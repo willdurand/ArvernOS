@@ -6,7 +6,7 @@ NASM = nasm
 kernel  = isofiles/boot/kernel.bin
 linker  = linker.ld
 iso		= os.iso
-lib		= libintermezzos.a
+lib		= libwillos.a
 
 OBJECTS := $(patsubst %.asm,%.o,$(wildcard *.asm))
 SOURCES := $(patsubst %.c,%.o,$(wildcard src/*.c))
