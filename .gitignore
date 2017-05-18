@@ -1,3 +1,4 @@
+/os.iso
 *.o
 *.bin
-/os.iso
+*.a
