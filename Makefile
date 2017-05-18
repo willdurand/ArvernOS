@@ -9,11 +9,11 @@ iso		= os.iso
 lib		= libwillos.a
 
 OBJECTS := $(patsubst %.asm,%.o,$(wildcard *.asm))
-SOURCES := $(patsubst %.c,%.o,$(wildcard src/*.c))
+SOURCES := $(patsubst %.c,%.o,$(shell find src -name '*.c'))
 
 CFLAGS = -W -Wall -ansi -pedantic -std=c99 -O2 -ffreestanding -nostdlib \
 		 -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs \
-		 -Isrc/include/
+		 -I src/include/ -I src/
 
 default: iso
 
@@ -26,7 +26,7 @@ $(kernel): $(OBJECTS) $(lib)
 $(OBJECTS): %.o: %.asm
 	$(NASM) -f elf64 $<
 
-$(SOURCES): %.o: %.c $(HEADERS)
+$(SOURCES): %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(lib): $(SOURCES)
