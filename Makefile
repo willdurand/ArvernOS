@@ -9,7 +9,7 @@ kernel: $(kernel)
 .PHONY: kernel
 
 $(kernel): $(objects)
-	ld --nmagic --output=$@ --script=$(linker) $<
+	ld --nmagic --output=$@ --script=$(linker) $(objects)
 
 $(objects): %.o: %.asm
 	nasm -f elf64 $<
