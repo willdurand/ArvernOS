@@ -3,7 +3,9 @@
 
 #include <stdint.h>
 
-#define VIDEO_ADDRESS 0xB8000
+#define VIDEO_ADDRESS   0xB8000
+#define VGA_WIDTH       80
+#define VGA_HEIGHT      24
 
 static const uint8_t COLOR_BLACK         = 0;
 static const uint8_t COLOR_BLUE          = 1;
@@ -22,7 +24,8 @@ static const uint8_t COLOR_LIGHT_MAGENTA = 13;
 static const uint8_t COLOR_LIGHT_BROWN   = 14;
 static const uint8_t COLOR_WHITE         = 15;
 
-uint16_t vga_print(uint32_t, uint8_t);
-uint8_t new_scheme(uint8_t, uint8_t);
+void screen_init();
+void screen_clear();
+void screen_print(const char*);
 
 #endif
