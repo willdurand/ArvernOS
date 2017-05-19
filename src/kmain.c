@@ -17,6 +17,8 @@ void kmain(void)
     screen_print("\n");
 
     isr_init();
-    screen_print("ISR initialized");
+    irq_init();
 
+    // do not stop the OS
+    while (1) ;;
 }

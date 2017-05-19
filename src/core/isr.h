@@ -4,6 +4,13 @@
 #include <core/idt.h>
 #include <stdint.h>
 
+#define PIC1        0x20 // Master PIC
+#define PIC2        0xA0 // Slave PIC
+#define PIC1_DATA   (PIC1 + 1)
+#define PIC2_DATA   (PIC2 + 1)
+#define PIC_EOI     0x20 // end of interrupt
+#define IRQ_BASE    0x20
+
 #define IRQ0 32
 #define IRQ1 33
 #define IRQ2 34
@@ -49,6 +56,7 @@ extern void irq2();
 typedef void (*isr_t) (uint64_t stack);
 
 void isr_init();
+void irq_init();
 void isr_handler(uint64_t id, uint64_t stack) __asm__("isr_handler");
 void irq_handler(uint64_t id, uint64_t stack) __asm__("irq_handler");
 void register_interrupt_handler(uint64_t id, isr_t handler);
