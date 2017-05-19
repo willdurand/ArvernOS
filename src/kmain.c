@@ -14,11 +14,9 @@ void kmain(void)
     screen_print(KERNEL_DATE);
     screen_print(" at ");
     screen_print(KERNEL_TIME);
-
-    isr_init();
-
     screen_print("\n");
 
-    __asm__("int $3");
-    __asm__("int $2");
+    isr_init();
+    screen_print("ISR initialized");
+
 }
