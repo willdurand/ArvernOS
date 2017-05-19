@@ -19,5 +19,6 @@ void kmain(void)
 
     screen_print("\n");
 
-    __asm__("int $4");
+    __asm__("int $3");
+    __asm__("int $2");
 }

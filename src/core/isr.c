@@ -2,7 +2,7 @@
 #include <drivers/screen.h>
 #include "isr.h"
 
-char *exception_messages[] = {
+const char* exception_messages[] = {
     "Division By Zero",
     "Debug",
     "Non Maskable Interrupt",
@@ -78,14 +78,14 @@ void isr_init()
     set_idt();
 }
 
-void isr_handler(registers_t r)
+void isr_handler(uint64_t id, uint64_t stack)
 {
     char s[3];
+    itoa(id, s);
 
     screen_print("Received interrupt: ");
-    //itoa(r.int_no, s);
-    //screen_print(s);
+    screen_print(s);
     screen_print("\n");
-    screen_print(exception_messages[r.int_no]);
+    screen_print(exception_messages[id]);
     screen_print("\n");
 }
