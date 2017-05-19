@@ -1,12 +1,18 @@
-CC   = /usr/local/bin/x86_64-pc-elf-gcc
-LD   = /usr/local/bin/x86_64-pc-elf-ld
-AR   = /usr/local/bin/x86_64-pc-elf-ar
-NASM = nasm
+CC   ?= gcc
+LD   ?= ld
+AR   ?= ar
+NASM ?= nasm
 
-kernel  = isofiles/boot/kernel.bin
-linker  = linker.ld
-iso		= os.iso
-lib		= libwillos.a
+ifeq ($(shell uname -s),Darwin)
+	CC = x86_64-pc-elf-gcc
+	LD = x86_64-pc-elf-ld
+	AR = x86_64-pc-elf-ar
+endif
+
+kernel = isofiles/boot/kernel.bin
+linker = linker.ld
+iso    = os.iso
+lib    = libwillos.a
 
 OBJECTS := $(patsubst %.asm,%.o,$(shell find asm -name '*.asm'))
 SOURCES := $(patsubst %.c,%.o,$(shell find src -name '*.c'))
