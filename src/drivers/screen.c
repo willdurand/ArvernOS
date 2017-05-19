@@ -58,14 +58,25 @@ void print_char_at(char c, uint8_t scheme, int x, int y)
 
 void print_char(char c)
 {
-    print_char_at(c, screen_scheme, screen_col, screen_row);
-
-    if (++screen_col == VGA_WIDTH)
-    {
+    if (c == '\n') {
         screen_col = 0;
-        if (++screen_row == VGA_HEIGHT)
+        screen_row++;
+    } else if (c == '\b' && screen_col > 0) {
+        print_char_at(0x0, screen_scheme, --screen_col, screen_row);
+    } else if (c == '\t') {
+        screen_col = screen_col + 8 - (screen_col % 8);
+    } else if (c == '\r') {
+        screen_col = 0;
+    } else {
+        print_char_at(c, screen_scheme, screen_col, screen_row);
+
+        if (++screen_col == VGA_WIDTH)
         {
-            screen_row = 0;
+            screen_col = 0;
+            if (++screen_row == VGA_HEIGHT)
+            {
+                screen_row = 0;
+            }
         }
     }
 }
