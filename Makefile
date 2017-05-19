@@ -19,6 +19,7 @@ SOURCES := $(patsubst %.c,%.o,$(shell find src -name '*.c'))
 
 CFLAGS = -W -Wall -ansi -pedantic -std=c99 -O2 -ffreestanding -nostdlib \
 		 -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs \
+		 -mno-red-zone \
 		 -I src/include/ -I src/
 
 default: iso

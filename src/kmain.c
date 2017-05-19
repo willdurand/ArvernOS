@@ -1,4 +1,4 @@
-#include <stdint.h>
+#include <core/isr.h>
 #include <drivers/screen.h>
 #include "kmain.h"
 
@@ -14,4 +14,10 @@ void kmain(void)
     screen_print(KERNEL_DATE);
     screen_print(" at ");
     screen_print(KERNEL_TIME);
+
+    isr_init();
+
+    screen_print("\n");
+
+    __asm__("int $4");
 }

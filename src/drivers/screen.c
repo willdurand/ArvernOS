@@ -1,3 +1,4 @@
+#include <string.h>
 #include "screen.h"
 
 // private
@@ -37,15 +38,6 @@ void screen_print(const char* str)
 uint8_t color_scheme(uint8_t fg, uint8_t bg)
 {
     return fg | bg << 4;
-}
-
-int strlen(const char* str)
-{
-    int ret = 0;
-    while (str[ret] != 0)
-        ret++;
-
-    return ret;
 }
 
 void print_char_at(char c, uint8_t scheme, int x, int y)
