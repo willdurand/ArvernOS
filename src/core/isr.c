@@ -1,6 +1,9 @@
-#include <stdlib.h>
+#include <core/ports.h>
 #include <drivers/screen.h>
+#include <stdlib.h>
 #include "isr.h"
+
+isr_t interrupt_handlers[256];
 
 const char* exception_messages[] = {
     "Division By Zero",
@@ -75,6 +78,24 @@ void isr_init()
     set_idt_gate(30, (uint64_t) isr30);
     set_idt_gate(31, (uint64_t) isr31);
 
+    // Remap the PIC
+    // cf. http://wiki.osdev.org/8259_PIC#Initialisation
+    // cf. https://github.com/ghaiklor/ghaiklor-os-gcc
+    port_byte_out(0x20, 0x11);
+    port_byte_out(0xA0, 0x11);
+    port_byte_out(0x21, 0x20);
+    port_byte_out(0xA1, 0x28);
+    port_byte_out(0x21, 0x04);
+    port_byte_out(0xA1, 0x02);
+    port_byte_out(0x21, 0x01);
+    port_byte_out(0xA1, 0x01);
+    port_byte_out(0x21, 0x0);
+    port_byte_out(0xA1, 0x0);
+
+    set_idt_gate(IRQ0, (uint64_t)irq0);
+    set_idt_gate(IRQ1, (uint64_t)irq1);
+    set_idt_gate(IRQ2, (uint64_t)irq2);
+
     set_idt();
 }
 
@@ -88,4 +109,24 @@ void isr_handler(uint64_t id, uint64_t stack)
     screen_print("\n");
     screen_print(exception_messages[id]);
     screen_print("\n");
+}
+
+void irq_handler(uint64_t id, uint64_t stack)
+{
+    if (id > 34)
+    {
+        port_byte_out(0xA0, 0x20);
+    }
+
+    port_byte_out(0x20, 0x20);
+
+    isr_t handler = interrupt_handlers[id];
+    if (handler != 0)
+    {
+        handler(stack);
+    }
+}
+
+void register_interrupt_handler(uint64_t id, isr_t handler)
+{
 }

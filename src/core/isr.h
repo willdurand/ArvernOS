@@ -4,6 +4,10 @@
 #include <core/idt.h>
 #include <stdint.h>
 
+#define IRQ0 32
+#define IRQ1 33
+#define IRQ2 34
+
 // These functions are declared in interrupt.asm file
 extern void isr0();
 extern void isr1();
@@ -38,7 +42,15 @@ extern void isr29();
 extern void isr30();
 extern void isr31();
 
+extern void irq0();
+extern void irq1();
+extern void irq2();
+
+typedef void (*isr_t) (uint64_t stack);
+
 void isr_init();
 void isr_handler(uint64_t id, uint64_t stack) __asm__("isr_handler");
+void irq_handler(uint64_t id, uint64_t stack) __asm__("irq_handler");
+void register_interrupt_handler(uint64_t id, isr_t handler);
 
 #endif
