@@ -47,22 +47,22 @@ start:
 
     lgdt [gdt64.pointer]
 
-	; update selectors
-	mov ax, gdt64.data
-	mov ss, ax
-	mov ds, ax
-	mov es, ax
+    ; update selectors
+    mov ax, gdt64.data
+    mov ss, ax
+    mov ds, ax
+    mov es, ax
 
-	jmp gdt64.code:long_mode_start
+    jmp gdt64.code:long_mode_start
 
-	; should not be reached
-	hlt
+    ; should not be reached
+    hlt
 
 ; block started by symbol
 section .bss
 align 4096
 p4_table:
-	; `resb` means 'reserves bytes'
+    ; `resb` means 'reserves bytes'
     resb 4096
 p3_table:
     resb 4096
@@ -71,7 +71,7 @@ p2_table:
 
 section .rodata
 gdt64:
-	; `dq` means 'define quad-word'
+    ; `dq` means 'define quad-word'
     dq 0
 .code: equ $ - gdt64
     dq (1<<44) | (1<<47) | (1<<41) | (1<<43) | (1<<53)

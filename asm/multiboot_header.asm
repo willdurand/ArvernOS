@@ -6,16 +6,16 @@ section .multiboot_header
 
 ; it is a label
 header_start:
-	; `dd` means 'define double word'
-	dd MULTIBOOT_HEADER_MAGIC
-	dd MULTIBOOT_HEADER_FLAGS
-	dd header_end - header_start ; header length
+    ; `dd` means 'define double word'
+    dd MULTIBOOT_HEADER_MAGIC
+    dd MULTIBOOT_HEADER_FLAGS
+    dd header_end - header_start ; header length
 
     ; checksum
     dd 0x100000000 - (0xe85250d6 + 0 + (header_end - header_start))
 
     ; required end tag
-	; `dw` means 'define word' (word = 16 bits on x86_64)
+    ; `dw` means 'define word' (word = 16 bits on x86_64)
     dw 0    ; type
     dw 0    ; flags
     dd 8    ; size

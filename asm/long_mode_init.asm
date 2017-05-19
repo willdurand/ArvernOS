@@ -4,7 +4,7 @@ extern kmain
 section .text
 bits 64
 long_mode_start:
-	call kmain
+    call kmain
 
-	; should not happen
-	hlt
+    ; should not happen
+    hlt
