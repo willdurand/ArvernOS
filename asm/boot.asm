@@ -6,16 +6,42 @@ extern long_mode_start
 section .text
 bits 32
 start:
+	mov esp, stack_top
+    ; `ebx` points to a boot information structure.
+	; We move it to `rdi` to pass it to our kernel.
+	mov edi, ebx
+
+	call set_up_page_tables
+	call enable_paging
+
+    lgdt [gdt64.pointer]
+
+	; update selectors
+	mov ax, gdt64.data
+	mov ss, ax
+	mov ds, ax
+	mov es, ax
+	mov fs, ax
+	mov gs, ax
+
+	jmp gdt64.code:long_mode_start
+
+    ; should not be reached
+    hlt
+
+set_up_page_tables:
     ; Point the first entry of the level 4 page table to the first entry in the
     ; p3 table
     mov eax, p3_table
     or eax, 0b11
     mov dword [p4_table + 0], eax
+
     ; Point the first entry of the level 3 page table to the first entry in the
     ; p2 table
     mov eax, p2_table
     or eax, 0b11
     mov dword [p3_table + 0], eax
+
     ; point each page table level two entry to a page
     mov ecx, 0         ; counter variable
 .map_p2_table:
@@ -27,36 +53,32 @@ start:
     inc ecx
     cmp ecx, 512
     jne .map_p2_table
+
+    ret
+
+enable_paging:
     ; move page table address to cr3
     mov eax, p4_table
     mov cr3, eax
+
     ; enable PAE
     mov eax, cr4
     or eax, 1 << 5
     mov cr4, eax
+
     ; set the long mode bit
     mov ecx, 0xC0000080
     rdmsr
     or eax, 1 << 8
     wrmsr
+
     ; enable paging
     mov eax, cr0
     or eax, 1 << 31
     or eax, 1 << 16
     mov cr0, eax
 
-    lgdt [gdt64.pointer]
-
-    ; update selectors
-    mov ax, gdt64.data
-    mov ss, ax
-    mov ds, ax
-    mov es, ax
-
-    jmp gdt64.code:long_mode_start
-
-    ; should not be reached
-    hlt
+	ret
 
 ; block started by symbol
 section .bss
@@ -68,6 +90,10 @@ p3_table:
     resb 4096
 p2_table:
     resb 4096
+; cf. http://os.phil-opp.com/allocating-frames.html
+stack_bottom:
+    resb 4096 * 4
+stack_top:
 
 section .rodata
 gdt64:
