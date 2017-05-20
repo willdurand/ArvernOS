@@ -142,3 +142,5 @@ irq_common_stub:
 irq_handler 0
 irq_handler 1
 irq_handler 2
+irq_handler 3
+irq_handler 4

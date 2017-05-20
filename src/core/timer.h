@@ -3,6 +3,6 @@
 
 #include <stdint.h>
 
-void init_timer(int freq);
+void timer_init(int freq);
 
 #endif

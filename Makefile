@@ -46,7 +46,11 @@ $(iso): $(kernel)
 	grub-mkrescue -o $@ isofiles
 
 run: $(iso)
-	qemu-system-x86_64 -cdrom os.iso
+	qemu-system-x86_64 -cdrom $<
+.PHONY: run
+
+debug: $(iso)
+	qemu-system-x86_64 -cdrom $< -serial file:/tmp/serial.log
 .PHONY: run
 
 clean:

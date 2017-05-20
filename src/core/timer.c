@@ -12,7 +12,7 @@ static void timer_callback(uint64_t stack)
     UNUSED(stack);
 }
 
-void init_timer(int freq)
+void timer_init(int freq)
 {
     register_interrupt_handler(IRQ0, timer_callback);
 

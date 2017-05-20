@@ -1,5 +1,4 @@
 #include <core/ports.h>
-#include <core/timer.h>
 #include <drivers/screen.h>
 #include <stdlib.h>
 #include "isr.h"
@@ -102,6 +101,8 @@ void isr_init()
     set_idt_gate(IRQ0, (uint64_t) irq0);
     set_idt_gate(IRQ1, (uint64_t) irq1);
     set_idt_gate(IRQ2, (uint64_t) irq2);
+    set_idt_gate(IRQ3, (uint64_t) irq3);
+    set_idt_gate(IRQ4, (uint64_t) irq4);
 
     set_idt();
 }
@@ -109,8 +110,6 @@ void isr_init()
 void irq_init()
 {
     __asm__("sti");
-
-    init_timer(50);
 }
 
 void isr_handler(uint64_t id, uint64_t stack)

@@ -14,6 +14,8 @@
 #define IRQ0 32
 #define IRQ1 33
 #define IRQ2 34
+#define IRQ3 35
+#define IRQ4 36
 
 // These functions are declared in interrupt.asm file
 extern void isr0();
@@ -52,6 +54,8 @@ extern void isr31();
 extern void irq0();
 extern void irq1();
 extern void irq2();
+extern void irq3();
+extern void irq4();
 
 typedef void (*isr_t) (uint64_t stack);
 

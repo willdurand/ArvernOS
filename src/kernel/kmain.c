@@ -1,5 +1,7 @@
 #include <core/isr.h>
+#include <core/timer.h>
 #include <drivers/screen.h>
+#include <drivers/serial.h>
 #include <drivers/keyboard.h>
 #include "kmain.h"
 
@@ -22,6 +24,12 @@ void kmain(void)
 
     isr_init();
     irq_init();
+
+    // enable scheduler
+    timer_init(50);
+
+    // enable serial port
+    serial_init(SERIAL_COM1, SERIAL_SPEED_115200);
 
     keyboard_init();
 
