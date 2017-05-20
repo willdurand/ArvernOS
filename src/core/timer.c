@@ -9,13 +9,6 @@ uint32_t tick = 0;
 static void timer_callback(uint64_t stack)
 {
     tick++;
-
-    char tick_ascii[256];
-    itoa(tick, tick_ascii);
-
-    screen_print("Tick: ");
-    screen_print(tick_ascii);
-    screen_print("\n");
 }
 
 void init_timer(int freq)

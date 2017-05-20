@@ -7,6 +7,9 @@ void kmain(void)
     screen_init();
     screen_clear();
 
+    screen_print(KERNEL_ASCII);
+    screen_print("\n");
+
     screen_print(KERNEL_NAME);
     screen_print(" ");
     screen_print(KERNEL_VERSION);
@@ -19,6 +22,7 @@ void kmain(void)
     isr_init();
     irq_init();
 
-    // do not stop the OS
-    while (1) ;;
+    while (1) {
+        __asm__("hlt");
+    }
 }
