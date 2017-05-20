@@ -123,6 +123,8 @@ void isr_handler(uint64_t id, uint64_t stack)
     screen_print("\n");
     screen_print(exception_messages[id]);
     screen_print("\n");
+
+    UNUSED(stack);
 }
 
 void irq_handler(uint64_t id, uint64_t stack)

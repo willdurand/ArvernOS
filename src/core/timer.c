@@ -9,6 +9,8 @@ uint32_t tick = 0;
 static void timer_callback(uint64_t stack)
 {
     tick++;
+
+    UNUSED(stack);
 }
 
 void init_timer(int freq)
