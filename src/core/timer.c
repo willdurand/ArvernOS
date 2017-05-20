@@ -1,7 +1,6 @@
 #include "timer.h"
 #include <core/isr.h>
 #include <core/ports.h>
-#include <drivers/screen.h>
 #include <stdlib.h>
 
 uint32_t tick = 0;

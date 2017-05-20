@@ -1,5 +1,6 @@
 #include <core/isr.h>
 #include <drivers/screen.h>
+#include <drivers/keyboard.h>
 #include "kmain.h"
 
 void kmain(void)
@@ -21,6 +22,8 @@ void kmain(void)
 
     isr_init();
     irq_init();
+
+    keyboard_init();
 
     while (1) {
         __asm__("hlt");
