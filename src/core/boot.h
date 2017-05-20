@@ -10,7 +10,6 @@
 #define MULTIBOOT2_BOOTLOADER_MAGIC		0x36d76289
 
 /* Flags set in the 'flags' member of the multiboot header.  */
-#define MULTIBOOT_TAG_ALIGN                  8
 #define MULTIBOOT_TAG_TYPE_END               0
 #define MULTIBOOT_TAG_TYPE_CMDLINE           1
 #define MULTIBOOT_TAG_TYPE_BOOT_LOADER_NAME  2
@@ -99,6 +98,12 @@ typedef struct multiboot_tag_mmap {
     uint32_t entry_version;
     multiboot_mmap_entry_t entries[];
 } multiboot_tag_mmap_t;
+
+typedef struct multiboot_tag_network {
+    uint32_t type;
+    uint32_t size;
+    uint8_t dhcpack[];
+} multiboot_tag_network_t;
 
 int multiboot_is_valid(unsigned long magic, unsigned long addr);
 void dump_multiboot_info(unsigned long addr);
