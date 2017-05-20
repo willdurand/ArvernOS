@@ -59,6 +59,25 @@ void dump_multiboot_info(unsigned long addr)
                     ((multiboot_tag_bootdev_t *) tag)->part
                 );
                 break;
+            case MULTIBOOT_TAG_TYPE_MMAP:
+                {
+                    multiboot_memory_map_t *mmap;
+                    for (
+                        mmap = ((multiboot_tag_mmap_t *) tag)->entries;
+                        (uint8_t *) mmap < (uint8_t *) tag + tag->size;
+                        mmap = (multiboot_memory_map_t *) ((unsigned long) mmap + ((multiboot_tag_mmap_t *) tag)->entry_size)
+                    ) {
+                        DEBUG(
+                            "mmap base_addr = 0x%x%x, length = 0x%x%x, type = 0x%x\n",
+                            (unsigned) (mmap->addr >> 32),
+                            (unsigned) (mmap->addr & 0xffffffff),
+                            (unsigned) (mmap->len >> 32),
+                            (unsigned) (mmap->len & 0xffffffff),
+                            (unsigned) mmap->type
+                        );
+                    }
+                }
+                break;
 
             default:
                 DEBUG("Tag 0x%x, Size 0x%x\n", tag->type, tag->size);

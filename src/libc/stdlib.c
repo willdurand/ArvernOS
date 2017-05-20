@@ -23,7 +23,7 @@ void itoa(int n, char* str, int base)
         str[i++] = (r < 10) ? r + '0' : r + 'a' - 10;
     } while ((n /= base) > 0);
 
-    if (sign < 0) {
+    if (sign < 0 && base == 10) {
         str[i++] = '-';
     }
 

@@ -83,6 +83,23 @@ typedef struct multiboot_tag_module {
     char cmdline[];
 } multiboot_tag_module_t;
 
+typedef struct multiboot_mmap_entry {
+    uint64_t addr;
+    uint64_t len;
+    uint32_t type;
+    uint32_t zero;
+} multiboot_mmap_entry_t;
+
+typedef multiboot_mmap_entry_t multiboot_memory_map_t;
+
+typedef struct multiboot_tag_mmap {
+    uint32_t type;
+    uint32_t size;
+    uint32_t entry_size;
+    uint32_t entry_version;
+    multiboot_mmap_entry_t entries[];
+} multiboot_tag_mmap_t;
+
 int multiboot_is_valid(unsigned long magic, unsigned long addr);
 void dump_multiboot_info(unsigned long addr);
 
