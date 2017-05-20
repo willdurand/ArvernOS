@@ -29,8 +29,8 @@ void screen_init()
 
 void screen_clear()
 {
-    for (int y = 0; y < VGA_HEIGHT; y++) {
-        for (int x = 0; x < VGA_WIDTH; x++) {
+    for (int y = 0; y < SCREEN_HEIGHT; y++) {
+        for (int x = 0; x < SCREEN_WIDTH; x++) {
             screen_write_at(' ', screen_scheme, x, y);
         }
     }
@@ -50,23 +50,23 @@ uint8_t color_scheme(uint8_t fg, uint8_t bg)
 
 void screen_write_at(char c, uint8_t scheme, int x, int y)
 {
-    const int offset = 2 * (y * VGA_WIDTH + x);
+    const int offset = 2 * (y * SCREEN_WIDTH + x);
 
     framebuffer[offset] = c;
     framebuffer[offset + 1] = scheme;
 
     // scrolling
-    if (offset > VGA_HEIGHT * VGA_WIDTH * 2) {
-        for (int i = 1; i < VGA_HEIGHT; i++) {
+    if (offset > SCREEN_HEIGHT * SCREEN_WIDTH * 2) {
+        for (int i = 1; i < SCREEN_HEIGHT; i++) {
             memcpy(
-                ((char *) VIDEO_ADDRESS + (2 * i * VGA_WIDTH)),
-                ((char *) VIDEO_ADDRESS + (2 * (i - 1) * VGA_WIDTH)),
-                2 * VGA_WIDTH
+                ((char *) VIDEO_ADDRESS + (2 * i * SCREEN_WIDTH)),
+                ((char *) VIDEO_ADDRESS + (2 * (i - 1) * SCREEN_WIDTH)),
+                2 * SCREEN_WIDTH
             );
         }
 
-        char* last_line = (char *)(2 * (VGA_HEIGHT) * VGA_WIDTH + VIDEO_ADDRESS);
-        for (int i = 0; i < VGA_WIDTH * 2; i++) {
+        char* last_line = (char *)(2 * (SCREEN_HEIGHT) * SCREEN_WIDTH + VIDEO_ADDRESS);
+        for (int i = 0; i < SCREEN_WIDTH * 2; i++) {
             last_line[i] = 0;
         }
 
@@ -90,13 +90,13 @@ void screen_write(char c)
         screen_write_at(c, screen_scheme, screen_col, screen_row);
         screen_col++;
 
-        if (screen_col == VGA_WIDTH) {
+        if (screen_col == SCREEN_WIDTH) {
             screen_col = 0;
             screen_row++;
         }
     }
 
-    move_cursor((screen_row * VGA_WIDTH) + screen_col);
+    move_cursor((screen_row * SCREEN_WIDTH) + screen_col);
 }
 
 void move_cursor(uint16_t pos)

@@ -4,8 +4,8 @@
 #include <stdint.h>
 
 #define VIDEO_ADDRESS   0xB8000
-#define VGA_WIDTH       80
-#define VGA_HEIGHT      24
+#define SCREEN_WIDTH    80
+#define SCREEN_HEIGHT   24
 
 static const uint8_t COLOR_BLACK         = 0;
 static const uint8_t COLOR_BLUE          = 1;
