@@ -3,6 +3,6 @@
 
 #define UNUSED(x) (void)(x)
 
-void itoa(int n, char str[]);
+void itoa(int n, char* str, int base);
 
 #endif

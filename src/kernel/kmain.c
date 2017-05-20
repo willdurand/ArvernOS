@@ -7,10 +7,17 @@
 #include <stdio.h>
 #include "kmain.h"
 
-void kmain(void)
+#define CHECK_FLAG(flags, bit) ((flags) & (1 << (bit)))
+
+void kmain(unsigned long magic, unsigned long addr)
 {
     screen_init();
     screen_clear();
+
+    if (multiboot_is_valid(magic, addr) != 0) {
+        printf("System halted!");
+        return;
+    }
 
     printf("%s\n", KERNEL_ASCII);
     printf("%s %s / Built on: %s at %s\n", KERNEL_NAME, KERNEL_VERSION, KERNEL_DATE, KERNEL_TIME);
@@ -26,6 +33,8 @@ void kmain(void)
     DEBUG("%s has started\n", KERNEL_NAME);
 
     keyboard_init();
+
+    dump_multiboot_info(addr);
 
     while (1) {
         __asm__("hlt");

@@ -1,18 +1,18 @@
 ; cf. https://intermezzos.github.io/book/multiboot-headers.html
 section .multiboot_header
 
-%define MULTIBOOT_HEADER_MAGIC 0xe85250d6
-%define MULTIBOOT_HEADER_FLAGS 0
+%define MULTIBOOT_MAGIC_NUMBER	0xe85250d6
+%define PROTECTED_MODE_CODE		0
 
 ; it is a label
 header_start:
     ; `dd` means 'define double word'
-    dd MULTIBOOT_HEADER_MAGIC
-    dd MULTIBOOT_HEADER_FLAGS
+    dd MULTIBOOT_MAGIC_NUMBER
+    dd PROTECTED_MODE_CODE
     dd header_end - header_start ; header length
 
     ; checksum
-    dd 0x100000000 - (0xe85250d6 + 0 + (header_end - header_start))
+    dd 0x100000000 - (MULTIBOOT_MAGIC_NUMBER + 0 + (header_end - header_start))
 
     ; required end tag
     ; `dw` means 'define word' (word = 16 bits on x86_64)
