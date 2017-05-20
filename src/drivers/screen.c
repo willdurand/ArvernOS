@@ -1,4 +1,5 @@
 #include <string.h>
+#include <mem.h>
 #include "screen.h"
 
 // private
@@ -46,6 +47,24 @@ void print_char_at(char c, uint8_t scheme, int x, int y)
 
     framebuffer[offset] = c;
     framebuffer[offset + 1] = scheme;
+
+    // scrolling
+    if (offset > VGA_HEIGHT * VGA_WIDTH * 2) {
+        for (int i = 1; i < VGA_HEIGHT; i++) {
+            memcpy(
+                    (char *) (VIDEO_ADDRESS + (2 * i * VGA_WIDTH)),
+                    (char *) (VIDEO_ADDRESS + (2 * (i - 1) * VGA_WIDTH)),
+                    2 * VGA_WIDTH
+                  );
+        }
+
+        char* last_line = (char *)(2 * (VGA_HEIGHT) * VGA_WIDTH + VIDEO_ADDRESS);
+        for (int i = 0; i < VGA_WIDTH * 2; i++) {
+            last_line[i] = 0;
+        }
+
+        screen_row--;
+    }
 }
 
 void print_char(char c)
