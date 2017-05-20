@@ -124,6 +124,8 @@ void isr_handler(uint64_t id, uint64_t stack)
     screen_print("\n");
 
     UNUSED(stack);
+
+    __asm__("hlt");
 }
 
 void irq_handler(uint64_t id, uint64_t stack)

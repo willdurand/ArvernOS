@@ -1,8 +1,13 @@
 #include "serial.h"
 #include <core/ports.h>
+#include <string.h>
 
+// private functions
 int serial_received(uint32_t com);
 int serial_is_transmit_fifo_empty(uint32_t com);
+// could be exposed later
+char serial_read(uint32_t com);
+void serial_write(uint32_t com, char c);
 
 void serial_init(uint16_t com, uint16_t divisor)
 {
@@ -22,6 +27,13 @@ void serial_init(uint16_t com, uint16_t divisor)
 
     // IRQs enabled, RTS/DSR set
     port_byte_out(SERIAL_MODEM_COMMAND_PORT(com), 0x0B);
+}
+
+void serial_print(uint32_t com, const char* str)
+{
+    for (int i = 0; i < strlen(str); i++) {
+        serial_write(com, str[i]);
+    }
 }
 
 int serial_is_transmit_fifo_empty(uint32_t com)

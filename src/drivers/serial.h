@@ -24,7 +24,6 @@
 #define SERIAL_SPEED_38400  3
 
 void serial_init(uint16_t com, uint16_t divisor);
-char serial_read(uint32_t com);
-void serial_write(uint32_t com, char c);
+void serial_print(uint32_t com, const char* str);
 
 #endif

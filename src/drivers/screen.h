@@ -26,6 +26,7 @@ static const uint8_t COLOR_WHITE         = 15;
 
 void screen_init();
 void screen_clear();
+void screen_write(char c);
 void screen_print(const char*);
 
 #endif
