@@ -1,5 +1,6 @@
 #include <core/isr.h>
 #include <core/timer.h>
+#include <core/debug.h>
 #include <drivers/screen.h>
 #include <drivers/serial.h>
 #include <drivers/keyboard.h>
@@ -22,9 +23,7 @@ void kmain(void)
 
     // enable serial port
     serial_init(SERIAL_COM1, SERIAL_SPEED_115200);
-    serial_print(SERIAL_COM1, KERNEL_NAME);
-    serial_print(SERIAL_COM1, " has started");
-    serial_print(SERIAL_COM1, "\n");
+    DEBUG("%s has started\n", KERNEL_NAME);
 
     keyboard_init();
 

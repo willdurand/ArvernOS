@@ -25,5 +25,7 @@
 
 void serial_init(uint16_t com, uint16_t divisor);
 void serial_print(uint32_t com, const char* str);
+void serial_write(uint32_t com, char c);
+void serial_printf(uint32_t com, const char* format, ...);
 
 #endif

@@ -1,13 +1,14 @@
 #include "serial.h"
 #include <core/ports.h>
 #include <string.h>
+#include <stdarg.h>
+#include <stdio.h>
 
 // private functions
 int serial_received(uint32_t com);
 int serial_is_transmit_fifo_empty(uint32_t com);
 // could be exposed later
 char serial_read(uint32_t com);
-void serial_write(uint32_t com, char c);
 
 void serial_init(uint16_t com, uint16_t divisor)
 {
@@ -34,6 +35,14 @@ void serial_print(uint32_t com, const char* str)
     for (int i = 0; i < strlen(str); i++) {
         serial_write(com, str[i]);
     }
+}
+
+void serial_printf(uint32_t com, const char* format, ...)
+{
+    va_list arg;
+    va_start(arg, format);
+    vprintf(com, format, arg);
+    va_end(arg);
 }
 
 int serial_is_transmit_fifo_empty(uint32_t com)
