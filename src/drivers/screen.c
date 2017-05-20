@@ -1,12 +1,19 @@
 #include <string.h>
 #include <mem.h>
+#include <core/ports.h>
 #include "screen.h"
+
+#define FB_COMMAND_PORT         0x3D4
+#define FB_DATA_PORT            0x3D5
+#define FB_HIGH_BYTE_COMMAND    14
+#define FB_LOW_BYTE_COMMAND     15
 
 // private
 void print_char_at(char c, uint8_t scheme, int x, int y);
 void print_char(char c);
 int strlen(const char* str);
 uint8_t color_scheme(uint8_t fg, uint8_t bg);
+void move_cursor(uint16_t pos);
 
 uint8_t screen_scheme;
 char* framebuffer;
@@ -73,21 +80,29 @@ void print_char(char c)
         screen_col = 0;
         screen_row++;
     } else if (c == '\b' && screen_col > 0) {
-        print_char_at(0x0, screen_scheme, --screen_col, screen_row);
+        screen_col--;
+        print_char_at(0x0, screen_scheme, screen_col, screen_row);
     } else if (c == '\t') {
         screen_col = screen_col + 8 - (screen_col % 8);
     } else if (c == '\r') {
         screen_col = 0;
     } else {
         print_char_at(c, screen_scheme, screen_col, screen_row);
+        screen_col++;
 
-        if (++screen_col == VGA_WIDTH)
-        {
+        if (screen_col == VGA_WIDTH) {
             screen_col = 0;
-            if (++screen_row == VGA_HEIGHT)
-            {
-                screen_row = 0;
-            }
+            screen_row++;
         }
     }
+
+    move_cursor((screen_row * VGA_WIDTH) + screen_col);
+}
+
+void move_cursor(uint16_t pos)
+{
+    port_byte_out(FB_COMMAND_PORT, FB_HIGH_BYTE_COMMAND);
+    port_byte_out(FB_DATA_PORT,    ((pos >> 8) & 0x00FF));
+    port_byte_out(FB_COMMAND_PORT, FB_LOW_BYTE_COMMAND);
+    port_byte_out(FB_DATA_PORT,    pos & 0x00FF);
 }
