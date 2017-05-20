@@ -11,17 +11,8 @@ void kmain(void)
     screen_init();
     screen_clear();
 
-    screen_print(KERNEL_ASCII);
-    screen_print("\n");
-
-    screen_print(KERNEL_NAME);
-    screen_print(" ");
-    screen_print(KERNEL_VERSION);
-    screen_print(" / Built on: ");
-    screen_print(KERNEL_DATE);
-    screen_print(" at ");
-    screen_print(KERNEL_TIME);
-    screen_print("\n");
+    printf("%s\n", KERNEL_ASCII);
+    printf("%s %s / Built on: %s at %s\n", KERNEL_NAME, KERNEL_VERSION, KERNEL_DATE, KERNEL_TIME);
 
     isr_init();
     irq_init();

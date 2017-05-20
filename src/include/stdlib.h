@@ -4,6 +4,5 @@
 #define UNUSED(x) (void)(x)
 
 void itoa(int n, char str[]);
-void reverse(char s[]);
 
 #endif
