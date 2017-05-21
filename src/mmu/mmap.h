@@ -1,5 +1,5 @@
-#ifndef CORE_MMU_H
-#define CORE_MMU_H
+#ifndef MMU_MMAP_H
+#define MMU_MMAP_H
 
 #include <core/boot.h>
 

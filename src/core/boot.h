@@ -1,5 +1,5 @@
-#ifndef BOOT_H
-#define BOOT_H
+#ifndef CORE_BOOT_H
+#define CORE_BOOT_H
 
 #include <stdint.h>
 
