@@ -15,4 +15,9 @@ SECTIONS {
     {
         *(.text)
     }
+
+    .rodata :
+    {
+        *(.rodata .rodata.*)
+    }
 }
