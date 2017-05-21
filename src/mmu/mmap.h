@@ -13,5 +13,6 @@ void mmap_init(multiboot_tag_mmap_t *mmap, physical_address_t kernel_start, phys
 frame_t mmap_allocate_frame();
 physical_address_t mmap_read(uint32_t request, uint8_t mode);
 frame_t frame_containing_address(uint64_t addr);
+uint64_t frame_starting_address(frame_t frame);
 
 #endif

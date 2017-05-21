@@ -29,7 +29,10 @@ typedef page_entry_t* page_table_t;
 
 void paging_init();
 page_t page_containing_address(uint64_t addr);
+physical_address_t translate(virtual_address_t addr);
 frame_t translate_page(page_t page);
 void map_page_to_frame(page_t page, frame_t frame, uint8_t flags);
+void identity_map(frame_t frame, uint8_t flags);
+void map(page_t page, uint8_t flags);
 
 #endif
