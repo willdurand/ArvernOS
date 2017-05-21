@@ -2,6 +2,11 @@
 #include <stdio.h>
 #include <core/debug.h>
 
+uint64_t kernel_start = -1;
+uint64_t kernel_end = 0;
+uint64_t multiboot_start;
+uint64_t multiboot_end;
+
 int multiboot_is_valid(unsigned long magic, unsigned long addr)
 {
     if (magic != MULTIBOOT2_BOOTLOADER_MAGIC) {
@@ -34,14 +39,32 @@ void* find_multiboot_tag(unsigned long addr, uint16_t type)
     return 0;
 }
 
+uint64_t get_kernel_start()
+{
+    return kernel_start;
+}
+
+uint64_t get_kernel_end()
+{
+    return kernel_end;
+}
+
+uint64_t get_multiboot_start()
+{
+    return multiboot_start;
+}
+
+uint64_t get_multiboot_end()
+{
+    return multiboot_end;
+}
+
 void dump_multiboot_info(unsigned long addr)
 {
     multiboot_tag_t *tag;
     unsigned size = *(unsigned *) addr;
 
-    uint64_t kernel_start = -1;
-    uint64_t kernel_end = 0;
-
+    multiboot_start = (uint64_t) addr;
     DEBUG("announced MBI size 0x%x", size);
 
     for (
@@ -88,12 +111,10 @@ void dump_multiboot_info(unsigned long addr)
                         mmap = (multiboot_mmap_entry_t *) ((unsigned long) mmap + ((multiboot_tag_mmap_t *) tag)->entry_size)
                     ) {
                         DEBUG(
-                            "mmap base_addr = 0x%x%x, length = 0x%x%x, type = 0x%x",
-                            (unsigned) (mmap->addr >> 32),
-                            (unsigned) (mmap->addr & 0xffffffff),
-                            (unsigned) (mmap->len >> 32),
-                            (unsigned) (mmap->len & 0xffffffff),
-                            (unsigned) mmap->type
+                            "mmap base_addr = 0x%X, length = 0x%X, type = 0x%x",
+                            mmap->addr,
+                            mmap->len,
+                            mmap->type
                         );
                     }
                 }
@@ -123,11 +144,11 @@ void dump_multiboot_info(unsigned long addr)
                         i++
                     ) {
                         DEBUG(
-                            "elf section #%d addr = 0x%x, type = 0x%X, size = 0x%x, flags = 0x%X",
+                            "elf section #%d addr = 0x%X, type = 0x%X, size = 0x%X, flags = 0x%X",
                             i,
-                            (unsigned) (elf->addr >> 32),
+                            elf->addr,
                             elf->type,
-                            (unsigned) (elf->size >> 32),
+                            elf->size,
                             elf->flags
                         );
 
@@ -161,6 +182,5 @@ void dump_multiboot_info(unsigned long addr)
     tag = (multiboot_tag_t *) ((uint8_t *) tag + ((tag->size + 7) & ~7));
     DEBUG("total MBI size 0x%x", (unsigned long) tag - addr);
 
-    DEBUG("kernel start = 0x%x, kernel end = 0x%x", (kernel_start >> 32), (kernel_end >> 32));
-    DEBUG("multiboot start = 0x%x, multiboot end = 0x%x", addr, tag);
+    multiboot_end = (uint64_t) tag;
 }

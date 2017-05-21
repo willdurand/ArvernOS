@@ -4,13 +4,20 @@
 uint64_t containing_address(uint64_t addr);
 
 multiboot_tag_mmap_t *memory_area;
+physical_address_t kernel_reserved_start;
+physical_address_t kernel_reserved_end;
 physical_address_t multiboot_reserved_start;
 physical_address_t multiboot_reserved_end;
 uint32_t next_free_frame;
 
-void mmap_init(multiboot_tag_mmap_t *mmap, physical_address_t mb_start, physical_address_t mb_end)
-{
+void mmap_init(
+    multiboot_tag_mmap_t *mmap,
+    const physical_address_t kernel_start, const physical_address_t kernel_end,
+    const physical_address_t mb_start, const physical_address_t mb_end
+) {
     memory_area = mmap;
+    kernel_reserved_start = kernel_start;
+    kernel_reserved_end = kernel_end;
     multiboot_reserved_start = mb_start;
     multiboot_reserved_end = mb_end;
     next_free_frame = 1;
@@ -81,9 +88,12 @@ uint32_t mmap_allocate_frame()
 
     DEBUG("current_addr = 0x%x", current_addr);
 
-    // Verify that the frame is not in the multiboot reserved area. If it is,
-    // increment the next free frame number and recursively call back.
-    if (current_addr >= multiboot_reserved_start && current_addr <= multiboot_reserved_end) {
+    // Verify that the frame is not in the reserved areas. If it is, increment
+    // the next free frame number and recursively call back.
+    if (
+        (current_addr >= multiboot_reserved_start && current_addr <= multiboot_reserved_end) ||
+        (current_addr >= kernel_reserved_start && current_addr <= kernel_reserved_end)
+    ) {
         next_free_frame++;
 
         return mmap_allocate_frame();

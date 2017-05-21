@@ -92,7 +92,7 @@ typedef struct multiboot_mmap_entry {
     uint64_t len;
     uint32_t type;
     uint32_t zero;
-} multiboot_mmap_entry_t;
+} __attribute__((packed)) multiboot_mmap_entry_t;
 
 typedef struct multiboot_tag_mmap {
     uint32_t type;
@@ -109,8 +109,9 @@ typedef struct multiboot_tag_network {
 } multiboot_tag_network_t;
 
 typedef struct multiboot_elf_sections_entry {
+    uint32_t name;
     uint32_t type;
-    uint32_t flags;
+    uint64_t flags;
     uint64_t addr;
     uint64_t offset;
     uint64_t size;
@@ -118,7 +119,7 @@ typedef struct multiboot_elf_sections_entry {
     uint32_t info;
     uint64_t alignment;
     uint64_t entry_size;
-} multiboot_elf_sections_entry_t;
+} __attribute__((packed)) multiboot_elf_sections_entry_t;
 
 typedef struct multiboot_tag_elf_sections {
     uint32_t type;
@@ -132,5 +133,9 @@ typedef struct multiboot_tag_elf_sections {
 int multiboot_is_valid(unsigned long magic, unsigned long addr);
 void dump_multiboot_info(unsigned long addr);
 void* find_multiboot_tag(unsigned long addr, uint16_t type);
+uint64_t get_kernel_start();
+uint64_t get_kernel_end();
+uint64_t get_multiboot_start();
+uint64_t get_multiboot_end();
 
 #endif
