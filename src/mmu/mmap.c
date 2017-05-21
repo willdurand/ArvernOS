@@ -1,14 +1,13 @@
 #include "mmap.h"
+#include <mmu/paging.h>
 #include <core/debug.h>
-
-uint64_t containing_address(uint64_t addr);
 
 multiboot_tag_mmap_t *memory_area;
 physical_address_t kernel_reserved_start;
 physical_address_t kernel_reserved_end;
 physical_address_t multiboot_reserved_start;
 physical_address_t multiboot_reserved_end;
-uint32_t next_free_frame;
+frame_t next_free_frame;
 
 void mmap_init(
     multiboot_tag_mmap_t *mmap,
@@ -32,7 +31,7 @@ void mmap_init(
     );
 }
 
-physical_address_t mmap_read(uint32_t request, uint8_t mode)
+physical_address_t mmap_read(frame_t request, uint8_t mode)
 {
     // If the user specifies an invalid mode, also skip the request
     if (mode != MMAP_GET_NUM && mode != MMAP_GET_ADDR) {
@@ -41,7 +40,7 @@ physical_address_t mmap_read(uint32_t request, uint8_t mode)
 
     DEBUG("request = %d, mode = %d", request, mode);
 
-    uint32_t cur_num = 0;
+    frame_t cur_num = 0;
     multiboot_mmap_entry_t *entry;
     for (
         entry = ((multiboot_tag_mmap_t *) memory_area)->entries;
@@ -79,7 +78,7 @@ physical_address_t mmap_read(uint32_t request, uint8_t mode)
     return 0;
 }
 
-uint32_t mmap_allocate_frame()
+frame_t mmap_allocate_frame()
 {
     DEBUG("start (next_free_frame = %d)", next_free_frame);
 
@@ -102,10 +101,12 @@ uint32_t mmap_allocate_frame()
     // TODO: add check for kernel reserved area
 
     // Call mmap_read again to get the frame number for our address
-    uint32_t current_frame_num = mmap_read(current_addr, MMAP_GET_NUM);
+    frame_t current_frame_num = mmap_read(current_addr, MMAP_GET_NUM);
 
     // Update next_free_frame to the next unallocated frame number
     next_free_frame = current_frame_num + 1;
+
+    DEBUG("return current_frame_num = %d (next_free_frame = %d)", current_frame_num, next_free_frame);
 
     // Finally, return the newly allocated frame num
     return current_frame_num;

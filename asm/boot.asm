@@ -90,6 +90,12 @@ check_long_mode:
     jmp error
 
 set_up_page_tables:
+	; cf. http://os.phil-opp.com/modifying-page-tables.html
+	; required to implement recursive mapping (paging)
+	mov eax, p4_table
+	or eax, 0b11 ; present + writable
+	mov [p4_table + 511 * 8], eax
+
     ; Point the first entry of the level 4 page table to the first entry in the
     ; p3 table
     mov eax, p3_table
