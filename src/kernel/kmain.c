@@ -1,7 +1,7 @@
 #include <core/isr.h>
 #include <core/timer.h>
 #include <core/debug.h>
-#include <core/mmap.h>
+#include <mmu/mmap.h>
 #include <drivers/screen.h>
 #include <drivers/serial.h>
 #include <drivers/keyboard.h>
