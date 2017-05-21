@@ -1,64 +1,102 @@
 #include "mmap.h"
 #include <core/debug.h>
 
-multiboot_tag_mmap_t *mmap;
+uint64_t containing_address(uint64_t addr);
+
+multiboot_tag_mmap_t *memory_area;
 physical_address_t multiboot_reserved_start;
 physical_address_t multiboot_reserved_end;
-int next_free_frame;
+uint32_t next_free_frame;
 
 void mmap_init(multiboot_tag_mmap_t *mmap, physical_address_t mb_start, physical_address_t mb_end)
 {
-    mmap = mmap;
+    memory_area = mmap;
     multiboot_reserved_start = mb_start;
     multiboot_reserved_end = mb_end;
     next_free_frame = 1;
 
     DEBUG(
-        "Initialized MMAP with mmap addr = 0x%x, multiboot_reserved_start = 0x%x, "
-        "multiboot_reserved_end = 0x%x, next_free_frame = %d\n",
-        mmap,
+        "Initialized MMAP with memory_area = 0x%x, multiboot_reserved_start = 0x%x, "
+        "multiboot_reserved_end = 0x%x, next_free_frame = %d",
+        memory_area,
         multiboot_reserved_start,
         multiboot_reserved_end,
         next_free_frame
     );
 }
 
-physical_address_t mmap_read(physical_address_t request, uint8_t mode)
+physical_address_t mmap_read(uint32_t request, uint8_t mode)
 {
-    // We're reserving frame number 0 for errors, so skip all requests for 0
-    if (request == 0) {
-        return 0;
-    }
-
     // If the user specifies an invalid mode, also skip the request
     if (mode != MMAP_GET_NUM && mode != MMAP_GET_ADDR) {
         return 0;
     }
 
-    // TODO: implement me
+    DEBUG("request = %d, mode = %d", request, mode);
+
+    uint32_t cur_num = 0;
+    multiboot_mmap_entry_t *entry;
+    for (
+        entry = ((multiboot_tag_mmap_t *) memory_area)->entries;
+        (uint8_t *) entry < (uint8_t *) memory_area + memory_area->size;
+        entry = (multiboot_mmap_entry_t *) ((unsigned long) entry + ((multiboot_tag_mmap_t *) memory_area)->entry_size)
+    ) {
+        physical_address_t i;
+        physical_address_t entry_end = entry->addr + entry->len;
+        for (i = entry->addr; i + PAGE_SIZE < entry_end; i += PAGE_SIZE) {
+            if (mode == MMAP_GET_NUM && request >= i && request <= i + PAGE_SIZE) {
+                // If we're looking for a frame number from an address and we
+                // found it return the frame number
+                return cur_num + 1;
+            }
+
+            // If the requested chunk is in reserved space, skip it
+            if (entry->type == MULTIBOOT_MEMORY_RESERVED) {
+                if (mode == MMAP_GET_ADDR && cur_num == request) {
+                    // The address of a chunk in reserved space was requested
+                    // Increment the request until it is no longer reserved
+                    request++;
+                }
+                // Skip to the next chunk until it's no longer reserved
+                cur_num++;
+                continue;
+            } else if (mode == MMAP_GET_ADDR && cur_num == request) {
+                // If we're looking for a frame starting address and we found
+                // it return the starting address
+                return i;
+            }
+            cur_num++;
+        }
+    }
 
     return 0;
 }
 
-physical_address_t mmap_allocate_frame()
+uint32_t mmap_allocate_frame()
 {
+    DEBUG("start (next_free_frame = %d)", next_free_frame);
+
     // Get the address for the next free frame
-    physical_address_t cur_addr = mmap_read(next_free_frame, MMAP_GET_ADDR);
+    physical_address_t current_addr = mmap_read(next_free_frame, MMAP_GET_ADDR);
+
+    DEBUG("current_addr = 0x%x", current_addr);
 
     // Verify that the frame is not in the multiboot reserved area. If it is,
     // increment the next free frame number and recursively call back.
-    if (cur_addr >= multiboot_reserved_start && cur_addr <= multiboot_reserved_end) {
-        ++next_free_frame;
+    if (current_addr >= multiboot_reserved_start && current_addr <= multiboot_reserved_end) {
+        next_free_frame++;
 
         return mmap_allocate_frame();
     }
 
+    // TODO: add check for kernel reserved area
+
     // Call mmap_read again to get the frame number for our address
-    physical_address_t cur_num = mmap_read(cur_addr, MMAP_GET_NUM);
+    uint32_t current_frame_num = mmap_read(current_addr, MMAP_GET_NUM);
 
     // Update next_free_frame to the next unallocated frame number
-    next_free_frame = cur_num + 1;
+    next_free_frame = current_frame_num + 1;
 
     // Finally, return the newly allocated frame num
-    return cur_num;
+    return current_frame_num;
 }

@@ -42,9 +42,13 @@ void kmain(unsigned long magic, unsigned long addr)
     multiboot_tag_mmap_t *mmap = find_multiboot_tag(addr, MULTIBOOT_TAG_TYPE_MMAP);
     mmap_init(mmap, addr, (addr + *(unsigned *) addr));
 
-    uint32_t new_frame = mmap_allocate_frame();
-    uint32_t new_frame_addr = mmap_read(new_frame, MMAP_GET_ADDR);
-    printf("New frame allocated at: 0x%x\n", new_frame_addr);
+    uint32_t f1 = mmap_allocate_frame();
+    physical_address_t f1_addr = mmap_read(f1, MMAP_GET_ADDR);
+    printf("New frame allocated at: 0x%x\n", f1_addr);
+
+    uint32_t f2 = mmap_allocate_frame();
+    physical_address_t f2_addr = mmap_read(f2, MMAP_GET_ADDR);
+    printf("New frame allocated at: 0x%x\n", f2_addr);
 
     while (1) {
         __asm__("hlt");

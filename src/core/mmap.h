@@ -10,7 +10,8 @@
 typedef uint64_t physical_address_t;
 
 void mmap_init(multiboot_tag_mmap_t *mmap, physical_address_t mb_start, physical_address_t mb_end);
-physical_address_t mmap_read(physical_address_t request, uint8_t mode);
-physical_address_t mmap_allocate_frame();
+uint32_t mmap_allocate_frame();
+physical_address_t mmap_read(uint32_t request, uint8_t mode);
+
 
 #endif
