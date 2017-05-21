@@ -33,6 +33,9 @@
 #define MULTIBOOT_TAG_TYPE_EFI64_IH          20
 #define MULTIBOOT_TAG_TYPE_LOAD_BASE_ADDR    21
 
+#define MULTIBOOT_MEMORY_AVAILABLE  1
+#define MULTIBOOT_MEMORY_RESERVED   2
+
 typedef struct multiboot_header
 {
     uint32_t magic;
