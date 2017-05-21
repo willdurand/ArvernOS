@@ -36,6 +36,7 @@ void kmain(unsigned long magic, unsigned long addr)
 
     keyboard_init();
 
+    // this is needed to compute the values after
     dump_multiboot_info(addr);
 
     uint64_t mb_start = get_multiboot_start();
@@ -46,17 +47,9 @@ void kmain(unsigned long magic, unsigned long addr)
     DEBUG("multiboot_start = 0x%X, multiboot_end = 0x%X", mb_start, mb_end);
     DEBUG("kernel_start = 0x%X, kernel_end = 0x%X", k_start, k_end);
 
-    // mmap
+    // memory
     multiboot_tag_mmap_t *mmap = find_multiboot_tag(addr, MULTIBOOT_TAG_TYPE_MMAP);
     mmap_init(mmap, k_start, k_end, addr, (addr + *(unsigned *) addr));
-
-    uint32_t f1 = mmap_allocate_frame();
-    physical_address_t f1_addr = mmap_read(f1, MMAP_GET_ADDR);
-    printf("New frame allocated at: 0x%x\n", f1_addr);
-
-    uint32_t f2 = mmap_allocate_frame();
-    physical_address_t f2_addr = mmap_read(f2, MMAP_GET_ADDR);
-    printf("New frame allocated at: 0x%x\n", f2_addr);
 
     while (1) {
         __asm__("hlt");
