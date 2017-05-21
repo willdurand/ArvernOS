@@ -36,6 +36,8 @@
 #define MULTIBOOT_MEMORY_AVAILABLE  1
 #define MULTIBOOT_MEMORY_RESERVED   2
 
+#define MULTIBOOT_ELF_SECTION_TYPE_NULL 0
+
 typedef struct multiboot_header
 {
     uint32_t magic;

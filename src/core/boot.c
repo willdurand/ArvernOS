@@ -22,7 +22,10 @@ void dump_multiboot_info(unsigned long addr)
     multiboot_tag_t *tag;
     unsigned size = *(unsigned *) addr;
 
-    DEBUG("Announced MBI size 0x%x\n", size);
+    uint64_t kernel_start = -1;
+    uint64_t kernel_end = 0;
+
+    DEBUG("announced MBI size 0x%x\n", size);
 
     for (
         tag = (multiboot_tag_t *) (addr + 8);
@@ -94,24 +97,35 @@ void dump_multiboot_info(unsigned long addr)
                 {
                     multiboot_elf_sections_entry_t *elf;
 
-                    int i;
+                    uint32_t i;
                     for (
                         i = 0,
                         elf = ((multiboot_tag_elf_sections_t *) tag)->sections;
-                        (uint8_t *) elf < (uint8_t *) tag + tag->size;
-                        elf = (multiboot_elf_sections_entry_t *) ((unsigned long) elf + ((multiboot_tag_elf_sections_t *) tag)->section_size),
+                        i < ((multiboot_tag_elf_sections_t *) tag)->num;
+                        elf = (multiboot_elf_sections_entry_t *) ((uint64_t) elf + ((multiboot_tag_elf_sections_t *) tag)->section_size),
                         i++
                     ) {
                         DEBUG(
-                            "elf section #%d addr = 0x%x%x, type = 0x%x, size = 0x%x%x, flags = 0x%x\n",
+                            "elf section #%d addr = 0x%x, type = 0x%X, size = 0x%x, flags = 0x%X\n",
                             i,
                             (unsigned) (elf->addr >> 32),
-                            (unsigned) (elf->addr & 0xffffffff),
                             elf->type,
                             (unsigned) (elf->size >> 32),
-                            (unsigned) (elf->size & 0xffffffff),
                             elf->flags
                         );
+
+                        if (elf->type == MULTIBOOT_ELF_SECTION_TYPE_NULL) {
+                            continue;
+                        }
+
+                        if (((uint64_t) (elf->addr)) < kernel_start) {
+                            kernel_start = (uint64_t) elf->addr;
+                        }
+
+                        if (((uint64_t) (elf->addr)) + elf->size > kernel_end) {
+                            kernel_end = (uint64_t) elf->addr;
+                            kernel_end += elf->size;
+                        }
                     }
                 }
                 break;
@@ -128,5 +142,8 @@ void dump_multiboot_info(unsigned long addr)
     }
 
     tag = (multiboot_tag_t *) ((uint8_t *) tag + ((tag->size + 7) & ~7));
-    DEBUG("Total MBI size 0x%x\n", (unsigned long) tag - addr);
+    DEBUG("total MBI size 0x%x\n", (unsigned long) tag - addr);
+
+    DEBUG("kernel start = 0x%x, kernel end = 0x%x\n", (kernel_start >> 32), (kernel_end >> 32));
+    DEBUG("multiboot start = 0x%x, multiboot end = 0x%x\n", addr, tag);
 }
