@@ -7,8 +7,6 @@ section .text
 bits 32
 start:
 	mov esp, stack_top
-	; pass magix
-
 	; `ebx` points to a boot information structure.
 	; We move it to `esi` to pass it to our kernel.
 	mov esi, ebx
@@ -162,6 +160,7 @@ p3_table:
 p2_table:
     resb 4096
 ; cf. http://os.phil-opp.com/allocating-frames.html
+; the stack now has 16kB (four pages)
 stack_bottom:
     resb 4096 * 4
 stack_top:
