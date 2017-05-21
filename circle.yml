@@ -1,0 +1,12 @@
+dependencies:
+  pre:
+    - sudo apt-get update; sudo apt-get install nasm grub2 xorriso build-essential
+
+compile:
+  override:
+    - make
+
+test:
+  override:
+    - test -f isofiles/boot/kernel.bin
+    - test -f os.iso
