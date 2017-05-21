@@ -6,6 +6,7 @@ uint64_t p4_index(frame_t frame);
 uint64_t p3_index(frame_t frame);
 uint64_t p2_index(frame_t frame);
 uint64_t p1_index(frame_t frame);
+frame_t pointed_frame(page_entry_t entry);
 void set_addr_mask(page_entry_t *entry, uint64_t addr);
 page_table_t next_table_create(page_table_t in, uint64_t index);
 
@@ -13,18 +14,18 @@ void paging_init()
 {
 }
 
-page_t containing_address(uint64_t addr)
+page_t page_containing_address(uint64_t addr)
 {
     return addr / PAGE_SIZE;
 }
 
-page_table_t pointed_frame(page_entry_t entry)
+frame_t pointed_frame(page_entry_t entry)
 {
     if (entry.present) {
         uint64_t e = entry.packed;
         e &= 0x000ffffffffff000;
 
-        return (page_table_t) e;
+        return frame_containing_address(e);
     }
 
     return 0;
@@ -48,13 +49,13 @@ page_table_t next_table_address(page_table_t table, uint32_t index)
 
 physical_address_t translate(virtual_address_t addr)
 {
-    page_t virt = containing_address(addr);
+    page_t virt = page_containing_address(addr);
     uint64_t offset = virt % PAGE_SIZE;
 
-    return (physical_address_t) (starting_address(translate_page(virt)) + offset);
+    return (physical_address_t) (starting_address((uint64_t) translate_page(virt)) + offset);
 }
 
-page_table_t translate_page(page_t page)
+frame_t translate_page(page_t page)
 {
     page_table_t p3 = next_table_address((page_table_t)P4_TABLE, p4_index(page));
     if (!p3) {

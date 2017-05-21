@@ -28,8 +28,8 @@ typedef union page_entry {
 typedef page_entry_t* page_table_t;
 
 void paging_init();
-page_t containing_address(uint64_t addr);
-page_table_t translate_page(page_t page);
-page_table_t next_table_create(page_table_t table, uint64_t index);
+page_t page_containing_address(uint64_t addr);
+frame_t translate_page(page_t page);
+void map_page_to_frame(page_t page, frame_t frame, uint8_t flags);
 
 #endif

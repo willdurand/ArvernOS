@@ -111,3 +111,8 @@ frame_t mmap_allocate_frame()
     // Finally, return the newly allocated frame num
     return current_frame_num;
 }
+
+frame_t frame_containing_address(uint64_t addr)
+{
+    return addr / PAGE_SIZE;
+}

@@ -52,11 +52,12 @@ void kmain(unsigned long magic, unsigned long addr)
     paging_init();
 
     physical_address_t a = 42 * 512 * 512 * 4096;
-    page_t page = containing_address(a);
+    page_t page = page_containing_address(a);
+    frame_t frame = translate_page(page);
 
     DEBUG("containing_address = 0x%X", page);
-    DEBUG("translate_page = 0x%X", translate_page(page));
-    map_page_to_frame(page, translate_page(page), 0U);
+    DEBUG("translate_page = 0x%X", frame);
+    map_page_to_frame(page, frame, 0x0);
 
     while (1) {
         __asm__("hlt");
