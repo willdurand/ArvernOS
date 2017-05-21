@@ -91,10 +91,29 @@ void dump_multiboot_info(unsigned long addr)
                 DEBUG("%s\n", "acpi new");
                 break;
             case MULTIBOOT_TAG_TYPE_ELF_SECTIONS:
-                DEBUG(
-                    "elf sections number = %d\n",
-                    ((multiboot_tag_elf_sections_t *) tag)->num
-                );
+                {
+                    multiboot_elf_sections_entry_t *elf;
+
+                    int i;
+                    for (
+                        i = 0,
+                        elf = ((multiboot_tag_elf_sections_t *) tag)->sections;
+                        (uint8_t *) elf < (uint8_t *) tag + tag->size;
+                        elf = (multiboot_elf_sections_entry_t *) ((unsigned long) elf + ((multiboot_tag_elf_sections_t *) tag)->section_size),
+                        i++
+                    ) {
+                        DEBUG(
+                            "elf section #%d addr = 0x%x%x, type = 0x%x, size = 0x%x%x, flags = 0x%x\n",
+                            i,
+                            (unsigned) (elf->addr >> 32),
+                            (unsigned) (elf->addr & 0xffffffff),
+                            elf->type,
+                            (unsigned) (elf->size >> 32),
+                            (unsigned) (elf->size & 0xffffffff),
+                            elf->flags
+                        );
+                    }
+                }
                 break;
             case MULTIBOOT_TAG_TYPE_NETWORK:
                 DEBUG("%s\n", "network");

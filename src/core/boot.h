@@ -106,13 +106,25 @@ typedef struct multiboot_tag_network {
     uint8_t dhcpack[];
 } multiboot_tag_network_t;
 
+typedef struct multiboot_elf_sections_entry {
+    uint32_t type;
+    uint32_t flags;
+    uint64_t addr;
+    uint64_t offset;
+    uint64_t size;
+    uint32_t link;
+    uint32_t info;
+    uint64_t alignment;
+    uint64_t entry_size;
+} multiboot_elf_sections_entry_t;
+
 typedef struct multiboot_tag_elf_sections {
     uint32_t type;
     uint32_t size;
     uint32_t num;
-    uint32_t entsize;
+    uint32_t section_size;
     uint32_t shndx;
-    char sections[];
+    multiboot_elf_sections_entry_t sections[];
 } multiboot_tag_elf_sections_t;
 
 int multiboot_is_valid(unsigned long magic, unsigned long addr);

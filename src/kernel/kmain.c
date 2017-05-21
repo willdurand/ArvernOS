@@ -5,6 +5,7 @@
 #include <drivers/serial.h>
 #include <drivers/keyboard.h>
 #include <stdio.h>
+#include <stdint.h>
 #include "kmain.h"
 
 #define CHECK_FLAG(flags, bit) ((flags) & (1 << (bit)))
