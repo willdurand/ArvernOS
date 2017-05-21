@@ -61,11 +61,11 @@ void dump_multiboot_info(unsigned long addr)
                 break;
             case MULTIBOOT_TAG_TYPE_MMAP:
                 {
-                    multiboot_memory_map_t *mmap;
+                    multiboot_mmap_entry_t *mmap;
                     for (
                         mmap = ((multiboot_tag_mmap_t *) tag)->entries;
                         (uint8_t *) mmap < (uint8_t *) tag + tag->size;
-                        mmap = (multiboot_memory_map_t *) ((unsigned long) mmap + ((multiboot_tag_mmap_t *) tag)->entry_size)
+                        mmap = (multiboot_mmap_entry_t *) ((unsigned long) mmap + ((multiboot_tag_mmap_t *) tag)->entry_size)
                     ) {
                         DEBUG(
                             "mmap base_addr = 0x%x%x, length = 0x%x%x, type = 0x%x\n",

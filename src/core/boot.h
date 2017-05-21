@@ -92,8 +92,6 @@ typedef struct multiboot_mmap_entry {
     uint32_t zero;
 } multiboot_mmap_entry_t;
 
-typedef multiboot_mmap_entry_t multiboot_memory_map_t;
-
 typedef struct multiboot_tag_mmap {
     uint32_t type;
     uint32_t size;
