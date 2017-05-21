@@ -131,5 +131,6 @@ typedef struct multiboot_tag_elf_sections {
 
 int multiboot_is_valid(unsigned long magic, unsigned long addr);
 void dump_multiboot_info(unsigned long addr);
+void* find_multiboot_tag(unsigned long addr, uint16_t type);
 
 #endif

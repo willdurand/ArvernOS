@@ -17,6 +17,23 @@ int multiboot_is_valid(unsigned long magic, unsigned long addr)
     return 0;
 }
 
+void* find_multiboot_tag(unsigned long addr, uint16_t type)
+{
+    multiboot_tag_t *tag;
+
+    for (
+        tag = (multiboot_tag_t *) (addr + 8);
+        tag->type != MULTIBOOT_TAG_TYPE_END;
+        tag = (multiboot_tag_t *) ((uint8_t *) tag + ((tag->size + 7) & ~7))
+    ) {
+        if (tag->type == type) {
+            return tag;
+        }
+    }
+
+    return 0;
+}
+
 void dump_multiboot_info(unsigned long addr)
 {
     multiboot_tag_t *tag;

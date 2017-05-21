@@ -1,6 +1,7 @@
 #include <core/isr.h>
 #include <core/timer.h>
 #include <core/debug.h>
+#include <core/mmap.h>
 #include <drivers/screen.h>
 #include <drivers/serial.h>
 #include <drivers/keyboard.h>
@@ -36,6 +37,14 @@ void kmain(unsigned long magic, unsigned long addr)
     keyboard_init();
 
     dump_multiboot_info(addr);
+
+    // mmap
+    multiboot_tag_mmap_t *mmap = find_multiboot_tag(addr, MULTIBOOT_TAG_TYPE_MMAP);
+    mmap_init(mmap, addr, (addr + *(unsigned *) addr));
+
+    uint32_t new_frame = mmap_allocate_frame();
+    uint32_t new_frame_addr = mmap_read(new_frame, MMAP_GET_ADDR);
+    printf("New frame allocated at: 0x%x\n", new_frame_addr);
 
     while (1) {
         __asm__("hlt");
