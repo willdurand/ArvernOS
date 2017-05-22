@@ -1,7 +1,7 @@
-#include <core/ports.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include "isr.h"
+#include <core/ports.h>
+#include <kernel/panic.h>
+#include <stdlib.h>
 
 isr_t interrupt_handlers[256];
 
@@ -112,13 +112,15 @@ void irq_init()
     __asm__("sti");
 }
 
+void irq_disable()
+{
+    __asm__("cli");
+}
+
 void isr_handler(uint64_t id, uint64_t stack)
 {
-    printf("Received interrupt: %d - %s\n", id, exception_messages[id]);
-
     UNUSED(stack);
-
-    __asm__("hlt");
+    PANIC("Received interrupt: %d - %s\n", id, exception_messages[id]);
 }
 
 void irq_handler(uint64_t id, uint64_t stack)

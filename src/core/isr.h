@@ -61,6 +61,7 @@ typedef void (*isr_t) (uint64_t stack);
 
 void isr_init();
 void irq_init();
+void irq_disable();
 void isr_handler(uint64_t id, uint64_t stack) __asm__("isr_handler");
 void irq_handler(uint64_t id, uint64_t stack) __asm__("irq_handler");
 void register_interrupt_handler(uint64_t id, isr_t handler);
