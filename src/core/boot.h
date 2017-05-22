@@ -130,12 +130,15 @@ typedef struct multiboot_tag_elf_sections {
     multiboot_elf_sections_entry_t sections[];
 } multiboot_tag_elf_sections_t;
 
+typedef struct reserved_areas {
+    uint64_t kernel_start;
+    uint64_t kernel_end;
+    uint64_t multiboot_start;
+    uint64_t multiboot_end;
+} reserved_areas_t;
+
 int multiboot_is_valid(unsigned long magic, unsigned long addr);
-void dump_multiboot_info(unsigned long addr);
 void* find_multiboot_tag(unsigned long addr, uint16_t type);
-uint64_t get_kernel_start();
-uint64_t get_kernel_end();
-uint64_t get_multiboot_start();
-uint64_t get_multiboot_end();
+reserved_areas_t read_multiboot_info(unsigned long addr);
 
 #endif

@@ -3,30 +3,26 @@
 #include <core/debug.h>
 
 multiboot_tag_mmap_t *memory_area;
-physical_address_t kernel_reserved_start;
-physical_address_t kernel_reserved_end;
-physical_address_t multiboot_reserved_start;
-physical_address_t multiboot_reserved_end;
+physical_address_t kernel_start;
+physical_address_t kernel_end;
+physical_address_t multiboot_start;
+physical_address_t multiboot_end;
 frame_t next_free_frame;
 
-void mmap_init(
-    multiboot_tag_mmap_t *mmap,
-    const physical_address_t kernel_start, const physical_address_t kernel_end,
-    const physical_address_t mb_start, const physical_address_t mb_end
-) {
+void mmap_init(multiboot_tag_mmap_t *mmap, reserved_areas_t reserved) {
     memory_area = mmap;
-    kernel_reserved_start = kernel_start;
-    kernel_reserved_end = kernel_end;
-    multiboot_reserved_start = mb_start;
-    multiboot_reserved_end = mb_end;
+    kernel_start = reserved.kernel_start;
+    kernel_end = reserved.kernel_end;
+    multiboot_start = reserved.multiboot_start;
+    multiboot_end = reserved.multiboot_end;
     next_free_frame = 1;
 
     DEBUG(
-        "Initialized MMAP with memory_area = 0x%x, multiboot_reserved_start = 0x%x, "
-        "multiboot_reserved_end = 0x%x, next_free_frame = %d",
+        "Initialized MMAP with memory_area = 0x%x, multiboot_start = 0x%x, "
+        "multiboot_end = 0x%x, next_free_frame = %d",
         memory_area,
-        multiboot_reserved_start,
-        multiboot_reserved_end,
+        multiboot_start,
+        multiboot_end,
         next_free_frame
     );
 }
@@ -90,8 +86,8 @@ frame_t mmap_allocate_frame()
     // Verify that the frame is not in the reserved areas. If it is, increment
     // the next free frame number and recursively call back.
     if (
-        (current_addr >= multiboot_reserved_start && current_addr <= multiboot_reserved_end) ||
-        (current_addr >= kernel_reserved_start && current_addr <= kernel_reserved_end)
+        (current_addr >= multiboot_start && current_addr <= multiboot_end) ||
+        (current_addr >= kernel_start && current_addr <= kernel_end)
     ) {
         next_free_frame++;
 

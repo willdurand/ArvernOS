@@ -2,11 +2,6 @@
 #include <stdio.h>
 #include <core/debug.h>
 
-uint64_t kernel_start = -1;
-uint64_t kernel_end = 0;
-uint64_t multiboot_start;
-uint64_t multiboot_end;
-
 int multiboot_is_valid(unsigned long magic, unsigned long addr)
 {
     if (magic != MULTIBOOT2_MAGIC_VALUE) {
@@ -39,32 +34,18 @@ void* find_multiboot_tag(unsigned long addr, uint16_t type)
     return 0;
 }
 
-uint64_t get_kernel_start()
-{
-    return kernel_start;
-}
-
-uint64_t get_kernel_end()
-{
-    return kernel_end;
-}
-
-uint64_t get_multiboot_start()
-{
-    return multiboot_start;
-}
-
-uint64_t get_multiboot_end()
-{
-    return multiboot_end;
-}
-
-void dump_multiboot_info(unsigned long addr)
+reserved_areas_t read_multiboot_info(unsigned long addr)
 {
     multiboot_tag_t *tag;
     unsigned size = *(unsigned *) addr;
 
-    multiboot_start = (uint64_t) addr;
+    reserved_areas_t reserved = {
+        .kernel_start = -1,
+        .kernel_end = 0,
+        .multiboot_start = (uint64_t) addr,
+        .multiboot_end = 0
+    };
+
     DEBUG("announced MBI size 0x%x", size);
 
     for (
@@ -156,13 +137,13 @@ void dump_multiboot_info(unsigned long addr)
                             continue;
                         }
 
-                        if (((uint64_t) (elf->addr)) < kernel_start) {
-                            kernel_start = (uint64_t) elf->addr;
+                        if (((uint64_t) (elf->addr)) < reserved.kernel_start) {
+                            reserved.kernel_start = (uint64_t) elf->addr;
                         }
 
-                        if (((uint64_t) (elf->addr)) + elf->size > kernel_end) {
-                            kernel_end = (uint64_t) elf->addr;
-                            kernel_end += elf->size;
+                        if (((uint64_t) (elf->addr)) + elf->size > reserved.kernel_end) {
+                            reserved.kernel_end = (uint64_t) elf->addr;
+                            reserved.kernel_end += elf->size;
                         }
                     }
                 }
@@ -182,5 +163,7 @@ void dump_multiboot_info(unsigned long addr)
     tag = (multiboot_tag_t *) ((uint8_t *) tag + ((tag->size + 7) & ~7));
     DEBUG("total MBI size 0x%x", (unsigned long) tag - addr);
 
-    multiboot_end = (uint64_t) tag;
+    reserved.multiboot_end = (uint64_t) tag;
+
+    return reserved;
 }

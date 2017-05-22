@@ -8,7 +8,13 @@
                         "\\^/ |  |  | \\_/__)\n"
 
 #define KERNEL_NAME    "willOS"
+
+#ifdef ENABLE_KERNEL_DEBUG
+#define KERNEL_VERSION "DEBUG MODE"
+#else
 #define KERNEL_VERSION "0.0.1"
+#endif
+
 #define KERNEL_DATE     __DATE__
 #define KERNEL_TIME     __TIME__
 
