@@ -4,10 +4,10 @@
 #include <stdint.h>
 
 /* The magic field should contain this. */
-#define MULTIBOOT2_HEADER_MAGIC			0xe85250d6
+#define MULTIBOOT2_MAGIC_NUMBER			    0xe85250d6
 
 /* This should be in %eax. */
-#define MULTIBOOT2_BOOTLOADER_MAGIC		0x36d76289
+#define MULTIBOOT2_MAGIC_VALUE              0x36d76289
 
 /* Flags set in the 'flags' member of the multiboot header.  */
 #define MULTIBOOT_TAG_TYPE_END               0

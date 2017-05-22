@@ -3,6 +3,8 @@
 global start
 extern long_mode_start
 
+%define MULTIBOOT2_MAGIC_VALUE 0x36d76289
+
 section .text
 bits 32
 start:
@@ -28,7 +30,7 @@ start:
     hlt
 
 check_multiboot:
-	cmp eax, 0x36d76289
+	cmp eax, MULTIBOOT2_MAGIC_VALUE
 	jne .no_multiboot
 	ret
 .no_multiboot:
