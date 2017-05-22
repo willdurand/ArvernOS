@@ -3,6 +3,8 @@
 
 #include <stdint.h>
 
+// cf. https://www.uclibc.org/docs/elf-64-gen.pdf
+
 /* The magic field should contain this. */
 #define MULTIBOOT2_MAGIC_NUMBER			    0xe85250d6
 
