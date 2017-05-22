@@ -58,6 +58,10 @@ run: $(ISO)
 	qemu-system-x86_64 -cdrom $<
 .PHONY: run
 
+run-i386: $(ISO)
+	qemu-system-i386 -cdrom $<
+.PHONY: run-i386
+
 debug: CFLAGS += -DENABLE_KERNEL_DEBUG
 debug: $(ISO)
 	qemu-system-x86_64 -cdrom $< -serial file:/tmp/serial.log
