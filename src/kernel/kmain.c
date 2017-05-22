@@ -1,13 +1,11 @@
 #include <core/isr.h>
 #include <core/timer.h>
 #include <core/debug.h>
-#include <mmu/mmap.h>
-#include <mmu/paging.h>
+#include <mmu/mmu.h>
 #include <drivers/screen.h>
 #include <drivers/serial.h>
 #include <drivers/keyboard.h>
 #include <stdio.h>
-#include <stdint.h>
 #include "kmain.h"
 
 void kmain(unsigned long magic, unsigned long addr)
@@ -46,8 +44,7 @@ void kmain(unsigned long magic, unsigned long addr)
 
     // memory
     multiboot_tag_mmap_t *mmap = find_multiboot_tag(mbi->tags, MULTIBOOT_TAG_TYPE_MMAP);
-    mmap_init(mmap, reserved);
-    paging_init();
+    mmu_init(mmap, reserved);
     printf("- frame allocator and paging enabled\n");
 
     printf("- system ready, welcome!\n\n$ ");
