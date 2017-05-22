@@ -114,7 +114,7 @@ void irq_init()
 
 void isr_handler(uint64_t id, uint64_t stack)
 {
-    printf("Received interrupt: %d\n%s\n", id, exception_messages[id]);
+    printf("Received interrupt: %d - %s\n", id, exception_messages[id]);
 
     UNUSED(stack);
 

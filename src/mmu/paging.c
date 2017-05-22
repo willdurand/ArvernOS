@@ -9,7 +9,6 @@ uint64_t p1_index(frame_t frame);
 frame_t pointed_frame(page_entry_t entry);
 void set_addr_mask(page_entry_t *entry, uint64_t addr);
 page_table_t next_table_create(page_table_t in, uint64_t index);
-uint64_t page_starting_address(page_t page);
 page_table_t next_table_address(page_table_t table, uint32_t index);
 
 void paging_init()
@@ -56,14 +55,13 @@ frame_t translate_page(page_t page)
 void map_page_to_frame(page_t page, frame_t frame, uint8_t flags)
 {
     page_table_t p3 = next_table_create((page_table_t)P4_TABLE, p4_index(page));
-
     DEBUG("p3 = 0x%X", p3);
 
     page_table_t p2 = next_table_create((page_table_t)p3, p3_index(page));
-
     DEBUG("p2 = 0x%X", p2);
 
     page_table_t p1 = next_table_create((page_table_t)p2, p2_index(page));
+    DEBUG("p1 = 0x%X", p1);
 
     set_addr_mask(&p1[p1_index(page)], frame);
     p1[p1_index(page)].packed = flags;
@@ -81,6 +79,41 @@ void map(page_t page, uint8_t flags)
     frame_t frame = mmap_allocate_frame();
     map_page_to_frame(page, frame, flags);
 }
+
+void unmap(page_t page)
+{
+    page_table_t p3 = next_table_address((page_table_t)P4_TABLE, p4_index(page));
+    page_table_t p2 = next_table_address(p3, p3_index(page));
+    page_table_t p1 = next_table_address(p2, p2_index(page));
+
+    // TODO: free p(1,2,3) table if empty
+
+    page_entry_t entry = p1[p1_index(page)];
+
+    if (!entry.present) {
+        DEBUG("%s", "ERROR");
+        return;
+    }
+
+    p1[p1_index(page)].present = 0;
+    mmap_deallocate_frame(pointed_frame(entry));
+
+    // flush the translation lookaside buffer
+    // cf. http://os.phil-opp.com/modifying-page-tables.html#unmap
+    __asm__("invlpg (%0)" ::"r" (page_starting_address(page)) : "memory");
+}
+
+/*
+let p1 = self.p4_mut()
+                 .next_table_mut(page.p4_index())
+                 .and_then(|p3| p3.next_table_mut(page.p3_index()))
+                 .and_then(|p2| p2.next_table_mut(page.p2_index()))
+                 .expect("mapping code does not support huge pages");
+    let frame = p1[page.p1_index()].pointed_frame().unwrap();
+    p1[page.p1_index()].set_unused();
+    // TODO free p(1,2,3) table if empty
+    allocator.deallocate_frame(frame);
+    */
 
 void set_addr_mask(page_entry_t *entry, uint64_t addr)
 {

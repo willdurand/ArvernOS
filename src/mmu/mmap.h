@@ -14,5 +14,6 @@ frame_t mmap_allocate_frame();
 physical_address_t mmap_read(uint32_t request, uint8_t mode);
 frame_t frame_containing_address(uint64_t addr);
 uint64_t frame_starting_address(frame_t frame);
+void mmap_deallocate_frame(frame_t frame);
 
 #endif

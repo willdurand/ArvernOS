@@ -51,14 +51,6 @@ void kmain(unsigned long magic, unsigned long addr)
     mmap_init(mmap, k_start, k_end, addr, (addr + *(unsigned *) addr));
     paging_init();
 
-    physical_address_t a = 42 * 512 * 512 * 4096;
-    page_t page = page_containing_address(a);
-    frame_t frame = translate_page(page);
-
-    DEBUG("containing_address = 0x%X", page);
-    DEBUG("translate_page = 0x%X", frame);
-    map_page_to_frame(page, frame, 0x0);
-
     while (1) {
         __asm__("hlt");
     }

@@ -98,8 +98,6 @@ frame_t mmap_allocate_frame()
         return mmap_allocate_frame();
     }
 
-    // TODO: add check for kernel reserved area
-
     // Call mmap_read again to get the frame number for our address
     frame_t current_frame_num = mmap_read(current_addr, MMAP_GET_NUM);
 
@@ -120,4 +118,13 @@ frame_t frame_containing_address(uint64_t addr)
 uint64_t frame_starting_address(frame_t frame)
 {
     return frame * PAGE_SIZE;
+}
+
+void mmap_deallocate_frame(frame_t frame)
+{
+    uint64_t addr = frame_starting_address(frame);
+
+    for (int i = 0; i < PAGE_SIZE; i++) {
+        ((uint64_t *)addr)[i] = 0;
+    }
 }
