@@ -8,5 +8,5 @@ compile:
 
 test:
   override:
-    - test -f isofiles/boot/kernel.bin
-    - test -f os.iso
+    - test -f build/isofiles/boot/kernel.bin
+    - test -f build/willOS.iso
