@@ -20,7 +20,8 @@ void kmain(unsigned long magic, unsigned long addr)
         return;
     }
 
-    reserved_areas_t reserved = read_multiboot_info(addr);
+    multiboot_info_t *mbi = (multiboot_info_t*) addr;
+    reserved_areas_t reserved = read_multiboot_info(mbi);
 
     printf("%s\n", KERNEL_ASCII);
     printf("%s %s / Built on: %s at %s\n\n", KERNEL_NAME, KERNEL_VERSION, KERNEL_DATE, KERNEL_TIME);
@@ -44,7 +45,7 @@ void kmain(unsigned long magic, unsigned long addr)
     printf("- keyboard routine enabled\n");
 
     // memory
-    multiboot_tag_mmap_t *mmap = find_multiboot_tag(addr, MULTIBOOT_TAG_TYPE_MMAP);
+    multiboot_tag_mmap_t *mmap = find_multiboot_tag(mbi->tags, MULTIBOOT_TAG_TYPE_MMAP);
     mmap_init(mmap, reserved);
     paging_init();
     printf("- frame allocator and paging enabled\n");

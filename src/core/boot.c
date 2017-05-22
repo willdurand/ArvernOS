@@ -17,12 +17,12 @@ int multiboot_is_valid(unsigned long magic, unsigned long addr)
     return 0;
 }
 
-void* find_multiboot_tag(unsigned long addr, uint16_t type)
+void* find_multiboot_tag(multiboot_tag_t *tags, uint16_t type)
 {
     multiboot_tag_t *tag;
 
     for (
-        tag = (multiboot_tag_t *) (addr + 8);
+        tag = tags; // points to the first tag of the multiboot_info_t struct
         tag->type != MULTIBOOT_TAG_TYPE_END;
         tag = (multiboot_tag_t *) ((uint8_t *) tag + ((tag->size + 7) & ~7))
     ) {
@@ -34,22 +34,20 @@ void* find_multiboot_tag(unsigned long addr, uint16_t type)
     return 0;
 }
 
-reserved_areas_t read_multiboot_info(unsigned long addr)
+reserved_areas_t read_multiboot_info(multiboot_info_t *mbi)
 {
     multiboot_tag_t *tag;
-    unsigned size = *(unsigned *) addr;
-
     reserved_areas_t reserved = {
         .kernel_start = -1,
         .kernel_end = 0,
-        .multiboot_start = (uint64_t) addr,
+        .multiboot_start = (uint64_t) mbi,
         .multiboot_end = 0
     };
 
-    DEBUG("announced MBI size 0x%x", size);
+    DEBUG("announced MBI size 0x%x", mbi->size);
 
     for (
-        tag = (multiboot_tag_t *) (addr + 8);
+        tag = (multiboot_tag_t *) mbi->tags;
         tag->type != MULTIBOOT_TAG_TYPE_END;
         tag = (multiboot_tag_t *) ((uint8_t *) tag + ((tag->size + 7) & ~7))
     ) {
@@ -161,9 +159,9 @@ reserved_areas_t read_multiboot_info(unsigned long addr)
     }
 
     tag = (multiboot_tag_t *) ((uint8_t *) tag + ((tag->size + 7) & ~7));
-    DEBUG("total MBI size 0x%x", (unsigned long) tag - addr);
-
     reserved.multiboot_end = (uint64_t) tag;
+
+    DEBUG("total MBI size 0x%X", (uint64_t) tag - (uint64_t) mbi);
 
     return reserved;
 }

@@ -38,25 +38,19 @@
 
 #define MULTIBOOT_ELF_SECTION_TYPE_NULL 0
 
-typedef struct multiboot_header
-{
-    uint32_t magic;
-    uint32_t architecture;
-    uint32_t header_length;
-    uint32_t checksum;
-    // tags?
-} __attribute__((packed)) multiboot_header_t;
-
-typedef struct multiboot_header_tag {
-  uint16_t type;
-  uint16_t flags;
-  uint32_t size;
-} __attribute__((packed)) multiboot_header_tag_t;
-
 typedef struct multiboot_tag {
     uint32_t type;
     uint32_t size;
+    // other fieds
 } __attribute__((packed)) multiboot_tag_t;
+
+typedef struct multiboot_info
+{
+    uint32_t size;
+    uint32_t reserved;
+    multiboot_tag_t tags[];
+    // end tags
+} __attribute__((packed)) multiboot_info_t;
 
 typedef struct multiboot_tag_string {
     uint32_t type;
@@ -102,12 +96,6 @@ typedef struct multiboot_tag_mmap {
     multiboot_mmap_entry_t entries[];
 } __attribute__((packed)) multiboot_tag_mmap_t;
 
-typedef struct multiboot_tag_network {
-    uint32_t type;
-    uint32_t size;
-    uint8_t dhcpack[];
-} __attribute__((packed)) multiboot_tag_network_t;
-
 typedef struct multiboot_elf_sections_entry {
     uint32_t name;
     uint32_t type;
@@ -138,7 +126,7 @@ typedef struct reserved_areas {
 } reserved_areas_t;
 
 int multiboot_is_valid(unsigned long magic, unsigned long addr);
-void* find_multiboot_tag(unsigned long addr, uint16_t type);
-reserved_areas_t read_multiboot_info(unsigned long addr);
+void* find_multiboot_tag(multiboot_tag_t *tags, uint16_t type);
+reserved_areas_t read_multiboot_info(multiboot_info_t *mbi);
 
 #endif
