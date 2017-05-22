@@ -45,31 +45,31 @@ typedef struct multiboot_header
     uint32_t header_length;
     uint32_t checksum;
     // tags?
-} multiboot_header_t;
+} __attribute__((packed)) multiboot_header_t;
 
 typedef struct multiboot_header_tag {
   uint16_t type;
   uint16_t flags;
   uint32_t size;
-} multiboot_header_tag_t;
+} __attribute__((packed)) multiboot_header_tag_t;
 
 typedef struct multiboot_tag {
     uint32_t type;
     uint32_t size;
-} multiboot_tag_t;
+} __attribute__((packed)) multiboot_tag_t;
 
 typedef struct multiboot_tag_string {
     uint32_t type;
     uint32_t size;
     char string[];
-} multiboot_tag_string_t;
+} __attribute__((packed)) multiboot_tag_string_t;
 
 typedef struct multiboot_tag_basic_meminfo {
     uint32_t type;
     uint32_t size;
     uint32_t mem_lower;
     uint32_t mem_upper;
-} multiboot_tag_basic_meminfo_t;
+} __attribute__((packed)) multiboot_tag_basic_meminfo_t;
 
 typedef struct multiboot_tag_bootdev {
     uint32_t type;
@@ -77,7 +77,7 @@ typedef struct multiboot_tag_bootdev {
     uint32_t biosdev;
     uint32_t slice;
     uint32_t part;
-} multiboot_tag_bootdev_t;
+} __attribute__((packed)) multiboot_tag_bootdev_t;
 
 typedef struct multiboot_tag_module {
     uint32_t type;
@@ -85,7 +85,7 @@ typedef struct multiboot_tag_module {
     uint32_t mod_start;
     uint32_t mod_end;
     char cmdline[];
-} multiboot_tag_module_t;
+} __attribute__((packed)) multiboot_tag_module_t;
 
 typedef struct multiboot_mmap_entry {
     uint64_t addr;
@@ -100,13 +100,13 @@ typedef struct multiboot_tag_mmap {
     uint32_t entry_size;
     uint32_t entry_version;
     multiboot_mmap_entry_t entries[];
-} multiboot_tag_mmap_t;
+} __attribute__((packed)) multiboot_tag_mmap_t;
 
 typedef struct multiboot_tag_network {
     uint32_t type;
     uint32_t size;
     uint8_t dhcpack[];
-} multiboot_tag_network_t;
+} __attribute__((packed)) multiboot_tag_network_t;
 
 typedef struct multiboot_elf_sections_entry {
     uint32_t name;
@@ -128,7 +128,7 @@ typedef struct multiboot_tag_elf_sections {
     uint32_t section_size;
     uint32_t shndx;
     multiboot_elf_sections_entry_t sections[];
-} multiboot_tag_elf_sections_t;
+} __attribute__((packed)) multiboot_tag_elf_sections_t;
 
 typedef struct reserved_areas {
     uint64_t kernel_start;
