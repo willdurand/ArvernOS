@@ -103,18 +103,6 @@ void unmap(page_t page)
     __asm__("invlpg (%0)" ::"r" (page_starting_address(page)) : "memory");
 }
 
-/*
-let p1 = self.p4_mut()
-                 .next_table_mut(page.p4_index())
-                 .and_then(|p3| p3.next_table_mut(page.p3_index()))
-                 .and_then(|p2| p2.next_table_mut(page.p2_index()))
-                 .expect("mapping code does not support huge pages");
-    let frame = p1[page.p1_index()].pointed_frame().unwrap();
-    p1[page.p1_index()].set_unused();
-    // TODO free p(1,2,3) table if empty
-    allocator.deallocate_frame(frame);
-    */
-
 void set_addr_mask(page_entry_t *entry, uint64_t addr)
 {
     uint64_t mask = 0xfff0000000000fff;
