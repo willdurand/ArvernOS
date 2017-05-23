@@ -3,6 +3,7 @@
 #include <core/timer.h>
 #include <core/debug.h>
 #include <core/check.h>
+#include <core/cmos.h>
 #include <mmu/mmu.h>
 #include <kernel/panic.h>
 #include <drivers/screen.h>
@@ -55,7 +56,16 @@ void kmain(unsigned long magic, unsigned long addr)
     mmu_init(mmap, reserved);
     printf("- frame allocator and paging enabled\n");
 
-    printf("- system ready, welcome!\n\n$ ");
+    // cmos
+    cmos_rtc_t rtc = cmos_read_rtc();
+    printf(
+        "\nHello Human, today's date and time is %2d/%2d/%2d %2d:%2d:%2d UTC\n",
+        rtc.year, rtc.month, rtc.day,
+        rtc.hours, rtc.minutes, rtc.seconds
+    );
+
+    // prompt :p
+    printf("$ ");
 
     while (1) {
         __asm__("hlt");
