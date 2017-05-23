@@ -10,6 +10,12 @@
 #include <drivers/keyboard.h>
 #include <stdio.h>
 
+void print_welcome_messge()
+{
+    printf("%s\n", KERNEL_ASCII);
+    printf("%s %s / Built on: %s at %s\n\n", KERNEL_NAME, KERNEL_VERSION, KERNEL_DATE, KERNEL_TIME);
+}
+
 void kmain(unsigned long magic, unsigned long addr)
 {
     screen_init();
@@ -22,18 +28,16 @@ void kmain(unsigned long magic, unsigned long addr)
     multiboot_info_t *mbi = (multiboot_info_t*) addr;
     reserved_areas_t reserved = read_multiboot_info(mbi);
 
-    printf("%s\n", KERNEL_ASCII);
-    printf("%s %s / Built on: %s at %s\n\n", KERNEL_NAME, KERNEL_VERSION, KERNEL_DATE, KERNEL_TIME);
-
+    print_welcome_messge();
     printf("- multiboot_start = 0x%X, multiboot_end = 0x%X\n", reserved.multiboot_start, reserved.multiboot_end);
-    printf("- kernel_start = 0x%X, kernel_end = 0x%X\n", reserved.kernel_start, reserved.kernel_end);
+    printf("- kernel_start    = 0x%X, kernel_end    = 0x%X\n", reserved.kernel_start, reserved.kernel_end);
 
     isr_init();
     irq_init();
     printf("- interruptions enabled\n");
 
     // enable scheduler
-    timer_init(50);
+    timer_init(50); // 50hz
     printf("- clock (timer) enabled\n");
 
     // self-checks
