@@ -5,7 +5,7 @@ global interrupt
 extern isr_handler
 extern irq_handler
 
-%macro isr_handler 1
+%macro def_isr_handler 1
     global isr%1
     isr%1:
         cli
@@ -13,7 +13,7 @@ extern irq_handler
         jmp isr_common_stub
 %endmacro
 
-%macro irq_handler 1
+%macro def_irq_handler 1
     global irq%1
     irq%1:
         cli
@@ -64,38 +64,38 @@ isr_common_stub:
 
 ; define interruptions
 ; should be keep in sync with src/core/isr.h
-isr_handler 0
-isr_handler 1
-isr_handler 2
-isr_handler 3
-isr_handler 4
-isr_handler 5
-isr_handler 6
-isr_handler 7
-isr_handler 8
-isr_handler 9
-isr_handler 10
-isr_handler 11
-isr_handler 12
-isr_handler 13
-isr_handler 14
-isr_handler 15
-isr_handler 16
-isr_handler 17
-isr_handler 18
-isr_handler 19
-isr_handler 20
-isr_handler 21
-isr_handler 22
-isr_handler 23
-isr_handler 24
-isr_handler 25
-isr_handler 26
-isr_handler 27
-isr_handler 28
-isr_handler 29
-isr_handler 30
-isr_handler 31
+def_isr_handler 0
+def_isr_handler 1
+def_isr_handler 2
+def_isr_handler 3
+def_isr_handler 4
+def_isr_handler 5
+def_isr_handler 6
+def_isr_handler 7
+def_isr_handler 8
+def_isr_handler 9
+def_isr_handler 10
+def_isr_handler 11
+def_isr_handler 12
+def_isr_handler 13
+def_isr_handler 14
+def_isr_handler 15
+def_isr_handler 16
+def_isr_handler 17
+def_isr_handler 18
+def_isr_handler 19
+def_isr_handler 20
+def_isr_handler 21
+def_isr_handler 22
+def_isr_handler 23
+def_isr_handler 24
+def_isr_handler 25
+def_isr_handler 26
+def_isr_handler 27
+def_isr_handler 28
+def_isr_handler 29
+def_isr_handler 30
+def_isr_handler 31
 
 irq_common_stub:
     ; save registers
@@ -140,8 +140,8 @@ irq_common_stub:
 
 ; define hardware interruptions
 ; should be keep in sync with src/core/isr.h
-irq_handler 0
-irq_handler 1
-irq_handler 2
-irq_handler 3
-irq_handler 4
+def_irq_handler 0
+def_irq_handler 1
+def_irq_handler 2
+def_irq_handler 3
+def_irq_handler 4
