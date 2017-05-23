@@ -4,5 +4,6 @@
 #include <stdint.h>
 
 void timer_init(int freq);
+uint32_t timer_tick();
 
 #endif

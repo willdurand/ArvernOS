@@ -2,6 +2,7 @@
 #include <core/isr.h>
 #include <core/timer.h>
 #include <core/debug.h>
+#include <core/check.h>
 #include <mmu/mmu.h>
 #include <kernel/panic.h>
 #include <drivers/screen.h>
@@ -34,6 +35,9 @@ void kmain(unsigned long magic, unsigned long addr)
     // enable scheduler
     timer_init(50);
     printf("- clock (timer) enabled\n");
+
+    // self-checks
+    check_interrupts();
 
     // enable serial port
     serial_init(SERIAL_COM1, SERIAL_SPEED_115200);

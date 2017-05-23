@@ -12,6 +12,11 @@ static void timer_callback(uint64_t stack)
     UNUSED(stack);
 }
 
+uint32_t timer_tick()
+{
+    return tick;
+}
+
 void timer_init(int freq)
 {
     register_interrupt_handler(IRQ0, timer_callback);
