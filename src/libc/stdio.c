@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include <drivers/screen.h>
 #include <drivers/serial.h>
 
@@ -27,7 +28,19 @@ void vprintf(int device, const char* format, va_list arg)
         char c = format[i];
 
         if (c == '%') {
+            uint8_t leftpad = format[i + 1] - '0';
+
+            if (isdigit(leftpad)) {
+                i++;
+            } else {
+                leftpad = 0;
+            }
+
             switch (format[i + 1]) {
+                case '%':
+                    putchar(device, '%');
+                    break;
+
                 case 'c':
                     putchar(device, va_arg(arg, int));
                     break;
@@ -35,6 +48,12 @@ void vprintf(int device, const char* format, va_list arg)
                 case 'd':
                     i_val = va_arg(arg, int32_t);
                     itoa(i_val, s_val, 10);
+
+                    while ((leftpad - strlen(s_val)) > 0) {
+                        putchar(device, '0');
+                        leftpad--;
+                    }
+
                     puts(device, s_val);
                     break;
 
