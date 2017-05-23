@@ -1,10 +1,11 @@
 #include "cmos.h"
 #include <core/ports.h>
 #include <mem.h>
+#include <stdbool.h>
 
-uint8_t cmos_read_register(uint8_t reg);
-int cmos_update_in_progress();
-int rtc_values_are_not_equal(cmos_rtc_t c1, cmos_rtc_t c2);
+uint8_t read_register(uint8_t reg);
+bool update_in_progress();
+bool rtc_values_are_not_equal(cmos_rtc_t c1, cmos_rtc_t c2);
 
 cmos_rtc_t cmos_read_rtc()
 {
@@ -13,37 +14,37 @@ cmos_rtc_t cmos_read_rtc()
 
     // This uses the "read registers until you get the same values twice in a
     // row" technique to avoid getting inconsistent values due to RTC updates
-    while (cmos_update_in_progress()) ;
+    while (update_in_progress()) ;
 
     // read a first time
-    rtc.seconds = cmos_read_register(CMOS_REG_SECONDS);
-    rtc.minutes = cmos_read_register(CMOS_REG_MINUTES);
-    rtc.hours = cmos_read_register(CMOS_REG_HOURS);
-    rtc.weekdays = cmos_read_register(CMOS_REG_WEEKDAYS);
-    rtc.day = cmos_read_register(CMOS_REG_DAY);
-    rtc.month = cmos_read_register(CMOS_REG_MONTH);
-    rtc.year = cmos_read_register(CMOS_REG_YEAR);
-    rtc.century = cmos_read_register(CMOS_REG_CENTURY);
+    rtc.seconds = read_register(CMOS_REG_SECONDS);
+    rtc.minutes = read_register(CMOS_REG_MINUTES);
+    rtc.hours = read_register(CMOS_REG_HOURS);
+    rtc.weekdays = read_register(CMOS_REG_WEEKDAYS);
+    rtc.day = read_register(CMOS_REG_DAY);
+    rtc.month = read_register(CMOS_REG_MONTH);
+    rtc.year = read_register(CMOS_REG_YEAR);
+    rtc.century = read_register(CMOS_REG_CENTURY);
 
     do {
         // prepare to read a second time
         memcpy(&rtc, &last, sizeof(cmos_rtc_t));
 
-        while (cmos_update_in_progress()) ;
+        while (update_in_progress()) ;
 
         // read a second time
-        rtc.seconds = cmos_read_register(CMOS_REG_SECONDS);
-        rtc.minutes = cmos_read_register(CMOS_REG_MINUTES);
-        rtc.hours = cmos_read_register(CMOS_REG_HOURS);
-        rtc.weekdays = cmos_read_register(CMOS_REG_WEEKDAYS);
-        rtc.day = cmos_read_register(CMOS_REG_DAY);
-        rtc.month = cmos_read_register(CMOS_REG_MONTH);
-        rtc.year = cmos_read_register(CMOS_REG_YEAR);
-        rtc.century = cmos_read_register(CMOS_REG_CENTURY);
+        rtc.seconds = read_register(CMOS_REG_SECONDS);
+        rtc.minutes = read_register(CMOS_REG_MINUTES);
+        rtc.hours = read_register(CMOS_REG_HOURS);
+        rtc.weekdays = read_register(CMOS_REG_WEEKDAYS);
+        rtc.day = read_register(CMOS_REG_DAY);
+        rtc.month = read_register(CMOS_REG_MONTH);
+        rtc.year = read_register(CMOS_REG_YEAR);
+        rtc.century = read_register(CMOS_REG_CENTURY);
     } while (rtc_values_are_not_equal(rtc, last));
 
     // Status Register B contains the formats of bytes
-    uint8_t reg_b = cmos_read_register(CMOS_REG_STATUS_B);
+    uint8_t reg_b = read_register(CMOS_REG_STATUS_B);
 
     if (!(reg_b & 0x04)) {
         // convert BCD back into a "good" binary value
@@ -69,20 +70,20 @@ cmos_rtc_t cmos_read_rtc()
     return rtc;
 }
 
-int cmos_update_in_progress()
+bool update_in_progress()
 {
     port_byte_out(CMOS_COMMAND_PORT, CMOS_REG_STATUS_A);
     // the RTC has an "Update in progress" flag (bit 7 of Status Register A)
     return (port_byte_in(CMOS_DATA_PORT) & 0x80);
 }
 
-uint8_t cmos_read_register(uint8_t reg)
+uint8_t read_register(uint8_t reg)
 {
     port_byte_out(CMOS_COMMAND_PORT, (1 << 7) | reg);
     return port_byte_in(CMOS_DATA_PORT);
 }
 
-int rtc_values_are_not_equal(cmos_rtc_t c1, cmos_rtc_t c2)
+bool rtc_values_are_not_equal(cmos_rtc_t c1, cmos_rtc_t c2)
 {
     return (
         c1.seconds != c2.seconds ||

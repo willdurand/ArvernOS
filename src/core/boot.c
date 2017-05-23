@@ -2,19 +2,19 @@
 #include <stdio.h>
 #include <core/debug.h>
 
-int multiboot_is_valid(unsigned long magic, unsigned long addr)
+bool multiboot_is_valid(unsigned long magic, unsigned long addr)
 {
     if (magic != MULTIBOOT2_MAGIC_VALUE) {
         printf("Invalid magic value: 0x%x", magic);
-        return -1;
+        return false;
     }
 
     if (addr & 7) {
         printf("Unaligned MBI: 0x%x", addr);
-        return -2;
+        return false;
     }
 
-    return 0;
+    return true;
 }
 
 void* find_multiboot_tag(multiboot_tag_t *tags, uint16_t type)

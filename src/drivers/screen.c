@@ -10,7 +10,6 @@
 
 // private
 void screen_write_at(char c, uint8_t scheme, int x, int y);
-int strlen(const char* str);
 uint8_t color_scheme(uint8_t fg, uint8_t bg);
 void move_cursor(uint16_t pos);
 

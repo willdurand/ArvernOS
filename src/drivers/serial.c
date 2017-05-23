@@ -3,12 +3,13 @@
 #include <string.h>
 #include <stdarg.h>
 #include <stdio.h>
+#include <stdbool.h>
 
 // private functions
-int serial_received(uint32_t com);
-int serial_is_transmit_fifo_empty(uint32_t com);
+bool serial_received(uint16_t com);
+bool serial_is_transmit_fifo_empty(uint16_t com);
 // could be exposed later
-char serial_read(uint32_t com);
+char serial_read(uint16_t com);
 
 void serial_init(uint16_t com, uint16_t divisor)
 {
@@ -30,14 +31,14 @@ void serial_init(uint16_t com, uint16_t divisor)
     port_byte_out(SERIAL_MODEM_COMMAND_PORT(com), 0x0B);
 }
 
-void serial_print(uint32_t com, const char* str)
+void serial_print(uint16_t com, const char* str)
 {
     for (int i = 0; i < strlen(str); i++) {
         serial_write(com, str[i]);
     }
 }
 
-void serial_printf(uint32_t com, const char* format, ...)
+void serial_printf(uint16_t com, const char* format, ...)
 {
     va_list arg;
     va_start(arg, format);
@@ -45,25 +46,25 @@ void serial_printf(uint32_t com, const char* format, ...)
     va_end(arg);
 }
 
-int serial_is_transmit_fifo_empty(uint32_t com)
+bool serial_is_transmit_fifo_empty(uint16_t com)
 {
     /* 0x20 = 0010 0000 */
-    return port_byte_in(SERIAL_LINE_STATUS_PORT(com)) & 0x20;
+    return (port_byte_in(SERIAL_LINE_STATUS_PORT(com)) & 0x20);
 }
 
-int serial_received(uint32_t com)
+bool serial_received(uint16_t com)
 {
-    return port_byte_in(SERIAL_LINE_STATUS_PORT(com)) & 1;
+    return (port_byte_in(SERIAL_LINE_STATUS_PORT(com)) & 1);
 }
 
-char serial_read(uint32_t com)
+char serial_read(uint16_t com)
 {
     while (serial_received(com) == 0) ;
 
     return port_byte_in(com);
 }
 
-void serial_write(uint32_t com, char c) {
+void serial_write(uint16_t com, char c) {
     while (serial_is_transmit_fifo_empty(com) == 0) ;
 
     port_byte_out(com, c);

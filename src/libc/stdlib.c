@@ -6,8 +6,7 @@ void itoa(int n, char* str, int base)
     int i = 0;
     int sign;
 
-    if (n == 0)
-    {
+    if (n == 0) {
         str[i++] = '0';
         str[i] = '\0';
 
@@ -36,8 +35,7 @@ void ulltoa(uint64_t n, char* str, int base)
     int i = 0;
     int sign;
 
-    if (n == 0)
-    {
+    if (n == 0) {
         str[i++] = '0';
         str[i] = '\0';
 

@@ -22,7 +22,7 @@ void kmain(unsigned long magic, unsigned long addr)
     screen_init();
     screen_clear();
 
-    if (multiboot_is_valid(magic, addr) != 0) {
+    if (multiboot_is_valid(magic, addr) == false) {
         PANIC("invalid multiboot");
     }
 

@@ -2,6 +2,7 @@
 #define CORE_BOOT_H
 
 #include <stdint.h>
+#include <stdbool.h>
 
 // cf. https://www.uclibc.org/docs/elf-64-gen.pdf
 
@@ -127,7 +128,7 @@ typedef struct reserved_areas {
     uint64_t multiboot_end;
 } reserved_areas_t;
 
-int multiboot_is_valid(unsigned long magic, unsigned long addr);
+bool multiboot_is_valid(unsigned long magic, unsigned long addr);
 void* find_multiboot_tag(multiboot_tag_t *tags, uint16_t type);
 reserved_areas_t read_multiboot_info(multiboot_info_t *mbi);
 

@@ -1,6 +1,8 @@
 #ifndef CTYPE_H
 #define CTYPE_H
 
-int isdigit(int c);
+#include <stdbool.h>
+
+bool isdigit(int c);
 
 #endif
