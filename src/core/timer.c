@@ -5,11 +5,11 @@
 
 uint32_t tick = 0;
 
-static void timer_callback(uint64_t stack)
+static void timer_callback(stack_t *stack)
 {
     tick++;
 
-    UNUSED(stack);
+    UNUSED(*stack);
 }
 
 uint32_t timer_tick()

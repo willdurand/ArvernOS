@@ -3,8 +3,11 @@
 #include <kernel/panic.h>
 #include <stdlib.h>
 
-isr_t interrupt_handlers[256];
+#define NB_REGISTERS_PUSHED_BEFORE_CALL 15
 
+stack_t* get_stack(uint64_t id, uint64_t stack);
+
+isr_t interrupt_handlers[256];
 const char* exception_messages[] = {
     "Division By Zero",
     "Debug",
@@ -117,29 +120,70 @@ void irq_disable()
     __asm__("cli");
 }
 
-void isr_handler(uint64_t id, uint64_t stack)
+void isr_handler(uint64_t id, uint64_t stack_addr)
 {
-    UNUSED(stack);
-    PANIC("Received interrupt: %d - %s\n", id, exception_messages[id]);
+    stack_t *stack = get_stack(id, stack_addr);
+
+    PANIC(
+        "Received interrupt: %d - %s\n\n"
+        "  instruction_pointer = 0x%X\n"
+        "  code_segment        = 0x%X\n"
+        "  cpu_flags           = 0x%X\n"
+        "  stack_pointer       = 0x%X\n"
+        "  stack_segment       = 0x%X",
+        id, exception_messages[id],
+        stack->instruction_pointer,
+        stack->code_segment,
+        stack->cpu_flags,
+        stack->stack_pointer,
+        stack->stack_segment
+    );
 }
 
-void irq_handler(uint64_t id, uint64_t stack)
+void irq_handler(uint64_t id, uint64_t stack_addr)
 {
-    if (id >= 40)
-    {
+    if (id >= 40) {
         port_byte_out(PIC2, PIC_EOI);
     }
 
     port_byte_out(PIC1, PIC_EOI);
 
-    if (interrupt_handlers[id] != 0)
-    {
+    if (interrupt_handlers[id] != 0) {
         isr_t handler = interrupt_handlers[id];
-        handler(stack);
+        handler(get_stack(id, stack_addr));
     }
 }
 
 void register_interrupt_handler(uint64_t id, isr_t handler)
 {
     interrupt_handlers[id] = handler;
+}
+
+stack_t* get_stack(uint64_t id, uint64_t stack_addr)
+{
+    // cf. https://github.com/0xAX/linux-insides/blob/master/interrupts/interrupts-3.md
+    //
+    //     +------------+
+    // +40 | %SS        |
+    // +32 | %RSP       |
+    // +24 | %RFLAGS    |
+    // +16 | %CS        |
+    //  +8 | %RIP       |
+    //   0 | ERROR CODE | <-- %RSP
+    //     +------------+
+    //
+    switch (id) {
+        case 8:
+        case 10:
+        case 11:
+        case 12:
+        case 13:
+        case 14:
+        case 17:
+            // skip error code, so that we always get the same stack_t
+            stack_addr += sizeof(uint64_t);
+            break;
+    }
+
+    return (stack_t*) (stack_addr + (NB_REGISTERS_PUSHED_BEFORE_CALL * sizeof(uint64_t)));
 }

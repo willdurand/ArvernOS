@@ -46,7 +46,7 @@ void kmain(unsigned long magic, unsigned long addr)
 
     // enable serial port
     serial_init(SERIAL_COM1, SERIAL_SPEED_115200);
-    DEBUG("%s has started\n", KERNEL_NAME);
+    DEBUG("%s has started", KERNEL_NAME);
 
     keyboard_init();
     printf("- keyboard routine enabled\n");

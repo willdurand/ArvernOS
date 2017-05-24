@@ -6,7 +6,7 @@
 
 #define SCANCODE_MAX 57
 
-static void keyboard_callback(uint64_t stack)
+static void keyboard_callback(stack_t *stack)
 {
     uint8_t scancode = port_byte_in(KEYBOARD_DATA_PORT);
 
@@ -16,7 +16,7 @@ static void keyboard_callback(uint64_t stack)
 
     printf("Received scancode: %d\n", scancode);
 
-    UNUSED(stack);
+    UNUSED(*stack);
 }
 
 void keyboard_init()

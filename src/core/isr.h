@@ -57,7 +57,15 @@ extern void irq2();
 extern void irq3();
 extern void irq4();
 
-typedef void (*isr_t) (uint64_t stack);
+typedef struct stack {
+    uint64_t instruction_pointer;
+    uint64_t code_segment;
+    uint64_t cpu_flags;
+    uint64_t stack_pointer;
+    uint64_t stack_segment;
+} __attribute__((packed)) stack_t;
+
+typedef void (*isr_t) (stack_t *stack);
 
 void isr_init();
 void irq_init();
