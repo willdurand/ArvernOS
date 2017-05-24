@@ -11,6 +11,22 @@
 #define PIC_EOI     0x20 // end of interrupt
 #define IRQ_BASE    0x20
 
+// exceptions, cf. http://wiki.osdev.org/Exceptions
+#define EXCEPTION_DE 0
+#define EXCEPTION_DB 1
+#define EXCEPTION_BP 3
+#define EXCEPTION_OF 4
+#define EXCEPTION_BR 5
+#define EXCEPTION_UD 6
+#define EXCEPTION_NM 7
+#define EXCEPTION_DF 8
+#define EXCEPTION_TS 10
+#define EXCEPTION_NP 11
+#define EXCEPTION_SS 12
+#define EXCEPTION_GP 13
+#define EXCEPTION_PF 14
+// ...
+
 #define IRQ0 32
 #define IRQ1 33
 #define IRQ2 34

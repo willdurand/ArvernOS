@@ -1,11 +1,13 @@
 #include "isr.h"
 #include <core/ports.h>
 #include <kernel/panic.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 #define NB_REGISTERS_PUSHED_BEFORE_CALL 15
 
 stack_t* get_stack(uint64_t id, uint64_t stack);
+void breakpoint_handler(stack_t *stack);
 
 isr_t interrupt_handlers[256];
 const char* exception_messages[] = {
@@ -107,6 +109,9 @@ void isr_init()
     set_idt_gate(IRQ3, (uint64_t) irq3);
     set_idt_gate(IRQ4, (uint64_t) irq4);
 
+    // handlers for isr exceptions
+    register_interrupt_handler(EXCEPTION_BP, breakpoint_handler);
+
     set_idt();
 }
 
@@ -123,6 +128,13 @@ void irq_disable()
 void isr_handler(uint64_t id, uint64_t stack_addr)
 {
     stack_t *stack = get_stack(id, stack_addr);
+
+    if (interrupt_handlers[id] != 0) {
+        isr_t handler = interrupt_handlers[id];
+        handler(get_stack(id, stack_addr));
+
+        return;
+    }
 
     PANIC(
         "Received interrupt: %d - %s\n\n"
@@ -186,4 +198,21 @@ stack_t* get_stack(uint64_t id, uint64_t stack_addr)
     }
 
     return (stack_t*) (stack_addr + (NB_REGISTERS_PUSHED_BEFORE_CALL * sizeof(uint64_t)));
+}
+
+void breakpoint_handler(stack_t *stack)
+{
+    printf(
+        "Exception: BREAKPOINT\n"
+        "  instruction_pointer = 0x%X\n"
+        "  code_segment        = 0x%X\n"
+        "  cpu_flags           = 0x%X\n"
+        "  stack_pointer       = 0x%X\n"
+        "  stack_segment       = 0x%X\n",
+        stack->instruction_pointer,
+        stack->code_segment,
+        stack->cpu_flags,
+        stack->stack_pointer,
+        stack->stack_segment
+    );
 }
