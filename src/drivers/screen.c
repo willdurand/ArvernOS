@@ -1,7 +1,8 @@
-#include <string.h>
-#include <mem.h>
-#include <core/ports.h>
 #include "screen.h"
+#include <mem.h>
+#include <string.h>
+#include <stddef.h>
+#include <core/ports.h>
 
 #define FB_COMMAND_PORT         0x3D4
 #define FB_DATA_PORT            0x3D5
@@ -37,7 +38,7 @@ void screen_clear()
 
 void screen_print(const char* str)
 {
-    for (int i = 0; i < strlen(str); i++) {
+    for (size_t i = 0; i < strlen(str); i++) {
         screen_write(str[i]);
     }
 }

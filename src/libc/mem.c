@@ -1,6 +1,6 @@
 #include <mem.h>
 
-void memcpy(void *src, void *dest, uint64_t bytes)
+void memcpy(void *src, void *dest, size_t bytes)
 {
     char *s = (char *) src;
     char *d = (char *) dest;
