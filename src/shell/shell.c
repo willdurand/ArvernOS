@@ -106,7 +106,6 @@ const char* commands[][NB_DOCUMENTED_COMMANDS] = {
     {"help", "display information about willOS shell commands"},
     {"date", "print the system date and time"},
     {"clear", "clear the terminal screen"},
-    {"shutdown", "close down the system"},
     {"reboot", "stopping and restarting the system"},
 };
 
@@ -150,8 +149,6 @@ void clear() {
     screen_clear();
 }
 
-extern void shutdown();
-
 extern void reboot();
 
 void run_command(const char* command) {
@@ -169,8 +166,6 @@ void run_command(const char* command) {
         date();
     } else if (strncmp(command, "clear", 5) == 0) {
         clear();
-    } else if (strncmp(command, "shutdown", 8) == 0) {
-        shutdown();
     } else if (strncmp(command, "reboot", 6) == 0) {
         reboot();
     } else {
