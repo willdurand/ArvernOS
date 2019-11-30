@@ -34,6 +34,9 @@ void screen_clear()
             screen_write_at(' ', screen_scheme, x, y);
         }
     }
+
+    screen_col = 0;
+    screen_row = 0;
 }
 
 void screen_print(const char* str)

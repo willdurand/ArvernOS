@@ -5,5 +5,6 @@
 
 size_t strlen(const char* s);
 void reverse(char* s);
+int strncmp(const char *s, const char *r, int len);
 
 #endif

@@ -3,13 +3,13 @@
 #include <core/timer.h>
 #include <core/debug.h>
 #include <core/check.h>
-#include <core/cmos.h>
 #include <mmu/mmu.h>
 #include <kernel/panic.h>
 #include <drivers/screen.h>
 #include <drivers/serial.h>
 #include <drivers/keyboard.h>
 #include <stdio.h>
+#include <shell/shell.h>
 
 void print_welcome_messge()
 {
@@ -56,18 +56,9 @@ void kmain(unsigned long magic, unsigned long addr)
     mmu_init(mmap, reserved);
     printf("- frame allocator and paging enabled\n");
 
-    // cmos
-    cmos_rtc_t rtc = cmos_read_rtc();
-    printf(
-        "\nHello Human, today's date and time is %2d/%2d/%2d %2d:%2d:%2d UTC\n",
-        rtc.year, rtc.month, rtc.day,
-        rtc.hours, rtc.minutes, rtc.seconds
-    );
-
-    // prompt :p
-    printf("$ ");
-
+    // shell
+    printf(PROMPT);
     while (1) {
-        __asm__("hlt");
+        shell(keyboard_get_last_scancode());
     }
 }

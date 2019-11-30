@@ -4,7 +4,6 @@
 #include <stdint.h>
 #include <mmu/mmap.h>
 
-#define PAGE_SIZE       4096
 #define PAGE_ENTRIES    512
 #define P4_TABLE        0xfffffffffffff000
 
