@@ -71,3 +71,7 @@ clean:
 	rm -f $(OBJECTS) $(SOURCES) $(KERNEL) $(ISO) $(LIB)
 	rm -rf $(BUILD_DIR)
 .PHONY: clean
+
+fmt:
+	astyle --project=.astylerc --recursive "*.c,*.h"
+.PHONY: fmt

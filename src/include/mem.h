@@ -4,6 +4,6 @@
 #include <stddef.h>
 #include <stdint.h>
 
-void memcpy(void *src, void *dest, size_t bytes);
+void memcpy(void* src, void* dest, size_t bytes);
 
 #endif

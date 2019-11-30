@@ -2,8 +2,7 @@
 #include <core/isr.h>
 #include <stdio.h>
 
-void kernel_panic(const char* format, ...)
-{
+void kernel_panic(const char* format, ...) {
     va_list arg;
     va_start(arg, format);
     vprintf(DEVICE_SCREEN, format, arg);
@@ -13,5 +12,6 @@ void kernel_panic(const char* format, ...)
 
     // completely stop
     irq_disable();
+
     while (1) ;
 }

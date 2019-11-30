@@ -81,7 +81,7 @@ typedef struct stack {
     uint64_t stack_segment;
 } __attribute__((packed)) stack_t;
 
-typedef void (*isr_t) (stack_t *stack);
+typedef void (*isr_t)(stack_t* stack);
 
 void isr_init();
 void irq_init();

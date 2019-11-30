@@ -19,16 +19,14 @@ char* framebuffer;
 int screen_col;
 int screen_row;
 
-void screen_init()
-{
+void screen_init() {
     framebuffer = (char*) VIDEO_ADDRESS;
     screen_scheme = color_scheme(COLOR_LIGHT_GREY, COLOR_BLACK);
     screen_col = 0;
     screen_row = 0;
 }
 
-void screen_clear()
-{
+void screen_clear() {
     for (int y = 0; y < SCREEN_HEIGHT; y++) {
         for (int x = 0; x < SCREEN_WIDTH; x++) {
             screen_write_at(' ', screen_scheme, x, y);
@@ -39,20 +37,17 @@ void screen_clear()
     screen_row = 0;
 }
 
-void screen_print(const char* str)
-{
+void screen_print(const char* str) {
     for (size_t i = 0; i < strlen(str); i++) {
         screen_write(str[i]);
     }
 }
 
-uint8_t color_scheme(uint8_t fg, uint8_t bg)
-{
+uint8_t color_scheme(uint8_t fg, uint8_t bg) {
     return fg | bg << 4;
 }
 
-void screen_write_at(char c, uint8_t scheme, int x, int y)
-{
+void screen_write_at(char c, uint8_t scheme, int x, int y) {
     const int offset = 2 * (y * SCREEN_WIDTH + x);
 
     framebuffer[offset] = c;
@@ -62,13 +57,14 @@ void screen_write_at(char c, uint8_t scheme, int x, int y)
     if (offset > SCREEN_HEIGHT * SCREEN_WIDTH * 2) {
         for (int i = 1; i < SCREEN_HEIGHT; i++) {
             memcpy(
-                ((char *) VIDEO_ADDRESS + (2 * i * SCREEN_WIDTH)),
-                ((char *) VIDEO_ADDRESS + (2 * (i - 1) * SCREEN_WIDTH)),
+                ((char*) VIDEO_ADDRESS + (2 * i * SCREEN_WIDTH)),
+                ((char*) VIDEO_ADDRESS + (2 * (i - 1) * SCREEN_WIDTH)),
                 2 * SCREEN_WIDTH
             );
         }
 
-        char* last_line = (char *)(2 * (SCREEN_HEIGHT) * SCREEN_WIDTH + VIDEO_ADDRESS);
+        char* last_line = (char*)(2 * (SCREEN_HEIGHT) * SCREEN_WIDTH + VIDEO_ADDRESS);
+
         for (int i = 0; i < SCREEN_WIDTH * 2; i++) {
             last_line[i] = 0;
         }
@@ -77,8 +73,7 @@ void screen_write_at(char c, uint8_t scheme, int x, int y)
     }
 }
 
-void screen_write(char c)
-{
+void screen_write(char c) {
     if (c == '\n') {
         screen_col = 0;
         screen_row++;
@@ -102,10 +97,9 @@ void screen_write(char c)
     move_cursor((screen_row * SCREEN_WIDTH) + screen_col);
 }
 
-void move_cursor(uint16_t pos)
-{
+void move_cursor(uint16_t pos) {
     port_byte_out(FB_COMMAND_PORT, FB_HIGH_BYTE_COMMAND);
-    port_byte_out(FB_DATA_PORT,    ((pos >> 8) & 0x00FF));
+    port_byte_out(FB_DATA_PORT, ((pos >> 8) & 0x00FF));
     port_byte_out(FB_COMMAND_PORT, FB_LOW_BYTE_COMMAND);
     port_byte_out(FB_DATA_PORT,    pos & 0x00FF);
 }

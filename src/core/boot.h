@@ -7,7 +7,7 @@
 // cf. https://www.uclibc.org/docs/elf-64-gen.pdf
 
 /* The magic field should contain this. */
-#define MULTIBOOT2_MAGIC_NUMBER			    0xe85250d6
+#define MULTIBOOT2_MAGIC_NUMBER             0xe85250d6
 
 /* This should be in %eax. */
 #define MULTIBOOT2_MAGIC_VALUE              0x36d76289
@@ -47,8 +47,7 @@ typedef struct multiboot_tag {
     // other fieds
 } __attribute__((packed)) multiboot_tag_t;
 
-typedef struct multiboot_info
-{
+typedef struct multiboot_info {
     uint32_t size;
     uint32_t reserved;
     multiboot_tag_t tags[];
@@ -129,7 +128,7 @@ typedef struct reserved_areas {
 } reserved_areas_t;
 
 bool multiboot_is_valid(unsigned long magic, unsigned long addr);
-void* find_multiboot_tag(multiboot_tag_t *tags, uint16_t type);
-reserved_areas_t read_multiboot_info(multiboot_info_t *mbi);
+void* find_multiboot_tag(multiboot_tag_t* tags, uint16_t type);
+reserved_areas_t read_multiboot_info(multiboot_info_t* mbi);
 
 #endif

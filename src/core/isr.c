@@ -7,7 +7,7 @@
 #define NB_REGISTERS_PUSHED_BEFORE_CALL 15
 
 stack_t* get_stack(uint64_t id, uint64_t stack);
-void breakpoint_handler(stack_t *stack);
+void breakpoint_handler(stack_t* stack);
 
 isr_t interrupt_handlers[256];
 const char* exception_messages[] = {
@@ -48,8 +48,7 @@ const char* exception_messages[] = {
     "Reserved"
 };
 
-void isr_init()
-{
+void isr_init() {
     // start initialization
     port_byte_out(PIC1, 0x11);
     port_byte_out(PIC2, 0x11);
@@ -115,19 +114,16 @@ void isr_init()
     set_idt();
 }
 
-void irq_init()
-{
+void irq_init() {
     __asm__("sti");
 }
 
-void irq_disable()
-{
+void irq_disable() {
     __asm__("cli");
 }
 
-void isr_handler(uint64_t id, uint64_t stack_addr)
-{
-    stack_t *stack = get_stack(id, stack_addr);
+void isr_handler(uint64_t id, uint64_t stack_addr) {
+    stack_t* stack = get_stack(id, stack_addr);
 
     if (interrupt_handlers[id] != 0) {
         isr_t handler = interrupt_handlers[id];
@@ -152,8 +148,7 @@ void isr_handler(uint64_t id, uint64_t stack_addr)
     );
 }
 
-void irq_handler(uint64_t id, uint64_t stack_addr)
-{
+void irq_handler(uint64_t id, uint64_t stack_addr) {
     if (id >= 40) {
         port_byte_out(PIC2, PIC_EOI);
     }
@@ -166,13 +161,11 @@ void irq_handler(uint64_t id, uint64_t stack_addr)
     }
 }
 
-void register_interrupt_handler(uint64_t id, isr_t handler)
-{
+void register_interrupt_handler(uint64_t id, isr_t handler) {
     interrupt_handlers[id] = handler;
 }
 
-stack_t* get_stack(uint64_t id, uint64_t stack_addr)
-{
+stack_t* get_stack(uint64_t id, uint64_t stack_addr) {
     // cf. https://github.com/0xAX/linux-insides/blob/master/interrupts/interrupts-3.md
     //
     //     +------------+
@@ -185,23 +178,22 @@ stack_t* get_stack(uint64_t id, uint64_t stack_addr)
     //     +------------+
     //
     switch (id) {
-        case 8:
-        case 10:
-        case 11:
-        case 12:
-        case 13:
-        case 14:
-        case 17:
-            // skip error code, so that we always get the same stack_t
-            stack_addr += sizeof(uint64_t);
-            break;
+    case 8:
+    case 10:
+    case 11:
+    case 12:
+    case 13:
+    case 14:
+    case 17:
+        // skip error code, so that we always get the same stack_t
+        stack_addr += sizeof(uint64_t);
+        break;
     }
 
-    return (stack_t*) (stack_addr + (NB_REGISTERS_PUSHED_BEFORE_CALL * sizeof(uint64_t)));
+    return (stack_t*)(stack_addr + (NB_REGISTERS_PUSHED_BEFORE_CALL * sizeof(uint64_t)));
 }
 
-void breakpoint_handler(stack_t *stack)
-{
+void breakpoint_handler(stack_t* stack) {
     printf(
         "Exception: BREAKPOINT\n"
         "  instruction_pointer = 0x%X\n"

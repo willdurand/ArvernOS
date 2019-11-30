@@ -1,8 +1,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-void itoa(int n, char* str, int base)
-{
+void itoa(int n, char* str, int base) {
     int i = 0;
     int sign;
 
@@ -30,8 +29,7 @@ void itoa(int n, char* str, int base)
     reverse(str);
 }
 
-void ulltoa(uint64_t n, char* str, int base)
-{
+void ulltoa(uint64_t n, char* str, int base) {
     int i = 0;
     int sign;
 

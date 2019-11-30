@@ -11,7 +11,7 @@
 typedef uint64_t physical_address_t;
 typedef uint64_t frame_t;
 
-void mmap_init(multiboot_tag_mmap_t *mmap, reserved_areas_t reserved);
+void mmap_init(multiboot_tag_mmap_t* mmap, reserved_areas_t reserved);
 frame_t mmap_allocate_frame();
 physical_address_t mmap_read(frame_t request, uint8_t mode);
 frame_t frame_containing_address(physical_address_t addr);

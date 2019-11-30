@@ -7,8 +7,7 @@ uint8_t read_register(uint8_t reg);
 bool update_in_progress();
 bool rtc_values_are_not_equal(cmos_rtc_t c1, cmos_rtc_t c2);
 
-cmos_rtc_t cmos_read_rtc()
-{
+cmos_rtc_t cmos_read_rtc() {
     cmos_rtc_t rtc;
     cmos_rtc_t last;
 
@@ -70,29 +69,26 @@ cmos_rtc_t cmos_read_rtc()
     return rtc;
 }
 
-bool update_in_progress()
-{
+bool update_in_progress() {
     port_byte_out(CMOS_COMMAND_PORT, CMOS_REG_STATUS_A);
     // the RTC has an "Update in progress" flag (bit 7 of Status Register A)
     return (port_byte_in(CMOS_DATA_PORT) & 0x80);
 }
 
-uint8_t read_register(uint8_t reg)
-{
+uint8_t read_register(uint8_t reg) {
     port_byte_out(CMOS_COMMAND_PORT, (1 << 7) | reg);
     return port_byte_in(CMOS_DATA_PORT);
 }
 
-bool rtc_values_are_not_equal(cmos_rtc_t c1, cmos_rtc_t c2)
-{
+bool rtc_values_are_not_equal(cmos_rtc_t c1, cmos_rtc_t c2) {
     return (
-        c1.seconds != c2.seconds ||
-        c1.minutes != c2.minutes ||
-        c1.hours != c2.hours ||
-        c1.weekdays != c2.weekdays ||
-        c1.day != c2.day ||
-        c1.month != c2.month ||
-        c1.year != c2.year ||
-        c1.century != c2.century
-    );
+               c1.seconds != c2.seconds ||
+               c1.minutes != c2.minutes ||
+               c1.hours != c2.hours ||
+               c1.weekdays != c2.weekdays ||
+               c1.day != c2.day ||
+               c1.month != c2.month ||
+               c1.year != c2.year ||
+               c1.century != c2.century
+           );
 }
