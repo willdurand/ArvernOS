@@ -5,11 +5,11 @@
 #include <core/check.h>
 #include <mmu/mmu.h>
 #include <kernel/panic.h>
+#include <kernel/kshell.h>
 #include <drivers/screen.h>
 #include <drivers/serial.h>
 #include <drivers/keyboard.h>
 #include <stdio.h>
-#include <shell/shell.h>
 
 void print_welcome_messge() {
     printf("%s\n", KERNEL_ASCII);
@@ -38,7 +38,7 @@ void kmain(unsigned long magic, unsigned long addr) {
     printf("- interruptions enabled\n");
 
     // enable scheduler
-    timer_init(50); // 50hz
+    timer_init();
     printf("- clock (timer) enabled\n");
 
     // self-checks
@@ -60,6 +60,6 @@ void kmain(unsigned long magic, unsigned long addr) {
     printf(PROMPT);
 
     while (1) {
-        shell(keyboard_get_last_scancode());
+        kshell(keyboard_get_last_scancode());
     }
 }

@@ -15,10 +15,14 @@ uint32_t timer_tick() {
     return tick;
 }
 
-void timer_init(int freq) {
+uint32_t timer_uptime() {
+    return timer_tick() / TIMER_HZ;
+}
+
+void timer_init() {
     register_interrupt_handler(IRQ0, timer_callback);
 
-    int divisor = 1193180 / freq;
+    int divisor = 1193180 / TIMER_HZ;
 
     port_byte_out(0x43, 0x36);
     port_byte_out(0x40, divisor & 0xff);

@@ -1,6 +1,7 @@
-#include "shell.h"
+#include "kshell.h"
 #include <core/cmos.h>
 #include <core/debug.h>
+#include <core/timer.h>
 #include <drivers/screen.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -107,6 +108,7 @@ const char* commands[][NB_DOCUMENTED_COMMANDS] = {
     {"date", "print the system date and time"},
     {"clear", "clear the terminal screen"},
     {"reboot", "stopping and restarting the system"},
+    {"uptime", "tell how long the system has been running"},
 };
 
 unsigned char get_char(uint8_t scancode) {
@@ -151,6 +153,10 @@ void clear() {
 
 extern void reboot();
 
+void uptime() {
+    printf("up %u seconds\n", timer_uptime());
+}
+
 void run_command(const char* command) {
     DEBUG("command: %s", command);
 
@@ -168,6 +174,8 @@ void run_command(const char* command) {
         clear();
     } else if (strncmp(command, "reboot", 6) == 0) {
         reboot();
+    } else if (strncmp(command, "uptime", 6) == 0) {
+        uptime();
     } else {
         printf("invalid command\n");
     }
@@ -189,7 +197,7 @@ void reset_readline() {
     printf(PROMPT);
 }
 
-void shell(uint8_t scancode) {
+void kshell(uint8_t scancode) {
     bool key_was_released = false;
 
     if (scancode > 128) {

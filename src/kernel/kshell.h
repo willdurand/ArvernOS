@@ -1,5 +1,5 @@
-#ifndef SHELL_H
-#define SHELL_H
+#ifndef KSHELL_H
+#define KSHELL_H
 
 // This is required to use `uint8_t`.
 #include <stdlib.h>
@@ -13,6 +13,6 @@
 #define KB_RSHIFT       54
 #define KB_TAB          15
 
-void shell(uint8_t scancode);
+void kshell(uint8_t scancode);
 
 #endif

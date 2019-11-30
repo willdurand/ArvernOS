@@ -3,7 +3,9 @@
 
 #include <stdint.h>
 
-void timer_init(int freq);
-uint32_t timer_tick();
+#define TIMER_HZ 50
+
+void timer_init();
+uint32_t timer_uptime();
 
 #endif
