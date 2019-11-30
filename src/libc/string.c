@@ -36,3 +36,15 @@ int strncmp(const char* s, const char* r, int len) {
 
     return 0;
 }
+
+char* strcpy(char* dest, const char* src) {
+    char* ret = dest;
+
+    while (*src != 0) {
+        *dest++ = *src++;
+    }
+
+    *dest = 0;
+
+    return ret;
+}

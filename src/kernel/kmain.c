@@ -61,5 +61,6 @@ void kmain(unsigned long magic, unsigned long addr) {
 
     while (1) {
         kshell(keyboard_get_last_scancode());
+        __asm__("hlt");
     }
 }

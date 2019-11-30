@@ -158,7 +158,7 @@ void uptime() {
 }
 
 void run_command(const char* command) {
-    DEBUG("command: %s", command);
+    DEBUG("received '%s'", command);
 
     if (*command == 0) {
         return;
@@ -181,7 +181,8 @@ void run_command(const char* command) {
     }
 }
 
-unsigned char readline[READLINE_SIZE] = {0};
+char readline[READLINE_SIZE] = {0};
+char last_readline[READLINE_SIZE] = {0};
 unsigned int readline_index = 0;
 
 bool ctrl_mode = false;
@@ -193,8 +194,6 @@ void reset_readline() {
     for (unsigned int i = 0; i < READLINE_SIZE; i++) {
         readline[i] = 0;
     }
-
-    printf(PROMPT);
 }
 
 void kshell(uint8_t scancode) {
@@ -205,7 +204,21 @@ void kshell(uint8_t scancode) {
         scancode -= 128;
     }
 
+    if (scancode != 0) {
+        DEBUG("scancode = %d", scancode);
+    }
+
     switch (scancode) {
+    case KB_ARROW_UP:
+        if (key_was_released) {
+            reset_readline();
+            strcpy(readline, last_readline);
+            printf(readline);
+            readline_index = strlen(readline);
+        }
+
+        break;
+
     case KB_LSHIFT:
     case KB_RSHIFT:
         if (key_was_released) {
@@ -238,7 +251,9 @@ void kshell(uint8_t scancode) {
         if (key_was_released) {
             printf("\n");
             run_command((const char*)readline);
+            strcpy(last_readline, readline);
             reset_readline();
+            printf(PROMPT);
         }
 
         break;
@@ -270,6 +285,7 @@ void kshell(uint8_t scancode) {
                     case 'l':
                         clear();
                         reset_readline();
+                        printf(PROMPT);
                         break;
                     }
                 } else {
