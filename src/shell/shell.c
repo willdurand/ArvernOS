@@ -199,7 +199,9 @@ void run_command(const char *command)
 
 unsigned char readline[READLINE_SIZE] = {0};
 unsigned int readline_index = 0;
+
 bool ctrl_mode = false;
+bool shift_mode = false;
 
 void reset_readline()
 {
@@ -222,6 +224,17 @@ void shell(uint8_t scancode)
 
     switch (scancode)
     {
+        case KB_LSHIFT:
+        case KB_RSHIFT:
+            if (key_was_released)
+            {
+                shift_mode = false;
+            }
+            else
+            {
+                shift_mode = true;
+            }
+            break;
         case KB_LCTRL:
             if (key_was_released)
             {
@@ -252,8 +265,8 @@ void shell(uint8_t scancode)
             if (key_was_released)
             {
                 printf("  ");
-                readline[readline_index++] = ' ';
-                readline[readline_index++] = ' ';
+                readline[readline_index++] = 0;
+                readline[readline_index++] = 0;
             }
             break;
         default:
