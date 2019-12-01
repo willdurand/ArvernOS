@@ -9,7 +9,7 @@ uint8_t last_scancode = 0;
 static void keyboard_callback(stack_t* stack) {
     uint8_t status = port_byte_in(KEYBOARD_STATUS_PORT);
 
-    if (status & 0x1) {
+    if (status & 0x01) {
         uint8_t scancode = port_byte_in(KEYBOARD_DATA_PORT);
 
         DEBUG("received scancode: %d", scancode);
