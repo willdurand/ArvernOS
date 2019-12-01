@@ -116,13 +116,14 @@ unsigned char get_char(uint8_t scancode) {
 }
 
 void help(const char* command) {
-    const char* arg = 0;
-
     if (strlen(command) == 4) {
-        arg = command;
-    } else {
-        arg = command + 5;
+        for (uint8_t i = 0; i < NB_DOCUMENTED_COMMANDS; i++) {
+            printf("%s - %s\n", commands[i][0], commands[i][1]);
+        }
+        return;
     }
+
+    const char* arg = command + 5;
 
     for (uint8_t i = 0; i < NB_DOCUMENTED_COMMANDS; i++) {
         if (strncmp(arg, commands[i][0], strlen(commands[i][0])) == 0) {
