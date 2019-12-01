@@ -1,6 +1,6 @@
 #include <mem.h>
 
-void* memcpy(const void* src, void* dest, size_t bytes) {
+void* memcpy(void* dest, const void* src, size_t bytes) {
     const char* s = (char*) src;
     char* d = (char*) dest;
 
@@ -21,9 +21,7 @@ void* memset(void* str, int c, size_t bytes) {
 
 void* memmove(void* dest, const void* src, size_t len) {
     unsigned char cpy[len];
-
-    memcpy(src, cpy, len);
-
-    return memcpy(cpy, dest, len);
+    memcpy(cpy, src, len);
+    return memcpy(dest, cpy, len);
 }
 

@@ -27,7 +27,7 @@ cmos_rtc_t cmos_read_rtc() {
 
     do {
         // prepare to read a second time
-        memcpy(&rtc, &last, sizeof(cmos_rtc_t));
+        memcpy(&last, &rtc, sizeof(cmos_rtc_t));
 
         while (update_in_progress()) ;
 
