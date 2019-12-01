@@ -12,7 +12,7 @@
 #ifdef ENABLE_KERNEL_DEBUG
 #define KERNEL_VERSION "DEBUG MODE"
 #else
-#define KERNEL_VERSION "0.0.1"
+#define KERNEL_VERSION "0.0.2"
 #endif
 
 #define KERNEL_DATE     __DATE__
