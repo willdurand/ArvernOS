@@ -1,5 +1,6 @@
 #include "kmain.h"
 #include <core/isr.h>
+#include <core/gdt.h>
 #include <core/timer.h>
 #include <core/debug.h>
 #include <core/check.h>
@@ -36,6 +37,9 @@ void kmain(unsigned long magic, unsigned long addr) {
     isr_init();
     irq_init();
     printf("- interruptions enabled\n");
+
+    gdt_init();
+    printf("- global descriptor table enabled\n");
 
     // enable scheduler
     timer_init();

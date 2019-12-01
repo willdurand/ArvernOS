@@ -32,7 +32,7 @@ frame_t translate_page(page_t page) {
         return 0;
     }
 
-    // TODO: huge page
+    // TODO: huge page, see: https://os.phil-opp.com/page-tables/
 
     page_table_t p2 = next_table_address(p3, p3_index(page));
 

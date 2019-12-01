@@ -4,6 +4,7 @@
 #include <core/timer.h>
 #include <drivers/screen.h>
 #include <mmu/mmap.h>
+#include <mmu/paging.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -162,15 +163,30 @@ void uptime() {
 }
 
 void selftest() {
-    printf("=== willOS selftest ===\n");
+    printf("willOS selftest\n");
 
+    // See: https://os.phil-opp.com/page-tables/
+    printf("\n[paging]\n");
+    uint64_t addr = 42 * 512 * 512 * 4096;
+    page_t page = page_containing_address(addr);
+    frame_t frame = translate_page(page);
+    printf("    new frame allocated at: %d\n", frame);
+    map_page_to_frame(page, frame, 0);
+    translate_page(page);
     frame_t new_frame = mmap_allocate_frame();
-    physical_address_t new_frame_addr = mmap_read(new_frame, MMAP_GET_ADDR);
-    printf("New frame allocated at: 0x%x\n", new_frame_addr);
+    printf("    new frame allocated at: %d\n", new_frame);
+    unmap(page_containing_address(addr));
+    printf("    physical address: %x\n", page_containing_address(addr));
+
+    printf("\n[interrupts]\n");
+    printf("    invoking breakpoint exception\n");
+    __asm__("int3");
+
+    printf("\nall good!\n");
 }
 
 void run_command(const char* command) {
-    DEBUG("received '%s'", command);
+    DEBUG("command='%s'", command);
 
     if (*command == 0) {
         return;
@@ -216,10 +232,6 @@ void kshell(uint8_t scancode) {
     if (scancode > 128) {
         key_was_released = true;
         scancode -= 128;
-    }
-
-    if (scancode != 0) {
-        DEBUG("scancode = %d", scancode);
     }
 
     switch (scancode) {
