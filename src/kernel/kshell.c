@@ -3,6 +3,7 @@
 #include <core/debug.h>
 #include <core/timer.h>
 #include <drivers/screen.h>
+#include <mmu/mmap.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -101,7 +102,7 @@ unsigned char keymap[128] = {
     0,
 };
 
-#define NB_DOCUMENTED_COMMANDS 5
+#define NB_DOCUMENTED_COMMANDS 6
 
 const char* commands[][NB_DOCUMENTED_COMMANDS] = {
     {"help", "display information about willOS shell commands"},
@@ -109,6 +110,7 @@ const char* commands[][NB_DOCUMENTED_COMMANDS] = {
     {"clear", "clear the terminal screen"},
     {"reboot", "stopping and restarting the system"},
     {"uptime", "tell how long the system has been running"},
+    {"selftest", "run the willOS test suite"},
 };
 
 unsigned char get_char(uint8_t scancode) {
@@ -120,6 +122,7 @@ void help(const char* command) {
         for (uint8_t i = 0; i < NB_DOCUMENTED_COMMANDS; i++) {
             printf("%s - %s\n", commands[i][0], commands[i][1]);
         }
+
         return;
     }
 
@@ -158,6 +161,14 @@ void uptime() {
     printf("up %u seconds\n", timer_uptime());
 }
 
+void selftest() {
+    printf("=== willOS selftest ===\n");
+
+    frame_t new_frame = mmap_allocate_frame();
+    physical_address_t new_frame_addr = mmap_read(new_frame, MMAP_GET_ADDR);
+    printf("New frame allocated at: 0x%x\n", new_frame_addr);
+}
+
 void run_command(const char* command) {
     DEBUG("received '%s'", command);
 
@@ -177,6 +188,8 @@ void run_command(const char* command) {
         reboot();
     } else if (strncmp(command, "uptime", 6) == 0) {
         uptime();
+    } else if (strncmp(command, "selftest", 8) == 0) {
+        selftest();
     } else {
         printf("invalid command\n");
     }

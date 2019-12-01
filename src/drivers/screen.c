@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stddef.h>
 #include <core/ports.h>
+#include <core/debug.h>
 
 #define FB_COMMAND_PORT         0x3D4
 #define FB_DATA_PORT            0x3D5
@@ -27,11 +28,7 @@ void screen_init() {
 }
 
 void screen_clear() {
-    for (int y = 0; y < SCREEN_HEIGHT; y++) {
-        for (int x = 0; x < SCREEN_WIDTH; x++) {
-            screen_write_at(' ', screen_scheme, x, y);
-        }
-    }
+    memset((char*) VIDEO_ADDRESS, 0, 2 * SCREEN_HEIGHT * SCREEN_WIDTH);
 
     screen_col = 0;
     screen_row = 0;
@@ -48,26 +45,23 @@ uint8_t color_scheme(uint8_t fg, uint8_t bg) {
 }
 
 void screen_write_at(char c, uint8_t scheme, int x, int y) {
-    const int offset = 2 * (y * SCREEN_WIDTH + x);
+    int offset = 2 * (y * SCREEN_WIDTH + x);
 
     framebuffer[offset] = c;
     framebuffer[offset + 1] = scheme;
 
-    // scrolling
-    if (offset > SCREEN_HEIGHT * SCREEN_WIDTH * 2) {
-        for (int i = 1; i < SCREEN_HEIGHT; i++) {
-            memcpy(
-                ((char*) VIDEO_ADDRESS + (2 * i * SCREEN_WIDTH)),
-                ((char*) VIDEO_ADDRESS + (2 * (i - 1) * SCREEN_WIDTH)),
-                2 * SCREEN_WIDTH
-            );
-        }
+    if ((screen_row + 1) == SCREEN_HEIGHT) {
+        memmove(
+            (char*) VIDEO_ADDRESS,
+            (char*) VIDEO_ADDRESS + (2 * SCREEN_WIDTH),
+            2 * (SCREEN_HEIGHT - 1) * SCREEN_WIDTH
+        );
 
-        char* last_line = (char*)(2 * (SCREEN_HEIGHT) * SCREEN_WIDTH + VIDEO_ADDRESS);
-
-        for (int i = 0; i < SCREEN_WIDTH * 2; i++) {
-            last_line[i] = 0;
-        }
+        memset(
+            (char*) VIDEO_ADDRESS + ((SCREEN_HEIGHT - 1) * SCREEN_WIDTH * 2),
+            0,
+            2 * SCREEN_WIDTH
+        );
 
         screen_row--;
     }
