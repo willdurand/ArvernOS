@@ -9,6 +9,8 @@ willOS is a dead-simple 64 bits Operating System.
 <img src="doc/qemu.gif">
 <p>
 
+Note: the screencast above is likely outdated.
+
 ## Setting up a development environment
 
 The following dependencies are required to build this project:
