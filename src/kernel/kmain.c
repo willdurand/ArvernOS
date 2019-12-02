@@ -25,10 +25,14 @@ void kmain(unsigned long magic, unsigned long addr) {
         PANIC("invalid multiboot");
     }
 
+    print_welcome_messge();
+    // enable serial port
+    serial_init(SERIAL_COM1, SERIAL_SPEED_115200);
+    DEBUG("%s has started", KERNEL_NAME);
+
     multiboot_info_t* mbi = (multiboot_info_t*) addr;
     reserved_areas_t reserved = read_multiboot_info(mbi);
 
-    print_welcome_messge();
     printf("- multiboot_start = 0x%X, multiboot_end = 0x%X\n", reserved.multiboot_start,
            reserved.multiboot_end);
     printf("- kernel_start    = 0x%X, kernel_end    = 0x%X\n", reserved.kernel_start,
@@ -47,10 +51,6 @@ void kmain(unsigned long magic, unsigned long addr) {
 
     // self-checks
     check_interrupts();
-
-    // enable serial port
-    serial_init(SERIAL_COM1, SERIAL_SPEED_115200);
-    DEBUG("%s has started", KERNEL_NAME);
 
     keyboard_init();
     printf("- keyboard routine enabled\n");
