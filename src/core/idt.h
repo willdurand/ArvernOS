@@ -5,7 +5,7 @@
 
 #define IDT_ENTRIES 256
 
-typedef struct opts {
+typedef struct idt_opts {
     uint8_t stack_OK  : 3;
     uint8_t ZEROS     : 5;
     uint8_t gate_type : 1;
@@ -13,12 +13,12 @@ typedef struct opts {
     uint8_t ZERO      : 1;
     uint8_t DPL       : 2;
     uint8_t present   : 1;
-} __attribute__((packed)) opts_t;
+} __attribute__((packed)) idt_opts_t;
 
 typedef struct idt_gate {
     uint16_t ptr_low;
     uint16_t selector;
-    opts_t opts;
+    idt_opts_t opts;
     uint16_t ptr_mid;
     uint32_t ptr_high;
 

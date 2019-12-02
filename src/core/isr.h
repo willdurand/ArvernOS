@@ -33,7 +33,7 @@
 #define IRQ3 35
 #define IRQ4 36
 
-// These functions are declared in interrupt.asm file
+// These functions are declared in isr.asm file
 extern void isr0();
 extern void isr1();
 extern void isr2();

@@ -74,4 +74,5 @@ clean:
 
 fmt:
 	astyle --project=.astylerc --recursive "*.c,*.h"
+	@find . -name '*.orig' -exec rm "{}" ";"
 .PHONY: fmt
