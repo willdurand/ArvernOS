@@ -10,97 +10,97 @@
 #include <string.h>
 #include <stdbool.h>
 
-unsigned char keymap[128] = {
-    0,
-    27,
-    '1',
-    '2',
-    '3',
-    '4',
-    '5',
-    '6',
-    '7',
-    '8',
-    '9',
-    '0',
-    '-',
-    '=',
-    '\b',
-    '\t',
-    'q',
-    'w',
-    'e',
-    'r',
-    't',
-    'y',
-    'u',
-    'i',
-    'o',
-    'p',
-    '[',
-    ']',
-    '\n',
-    0,
-    'a',
-    's',
-    'd',
-    'f',
-    'g',
-    'h',
-    'j',
-    'k',
-    'l',
-    ';',
-    '\'',
-    '`',
-    0, // Left shift
-    '\\',
-    'z',
-    'x',
-    'c',
-    'v',
-    'b',
-    'n',
-    'm',
-    ',',
-    '.',
-    '/',
-    0, // Right shift
-    '*',
-    0, // Alt
-    ' ',
-    0, // Caps lock
-    0, // F1
-    0, // F2
-    0, // F3
-    0, // F4
-    0, // F5
-    0, // F6
-    0, // F8
-    0, // F7
-    0, // F9
-    0, // F10
-    0, // Num lock
-    0, // Scroll lock
-    0, // Home key
-    0, // Arrow up
-    0, // Page up
-    '-',
-    0, // Arrow left
-    0,
-    0, // Arrow right
-    '+',
-    0, // End
-    0, // Arrow down
-    0, // Page down
-    0, // Insert ket
-    0, // Deltee key
-    0,
-    0,
-    0,
-    0, // F11
-    0, // F12
-    0,
+unsigned char keymap[][128] = {
+    {0},
+    {27},
+    {'1', '!'},
+    {'2', '@'},
+    {'3', '#'},
+    {'4', '$'},
+    {'5', '%'},
+    {'6', '^'},
+    {'7', '&'},
+    {'8', '*'},
+    {'9', '('},
+    {'0', ')'},
+    {'-', '_'},
+    {'=', '+'},
+    {'\b'},
+    {'\t'},
+    {'q', 'Q'},
+    {'w', 'W'},
+    {'e', 'E'},
+    {'r', 'R'},
+    {'t', 'T'},
+    {'y', 'Y'},
+    {'u', 'U'},
+    {'i', 'I'},
+    {'o', 'O'},
+    {'p', 'P'},
+    {'[', '{'},
+    {']', '}'},
+    {'\n'},
+    {0},
+    {'a', 'A'},
+    {'s', 'S'},
+    {'d', 'D'},
+    {'f', 'F'},
+    {'g', 'G'},
+    {'h', 'H'},
+    {'j', 'J'},
+    {'k', 'K'},
+    {'l', 'L'},
+    {';', ':'},
+    {'\'', '"'},
+    {'`', '~'},
+    {0}, // Left shift
+    {'\\', '|'},
+    {'z', 'Z'},
+    {'x', 'X'},
+    {'c', 'C'},
+    {'v', 'V'},
+    {'b', 'B'},
+    {'n', 'N'},
+    {'m', 'M'},
+    {',', '<'},
+    {'.', '>'},
+    {'/', '?'},
+    {0}, // Right shift
+    {'*'},
+    {0}, // Alt
+    {' '}, // Space
+    {0}, // Caps lock
+    {0}, // F1
+    {0}, // F2
+    {0}, // F3
+    {0}, // F4
+    {0}, // F5
+    {0}, // F6
+    {0}, // F8
+    {0}, // F7
+    {0}, // F9
+    {0}, // F10
+    {0}, // Num lock
+    {0}, // Scroll lock
+    {0}, // Home key
+    {0}, // Arrow up
+    {0}, // Page up
+    {'-'},
+    {0}, // Arrow left
+    {0},
+    {0}, // Arrow right
+    {'+'},
+    {0}, // End
+    {0}, // Arrow down
+    {0}, // Page down
+    {0}, // Insert ket
+    {0}, // Deltee key
+    {0},
+    {0},
+    {0},
+    {0}, // F11
+    {0}, // F12
+    {0},
 };
 
 #define NB_DOCUMENTED_COMMANDS 6
@@ -114,8 +114,12 @@ const char* commands[][NB_DOCUMENTED_COMMANDS] = {
     {"selftest", "run the willOS test suite"},
 };
 
-unsigned char get_char(uint8_t scancode) {
-    return keymap[scancode];
+unsigned char get_char(uint8_t scancode, bool shift, bool caps_lock) {
+    if ((caps_lock || shift) && keymap[scancode][1]) {
+        return keymap[scancode][1];
+    }
+
+    return keymap[scancode][0];
 }
 
 void help(const char* command) {
@@ -215,6 +219,7 @@ char readline[READLINE_SIZE] = {0};
 char last_readline[READLINE_SIZE] = {0};
 unsigned int readline_index = 0;
 
+bool caps_lock_mode = false;
 bool ctrl_mode = false;
 bool shift_mode = false;
 
@@ -235,6 +240,13 @@ void kshell(uint8_t scancode) {
     }
 
     switch (scancode) {
+    case KB_CAPS_LOCK:
+        if (key_was_released) {
+            caps_lock_mode = !caps_lock_mode;
+        }
+
+        break;
+
     case KB_ARROW_UP:
         if (key_was_released) {
             reset_readline();
@@ -295,7 +307,7 @@ void kshell(uint8_t scancode) {
 
     default:
         if (key_was_released) {
-            unsigned char c = get_char(scancode);
+            unsigned char c = get_char(scancode, shift_mode, caps_lock_mode);
 
             if (c) {
                 // Handle keyboard shortcuts.
