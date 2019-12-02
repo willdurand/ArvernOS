@@ -12,6 +12,7 @@ page_table_t next_table_create(page_table_t in, uint64_t index);
 page_table_t next_table_address(page_table_t table, uint32_t index);
 
 void paging_init() {
+    // TODO: implement me
 }
 
 page_t page_containing_address(uint64_t addr) {

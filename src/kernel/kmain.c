@@ -26,6 +26,7 @@ void kmain(unsigned long magic, unsigned long addr) {
     }
 
     print_welcome_messge();
+
     // enable serial port
     serial_init(SERIAL_COM1, SERIAL_SPEED_115200);
     DEBUG("%s has started", KERNEL_NAME);
@@ -33,10 +34,14 @@ void kmain(unsigned long magic, unsigned long addr) {
     multiboot_info_t* mbi = (multiboot_info_t*) addr;
     reserved_areas_t reserved = read_multiboot_info(mbi);
 
+    // memory
     printf("- multiboot_start = 0x%X, multiboot_end = 0x%X\n", reserved.multiboot_start,
            reserved.multiboot_end);
     printf("- kernel_start    = 0x%X, kernel_end    = 0x%X\n", reserved.kernel_start,
            reserved.kernel_end);
+    multiboot_tag_mmap_t* mmap = find_multiboot_tag(mbi->tags, MULTIBOOT_TAG_TYPE_MMAP);
+    mmu_init(mmap, reserved);
+    printf("- frame allocator and paging enabled\n");
 
     isr_init();
     irq_init();
@@ -54,11 +59,6 @@ void kmain(unsigned long magic, unsigned long addr) {
 
     keyboard_init();
     printf("- keyboard routine enabled\n");
-
-    // memory
-    multiboot_tag_mmap_t* mmap = find_multiboot_tag(mbi->tags, MULTIBOOT_TAG_TYPE_MMAP);
-    mmu_init(mmap, reserved);
-    printf("- frame allocator and paging enabled\n");
 
     // shell
     printf(PROMPT);
