@@ -29,6 +29,7 @@ CFLAGS = -W -Wall -pedantic -std=c11 -O2 -ffreestanding -nostdlib \
 
 default: iso
 
+kernel: ## compile the kernel
 kernel: $(KERNEL)
 .PHONY: kernel
 
@@ -46,6 +47,7 @@ $(SOURCES): %.o: %.c
 $(LIB): $(SOURCES)
 	$(AR) rcs $@ $^
 
+iso: ## build the image of the OS (.iso)
 iso: $(ISO)
 .PHONY: iso
 
@@ -54,25 +56,28 @@ $(ISO): $(KERNEL)
 	cp -R grub/* $(GRUB_DIR)
 	grub-mkrescue -o $@ $(ISO_DIR)
 
+run: ## run the OS
 run: $(ISO)
 	qemu-system-x86_64 -cdrom $<
 .PHONY: run
 
-run-i386: $(ISO)
-	qemu-system-i386 -cdrom $<
-.PHONY: run-i386
-
+debug: ## build and run the OS in debug mode
 debug: CFLAGS += -DENABLE_KERNEL_DEBUG
 debug: $(ISO)
 	qemu-system-x86_64 -cdrom $< -serial file:/tmp/serial.log
 .PHONY: run
 
-clean:
+clean: ## remove build artifacts
+	find . -name '*.orig' -exec rm "{}" ";"
 	rm -f $(OBJECTS) $(SOURCES) $(KERNEL) $(ISO) $(LIB)
 	rm -rf $(BUILD_DIR)
 .PHONY: clean
 
-fmt:
+fmt: ## automatically format the code with astyle
 	astyle --project=.astylerc --recursive "*.c,*.h"
 	@find . -name '*.orig' -exec rm "{}" ";"
 .PHONY: fmt
+
+help:
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+.PHONY: help
