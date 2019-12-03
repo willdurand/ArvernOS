@@ -3,7 +3,6 @@
 #include <core/timer.h>
 #include <core/debug.h>
 #include <core/check.h>
-#include <mmu/mmu.h>
 #include <kernel/panic.h>
 #include <kernel/kshell.h>
 #include <drivers/screen.h>
@@ -38,9 +37,6 @@ void kmain(unsigned long magic, unsigned long addr) {
            reserved.multiboot_end);
     printf("- kernel_start    = 0x%X, kernel_end    = 0x%X\n", reserved.kernel_start,
            reserved.kernel_end);
-    multiboot_tag_mmap_t* mmap = find_multiboot_tag(mbi->tags, MULTIBOOT_TAG_TYPE_MMAP);
-    mmu_init(mmap, reserved);
-    printf("- frame allocator and paging enabled\n");
 
     isr_init();
     irq_init();
