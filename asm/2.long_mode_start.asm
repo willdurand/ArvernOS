@@ -1,4 +1,6 @@
+; 64-bit code here.
 global long_mode_start
+
 extern kmain
 
 section .text
@@ -14,5 +16,5 @@ long_mode_start:
 
 	call kmain
 
-	; should not happen
+	; Should not happen.
 	hlt

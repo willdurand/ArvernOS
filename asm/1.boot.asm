@@ -1,12 +1,15 @@
 ; cf. https://intermezzos.github.io/book/hello-world.html
 
-global start
+global start	; exports a label (makes it public). As start will be the entry
+		; point of our kernel, it needs to be public.
+
 extern long_mode_start
 
-%define MULTIBOOT2_MAGIC_VALUE 0x36d76289
-
-section .text
-bits 32
+section .text	; executable code
+bits 32		; specifies that the following lines are 32-bit instructions.
+		; it's needed because the CPU is still in Protected mode when
+		; GRUB starts our kernel. When we switch to Long mode, we can
+		; use bits 64 (64-bit instructions).
 start:
 	mov esp, stack_top
 	; `ebx` points to a boot information structure.
@@ -15,6 +18,7 @@ start:
 	; `eax` should contain the multiboot2 magic number.
 	mov edi, eax
 
+	; various checks before we can move on.
 	call check_multiboot
 	call check_cpuid
 	call check_long_mode
@@ -22,12 +26,16 @@ start:
 	call set_up_page_tables
 	call enable_paging
 
-    lgdt [gdt64.pointer]
+    lgdt [gdt64.pointer]    ; load the 64-bit GDT
+    jmp gdt64.code:long_mode_start
 
-	jmp gdt64.code:long_mode_start
-
-    ; should not be reached
+    ; Should not be reached.
     hlt
+
+; -----------------------------------------------------------------------------
+; make sure the kernel was really loaded by a Multiboot compliant bootloader
+
+%define MULTIBOOT2_MAGIC_VALUE 0x36d76289
 
 check_multiboot:
 	cmp eax, MULTIBOOT2_MAGIC_VALUE
@@ -37,7 +45,10 @@ check_multiboot:
 	mov al, "0"
 	jmp error
 
+; -----------------------------------------------------------------------------
+; CPUID check
 ; cf. http://wiki.osdev.org/Setting_Up_Long_Mode#Detection_of_CPUID
+
 check_cpuid:
     ; Check if CPUID is supported by attempting to flip the ID bit (bit 21)
     ; in the FLAGS register. If we can flip it, CPUID is available.
@@ -60,19 +71,22 @@ check_cpuid:
     pushfd
     pop eax
 
-    ; Restore FLAGS from the old version stored in ECX (i.e. flipping the
-    ; ID bit back if it was ever flipped).
+    ; Restore FLAGS from the old version stored in ECX (i.e. flipping the ID
+    ; bit back if it was ever flipped).
     push ecx
     popfd
 
-    ; Compare EAX and ECX. If they are equal then that means the bit
-    ; wasn't flipped, and CPUID isn't supported.
+    ; Compare EAX and ECX. If they are equal then that means the bit wasn't
+    ; flipped, and CPUID isn't supported.
     cmp eax, ecx
     je .no_cpuid
     ret
 .no_cpuid:
     mov al, "1"
     jmp error
+
+; -----------------------------------------------------------------------------
+; Long Mode check
 
 check_long_mode:
     ; test if extended processor info in available
@@ -91,65 +105,66 @@ check_long_mode:
     mov al, "2"
     jmp error
 
-set_up_page_tables:
-	; cf. http://os.phil-opp.com/modifying-page-tables.html
-	; required to implement recursive mapping (paging)
-	mov eax, p4_table
-	or eax, 0b11 ; present + writable
-	mov [p4_table + 511 * 8], eax
+; -----------------------------------------------------------------------------
 
+set_up_page_tables:
     ; Point the first entry of the level 4 page table to the first entry in the
-    ; p3 table
+    ; p3 table.
     mov eax, p3_table
-    or eax, 0b11
-    mov dword [p4_table + 0], eax
+    or eax, 0b11    ; present + writable
+    mov dword [p4_table], eax
 
     ; Point the first entry of the level 3 page table to the first entry in the
     ; p2 table
     mov eax, p2_table
-    or eax, 0b11
-    mov dword [p3_table + 0], eax
+    or eax, 0b11    ; present + writable
+    mov dword [p3_table], eax
 
     ; point each page table level two entry to a page
     mov ecx, 0         ; counter variable
 .map_p2_table:
-    mov eax, 0x200000  ; 2MiB
-    mul ecx
-    or eax, 0b10000011
-    mov [p2_table + ecx * 8], eax
+    ; map ecx-th P2 entry to a huge page that starts at address 2MiB*ecx
+    mov eax, 0x200000		    ; 2MiB
+    mul ecx			    ; start address of ecx-th page
+    or eax, 0b10000011		    ; present + writable + huge
+    mov [p2_table + ecx * 8], eax   ; map ecx-th entry
 
-    inc ecx
-    cmp ecx, 512
-    jne .map_p2_table
+    inc ecx		; increase counter
+    cmp ecx, 512	; if counter == 512, the whole P2 table is mapped
+    jne .map_p2_table	; else map the next entry
 
     ret
 
+; -----------------------------------------------------------------------------
+; Enable paging to enter long-mode.
+
 enable_paging:
-    ; move page table address to cr3
+    ; load P4 to cr3 register (cpu uses this to access the P4 table)
     mov eax, p4_table
     mov cr3, eax
 
-    ; enable PAE
+    ; enable PAE-flag in cr4 (Physical Address Extension)
     mov eax, cr4
     or eax, 1 << 5
     mov cr4, eax
 
-    ; set the long mode bit
+    ; set the long mode bit in the EFER MSR (model specific register)
     mov ecx, 0xC0000080
     rdmsr
     or eax, 1 << 8
     wrmsr
 
-    ; enable paging
+    ; enable paging in the cr0 register
     mov eax, cr0
     or eax, 1 << 31
-    or eax, 1 << 16
     mov cr0, eax
 
-	ret
+    ret
 
+; -----------------------------------------------------------------------------
 ; Prints `ERR: ` and the given error code to screen and hangs.
-; parameter: error code (in ascii) in al
+;
+; Parameter: error code (in ascii) in al
 ;
 ;	0 = no multiboot
 ;	1 = no CPUID
@@ -161,7 +176,8 @@ error:
 	mov byte  [0xb800a], al
 	hlt
 
-; block started by symbol
+; -----------------------------------------------------------------------------
+
 section .bss
 align 4096
 p4_table:
@@ -176,6 +192,10 @@ p2_table:
 stack_bottom:
     resb 4096 * 4
 stack_top:
+
+; -----------------------------------------------------------------------------
+; The processor is still in a 32-bit compatibility submode. To actually execute
+; 64-bit code, we need to set up a new Global Descriptor Table.
 
 section .rodata
 gdt64:

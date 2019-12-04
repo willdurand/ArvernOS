@@ -3,6 +3,7 @@
 ENTRY(start)
 
 SECTIONS {
+    /* sets the load address of the first section to 1 MiB (convention) */
     . = 1M;
 
     .boot :

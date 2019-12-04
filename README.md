@@ -73,6 +73,19 @@ loaded, run:
 
     $ make run
 
+## Early boot sequence
+
+1. The BIOS loads the bootloader (GRUB) from the ISO
+2. The bootloader reads the kernel executable and finds the multiboot header
+3. The bootloader copies the `.boot` and `.text` sections to memory (to
+   addresses `0x100000` and `0x100020`)
+4. The bootloader jumps to the entry point (at `0x100020`)
+5. Various checks are performed to make sure we can continue the boot process
+6. Page table and paging are configured and enabled
+7. Load a 64-bit Global Descriptor Table
+8. Reload all the data segment registers
+9. Call the C `kmain()` function
+
 ## License
 
 willOS is released under the MIT License. See the bundled [LICENSE](LICENSE.md)
