@@ -77,7 +77,7 @@ void screen_write(char c) {
         screen_row++;
     } else if (c == '\b') {
         if (screen_col == 0) {
-            screen_col = SCREEN_WIDTH -1;
+            screen_col = SCREEN_WIDTH - 1;
             screen_row--;
         } else {
             screen_col--;
