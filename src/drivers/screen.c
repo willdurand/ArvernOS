@@ -75,8 +75,14 @@ void screen_write(char c) {
     if (c == '\n') {
         screen_col = 0;
         screen_row++;
-    } else if (c == '\b' && screen_col > 0) {
-        screen_col--;
+    } else if (c == '\b') {
+        if (screen_col == 0) {
+            screen_col = SCREEN_WIDTH -1;
+            screen_row--;
+        } else {
+            screen_col--;
+        }
+
         screen_write_at(0x0, screen_scheme, screen_col, screen_row);
     } else if (c == '\t') {
         screen_col = screen_col + 8 - (screen_col % 8);
