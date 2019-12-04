@@ -200,6 +200,12 @@ void run_command(const char* command) {
     }
 }
 
+void print_prompt() {
+    screen_color_scheme(COLOR_CYAN, COLOR_BLACK);
+    printf(PROMPT);
+    screen_color_scheme(COLOR_WHITE, COLOR_BLACK);
+}
+
 char readline[READLINE_SIZE] = {0};
 char last_readline[READLINE_SIZE] = {0};
 unsigned int readline_index = 0;
@@ -276,7 +282,7 @@ void kshell(uint8_t scancode) {
             run_command((const char*)readline);
             strcpy(last_readline, readline);
             reset_readline();
-            printf(PROMPT);
+            print_prompt();
         }
 
         break;
@@ -302,13 +308,13 @@ void kshell(uint8_t scancode) {
                         readline[readline_index++] = '^';
                         readline[readline_index++] = 'C';
                         printf("^C\n");
-                        printf(PROMPT);
+                        print_prompt();
                         break;
 
                     case 'l':
                         clear();
                         reset_readline();
-                        printf(PROMPT);
+                        print_prompt();
                         break;
                     }
                 } else {

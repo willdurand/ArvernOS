@@ -1,7 +1,6 @@
 #ifndef KSHELL_H
 #define KSHELL_H
 
-// This is required to use `uint8_t`.
 #include <stdlib.h>
 
 #define READLINE_SIZE   256
@@ -16,5 +15,6 @@
 #define KB_TAB          15
 
 void kshell(uint8_t scancode);
+void print_prompt();
 
 #endif

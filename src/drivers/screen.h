@@ -28,5 +28,6 @@ void screen_init();
 void screen_clear();
 void screen_write(char c);
 void screen_print(const char*);
+void screen_color_scheme(uint8_t fg, uint8_t bg);
 
 #endif

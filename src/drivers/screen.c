@@ -22,9 +22,13 @@ int screen_row;
 
 void screen_init() {
     framebuffer = (char*) VIDEO_ADDRESS;
-    screen_scheme = color_scheme(COLOR_LIGHT_GREY, COLOR_BLACK);
     screen_col = 0;
     screen_row = 0;
+    screen_color_scheme(COLOR_WHITE, COLOR_BLACK);
+}
+
+void screen_color_scheme(uint8_t fg, uint8_t bg) {
+    screen_scheme = color_scheme(fg, bg);
 }
 
 void screen_clear() {

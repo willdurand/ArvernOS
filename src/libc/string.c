@@ -1,4 +1,5 @@
 #include <string.h>
+#include <mem.h>
 
 size_t strlen(const char* s) {
     size_t ret = 0;
