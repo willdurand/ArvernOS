@@ -3,10 +3,11 @@ willOS
 
 [![CircleCI](https://circleci.com/gh/willdurand/willOS/tree/master.svg?style=svg)](https://circleci.com/gh/willdurand/willOS/tree/master)
 
-willOS is a dead-simple 64 bits Operating System.
+willOS is a minimal 64 bits kernel (not really an Operating System because it
+cannot do a lot of things currently).
 
 <p align="center">
-<img src="doc/qemu.gif">
+<img src="docs/qemu.gif">
 <p>
 
 Note: the screencast above is likely outdated.
