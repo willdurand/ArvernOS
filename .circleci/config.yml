@@ -1,0 +1,12 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/buildpack-deps
+    steps:
+      - checkout
+      - run: sudo apt-get update
+      - run: sudo apt-get install nasm grub2 xorriso build-essential
+      - run: make
+      - run: test -f build/isofiles/boot/kernel.bin
+      - run: test -f build/willOS.iso
