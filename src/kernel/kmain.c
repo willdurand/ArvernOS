@@ -70,10 +70,10 @@ void kmain(unsigned long magic, unsigned long addr) {
     reserved_areas_t reserved = read_multiboot_info(mbi);
 
     // memory
-    printf("multiboot_start = 0x%X, multiboot_end = 0x%X\n", reserved.multiboot_start,
-           reserved.multiboot_end);
-    printf("kernel_start    = 0x%X, kernel_end    = 0x%X\n\n", reserved.kernel_start,
-           reserved.kernel_end);
+    DEBUG("multiboot_start = 0x%X, multiboot_end = 0x%X\n", reserved.multiboot_start,
+          reserved.multiboot_end);
+    DEBUG("kernel_start    = 0x%X, kernel_end    = 0x%X\n\n", reserved.kernel_start,
+          reserved.kernel_end);
 
     print_step("initializing interruptions");
     isr_init();
