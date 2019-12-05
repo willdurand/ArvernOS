@@ -17,15 +17,18 @@ KERNEL_DIR = $(ISO_DIR)/boot
 GRUB_DIR   = $(KERNEL_DIR)/grub
 KERNEL     = $(KERNEL_DIR)/kernel.bin
 ISO        = $(BUILD_DIR)/$(OS_NAME).iso
-LIB        = $(BUILD_DIR)/lib$(OS_NAME).a
+LIBC       = $(BUILD_DIR)/libc-$(OS_NAME).a
+LIBK       = $(BUILD_DIR)/libk-$(OS_NAME).a
 
 OBJECTS := $(patsubst %.asm,%.o,$(shell find asm -name '*.asm'))
 SOURCES := $(patsubst %.c,%.o,$(shell find src -name '*.c'))
+LIBC_SOURCES := $(patsubst %.c,%.o,$(shell find src/libc -name '*.c'))
 
 CFLAGS = -W -Wall -pedantic -std=c11 -O2 -ffreestanding -nostdlib \
 		 -fno-builtin -fno-stack-protector \
 		 -mno-red-zone \
-		 -I src/include/ -I src/
+		 -I src/include/ -I src/ \
+		 -D__is_libk
 
 default: iso
 
@@ -33,9 +36,9 @@ kernel: ## compile the kernel
 kernel: $(KERNEL)
 .PHONY: kernel
 
-$(KERNEL): $(OBJECTS) $(LIB)
+$(KERNEL): $(OBJECTS) $(LIBK)
 	mkdir -p $(KERNEL_DIR)
-	$(LD) --nmagic --output=$@ --script=$(LINKER) $(OBJECTS) $(LIB)
+	$(LD) --nmagic --output=$@ --script=$(LINKER) $(OBJECTS) $(LIBK)
 
 $(OBJECTS): %.o: %.asm
 	mkdir -p $(BUILD_DIR)
@@ -44,8 +47,18 @@ $(OBJECTS): %.o: %.asm
 $(SOURCES): %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(LIB): $(SOURCES)
+$(LIBK): $(SOURCES)
+	mkdir -p $(BUILD_DIR)
 	$(AR) rcs $@ $^
+
+$(LIBC): $(LIBC_SOURCES)
+	mkdir -p $(BUILD_DIR)
+	$(AR) rcs $@ $^
+
+libc: ## build the libc (for userland)
+libc: CFLAGS := $(filter-out -D__is_libk, $(CFLAGS))
+libc: $(LIBC)
+.PHONY: libc
 
 iso: ## build the image of the OS (.iso)
 iso: $(ISO)
@@ -69,7 +82,7 @@ debug: $(ISO)
 
 clean: ## remove build artifacts
 	find . -name '*.orig' -exec rm "{}" ";"
-	rm -f $(OBJECTS) $(SOURCES) $(KERNEL) $(ISO) $(LIB)
+	rm -f $(OBJECTS) $(SOURCES) $(KERNEL) $(ISO) $(LIBK) $(LIBC)
 	rm -rf $(BUILD_DIR)
 .PHONY: clean
 

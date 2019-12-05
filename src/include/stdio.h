@@ -3,9 +3,15 @@
 
 #include <stdarg.h>
 
+void printf(const char* format, ...);
+
+#ifdef __is_libk
+// This section is for the kernel version of `stdio.h`.
+
 #define DEVICE_SCREEN 0
 
-void printf(const char* format, ...);
 void vprintf(int device, const char* format, va_list arg);
+
+#endif
 
 #endif

@@ -7,15 +7,19 @@
 #include <drivers/screen.h>
 #include <drivers/serial.h>
 
-void putchar(int device, char c);
-void puts(int device, char* s);
-
 void printf(const char* format, ...) {
+#ifdef __is_libk
     va_list arg;
     va_start(arg, format);
     vprintf(DEVICE_SCREEN, format, arg);
     va_end(arg);
+#endif
 }
+
+#ifdef __is_libk
+
+void putchar(int device, char c);
+void puts(int device, char* s);
 
 void vprintf(int device, const char* format, va_list arg) {
     int32_t i_val;
@@ -97,3 +101,5 @@ void puts(int device, char* s) {
         screen_print(s);
     }
 }
+
+#endif
