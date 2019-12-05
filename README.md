@@ -19,12 +19,20 @@ The following dependencies are required to build this project:
 * `gcc` (`build-essential`)
 * `nasm`
 * `ld`
-* `grub-mkrescue` (part of `grub` or `grub2`)
+* `grub-mkrescue` (part of `grub2-common`)
 * `xorriso`
 * (optional) `qemu`
 
 This project targets `x86_64` architectures, so you likely need a
 cross-compilation toolchain.
+
+### Docker (recommended way)
+
+Use [Docker](https://docs.docker.com/) with the provided
+[`Dockerfile`](./Dockerfile):
+
+   $ docker build -t willos/toolchain .
+   $ docker run --rm -v $(pwd):/app willos/toolchain make
 
 ### MacOS
 
@@ -48,7 +56,7 @@ Hat tip to [Eliza Weisman](http://github.com/hawkw) for the taps!
 
 ### Linux
 
-See the [circle.yml](circle.yml) file.
+See the [circle-ci config](.circleci/config.yml).
 
 ## Building willOS
 
