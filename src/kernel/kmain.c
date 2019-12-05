@@ -2,6 +2,7 @@
 #include <core/isr.h>
 #include <core/timer.h>
 #include <core/debug.h>
+#include <core/syscall.h>
 #include <drivers/screen.h>
 #include <kernel/panic.h>
 #include <kernel/kshell.h>
@@ -75,12 +76,16 @@ void kmain(unsigned long magic, unsigned long addr) {
     DEBUG("kernel_start    = 0x%X, kernel_end    = 0x%X", reserved.kernel_start,
           reserved.kernel_end);
 
+
     print_step("initializing interruptions");
     isr_init();
     irq_init();
     print_ok();
 
-    // enable scheduler
+    print_step("initializing syscalls");
+    syscall_init();
+    print_ok();
+
     print_step("initializing clock (timer)");
     timer_init();
     print_ok();

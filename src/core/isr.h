@@ -33,6 +33,8 @@
 #define IRQ3 35
 #define IRQ4 36
 
+#define SYSCALL 80
+
 // These functions are declared in interrupt.asm file
 extern void isr0();
 extern void isr1();
@@ -66,6 +68,9 @@ extern void isr28();
 extern void isr29();
 extern void isr30();
 extern void isr31();
+
+// That is for syscalls
+extern void isr80();
 
 extern void irq0();
 extern void irq1();

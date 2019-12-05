@@ -97,6 +97,9 @@ def_isr_handler 29
 def_isr_handler 30
 def_isr_handler 31
 
+; That is for syscalls
+def_isr_handler 80
+
 irq_common_stub:
     ; save registers
     push rax

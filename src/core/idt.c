@@ -9,9 +9,13 @@ void set_idt_gate(uint16_t n, uint64_t handler) {
     idt[n].ptr_mid  = (uint16_t)(handler >> 16);
     idt[n].ptr_high = (uint32_t)(handler >> 32);
 
-    idt[n].opts.stack_OK  = 0; // do not switch stack
-    idt[n].opts.present   = 1; // are we valid
-    idt[n].opts.DPL       = 3; // priv to call int handler
+    idt[n].opts.stack_OK  = 0;    // do not switch stack
+    idt[n].opts.present   = 1;    // are we valid
+    idt[n].opts.DPL       = 3;    // priviledge to call int handler
+
+    // Note: in the future, we will have to set DPL to 0 to allow userland code
+    // to do syscalls. See: https://wiki.osdev.org/Interrupt_Descriptor_Table
+
     idt[n].opts.gate_type = 0x01; // 1 = interrupt, 2 = trap
     idt[n].opts.ONES      = 0x07;
     idt[n].opts.ZERO      = 0;

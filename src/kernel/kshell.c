@@ -171,6 +171,10 @@ void selftest() {
     printf("    invoking breakpoint exception\n");
     __asm__("int3");
 
+    printf("\n[syscalls]\n");
+    printf("    syscalling\n");
+    __asm__("int $80");
+
     printf("\nall good!\n");
 }
 

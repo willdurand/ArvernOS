@@ -11,7 +11,6 @@ stack_t* get_stack(uint64_t id, uint64_t stack);
 void breakpoint_handler(stack_t* stack);
 void double_fault_handler(stack_t* stack);
 
-isr_t interrupt_handlers[256];
 const char* exception_messages[] = {
     "Division By Zero",
     "Debug",
@@ -49,6 +48,8 @@ const char* exception_messages[] = {
     "Reserved",
     "Reserved"
 };
+
+isr_t interrupt_handlers[256];
 
 void isr_init() {
     // start initialization
@@ -109,6 +110,8 @@ void isr_init() {
     set_idt_gate(IRQ2, (uint64_t) irq2);
     set_idt_gate(IRQ3, (uint64_t) irq3);
     set_idt_gate(IRQ4, (uint64_t) irq4);
+
+    set_idt_gate(SYSCALL, (uint64_t) isr80);
 
     // handlers for isr exceptions
     register_interrupt_handler(EXCEPTION_BP, breakpoint_handler);
