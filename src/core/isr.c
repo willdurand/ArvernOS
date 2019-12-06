@@ -110,7 +110,7 @@ void isr_init() {
     register_idt_gate(IRQ4, (uint64_t) irq4);
 
     // syscalls
-    register_idt_gate(SYSCALL, (uint64_t) isr80);
+    register_idt_gate(SYSCALL, (uint64_t) isr0x80);
 
     // handlers for isr exceptions
     register_interrupt_handler(EXCEPTION_BP, breakpoint_handler);
