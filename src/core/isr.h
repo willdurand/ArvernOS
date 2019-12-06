@@ -2,6 +2,7 @@
 #define CORE_ISR_H
 
 #include <core/idt.h>
+#include <core/syscall.h>
 #include <stdint.h>
 
 #define PIC1        0x20 // Master PIC
@@ -25,6 +26,9 @@
 #define EXCEPTION_SS 12
 #define EXCEPTION_GP 13
 #define EXCEPTION_PF 14
+// 15 is "reserved"
+#define EXCEPTION_MF 16
+#define EXCEPTION_AC 17
 // ...
 
 #define IRQ0 32

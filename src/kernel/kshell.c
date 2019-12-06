@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <test.h>
 
 unsigned char keymap[][128] = {
     {0},
@@ -173,7 +174,7 @@ void selftest() {
 
     printf("\n[syscalls]\n");
     printf("    syscalling\n");
-    __asm__("int $80");
+    test();
 
     printf("\nall good!\n");
 }

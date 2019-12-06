@@ -111,6 +111,7 @@ void isr_init() {
     set_idt_gate(IRQ3, (uint64_t) irq3);
     set_idt_gate(IRQ4, (uint64_t) irq4);
 
+    // syscalls
     set_idt_gate(SYSCALL, (uint64_t) isr80);
 
     // handlers for isr exceptions
@@ -131,10 +132,17 @@ void irq_disable() {
 void isr_handler(uint64_t id, uint64_t stack_addr) {
     stack_t* stack = get_stack(id, stack_addr);
 
-    if (interrupt_handlers[id] != 0) {
-        isr_t handler = interrupt_handlers[id];
-        handler(get_stack(id, stack_addr));
+    // We have a special handler for syscalls.
+    if (id == SYSCALL) {
+        syscall_handler((registers_t*)stack);
+        return;
+    }
 
+    isr_t handler = interrupt_handlers[id];
+
+    if (handler != 0) {
+
+        handler(stack);
         return;
     }
 
@@ -184,19 +192,19 @@ stack_t* get_stack(uint64_t id, uint64_t stack_addr) {
     //     +------------+
     //
     switch (id) {
-    case 8:
-    case 10:
-    case 11:
-    case 12:
-    case 13:
-    case 14:
-    case 17:
+    case EXCEPTION_DF:
+    case EXCEPTION_TS:
+    case EXCEPTION_NP:
+    case EXCEPTION_SS:
+    case EXCEPTION_GP:
+    case EXCEPTION_PF:
+    case EXCEPTION_AC:
         // skip error code, so that we always get the same stack_t
         stack_addr += sizeof(uint64_t);
         break;
     }
 
-    return (stack_t*)(stack_addr + (NB_REGISTERS_PUSHED_BEFORE_CALL * sizeof(uint64_t)));
+    return (stack_t*)(stack_addr + (NB_REGISTERS_PUSHED_BEFORE_CALL - 1 * sizeof(uint64_t)));
 }
 
 void breakpoint_handler(stack_t* stack) {

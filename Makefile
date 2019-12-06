@@ -78,7 +78,7 @@ debug: ## build and run the OS in debug mode
 debug: CFLAGS += -DENABLE_KERNEL_DEBUG
 debug: $(ISO)
 	qemu-system-x86_64 -cdrom $< -serial file:/tmp/serial.log
-.PHONY: run
+.PHONY: debug
 
 clean: ## remove build artifacts
 	find . -name '*.orig' -exec rm "{}" ";"
@@ -90,6 +90,12 @@ fmt: ## automatically format the code with astyle
 	astyle --project=.astylerc --recursive "*.c,*.h"
 	@find . -name '*.orig' -exec rm "{}" ";"
 .PHONY: fmt
+
+gdb: ## build, run the OS in debug mode and GDB
+gdb: CFLAGS += -DENABLE_KERNEL_DEBUG -g
+gdb: $(ISO)
+	qemu-system-x86_64 -s -S -cdrom $< -serial file:/tmp/serial.log
+.PHONY: gdb
 
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
