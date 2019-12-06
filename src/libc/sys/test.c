@@ -1,5 +1,5 @@
 #include <sys/syscall.h>
 
-void test(char c) {
-    __asm__("int $80" : : "n"(SYSCALL_TEST), "a"(c));
+void test(const char* s) {
+    __asm__("int $80" : /* no output */ : "a"(SYSCALL_TEST), "b"(s));
 }

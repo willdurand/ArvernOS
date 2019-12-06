@@ -134,7 +134,7 @@ void isr_handler(uint64_t id, uint64_t stack_addr) {
 
     // We have a special handler for syscalls.
     if (id == SYSCALL) {
-        syscall_handler((registers_t*)stack);
+        syscall_handler((registers_t*)stack_addr);
         return;
     }
 
@@ -180,28 +180,32 @@ void register_interrupt_handler(uint64_t id, isr_t handler) {
 }
 
 stack_t* get_stack(uint64_t id, uint64_t stack_addr) {
-    // cf. https://github.com/0xAX/linux-insides/blob/master/interrupts/interrupts-3.md
+    // See: https://github.com/0xAX/linux-insides/blob/master/interrupts/interrupts-3.md
+    // See: https://github.com/littleosbook/littleosbook/blob/e90faeb24c5c9fed8cde9a35974893706e81cbbf/interrupts.md
     //
     //     +------------+
     // +40 | %SS        |
     // +32 | %RSP       |
-    // +24 | %RFLAGS    |
+    // +24 | %CPU FLAGS |
     // +16 | %CS        |
-    //  +8 | %RIP       |
+    //  +8 | %IP        |
     //   0 | ERROR CODE | <-- %RSP
     //     +------------+
     //
     switch (id) {
-    case SYSCALL:
-        break;
-
-    default:
+    case EXCEPTION_DF:
+    case EXCEPTION_TS:
+    case EXCEPTION_NP:
+    case EXCEPTION_SS:
+    case EXCEPTION_GP:
+    case EXCEPTION_PF:
+    case EXCEPTION_AC:
         // skip error code, so that we always get the same stack_t
         stack_addr += sizeof(uint64_t);
         break;
     }
 
-    return (stack_t*)(stack_addr + (NB_REGISTERS_PUSHED_BEFORE_CALL - 1 * sizeof(uint64_t)));
+    return (stack_t*)(stack_addr + (NB_REGISTERS_PUSHED_BEFORE_CALL * sizeof(uint64_t)));
 }
 
 void breakpoint_handler(stack_t* stack) {

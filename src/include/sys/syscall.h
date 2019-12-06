@@ -1,9 +1,9 @@
 #ifndef SYS_SYSCALL_H
 #define SYS_SYSCALL_H
 
-#define NB_SYSCALLS   1
-#define SYSCALL_TEST  0
+#define NB_SYSCALLS   2
+#define SYSCALL_TEST  1
 
-void test(char c);
+void test(const char* s);
 
 #endif

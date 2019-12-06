@@ -174,7 +174,7 @@ void selftest() {
 
     printf("\n[syscalls]\n");
     printf("    syscalling\n");
-    test('i');
+    test("kshell");
 
     printf("\nall good!\n");
 }
