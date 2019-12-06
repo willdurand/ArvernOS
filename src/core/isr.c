@@ -5,8 +5,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define NB_REGISTERS_PUSHED_BEFORE_CALL 15
-
 stack_t* get_stack(uint64_t id, uint64_t stack);
 void breakpoint_handler(stack_t* stack);
 void double_fault_handler(stack_t* stack);
@@ -205,7 +203,7 @@ stack_t* get_stack(uint64_t id, uint64_t stack_addr) {
         break;
     }
 
-    return (stack_t*)(stack_addr + (NB_REGISTERS_PUSHED_BEFORE_CALL * sizeof(uint64_t)));
+    return (stack_t*)(stack_addr + sizeof(registers_t));
 }
 
 void breakpoint_handler(stack_t* stack) {
