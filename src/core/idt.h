@@ -32,7 +32,7 @@ typedef struct idt_register {
     uint64_t base;
 } __attribute__((packed)) idt_register_t;
 
-void set_idt_gate(uint16_t n, uint64_t handler);
-void set_idt();
+void register_idt_gate(uint16_t n, uint64_t handler);
+void idt_init();
 
 #endif

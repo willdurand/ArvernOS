@@ -70,53 +70,53 @@ void isr_init() {
     port_byte_out(PIC1_DATA, 0x00);
     port_byte_out(PIC2_DATA, 0x00);
 
-    set_idt_gate(0, (uint64_t) isr0);
-    set_idt_gate(1, (uint64_t) isr1);
-    set_idt_gate(2, (uint64_t) isr2);
-    set_idt_gate(3, (uint64_t) isr3);
-    set_idt_gate(4, (uint64_t) isr4);
-    set_idt_gate(5, (uint64_t) isr5);
-    set_idt_gate(6, (uint64_t) isr6);
-    set_idt_gate(7, (uint64_t) isr7);
-    set_idt_gate(8, (uint64_t) isr8);
-    set_idt_gate(9, (uint64_t) isr9);
-    set_idt_gate(10, (uint64_t) isr10);
-    set_idt_gate(11, (uint64_t) isr11);
-    set_idt_gate(12, (uint64_t) isr12);
-    set_idt_gate(13, (uint64_t) isr13);
-    set_idt_gate(14, (uint64_t) isr14);
-    set_idt_gate(15, (uint64_t) isr15);
-    set_idt_gate(16, (uint64_t) isr16);
-    set_idt_gate(17, (uint64_t) isr17);
-    set_idt_gate(18, (uint64_t) isr18);
-    set_idt_gate(19, (uint64_t) isr19);
-    set_idt_gate(20, (uint64_t) isr20);
-    set_idt_gate(21, (uint64_t) isr21);
-    set_idt_gate(22, (uint64_t) isr22);
-    set_idt_gate(23, (uint64_t) isr23);
-    set_idt_gate(24, (uint64_t) isr24);
-    set_idt_gate(25, (uint64_t) isr25);
-    set_idt_gate(26, (uint64_t) isr26);
-    set_idt_gate(27, (uint64_t) isr27);
-    set_idt_gate(28, (uint64_t) isr28);
-    set_idt_gate(29, (uint64_t) isr29);
-    set_idt_gate(30, (uint64_t) isr30);
-    set_idt_gate(31, (uint64_t) isr31);
+    register_idt_gate(0, (uint64_t) isr0);
+    register_idt_gate(1, (uint64_t) isr1);
+    register_idt_gate(2, (uint64_t) isr2);
+    register_idt_gate(3, (uint64_t) isr3);
+    register_idt_gate(4, (uint64_t) isr4);
+    register_idt_gate(5, (uint64_t) isr5);
+    register_idt_gate(6, (uint64_t) isr6);
+    register_idt_gate(7, (uint64_t) isr7);
+    register_idt_gate(8, (uint64_t) isr8);
+    register_idt_gate(9, (uint64_t) isr9);
+    register_idt_gate(10, (uint64_t) isr10);
+    register_idt_gate(11, (uint64_t) isr11);
+    register_idt_gate(12, (uint64_t) isr12);
+    register_idt_gate(13, (uint64_t) isr13);
+    register_idt_gate(14, (uint64_t) isr14);
+    register_idt_gate(15, (uint64_t) isr15);
+    register_idt_gate(16, (uint64_t) isr16);
+    register_idt_gate(17, (uint64_t) isr17);
+    register_idt_gate(18, (uint64_t) isr18);
+    register_idt_gate(19, (uint64_t) isr19);
+    register_idt_gate(20, (uint64_t) isr20);
+    register_idt_gate(21, (uint64_t) isr21);
+    register_idt_gate(22, (uint64_t) isr22);
+    register_idt_gate(23, (uint64_t) isr23);
+    register_idt_gate(24, (uint64_t) isr24);
+    register_idt_gate(25, (uint64_t) isr25);
+    register_idt_gate(26, (uint64_t) isr26);
+    register_idt_gate(27, (uint64_t) isr27);
+    register_idt_gate(28, (uint64_t) isr28);
+    register_idt_gate(29, (uint64_t) isr29);
+    register_idt_gate(30, (uint64_t) isr30);
+    register_idt_gate(31, (uint64_t) isr31);
 
-    set_idt_gate(IRQ0, (uint64_t) irq0);
-    set_idt_gate(IRQ1, (uint64_t) irq1);
-    set_idt_gate(IRQ2, (uint64_t) irq2);
-    set_idt_gate(IRQ3, (uint64_t) irq3);
-    set_idt_gate(IRQ4, (uint64_t) irq4);
+    register_idt_gate(IRQ0, (uint64_t) irq0);
+    register_idt_gate(IRQ1, (uint64_t) irq1);
+    register_idt_gate(IRQ2, (uint64_t) irq2);
+    register_idt_gate(IRQ3, (uint64_t) irq3);
+    register_idt_gate(IRQ4, (uint64_t) irq4);
 
     // syscalls
-    set_idt_gate(SYSCALL, (uint64_t) isr80);
+    register_idt_gate(SYSCALL, (uint64_t) isr80);
 
     // handlers for isr exceptions
     register_interrupt_handler(EXCEPTION_BP, breakpoint_handler);
     register_interrupt_handler(EXCEPTION_DF, double_fault_handler);
 
-    set_idt();
+    idt_init();
 }
 
 void irq_init() {

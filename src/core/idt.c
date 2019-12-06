@@ -3,7 +3,7 @@
 idt_gate_t idt[IDT_ENTRIES];
 idt_register_t idt_reg;
 
-void set_idt_gate(uint16_t n, uint64_t handler) {
+void register_idt_gate(uint16_t n, uint64_t handler) {
     idt[n].selector = 0x08;
     idt[n].ptr_low  = (uint16_t) handler;
     idt[n].ptr_mid  = (uint16_t)(handler >> 16);
@@ -22,7 +22,7 @@ void set_idt_gate(uint16_t n, uint64_t handler) {
     idt[n]._type       = 0;
 }
 
-void set_idt() {
+void idt_init() {
     idt_reg.base = (uint64_t) &idt;
     idt_reg.length = IDT_ENTRIES * sizeof(idt_gate_t) - 1;
     __asm__("lidt %0" : : "m"(idt_reg));
