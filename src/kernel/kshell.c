@@ -3,11 +3,11 @@
 #include <core/debug.h>
 #include <core/timer.h>
 #include <drivers/screen.h>
+#include <sys/syscall.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include <test.h>
 
 unsigned char keymap[][128] = {
     {0},
@@ -174,7 +174,7 @@ void selftest() {
 
     printf("\n[syscalls]\n");
     printf("    syscalling\n");
-    test();
+    test('i');
 
     printf("\nall good!\n");
 }

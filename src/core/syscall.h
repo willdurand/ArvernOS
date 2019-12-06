@@ -3,9 +3,6 @@
 
 #include <stdint.h>
 
-#define NB_SYSCALLS   1
-#define SYSCALL_TEST  0
-
 typedef struct registers {
     uint64_t rax;
     uint64_t rbx;

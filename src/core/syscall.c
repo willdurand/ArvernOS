@@ -1,5 +1,6 @@
 #include "syscall.h"
 #include <kernel/panic.h>
+#include <sys/syscall.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -30,7 +31,5 @@ void syscall_handler(registers_t* registers) {
 }
 
 void syscall_test(registers_t* registers) {
-    UNUSED(registers);
-
-    printf("hello from syscall_test\n");
+    printf("hello from syscall_test: %c\n", registers->rbx);
 }

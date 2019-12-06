@@ -192,13 +192,10 @@ stack_t* get_stack(uint64_t id, uint64_t stack_addr) {
     //     +------------+
     //
     switch (id) {
-    case EXCEPTION_DF:
-    case EXCEPTION_TS:
-    case EXCEPTION_NP:
-    case EXCEPTION_SS:
-    case EXCEPTION_GP:
-    case EXCEPTION_PF:
-    case EXCEPTION_AC:
+    case SYSCALL:
+        break;
+
+    default:
         // skip error code, so that we always get the same stack_t
         stack_addr += sizeof(uint64_t);
         break;
