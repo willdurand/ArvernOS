@@ -1,6 +1,9 @@
 #include "mmap.h"
-#include <core/debug.h>
+#include <mmu/debug.h>
 #include <kernel/panic.h>
+#include <mem.h>
+
+uint64_t mmap_read(uint64_t request, uint8_t mode);
 
 multiboot_tag_mmap_t* memory_area;
 uint64_t kernel_start;
@@ -13,8 +16,9 @@ void mmap_init(multiboot_info_t* mbi) {
     reserved_areas_t reserved = read_multiboot_info(mbi);
     multiboot_tag_mmap_t* mmap = find_multiboot_tag(mbi->tags, MULTIBOOT_TAG_TYPE_MMAP);
 
-    DEBUG("multiboot_start = %p, multiboot_end = %p", reserved.multiboot_start, reserved.multiboot_end);
-    DEBUG("kernel_start    = %p, kernel_end    = %p", reserved.kernel_start, reserved.kernel_end);
+    MMU_DEBUG("multiboot_start = %p, multiboot_end = %p", reserved.multiboot_start,
+              reserved.multiboot_end);
+    MMU_DEBUG("kernel_start    = %p, kernel_end    = %p", reserved.kernel_start, reserved.kernel_end);
 
     memory_area = mmap;
     kernel_start = reserved.kernel_start;
@@ -23,7 +27,7 @@ void mmap_init(multiboot_info_t* mbi) {
     multiboot_end = reserved.multiboot_end;
     next_free_frame = 1;
 
-    DEBUG(
+    MMU_DEBUG(
         "Initialized MMAP with memory_area = %p, multiboot_start = %p, "
         "multiboot_end = %p, next_free_frame = %u",
         memory_area,
@@ -75,23 +79,24 @@ uint64_t mmap_allocate_frame() {
         PANIC("failed to allocate a new frame, addr=%p", addr);
     }
 
-    DEBUG("allocated new frame with addr=%p", addr);
+    MMU_DEBUG("allocated new frame with addr=%p", addr);
+    next_free_frame++;
 
-    return next_free_frame++;
+    return addr;
 }
 
-void mmap_deallocate_frame(uint64_t addr) {
-    uint64_t frame = frame_starting_address(addr);
+void mmap_deallocate_frame(uint64_t frame_number) {
+    uint64_t addr = frame_start_address(frame_number);
 
-    for (int i = 0; i < PAGE_SIZE; i++) {
-        ((uint64_t*)frame)[i] = 0;
-    }
+    memset(addr, 0, sizeof(uint64_t) * PAGE_SIZE);
+
+    MMU_DEBUG("deallocated frame=%u addr=%p", frame_number, addr);
 }
 
 uint64_t frame_containing_address(uint64_t addr) {
     return addr / PAGE_SIZE;
 }
 
-uint64_t frame_starting_address(uint64_t addr) {
-    return addr * PAGE_SIZE;
+uint64_t frame_start_address(uint64_t frame_number) {
+    return frame_number * PAGE_SIZE;
 }

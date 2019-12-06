@@ -9,10 +9,12 @@
 #define MMAP_GET_ADDR   1
 
 void mmap_init(multiboot_info_t* mbi);
+// Returns a physical address.
 uint64_t mmap_allocate_frame();
-uint64_t mmap_read(uint64_t request, uint8_t mode);
-void mmap_deallocate_frame(uint64_t addr);
+void mmap_deallocate_frame(uint64_t frame_number);
+// Returns the frame number.
 uint64_t frame_containing_address(uint64_t addr);
-uint64_t frame_starting_address(uint64_t addr);
+// Returns a physical address.
+uint64_t frame_start_address(uint64_t frame_number);
 
 #endif

@@ -89,7 +89,7 @@ reserved_areas_t read_multiboot_info(multiboot_info_t* mbi) {
             for (
                 mmap = ((multiboot_tag_mmap_t*) tag)->entries;
                 (uint8_t*) mmap < (uint8_t*) tag + tag->size;
-                mmap = (multiboot_mmap_entry_t*)((unsigned long) mmap + ((multiboot_tag_mmap_t*) tag)->entry_size)
+                mmap = (multiboot_mmap_entry_t*)((uint64_t) mmap + ((multiboot_tag_mmap_t*) tag)->entry_size)
             ) {
                 DEBUG(
                     "mmap base_addr = %p, length = %#x, type = %#x",
