@@ -2,7 +2,6 @@
 #define CORE_ISR_H
 
 #include <core/idt.h>
-#include <core/syscall.h>
 #include <stdint.h>
 
 #define PIC1        0x20 // Master PIC
@@ -37,9 +36,7 @@
 #define IRQ3 35
 #define IRQ4 36
 
-#define SYSCALL 0x80
-
-// These functions are declared in interrupt.asm file
+// These functions are declared in interrupts.asm file
 extern void isr0();
 extern void isr1();
 extern void isr2();
@@ -73,14 +70,29 @@ extern void isr29();
 extern void isr30();
 extern void isr31();
 
-// That is for syscalls
-extern void isr0x80();
-
 extern void irq0();
 extern void irq1();
 extern void irq2();
 extern void irq3();
 extern void irq4();
+
+typedef struct registers {
+    uint64_t r15;
+    uint64_t r14;
+    uint64_t r13;
+    uint64_t r12;
+    uint64_t r11;
+    uint64_t r10;
+    uint64_t r9;
+    uint64_t r8;
+    uint64_t rbp;
+    uint64_t rdi;
+    uint64_t rsi;
+    uint64_t rdx;
+    uint64_t rcx;
+    uint64_t rbx;
+    uint64_t rax;
+} __attribute__((packed)) registers_t;
 
 typedef struct stack {
     uint64_t instruction_pointer;
@@ -98,5 +110,9 @@ void irq_disable();
 void isr_handler(uint64_t id, uint64_t stack) __asm__("isr_handler");
 void irq_handler(uint64_t id, uint64_t stack) __asm__("irq_handler");
 void register_interrupt_handler(uint64_t id, isr_t handler);
+
+// That is for syscalls
+#define SYSCALL 0x80
+extern void isr0x80();
 
 #endif

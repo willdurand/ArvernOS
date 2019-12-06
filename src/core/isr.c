@@ -1,11 +1,13 @@
 #include "isr.h"
 #include <core/debug.h>
 #include <core/ports.h>
+#include <core/syscall.h>
 #include <kernel/panic.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 stack_t* get_stack(uint64_t id, uint64_t stack);
+
 void breakpoint_handler(stack_t* stack);
 void double_fault_handler(stack_t* stack);
 

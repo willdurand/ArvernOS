@@ -1,6 +1,6 @@
 ; cf. https://github.com/ghaiklor/ghaiklor-os-gcc
 ; cf. https://github.com/tmathmeyer/sos
-global interrupt
+global interrupts
 
 extern isr_handler
 extern irq_handler
