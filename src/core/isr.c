@@ -148,11 +148,11 @@ void isr_handler(uint64_t id, uint64_t stack_addr) {
 
     PANIC(
         "Received interrupt: %d - %s\n\n"
-        "  instruction_pointer = 0x%X\n"
-        "  code_segment        = 0x%X\n"
-        "  cpu_flags           = 0x%X\n"
-        "  stack_pointer       = 0x%X\n"
-        "  stack_segment       = 0x%X",
+        "  instruction_pointer = %p\n"
+        "  code_segment        = %#x\n"
+        "  cpu_flags           = %#x\n"
+        "  stack_pointer       = %p\n"
+        "  stack_segment       = %#x",
         id, exception_messages[id],
         stack->instruction_pointer,
         stack->code_segment,
@@ -211,11 +211,11 @@ stack_t* get_stack(uint64_t id, uint64_t stack_addr) {
 void breakpoint_handler(stack_t* stack) {
     printf(
         "Exception: BREAKPOINT\n"
-        "  instruction_pointer = 0x%X\n"
-        "  code_segment        = 0x%X\n"
-        "  cpu_flags           = 0x%X\n"
-        "  stack_pointer       = 0x%X\n"
-        "  stack_segment       = 0x%X\n",
+        "  instruction_pointer = %p\n"
+        "  code_segment        = %#x\n"
+        "  cpu_flags           = %#x\n"
+        "  stack_pointer       = %p\n"
+        "  stack_segment       = %#x\n",
         stack->instruction_pointer,
         stack->code_segment,
         stack->cpu_flags,
@@ -227,11 +227,11 @@ void breakpoint_handler(stack_t* stack) {
 void double_fault_handler(stack_t* stack) {
     printf(
         "Exception: DOUBLE FAULT\n"
-        "  instruction_pointer = 0x%X\n"
-        "  code_segment        = 0x%X\n"
-        "  cpu_flags           = 0x%X\n"
-        "  stack_pointer       = 0x%X\n"
-        "  stack_segment       = 0x%X\n",
+        "  instruction_pointer = %p\n"
+        "  code_segment        = %#x\n"
+        "  cpu_flags           = %#x\n"
+        "  stack_pointer       = %p\n"
+        "  stack_segment       = %#x\n",
         stack->instruction_pointer,
         stack->code_segment,
         stack->cpu_flags,

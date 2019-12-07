@@ -11,7 +11,6 @@
 #include <drivers/keyboard.h>
 #include <stdio.h>
 #include <string.h>
-#include <mem.h>
 
 void print_welcome_messge();
 void print_step(const char* msg);
@@ -26,13 +25,7 @@ void print_welcome_messge() {
 }
 
 void print_step(const char* msg) {
-    int len = strlen(msg);
-
-    char buf[SCREEN_WIDTH - 5];
-    memcpy(buf, msg, len);
-    memset(buf + len * sizeof(char), ' ', SCREEN_WIDTH - 5 - len);
-
-    printf(buf);
+    printf("%-75s", msg);
 }
 
 void print_ok() {
@@ -71,11 +64,8 @@ void kmain(unsigned long magic, unsigned long addr) {
     reserved_areas_t reserved = read_multiboot_info(mbi);
 
     // memory
-    DEBUG("multiboot_start = 0x%X, multiboot_end = 0x%X", reserved.multiboot_start,
-          reserved.multiboot_end);
-    DEBUG("kernel_start    = 0x%X, kernel_end    = 0x%X", reserved.kernel_start,
-          reserved.kernel_end);
-
+    DEBUG("multiboot_start = %p, multiboot_end = %p", reserved.multiboot_start, reserved.multiboot_end);
+    DEBUG("kernel_start    = %p, kernel_end    = %p", reserved.kernel_start, reserved.kernel_end);
 
     print_step("initializing interruptions");
     isr_init();

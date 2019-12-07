@@ -4,12 +4,12 @@
 
 bool multiboot_is_valid(unsigned long magic, unsigned long addr) {
     if (magic != MULTIBOOT2_MAGIC_VALUE) {
-        printf("Invalid magic value: 0x%x", magic);
+        printf("Invalid magic value: %#x", magic);
         return false;
     }
 
     if (addr & 7) {
-        printf("Unaligned MBI: 0x%x", addr);
+        printf("Unaligned MBI: %#x", addr);
         return false;
     }
 
@@ -41,7 +41,7 @@ reserved_areas_t read_multiboot_info(multiboot_info_t* mbi) {
         .multiboot_end = 0
     };
 
-    DEBUG("announced MBI size 0x%x", mbi->size);
+    DEBUG("announced MBI size %#x", mbi->size);
 
     for (
         tag = (multiboot_tag_t*) mbi->tags;
@@ -59,7 +59,7 @@ reserved_areas_t read_multiboot_info(multiboot_info_t* mbi) {
 
         case MULTIBOOT_TAG_TYPE_MODULE:
             DEBUG(
-                "module at 0x%x-0x%x. command line %s",
+                "module at %#x-%#x. command line %s",
                 ((multiboot_tag_module_t*) tag)->mod_start,
                 ((multiboot_tag_module_t*) tag)->mod_end,
                 ((multiboot_tag_module_t*) tag)->cmdline
@@ -76,7 +76,7 @@ reserved_areas_t read_multiboot_info(multiboot_info_t* mbi) {
 
         case MULTIBOOT_TAG_TYPE_BOOTDEV:
             DEBUG(
-                "boot device 0x%x,%u,%u",
+                "boot device %#x, %u, %u",
                 ((multiboot_tag_bootdev_t*) tag)->biosdev,
                 ((multiboot_tag_bootdev_t*) tag)->slice,
                 ((multiboot_tag_bootdev_t*) tag)->part
@@ -92,7 +92,7 @@ reserved_areas_t read_multiboot_info(multiboot_info_t* mbi) {
                 mmap = (multiboot_mmap_entry_t*)((unsigned long) mmap + ((multiboot_tag_mmap_t*) tag)->entry_size)
             ) {
                 DEBUG(
-                    "mmap base_addr = 0x%X, length = 0x%X, type = 0x%x",
+                    "mmap base_addr = %p, length = %#x, type = %#x",
                     mmap->addr,
                     mmap->len,
                     mmap->type
@@ -131,7 +131,7 @@ reserved_areas_t read_multiboot_info(multiboot_info_t* mbi) {
                 i++
             ) {
                 DEBUG(
-                    "elf section #%d addr = 0x%X, type = 0x%X, size = 0x%X, flags = 0x%X",
+                    "elf section #%02d addr = %p, type = %#x, size = %#x, flags = %#x",
                     i,
                     elf->addr,
                     elf->type,
@@ -164,14 +164,14 @@ reserved_areas_t read_multiboot_info(multiboot_info_t* mbi) {
             break;
 
         default:
-            DEBUG("tag 0x%x, size 0x%x", tag->type, tag->size);
+            DEBUG("tag %#x, size %#x", tag->type, tag->size);
         }
     }
 
     tag = (multiboot_tag_t*)((uint8_t*) tag + ((tag->size + 7) & ~7));
     reserved.multiboot_end = (uint64_t) tag;
 
-    DEBUG("total MBI size 0x%X", (uint64_t) tag - (uint64_t) mbi);
+    DEBUG("total MBI size %#x", (uint64_t) tag - (uint64_t) mbi);
 
     return reserved;
 }

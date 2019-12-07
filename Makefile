@@ -21,13 +21,13 @@ LIBC       = $(BUILD_DIR)/libc-$(OS_NAME).a
 LIBK       = $(BUILD_DIR)/libk-$(OS_NAME).a
 
 OBJECTS := $(patsubst %.asm,%.o,$(shell find asm -name '*.asm'))
-SOURCES := $(patsubst %.c,%.o,$(shell find src -name '*.c'))
+SOURCES := $(patsubst %.c,%.o,$(shell find libs src -name '*.c'))
 LIBC_SOURCES := $(patsubst %.c,%.o,$(shell find src/libc -name '*.c'))
 
 CFLAGS = -W -Wall -pedantic -std=c11 -O2 -ffreestanding -nostdlib \
 		 -fno-builtin -fno-stack-protector \
 		 -mno-red-zone \
-		 -I src/include/ -I src/ \
+		 -I src/include/ -I src/ -I libs/ \
 		 -D__is_libk
 
 default: iso

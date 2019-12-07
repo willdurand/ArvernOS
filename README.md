@@ -98,4 +98,6 @@ loaded, run:
 ## License
 
 willOS is released under the MIT License. See the bundled [LICENSE](LICENSE.md)
-file for details.
+file for details. In addition, some parts of this project have their own
+licenses attached (either in the source files or in a `LICENSE` file next to
+them).

@@ -37,19 +37,19 @@ void syscall_test(registers_t* registers) {
 
 void syscall_print_registers(registers_t* registers) {
     printf("registers:\n");
-    printf("  rax=0x%X\n", registers->rax);
-    printf("  rbx=0x%X\n", registers->rbx);
-    printf("  rcx=0x%X\n", registers->rcx);
-    printf("  rdx=0x%X\n", registers->rdx);
-    printf("  rsi=0x%X\n", registers->rsi);
-    printf("  rdi=0x%X\n", registers->rdi);
-    printf("  rbp=0x%X\n", registers->rbp);
-    printf("  r8 =0x%X\n", registers->r8);
-    printf("  r9 =0x%X\n", registers->r9);
-    printf("  r10=0x%X\n", registers->r10);
-    printf("  r11=0x%X\n", registers->r11);
-    printf("  r12=0x%X\n", registers->r12);
-    printf("  r13=0x%X\n", registers->r13);
-    printf("  r14=0x%X\n", registers->r14);
-    printf("  r15=0x%X\n", registers->r15);
+    printf("  rax=%#x\n", registers->rax);
+    printf("  rbx=%#x\n", registers->rbx);
+    printf("  rcx=%#x\n", registers->rcx);
+    printf("  rdx=%#x\n", registers->rdx);
+    printf("  rsi=%#x\n", registers->rsi);
+    printf("  rdi=%#x\n", registers->rdi);
+    printf("  rbp=%#x\n", registers->rbp);
+    printf("   r8=%#x\n", registers->r8);
+    printf("   r9=%#x\n", registers->r9);
+    printf("  r10=%#x\n", registers->r10);
+    printf("  r11=%#x\n", registers->r11);
+    printf("  r12=%#x\n", registers->r12);
+    printf("  r13=%#x\n", registers->r13);
+    printf("  r14=%#x\n", registers->r14);
+    printf("  r15=%#x\n", registers->r15);
 }
