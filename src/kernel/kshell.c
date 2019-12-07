@@ -145,7 +145,7 @@ void help(const char* command) {
 void date() {
     cmos_rtc_t rtc = cmos_read_rtc();
 
-    printf("%4d-%2d-%2d %2d:%2d:%2d UTC\n",
+    printf("%4d-%02d-%02d %02d:%02d:%02d UTC\n",
            rtc.year,
            rtc.month,
            rtc.day,
