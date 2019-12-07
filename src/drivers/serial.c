@@ -37,11 +37,9 @@ void serial_print(uint16_t com, const char* str) {
     }
 }
 
-void serial_printf(uint16_t com, const char* format, ...) {
-    va_list arg;
-    va_start(arg, format);
-    vprintf(com, format, arg);
-    va_end(arg);
+void serial_stream_output(char c, void* arg) {
+    uint16_t com = *(uint16_t*)arg;
+    serial_write(com, c);
 }
 
 bool serial_is_transmit_fifo_empty(uint16_t com) {

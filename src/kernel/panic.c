@@ -5,7 +5,7 @@
 void kernel_panic(const char* format, ...) {
     va_list arg;
     va_start(arg, format);
-    vprintf(DEVICE_SCREEN, format, arg);
+    vprintf(format, arg);
     va_end(arg);
 
     printf("\nSystem halted!\n");

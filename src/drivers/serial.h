@@ -26,6 +26,11 @@
 void serial_init(uint16_t com, uint16_t divisor);
 void serial_print(uint16_t com, const char* str);
 void serial_write(uint16_t com, char c);
-void serial_printf(uint16_t com, const char* format, ...);
+
+#ifdef ENABLE_KERNEL_DEBUG
+
+void serial_stream_output(char c, void* arg);
+
+#endif
 
 #endif
