@@ -30,6 +30,8 @@ CFLAGS = -W -Wall -pedantic -std=c11 -O2 -ffreestanding -nostdlib \
 		 -I src/include/ -I src/ -I libs/ \
 		 -D__is_libk
 
+DEBUG_CFLAGS = -DENABLE_KERNEL_DEBUG -DDEBUG_WITH_COLORS
+
 default: iso
 
 kernel: ## compile the kernel
@@ -75,7 +77,7 @@ run: $(ISO)
 .PHONY: run
 
 debug: ## build and run the OS in debug mode
-debug: CFLAGS += -DENABLE_KERNEL_DEBUG
+debug: CFLAGS += $(DEBUG_CFLAGS)
 debug: $(ISO)
 	qemu-system-x86_64 -cdrom $< -serial file:/tmp/serial.log
 .PHONY: debug
@@ -92,7 +94,7 @@ fmt: ## automatically format the code with astyle
 .PHONY: fmt
 
 gdb: ## build, run the OS in debug mode and GDB
-gdb: CFLAGS += -DENABLE_KERNEL_DEBUG -g
+gdb: CFLAGS += $(DEBUG_CFLAGS) -g
 gdb: $(ISO)
 	qemu-system-x86_64 -s -S -cdrom $< -serial file:/tmp/serial.log
 .PHONY: gdb
