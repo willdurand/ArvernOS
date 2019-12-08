@@ -1,14 +1,16 @@
 #include "kmain.h"
-#include <core/isr.h>
-#include <core/timer.h>
 #include <core/debug.h>
+#include <core/isr.h>
 #include <core/syscall.h>
+#include <core/timer.h>
+#include <drivers/keyboard.h>
 #include <drivers/screen.h>
-#include <kernel/panic.h>
-#include <kernel/kshell.h>
 #include <drivers/screen.h>
 #include <drivers/serial.h>
-#include <drivers/keyboard.h>
+#include <kernel/kshell.h>
+#include <kernel/panic.h>
+#include <mmu/mmap.h>
+#include <mem.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -54,18 +56,17 @@ void kmain(unsigned long magic, unsigned long addr) {
         PANIC("invalid multiboot");
     }
 
+    multiboot_info_t* mbi = (multiboot_info_t*) addr;
+
     print_welcome_messge();
 
     // enable serial port
     serial_init(SERIAL_COM1, SERIAL_SPEED_115200);
     DEBUG("%s has started", KERNEL_NAME);
 
-    multiboot_info_t* mbi = (multiboot_info_t*) addr;
-    reserved_areas_t reserved = read_multiboot_info(mbi);
-
-    // memory
-    DEBUG("multiboot_start = %p, multiboot_end = %p", reserved.multiboot_start, reserved.multiboot_end);
-    DEBUG("kernel_start    = %p, kernel_end    = %p", reserved.kernel_start, reserved.kernel_end);
+    print_step("initializing frame allocator");
+    mmap_init(mbi);
+    print_ok();
 
     print_step("initializing interruptions");
     isr_init();
@@ -76,7 +77,7 @@ void kmain(unsigned long magic, unsigned long addr) {
     syscall_init();
     print_ok();
 
-    print_step("initializing clock (timer)");
+    print_step("initializing clock/timer");
     timer_init();
     print_ok();
 

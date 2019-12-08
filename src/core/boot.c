@@ -131,7 +131,8 @@ reserved_areas_t read_multiboot_info(multiboot_info_t* mbi) {
                 i++
             ) {
                 DEBUG(
-                    "elf section #%02d addr = %p, type = %#x, size = %#x, flags = %#x",
+                    "elf section #%02d addr = %p, type = %#x, size = %#x, "
+                    "flags = %#x",
                     i,
                     elf->addr,
                     elf->type,
