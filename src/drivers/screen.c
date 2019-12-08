@@ -53,22 +53,6 @@ void screen_write_at(char c, uint8_t scheme, int x, int y) {
 
     framebuffer[offset] = c;
     framebuffer[offset + 1] = scheme;
-
-    if ((screen_row + 1) == SCREEN_HEIGHT) {
-        memmove(
-            (char*) VIDEO_ADDRESS,
-            (char*) VIDEO_ADDRESS + (2 * SCREEN_WIDTH),
-            2 * (SCREEN_HEIGHT - 1) * SCREEN_WIDTH
-        );
-
-        memset(
-            (char*) VIDEO_ADDRESS + ((SCREEN_HEIGHT - 1) * SCREEN_WIDTH * 2),
-            0,
-            2 * SCREEN_WIDTH
-        );
-
-        screen_row--;
-    }
 }
 
 void screen_write(char c) {
@@ -85,17 +69,33 @@ void screen_write(char c) {
 
         screen_write_at(0x0, screen_scheme, screen_col, screen_row);
     } else if (c == '\t') {
-        screen_col = screen_col + 8 - (screen_col % 8);
+        screen_print("    ");
     } else if (c == '\r') {
         screen_col = 0;
     } else {
         screen_write_at(c, screen_scheme, screen_col, screen_row);
         screen_col++;
+    }
 
-        if (screen_col == SCREEN_WIDTH) {
-            screen_col = 0;
-            screen_row++;
-        }
+    if (screen_col >= SCREEN_WIDTH) {
+        screen_col = 0;
+        screen_row++;
+    }
+
+    if (screen_row >= SCREEN_HEIGHT) {
+        memmove(
+            (char*) VIDEO_ADDRESS,
+            (char*) VIDEO_ADDRESS + (2 * SCREEN_WIDTH),
+            2 * (SCREEN_HEIGHT - 1) * SCREEN_WIDTH
+        );
+
+        memset(
+            (char*) VIDEO_ADDRESS + ((SCREEN_HEIGHT - 1) * SCREEN_WIDTH * 2),
+            0,
+            2 * SCREEN_WIDTH
+        );
+
+        screen_row = SCREEN_HEIGHT - 1;
     }
 
     move_cursor((screen_row * SCREEN_WIDTH) + screen_col);

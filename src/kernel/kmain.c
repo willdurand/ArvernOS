@@ -27,7 +27,7 @@ void print_welcome_messge() {
 }
 
 void print_step(const char* msg) {
-    printf("%-75s", msg);
+    printf("%-76s", msg);
 }
 
 void print_ok() {
@@ -35,7 +35,7 @@ void print_ok() {
     screen_color_scheme(COLOR_GREEN, COLOR_BLACK);
     printf("OK");
     screen_color_scheme(COLOR_WHITE, COLOR_BLACK);
-    printf("]\n");
+    printf("]");
 }
 
 void check_interrupts() {
