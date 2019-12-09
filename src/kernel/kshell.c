@@ -124,7 +124,7 @@ unsigned char get_char(uint8_t scancode, bool shift, bool caps_lock) {
 void help(const char* command) {
     if (strlen(command) == 4) {
         for (uint8_t i = 0; i < NB_DOCUMENTED_COMMANDS; i++) {
-            printf("%s - %s\n", commands[i][0], commands[i][1]);
+            printf("%-10s %s\n", commands[i][0], commands[i][1]);
         }
 
         return;
@@ -175,6 +175,20 @@ void selftest() {
     printf("\n[syscalls]\n");
     printf("    syscalling\n");
     test("kshell");
+
+    printf("\n[memory]\n");
+    char* str = 0x42;
+    printf("    pointer before malloc(): p=%p\n", str);
+    str = (char*)malloc(9 * sizeof(char));
+
+    if (str == 0) {
+        printf("    failed\n");
+    } else {
+        printf("    success! p=%p", str);
+        strcpy(str, "it works");
+        printf(" and value is: %s\n", str);
+        free(str);
+    }
 
     printf("\nall good!\n");
 }
