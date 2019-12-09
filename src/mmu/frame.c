@@ -1,9 +1,8 @@
-#include "mmap.h"
+#include "frame.h"
 #include <mmu/debug.h>
 #include <kernel/panic.h>
-#include <mem.h>
 
-uint64_t mmap_read(uint64_t request, uint8_t mode);
+uint64_t read_mmap(uint64_t request, uint8_t mode);
 
 multiboot_tag_mmap_t* memory_area;
 uint64_t kernel_start;
@@ -12,7 +11,7 @@ uint64_t multiboot_start;
 uint64_t multiboot_end;
 uint64_t next_free_frame;
 
-void mmap_init(multiboot_info_t* mbi) {
+void frame_init(multiboot_info_t* mbi) {
     reserved_areas_t reserved = read_multiboot_info(mbi);
     multiboot_tag_mmap_t* mmap = find_multiboot_tag(mbi->tags, MULTIBOOT_TAG_TYPE_MMAP);
 
@@ -37,7 +36,7 @@ void mmap_init(multiboot_info_t* mbi) {
     );
 }
 
-uint64_t mmap_read(uint64_t request, uint8_t mode) {
+uint64_t read_mmap(uint64_t request, uint8_t mode) {
     uint64_t cur_num = 0;
 
     for (
@@ -56,11 +55,11 @@ uint64_t mmap_read(uint64_t request, uint8_t mode) {
                 continue;
             }
 
-            if (mode == MMAP_GET_NUM && request >= i && request <= i + PAGE_SIZE) {
+            if (mode == FRAME_GET_NUM && request >= i && request <= i + PAGE_SIZE) {
                 return cur_num + 1;
             }
 
-            if (mode == MMAP_GET_ADDR && cur_num == request && i != 0) {
+            if (mode == FRAME_GET_ADDR && cur_num == request && i != 0) {
                 return i;
             }
 
@@ -71,9 +70,18 @@ uint64_t mmap_read(uint64_t request, uint8_t mode) {
     return 0;
 }
 
-uint64_t mmap_allocate_frame() {
+/**
+ * This is a sort of "WaterMark allocator" because we can only create new
+ * frames and we do not retain the created ones in order to reuse them after
+ * they are deallocated.
+ *
+ * @todo create a map to retain allocated frames and update this function to
+ * reuse deallocated frames. Maybe we could have a fixed-length map to start.
+ * That would still be not ideal but that would be better than nothing.
+ */
+uint64_t frame_allocate() {
     // Get the address for the next free frame
-    uint64_t addr = mmap_read(next_free_frame, MMAP_GET_ADDR);
+    uint64_t addr = read_mmap(next_free_frame, FRAME_GET_ADDR);
 
     if (addr == 0) {
         PANIC("failed to allocate a new frame, addr=%p", addr);
@@ -85,16 +93,16 @@ uint64_t mmap_allocate_frame() {
     return addr;
 }
 
-void mmap_deallocate_frame(uint64_t frame_number) {
+void frame_deallocate(uint64_t frame_number) {
     uint64_t addr = frame_start_address(frame_number);
 
-    memset(addr, 0, sizeof(uint64_t) * PAGE_SIZE);
+    /// @todo actually free this frame
 
     MMU_DEBUG("deallocated frame=%u addr=%p", frame_number, addr);
 }
 
-uint64_t frame_containing_address(uint64_t addr) {
-    return addr / PAGE_SIZE;
+uint64_t frame_containing_address(uint64_t physical_address) {
+    return physical_address / PAGE_SIZE;
 }
 
 uint64_t frame_start_address(uint64_t frame_number) {

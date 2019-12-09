@@ -1,9 +1,9 @@
 #include "paging.h"
 #include <mmu/debug.h>
-#include <mmu/mmap.h>
 #include <kernel/panic.h>
 #include <stdio.h>
 #include <mem.h>
+#include <stdlib.h>
 
 #define MMU_DEBUG_PAGE_ENTRY(message, e)  MMU_DEBUG("%s " \
                                           "page entry addr=%p present=%d " \
@@ -29,13 +29,11 @@ uint64_t (*allocate_frame)(void);
 void (*deallocate_frame)(uint64_t);
 
 void paging_init(multiboot_info_t* mbi) {
-    reserved_areas_t reserved = read_multiboot_info(mbi);
-    multiboot_tag_elf_sections_t* sections = find_multiboot_tag(mbi->tags,
-            MULTIBOOT_TAG_TYPE_ELF_SECTIONS);
+    UNUSED(*mbi);
 
     // Set allocator functions.
-    allocate_frame = mmap_allocate_frame;
-    deallocate_frame = mmap_deallocate_frame;
+    allocate_frame = frame_allocate;
+    deallocate_frame = frame_deallocate;
 
     // The rest of this function tests the paging feature.
 
@@ -82,7 +80,7 @@ void paging_init(multiboot_info_t* mbi) {
 }
 
 void zero_table(page_table_t* table) {
-    memset(table, 0, sizeof(page_table_t));
+    memset((void*)table, 0, sizeof(page_table_t));
 }
 
 page_table_t* next_table_address(page_table_t* table, uint64_t index) {
@@ -128,21 +126,21 @@ uint64_t page_start_address(uint64_t page_number) {
     return page_number * PAGE_SIZE;
 }
 
-uint64_t translate_page(uint64_t page) {
+uint64_t translate_page(uint64_t page_number) {
     page_table_t* p4 = get_p4();
 
-    page_table_t* p3 = next_table_address(p4, p4_index(page));
+    page_table_t* p3 = next_table_address(p4, p4_index(page_number));
 
-    if (p4->entries[p4_index(page)].huge_page) {
-        uint64_t frame_number = pointed_frame(p3->entries[p3_index(page)]);
-        MMU_DEBUG("1GB huge page=%u frame=%u", page, frame_number);
+    if (p4->entries[p4_index(page_number)].huge_page) {
+        uint64_t frame_number = pointed_frame(p3->entries[p3_index(page_number)]);
+        MMU_DEBUG("1GB huge page=%u frame=%u", page_number, frame_number);
 
         if (frame_number % (PAGE_ENTRIES * PAGE_ENTRIES) == 0) {
-            frame_number += p2_index(page) * PAGE_ENTRIES + p1_index(page);
+            frame_number += p2_index(page_number) * PAGE_ENTRIES + p1_index(page_number);
 
             return frame_number;
         } else {
-            PANIC("misaligned 1GB page=%u", page);
+            PANIC("misaligned 1GB page=%u", page_number);
         }
     }
 
@@ -151,18 +149,18 @@ uint64_t translate_page(uint64_t page) {
         return 0;
     }
 
-    page_table_t* p2 = next_table_address(p3, p3_index(page));
+    page_table_t* p2 = next_table_address(p3, p3_index(page_number));
 
-    if (p3->entries[p3_index(page)].huge_page) {
-        uint64_t frame_number = pointed_frame(p2->entries[p2_index(page)]);
-        MMU_DEBUG("2MB huge page=%u frame=%u", page, frame_number);
+    if (p3->entries[p3_index(page_number)].huge_page) {
+        uint64_t frame_number = pointed_frame(p2->entries[p2_index(page_number)]);
+        MMU_DEBUG("2MB huge page=%u frame=%u", page_number, frame_number);
 
         if (frame_number % PAGE_ENTRIES == 0) {
-            frame_number += p1_index(page);
+            frame_number += p1_index(page_number);
 
             return frame_number;
         } else {
-            PANIC("misaligned 2MB page=%u", page);
+            PANIC("misaligned 2MB page=%u", page_number);
         }
     }
 
@@ -171,14 +169,14 @@ uint64_t translate_page(uint64_t page) {
         return 0;
     }
 
-    page_table_t* p1 = next_table_address(p2, p2_index(page));
+    page_table_t* p1 = next_table_address(p2, p2_index(page_number));
 
     if (p1 == 0) {
         MMU_DEBUG("did not find p1 (%p), returning 0", p1);
         return 0;
     }
 
-    return pointed_frame(p1->entries[p1_index(page)]);
+    return pointed_frame(p1->entries[p1_index(page_number)]);
 }
 
 uint64_t p4_index(uint64_t page) {

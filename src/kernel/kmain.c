@@ -9,7 +9,7 @@
 #include <drivers/serial.h>
 #include <kernel/kshell.h>
 #include <kernel/panic.h>
-#include <mmu/mmap.h>
+#include <mmu/frame.h>
 #include <mmu/paging.h>
 #include <mem.h>
 #include <stdio.h>
@@ -66,7 +66,7 @@ void kmain(unsigned long magic, unsigned long addr) {
     DEBUG("%s has started", KERNEL_NAME);
 
     print_step("initializing frame allocator");
-    mmap_init(mbi);
+    frame_init(mbi);
     print_ok();
 
     print_step("initializing paging");

@@ -1,18 +1,20 @@
+/**
+ * @file
+ * @see https://www.uclibc.org/docs/elf-64-gen.pdf
+ */
 #ifndef CORE_BOOT_H
 #define CORE_BOOT_H
 
 #include <stdint.h>
 #include <stdbool.h>
 
-// cf. https://www.uclibc.org/docs/elf-64-gen.pdf
-
-/* The magic field should contain this. */
+// The magic field should contain this.
 #define MULTIBOOT2_MAGIC_NUMBER             0xe85250d6
 
-/* This should be in %eax. */
+// This should be in %eax.
 #define MULTIBOOT2_MAGIC_VALUE              0x36d76289
 
-/* Flags set in the 'flags' member of the multiboot header.  */
+// Flags set in the 'flags' member of the multiboot header.
 #define MULTIBOOT_TAG_TYPE_END               0
 #define MULTIBOOT_TAG_TYPE_CMDLINE           1
 #define MULTIBOOT_TAG_TYPE_BOOT_LOADER_NAME  2
@@ -101,7 +103,9 @@ typedef struct multiboot_tag_mmap {
     multiboot_mmap_entry_t entries[];
 } __attribute__((packed)) multiboot_tag_mmap_t;
 
-// See: https://en.wikipedia.org/wiki/Executable_and_Linkable_Format#Section_header
+/**
+ * @see https://en.wikipedia.org/wiki/Executable_and_Linkable_Format#Section_header
+ */
 typedef struct multiboot_elf_sections_entry {
     uint32_t name;
     uint32_t type;
@@ -131,8 +135,18 @@ typedef struct reserved_areas {
     uint64_t multiboot_end;
 } reserved_areas_t;
 
+/**
+ * Makes sure the bootloader loads the kernel with multiboot2.
+ *
+ * @param magic a magic value passed from the bootloader to the `kmain()`
+ *        function.
+ * @param addr the address to the multiboot information
+ * @return `true` if everything is ok, `false` otherwise
+ */
 bool multiboot_is_valid(unsigned long magic, unsigned long addr);
+
 void* find_multiboot_tag(multiboot_tag_t* tags, uint16_t type);
+
 reserved_areas_t read_multiboot_info(multiboot_info_t* mbi);
 
 #endif

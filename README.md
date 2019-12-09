@@ -7,8 +7,8 @@ willOS is a minimal 64 bits kernel (not really an Operating System because it
 cannot do a lot of things currently).
 
 <p align="center">
-<img src="docs/qemu.gif">
-<p>
+  <img style="max-width: 70%" src="https://raw.githubusercontent.com/willdurand/willOS/master/docs/qemu.gif">
+</p>
 
 Note: the screencast above is likely outdated.
 
@@ -29,49 +29,64 @@ cross-compilation toolchain.
 ### Docker (recommended way)
 
 Use [Docker](https://docs.docker.com/) with the provided
-[`Dockerfile`](./Dockerfile):
+[`Dockerfile`](https://github.com/willdurand/willOS/blob/master/Dockerfile):
 
-   $ docker build -t willos/toolchain .
-   $ docker run --rm -v $(pwd):/app willos/toolchain make
+```
+$ docker build -t willos/toolchain .
+$ docker run --rm -v $(pwd):/app willos/toolchain make
+```
 
 ### MacOS
 
 Install [Homebrew](https://brew.sh/), then run the following commands:
 
-    $ brew install nasm
-    $ brew install xorriso
-    $ brew install qemu
+```
+$ brew install nasm
+$ brew install xorriso
+$ brew install qemu
+```
 
 You need to tap `hawkw/x86_64-pc-elf` to install the cross-compilation toolchain:
 
-    $ brew tap hawkw/x86_64-pc-elf
-    $ brew install x86_64-pc-elf-gcc
+```
+$ brew tap hawkw/x86_64-pc-elf
+$ brew install x86_64-pc-elf-gcc
+```
 
 You need to tap `hawkw/grub` to install the GRUB utility:
 
-    $ brew tap hawkw/grub
-    $ brew install grub --with-x86_64-pc-elf --HEAD
+```
+$ brew tap hawkw/grub
+$ brew install grub --with-x86_64-pc-elf --HEAD
+```
 
 Hat tip to [Eliza Weisman](http://github.com/hawkw) for the taps!
 
 ### Linux
 
-See the [circle-ci config](.circleci/config.yml).
+See the [circle-ci
+config](https://github.com/willdurand/willOS/blob/master/.circleci/config.yml).
 
 ## Building willOS
 
 To compile the kernel (ELF 64-bit), run:
 
-    $ make kernel
+```
+$ make kernel
+```
 
 To build the ISO (this is the default target), run:
 
-    $ make iso
+```
+$ make iso
+```
 
 To compile the OS in DEBUG mode, build the ISO, and start `qemu` with the OS
 loaded, run:
 
-    $ make debug
+```
+$ make debug
+```
 
 **Note:** in DEBUG mode, logging uses the serial port `COM1` to write various
 debugging information. `qemu` is configured to write the output of this serial
@@ -80,7 +95,9 @@ port to `/tmp/serial.log`.
 To compile the OS in normal mode, build the ISO, and start `qemu` with the OS
 loaded, run:
 
-    $ make run
+```
+$ make run
+```
 
 ## Early boot sequence
 
@@ -97,7 +114,7 @@ loaded, run:
 
 ## License
 
-willOS is released under the MIT License. See the bundled [LICENSE](LICENSE.md)
-file for details. In addition, some parts of this project have their own
-licenses attached (either in the source files or in a `LICENSE` file next to
-them).
+willOS is released under the MIT License. See the bundled
+[LICENSE](https://github.com/willdurand/willOS/blob/master/LICENSE.md) file for
+details. In addition, some parts of this project have their own licenses
+attached (either in the source files or in a `LICENSE` file next to them).

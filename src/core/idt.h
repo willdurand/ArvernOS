@@ -1,10 +1,15 @@
+/** @file */
 #ifndef CORE_IDT_H
 #define CORE_IDT_H
 
 #include <stdint.h>
 
+/// The number of entries in the _Interrupt Descriptor Table_.
 #define IDT_ENTRIES 256
 
+/**
+ * This structure represents the _Interrupt Descriptor Table_ options.
+ */
 typedef struct idt_opts {
     uint8_t stack_OK  : 3;
     uint8_t ZEROS     : 5;
@@ -32,7 +37,14 @@ typedef struct idt_register {
     uint64_t base;
 } __attribute__((packed)) idt_register_t;
 
-void register_idt_gate(uint16_t n, uint64_t handler);
+/**
+ * Initialize the _Interrupt Descriptor Table_.
+ */
 void idt_init();
+
+/**
+ * Register a _handler_ for a _gate_.
+ */
+void register_idt_gate(uint16_t n, uint64_t handler);
 
 #endif

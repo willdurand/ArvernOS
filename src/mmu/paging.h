@@ -2,14 +2,17 @@
 #define MMU_PAGING_H
 
 #include <core/boot.h>
-#include <mmu/mmap.h>
+#include <mmu/frame.h>
 #include <stdint.h>
 
 #define PAGE_ENTRIES  512
 #define P4_TABLE      0xfffffffffffff000
 
+/// The page is currently in memory
 #define PAGING_FLAG_PRESENT     0x01
+/// It is allowed to write to this page
 #define PAGING_FLAG_WRITABLE    0x02
+/// Forbids executing code on this page
 #define PAGING_FLAG_NO_EXECUTE  ((uint64_t)1) << 63
 
 // cf.http://os.phil-opp.com/modifying-page-tables.html#page-table-entries
@@ -46,14 +49,49 @@ typedef struct page_table {
     page_entry_t entries[PAGE_ENTRIES];
 } page_table_t;
 
+/**
+ * Initializes paging to separate virtual and physical memory.
+ */
 void paging_init(multiboot_info_t* mbi);
-// Returns a page number.
+
+/**
+ * Returns a page number given a virtual address.
+ *
+ * @param virtual_address a virtual address (page)
+ * @returns a page number
+ */
 uint64_t page_containing_address(uint64_t virtual_address);
-// Returns a virtual address.
-uint64_t page_start_address(uint64_t page);
-// Returns a frame number.
-uint64_t translate_page(uint64_t page);
+
+/**
+ * Returns the virtual start address of a page.
+ *
+ * @param page_number a page number (not an address)
+ * @returns a virtual address (page)
+ */
+uint64_t page_start_address(uint64_t page_number);
+
+/**
+ * Translates a page number to a frame number.
+ *
+ * @param page_number a page number (not an address)
+ * @returns a frame number
+ */
+uint64_t translate_page(uint64_t page_number);
+
+/**
+ * Maps a page (number) to a frame (physical address).
+ *
+ * @param page_number a page number (not an address)
+ * @param addr a physical address (frame)
+ * @param flags paging flags
+ */
 void map_page_to_frame(uint64_t page, uint64_t frame, uint64_t flags);
+
+/**
+ * Unmaps (free) a page.
+ *
+ * @param page_number a page number (not an address)
+ */
 void unmap(uint64_t page);
 
 #endif
