@@ -10,6 +10,7 @@
 #include <kernel/kshell.h>
 #include <kernel/panic.h>
 #include <mmu/mmap.h>
+#include <mmu/paging.h>
 #include <mem.h>
 #include <stdio.h>
 #include <string.h>
@@ -66,6 +67,10 @@ void kmain(unsigned long magic, unsigned long addr) {
 
     print_step("initializing frame allocator");
     mmap_init(mbi);
+    print_ok();
+
+    print_step("initializing paging");
+    paging_init(mbi);
     print_ok();
 
     print_step("initializing interruptions");

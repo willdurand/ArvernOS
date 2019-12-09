@@ -39,7 +39,10 @@
 #define MULTIBOOT_MEMORY_AVAILABLE  1
 #define MULTIBOOT_MEMORY_RESERVED   2
 
-#define MULTIBOOT_ELF_SECTION_TYPE_NULL 0
+#define MULTIBOOT_ELF_SECTION_TYPE_NULL       0
+#define MULTIBOOT_ELF_SECTION_FLAG_WRITABLE   0x1
+#define MULTIBOOT_ELF_SECTION_FLAG_ALLOCATED  0x2
+#define MULTIBOOT_ELF_SECTION_FLAG_EXECUTABLE 0x4
 
 typedef struct multiboot_tag {
     uint32_t type;
@@ -98,6 +101,7 @@ typedef struct multiboot_tag_mmap {
     multiboot_mmap_entry_t entries[];
 } __attribute__((packed)) multiboot_tag_mmap_t;
 
+// See: https://en.wikipedia.org/wiki/Executable_and_Linkable_Format#Section_header
 typedef struct multiboot_elf_sections_entry {
     uint32_t name;
     uint32_t type;

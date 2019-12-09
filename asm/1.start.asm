@@ -108,6 +108,11 @@ check_long_mode:
 ; -----------------------------------------------------------------------------
 
 set_up_page_tables:
+    ; See: https://os.phil-opp.com/page-tables/#implementation
+    mov eax, p4_table
+    or eax, 0b11 ; present + writable
+    mov [p4_table + 511 * 8], eax
+
     ; Point the first entry of the level 4 page table to the first entry in the
     ; p3 table.
     mov eax, p3_table
