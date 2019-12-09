@@ -1,7 +1,12 @@
 #ifndef STDLIB_H
 #define STDLIB_H
 
+#include <stddef.h>
 #include <stdint.h>
+
+#define _HAVE_SIZE_T
+
+#include <liballoc/liballoc.h>
 
 #define UNUSED(x) (void)(x)
 

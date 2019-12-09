@@ -59,19 +59,16 @@ void paging_init(multiboot_info_t* mbi) {
     map_page_to_frame(page3, frame1, 0x0);
     map_page_to_frame(page4, frame2, 0x0);
 
-    MMU_DEBUG("m1=%x m2=%x m3=%x m4=%x", *m1, *m2, *m3, *m4);
+    MMU_DEBUG("m1=%p (%x) m2=%p (%x) m3=%p (%x) and m4=%d", m1, *m1, m2, *m2, m3, *m3, m4);
 
     *m2 = 0xdeadbeef;
+    m4 = 12;
 
     if (*m1 != *m3) {
-        PANIC(
-            "paging test failed m1=%p m2=%p m3=%p"
-            "*m1=%x *m2=%x *m3=%x",
-            m1, m2, m3, *m1, *m2, *m3
-        );
+        PANIC("%s", "paging test failed");
     }
 
-    MMU_DEBUG("m1=%x m2=%x m3=%x m4=%x", *m1, *m2, *m3, *m4);
+    MMU_DEBUG("m1=%p (%x) m2=%p (%x) m3=%p (%x) and m4=%d", m1, *m1, m2, *m2, m3, *m3, m4);
 
     unmap(page1);
     unmap(page2);
@@ -320,25 +317,25 @@ page_table_t* get_p4() {
     return (page_table_t*)P4_TABLE;
 }
 
-void unmap(uint64_t page) {
-    uint64_t addr = page_start_address(page);
+void unmap(uint64_t page_number) {
+    uint64_t addr = page_start_address(page_number);
 
     if (translate(addr) == 0) {
-        PANIC("cannot unmap page=%u because it is not mapped", page);
+        PANIC("cannot unmap page=%u because it is not mapped", page_number);
     }
 
     page_table_t* p4 = get_p4();
-    page_table_t* p3 = next_table_address(p4, p4_index(page));
-    page_table_t* p2 = next_table_address(p3, p3_index(page));
-    page_table_t* p1 = next_table_address(p2, p2_index(page));
+    page_table_t* p3 = next_table_address(p4, p4_index(page_number));
+    page_table_t* p2 = next_table_address(p3, p3_index(page_number));
+    page_table_t* p1 = next_table_address(p2, p2_index(page_number));
 
-    page_entry_t entry = p1->entries[p1_index(page)];
+    page_entry_t entry = p1->entries[p1_index(page_number)];
     uint64_t frame_number = pointed_frame(entry);
 
-    p1->entries[p1_index(page)].addr = 0;
-    MMU_DEBUG_PAGE_ENTRY("cleared", p1->entries[p1_index(page)]);
+    p1->entries[p1_index(page_number)].addr = 0;
+    MMU_DEBUG_PAGE_ENTRY("cleared", p1->entries[p1_index(page_number)]);
 
-    // TODO free p(1,2,3) table if empty
+    /// @todo free p(1,2,3) table if empty
 
     deallocate_frame(frame_number);
 
@@ -346,7 +343,7 @@ void unmap(uint64_t page) {
     // cf. http://os.phil-opp.com/modifying-page-tables.html#unmap
     __asm__("invlpg (%0)" : /* no output */ : "r"(addr) : "memory");
 
-    MMU_DEBUG("unapped page=%u addr=%p", page, addr);
+    MMU_DEBUG("unapped page=%u addr=%p", page_number, addr);
 }
 
 uint64_t read_cr3() {
@@ -359,4 +356,14 @@ uint64_t read_cr3() {
 
 void write_cr3(uint64_t value) {
     __asm__("mov %0, %%cr3" : /* no output */ : "r"(value));
+}
+
+void map(uint64_t page_number, uint64_t flags) {
+    uint64_t frame = allocate_frame();
+
+    if (frame == 0) {
+        PANIC("out of memory");
+    }
+
+    map_page_to_frame(page_number, frame, flags);
 }

@@ -88,10 +88,19 @@ uint64_t translate_page(uint64_t page_number);
 void map_page_to_frame(uint64_t page, uint64_t frame, uint64_t flags);
 
 /**
+ * Convenient function to map a pager (number) without providing a frame. The
+ * frame is automatically allocated.
+ *
+ * @param page_number a page number (not an address)
+ * @param flags paging flags
+ */
+void map(uint64_t page_number, uint64_t flags);
+
+/**
  * Unmaps (free) a page.
  *
  * @param page_number a page number (not an address)
  */
-void unmap(uint64_t page);
+void unmap(uint64_t page_number);
 
 #endif
