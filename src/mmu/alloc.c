@@ -3,6 +3,7 @@
 #include <mmu/bitmap.h>
 #include <mmu/debug.h>
 #include <mmu/paging.h>
+#include <mem.h>
 
 bitmap_t allocated_pages;
 uint64_t heap_end_page;
@@ -52,6 +53,9 @@ void* liballoc_alloc(int number_of_pages) {
     }
 
     uint64_t addr = (HEAP_START + ((first_free_page - 1) * PAGE_SIZE));
+    /// @todo I am actually not sure about this, but that should not hurt I
+    ///       guess.
+    void* ptr = memset((void*)addr, 0, (first_free_page - 1) * PAGE_SIZE);
 
     for (uint64_t i = 0; i < number_of_pages; i++) {
         bitmap_set(&allocated_pages, first_free_page + i);
@@ -59,7 +63,7 @@ void* liballoc_alloc(int number_of_pages) {
 
     MMU_DEBUG("allocated %d pages at addr=%p", number_of_pages, addr);
 
-    return addr;
+    return ptr;
 }
 
 int liballoc_free(void* ptr, int number_of_pages) {
