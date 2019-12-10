@@ -1,6 +1,8 @@
 #include "frame.h"
-#include <mmu/debug.h>
 #include <kernel/panic.h>
+#include <mmu/bitmap.h>
+#include <mmu/debug.h>
+#include <mem.h>
 
 uint64_t read_mmap(uint64_t request);
 
@@ -9,7 +11,7 @@ uint64_t kernel_start;
 uint64_t kernel_end;
 uint64_t multiboot_start;
 uint64_t multiboot_end;
-uint64_t next_free_frame;
+bitmap_t allocated_frames;
 
 void frame_init(multiboot_info_t* mbi) {
     reserved_areas_t reserved = read_multiboot_info(mbi);
@@ -24,16 +26,12 @@ void frame_init(multiboot_info_t* mbi) {
     kernel_end = reserved.kernel_end;
     multiboot_start = reserved.multiboot_start;
     multiboot_end = reserved.multiboot_end;
-    next_free_frame = 1;
+    allocated_frames = 0;
 
     MMU_DEBUG(
-        "Initialized frame allocator with multiboot_start = %p multiboot_end ="
-        "%p kernel_start=%p kernel_end=%p next_free_frame = %u",
-        multiboot_start,
-        multiboot_end,
-        kernel_start,
-        kernel_end,
-        next_free_frame
+        "Initialized frame allocator with multiboot_start = %p "
+        "multiboot_end=%p kernel_start=%p kernel_end=%p",
+        multiboot_start, multiboot_end, kernel_start, kernel_end
     );
 }
 
@@ -68,25 +66,24 @@ uint64_t read_mmap(uint64_t request) {
     return 0;
 }
 
-/**
- * This is a sort of "WaterMark allocator" because we can only create new
- * frames and we do not retain the created ones in order to reuse them after
- * they are deallocated.
- *
- * @todo create a map to retain allocated frames and update this function to
- * reuse deallocated frames. Maybe we could have a fixed-length map to start.
- * That would still be not ideal but that would be better than nothing.
- */
 uint64_t frame_allocate() {
-    // Get the address for the next free frame
-    uint64_t addr = read_mmap(next_free_frame);
+    uint64_t free_frame = 0;
 
-    if (addr == 0) {
-        PANIC("failed to allocate a new frame, next_free_frame=%u", next_free_frame);
+    for (uint64_t i = 1; i <= MAX_FRAMES; i++) {
+        if (bitmap_get(&allocated_frames, i) == false) {
+            free_frame = i;
+            break;
+        }
     }
 
-    MMU_DEBUG("allocated new frame with addr=%p", addr);
-    next_free_frame++;
+    uint64_t addr = read_mmap(free_frame);
+
+    if (addr == 0) {
+        PANIC("%s", "failed to allocate a new frame");
+    }
+
+    MMU_DEBUG("allocated frame with addr=%p free_frame=%u", addr, free_frame);
+    bitmap_set(&allocated_frames, free_frame);
 
     return addr;
 }
@@ -94,9 +91,10 @@ uint64_t frame_allocate() {
 void frame_deallocate(uint64_t frame_number) {
     uint64_t addr = frame_start_address(frame_number);
 
-    /// @todo actually free this frame
+    MMU_DEBUG("deallocating frame=%u addr=%p", frame_number, addr);
 
-    MMU_DEBUG("deallocated frame=%u addr=%p", frame_number, addr);
+    bitmap_clear(&allocated_frames, frame_number);
+    memset((void*)addr, 0, PAGE_SIZE);
 }
 
 uint64_t frame_containing_address(uint64_t physical_address) {
