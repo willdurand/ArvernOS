@@ -66,6 +66,11 @@ void kmain(unsigned long magic, unsigned long addr) {
     serial_init(SERIAL_COM1, SERIAL_SPEED_115200);
     DEBUG("%s has started", KERNEL_NAME);
 
+    print_step("initializing interruptions");
+    isr_init();
+    irq_init();
+    print_ok();
+
     print_step("initializing frame allocator");
     frame_init(mbi);
     print_ok();
@@ -76,11 +81,6 @@ void kmain(unsigned long magic, unsigned long addr) {
 
     print_step("initializing heap allocator");
     alloc_init();
-    print_ok();
-
-    print_step("initializing interruptions");
-    isr_init();
-    irq_init();
     print_ok();
 
     print_step("initializing syscalls");
