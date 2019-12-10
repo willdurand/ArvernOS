@@ -49,123 +49,123 @@ reserved_areas_t read_multiboot_info(multiboot_info_t* mbi) {
         tag = (multiboot_tag_t*)((uint8_t*) tag + ((tag->size + 7) & ~7))
     ) {
         switch (tag->type) {
-        case MULTIBOOT_TAG_TYPE_CMDLINE:
-            DEBUG("command line = %s", ((multiboot_tag_string_t*) tag)->string);
-            break;
+            case MULTIBOOT_TAG_TYPE_CMDLINE:
+                DEBUG("command line = %s", ((multiboot_tag_string_t*) tag)->string);
+                break;
 
-        case MULTIBOOT_TAG_TYPE_BOOT_LOADER_NAME:
-            DEBUG("boot loader name = %s", ((multiboot_tag_string_t*) tag)->string);
-            break;
+            case MULTIBOOT_TAG_TYPE_BOOT_LOADER_NAME:
+                DEBUG("boot loader name = %s", ((multiboot_tag_string_t*) tag)->string);
+                break;
 
-        case MULTIBOOT_TAG_TYPE_MODULE:
-            DEBUG(
-                "module at %#x-%#x. command line %s",
-                ((multiboot_tag_module_t*) tag)->mod_start,
-                ((multiboot_tag_module_t*) tag)->mod_end,
-                ((multiboot_tag_module_t*) tag)->cmdline
-            );
-            break;
-
-        case MULTIBOOT_TAG_TYPE_BASIC_MEMINFO:
-            DEBUG(
-                "mem_lower = %dKB, mem_upper = %dKB",
-                ((multiboot_tag_basic_meminfo_t*) tag)->mem_lower,
-                ((multiboot_tag_basic_meminfo_t*) tag)->mem_upper
-            );
-            break;
-
-        case MULTIBOOT_TAG_TYPE_BOOTDEV:
-            DEBUG(
-                "boot device %#x, %u, %u",
-                ((multiboot_tag_bootdev_t*) tag)->biosdev,
-                ((multiboot_tag_bootdev_t*) tag)->slice,
-                ((multiboot_tag_bootdev_t*) tag)->part
-            );
-            break;
-
-        case MULTIBOOT_TAG_TYPE_MMAP: {
-            multiboot_mmap_entry_t* mmap;
-
-            for (
-                mmap = ((multiboot_tag_mmap_t*) tag)->entries;
-                (uint8_t*) mmap < (uint8_t*) tag + tag->size;
-                mmap = (multiboot_mmap_entry_t*)((uint64_t) mmap + ((multiboot_tag_mmap_t*) tag)->entry_size)
-            ) {
+            case MULTIBOOT_TAG_TYPE_MODULE:
                 DEBUG(
-                    "mmap base_addr = %p, length = %#x, type = %#x",
-                    mmap->addr,
-                    mmap->len,
-                    mmap->type
+                    "module at %#x-%#x. command line %s",
+                    ((multiboot_tag_module_t*) tag)->mod_start,
+                    ((multiboot_tag_module_t*) tag)->mod_end,
+                    ((multiboot_tag_module_t*) tag)->cmdline
                 );
-            }
-        }
-        break;
+                break;
 
-        case MULTIBOOT_TAG_TYPE_FRAMEBUFFER:
-            DEBUG("%s", "framebuffer");
-            break;
-
-        case MULTIBOOT_TAG_TYPE_APM:
-            DEBUG("%s", "apm");
-            break;
-
-        case MULTIBOOT_TAG_TYPE_ACPI_OLD:
-            DEBUG("%s", "acpi old");
-            break;
-
-        case MULTIBOOT_TAG_TYPE_ACPI_NEW:
-            DEBUG("%s", "acpi new");
-            break;
-
-        case MULTIBOOT_TAG_TYPE_ELF_SECTIONS: {
-            multiboot_elf_sections_entry_t* elf;
-
-            uint32_t i;
-
-            for (
-                i = 0,
-                elf = ((multiboot_tag_elf_sections_t*) tag)->sections;
-                i < ((multiboot_tag_elf_sections_t*) tag)->num;
-                elf = (multiboot_elf_sections_entry_t*)((uint64_t) elf + ((multiboot_tag_elf_sections_t*)
-                        tag)->section_size),
-                i++
-            ) {
+            case MULTIBOOT_TAG_TYPE_BASIC_MEMINFO:
                 DEBUG(
-                    "elf section #%02d addr = %p, type = %#x, size = %#x, "
-                    "flags = %#x",
-                    i,
-                    elf->addr,
-                    elf->type,
-                    elf->size,
-                    elf->flags
+                    "mem_lower = %dKB, mem_upper = %dKB",
+                    ((multiboot_tag_basic_meminfo_t*) tag)->mem_lower,
+                    ((multiboot_tag_basic_meminfo_t*) tag)->mem_upper
                 );
+                break;
 
-                if (elf->type == MULTIBOOT_ELF_SECTION_TYPE_NULL) {
-                    continue;
-                }
+            case MULTIBOOT_TAG_TYPE_BOOTDEV:
+                DEBUG(
+                    "boot device %#x, %u, %u",
+                    ((multiboot_tag_bootdev_t*) tag)->biosdev,
+                    ((multiboot_tag_bootdev_t*) tag)->slice,
+                    ((multiboot_tag_bootdev_t*) tag)->part
+                );
+                break;
 
-                if (((uint64_t)(elf->addr)) < reserved.kernel_start) {
-                    reserved.kernel_start = (uint64_t) elf->addr;
-                }
+            case MULTIBOOT_TAG_TYPE_MMAP: {
+                multiboot_mmap_entry_t* mmap;
 
-                if (((uint64_t)(elf->addr)) + elf->size > reserved.kernel_end) {
-                    reserved.kernel_end = (uint64_t) elf->addr;
-                    reserved.kernel_end += elf->size;
+                for (
+                    mmap = ((multiboot_tag_mmap_t*) tag)->entries;
+                    (uint8_t*) mmap < (uint8_t*) tag + tag->size;
+                    mmap = (multiboot_mmap_entry_t*)((uint64_t) mmap + ((multiboot_tag_mmap_t*) tag)->entry_size)
+                ) {
+                    DEBUG(
+                        "mmap base_addr = %p, length = %#x, type = %#x",
+                        mmap->addr,
+                        mmap->len,
+                        mmap->type
+                    );
                 }
             }
-        }
-        break;
-
-        case MULTIBOOT_TAG_TYPE_NETWORK:
-            DEBUG("%s", "network");
             break;
 
-        case MULTIBOOT_TAG_TYPE_LOAD_BASE_ADDR:
-            DEBUG("%s", "load base addr");
+            case MULTIBOOT_TAG_TYPE_FRAMEBUFFER:
+                DEBUG("%s", "framebuffer");
+                break;
+
+            case MULTIBOOT_TAG_TYPE_APM:
+                DEBUG("%s", "apm");
+                break;
+
+            case MULTIBOOT_TAG_TYPE_ACPI_OLD:
+                DEBUG("%s", "acpi old");
+                break;
+
+            case MULTIBOOT_TAG_TYPE_ACPI_NEW:
+                DEBUG("%s", "acpi new");
+                break;
+
+            case MULTIBOOT_TAG_TYPE_ELF_SECTIONS: {
+                multiboot_elf_sections_entry_t* elf;
+
+                uint32_t i;
+
+                for (
+                    i = 0,
+                    elf = ((multiboot_tag_elf_sections_t*) tag)->sections;
+                    i < ((multiboot_tag_elf_sections_t*) tag)->num;
+                    elf = (multiboot_elf_sections_entry_t*)((uint64_t) elf + ((multiboot_tag_elf_sections_t*)
+                            tag)->section_size),
+                    i++
+                ) {
+                    DEBUG(
+                        "elf section #%02d addr = %p, type = %#x, size = %#x, "
+                        "flags = %#x",
+                        i,
+                        elf->addr,
+                        elf->type,
+                        elf->size,
+                        elf->flags
+                    );
+
+                    if (elf->type == MULTIBOOT_ELF_SECTION_TYPE_NULL) {
+                        continue;
+                    }
+
+                    if (((uint64_t)(elf->addr)) < reserved.kernel_start) {
+                        reserved.kernel_start = (uint64_t) elf->addr;
+                    }
+
+                    if (((uint64_t)(elf->addr)) + elf->size > reserved.kernel_end) {
+                        reserved.kernel_end = (uint64_t) elf->addr;
+                        reserved.kernel_end += elf->size;
+                    }
+                }
+            }
             break;
 
-        default:
-            DEBUG("tag %#x, size %#x", tag->type, tag->size);
+            case MULTIBOOT_TAG_TYPE_NETWORK:
+                DEBUG("%s", "network");
+                break;
+
+            case MULTIBOOT_TAG_TYPE_LOAD_BASE_ADDR:
+                DEBUG("%s", "load base addr");
+                break;
+
+            default:
+                DEBUG("tag %#x, size %#x", tag->type, tag->size);
         }
     }
 

@@ -1,10 +1,11 @@
 --lineend=linux
+--convert-tabs
 
 --style=google
 
 --indent=spaces=4
 --indent-col1-comments
---convert-tabs
+--indent-switches
 
 --attach-return-type
 --attach-namespaces
@@ -21,8 +22,8 @@
 --break-after-logical
 
 --pad-comma
+--pad-header
 --pad-oper
 --unpad-paren
 
 --break-blocks
---pad-header

@@ -147,6 +147,10 @@ bool multiboot_is_valid(unsigned long magic, unsigned long addr);
 
 void* find_multiboot_tag(multiboot_tag_t* tags, uint16_t type);
 
+/**
+ * Returns the memory areas reserved for the kernel and the multiboot
+ * information.
+ */
 reserved_areas_t read_multiboot_info(multiboot_info_t* mbi);
 
 #endif

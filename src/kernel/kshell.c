@@ -250,97 +250,97 @@ void kshell(uint8_t scancode) {
     }
 
     switch (scancode) {
-    case KB_CAPS_LOCK:
-        if (key_was_released) {
-            caps_lock_mode = !caps_lock_mode;
-        }
+        case KB_CAPS_LOCK:
+            if (key_was_released) {
+                caps_lock_mode = !caps_lock_mode;
+            }
 
-        break;
+            break;
 
-    case KB_ARROW_UP:
-        if (key_was_released) {
-            reset_readline();
-            strcpy(readline, last_readline);
-            printf(readline);
-            readline_index = strlen(readline);
-        }
+        case KB_ARROW_UP:
+            if (key_was_released) {
+                reset_readline();
+                strcpy(readline, last_readline);
+                printf(readline);
+                readline_index = strlen(readline);
+            }
 
-        break;
+            break;
 
-    case KB_LSHIFT:
-    case KB_RSHIFT:
-        if (key_was_released) {
-            shift_mode = false;
-        } else {
-            shift_mode = true;
-        }
+        case KB_LSHIFT:
+        case KB_RSHIFT:
+            if (key_was_released) {
+                shift_mode = false;
+            } else {
+                shift_mode = true;
+            }
 
-        break;
+            break;
 
-    case KB_LCTRL:
-        if (key_was_released) {
-            ctrl_mode = false;
-        } else {
-            ctrl_mode = true;
-        }
+        case KB_LCTRL:
+            if (key_was_released) {
+                ctrl_mode = false;
+            } else {
+                ctrl_mode = true;
+            }
 
-        break;
+            break;
 
-    case KB_BACKSPACE:
-        if (key_was_released && readline_index > 0) {
-            printf("\b");
-            readline_index--;
-            readline[readline_index] = 0;
-        }
+        case KB_BACKSPACE:
+            if (key_was_released && readline_index > 0) {
+                printf("\b");
+                readline_index--;
+                readline[readline_index] = 0;
+            }
 
-        break;
+            break;
 
-    case KB_ENTER:
-        if (key_was_released) {
-            printf("\n");
-            run_command((const char*)readline);
-            strcpy(last_readline, readline);
-            reset_readline();
-            print_prompt();
-        }
+        case KB_ENTER:
+            if (key_was_released) {
+                printf("\n");
+                run_command((const char*)readline);
+                strcpy(last_readline, readline);
+                reset_readline();
+                print_prompt();
+            }
 
-        break;
+            break;
 
-    case KB_TAB:
-        if (key_was_released) {
-            printf("  ");
-            readline[readline_index++] = 0;
-            readline[readline_index++] = 0;
-        }
+        case KB_TAB:
+            if (key_was_released) {
+                printf("  ");
+                readline[readline_index++] = 0;
+                readline[readline_index++] = 0;
+            }
 
-        break;
+            break;
 
-    default:
-        if (key_was_released) {
-            unsigned char c = get_char(scancode, shift_mode, caps_lock_mode);
+        default:
+            if (key_was_released) {
+                unsigned char c = get_char(scancode, shift_mode, caps_lock_mode);
 
-            if (c) {
-                // Handle keyboard shortcuts.
-                if (ctrl_mode) {
-                    switch (c) {
-                    case 'c':
-                        readline[readline_index++] = '^';
-                        readline[readline_index++] = 'C';
-                        printf("^C\n");
-                        print_prompt();
-                        break;
+                if (c) {
+                    // Handle keyboard shortcuts.
+                    if (ctrl_mode) {
+                        switch (c) {
+                            case 'c':
+                                readline[readline_index++] = '^';
+                                readline[readline_index++] = 'C';
+                                printf("^C\n");
+                                print_prompt();
+                                break;
 
-                    case 'l':
-                        clear();
-                        reset_readline();
-                        print_prompt();
-                        break;
+                            case 'l':
+                                clear();
+                                reset_readline();
+                                print_prompt();
+                                break;
+                        }
+                    } else {
+                        printf("%c", c);
+                        readline[readline_index++] = c;
                     }
-                } else {
-                    printf("%c", c);
-                    readline[readline_index++] = c;
                 }
             }
-        }
     }
 }
