@@ -27,11 +27,12 @@ void frame_init(multiboot_info_t* mbi) {
     next_free_frame = 1;
 
     MMU_DEBUG(
-        "Initialized MMAP with memory_area = %p, multiboot_start = %p, "
-        "multiboot_end = %p, next_free_frame = %u",
-        memory_area,
+        "Initialized frame allocator with multiboot_start = %p multiboot_end ="
+        "%p kernel_start=%p kernel_end=%p next_free_frame = %u",
         multiboot_start,
         multiboot_end,
+        kernel_start,
+        kernel_end,
         next_free_frame
     );
 }
