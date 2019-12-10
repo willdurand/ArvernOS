@@ -2,7 +2,7 @@
 #include <mmu/debug.h>
 #include <kernel/panic.h>
 
-uint64_t read_mmap(uint64_t request, uint8_t mode);
+uint64_t read_mmap(uint64_t request);
 
 multiboot_tag_mmap_t* memory_area;
 uint64_t kernel_start;
@@ -37,7 +37,7 @@ void frame_init(multiboot_info_t* mbi) {
     );
 }
 
-uint64_t read_mmap(uint64_t request, uint8_t mode) {
+uint64_t read_mmap(uint64_t request) {
     uint64_t cur_num = 0;
 
     for (
@@ -51,17 +51,14 @@ uint64_t read_mmap(uint64_t request, uint8_t mode) {
 
         uint64_t entry_end = entry->addr + entry->len;
 
-        for (uint64_t i = entry->addr; i + PAGE_SIZE < entry_end; i += PAGE_SIZE) {
-            if ((i >= multiboot_start && i <= multiboot_end) || (i >= kernel_start && i <= kernel_end)) {
+        for (uint64_t addr = entry->addr; addr + PAGE_SIZE < entry_end; addr += PAGE_SIZE) {
+            if ((addr >= multiboot_start && addr <= multiboot_end) || (addr >= kernel_start &&
+                    addr <= kernel_end)) {
                 continue;
             }
 
-            if (mode == FRAME_GET_NUM && request >= i && request <= i + PAGE_SIZE) {
-                return cur_num + 1;
-            }
-
-            if (mode == FRAME_GET_ADDR && cur_num == request && i != 0) {
-                return i;
+            if (cur_num == request && addr != 0) {
+                return addr;
             }
 
             cur_num++;
@@ -82,10 +79,10 @@ uint64_t read_mmap(uint64_t request, uint8_t mode) {
  */
 uint64_t frame_allocate() {
     // Get the address for the next free frame
-    uint64_t addr = read_mmap(next_free_frame, FRAME_GET_ADDR);
+    uint64_t addr = read_mmap(next_free_frame);
 
     if (addr == 0) {
-        PANIC("failed to allocate a new frame, addr=%p", addr);
+        PANIC("failed to allocate a new frame, next_free_frame=%u", next_free_frame);
     }
 
     MMU_DEBUG("allocated new frame with addr=%p", addr);
