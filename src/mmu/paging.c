@@ -332,7 +332,7 @@ void unmap(uint64_t page_number) {
     page_entry_t entry = p1->entries[p1_index(page_number)];
     uint64_t frame_number = pointed_frame(entry);
 
-    p1->entries[p1_index(page_number)].addr = 0;
+    memset(&p1->entries[p1_index(page_number)], 0, sizeof(page_entry_t));
     MMU_DEBUG_PAGE_ENTRY("cleared", p1->entries[p1_index(page_number)]);
 
     /// @todo free p(1,2,3) table if empty
