@@ -4,13 +4,8 @@ willOS
 [![CircleCI](https://circleci.com/gh/willdurand/willOS/tree/master.svg?style=svg)](https://circleci.com/gh/willdurand/willOS/tree/master)
 
 willOS is a minimal 64 bits kernel (not really an Operating System because it
-cannot do a lot of things currently).
-
-<p align="center">
-  <img style="max-width: 70%" src="https://raw.githubusercontent.com/willdurand/willOS/master/docs/qemu.gif">
-</p>
-
-Note: the screencast above is likely outdated.
+cannot do a lot of things currently). Some screencasts are available in [this
+Twitter thread](https://twitter.com/couac/status/866693418130575361).
 
 ## Setting up a development environment
 
