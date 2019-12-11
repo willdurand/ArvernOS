@@ -5,13 +5,13 @@
 #include <mmu/paging.h>
 #include <mem.h>
 
-bitmap_t allocated_pages;
+bitmap_t allocated_pages[1];
 uint64_t heap_end_page;
 uint64_t heap_start_page;
 uint64_t max_pages;
 
 void alloc_init() {
-    allocated_pages = 0;
+    allocated_pages[0] = 0;
     heap_end_page = page_containing_address(HEAP_START + HEAP_SIZE - 1);
     heap_start_page = page_containing_address(HEAP_START);
     max_pages = heap_end_page - heap_start_page + 1;
@@ -41,7 +41,7 @@ void* liballoc_alloc(int number_of_pages) {
     uint64_t first_free_page = 0;
 
     for (uint64_t i = 1; i <= max_pages; i++) {
-        if (bitmap_get(&allocated_pages, i) == false) {
+        if (bitmap_get(allocated_pages, i) == false) {
             first_free_page = i;
             break;
         }
@@ -58,7 +58,7 @@ void* liballoc_alloc(int number_of_pages) {
     void* ptr = memset((void*)addr, 0, (first_free_page - 1) * PAGE_SIZE);
 
     for (uint64_t i = 0; i < number_of_pages; i++) {
-        bitmap_set(&allocated_pages, first_free_page + i);
+        bitmap_set(allocated_pages, first_free_page + i);
     }
 
     MMU_DEBUG("allocated %d pages at addr=%p", number_of_pages, addr);
@@ -70,7 +70,7 @@ int liballoc_free(void* ptr, int number_of_pages) {
     uint64_t page = page_containing_address((uint64_t)ptr);
 
     for (uint64_t i = 0; i < number_of_pages; i++) {
-        bitmap_clear(&allocated_pages, page + i);
+        bitmap_clear(allocated_pages, page + i);
         unmap(page + i);
     }
 

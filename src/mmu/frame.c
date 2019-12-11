@@ -11,7 +11,7 @@ uint64_t kernel_start;
 uint64_t kernel_end;
 uint64_t multiboot_start;
 uint64_t multiboot_end;
-bitmap_t allocated_frames;
+bitmap_t allocated_frames[MAX_FRAMES / BITS_PER_WORD];
 
 void frame_init(multiboot_info_t* mbi) {
     reserved_areas_t reserved = read_multiboot_info(mbi);
@@ -26,7 +26,7 @@ void frame_init(multiboot_info_t* mbi) {
     kernel_end = reserved.kernel_end;
     multiboot_start = reserved.multiboot_start;
     multiboot_end = reserved.multiboot_end;
-    allocated_frames = 0;
+    memset(allocated_frames, 0, MAX_FRAMES / BITS_PER_WORD);
 
     MMU_DEBUG(
         "Initialized frame allocator with multiboot_start = %p "
@@ -70,7 +70,7 @@ uint64_t frame_allocate() {
     uint64_t free_frame = 0;
 
     for (uint64_t i = 1; i <= MAX_FRAMES; i++) {
-        if (bitmap_get(&allocated_frames, i) == false) {
+        if (bitmap_get(allocated_frames, i) == false) {
             free_frame = i;
             break;
         }
@@ -83,7 +83,7 @@ uint64_t frame_allocate() {
     }
 
     MMU_DEBUG("allocated frame with addr=%p free_frame=%u", addr, free_frame);
-    bitmap_set(&allocated_frames, free_frame);
+    bitmap_set(allocated_frames, free_frame);
 
     return addr;
 }
@@ -93,7 +93,7 @@ void frame_deallocate(uint64_t frame_number) {
 
     MMU_DEBUG("deallocating frame=%u addr=%p", frame_number, addr);
 
-    bitmap_clear(&allocated_frames, frame_number);
+    bitmap_clear(allocated_frames, frame_number);
     memset((void*)addr, 0, PAGE_SIZE);
 }
 
