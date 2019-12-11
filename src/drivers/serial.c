@@ -6,16 +6,16 @@
 #include <stdbool.h>
 #include <stddef.h>
 
-// private functions
+void serial_write(uint16_t com, char c);
 bool serial_received(uint16_t com);
 bool serial_is_transmit_fifo_empty(uint16_t com);
-// could be exposed later
+// TODO: could be exposed later if needed
 char serial_read(uint16_t com);
 
-void serial_init(uint16_t com, uint16_t divisor) {
+void serial_init(uint16_t com, uint16_t speed) {
     port_byte_out(SERIAL_LINE_COMMAND_PORT(com), SERIAL_LINE_ENABLE_DLAB);
-    port_byte_out(SERIAL_DATA_PORT(com), (divisor >> 8) & 0x00FF);
-    port_byte_out(SERIAL_DATA_PORT(com),         divisor & 0x00FF);
+    port_byte_out(SERIAL_DATA_PORT(com), (speed >> 8) & 0x00FF);
+    port_byte_out(SERIAL_DATA_PORT(com),         speed & 0x00FF);
 
     // cf. https://littleosbook.github.io/#configuring-the-serial-port
     //

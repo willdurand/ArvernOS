@@ -26,7 +26,6 @@ typedef struct idt_gate {
     idt_opts_t opts;
     uint16_t ptr_mid;
     uint32_t ptr_high;
-
     uint8_t  _1_reserved : 8;
     uint8_t  _type       : 5;
     uint32_t _2_reserved : 19;
@@ -38,12 +37,15 @@ typedef struct idt_register {
 } __attribute__((packed)) idt_register_t;
 
 /**
- * Initialize the _Interrupt Descriptor Table_.
+ * Initializes the _Interrupt Descriptor Table_.
  */
 void idt_init();
 
 /**
- * Register a _handler_ for a _gate_.
+ * Registers a _handler_ for a _gate_.
+ *
+ * @param n a gate number
+ * @param handler the handle to register for the given gate
  */
 void register_idt_gate(uint16_t n, uint64_t handler);
 

@@ -97,12 +97,12 @@ void kmain(unsigned long magic, unsigned long addr) {
     keyboard_init();
     print_ok();
 
-    // shell
+    // kshell
     printf("\n");
-    print_prompt();
+    kshell_print_prompt();
 
     while (1) {
-        kshell(keyboard_get_last_scancode());
+        kshell_run(keyboard_get_last_scancode());
         __asm__("hlt");
     }
 }

@@ -1,8 +1,10 @@
+/** @file */
 #ifndef SCREEN_H
 #define SCREEN_H
 
 #include <stdint.h>
 
+/// The address of the frame buffer.
 #define VIDEO_ADDRESS   0xB8000
 #define SCREEN_WIDTH    80
 #define SCREEN_HEIGHT   25
@@ -24,10 +26,37 @@ static const uint8_t COLOR_LIGHT_MAGENTA = 13;
 static const uint8_t COLOR_LIGHT_BROWN   = 14;
 static const uint8_t COLOR_WHITE         = 15;
 
+/**
+ * Initializes the screen driver.
+ */
 void screen_init();
+
+/**
+ * Clears the entire screen.
+ */
 void screen_clear();
+
+/**
+ * Writes a character to the screen.
+ *
+ * @param c the character to write to the screen
+ */
 void screen_write(char c);
-void screen_print(const char*);
+
+/**
+ * Prints a string to the screen.
+ *
+ * @param str the string to print to the screen
+ */
+void screen_print(const char* str);
+
+/**
+ * Changes the color scheme of the screen (background and foreground) that will
+ * be used for subsequent characters printed to it.
+ *
+ * @param fg the foreground color
+ * @param bg the background color
+ */
 void screen_color_scheme(uint8_t fg, uint8_t bg);
 
 #endif

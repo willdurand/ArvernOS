@@ -53,8 +53,8 @@ void* liballoc_alloc(int number_of_pages) {
     }
 
     uint64_t addr = (HEAP_START + ((first_free_page - 1) * PAGE_SIZE));
-    /// @todo I am actually not sure about this, but that should not hurt I
-    ///       guess.
+    // TODO: I am actually not sure about this, but that should not hurt I
+    @ / guess.
     void* ptr = memset((void*)addr, 0, (first_free_page - 1) * PAGE_SIZE);
 
     for (uint64_t i = 0; i < number_of_pages; i++) {

@@ -335,7 +335,7 @@ void unmap(uint64_t page_number) {
     memset(&p1->entries[p1_index(page_number)], 0, sizeof(page_entry_t));
     MMU_DEBUG_PAGE_ENTRY("cleared", p1->entries[p1_index(page_number)]);
 
-    /// @todo free p(1,2,3) table if empty
+    // TODO: free p(1,2,3) table if empty
 
     deallocate_frame(frame_number);
 

@@ -8,7 +8,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-// The magic field should contain this.
+/// The magic field should contain this.
 #define MULTIBOOT2_MAGIC_NUMBER             0xe85250d6
 
 // This should be in %eax.
@@ -143,13 +143,16 @@ typedef struct reserved_areas {
  * @param addr the address to the multiboot information
  * @return `true` if everything is ok, `false` otherwise
  */
-bool multiboot_is_valid(unsigned long magic, unsigned long addr);
+bool multiboot_is_valid(uint64_t magic, uint64_t addr);
 
 void* find_multiboot_tag(multiboot_tag_t* tags, uint16_t type);
 
 /**
  * Returns the memory areas reserved for the kernel and the multiboot
  * information.
+ *
+ * @param mbi a pointer to the multiboot info
+ * @return the memory areas (start/end) that are reserved
  */
 reserved_areas_t read_multiboot_info(multiboot_info_t* mbi);
 

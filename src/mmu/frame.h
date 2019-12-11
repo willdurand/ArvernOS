@@ -32,7 +32,7 @@ void frame_deallocate(uint64_t frame_number);
 /**
  * Returns the frame number given a physical address.
  *
- * @param addr a physical address (frame)
+ * @param physical_address a physical address (frame)
  * @returns a frame number
  */
 uint64_t frame_containing_address(uint64_t physical_address);

@@ -1,7 +1,9 @@
+/** @file */
 #ifndef KMAIN_H
 #define KMAIN_H
 
 #include <core/boot.h>
+#include <stdint.h>
 
 #define KERNEL_ASCII    "               _  __\n" \
                         "      o  |  | / \\(_ \n" \
@@ -18,6 +20,12 @@
 #define KERNEL_DATE     __DATE__
 #define KERNEL_TIME     __TIME__
 
-void kmain(unsigned long magic, unsigned long addr) __asm__("kmain");
+/**
+ * This is the entrypoint of the kernel (C code).
+ *
+ * @param magic the multiboot magic value
+ * @param addr the multiboot info address
+ */
+void kmain(uint64_t magic, uint64_t addr) __asm__("kmain");
 
 #endif

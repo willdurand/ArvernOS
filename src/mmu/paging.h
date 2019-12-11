@@ -1,3 +1,4 @@
+/** @file */
 #ifndef MMU_PAGING_H
 #define MMU_PAGING_H
 
@@ -81,7 +82,7 @@ uint64_t translate_page(uint64_t page_number);
 /**
  * Maps a page (number) to a frame (physical address).
  *
- * @param page_number a page number (not an address)
+ * @param page a page number (not an address)
  * @param frame a physical address (frame)
  * @param flags paging flags
  */

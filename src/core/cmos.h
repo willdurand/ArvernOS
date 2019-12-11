@@ -1,3 +1,4 @@
+/** @file */
 #ifndef CORE_CMOS_H
 #define CORE_CMOS_H
 
@@ -29,6 +30,11 @@ typedef struct cmos_rtc {
     uint8_t century;
 } cmos_rtc_t;
 
+/**
+ * Reads and returns the RTC data from the CMOS.
+ *
+ * @return RTC data
+ */
 cmos_rtc_t cmos_read_rtc();
 
 #endif

@@ -200,7 +200,7 @@ void run_command(const char* command) {
         return;
     }
 
-    // TODO: implement and use strktok() to get the command and the arguments.
+    // TODO: implement and use `strktok()` to get the command and the arguments.
 
     if (strncmp(command, "help", 4) == 0) {
         help(command);
@@ -219,7 +219,7 @@ void run_command(const char* command) {
     }
 }
 
-void print_prompt() {
+void kshell_print_prompt() {
     screen_color_scheme(COLOR_CYAN, COLOR_BLACK);
     printf(PROMPT);
     screen_color_scheme(COLOR_WHITE, COLOR_BLACK);
@@ -241,7 +241,7 @@ void reset_readline() {
     }
 }
 
-void kshell(uint8_t scancode) {
+void kshell_run(uint8_t scancode) {
     bool key_was_released = false;
 
     if (scancode > 128) {
@@ -301,7 +301,7 @@ void kshell(uint8_t scancode) {
                 run_command((const char*)readline);
                 strcpy(last_readline, readline);
                 reset_readline();
-                print_prompt();
+                kshell_print_prompt();
             }
 
             break;
@@ -327,13 +327,13 @@ void kshell(uint8_t scancode) {
                                 readline[readline_index++] = '^';
                                 readline[readline_index++] = 'C';
                                 printf("^C\n");
-                                print_prompt();
+                                kshell_print_prompt();
                                 break;
 
                             case 'l':
                                 clear();
                                 reset_readline();
-                                print_prompt();
+                                kshell_print_prompt();
                                 break;
                         }
                     } else {

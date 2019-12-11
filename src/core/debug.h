@@ -6,7 +6,7 @@
 
 #ifdef ENABLE_KERNEL_DEBUG
 
-static const int serial_com1 = SERIAL_COM1;
+static const uint16_t serial_com1 = SERIAL_COM1;
 
 #ifdef DEBUG_WITH_COLORS
 // See: https://github.com/shiena/ansicolor
