@@ -7,7 +7,7 @@
 /// The default page size.
 #define PAGE_SIZE       4096
 
-/// The number of frames to allocate (we consider 128MB for now).
+/// The number of frames that we can allocate (we consider 128MB for now).
 #define MAX_FRAMES      (128 * 1000000) / 4096
 
 /**
