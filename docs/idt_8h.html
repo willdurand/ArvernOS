@@ -88,23 +88,41 @@ $(document).ready(function(){initNavTree('idt_8h.html','');});
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">idt.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for idt.h:</div>
+<div class="dyncontent">
+<div class="center"><img src="idt_8h__incl.png" border="0" usemap="#src_2core_2idt_8h" alt=""/></div>
+<map name="src_2core_2idt_8h" id="src_2core_2idt_8h">
+<area shape="rect" title=" " alt="" coords="5,5,103,31"/>
+<area shape="rect" title=" " alt="" coords="22,79,86,104"/>
+</map>
+</div>
+</div><div class="textblock"><div class="dynheader">
+This graph shows which files directly or indirectly include this file:</div>
+<div class="dyncontent">
+<div class="center"><img src="idt_8h__dep__incl.png" border="0" usemap="#src_2core_2idt_8hdep" alt=""/></div>
+<map name="src_2core_2idt_8hdep" id="src_2core_2idt_8hdep">
+<area shape="rect" title=" " alt="" coords="18,5,116,31"/>
+<area shape="rect" href="isr_8h_source.html" title=" " alt="" coords="19,79,116,104"/>
+<area shape="rect" href="core_2syscall_8h.html" title=" " alt="" coords="5,152,129,177"/>
+</map>
+</div>
 </div>
 <p><a href="idt_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structidt__opts.html">idt_opts</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structidt__opts__t.html">idt_opts_t</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structidt__gate.html">idt_gate</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structidt__gate__t.html">idt_gate_t</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structidt__register.html">idt_register</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structidt__register__t.html">idt_register_t</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
@@ -114,11 +132,6 @@ Macros</h2></td></tr>
 <tr class="memdesc:a2a59a505aa55f15c152f30f811fbd310"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of entries in the <em>Interrupt Descriptor Table</em>. <br /></td></tr>
 <tr class="separator:a2a59a505aa55f15c152f30f811fbd310"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:a63a9f769329146e046006514ec6d38d3"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structidt__opts.html">idt_opts</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="idt_8h.html#a63a9f769329146e046006514ec6d38d3">idt_opts_t</a></td></tr>
-<tr class="separator:a63a9f769329146e046006514ec6d38d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a88d4205d069421eb4f8e7577285f1180"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="idt_8h.html#a88d4205d069421eb4f8e7577285f1180">idt_init</a> ()</td></tr>
@@ -126,22 +139,6 @@ Functions</h2></td></tr>
 <tr class="memitem:a12c0d8a15b0aaa34222b3fbcbe55b462"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="idt_8h.html#a12c0d8a15b0aaa34222b3fbcbe55b462">register_idt_gate</a> (uint16_t n, uint64_t handler)</td></tr>
 <tr class="separator:a12c0d8a15b0aaa34222b3fbcbe55b462"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a id="a63a9f769329146e046006514ec6d38d3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a63a9f769329146e046006514ec6d38d3">&#9670;&nbsp;</a></span>idt_opts_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef struct <a class="el" href="structidt__opts.html">idt_opts</a>   <a class="el" href="idt_8h.html#a63a9f769329146e046006514ec6d38d3">idt_opts_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This structure represents the <em>Interrupt Descriptor Table</em> options. </p>
-
-</div>
-</div>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a88d4205d069421eb4f8e7577285f1180"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a88d4205d069421eb4f8e7577285f1180">&#9670;&nbsp;</a></span>idt_init()</h2>
@@ -157,7 +154,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initialize the <em>Interrupt Descriptor Table</em>. </p>
+<p>Initializes the <em>Interrupt Descriptor Table</em>. </p>
 
 </div>
 </div>
@@ -186,7 +183,14 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Register a <em>handler</em> for a <em>gate</em>. </p>
+<p>Registers a <em>handler</em> for a <em>gate</em>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">n</td><td>a gate number </td></tr>
+    <tr><td class="paramname">handler</td><td>the handle to register for the given gate </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

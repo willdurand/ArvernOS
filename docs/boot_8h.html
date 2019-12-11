@@ -87,7 +87,7 @@ $(document).ready(function(){initNavTree('boot_8h.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">boot.h File Reference</div>  </div>
@@ -95,67 +95,74 @@ $(document).ready(function(){initNavTree('boot_8h.html','');});
 <div class="contents">
 <div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
 <code>#include &lt;stdbool.h&gt;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for boot.h:</div>
+<div class="dyncontent">
+<div class="center"><img src="boot_8h__incl.png" border="0" usemap="#src_2core_2boot_8h" alt=""/></div>
+<map name="src_2core_2boot_8h" id="src_2core_2boot_8h">
+<area shape="rect" title=" " alt="" coords="29,5,139,31"/>
+<area shape="rect" title=" " alt="" coords="5,79,70,104"/>
+<area shape="rect" title=" " alt="" coords="93,79,169,104"/>
+</map>
+</div>
+</div><div class="textblock"><div class="dynheader">
+This graph shows which files directly or indirectly include this file:</div>
+<div class="dyncontent">
+<div class="center"><img src="boot_8h__dep__incl.png" border="0" usemap="#src_2core_2boot_8hdep" alt=""/></div>
+<map name="src_2core_2boot_8hdep" id="src_2core_2boot_8hdep">
+<area shape="rect" title=" " alt="" coords="165,5,274,31"/>
+<area shape="rect" href="kmain_8h.html" title=" " alt="" coords="5,79,135,104"/>
+<area shape="rect" href="frame_8h.html" title=" " alt="" coords="159,79,280,104"/>
+<area shape="rect" href="paging_8h.html" title=" " alt="" coords="205,152,332,177"/>
+</map>
+</div>
 </div>
 <p><a href="boot_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmultiboot__tag.html">multiboot_tag</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmultiboot__tag__t.html">multiboot_tag_t</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmultiboot__info.html">multiboot_info</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmultiboot__info__t.html">multiboot_info_t</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmultiboot__tag__string.html">multiboot_tag_string</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmultiboot__tag__string__t.html">multiboot_tag_string_t</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmultiboot__tag__basic__meminfo.html">multiboot_tag_basic_meminfo</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmultiboot__tag__basic__meminfo__t.html">multiboot_tag_basic_meminfo_t</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmultiboot__tag__bootdev.html">multiboot_tag_bootdev</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmultiboot__tag__bootdev__t.html">multiboot_tag_bootdev_t</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmultiboot__tag__module.html">multiboot_tag_module</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmultiboot__tag__module__t.html">multiboot_tag_module_t</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmultiboot__mmap__entry.html">multiboot_mmap_entry</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmultiboot__mmap__entry__t.html">multiboot_mmap_entry_t</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmultiboot__tag__mmap.html">multiboot_tag_mmap</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmultiboot__tag__mmap__t.html">multiboot_tag_mmap_t</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmultiboot__elf__sections__entry.html">multiboot_elf_sections_entry</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmultiboot__elf__sections__entry__t.html">multiboot_elf_sections_entry_t</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmultiboot__tag__elf__sections.html">multiboot_tag_elf_sections</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmultiboot__tag__elf__sections__t.html">multiboot_tag_elf_sections_t</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structreserved__areas.html">reserved_areas</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structreserved__areas__t.html">reserved_areas_t</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:a3fa146b7e77e33663684aa89d72418b3"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structmultiboot__elf__sections__entry.html">multiboot_elf_sections_entry</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="boot_8h.html#a3fa146b7e77e33663684aa89d72418b3">multiboot_elf_sections_entry_t</a></td></tr>
-<tr class="separator:a3fa146b7e77e33663684aa89d72418b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a4d5760faf1505d98951af243fc877341"><td class="memItemLeft" align="right" valign="top"><a id="a4d5760faf1505d98951af243fc877341"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="boot_8h.html#a4d5760faf1505d98951af243fc877341">MULTIBOOT2_MAGIC_NUMBER</a>&#160;&#160;&#160;0xe85250d6</td></tr>
+<tr class="memdesc:a4d5760faf1505d98951af243fc877341"><td class="mdescLeft">&#160;</td><td class="mdescRight">The magic field should contain this. <br /></td></tr>
+<tr class="separator:a4d5760faf1505d98951af243fc877341"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a17651da252ee86be7af4db2ea89a3b93"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="boot_8h.html#a17651da252ee86be7af4db2ea89a3b93">multiboot_is_valid</a> (unsigned long magic, unsigned long addr)</td></tr>
-<tr class="separator:a17651da252ee86be7af4db2ea89a3b93"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa7b6135d99877551c21b6ca9543345c2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structreserved__areas.html">reserved_areas_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="boot_8h.html#aa7b6135d99877551c21b6ca9543345c2">read_multiboot_info</a> (<a class="el" href="structmultiboot__info.html">multiboot_info_t</a> *mbi)</td></tr>
+<tr class="memitem:a6e841bf75baeee7316b047c82b7127d4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="boot_8h.html#a6e841bf75baeee7316b047c82b7127d4">multiboot_is_valid</a> (uint64_t magic, uint64_t addr)</td></tr>
+<tr class="separator:a6e841bf75baeee7316b047c82b7127d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7b6135d99877551c21b6ca9543345c2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structreserved__areas__t.html">reserved_areas_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="boot_8h.html#aa7b6135d99877551c21b6ca9543345c2">read_multiboot_info</a> (<a class="el" href="structmultiboot__info__t.html">multiboot_info_t</a> *mbi)</td></tr>
 <tr class="separator:aa7b6135d99877551c21b6ca9543345c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section see"><dt>See also</dt><dd><a href="https://www.uclibc.org/docs/elf-64-gen.pdf">https://www.uclibc.org/docs/elf-64-gen.pdf</a> </dd></dl>
-</div><h2 class="groupheader">Typedef Documentation</h2>
-<a id="a3fa146b7e77e33663684aa89d72418b3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3fa146b7e77e33663684aa89d72418b3">&#9670;&nbsp;</a></span>multiboot_elf_sections_entry_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef struct <a class="el" href="structmultiboot__elf__sections__entry.html">multiboot_elf_sections_entry</a>   <a class="el" href="boot_8h.html#a3fa146b7e77e33663684aa89d72418b3">multiboot_elf_sections_entry_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="section see"><dt>See also</dt><dd><a href="https://en.wikipedia.org/wiki/Executable_and_Linkable_Format#Section_header">https://en.wikipedia.org/wiki/Executable_and_Linkable_Format#Section_header</a> </dd></dl>
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="a17651da252ee86be7af4db2ea89a3b93"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a17651da252ee86be7af4db2ea89a3b93">&#9670;&nbsp;</a></span>multiboot_is_valid()</h2>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="a6e841bf75baeee7316b047c82b7127d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e841bf75baeee7316b047c82b7127d4">&#9670;&nbsp;</a></span>multiboot_is_valid()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -163,13 +170,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">bool multiboot_is_valid </td>
           <td>(</td>
-          <td class="paramtype">unsigned long&#160;</td>
+          <td class="paramtype">uint64_t&#160;</td>
           <td class="paramname"><em>magic</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">unsigned long&#160;</td>
+          <td class="paramtype">uint64_t&#160;</td>
           <td class="paramname"><em>addr</em>&#160;</td>
         </tr>
         <tr>
@@ -182,7 +189,7 @@ Functions</h2></td></tr>
 <p>Makes sure the bootloader loads the kernel with multiboot2.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">magic</td><td>a magic value passed from the bootloader to the <code>kmain()</code> function. </td></tr>
+    <tr><td class="paramname">magic</td><td>a magic value passed from the bootloader to the <code><a class="el" href="kmain_8h.html#a517fbc4f628c0c7c827237bf78a39905">kmain()</a></code> function. </td></tr>
     <tr><td class="paramname">addr</td><td>the address to the multiboot information </td></tr>
   </table>
   </dd>
@@ -198,15 +205,31 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structreserved__areas.html">reserved_areas_t</a> read_multiboot_info </td>
+          <td class="memname"><a class="el" href="structreserved__areas__t.html">reserved_areas_t</a> read_multiboot_info </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structmultiboot__info.html">multiboot_info_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="structmultiboot__info__t.html">multiboot_info_t</a> *&#160;</td>
           <td class="paramname"><em>mbi</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Returns the memory areas reserved for the kernel and the multiboot information. </p>
+<p>Returns the memory areas reserved for the kernel and the multiboot information.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mbi</td><td>a pointer to the multiboot info </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the memory areas (start/end) that are reserved </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="boot_8h_aa7b6135d99877551c21b6ca9543345c2_icgraph.png" border="0" usemap="#boot_8h_aa7b6135d99877551c21b6ca9543345c2_icgraph" alt=""/></div>
+<map name="boot_8h_aa7b6135d99877551c21b6ca9543345c2_icgraph" id="boot_8h_aa7b6135d99877551c21b6ca9543345c2_icgraph">
+<area shape="rect" title=" " alt="" coords="133,5,272,31"/>
+<area shape="rect" href="frame_8h.html#ada91ff5ef3ceb241baf359ac078bb2d7" title=" " alt="" coords="5,5,85,31"/>
+</map>
+</div>
 
 </div>
 </div>

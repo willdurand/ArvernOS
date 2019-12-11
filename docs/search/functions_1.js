@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['idt_5finit_64',['idt_init',['../idt_8h.html#a88d4205d069421eb4f8e7577285f1180',1,'idt.c']]]
+  ['alloc_5finit_143',['alloc_init',['../alloc_8h.html#a0de47e42c61353f53c07a4274b87f864',1,'alloc.c']]]
 ];

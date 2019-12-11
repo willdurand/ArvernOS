@@ -89,33 +89,39 @@ $(document).ready(function(){initNavTree('bitmap_8h_source.html','');});
 <div class="title">bitmap.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef MMU_BITMAP_H</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define MMU_BITMAP_H</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;limits.h&gt;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">typedef</span> uint64_t bitmap_t;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">enum</span> { BITS_PER_WORD = <span class="keyword">sizeof</span>(bitmap_t) * CHAR_BIT };</div>
+<a href="bitmap_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#ifndef MMU_BITMAP_H</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#define MMU_BITMAP_H</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;limits.h&gt;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
+<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="bitmap_8h.html#ae1c22e18a745d7ab1519a37cb77ce1bb">   10</a></span>&#160;<span class="keyword">typedef</span> uint64_t <a class="code" href="bitmap_8h.html#ae1c22e18a745d7ab1519a37cb77ce1bb">bitmap_t</a>;</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#define WORD_OFFSET(b)  ((b) / BITS_PER_WORD)</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#define BIT_OFFSET(b)   ((b) % BITS_PER_WORD)</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keywordtype">bool</span> bitmap_get(bitmap_t* b, uint64_t n);</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">enum</span> { BITS_PER_WORD = <span class="keyword">sizeof</span>(<a class="code" href="bitmap_8h.html#ae1c22e18a745d7ab1519a37cb77ce1bb">bitmap_t</a>) * CHAR_BIT };</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#define WORD_OFFSET(b)  ((b) / BITS_PER_WORD)</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#define BIT_OFFSET(b)   ((b) % BITS_PER_WORD)</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keywordtype">void</span> bitmap_set(bitmap_t* b, uint64_t n);</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keywordtype">void</span> bitmap_clear(bitmap_t* b, uint64_t n);</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="bitmap_8h.html#ade4512f18861f6f5c803538112111455">bitmap_get</a>(<a class="code" href="bitmap_8h.html#ae1c22e18a745d7ab1519a37cb77ce1bb">bitmap_t</a>* b, uint64_t n);</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keywordtype">void</span> <a class="code" href="bitmap_8h.html#ae60e1e9970fe0c4f68ee27902adbebfa">bitmap_set</a>(<a class="code" href="bitmap_8h.html#ae1c22e18a745d7ab1519a37cb77ce1bb">bitmap_t</a>* b, uint64_t n);</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keywordtype">void</span> <a class="code" href="bitmap_8h.html#acbd3f5323acaf517704e69c47396119f">bitmap_clear</a>(<a class="code" href="bitmap_8h.html#ae1c22e18a745d7ab1519a37cb77ce1bb">bitmap_t</a>* b, uint64_t n);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
+<div class="ttc" id="abitmap_8h_html_acbd3f5323acaf517704e69c47396119f"><div class="ttname"><a href="bitmap_8h.html#acbd3f5323acaf517704e69c47396119f">bitmap_clear</a></div><div class="ttdeci">void bitmap_clear(bitmap_t *b, uint64_t n)</div><div class="ttdef"><b>Definition:</b> bitmap.c:11</div></div>
+<div class="ttc" id="abitmap_8h_html"><div class="ttname"><a href="bitmap_8h.html">bitmap.h</a></div></div>
+<div class="ttc" id="abitmap_8h_html_ae60e1e9970fe0c4f68ee27902adbebfa"><div class="ttname"><a href="bitmap_8h.html#ae60e1e9970fe0c4f68ee27902adbebfa">bitmap_set</a></div><div class="ttdeci">void bitmap_set(bitmap_t *b, uint64_t n)</div><div class="ttdef"><b>Definition:</b> bitmap.c:7</div></div>
+<div class="ttc" id="abitmap_8h_html_ade4512f18861f6f5c803538112111455"><div class="ttname"><a href="bitmap_8h.html#ade4512f18861f6f5c803538112111455">bitmap_get</a></div><div class="ttdeci">bool bitmap_get(bitmap_t *b, uint64_t n)</div><div class="ttdef"><b>Definition:</b> bitmap.c:3</div></div>
+<div class="ttc" id="abitmap_8h_html_ae1c22e18a745d7ab1519a37cb77ce1bb"><div class="ttname"><a href="bitmap_8h.html#ae1c22e18a745d7ab1519a37cb77ce1bb">bitmap_t</a></div><div class="ttdeci">uint64_t bitmap_t</div><div class="ttdoc">This type represents a bitmap (bitset).</div><div class="ttdef"><b>Definition:</b> bitmap.h:10</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_7bbbcc15c478ae77c369a34a30d3fadc.html">mmu</a></li><li class="navelem"><b>bitmap.h</b></li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_7bbbcc15c478ae77c369a34a30d3fadc.html">mmu</a></li><li class="navelem"><a class="el" href="bitmap_8h.html">bitmap.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.16 </li>

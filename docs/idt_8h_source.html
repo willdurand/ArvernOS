@@ -97,7 +97,7 @@ $(document).ready(function(){initNavTree('idt_8h_source.html','');});
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
 <div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="idt_8h.html#a2a59a505aa55f15c152f30f811fbd310">    8</a></span>&#160;<span class="preprocessor">#define IDT_ENTRIES 256</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="structidt__opts.html">   13</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structidt__opts.html">idt_opts</a> {</div>
+<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="structidt__opts__t.html">   13</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>idt_opts {</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    uint8_t stack_OK  : 3;</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    uint8_t ZEROS     : 5;</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    uint8_t gate_type : 1;</div>
@@ -105,38 +105,38 @@ $(document).ready(function(){initNavTree('idt_8h_source.html','');});
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    uint8_t ZERO      : 1;</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    uint8_t DPL       : 2;</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    uint8_t present   : 1;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;} __attribute__((packed)) <a class="code" href="idt_8h.html#a63a9f769329146e046006514ec6d38d3">idt_opts_t</a>;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;} __attribute__((packed)) <a class="code" href="structidt__opts__t.html">idt_opts_t</a>;</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="structidt__gate.html">   23</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structidt__gate.html">idt_gate</a> {</div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="structidt__gate__t.html">   23</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>idt_gate {</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    uint16_t ptr_low;</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    uint16_t selector;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <a class="code" href="structidt__opts.html">idt_opts_t</a> opts;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <a class="code" href="structidt__opts__t.html">idt_opts_t</a> opts;</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    uint16_t ptr_mid;</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    uint32_t ptr_high;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    uint8_t  _1_reserved : 8;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    uint8_t  _type       : 5;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    uint32_t _2_reserved : 19;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;} __attribute__((packed)) <a class="code" href="structidt__gate.html">idt_gate_t</a>;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="structidt__register.html">   35</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structidt__register.html">idt_register</a> {</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    uint16_t length;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    uint64_t base;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;} __attribute__((packed)) <a class="code" href="structidt__register.html">idt_register_t</a>;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keywordtype">void</span> <a class="code" href="idt_8h.html#a88d4205d069421eb4f8e7577285f1180">idt_init</a>();</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keywordtype">void</span> <a class="code" href="idt_8h.html#a12c0d8a15b0aaa34222b3fbcbe55b462">register_idt_gate</a>(uint16_t n, uint64_t handler);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    uint8_t  _1_reserved : 8;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    uint8_t  _type       : 5;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    uint32_t _2_reserved : 19;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;} __attribute__((packed)) <a class="code" href="structidt__gate__t.html">idt_gate_t</a>;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="structidt__register__t.html">   34</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>idt_register {</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    uint16_t length;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    uint64_t base;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;} __attribute__((packed)) <a class="code" href="structidt__register__t.html">idt_register_t</a>;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keywordtype">void</span> <a class="code" href="idt_8h.html#a88d4205d069421eb4f8e7577285f1180">idt_init</a>();</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keywordtype">void</span> <a class="code" href="idt_8h.html#a12c0d8a15b0aaa34222b3fbcbe55b462">register_idt_gate</a>(uint16_t n, uint64_t handler);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="astructidt__register_html"><div class="ttname"><a href="structidt__register.html">idt_register</a></div><div class="ttdef"><b>Definition:</b> idt.h:35</div></div>
+<div class="ttc" id="aidt_8h_html_a2a59a505aa55f15c152f30f811fbd310"><div class="ttname"><a href="idt_8h.html#a2a59a505aa55f15c152f30f811fbd310">IDT_ENTRIES</a></div><div class="ttdeci">#define IDT_ENTRIES</div><div class="ttdoc">The number of entries in the Interrupt Descriptor Table.</div><div class="ttdef"><b>Definition:</b> idt.h:8</div></div>
+<div class="ttc" id="astructidt__opts__t_html"><div class="ttname"><a href="structidt__opts__t.html">idt_opts_t</a></div><div class="ttdef"><b>Definition:</b> idt.h:13</div></div>
+<div class="ttc" id="aidt_8h_html"><div class="ttname"><a href="idt_8h.html">idt.h</a></div></div>
+<div class="ttc" id="astructidt__gate__t_html"><div class="ttname"><a href="structidt__gate__t.html">idt_gate_t</a></div><div class="ttdef"><b>Definition:</b> idt.h:23</div></div>
 <div class="ttc" id="aidt_8h_html_a88d4205d069421eb4f8e7577285f1180"><div class="ttname"><a href="idt_8h.html#a88d4205d069421eb4f8e7577285f1180">idt_init</a></div><div class="ttdeci">void idt_init()</div><div class="ttdef"><b>Definition:</b> idt.c:25</div></div>
 <div class="ttc" id="aidt_8h_html_a12c0d8a15b0aaa34222b3fbcbe55b462"><div class="ttname"><a href="idt_8h.html#a12c0d8a15b0aaa34222b3fbcbe55b462">register_idt_gate</a></div><div class="ttdeci">void register_idt_gate(uint16_t n, uint64_t handler)</div><div class="ttdef"><b>Definition:</b> idt.c:6</div></div>
-<div class="ttc" id="astructidt__opts_html"><div class="ttname"><a href="structidt__opts.html">idt_opts</a></div><div class="ttdef"><b>Definition:</b> idt.h:13</div></div>
-<div class="ttc" id="astructidt__gate_html"><div class="ttname"><a href="structidt__gate.html">idt_gate</a></div><div class="ttdef"><b>Definition:</b> idt.h:23</div></div>
-<div class="ttc" id="aidt_8h_html_a63a9f769329146e046006514ec6d38d3"><div class="ttname"><a href="idt_8h.html#a63a9f769329146e046006514ec6d38d3">idt_opts_t</a></div><div class="ttdeci">struct idt_opts idt_opts_t</div></div>
+<div class="ttc" id="astructidt__register__t_html"><div class="ttname"><a href="structidt__register__t.html">idt_register_t</a></div><div class="ttdef"><b>Definition:</b> idt.h:34</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>

@@ -96,8 +96,7 @@ $(document).ready(function(){initNavTree('boot_8h_source.html','');});
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment">// The magic field should contain this.</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#define MULTIBOOT2_MAGIC_NUMBER             0xe85250d6</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="boot_8h.html#a4d5760faf1505d98951af243fc877341">   12</a></span>&#160;<span class="preprocessor">#define MULTIBOOT2_MAGIC_NUMBER             0xe85250d6</span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">// This should be in %eax.</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#define MULTIBOOT2_MAGIC_VALUE              0x36d76289</span></div>
@@ -134,64 +133,64 @@ $(document).ready(function(){initNavTree('boot_8h_source.html','');});
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#define MULTIBOOT_ELF_SECTION_FLAG_ALLOCATED  0x2</span></div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#define MULTIBOOT_ELF_SECTION_FLAG_EXECUTABLE 0x4</span></div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="structmultiboot__tag.html">   49</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structmultiboot__tag.html">multiboot_tag</a> {</div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="structmultiboot__tag__t.html">   49</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>multiboot_tag {</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    uint32_t type;</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    uint32_t size;</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="comment">// other fieds</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;} __attribute__((packed)) <a class="code" href="structmultiboot__tag.html">multiboot_tag_t</a>;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;} __attribute__((packed)) <a class="code" href="structmultiboot__tag__t.html">multiboot_tag_t</a>;</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="structmultiboot__info.html">   55</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structmultiboot__info.html">multiboot_info</a> {</div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="structmultiboot__info__t.html">   55</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>multiboot_info {</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    uint32_t size;</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    uint32_t reserved;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <a class="code" href="structmultiboot__tag.html">multiboot_tag_t</a> tags[];</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <a class="code" href="structmultiboot__tag__t.html">multiboot_tag_t</a> tags[];</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="comment">// end tags</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;} __attribute__((packed)) <a class="code" href="structmultiboot__info.html">multiboot_info_t</a>;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;} __attribute__((packed)) <a class="code" href="structmultiboot__info__t.html">multiboot_info_t</a>;</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="structmultiboot__tag__string.html">   62</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structmultiboot__tag__string.html">multiboot_tag_string</a> {</div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="structmultiboot__tag__string__t.html">   62</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>multiboot_tag_string {</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    uint32_t type;</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    uint32_t size;</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordtype">char</span> <span class="keywordtype">string</span>[];</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;} __attribute__((packed)) <a class="code" href="structmultiboot__tag__string.html">multiboot_tag_string_t</a>;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;} __attribute__((packed)) <a class="code" href="structmultiboot__tag__string__t.html">multiboot_tag_string_t</a>;</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="structmultiboot__tag__basic__meminfo.html">   68</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structmultiboot__tag__basic__meminfo.html">multiboot_tag_basic_meminfo</a> {</div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="structmultiboot__tag__basic__meminfo__t.html">   68</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>multiboot_tag_basic_meminfo {</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    uint32_t type;</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    uint32_t size;</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    uint32_t mem_lower;</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    uint32_t mem_upper;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;} __attribute__((packed)) <a class="code" href="structmultiboot__tag__basic__meminfo.html">multiboot_tag_basic_meminfo_t</a>;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;} __attribute__((packed)) <a class="code" href="structmultiboot__tag__basic__meminfo__t.html">multiboot_tag_basic_meminfo_t</a>;</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="structmultiboot__tag__bootdev.html">   75</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structmultiboot__tag__bootdev.html">multiboot_tag_bootdev</a> {</div>
+<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="structmultiboot__tag__bootdev__t.html">   75</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>multiboot_tag_bootdev {</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    uint32_t type;</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    uint32_t size;</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    uint32_t biosdev;</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    uint32_t slice;</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    uint32_t part;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;} __attribute__((packed)) <a class="code" href="structmultiboot__tag__bootdev.html">multiboot_tag_bootdev_t</a>;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;} __attribute__((packed)) <a class="code" href="structmultiboot__tag__bootdev__t.html">multiboot_tag_bootdev_t</a>;</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
-<div class="line"><a name="l00083"></a><span class="lineno"><a class="line" href="structmultiboot__tag__module.html">   83</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structmultiboot__tag__module.html">multiboot_tag_module</a> {</div>
+<div class="line"><a name="l00083"></a><span class="lineno"><a class="line" href="structmultiboot__tag__module__t.html">   83</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>multiboot_tag_module {</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    uint32_t type;</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    uint32_t size;</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    uint32_t mod_start;</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    uint32_t mod_end;</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keywordtype">char</span> cmdline[];</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;} __attribute__((packed)) <a class="code" href="structmultiboot__tag__module.html">multiboot_tag_module_t</a>;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;} __attribute__((packed)) <a class="code" href="structmultiboot__tag__module__t.html">multiboot_tag_module_t</a>;</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
-<div class="line"><a name="l00091"></a><span class="lineno"><a class="line" href="structmultiboot__mmap__entry.html">   91</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structmultiboot__mmap__entry.html">multiboot_mmap_entry</a> {</div>
+<div class="line"><a name="l00091"></a><span class="lineno"><a class="line" href="structmultiboot__mmap__entry__t.html">   91</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>multiboot_mmap_entry {</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    uint64_t addr;</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    uint64_t len;</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    uint32_t type;</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    uint32_t zero;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;} __attribute__((packed)) <a class="code" href="structmultiboot__mmap__entry.html">multiboot_mmap_entry_t</a>;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;} __attribute__((packed)) <a class="code" href="structmultiboot__mmap__entry__t.html">multiboot_mmap_entry_t</a>;</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
-<div class="line"><a name="l00098"></a><span class="lineno"><a class="line" href="structmultiboot__tag__mmap.html">   98</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structmultiboot__tag__mmap.html">multiboot_tag_mmap</a> {</div>
+<div class="line"><a name="l00098"></a><span class="lineno"><a class="line" href="structmultiboot__tag__mmap__t.html">   98</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>multiboot_tag_mmap {</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    uint32_t type;</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    uint32_t size;</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    uint32_t entry_size;</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    uint32_t entry_version;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <a class="code" href="structmultiboot__mmap__entry.html">multiboot_mmap_entry_t</a> entries[];</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;} __attribute__((packed)) <a class="code" href="structmultiboot__tag__mmap.html">multiboot_tag_mmap_t</a>;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <a class="code" href="structmultiboot__mmap__entry__t.html">multiboot_mmap_entry_t</a> entries[];</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;} __attribute__((packed)) <a class="code" href="structmultiboot__tag__mmap__t.html">multiboot_tag_mmap_t</a>;</div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
-<div class="line"><a name="l00109"></a><span class="lineno"><a class="line" href="structmultiboot__elf__sections__entry.html">  109</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structmultiboot__elf__sections__entry.html">multiboot_elf_sections_entry</a> {</div>
+<div class="line"><a name="l00109"></a><span class="lineno"><a class="line" href="structmultiboot__elf__sections__entry__t.html">  109</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>multiboot_elf_sections_entry {</div>
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    uint32_t name;</div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    uint32_t type;</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    uint64_t flags;</div>
@@ -202,47 +201,48 @@ $(document).ready(function(){initNavTree('boot_8h_source.html','');});
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    uint32_t info;</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    uint64_t alignment;</div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    uint64_t entry_size;</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;} __attribute__((packed)) <a class="code" href="boot_8h.html#a3fa146b7e77e33663684aa89d72418b3">multiboot_elf_sections_entry_t</a>;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;} __attribute__((packed)) <a class="code" href="structmultiboot__elf__sections__entry__t.html">multiboot_elf_sections_entry_t</a>;</div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160; </div>
-<div class="line"><a name="l00122"></a><span class="lineno"><a class="line" href="structmultiboot__tag__elf__sections.html">  122</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structmultiboot__tag__elf__sections.html">multiboot_tag_elf_sections</a> {</div>
+<div class="line"><a name="l00122"></a><span class="lineno"><a class="line" href="structmultiboot__tag__elf__sections__t.html">  122</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>multiboot_tag_elf_sections {</div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    uint32_t type;</div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    uint32_t size;</div>
 <div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    uint32_t num;</div>
 <div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    uint32_t section_size;</div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    uint32_t shndx;</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    <a class="code" href="structmultiboot__elf__sections__entry.html">multiboot_elf_sections_entry_t</a> sections[];</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;} __attribute__((packed)) <a class="code" href="structmultiboot__tag__elf__sections.html">multiboot_tag_elf_sections_t</a>;</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    <a class="code" href="structmultiboot__elf__sections__entry__t.html">multiboot_elf_sections_entry_t</a> sections[];</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;} __attribute__((packed)) <a class="code" href="structmultiboot__tag__elf__sections__t.html">multiboot_tag_elf_sections_t</a>;</div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; </div>
-<div class="line"><a name="l00131"></a><span class="lineno"><a class="line" href="structreserved__areas.html">  131</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structreserved__areas.html">reserved_areas</a> {</div>
+<div class="line"><a name="l00131"></a><span class="lineno"><a class="line" href="structreserved__areas__t.html">  131</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>reserved_areas {</div>
 <div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    uint64_t kernel_start;</div>
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    uint64_t kernel_end;</div>
 <div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    uint64_t multiboot_start;</div>
 <div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    uint64_t multiboot_end;</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;} <a class="code" href="structreserved__areas.html">reserved_areas_t</a>;</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;} <a class="code" href="structreserved__areas__t.html">reserved_areas_t</a>;</div>
 <div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160; </div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="boot_8h.html#a17651da252ee86be7af4db2ea89a3b93">multiboot_is_valid</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> magic, <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> addr);</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="boot_8h.html#a6e841bf75baeee7316b047c82b7127d4">multiboot_is_valid</a>(uint64_t magic, uint64_t addr);</div>
 <div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160; </div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;<span class="keywordtype">void</span>* find_multiboot_tag(<a class="code" href="structmultiboot__tag.html">multiboot_tag_t</a>* tags, uint16_t type);</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;<span class="keywordtype">void</span>* find_multiboot_tag(<a class="code" href="structmultiboot__tag__t.html">multiboot_tag_t</a>* tags, uint16_t type);</div>
 <div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160; </div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;<a class="code" href="structreserved__areas.html">reserved_areas_t</a> <a class="code" href="boot_8h.html#aa7b6135d99877551c21b6ca9543345c2">read_multiboot_info</a>(<a class="code" href="structmultiboot__info.html">multiboot_info_t</a>* mbi);</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160; </div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;<a class="code" href="structreserved__areas__t.html">reserved_areas_t</a> <a class="code" href="boot_8h.html#aa7b6135d99877551c21b6ca9543345c2">read_multiboot_info</a>(<a class="code" href="structmultiboot__info__t.html">multiboot_info_t</a>* mbi);</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160; </div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="astructmultiboot__tag_html"><div class="ttname"><a href="structmultiboot__tag.html">multiboot_tag</a></div><div class="ttdef"><b>Definition:</b> boot.h:49</div></div>
-<div class="ttc" id="aboot_8h_html_a17651da252ee86be7af4db2ea89a3b93"><div class="ttname"><a href="boot_8h.html#a17651da252ee86be7af4db2ea89a3b93">multiboot_is_valid</a></div><div class="ttdeci">bool multiboot_is_valid(unsigned long magic, unsigned long addr)</div><div class="ttdef"><b>Definition:</b> boot.c:5</div></div>
-<div class="ttc" id="astructmultiboot__info_html"><div class="ttname"><a href="structmultiboot__info.html">multiboot_info</a></div><div class="ttdef"><b>Definition:</b> boot.h:55</div></div>
-<div class="ttc" id="astructmultiboot__tag__elf__sections_html"><div class="ttname"><a href="structmultiboot__tag__elf__sections.html">multiboot_tag_elf_sections</a></div><div class="ttdef"><b>Definition:</b> boot.h:122</div></div>
+<div class="ttc" id="astructreserved__areas__t_html"><div class="ttname"><a href="structreserved__areas__t.html">reserved_areas_t</a></div><div class="ttdef"><b>Definition:</b> boot.h:131</div></div>
+<div class="ttc" id="aboot_8h_html_a6e841bf75baeee7316b047c82b7127d4"><div class="ttname"><a href="boot_8h.html#a6e841bf75baeee7316b047c82b7127d4">multiboot_is_valid</a></div><div class="ttdeci">bool multiboot_is_valid(uint64_t magic, uint64_t addr)</div></div>
+<div class="ttc" id="aboot_8h_html"><div class="ttname"><a href="boot_8h.html">boot.h</a></div></div>
+<div class="ttc" id="astructmultiboot__tag__elf__sections__t_html"><div class="ttname"><a href="structmultiboot__tag__elf__sections__t.html">multiboot_tag_elf_sections_t</a></div><div class="ttdef"><b>Definition:</b> boot.h:122</div></div>
+<div class="ttc" id="astructmultiboot__elf__sections__entry__t_html"><div class="ttname"><a href="structmultiboot__elf__sections__entry__t.html">multiboot_elf_sections_entry_t</a></div><div class="ttdef"><b>Definition:</b> boot.h:109</div></div>
 <div class="ttc" id="aboot_8h_html_aa7b6135d99877551c21b6ca9543345c2"><div class="ttname"><a href="boot_8h.html#aa7b6135d99877551c21b6ca9543345c2">read_multiboot_info</a></div><div class="ttdeci">reserved_areas_t read_multiboot_info(multiboot_info_t *mbi)</div><div class="ttdef"><b>Definition:</b> boot.c:35</div></div>
-<div class="ttc" id="astructmultiboot__elf__sections__entry_html"><div class="ttname"><a href="structmultiboot__elf__sections__entry.html">multiboot_elf_sections_entry</a></div><div class="ttdef"><b>Definition:</b> boot.h:109</div></div>
-<div class="ttc" id="astructmultiboot__tag__string_html"><div class="ttname"><a href="structmultiboot__tag__string.html">multiboot_tag_string</a></div><div class="ttdef"><b>Definition:</b> boot.h:62</div></div>
-<div class="ttc" id="astructmultiboot__tag__mmap_html"><div class="ttname"><a href="structmultiboot__tag__mmap.html">multiboot_tag_mmap</a></div><div class="ttdef"><b>Definition:</b> boot.h:98</div></div>
-<div class="ttc" id="astructmultiboot__tag__bootdev_html"><div class="ttname"><a href="structmultiboot__tag__bootdev.html">multiboot_tag_bootdev</a></div><div class="ttdef"><b>Definition:</b> boot.h:75</div></div>
-<div class="ttc" id="astructmultiboot__mmap__entry_html"><div class="ttname"><a href="structmultiboot__mmap__entry.html">multiboot_mmap_entry</a></div><div class="ttdef"><b>Definition:</b> boot.h:91</div></div>
-<div class="ttc" id="aboot_8h_html_a3fa146b7e77e33663684aa89d72418b3"><div class="ttname"><a href="boot_8h.html#a3fa146b7e77e33663684aa89d72418b3">multiboot_elf_sections_entry_t</a></div><div class="ttdeci">struct multiboot_elf_sections_entry multiboot_elf_sections_entry_t</div></div>
-<div class="ttc" id="astructmultiboot__tag__module_html"><div class="ttname"><a href="structmultiboot__tag__module.html">multiboot_tag_module</a></div><div class="ttdef"><b>Definition:</b> boot.h:83</div></div>
-<div class="ttc" id="astructreserved__areas_html"><div class="ttname"><a href="structreserved__areas.html">reserved_areas</a></div><div class="ttdef"><b>Definition:</b> boot.h:131</div></div>
-<div class="ttc" id="astructmultiboot__tag__basic__meminfo_html"><div class="ttname"><a href="structmultiboot__tag__basic__meminfo.html">multiboot_tag_basic_meminfo</a></div><div class="ttdef"><b>Definition:</b> boot.h:68</div></div>
+<div class="ttc" id="astructmultiboot__tag__basic__meminfo__t_html"><div class="ttname"><a href="structmultiboot__tag__basic__meminfo__t.html">multiboot_tag_basic_meminfo_t</a></div><div class="ttdef"><b>Definition:</b> boot.h:68</div></div>
+<div class="ttc" id="astructmultiboot__tag__string__t_html"><div class="ttname"><a href="structmultiboot__tag__string__t.html">multiboot_tag_string_t</a></div><div class="ttdef"><b>Definition:</b> boot.h:62</div></div>
+<div class="ttc" id="astdio_8h_html"><div class="ttname"><a href="stdio_8h.html">stdio.h</a></div></div>
+<div class="ttc" id="astructmultiboot__tag__bootdev__t_html"><div class="ttname"><a href="structmultiboot__tag__bootdev__t.html">multiboot_tag_bootdev_t</a></div><div class="ttdef"><b>Definition:</b> boot.h:75</div></div>
+<div class="ttc" id="astructmultiboot__info__t_html"><div class="ttname"><a href="structmultiboot__info__t.html">multiboot_info_t</a></div><div class="ttdef"><b>Definition:</b> boot.h:55</div></div>
+<div class="ttc" id="astructmultiboot__tag__t_html"><div class="ttname"><a href="structmultiboot__tag__t.html">multiboot_tag_t</a></div><div class="ttdef"><b>Definition:</b> boot.h:49</div></div>
+<div class="ttc" id="astructmultiboot__tag__module__t_html"><div class="ttname"><a href="structmultiboot__tag__module__t.html">multiboot_tag_module_t</a></div><div class="ttdef"><b>Definition:</b> boot.h:83</div></div>
+<div class="ttc" id="astructmultiboot__tag__mmap__t_html"><div class="ttname"><a href="structmultiboot__tag__mmap__t.html">multiboot_tag_mmap_t</a></div><div class="ttdef"><b>Definition:</b> boot.h:98</div></div>
+<div class="ttc" id="astructmultiboot__mmap__entry__t_html"><div class="ttname"><a href="structmultiboot__mmap__entry__t.html">multiboot_mmap_entry_t</a></div><div class="ttdef"><b>Definition:</b> boot.h:91</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>

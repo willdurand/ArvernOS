@@ -1,7 +1,20 @@
 var searchData=
 [
-  ['read_5fmultiboot_5finfo_31',['read_multiboot_info',['../boot_8h.html#aa7b6135d99877551c21b6ca9543345c2',1,'boot.c']]],
-  ['register_5fidt_5fgate_32',['register_idt_gate',['../idt_8h.html#a12c0d8a15b0aaa34222b3fbcbe55b462',1,'idt.c']]],
-  ['registers_33',['registers',['../structregisters.html',1,'']]],
-  ['reserved_5fareas_34',['reserved_areas',['../structreserved__areas.html',1,'']]]
+  ['kb_5farrow_5fup_24',['KB_ARROW_UP',['../kshell_8h.html#a85cb0c863f1b67d9b99c728634295929',1,'kshell.h']]],
+  ['kb_5fbackspace_25',['KB_BACKSPACE',['../kshell_8h.html#a0b41f74350cf619c4f080a98d06eec85',1,'kshell.h']]],
+  ['kb_5fcaps_5flock_26',['KB_CAPS_LOCK',['../kshell_8h.html#a8d228ccce74894dba08d2d8f9f2e07da',1,'kshell.h']]],
+  ['kb_5fenter_27',['KB_ENTER',['../kshell_8h.html#a70388a0a0edc2a476657e42919b55655',1,'kshell.h']]],
+  ['kb_5flctrl_28',['KB_LCTRL',['../kshell_8h.html#a4b2c4a854e18a53335445bfc731cdd51',1,'kshell.h']]],
+  ['kb_5flshift_29',['KB_LSHIFT',['../kshell_8h.html#aa118eb14764e4006d95472b4e7a44b59',1,'kshell.h']]],
+  ['kb_5frshift_30',['KB_RSHIFT',['../kshell_8h.html#a2e1993a35d9afd0cfd9335fc50572add',1,'kshell.h']]],
+  ['kb_5ftab_31',['KB_TAB',['../kshell_8h.html#a6d0663a1794be11a94aee789b2d22925',1,'kshell.h']]],
+  ['kernel_5fpanic_32',['kernel_panic',['../panic_8h.html#acd2b4a8b19af5b3201990bbdeb5cf5e6',1,'panic.c']]],
+  ['keyboard_2eh_33',['keyboard.h',['../keyboard_8h.html',1,'']]],
+  ['keyboard_5fget_5flast_5fscancode_34',['keyboard_get_last_scancode',['../keyboard_8h.html#ab7b104c5f6e8f6e48059d1514a0a3725',1,'keyboard.c']]],
+  ['keyboard_5finit_35',['keyboard_init',['../keyboard_8h.html#aaeb4e4a3c4813ee1efc6b98bba9ec781',1,'keyboard.c']]],
+  ['kmain_36',['kmain',['../kmain_8h.html#a517fbc4f628c0c7c827237bf78a39905',1,'kmain.h']]],
+  ['kmain_2eh_37',['kmain.h',['../kmain_8h.html',1,'']]],
+  ['kshell_2eh_38',['kshell.h',['../kshell_8h.html',1,'']]],
+  ['kshell_5fprint_5fprompt_39',['kshell_print_prompt',['../kshell_8h.html#af0dfb69566e1acd19453a42d8e973e90',1,'kshell.c']]],
+  ['kshell_5frun_40',['kshell_run',['../kshell_8h.html#a6c773ce937d0e97008441fd2b5909533',1,'kshell.c']]]
 ];

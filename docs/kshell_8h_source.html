@@ -89,32 +89,59 @@ $(document).ready(function(){initNavTree('kshell_8h_source.html','');});
 <div class="title">kshell.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef KSHELL_H</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define KSHELL_H</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#define READLINE_SIZE   256</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#define PROMPT          &quot;$ &quot;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#define KB_ARROW_UP     72</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#define KB_BACKSPACE    14</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#define KB_CAPS_LOCK    58</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#define KB_ENTER        28</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#define KB_LCTRL        29</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#define KB_LSHIFT       42</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#define KB_RSHIFT       54</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#define KB_TAB          15</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keywordtype">void</span> kshell(uint8_t scancode);</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keywordtype">void</span> print_prompt();</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#endif</span></div>
+<a href="kshell_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#ifndef KSHELL_H</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#define KSHELL_H</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="stdlib_8h.html">stdlib.h</a>&gt;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
+<div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="kshell_8h.html#ac75983952a0074eee55efdb2cc0a5773">    8</a></span>&#160;<span class="preprocessor">#define READLINE_SIZE   256</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#define PROMPT          &quot;$ &quot;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#define KB_ARROW_UP     72</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#define KB_BACKSPACE    14</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#define KB_CAPS_LOCK    58</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#define KB_ENTER        28</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#define KB_LCTRL        29</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#define KB_LSHIFT       42</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#define KB_RSHIFT       54</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#define KB_TAB          15</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keywordtype">void</span> <a class="code" href="kshell_8h.html#a6c773ce937d0e97008441fd2b5909533">kshell_run</a>(uint8_t scancode);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keywordtype">void</span> <a class="code" href="kshell_8h.html#af0dfb69566e1acd19453a42d8e973e90">kshell_print_prompt</a>();</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
+<div class="ttc" id="akshell_8h_html"><div class="ttname"><a href="kshell_8h.html">kshell.h</a></div></div>
+<div class="ttc" id="ainclude_2sys_2syscall_8h_html"><div class="ttname"><a href="include_2sys_2syscall_8h.html">syscall.h</a></div></div>
+<div class="ttc" id="akshell_8h_html_a6c773ce937d0e97008441fd2b5909533"><div class="ttname"><a href="kshell_8h.html#a6c773ce937d0e97008441fd2b5909533">kshell_run</a></div><div class="ttdeci">void kshell_run(uint8_t scancode)</div><div class="ttdef"><b>Definition:</b> kshell.c:244</div></div>
+<div class="ttc" id="ascreen_8h_html"><div class="ttname"><a href="screen_8h.html">screen.h</a></div></div>
+<div class="ttc" id="akshell_8h_html_a0b41f74350cf619c4f080a98d06eec85"><div class="ttname"><a href="kshell_8h.html#a0b41f74350cf619c4f080a98d06eec85">KB_BACKSPACE</a></div><div class="ttdeci">#define KB_BACKSPACE</div><div class="ttdoc">The scancode for the backspace key.</div><div class="ttdef"><b>Definition:</b> kshell.h:14</div></div>
+<div class="ttc" id="akshell_8h_html_a8d228ccce74894dba08d2d8f9f2e07da"><div class="ttname"><a href="kshell_8h.html#a8d228ccce74894dba08d2d8f9f2e07da">KB_CAPS_LOCK</a></div><div class="ttdeci">#define KB_CAPS_LOCK</div><div class="ttdoc">The scancode for the caps lock key.</div><div class="ttdef"><b>Definition:</b> kshell.h:16</div></div>
+<div class="ttc" id="atimer_8h_html_ad5df37e1f85cabd9c5d43aa1dfc0e37e"><div class="ttname"><a href="timer_8h.html#ad5df37e1f85cabd9c5d43aa1dfc0e37e">timer_uptime</a></div><div class="ttdeci">uint64_t timer_uptime()</div><div class="ttdef"><b>Definition:</b> timer.c:18</div></div>
+<div class="ttc" id="akshell_8h_html_a4b2c4a854e18a53335445bfc731cdd51"><div class="ttname"><a href="kshell_8h.html#a4b2c4a854e18a53335445bfc731cdd51">KB_LCTRL</a></div><div class="ttdeci">#define KB_LCTRL</div><div class="ttdoc">The scancode for the left ctrl key.</div><div class="ttdef"><b>Definition:</b> kshell.h:20</div></div>
+<div class="ttc" id="akshell_8h_html_af0dfb69566e1acd19453a42d8e973e90"><div class="ttname"><a href="kshell_8h.html#af0dfb69566e1acd19453a42d8e973e90">kshell_print_prompt</a></div><div class="ttdeci">void kshell_print_prompt()</div><div class="ttdef"><b>Definition:</b> kshell.c:222</div></div>
+<div class="ttc" id="akshell_8h_html_a85cb0c863f1b67d9b99c728634295929"><div class="ttname"><a href="kshell_8h.html#a85cb0c863f1b67d9b99c728634295929">KB_ARROW_UP</a></div><div class="ttdeci">#define KB_ARROW_UP</div><div class="ttdoc">The scancode for the arrow up key.</div><div class="ttdef"><b>Definition:</b> kshell.h:12</div></div>
+<div class="ttc" id="akshell_8h_html_aa118eb14764e4006d95472b4e7a44b59"><div class="ttname"><a href="kshell_8h.html#aa118eb14764e4006d95472b4e7a44b59">KB_LSHIFT</a></div><div class="ttdeci">#define KB_LSHIFT</div><div class="ttdoc">The scancode for the left shift key.</div><div class="ttdef"><b>Definition:</b> kshell.h:22</div></div>
+<div class="ttc" id="ainclude_2sys_2syscall_8h_html_afc62fdd40cdd010568045694291ee7d1"><div class="ttname"><a href="include_2sys_2syscall_8h.html#afc62fdd40cdd010568045694291ee7d1">test</a></div><div class="ttdeci">void test(const char *s)</div><div class="ttdef"><b>Definition:</b> test.c:3</div></div>
+<div class="ttc" id="atimer_8h_html"><div class="ttname"><a href="timer_8h.html">timer.h</a></div></div>
+<div class="ttc" id="akshell_8h_html_ac75983952a0074eee55efdb2cc0a5773"><div class="ttname"><a href="kshell_8h.html#ac75983952a0074eee55efdb2cc0a5773">READLINE_SIZE</a></div><div class="ttdeci">#define READLINE_SIZE</div><div class="ttdoc">The number of characters to keep in the command line buffer.</div><div class="ttdef"><b>Definition:</b> kshell.h:8</div></div>
+<div class="ttc" id="acmos_8h_html"><div class="ttname"><a href="cmos_8h.html">cmos.h</a></div></div>
+<div class="ttc" id="astdio_8h_html"><div class="ttname"><a href="stdio_8h.html">stdio.h</a></div></div>
+<div class="ttc" id="akshell_8h_html_a70388a0a0edc2a476657e42919b55655"><div class="ttname"><a href="kshell_8h.html#a70388a0a0edc2a476657e42919b55655">KB_ENTER</a></div><div class="ttdeci">#define KB_ENTER</div><div class="ttdoc">The scancode for the enter key.</div><div class="ttdef"><b>Definition:</b> kshell.h:18</div></div>
+<div class="ttc" id="astructcmos__rtc__t_html"><div class="ttname"><a href="structcmos__rtc__t.html">cmos_rtc_t</a></div><div class="ttdef"><b>Definition:</b> cmos.h:22</div></div>
+<div class="ttc" id="acmos_8h_html_adfa7700f437e353519065098860d64f9"><div class="ttname"><a href="cmos_8h.html#adfa7700f437e353519065098860d64f9">cmos_read_rtc</a></div><div class="ttdeci">cmos_rtc_t cmos_read_rtc()</div><div class="ttdef"><b>Definition:</b> cmos.c:10</div></div>
+<div class="ttc" id="ascreen_8h_html_a76b60bda57a03e2f113f3cea03f45731"><div class="ttname"><a href="screen_8h.html#a76b60bda57a03e2f113f3cea03f45731">screen_color_scheme</a></div><div class="ttdeci">void screen_color_scheme(uint8_t fg, uint8_t bg)</div><div class="ttdef"><b>Definition:</b> screen.c:30</div></div>
+<div class="ttc" id="akshell_8h_html_a6d0663a1794be11a94aee789b2d22925"><div class="ttname"><a href="kshell_8h.html#a6d0663a1794be11a94aee789b2d22925">KB_TAB</a></div><div class="ttdeci">#define KB_TAB</div><div class="ttdoc">The scancode for the tab key.</div><div class="ttdef"><b>Definition:</b> kshell.h:26</div></div>
+<div class="ttc" id="astdlib_8h_html"><div class="ttname"><a href="stdlib_8h.html">stdlib.h</a></div></div>
+<div class="ttc" id="akshell_8h_html_a2e1993a35d9afd0cfd9335fc50572add"><div class="ttname"><a href="kshell_8h.html#a2e1993a35d9afd0cfd9335fc50572add">KB_RSHIFT</a></div><div class="ttdeci">#define KB_RSHIFT</div><div class="ttdoc">The scancode for the right shift key.</div><div class="ttdef"><b>Definition:</b> kshell.h:24</div></div>
+<div class="ttc" id="akshell_8h_html_accdbea14ea06c15e271784368bd993e8"><div class="ttname"><a href="kshell_8h.html#accdbea14ea06c15e271784368bd993e8">PROMPT</a></div><div class="ttdeci">#define PROMPT</div><div class="ttdoc">The shell prompt.</div><div class="ttdef"><b>Definition:</b> kshell.h:10</div></div>
+<div class="ttc" id="ascreen_8h_html_a448d55968909ab0f809276a961b2a1f6"><div class="ttname"><a href="screen_8h.html#a448d55968909ab0f809276a961b2a1f6">screen_clear</a></div><div class="ttdeci">void screen_clear()</div><div class="ttdef"><b>Definition:</b> screen.c:34</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_cbd7f246bdf7dc0a50281a272327e6ed.html">kernel</a></li><li class="navelem"><b>kshell.h</b></li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_cbd7f246bdf7dc0a50281a272327e6ed.html">kernel</a></li><li class="navelem"><a class="el" href="kshell_8h.html">kshell.h</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.16 </li>

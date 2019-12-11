@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['multiboot_5felf_5fsections_5fentry_5ft_69',['multiboot_elf_sections_entry_t',['../boot_8h.html#a3fa146b7e77e33663684aa89d72418b3',1,'boot.h']]]
+  ['syscall_5fhandler_5ft_184',['syscall_handler_t',['../core_2syscall_8h.html#a53b966bd42e849696ebbaa1ac15871b9',1,'syscall.h']]]
 ];

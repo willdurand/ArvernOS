@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['idt_5fgate_38',['idt_gate',['../structidt__gate.html',1,'']]],
-  ['idt_5fopts_39',['idt_opts',['../structidt__opts.html',1,'']]],
-  ['idt_5fregister_40',['idt_register',['../structidt__register.html',1,'']]]
+  ['idt_5fgate_5ft_107',['idt_gate_t',['../structidt__gate__t.html',1,'']]],
+  ['idt_5fopts_5ft_108',['idt_opts_t',['../structidt__opts__t.html',1,'']]],
+  ['idt_5fregister_5ft_109',['idt_register_t',['../structidt__register__t.html',1,'']]]
 ];

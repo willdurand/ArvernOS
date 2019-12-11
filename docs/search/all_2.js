@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['frame_2eh_2',['frame.h',['../frame_8h.html',1,'']]],
-  ['frame_5fallocate_3',['frame_allocate',['../frame_8h.html#a2c7f040adf876d7b49ee46f594ed6679',1,'frame.c']]],
-  ['frame_5fcontaining_5faddress_4',['frame_containing_address',['../frame_8h.html#a40b65cfd28ddd6d88557a11a95e4fdab',1,'frame.c']]],
-  ['frame_5fdeallocate_5',['frame_deallocate',['../frame_8h.html#a00af179c263448b20c29a4d6f75d91b1',1,'frame.c']]],
-  ['frame_5finit_6',['frame_init',['../frame_8h.html#ada91ff5ef3ceb241baf359ac078bb2d7',1,'frame.c']]],
-  ['frame_5fstart_5faddress_7',['frame_start_address',['../frame_8h.html#a4271c2a0f8373b3c676377e9774299ee',1,'frame.c']]]
+  ['bitmap_2eh_3',['bitmap.h',['../bitmap_8h.html',1,'']]],
+  ['bitmap_5fclear_4',['bitmap_clear',['../bitmap_8h.html#acbd3f5323acaf517704e69c47396119f',1,'bitmap.c']]],
+  ['bitmap_5fget_5',['bitmap_get',['../bitmap_8h.html#ade4512f18861f6f5c803538112111455',1,'bitmap.c']]],
+  ['bitmap_5fset_6',['bitmap_set',['../bitmap_8h.html#ae60e1e9970fe0c4f68ee27902adbebfa',1,'bitmap.c']]],
+  ['bitmap_5ft_7',['bitmap_t',['../bitmap_8h.html#ae1c22e18a745d7ab1519a37cb77ce1bb',1,'bitmap.h']]],
+  ['boot_2eh_8',['boot.h',['../boot_8h.html',1,'']]]
 ];

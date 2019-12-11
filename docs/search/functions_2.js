@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['multiboot_5fis_5fvalid_65',['multiboot_is_valid',['../boot_8h.html#a17651da252ee86be7af4db2ea89a3b93',1,'boot.c']]]
+  ['bitmap_5fclear_144',['bitmap_clear',['../bitmap_8h.html#acbd3f5323acaf517704e69c47396119f',1,'bitmap.c']]],
+  ['bitmap_5fget_145',['bitmap_get',['../bitmap_8h.html#ade4512f18861f6f5c803538112111455',1,'bitmap.c']]],
+  ['bitmap_5fset_146',['bitmap_set',['../bitmap_8h.html#ae60e1e9970fe0c4f68ee27902adbebfa',1,'bitmap.c']]]
 ];
