@@ -11,7 +11,6 @@ var boot_8h =
     [ "multiboot_elf_sections_entry_t", "structmultiboot__elf__sections__entry__t.html", null ],
     [ "multiboot_tag_elf_sections_t", "structmultiboot__tag__elf__sections__t.html", null ],
     [ "reserved_areas_t", "structreserved__areas__t.html", null ],
-    [ "MULTIBOOT2_MAGIC_NUMBER", "boot_8h.html#a4d5760faf1505d98951af243fc877341", null ],
-    [ "multiboot_is_valid", "boot_8h.html#a6e841bf75baeee7316b047c82b7127d4", null ],
-    [ "read_multiboot_info", "boot_8h.html#aa7b6135d99877551c21b6ca9543345c2", null ]
+    [ "find_multiboot_tag", "boot_8h.html#a62d6a6eaa877711b6b8308030f3f3dc0", null ],
+    [ "find_reserved_areas", "boot_8h.html#ae87c8fda1b62f7ace33b2e3ad24292c2", null ]
 ];

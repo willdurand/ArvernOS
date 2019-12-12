@@ -1,4 +1,5 @@
 <map id="frame_init" name="frame_init">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,85,31"/>
-<area shape="rect" id="node2" href="$boot_8h.html#aa7b6135d99877551c21b6ca9543345c2" title=" " alt="" coords="133,5,272,31"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,31,85,56"/>
+<area shape="rect" id="node2" href="$boot_8h.html#a62d6a6eaa877711b6b8308030f3f3dc0" title=" " alt="" coords="140,5,270,31"/>
+<area shape="rect" id="node3" href="$boot_8h.html#ae87c8fda1b62f7ace33b2e3ad24292c2" title=" " alt="" coords="133,55,276,80"/>
 </map>

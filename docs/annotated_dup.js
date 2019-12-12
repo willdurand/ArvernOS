@@ -1,8 +1,8 @@
 var annotated_dup =
 [
     [ "cmos_rtc_t", "structcmos__rtc__t.html", null ],
+    [ "idt_gate_options_t", "structidt__gate__options__t.html", null ],
     [ "idt_gate_t", "structidt__gate__t.html", null ],
-    [ "idt_opts_t", "structidt__opts__t.html", null ],
     [ "idt_register_t", "structidt__register__t.html", null ],
     [ "multiboot_elf_sections_entry_t", "structmultiboot__elf__sections__entry__t.html", null ],
     [ "multiboot_info_t", "structmultiboot__info__t.html", null ],

@@ -109,12 +109,12 @@ Include dependency graph for kmain.h:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a517fbc4f628c0c7c827237bf78a39905"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="kmain_8h.html#a517fbc4f628c0c7c827237bf78a39905">kmain</a> (uint64_t magic, uint64_t addr) __asm__(&quot;kmain&quot;)</td></tr>
-<tr class="separator:a517fbc4f628c0c7c827237bf78a39905"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a723148ea74ca575865f61d277c0657"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="kmain_8h.html#a3a723148ea74ca575865f61d277c0657">kmain</a> (uint64_t addr) __asm__(&quot;kmain&quot;)</td></tr>
+<tr class="separator:a3a723148ea74ca575865f61d277c0657"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a517fbc4f628c0c7c827237bf78a39905"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a517fbc4f628c0c7c827237bf78a39905">&#9670;&nbsp;</a></span>kmain()</h2>
+<a id="a3a723148ea74ca575865f61d277c0657"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a723148ea74ca575865f61d277c0657">&#9670;&nbsp;</a></span>kmain()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -123,29 +123,30 @@ Functions</h2></td></tr>
           <td class="memname">void kmain </td>
           <td>(</td>
           <td class="paramtype">uint64_t&#160;</td>
-          <td class="paramname"><em>magic</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>addr</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">uint64_t&#160;</td>
-          <td class="paramname"><em>addr</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>This is the entrypoint of the kernel (C code).</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">magic</td><td>the multiboot magic value </td></tr>
     <tr><td class="paramname">addr</td><td>the multiboot info address </td></tr>
   </table>
   </dd>
 </dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="kmain_8h_a3a723148ea74ca575865f61d277c0657_cgraph.png" border="0" usemap="#kmain_8h_a3a723148ea74ca575865f61d277c0657_cgraph" alt=""/></div>
+<map name="kmain_8h_a3a723148ea74ca575865f61d277c0657_cgraph" id="kmain_8h_a3a723148ea74ca575865f61d277c0657_cgraph">
+<area shape="rect" title=" " alt="" coords="5,55,62,80"/>
+<area shape="rect" href="screen_8h.html#a448d55968909ab0f809276a961b2a1f6" title=" " alt="" coords="110,5,208,31"/>
+<area shape="rect" href="screen_8h.html#a9dbb6c251337c03c078dc330caee48d2" title=" " alt="" coords="116,55,202,80"/>
+<area shape="rect" href="serial_8h.html#a086a2712ee8de77b7621d922d2b96857" title=" " alt="" coords="120,104,198,129"/>
+<area shape="rect" href="screen_8h.html#a76b60bda57a03e2f113f3cea03f45731" title=" " alt="" coords="256,55,408,80"/>
+</map>
+</div>
 
 </div>
 </div>

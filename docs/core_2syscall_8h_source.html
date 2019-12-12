@@ -93,7 +93,7 @@ $(document).ready(function(){initNavTree('core_2syscall_8h_source.html','');});
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#ifndef CORE_SYSCALL_H</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#define CORE_SYSCALL_H</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;core/isr.h&gt;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="isr_8h.html">core/isr.h</a>&gt;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
 <div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="core_2syscall_8h.html#a53b966bd42e849696ebbaa1ac15871b9">    8</a></span>&#160;<span class="keyword">typedef</span> void (*<a class="code" href="core_2syscall_8h.html#a53b966bd42e849696ebbaa1ac15871b9">syscall_handler_t</a>)(<a class="code" href="structregisters__t.html">registers_t</a>* registers);</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
@@ -107,13 +107,14 @@ $(document).ready(function(){initNavTree('core_2syscall_8h_source.html','');});
 <div class="ttc" id="acore_2syscall_8h_html_a362ef819e2d72c9411f40f5d87c5587a"><div class="ttname"><a href="core_2syscall_8h.html#a362ef819e2d72c9411f40f5d87c5587a">syscall_handler</a></div><div class="ttdeci">void syscall_handler(registers_t *registers)</div><div class="ttdef"><b>Definition:</b> syscall.c:23</div></div>
 <div class="ttc" id="ainclude_2sys_2syscall_8h_html"><div class="ttname"><a href="include_2sys_2syscall_8h.html">syscall.h</a></div></div>
 <div class="ttc" id="apanic_8h_html_a8f54a1e3c548236aa6a60f4596699819"><div class="ttname"><a href="panic_8h.html#a8f54a1e3c548236aa6a60f4596699819">PANIC</a></div><div class="ttdeci">#define PANIC(...)</div><div class="ttdoc">This macro should only be used when something goes terribly wrong.</div><div class="ttdef"><b>Definition:</b> panic.h:13</div></div>
-<div class="ttc" id="astructregisters__t_html"><div class="ttname"><a href="structregisters__t.html">registers_t</a></div><div class="ttdef"><b>Definition:</b> isr.h:79</div></div>
+<div class="ttc" id="astructregisters__t_html"><div class="ttname"><a href="structregisters__t.html">registers_t</a></div><div class="ttdef"><b>Definition:</b> isr.h:84</div></div>
 <div class="ttc" id="acore_2syscall_8h_html_a53b966bd42e849696ebbaa1ac15871b9"><div class="ttname"><a href="core_2syscall_8h.html#a53b966bd42e849696ebbaa1ac15871b9">syscall_handler_t</a></div><div class="ttdeci">void(* syscall_handler_t)(registers_t *registers)</div><div class="ttdoc">This type represents a syscall handler.</div><div class="ttdef"><b>Definition:</b> syscall.h:8</div></div>
 <div class="ttc" id="astdio_8h_html"><div class="ttname"><a href="stdio_8h.html">stdio.h</a></div></div>
 <div class="ttc" id="acore_2syscall_8h_html"><div class="ttname"><a href="core_2syscall_8h.html">syscall.h</a></div></div>
 <div class="ttc" id="apanic_8h_html"><div class="ttname"><a href="panic_8h.html">panic.h</a></div></div>
 <div class="ttc" id="astdlib_8h_html"><div class="ttname"><a href="stdlib_8h.html">stdlib.h</a></div></div>
 <div class="ttc" id="acore_2syscall_8h_html_a581ed37968ead91b6d3a0b3b7a71da9d"><div class="ttname"><a href="core_2syscall_8h.html#a581ed37968ead91b6d3a0b3b7a71da9d">syscall_init</a></div><div class="ttdeci">void syscall_init()</div><div class="ttdef"><b>Definition:</b> syscall.c:15</div></div>
+<div class="ttc" id="aisr_8h_html"><div class="ttname"><a href="isr_8h.html">isr.h</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>

@@ -103,22 +103,12 @@ Include dependency graph for idt.h:</div>
 <area shape="rect" title=" " alt="" coords="22,79,86,104"/>
 </map>
 </div>
-</div><div class="textblock"><div class="dynheader">
-This graph shows which files directly or indirectly include this file:</div>
-<div class="dyncontent">
-<div class="center"><img src="idt_8h__dep__incl.png" border="0" usemap="#src_2core_2idt_8hdep" alt=""/></div>
-<map name="src_2core_2idt_8hdep" id="src_2core_2idt_8hdep">
-<area shape="rect" title=" " alt="" coords="18,5,116,31"/>
-<area shape="rect" href="isr_8h_source.html" title=" " alt="" coords="19,79,116,104"/>
-<area shape="rect" href="core_2syscall_8h.html" title=" " alt="" coords="5,152,129,177"/>
-</map>
-</div>
 </div>
 <p><a href="idt_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structidt__opts__t.html">idt_opts_t</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structidt__gate__options__t.html">idt_gate_options_t</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structidt__gate__t.html">idt_gate_t</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -127,18 +117,39 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a2a59a505aa55f15c152f30f811fbd310"><td class="memItemLeft" align="right" valign="top"><a id="a2a59a505aa55f15c152f30f811fbd310"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="idt_8h.html#a2a59a505aa55f15c152f30f811fbd310">IDT_ENTRIES</a>&#160;&#160;&#160;256</td></tr>
-<tr class="memdesc:a2a59a505aa55f15c152f30f811fbd310"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of entries in the <em>Interrupt Descriptor Table</em>. <br /></td></tr>
+<tr class="memitem:a2a59a505aa55f15c152f30f811fbd310"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="idt_8h.html#a2a59a505aa55f15c152f30f811fbd310">IDT_ENTRIES</a>&#160;&#160;&#160;256</td></tr>
 <tr class="separator:a2a59a505aa55f15c152f30f811fbd310"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a88d4205d069421eb4f8e7577285f1180"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="idt_8h.html#a88d4205d069421eb4f8e7577285f1180">idt_init</a> ()</td></tr>
 <tr class="separator:a88d4205d069421eb4f8e7577285f1180"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a12c0d8a15b0aaa34222b3fbcbe55b462"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="idt_8h.html#a12c0d8a15b0aaa34222b3fbcbe55b462">register_idt_gate</a> (uint16_t n, uint64_t handler)</td></tr>
-<tr class="separator:a12c0d8a15b0aaa34222b3fbcbe55b462"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8af8af8cf5ecf069d893ba9a96d55c7e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="idt_8h.html#a8af8af8cf5ecf069d893ba9a96d55c7e">idt_register_gate</a> (uint16_t n, uint64_t handler, uint8_t type)</td></tr>
+<tr class="separator:a8af8af8cf5ecf069d893ba9a96d55c7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9b2767929a9d9b6851a7c60cb64e55c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="idt_8h.html#ae9b2767929a9d9b6851a7c60cb64e55c">idt_register_interrupt</a> (uint16_t n, uint64_t handler)</td></tr>
+<tr class="separator:ae9b2767929a9d9b6851a7c60cb64e55c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><dl class="section see"><dt>See also</dt><dd><a href="https://wiki.osdev.org/Interrupt_Descriptor_Table">https://wiki.osdev.org/Interrupt_Descriptor_Table</a> </dd>
+<dd>
+<a href="https://os.phil-opp.com/handling-exceptions/">https://os.phil-opp.com/handling-exceptions/</a> </dd></dl>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a2a59a505aa55f15c152f30f811fbd310"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a59a505aa55f15c152f30f811fbd310">&#9670;&nbsp;</a></span>IDT_ENTRIES</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IDT_ENTRIES&#160;&#160;&#160;256</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The number of entries in the <em>Interrupt Descriptor Table</em>.</p>
+<p>There are 256 interrupts (0..255), so IDT should have 256 entries, each entry corresponding to a specific interrupt. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a88d4205d069421eb4f8e7577285f1180"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a88d4205d069421eb4f8e7577285f1180">&#9670;&nbsp;</a></span>idt_init()</h2>
@@ -158,14 +169,66 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a12c0d8a15b0aaa34222b3fbcbe55b462"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a12c0d8a15b0aaa34222b3fbcbe55b462">&#9670;&nbsp;</a></span>register_idt_gate()</h2>
+<a id="a8af8af8cf5ecf069d893ba9a96d55c7e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8af8af8cf5ecf069d893ba9a96d55c7e">&#9670;&nbsp;</a></span>idt_register_gate()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void register_idt_gate </td>
+          <td class="memname">void idt_register_gate </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>n</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>handler</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>type</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Registers a gate in the IDT.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">n</td><td>a gate number </td></tr>
+    <tr><td class="paramname">handler</td><td>the handler to register for the given gate </td></tr>
+    <tr><td class="paramname">type</td><td>the gate type </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="idt_8h_a8af8af8cf5ecf069d893ba9a96d55c7e_icgraph.png" border="0" usemap="#idt_8h_a8af8af8cf5ecf069d893ba9a96d55c7e_icgraph" alt=""/></div>
+<map name="idt_8h_a8af8af8cf5ecf069d893ba9a96d55c7e_icgraph" id="idt_8h_a8af8af8cf5ecf069d893ba9a96d55c7e_icgraph">
+<area shape="rect" title=" " alt="" coords="197,5,318,31"/>
+<area shape="rect" href="idt_8h.html#ae9b2767929a9d9b6851a7c60cb64e55c" title=" " alt="" coords="5,5,149,31"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ae9b2767929a9d9b6851a7c60cb64e55c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae9b2767929a9d9b6851a7c60cb64e55c">&#9670;&nbsp;</a></span>idt_register_interrupt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void idt_register_interrupt </td>
           <td>(</td>
           <td class="paramtype">uint16_t&#160;</td>
           <td class="paramname"><em>n</em>, </td>
@@ -183,14 +246,23 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Registers a <em>handler</em> for a <em>gate</em>.</p>
+<p>Registers a an interrupt gate in the IDT.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">n</td><td>a gate number </td></tr>
-    <tr><td class="paramname">handler</td><td>the handle to register for the given gate </td></tr>
+    <tr><td class="paramname">handler</td><td>the handler to register for the given gate </td></tr>
   </table>
   </dd>
 </dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="idt_8h_ae9b2767929a9d9b6851a7c60cb64e55c_cgraph.png" border="0" usemap="#idt_8h_ae9b2767929a9d9b6851a7c60cb64e55c_cgraph" alt=""/></div>
+<map name="idt_8h_ae9b2767929a9d9b6851a7c60cb64e55c_cgraph" id="idt_8h_ae9b2767929a9d9b6851a7c60cb64e55c_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,149,31"/>
+<area shape="rect" href="idt_8h.html#a8af8af8cf5ecf069d893ba9a96d55c7e" title=" " alt="" coords="197,5,318,31"/>
+</map>
+</div>
 
 </div>
 </div>

@@ -3,8 +3,8 @@ var indexSectionsWithContent =
   0: "_abcfikmprstuvw",
   1: "cimprs",
   2: "abcfikpst",
-  3: "_abcfikmprstu",
-  4: "bs",
+  3: "_abcfikmpstu",
+  4: "bis",
   5: "ikmprstuv",
   6: "w"
 };

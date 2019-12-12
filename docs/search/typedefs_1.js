@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['syscall_5fhandler_5ft_184',['syscall_handler_t',['../core_2syscall_8h.html#a53b966bd42e849696ebbaa1ac15871b9',1,'syscall.h']]]
+  ['isr_5ft_203',['isr_t',['../isr_8h.html#a578e4aa356e844b0e91f9c4980d36cba',1,'isr.h']]]
 ];
