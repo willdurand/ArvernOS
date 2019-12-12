@@ -1,7 +1,7 @@
+/** @file */
 #ifndef CORE_ISR_H
 #define CORE_ISR_H
 
-#include <core/idt.h>
 #include <stdint.h>
 
 #define PIC1        0x20 // Master PIC
@@ -36,7 +36,10 @@
 #define IRQ3 35
 #define IRQ4 36
 
-// These functions are declared in interrupts.asm file
+/// This is the ID of the special interrupt for syscalls.
+#define SYSCALL 0x80
+
+// These functions are declared in the `interrupts.asm` file.
 extern void isr0();
 extern void isr1();
 extern void isr2();
@@ -76,6 +79,8 @@ extern void irq2();
 extern void irq3();
 extern void irq4();
 
+extern void isr0x80();
+
 typedef struct registers {
     uint64_t r15;
     uint64_t r14;
@@ -102,17 +107,46 @@ typedef struct stack {
     uint64_t stack_segment;
 } __attribute__((packed)) stack_t;
 
+/// This type represents an interrupt handler.
 typedef void (*isr_t)(stack_t* stack);
 
+/**
+ * Initializes the interrupt service routine.
+ */
 void isr_init();
-void irq_init();
-void irq_disable();
-void isr_handler(uint64_t id, uint64_t stack) __asm__("isr_handler");
-void irq_handler(uint64_t id, uint64_t stack) __asm__("irq_handler");
-void register_interrupt_handler(uint64_t id, isr_t handler);
 
-// That is for syscalls
-#define SYSCALL 0x80
-extern void isr0x80();
+/**
+ * Enables hardware interrupts.
+ */
+void irq_init();
+
+/**
+ * Disables hardware interrupts.
+ */
+void irq_disable();
+
+/**
+ * This is the handler for software interrupts.
+ *
+ * @param id the interrupt id
+ * @param stack the stack
+ */
+void isr_handler(uint64_t id, uint64_t stack) __asm__("isr_handler");
+
+/**
+ * This is the handler for harware interrupts.
+ *
+ * @param id the interrupt id
+ * @param stack the stack
+ */
+void irq_handler(uint64_t id, uint64_t stack) __asm__("irq_handler");
+
+/**
+ * Registers a handler for a given interrupt.
+ *
+ * @param id an interrupt id
+ * @param handler the handler to attach to the interrupt
+ */
+void isr_register_handler(uint64_t id, isr_t handler);
 
 #endif

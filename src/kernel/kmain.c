@@ -50,13 +50,9 @@ void check_interrupts() {
     print_ok();
 }
 
-void kmain(unsigned long magic, unsigned long addr) {
+void kmain(uint64_t addr) {
     screen_init();
     screen_clear();
-
-    if (multiboot_is_valid(magic, addr) == false) {
-        PANIC("invalid multiboot");
-    }
 
     multiboot_info_t* mbi = (multiboot_info_t*) addr;
 

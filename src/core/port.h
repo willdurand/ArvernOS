@@ -1,3 +1,4 @@
+/** @file */
 #ifndef CORE_PORT_H
 #define CORE_PORT_H
 

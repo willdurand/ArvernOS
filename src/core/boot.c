@@ -2,25 +2,9 @@
 #include <stdio.h>
 #include <core/debug.h>
 
-bool multiboot_is_valid(unsigned long magic, unsigned long addr) {
-    if (magic != MULTIBOOT2_MAGIC_VALUE) {
-        printf("Invalid magic value: %#x", magic);
-        return false;
-    }
-
-    if (addr & 7) {
-        printf("Unaligned MBI: %#x", addr);
-        return false;
-    }
-
-    return true;
-}
-
-void* find_multiboot_tag(multiboot_tag_t* tags, uint16_t type) {
-    multiboot_tag_t* tag;
-
+void* find_multiboot_tag(multiboot_info_t* mbi, uint16_t type) {
     for (
-        tag = tags; // points to the first tag of the multiboot_info_t struct
+        multiboot_tag_t* tag = mbi->tags; // points to the first tag of the multiboot_info_t struct
         tag->type != MULTIBOOT_TAG_TYPE_END;
         tag = (multiboot_tag_t*)((uint8_t*) tag + ((tag->size + 7) & ~7))
     ) {
@@ -32,7 +16,7 @@ void* find_multiboot_tag(multiboot_tag_t* tags, uint16_t type) {
     return 0;
 }
 
-reserved_areas_t read_multiboot_info(multiboot_info_t* mbi) {
+reserved_areas_t find_reserved_areas(multiboot_info_t* mbi) {
     multiboot_tag_t* tag;
     reserved_areas_t reserved = {
         .kernel_start = -1,

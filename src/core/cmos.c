@@ -1,5 +1,5 @@
 #include "cmos.h"
-#include <core/ports.h>
+#include <core/port.h>
 #include <mem.h>
 #include <stdbool.h>
 

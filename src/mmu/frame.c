@@ -14,8 +14,8 @@ uint64_t multiboot_end;
 bitmap_t allocated_frames[MAX_FRAMES / BITS_PER_WORD];
 
 void frame_init(multiboot_info_t* mbi) {
-    reserved_areas_t reserved = read_multiboot_info(mbi);
-    multiboot_tag_mmap_t* mmap = find_multiboot_tag(mbi->tags, MULTIBOOT_TAG_TYPE_MMAP);
+    reserved_areas_t reserved = find_reserved_areas(mbi);
+    multiboot_tag_mmap_t* mmap = find_multiboot_tag(mbi, MULTIBOOT_TAG_TYPE_MMAP);
 
     MMU_DEBUG("multiboot_start = %p, multiboot_end = %p", reserved.multiboot_start,
               reserved.multiboot_end);

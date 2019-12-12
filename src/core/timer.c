@@ -1,6 +1,6 @@
 #include "timer.h"
 #include <core/isr.h>
-#include <core/ports.h>
+#include <core/port.h>
 #include <stdlib.h>
 
 uint64_t tick = 0;
@@ -20,7 +20,7 @@ uint64_t timer_uptime() {
 }
 
 void timer_init() {
-    register_interrupt_handler(IRQ0, timer_callback);
+    isr_register_handler(IRQ0, timer_callback);
 
     uint64_t divisor = 1193180 / TIMER_HZ;
 

@@ -1,6 +1,7 @@
 #include "isr.h"
 #include <core/debug.h>
-#include <core/ports.h>
+#include <core/idt.h>
+#include <core/port.h>
 #include <core/syscall.h>
 #include <kernel/panic.h>
 #include <stdio.h>
@@ -72,51 +73,51 @@ void isr_init() {
     port_byte_out(PIC1_DATA, 0x00);
     port_byte_out(PIC2_DATA, 0x00);
 
-    register_idt_gate(0, (uint64_t) isr0);
-    register_idt_gate(1, (uint64_t) isr1);
-    register_idt_gate(2, (uint64_t) isr2);
-    register_idt_gate(3, (uint64_t) isr3);
-    register_idt_gate(4, (uint64_t) isr4);
-    register_idt_gate(5, (uint64_t) isr5);
-    register_idt_gate(6, (uint64_t) isr6);
-    register_idt_gate(7, (uint64_t) isr7);
-    register_idt_gate(8, (uint64_t) isr8);
-    register_idt_gate(9, (uint64_t) isr9);
-    register_idt_gate(10, (uint64_t) isr10);
-    register_idt_gate(11, (uint64_t) isr11);
-    register_idt_gate(12, (uint64_t) isr12);
-    register_idt_gate(13, (uint64_t) isr13);
-    register_idt_gate(14, (uint64_t) isr14);
-    register_idt_gate(15, (uint64_t) isr15);
-    register_idt_gate(16, (uint64_t) isr16);
-    register_idt_gate(17, (uint64_t) isr17);
-    register_idt_gate(18, (uint64_t) isr18);
-    register_idt_gate(19, (uint64_t) isr19);
-    register_idt_gate(20, (uint64_t) isr20);
-    register_idt_gate(21, (uint64_t) isr21);
-    register_idt_gate(22, (uint64_t) isr22);
-    register_idt_gate(23, (uint64_t) isr23);
-    register_idt_gate(24, (uint64_t) isr24);
-    register_idt_gate(25, (uint64_t) isr25);
-    register_idt_gate(26, (uint64_t) isr26);
-    register_idt_gate(27, (uint64_t) isr27);
-    register_idt_gate(28, (uint64_t) isr28);
-    register_idt_gate(29, (uint64_t) isr29);
-    register_idt_gate(30, (uint64_t) isr30);
-    register_idt_gate(31, (uint64_t) isr31);
+    idt_register_interrupt(0, (uint64_t) isr0);
+    idt_register_interrupt(1, (uint64_t) isr1);
+    idt_register_interrupt(2, (uint64_t) isr2);
+    idt_register_interrupt(3, (uint64_t) isr3);
+    idt_register_interrupt(4, (uint64_t) isr4);
+    idt_register_interrupt(5, (uint64_t) isr5);
+    idt_register_interrupt(6, (uint64_t) isr6);
+    idt_register_interrupt(7, (uint64_t) isr7);
+    idt_register_interrupt(8, (uint64_t) isr8);
+    idt_register_interrupt(9, (uint64_t) isr9);
+    idt_register_interrupt(10, (uint64_t) isr10);
+    idt_register_interrupt(11, (uint64_t) isr11);
+    idt_register_interrupt(12, (uint64_t) isr12);
+    idt_register_interrupt(13, (uint64_t) isr13);
+    idt_register_interrupt(14, (uint64_t) isr14);
+    idt_register_interrupt(15, (uint64_t) isr15);
+    idt_register_interrupt(16, (uint64_t) isr16);
+    idt_register_interrupt(17, (uint64_t) isr17);
+    idt_register_interrupt(18, (uint64_t) isr18);
+    idt_register_interrupt(19, (uint64_t) isr19);
+    idt_register_interrupt(20, (uint64_t) isr20);
+    idt_register_interrupt(21, (uint64_t) isr21);
+    idt_register_interrupt(22, (uint64_t) isr22);
+    idt_register_interrupt(23, (uint64_t) isr23);
+    idt_register_interrupt(24, (uint64_t) isr24);
+    idt_register_interrupt(25, (uint64_t) isr25);
+    idt_register_interrupt(26, (uint64_t) isr26);
+    idt_register_interrupt(27, (uint64_t) isr27);
+    idt_register_interrupt(28, (uint64_t) isr28);
+    idt_register_interrupt(29, (uint64_t) isr29);
+    idt_register_interrupt(30, (uint64_t) isr30);
+    idt_register_interrupt(31, (uint64_t) isr31);
 
-    register_idt_gate(IRQ0, (uint64_t) irq0);
-    register_idt_gate(IRQ1, (uint64_t) irq1);
-    register_idt_gate(IRQ2, (uint64_t) irq2);
-    register_idt_gate(IRQ3, (uint64_t) irq3);
-    register_idt_gate(IRQ4, (uint64_t) irq4);
+    idt_register_interrupt(IRQ0, (uint64_t) irq0);
+    idt_register_interrupt(IRQ1, (uint64_t) irq1);
+    idt_register_interrupt(IRQ2, (uint64_t) irq2);
+    idt_register_interrupt(IRQ3, (uint64_t) irq3);
+    idt_register_interrupt(IRQ4, (uint64_t) irq4);
 
     // syscalls
-    register_idt_gate(SYSCALL, (uint64_t) isr0x80);
+    idt_register_interrupt(SYSCALL, (uint64_t) isr0x80);
 
     // handlers for isr exceptions
-    register_interrupt_handler(EXCEPTION_BP, breakpoint_handler);
-    register_interrupt_handler(EXCEPTION_DF, double_fault_handler);
+    isr_register_handler(EXCEPTION_BP, breakpoint_handler);
+    isr_register_handler(EXCEPTION_DF, double_fault_handler);
 
     idt_init();
 }
@@ -175,7 +176,7 @@ void irq_handler(uint64_t id, uint64_t stack_addr) {
     }
 }
 
-void register_interrupt_handler(uint64_t id, isr_t handler) {
+void isr_register_handler(uint64_t id, isr_t handler) {
     interrupt_handlers[id] = handler;
 }
 

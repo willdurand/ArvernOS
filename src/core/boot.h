@@ -8,12 +8,6 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-/// The magic field should contain this.
-#define MULTIBOOT2_MAGIC_NUMBER             0xe85250d6
-
-// This should be in %eax.
-#define MULTIBOOT2_MAGIC_VALUE              0x36d76289
-
 // Flags set in the 'flags' member of the multiboot header.
 #define MULTIBOOT_TAG_TYPE_END               0
 #define MULTIBOOT_TAG_TYPE_CMDLINE           1
@@ -136,16 +130,14 @@ typedef struct reserved_areas {
 } reserved_areas_t;
 
 /**
- * Makes sure the bootloader loads the kernel with multiboot2.
+ * Finds and returns a pointer to a specific "tag" in the multiboot
+ * information.
  *
- * @param magic a magic value passed from the bootloader to the `kmain()`
- *        function.
- * @param addr the address to the multiboot information
- * @return `true` if everything is ok, `false` otherwise
+ * @param mbi a pointer to the multiboot info
+ * @param type the type of the tag to find
+ * @return a pointer to a multiboot tag structure or `0`
  */
-bool multiboot_is_valid(uint64_t magic, uint64_t addr);
-
-void* find_multiboot_tag(multiboot_tag_t* tags, uint16_t type);
+void* find_multiboot_tag(multiboot_info_t* mbi, uint16_t type);
 
 /**
  * Returns the memory areas reserved for the kernel and the multiboot
@@ -154,6 +146,6 @@ void* find_multiboot_tag(multiboot_tag_t* tags, uint16_t type);
  * @param mbi a pointer to the multiboot info
  * @return the memory areas (start/end) that are reserved
  */
-reserved_areas_t read_multiboot_info(multiboot_info_t* mbi);
+reserved_areas_t find_reserved_areas(multiboot_info_t* mbi);
 
 #endif

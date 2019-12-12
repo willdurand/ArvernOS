@@ -8,7 +8,7 @@
 typedef void (*syscall_handler_t)(registers_t* registers);
 
 /**
- * Initializes the syscall management.
+ * Initializes the syscalls management.
  */
 void syscall_init();
 

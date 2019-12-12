@@ -1,5 +1,5 @@
 #include "serial.h"
-#include <core/ports.h>
+#include <core/port.h>
 #include <string.h>
 #include <stdarg.h>
 #include <stdio.h>

@@ -2,7 +2,7 @@
 #include <mem.h>
 #include <string.h>
 #include <stddef.h>
-#include <core/ports.h>
+#include <core/port.h>
 #include <core/debug.h>
 
 #define FB_COMMAND_PORT         0x3D4

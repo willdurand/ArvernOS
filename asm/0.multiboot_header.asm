@@ -1,8 +1,7 @@
-; cf. https://intermezzos.github.io/book/multiboot-headers.html
 section .multiboot_header
 
 %define MULTIBOOT2_MAGIC_NUMBER	0xe85250d6
-%define PROTECTED_MODE_CODE		0   ; architecture 0 (protected mode i386)
+%define PROTECTED_MODE_CODE		  0   ; architecture 0 (protected mode i386)
                                     ; architecture 4 (MIPS)
 
 header_start:

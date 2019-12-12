@@ -23,9 +23,8 @@
 /**
  * This is the entrypoint of the kernel (C code).
  *
- * @param magic the multiboot magic value
  * @param addr the multiboot info address
  */
-void kmain(uint64_t magic, uint64_t addr) __asm__("kmain");
+void kmain(uint64_t addr) __asm__("kmain");
 
 #endif

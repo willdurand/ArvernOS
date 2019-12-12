@@ -12,11 +12,9 @@ bits 32		; specifies that the following lines are 32-bit instructions.
 		; use bits 64 (64-bit instructions).
 start:
 	mov esp, stack_top
-	; `ebx` points to a boot information structure.
-	; We move it to `esi` to pass it to our kernel.
-	mov esi, ebx
-	; `eax` should contain the multiboot2 magic number.
-	mov edi, eax
+	; `ebx` points to a boot information structure. We move it to `edi` to
+	; pass it to our kernel.
+	mov edi, ebx
 
 	; various checks before we can move on.
 	call check_multiboot
