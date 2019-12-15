@@ -30,7 +30,7 @@ CFLAGS = -W -Wall -pedantic -std=c11 -O2 -ffreestanding -nostdlib \
 		 -I src/include/ -I src/ -I libs/ \
 		 -D__is_libk
 
-DEBUG_CFLAGS = -DENABLE_KERNEL_DEBUG -DDEBUG_WITH_COLORS
+DEBUG_CFLAGS = -DENABLE_KERNEL_DEBUG -DDEBUG_WITH_COLORS -DDISABLE_MMU_DEBUG
 
 default: iso
 
