@@ -1,4 +1,7 @@
-/** @file */
+/**
+ * @file
+ * @see https://en.wikipedia.org/wiki/VGA-compatible_text_mode
+ */
 #ifndef SCREEN_H
 #define SCREEN_H
 
