@@ -136,6 +136,7 @@ Macros</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a44fe56c079dc6d3c0d4b29f5b9dab5a5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="paging_8h.html#a44fe56c079dc6d3c0d4b29f5b9dab5a5">paging_init</a> (<a class="el" href="structmultiboot__info__t.html">multiboot_info_t</a> *mbi)</td></tr>
+<tr class="memdesc:a44fe56c079dc6d3c0d4b29f5b9dab5a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes paging to separate virtual and physical memory.  <a href="paging_8h.html#a44fe56c079dc6d3c0d4b29f5b9dab5a5">More...</a><br /></td></tr>
 <tr class="separator:a44fe56c079dc6d3c0d4b29f5b9dab5a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8cecba5b00cd544790f3a2fbb1503660"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="paging_8h.html#a8cecba5b00cd544790f3a2fbb1503660">page_containing_address</a> (uint64_t virtual_address)</td></tr>
 <tr class="separator:a8cecba5b00cd544790f3a2fbb1503660"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -189,10 +190,13 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="paging_8h_a31b7b687f7cd7773e3dd5107bcdea030_cgraph.png" border="0" usemap="#paging_8h_a31b7b687f7cd7773e3dd5107bcdea030_cgraph" alt=""/></div>
 <map name="paging_8h_a31b7b687f7cd7773e3dd5107bcdea030_cgraph" id="paging_8h_a31b7b687f7cd7773e3dd5107bcdea030_cgraph">
-<area shape="rect" title=" " alt="" coords="5,31,53,56"/>
-<area shape="rect" href="paging_8h.html#a5dd0a3132223e82f998eb88ffd6b7876" title=" " alt="" coords="101,31,245,56"/>
-<area shape="rect" href="frame_8h.html#a40b65cfd28ddd6d88557a11a95e4fdab" title=" " alt="" coords="293,5,471,31"/>
-<area shape="rect" href="paging_8h.html#aac53c30ffef4782a7e0bc3f919fc3b07" title=" " alt="" coords="327,55,437,80"/>
+<area shape="rect" title=" " alt="" coords="5,80,53,105"/>
+<area shape="rect" href="frame_8h.html#a2c7f040adf876d7b49ee46f594ed6679" title=" " alt="" coords="118,55,227,80"/>
+<area shape="rect" href="paging_8h.html#a5dd0a3132223e82f998eb88ffd6b7876" title=" " alt="" coords="101,104,245,129"/>
+<area shape="rect" href="bitmap_8h.html#ade4512f18861f6f5c803538112111455" title=" " alt="" coords="339,5,426,31"/>
+<area shape="rect" href="bitmap_8h.html#ae60e1e9970fe0c4f68ee27902adbebfa" title=" " alt="" coords="339,55,425,80"/>
+<area shape="rect" href="frame_8h.html#a40b65cfd28ddd6d88557a11a95e4fdab" title=" " alt="" coords="293,104,471,129"/>
+<area shape="rect" href="paging_8h.html#aac53c30ffef4782a7e0bc3f919fc3b07" title=" " alt="" coords="327,153,437,179"/>
 </map>
 </div>
 
@@ -345,21 +349,11 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
+
 <p>Initializes paging to separate virtual and physical memory. </p>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="paging_8h_a44fe56c079dc6d3c0d4b29f5b9dab5a5_cgraph.png" border="0" usemap="#paging_8h_a44fe56c079dc6d3c0d4b29f5b9dab5a5_cgraph" alt=""/></div>
-<map name="paging_8h_a44fe56c079dc6d3c0d4b29f5b9dab5a5_cgraph" id="paging_8h_a44fe56c079dc6d3c0d4b29f5b9dab5a5_cgraph">
-<area shape="rect" title=" " alt="" coords="5,80,91,105"/>
-<area shape="rect" href="frame_8h.html#a2c7f040adf876d7b49ee46f594ed6679" title=" " alt="" coords="147,55,255,80"/>
-<area shape="rect" href="frame_8h.html#a00af179c263448b20c29a4d6f75d91b1" title=" " alt="" coords="139,104,263,129"/>
-<area shape="rect" href="bitmap_8h.html#ade4512f18861f6f5c803538112111455" title=" " alt="" coords="339,5,426,31"/>
-<area shape="rect" href="bitmap_8h.html#ae60e1e9970fe0c4f68ee27902adbebfa" title=" " alt="" coords="339,55,426,80"/>
-<area shape="rect" href="bitmap_8h.html#acbd3f5323acaf517704e69c47396119f" title=" " alt="" coords="334,104,431,129"/>
-<area shape="rect" href="frame_8h.html#a4271c2a0f8373b3c676377e9774299ee" title=" " alt="" coords="311,153,454,179"/>
-</map>
-</div>
+<p>The bootloader (assembly code) already set up a 4-level paging hierarchy that maps every page of our kernel to a physical frame. It does this because paging is mandatory in 64-bit mode on x86_64.</p>
+<p>This means that every memory address that we used in our kernel was a virtual address. Accessing the VGA buffer at address <code>0xb8000</code> only worked because the bootloader identity mapped that memory page, which means that it mapped the virtual page <code>0xb8000</code> to the physical frame <code>0xb8000</code>.</p>
+<p>In addition, this improves safety since illegal memory accesses cause page fault exceptions instead of modifying arbitrary physical memory. That being said, identity mapping clutters the virtual address space and makes it more difficult to find continuous memory regions of larger sizes (like 1000 KiB). </p>
 
 </div>
 </div>
@@ -426,8 +420,11 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="paging_8h_a71d704c874eecb8fa6cc99e8c873e890_cgraph.png" border="0" usemap="#paging_8h_a71d704c874eecb8fa6cc99e8c873e890_cgraph" alt=""/></div>
 <map name="paging_8h_a71d704c874eecb8fa6cc99e8c873e890_cgraph" id="paging_8h_a71d704c874eecb8fa6cc99e8c873e890_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,67,31"/>
-<area shape="rect" href="paging_8h.html#a7fdbe7d41abc360ddd26ea67b004cba4" title=" " alt="" coords="115,5,255,31"/>
+<area shape="rect" title=" " alt="" coords="5,55,67,80"/>
+<area shape="rect" href="frame_8h.html#a00af179c263448b20c29a4d6f75d91b1" title=" " alt="" coords="123,29,247,55"/>
+<area shape="rect" href="paging_8h.html#a7fdbe7d41abc360ddd26ea67b004cba4" title=" " alt="" coords="115,79,255,104"/>
+<area shape="rect" href="bitmap_8h.html#acbd3f5323acaf517704e69c47396119f" title=" " alt="" coords="326,5,423,31"/>
+<area shape="rect" href="frame_8h.html#a4271c2a0f8373b3c676377e9774299ee" title=" " alt="" coords="303,55,446,80"/>
 </map>
 </div>
 

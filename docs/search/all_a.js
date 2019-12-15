@@ -1,25 +1,9 @@
 var searchData=
 [
-  ['screen_2eh_83',['screen.h',['../screen_8h.html',1,'']]],
-  ['screen_5fclear_84',['screen_clear',['../screen_8h.html#a448d55968909ab0f809276a961b2a1f6',1,'screen.c']]],
-  ['screen_5fcolor_5fscheme_85',['screen_color_scheme',['../screen_8h.html#a76b60bda57a03e2f113f3cea03f45731',1,'screen.c']]],
-  ['screen_5finit_86',['screen_init',['../screen_8h.html#a9dbb6c251337c03c078dc330caee48d2',1,'screen.c']]],
-  ['screen_5fprint_87',['screen_print',['../screen_8h.html#a24117f9207f9493859a6100798d64d03',1,'screen.c']]],
-  ['screen_5fwrite_88',['screen_write',['../screen_8h.html#a5e3f65f82c3500c8da06877abb3daa1b',1,'screen.c']]],
-  ['serial_2eh_89',['serial.h',['../serial_8h.html',1,'']]],
-  ['serial_5fcom1_90',['SERIAL_COM1',['../serial_8h.html#a7dba27fd7950f6e40269808bd9238aca',1,'serial.h']]],
-  ['serial_5finit_91',['serial_init',['../serial_8h.html#a086a2712ee8de77b7621d922d2b96857',1,'serial.c']]],
-  ['serial_5fline_5fenable_5fdlab_92',['SERIAL_LINE_ENABLE_DLAB',['../serial_8h.html#a86dbcd1e612dc4ca6f5270d81def6ccd',1,'serial.h']]],
-  ['serial_5fprint_93',['serial_print',['../serial_8h.html#a1e9e38c6dbae13f53e8ed436fef0cd5b',1,'serial.c']]],
-  ['serial_5fspeed_5f115200_94',['SERIAL_SPEED_115200',['../serial_8h.html#ad22db02c1b733cacbf6e2411ed8577d3',1,'serial.h']]],
-  ['serial_5fspeed_5f38400_95',['SERIAL_SPEED_38400',['../serial_8h.html#acb00722fe46bcf13413da98c229aded8',1,'serial.h']]],
-  ['serial_5fspeed_5f57600_96',['SERIAL_SPEED_57600',['../serial_8h.html#abc968786733c07230d2d5230cec1e138',1,'serial.h']]],
-  ['stack_5ft_97',['stack_t',['../structstack__t.html',1,'']]],
-  ['stdio_2eh_98',['stdio.h',['../stdio_8h.html',1,'']]],
-  ['stdlib_2eh_99',['stdlib.h',['../stdlib_8h.html',1,'']]],
-  ['syscall_100',['SYSCALL',['../isr_8h.html#ac2b32acaa2085663ec396320d2e72fdb',1,'isr.h']]],
-  ['syscall_2eh_101',['syscall.h',['../core_2syscall_8h.html',1,'(Global Namespace)'],['../include_2sys_2syscall_8h.html',1,'(Global Namespace)']]],
-  ['syscall_5fhandler_102',['syscall_handler',['../core_2syscall_8h.html#a362ef819e2d72c9411f40f5d87c5587a',1,'syscall.c']]],
-  ['syscall_5fhandler_5ft_103',['syscall_handler_t',['../core_2syscall_8h.html#a53b966bd42e849696ebbaa1ac15871b9',1,'syscall.h']]],
-  ['syscall_5finit_104',['syscall_init',['../core_2syscall_8h.html#a581ed37968ead91b6d3a0b3b7a71da9d',1,'syscall.c']]]
+  ['read_5fcr2_87',['read_cr2',['../register_8h.html#a7b2de5d97ae8b57fd726fa100087f2b9',1,'register.c']]],
+  ['read_5fcr3_88',['read_cr3',['../register_8h.html#a37758a1d9dd7aa158743e035016ea79b',1,'register.c']]],
+  ['readline_5fsize_89',['READLINE_SIZE',['../kshell_8h.html#ac75983952a0074eee55efdb2cc0a5773',1,'kshell.h']]],
+  ['register_2eh_90',['register.h',['../register_8h.html',1,'']]],
+  ['registers_5ft_91',['registers_t',['../structregisters__t.html',1,'']]],
+  ['reserved_5fareas_5ft_92',['reserved_areas_t',['../structreserved__areas__t.html',1,'']]]
 ];

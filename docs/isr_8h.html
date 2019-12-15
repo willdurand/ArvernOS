@@ -129,6 +129,16 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="isr_8h.html#ac2b32acaa2085663ec396320d2e72fdb">SYSCALL</a>&#160;&#160;&#160;0x80</td></tr>
 <tr class="memdesc:ac2b32acaa2085663ec396320d2e72fdb"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is the ID of the special interrupt for syscalls. <br /></td></tr>
 <tr class="separator:ac2b32acaa2085663ec396320d2e72fdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a589ec46ff7327ddc8fd86c1352ded786"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="isr_8h.html#a589ec46ff7327ddc8fd86c1352ded786">PF_PROTECTION_VIOLATION</a>&#160;&#160;&#160;1 &lt;&lt; 0</td></tr>
+<tr class="separator:a589ec46ff7327ddc8fd86c1352ded786"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae7afaff148e4f0f9212e8281cfa6b79"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="isr_8h.html#aae7afaff148e4f0f9212e8281cfa6b79">PF_CAUSED_BY_WRITE</a>&#160;&#160;&#160;1 &lt;&lt; 1</td></tr>
+<tr class="separator:aae7afaff148e4f0f9212e8281cfa6b79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab2c012aeaf9d7e17ce719abf3476e5d8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="isr_8h.html#ab2c012aeaf9d7e17ce719abf3476e5d8">PF_USER_MODE</a>&#160;&#160;&#160;1 &lt;&lt; 2</td></tr>
+<tr class="separator:ab2c012aeaf9d7e17ce719abf3476e5d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab05b226866002973346b2da22ab6907f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="isr_8h.html#ab05b226866002973346b2da22ab6907f">PF_MALFORMED_TABLE</a>&#160;&#160;&#160;1 &lt;&lt; 3</td></tr>
+<tr class="separator:ab05b226866002973346b2da22ab6907f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab07f8f9ace844e31f94b9b1049325a98"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="isr_8h.html#ab07f8f9ace844e31f94b9b1049325a98">PF_INSTRUCTION_FETCH</a>&#160;&#160;&#160;1 &lt;&lt; 4</td></tr>
+<tr class="separator:ab07f8f9ace844e31f94b9b1049325a98"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -152,6 +162,82 @@ Functions</h2></td></tr>
 <tr class="memitem:a053905294332afc031508a03e6e10c86"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="isr_8h.html#a053905294332afc031508a03e6e10c86">isr_register_handler</a> (uint64_t id, <a class="el" href="isr_8h.html#a578e4aa356e844b0e91f9c4980d36cba">isr_t</a> handler)</td></tr>
 <tr class="separator:a053905294332afc031508a03e6e10c86"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="aae7afaff148e4f0f9212e8281cfa6b79"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae7afaff148e4f0f9212e8281cfa6b79">&#9670;&nbsp;</a></span>PF_CAUSED_BY_WRITE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PF_CAUSED_BY_WRITE&#160;&#160;&#160;1 &lt;&lt; 1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>If this flag is set, the memory access that caused the page fault was a write. Else the access that caused the page fault is a memory read. This bit does not necessarily indicate the cause of the page fault was a read or write violation. </p>
+
+</div>
+</div>
+<a id="ab07f8f9ace844e31f94b9b1049325a98"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab07f8f9ace844e31f94b9b1049325a98">&#9670;&nbsp;</a></span>PF_INSTRUCTION_FETCH</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PF_INSTRUCTION_FETCH&#160;&#160;&#160;1 &lt;&lt; 4</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>If this flag is set, it indicates that the access that caused the page fault was an instruction fetch. </p>
+
+</div>
+</div>
+<a id="ab05b226866002973346b2da22ab6907f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab05b226866002973346b2da22ab6907f">&#9670;&nbsp;</a></span>PF_MALFORMED_TABLE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PF_MALFORMED_TABLE&#160;&#160;&#160;1 &lt;&lt; 3</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>If this flag is set, the page fault is a result of the processor reading a 1 from a reserved field within a page-translation-table entry. </p>
+
+</div>
+</div>
+<a id="a589ec46ff7327ddc8fd86c1352ded786"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a589ec46ff7327ddc8fd86c1352ded786">&#9670;&nbsp;</a></span>PF_PROTECTION_VIOLATION</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PF_PROTECTION_VIOLATION&#160;&#160;&#160;1 &lt;&lt; 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>If this flag is set, the page fault was caused by a page-protection violation, else the page fault was caused by a not-present page. </p>
+
+</div>
+</div>
+<a id="ab2c012aeaf9d7e17ce719abf3476e5d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab2c012aeaf9d7e17ce719abf3476e5d8">&#9670;&nbsp;</a></span>PF_USER_MODE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PF_USER_MODE&#160;&#160;&#160;1 &lt;&lt; 2</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>If this flag is set, an access in user mode (CPL=3) caused the page fault. Else an access in supervisor mode (CPL=0, 1, or 2) caused the page fault. This bit does not necessarily indicate the cause of the page fault was a privilege violation. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="ab925df19b13ecfb0441d5ea0b4adaf5c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab925df19b13ecfb0441d5ea0b4adaf5c">&#9670;&nbsp;</a></span>irq_disable()</h2>
