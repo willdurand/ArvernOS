@@ -1,5 +1,4 @@
 #include "paging.h"
-#include <core/register.h>
 #include <mmu/debug.h>
 #include <kernel/panic.h>
 #include <stdio.h>
@@ -24,59 +23,8 @@ page_table_t* next_table_create(page_table_t* table, uint64_t index);
 page_table_t* get_p4();
 void paging_set_entry(page_entry_t* entry, uint64_t addr, uint64_t flags);
 
-uint64_t (*allocate_frame)(void);
-void (*deallocate_frame)(uint64_t);
-
 void paging_init(multiboot_info_t* mbi) {
     UNUSED(*mbi);
-
-    // Set allocator functions.
-    allocate_frame = frame_allocate;
-    deallocate_frame = frame_deallocate;
-
-    uint64_t cr3_value = read_cr3();
-    uint64_t addr = cr3_value & 0x000ffffffffff000;
-    MMU_DEBUG("Level 4 page table at: %p", addr);
-
-    // The rest of this function tests the paging feature.
-
-    uint64_t addr1 = (uint64_t)42 * PAGE_ENTRIES * PAGE_ENTRIES * PAGE_SIZE;
-    uint64_t addr2 = (uint64_t)43 * PAGE_ENTRIES * PAGE_ENTRIES * PAGE_SIZE;
-    uint64_t addr3 = addr2 + PAGE_SIZE;
-    uint64_t addr4 = addr3 + PAGE_SIZE;
-
-    uint64_t page1 = page_containing_address(addr1);
-    uint64_t page2 = page_containing_address(addr2);
-    uint64_t page3 = page_containing_address(addr3);
-    uint64_t page4 = page_containing_address(addr4);
-    uint64_t frame1 = allocate_frame();
-    uint64_t frame2 = allocate_frame();
-
-    uint64_t* m1 = (uint64_t*)page_start_address(page1);
-    uint64_t* m2 = (uint64_t*)page_start_address(page2);
-    uint64_t* m3 = (uint64_t*)page_start_address(page3);
-    uint64_t* m4 = (uint64_t*)page_start_address(page4);
-
-    map_page_to_frame(page1, frame1, PAGING_FLAG_WRITABLE);
-    map_page_to_frame(page2, frame1, PAGING_FLAG_WRITABLE);
-    map_page_to_frame(page3, frame1, 0x0);
-    map_page_to_frame(page4, frame2, 0x0);
-
-    MMU_DEBUG("m1=%p (%x) m2=%p (%x) m3=%p (%x) and m4=%d", m1, *m1, m2, *m2, m3, *m3, m4);
-
-    *m2 = 0xdeadbeef;
-    m4 = 12;
-
-    if (*m1 != *m3) {
-        PANIC("%s", "paging test failed");
-    }
-
-    MMU_DEBUG("m1=%p (%x) m2=%p (%x) m3=%p (%x) and m4=%d", m1, *m1, m2, *m2, m3, *m3, m4);
-
-    unmap(page1);
-    unmap(page2);
-    unmap(page3);
-    unmap(page4);
 }
 
 void zero_table(page_table_t* table) {
@@ -118,7 +66,7 @@ uint64_t page_containing_address(uint64_t virtual_address) {
         return virtual_address / PAGE_SIZE;
     }
 
-    PANIC("invalid address=%#x", virtual_address);
+    PANIC("invalid address=%p", virtual_address);
     return 0; // never reached but avoid a GCC warning.
 }
 
@@ -268,7 +216,7 @@ page_table_t* next_table_create(page_table_t* table, uint64_t index) {
     } else {
         MMU_DEBUG("page entry at index=%d is not present, creating entry", index);
 
-        uint64_t frame = allocate_frame();
+        uint64_t frame = frame_allocate();
 
         if (frame == 0) {
             PANIC("%s", "frame is unexpectedly equal to 0");
@@ -340,7 +288,7 @@ void unmap(uint64_t page_number) {
 
     // TODO: free p(1,2,3) table if empty
 
-    deallocate_frame(frame_number);
+    frame_deallocate(frame_number);
 
     // flush the translation lookaside buffer
     // cf. http://os.phil-opp.com/modifying-page-tables.html#unmap
@@ -350,7 +298,7 @@ void unmap(uint64_t page_number) {
 }
 
 void map(uint64_t page_number, uint64_t flags) {
-    uint64_t frame = allocate_frame();
+    uint64_t frame = frame_allocate();
 
     if (frame == 0) {
         PANIC("out of memory");
