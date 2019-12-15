@@ -51,7 +51,21 @@ typedef struct page_table {
 } page_table_t;
 
 /**
- * Initializes paging to separate virtual and physical memory.
+ * @brief Initializes paging to separate virtual and physical memory.
+ *
+ * The bootloader (assembly code) already set up a 4-level paging hierarchy
+ * that maps every page of our kernel to a physical frame. It does this because
+ * paging is mandatory in 64-bit mode on x86_64.
+ *
+ * This means that every memory address that we used in our kernel was a
+ * virtual address. Accessing the VGA buffer at address `0xb8000` only worked
+ * because the bootloader identity mapped that memory page, which means that it
+ * mapped the virtual page `0xb8000` to the physical frame `0xb8000`.
+ *
+ * In addition, this improves safety since illegal memory accesses cause page
+ * fault exceptions instead of modifying arbitrary physical memory. That being
+ * said, identity mapping clutters the virtual address space and makes it more
+ * difficult to find continuous memory regions of larger sizes (like 1000 KiB).
  */
 void paging_init(multiboot_info_t* mbi);
 

@@ -34,6 +34,10 @@ void paging_init(multiboot_info_t* mbi) {
     allocate_frame = frame_allocate;
     deallocate_frame = frame_deallocate;
 
+    uint64_t cr3_value = read_cr3();
+    uint64_t addr = cr3_value & 0x000ffffffffff000;
+    MMU_DEBUG("Level 4 page table at: %p", addr);
+
     // The rest of this function tests the paging feature.
 
     uint64_t addr1 = (uint64_t)42 * PAGE_ENTRIES * PAGE_ENTRIES * PAGE_SIZE;
