@@ -150,10 +150,10 @@ void isr_handler(uint64_t id, uint64_t stack_addr) {
     PANIC(
         "Received interrupt: %d - %s\n\n"
         "  instruction_pointer = %p\n"
-        "  code_segment        = %#x\n"
+        "  code_segment        = %x\n"
         "  cpu_flags           = %#x\n"
         "  stack_pointer       = %p\n"
-        "  stack_segment       = %#x",
+        "  stack_segment       = %x",
         id, exception_messages[id],
         stack->instruction_pointer,
         stack->code_segment,
