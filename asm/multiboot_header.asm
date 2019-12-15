@@ -1,3 +1,4 @@
+; This is a Multiboot-compliant header file in assembly code.
 section .multiboot_header
 
 %define MULTIBOOT2_MAGIC_NUMBER	0xe85250d6
