@@ -2,6 +2,7 @@
 #include <core/debug.h>
 #include <core/idt.h>
 #include <core/port.h>
+#include <core/register.h>
 #include <core/syscall.h>
 #include <kernel/panic.h>
 #include <stdio.h>
@@ -11,6 +12,7 @@ stack_t* get_stack(uint64_t id, uint64_t stack);
 
 void breakpoint_handler(stack_t* stack);
 void double_fault_handler(stack_t* stack);
+void page_fault_handler(stack_t* stack);
 
 const char* exception_messages[] = {
     "Division By Zero",
@@ -118,6 +120,7 @@ void isr_init() {
     // handlers for isr exceptions
     isr_register_handler(EXCEPTION_BP, breakpoint_handler);
     isr_register_handler(EXCEPTION_DF, double_fault_handler);
+    isr_register_handler(EXCEPTION_PF, page_fault_handler);
 
     idt_init();
 }
@@ -213,10 +216,10 @@ void breakpoint_handler(stack_t* stack) {
     printf(
         "Exception: BREAKPOINT\n"
         "  instruction_pointer = %p\n"
-        "  code_segment        = %#x\n"
+        "  code_segment        = %x\n"
         "  cpu_flags           = %#x\n"
         "  stack_pointer       = %p\n"
-        "  stack_segment       = %#x\n",
+        "  stack_segment       = %x\n",
         stack->instruction_pointer,
         stack->code_segment,
         stack->cpu_flags,
@@ -226,13 +229,38 @@ void breakpoint_handler(stack_t* stack) {
 }
 
 void double_fault_handler(stack_t* stack) {
-    printf(
+    PANIC(
         "Exception: DOUBLE FAULT\n"
         "  instruction_pointer = %p\n"
-        "  code_segment        = %#x\n"
+        "  code_segment        = %x\n"
         "  cpu_flags           = %#x\n"
         "  stack_pointer       = %p\n"
-        "  stack_segment       = %#x\n",
+        "  stack_segment       = %x\n",
+        stack->instruction_pointer,
+        stack->code_segment,
+        stack->cpu_flags,
+        stack->stack_pointer,
+        stack->stack_segment
+    );
+}
+
+void page_fault_handler(stack_t* stack) {
+    // The `get_stack()` function removes the error code so that we can have
+    // generic handlers (and not all interruptions have an error code anyway).
+    // This handler needs the `error_code`, so let's retrieve it.
+    uint64_t error_code = ((uint64_t*) stack)[-1];
+
+    PANIC(
+        "Exception: PAGE FAULT\n"
+        "  accessed address    = %p\n"
+        "  error code          = %#x\n"
+        "  instruction_pointer = %p\n"
+        "  code_segment        = %x\n"
+        "  cpu_flags           = %#x\n"
+        "  stack_pointer       = %p\n"
+        "  stack_segment       = %x\n",
+        read_cr2(),
+        error_code,
         stack->instruction_pointer,
         stack->code_segment,
         stack->cpu_flags,

@@ -1,4 +1,5 @@
 #include "paging.h"
+#include <core/register.h>
 #include <mmu/debug.h>
 #include <kernel/panic.h>
 #include <stdio.h>
@@ -22,8 +23,6 @@ uint64_t p1_index(uint64_t page);
 page_table_t* next_table_create(page_table_t* table, uint64_t index);
 page_table_t* get_p4();
 void paging_set_entry(page_entry_t* entry, uint64_t addr, uint64_t flags);
-uint64_t read_cr3();
-void write_cr3(uint64_t value);
 
 uint64_t (*allocate_frame)(void);
 void (*deallocate_frame)(uint64_t);
@@ -344,18 +343,6 @@ void unmap(uint64_t page_number) {
     __asm__("invlpg (%0)" : /* no output */ : "r"(addr) : "memory");
 
     MMU_DEBUG("unapped page=%u addr=%p", page_number, addr);
-}
-
-uint64_t read_cr3() {
-    uint64_t value;
-
-    __asm__("mov %%cr3, %0" : "=r"(value) : /* no input */);
-
-    return value;
-}
-
-void write_cr3(uint64_t value) {
-    __asm__("mov %0, %%cr3" : /* no output */ : "r"(value));
 }
 
 void map(uint64_t page_number, uint64_t flags) {
