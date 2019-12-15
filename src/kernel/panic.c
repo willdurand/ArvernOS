@@ -13,8 +13,9 @@ void kernel_panic(const char* format, ...) {
 
     printf("\n\n%45s", "SYSTEM HALTED!");
 
-    // completely stop
     irq_disable();
 
-    while (1) ;
+    while (1) {
+        __asm__("hlt");
+    }
 }
