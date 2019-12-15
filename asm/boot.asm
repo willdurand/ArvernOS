@@ -3,8 +3,6 @@
 global start	; exports a label (makes it public). As start will be the entry
 		; point of our kernel, it needs to be public.
 
-extern long_mode_start
-
 section .text	; executable code
 bits 32		; specifies that the following lines are 32-bit instructions.
 		; it's needed because the CPU is still in Protected mode when
@@ -211,3 +209,24 @@ gdt64:
 .pointer:
     dw .pointer - gdt64 - 1
     dq gdt64
+
+; -----------------------------------------------------------------------------
+; 64-bit code below
+
+extern kmain
+
+section .text
+bits 64
+long_mode_start:
+	; load 0 into all data segment registers
+	mov ax, 0
+	mov ss, ax
+	mov ds, ax
+	mov es, ax
+	mov fs, ax
+	mov gs, ax
+
+	call kmain
+
+	; Should not happen.
+	hlt
