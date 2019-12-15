@@ -94,7 +94,7 @@ fmt: ## automatically format the code with astyle
 .PHONY: fmt
 
 gdb: ## build, run the OS in debug mode and GDB
-gdb: CFLAGS += $(DEBUG_CFLAGS) -g
+gdb: CFLAGS += $(DEBUG_CFLAGS) -g -O0
 gdb: $(ISO)
 	qemu-system-x86_64 -s -S -cdrom $< -serial file:/tmp/serial.log
 .PHONY: gdb
