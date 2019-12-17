@@ -6,7 +6,7 @@ jobs:
     steps:
       - checkout
       - run: sudo apt-get update
-      - run: sudo apt-get install nasm xorriso build-essential grub2-common
+      - run: sudo apt-get install nasm xorriso build-essential grub2-common grub-pc-bin
       - run: make
       - run: test -f build/isofiles/boot/kernel.bin
       - run: test -f build/isofiles/boot/init
