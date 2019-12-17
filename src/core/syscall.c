@@ -1,5 +1,6 @@
 #include "syscall.h"
 #include <kernel/panic.h>
+#include <drivers/screen.h>
 #include <sys/syscall.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,9 +12,11 @@ void syscall_register_handler(uint8_t id, syscall_handler_t handler);
 void syscall_print_registers(registers_t* registers);
 
 void syscall_test(registers_t* registers);
+void syscall_write(registers_t* registers);
 
 void syscall_init() {
     syscall_register_handler(SYSCALL_TEST, syscall_test);
+    syscall_register_handler(SYSCALL_WRITE, syscall_write);
 }
 
 void syscall_register_handler(uint8_t id, syscall_handler_t handler) {
@@ -35,6 +38,10 @@ void syscall_test(registers_t* registers) {
     // TODO: remove offset (0x100000) when we have a separate memory area for a
     // process. See the `elf.c` file for more information.
     printf("    (syscall_test) hello, %s!\n", (registers->rbx + 0x100000));
+}
+
+void syscall_write(registers_t* registers) {
+    screen_write(registers->rbx);
 }
 
 void syscall_print_registers(registers_t* registers) {
