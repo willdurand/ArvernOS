@@ -5,7 +5,7 @@ ifeq ($(shell uname -s),Darwin)
 endif
 
 CFLAGS = -Wl,-emain -W -Wall -pedantic -std=c11 -O2 -ffreestanding -nostdlib \
-				 -fno-builtin -fno-stack-protector -I src/include/
+				 -fno-builtin -fno-stack-protector -I ../src/include/
 LIBS   = ../build/libc-willOS.a
 
 default: init
