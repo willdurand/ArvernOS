@@ -1,7 +1,7 @@
-#include <sys/syscall.h>
+#include <stdio.h>
 
 int main() {
-    test("I'm the init program");
+    printf("this is the init program");
 
     return 0;
 }

@@ -103,8 +103,6 @@ void kmain(uint64_t addr) {
         DEBUG("loaded elf entry=%p", elf->entry);
         print_ok();
 
-        printf("\n");
-
         typedef int callable(void);
         callable* c = (callable*)(elf->entry);
         int res = c();

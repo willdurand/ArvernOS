@@ -1,16 +1,24 @@
 #include <stdio.h>
-#include <drivers/screen.h>
 
 #ifdef __is_libk
+#include <drivers/screen.h>
 
 void _putchar(char c) {
     screen_write(c);
 }
 
 #else
+#include <stdint.h>
+#include <sys/syscall.h>
 
-void _putchar(char c) {
-    // TODO: add syscall to write to the screen.
+void printf(const char* s) {
+    s += 0x100000;
+
+    uint64_t i = 0;
+
+    while (s[i] != '\0') {
+        write(s[i++]);
+    }
 }
 
 #endif

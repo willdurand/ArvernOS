@@ -41,7 +41,7 @@ void syscall_test(registers_t* registers) {
 }
 
 void syscall_write(registers_t* registers) {
-    screen_write(registers->rbx);
+    screen_write((char)registers->rbx);
 }
 
 void syscall_print_registers(registers_t* registers) {
