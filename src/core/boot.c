@@ -34,16 +34,16 @@ reserved_areas_t find_reserved_areas(multiboot_info_t* mbi) {
     ) {
         switch (tag->type) {
             case MULTIBOOT_TAG_TYPE_CMDLINE:
-                DEBUG("command line = %s", ((multiboot_tag_string_t*) tag)->string);
+                DEBUG("command line=%s", ((multiboot_tag_string_t*) tag)->string);
                 break;
 
             case MULTIBOOT_TAG_TYPE_BOOT_LOADER_NAME:
-                DEBUG("boot loader name = %s", ((multiboot_tag_string_t*) tag)->string);
+                DEBUG("boot loader name=%s", ((multiboot_tag_string_t*) tag)->string);
                 break;
 
             case MULTIBOOT_TAG_TYPE_MODULE:
                 DEBUG(
-                    "module at %#x-%#x. command line %s",
+                    "module at %p-%p with command line=%s",
                     ((multiboot_tag_module_t*) tag)->mod_start,
                     ((multiboot_tag_module_t*) tag)->mod_end,
                     ((multiboot_tag_module_t*) tag)->cmdline
