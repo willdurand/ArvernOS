@@ -1,26 +1,18 @@
-CC   ?= gcc
-LD   ?= ld
-AR   ?= ar
-NASM ?= nasm
+CC ?= gcc
 
 ifeq ($(shell uname -s),Darwin)
-	CC = x86_64-pc-elf-gcc
-	LD = x86_64-pc-elf-ld
-	AR = x86_64-pc-elf-ar
+	CC ?= x86_64-pc-elf-gcc
 endif
 
-TARGET    = init
-ROOT_DIR  = ..
-BUILD_DIR = .
-CFLAGS    = -Wl,-emain -Wall -pedantic -std=c11 -O2 -ffreestanding -nostdlib -I $(ROOT_DIR)/src/include
-LIBS      = $(ROOT_DIR)/build/libc-willOS.a
+CFLAGS = -Wl,-emain -W -Wall -pedantic -std=c11 -O2 -ffreestanding -nostdlib \
+				 -fno-builtin -fno-stack-protector -I src/include/
+LIBS   = ../build/libc-willOS.a
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+default: init
 
-$(TARGET): $(TARGET).o
+init: init.c
 	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
 
 clean:
-	rm -rf $(TARGET) *.o
+	rm -f init *.o
 .PHONY: clean
