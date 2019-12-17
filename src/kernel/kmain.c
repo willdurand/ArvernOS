@@ -1,4 +1,5 @@
 #include "kmain.h"
+#include <core/elf.h>
 #include <core/debug.h>
 #include <core/isr.h>
 #include <core/syscall.h>
@@ -92,6 +93,22 @@ void kmain(uint64_t addr) {
     print_step("initializing keyboard");
     keyboard_init();
     print_ok();
+
+    multiboot_tag_module_t* module = find_multiboot_tag(mbi, MULTIBOOT_TAG_TYPE_MODULE);
+
+    print_step("loading grub module (elf)");
+    elf_header_t* elf = elf_load((uint64_t*)module->mod_start);
+
+    if (elf) {
+        DEBUG("loaded elf entry=%p", elf->entry);
+        print_ok();
+
+        printf("\n");
+
+        typedef int callable(void);
+        callable* c = (callable*)(elf->entry);
+        int res = c();
+    }
 
     // kshell
     printf("\n");

@@ -1,4 +1,5 @@
 /build/
+/init/init
 *.o
 *.a
 *.bin

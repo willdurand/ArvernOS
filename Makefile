@@ -67,9 +67,10 @@ iso: ## build the image of the OS (.iso)
 iso: $(ISO)
 .PHONY: iso
 
-$(ISO): $(KERNEL)
+$(ISO): $(KERNEL) init
 	mkdir -p $(GRUB_DIR)
 	cp -R grub/* $(GRUB_DIR)
+	cp init/init $(KERNEL_DIR)
 	grub-mkrescue -o $@ $(ISO_DIR)
 
 run: ## run the OS
@@ -99,6 +100,12 @@ gdb: CFLAGS += $(DEBUG_CFLAGS) -g -O0
 gdb: $(ISO)
 	qemu-system-x86_64 -s -S -cdrom $< -serial file:/tmp/serial.log
 .PHONY: gdb
+
+# TODO: there must be a better way to compile different modules from a
+# top-level makefile.
+init: $(LIBC)
+	cd init && make clean && make
+.PHONY: init
 
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
