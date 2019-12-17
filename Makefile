@@ -22,14 +22,12 @@ LIBC       = $(BUILD_DIR)/libc-$(OS_NAME).a
 LIBK       = $(BUILD_DIR)/libk-$(OS_NAME).a
 
 OBJECTS := $(patsubst %.asm,%.o,$(shell find asm -name '*.asm'))
-SOURCES := $(patsubst %.c,%.o,$(shell find libs src -name '*.c'))
+LIBK_SOURCES := $(patsubst %.c,%_k.o,$(shell find libs src -name '*.c'))
 LIBC_SOURCES := $(patsubst %.c,%.o,$(shell find src/libc -name '*.c'))
 
 CFLAGS = -W -Wall -pedantic -std=c11 -O2 -ffreestanding -nostdlib \
-		 -fno-builtin -fno-stack-protector \
-		 -mno-red-zone \
-		 -I src/include/ -I src/ -I libs/ \
-		 -D__is_libk
+				 -fno-builtin -fno-stack-protector -mno-red-zone \
+				 -I src/include/ -I src/ -I libs/
 
 DEBUG_CFLAGS = -DENABLE_KERNEL_DEBUG -DDEBUG_WITH_COLORS -DDISABLE_MMU_DEBUG
 
@@ -47,10 +45,14 @@ $(OBJECTS): %.o: %.asm
 	mkdir -p $(BUILD_DIR)
 	$(NASM) -f elf64 $<
 
-$(SOURCES): %.o: %.c
+$(LIBK_SOURCES): CFLAGS += -D__is_libk
+$(LIBK_SOURCES): %_k.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(LIBK): $(SOURCES)
+$(LIBC_SOURCES): %.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(LIBK): $(LIBK_SOURCES)
 	mkdir -p $(BUILD_DIR)
 	$(AR) rcs $@ $^
 
@@ -59,7 +61,6 @@ $(LIBC): $(LIBC_SOURCES)
 	$(AR) rcs $@ $^
 
 libc: ## build the libc (for userland)
-libc: CFLAGS := $(filter-out -D__is_libk, $(CFLAGS))
 libc: $(LIBC)
 .PHONY: libc
 
@@ -86,8 +87,9 @@ debug: $(ISO)
 
 clean: ## remove build artifacts
 	find . -name '*.orig' -exec rm "{}" ";"
-	rm -f $(OBJECTS) $(SOURCES) $(KERNEL) $(ISO) $(LIBK) $(LIBC)
+	rm -f $(OBJECTS) $(LIBK_SOURCES) $(LIBC_SOURCES) $(KERNEL) $(ISO) $(LIBK) $(LIBC)
 	rm -rf $(BUILD_DIR)
+	$(MAKE) -C init/ clean
 .PHONY: clean
 
 fmt: ## automatically format the code with astyle
@@ -101,10 +103,10 @@ gdb: $(ISO)
 	qemu-system-x86_64 -s -S -cdrom $< -serial file:/tmp/serial.log
 .PHONY: gdb
 
-# TODO: there must be a better way to compile different modules from a
-# top-level makefile.
-init: $(LIBC)
-	cd init && make clean && make
+init: ## compile the 'init' program (statically linked to libc)
+init: libc
+	rm -f init/init
+	$(MAKE) -C init/
 .PHONY: init
 
 help:
