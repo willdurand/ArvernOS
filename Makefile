@@ -2,6 +2,7 @@ CC   ?= gcc
 LD   ?= ld
 AR   ?= ar
 NASM ?= nasm
+QEMU ?= qemu-system-x86_64
 
 ifeq ($(shell uname -s),Darwin)
 	CC = x86_64-pc-elf-gcc
@@ -73,13 +74,13 @@ $(ISO): $(KERNEL)
 
 run: ## run the OS
 run: $(ISO)
-	qemu-system-x86_64 -cdrom $<
+	$(QEMU) -cdrom $<
 .PHONY: run
 
 debug: ## build and run the OS in debug mode
 debug: CFLAGS += $(DEBUG_CFLAGS)
 debug: $(ISO)
-	qemu-system-x86_64 -cdrom $< -serial file:/tmp/serial.log
+	$(QEMU) -cdrom $< -serial file:/tmp/serial.log
 .PHONY: debug
 
 clean: ## remove build artifacts
