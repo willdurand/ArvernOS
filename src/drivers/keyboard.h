@@ -21,6 +21,6 @@ void keyboard_init();
  *
  * @return the last scancode read or `0`
  */
-uint8_t keyboard_get_last_scancode();
+uint8_t keyboard_get_scancode();
 
 #endif
