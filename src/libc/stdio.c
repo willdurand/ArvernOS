@@ -12,8 +12,6 @@ void _putchar(char c) {
 #include <sys/syscall.h>
 
 void printf(const char* s) {
-    s += 0x100000;
-
     uint64_t i = 0;
 
     while (s[i] != '\0') {
