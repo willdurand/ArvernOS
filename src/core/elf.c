@@ -36,9 +36,6 @@ elf_header_t* elf_load(uint64_t* data) {
         }
     }
 
-    // See below why this is needed. We update the entrypoint here so that it
-    // does not have to be updated everywhere else.
-    elf->entry += 0x100000;
     DEBUG("elf entry is now at: %p", elf->entry);
 
     return elf;
@@ -69,11 +66,6 @@ void load_segment(uint64_t* data, elf_program_header_t* program_header) {
     if (program_header->flags & ELF_PT_W) {
         flags |= PAGING_FLAG_WRITABLE;
     }
-
-    // This is a hack to be able to map the segment, otherwise the page might
-    // be already used. Note that this offset does not guarantee anything, it
-    // happens to work with it, though.
-    addr += 0x100000;
 
     DEBUG("load segment at addr=%p (modified) with flags=%#x", addr, flags);
 

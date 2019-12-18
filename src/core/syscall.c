@@ -38,9 +38,7 @@ void syscall_handler(registers_t* registers) {
 }
 
 void syscall_test(registers_t* registers) {
-    // TODO: remove offset (0x100000) when we have a separate memory area for a
-    // process. See the `elf.c` file for more information.
-    printf("    (syscall_test) hello, %s!\n", (registers->rbx + 0x100000));
+    printf("    (syscall_test) hello, %s!\n", registers->rbx);
 }
 
 void syscall_write(registers_t* registers) {
