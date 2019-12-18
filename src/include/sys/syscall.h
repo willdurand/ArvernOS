@@ -24,6 +24,9 @@ void test(const char* s);
 void write(char c);
 
 /**
+ * Implements the read (from keyboard) syscall.
+ *
+ * @return a scancode
  */
 char read();
 
