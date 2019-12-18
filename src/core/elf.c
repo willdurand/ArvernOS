@@ -67,7 +67,7 @@ void load_segment(uint64_t* data, elf_program_header_t* program_header) {
         flags |= PAGING_FLAG_WRITABLE;
     }
 
-    DEBUG("load segment at addr=%p (modified) with flags=%#x", addr, flags);
+    DEBUG("load segment at addr=%p with flags=%#x", addr, flags);
 
     map(page_containing_address(addr), flags);
 
