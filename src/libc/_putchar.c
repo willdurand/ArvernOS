@@ -7,4 +7,10 @@ void _putchar(char c) {
     screen_write(c);
 }
 
+#else
+
+void _putchar(char c) {
+    putchar(c);
+}
+
 #endif

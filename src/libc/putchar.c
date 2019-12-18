@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#ifndef __is_libk
+#ifdef __is_libc
 #include <sys/syscall.h>
 
 void putchar(char c) {
