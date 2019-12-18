@@ -30,13 +30,21 @@ void print_welcome_messge() {
 }
 
 void print_step(const char* msg) {
-    printf("%-76s", msg);
+    printf("%-74s", msg);
 }
 
 void print_ok() {
-    printf("[");
+    printf("[ ");
     screen_color_scheme(COLOR_GREEN, COLOR_BLACK);
     printf("OK");
+    screen_color_scheme(COLOR_WHITE, COLOR_BLACK);
+    printf(" ]");
+}
+
+void print_ko() {
+    printf("[");
+    screen_color_scheme(COLOR_RED, COLOR_BLACK);
+    printf("FAIL");
     screen_color_scheme(COLOR_WHITE, COLOR_BLACK);
     printf("]");
 }
@@ -106,6 +114,8 @@ void kmain(uint64_t addr) {
         typedef int callable(void);
         callable* c = (callable*)(elf->entry);
         int res = c();
+    } else {
+        print_ko();
     }
 
     // kshell
