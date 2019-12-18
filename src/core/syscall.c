@@ -48,7 +48,7 @@ void syscall_write(registers_t* registers) {
 }
 
 void syscall_read(registers_t* registers) {
-    registers->rdx = keyboard_get_last_scancode();
+    registers->rdx = keyboard_get_scancode();
 }
 
 void syscall_print_registers(registers_t* registers) {
