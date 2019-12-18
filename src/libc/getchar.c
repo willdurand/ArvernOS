@@ -163,6 +163,27 @@ char getchar() {
 
                 break;
 
+            case KB_BACKSPACE:
+                if (key_was_released) {
+                    c = '\b';
+                }
+
+                break;
+
+            case KB_ENTER:
+                if (key_was_released) {
+                    c = '\n';
+                }
+
+                break;
+
+            case KB_TAB:
+                if (key_was_released) {
+                    c = '\t';
+                }
+
+                break;
+
             default:
                 if (key_was_released) {
                     if ((caps_lock_mode || shift_mode) && _keymap[scancode][1]) {
