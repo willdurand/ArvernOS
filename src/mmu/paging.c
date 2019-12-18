@@ -39,7 +39,10 @@ page_table_t* next_table_address(page_table_t* table, uint64_t index) {
 
     if (table->entries[index].huge_page == 1) {
         MMU_DEBUG("huge page detected for table=%p index=%u, returning 0", table, index);
-        return 0;
+        // TODO: fix this problem. Huge page is detected and we are not able to
+        // create a page table because of this. This prevents an ELF to load...
+        // That's pretty bad :(
+        //return 0;
     }
 
     page_table_t* next_table = (page_table_t*)(((uint64_t)table << 9) | (index << 12));
