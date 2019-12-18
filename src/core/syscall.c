@@ -1,6 +1,7 @@
 #include "syscall.h"
-#include <kernel/panic.h>
+#include <drivers/keyboard.h>
 #include <drivers/screen.h>
+#include <kernel/panic.h>
 #include <sys/syscall.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,10 +14,12 @@ void syscall_print_registers(registers_t* registers);
 
 void syscall_test(registers_t* registers);
 void syscall_write(registers_t* registers);
+void syscall_read(registers_t* registers);
 
 void syscall_init() {
     syscall_register_handler(SYSCALL_TEST, syscall_test);
     syscall_register_handler(SYSCALL_WRITE, syscall_write);
+    syscall_register_handler(SYSCALL_READ, syscall_read);
 }
 
 void syscall_register_handler(uint8_t id, syscall_handler_t handler) {
@@ -42,6 +45,10 @@ void syscall_test(registers_t* registers) {
 
 void syscall_write(registers_t* registers) {
     screen_write((char)registers->rbx);
+}
+
+void syscall_read(registers_t* registers) {
+    registers->rdx = keyboard_get_last_scancode();
 }
 
 void syscall_print_registers(registers_t* registers) {

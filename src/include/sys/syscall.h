@@ -6,6 +6,7 @@
 #define NB_SYSCALLS   3
 #define SYSCALL_TEST  1
 #define SYSCALL_WRITE 2
+#define SYSCALL_READ  3
 
 /**
  * Implements a syscall for testing purpose only. It takes a string as input
@@ -21,5 +22,9 @@ void test(const char* s);
  * @param c the character to print on the screen
  */
 void write(char c);
+
+/**
+ */
+char read();
 
 #endif
