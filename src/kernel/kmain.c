@@ -118,6 +118,8 @@ void kmain(uint64_t addr) {
         typedef int callable(void);
         callable* c = (callable*)(elf->entry);
         int res = c();
+
+        UNUSED(res);
     } else {
         print_ko();
     }
