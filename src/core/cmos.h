@@ -30,6 +30,9 @@ typedef struct cmos_rtc {
     uint8_t century;
 } cmos_rtc_t;
 
+/**
+ * Initializes the CMOS Real Time Clock.
+ */
 void cmos_init();
 
 /**
@@ -40,6 +43,9 @@ void cmos_init();
 cmos_rtc_t cmos_read_rtc();
 
 /**
+ * Returns the boot time in seconds since January 1, 1970 (unix time).
+ *
+ * @return the boot (unix) time
  */
 uint64_t cmos_boot_time();
 
