@@ -6,6 +6,20 @@
 uint8_t read_register(uint8_t reg);
 bool update_in_progress();
 bool rtc_values_are_not_equal(cmos_rtc_t c1, cmos_rtc_t c2);
+uint64_t secs_of_month(uint64_t months, uint64_t year);
+uint64_t secs_of_years(uint64_t years);
+
+uint64_t boot_time = 0;
+
+void cmos_init() {
+    cmos_rtc_t rtc = cmos_read_rtc();
+    boot_time = secs_of_years(rtc.year - 1) + secs_of_month(rtc.month - 1,
+                rtc.year) + (rtc.day - 1) * 86400 + rtc.hours * 3600 + rtc.minutes * 60 + +rtc.seconds;
+}
+
+uint64_t cmos_boot_time() {
+    return boot_time;
+}
 
 cmos_rtc_t cmos_read_rtc() {
     cmos_rtc_t rtc;
@@ -89,4 +103,74 @@ bool rtc_values_are_not_equal(cmos_rtc_t c1, cmos_rtc_t c2) {
             c1.month != c2.month ||
             c1.year != c2.year ||
             c1.century != c2.century);
+}
+
+uint64_t secs_of_years(uint64_t years) {
+    uint64_t days = 0;
+
+    while (years > 1969) {
+        days += 365;
+
+        if (years % 4 == 0) {
+            if (years % 100 == 0) {
+                if (years % 400 == 0) {
+                    days++;
+                }
+            } else {
+                days++;
+            }
+        }
+
+        years--;
+    }
+
+    return days * 86400;
+}
+
+uint64_t secs_of_month(uint64_t months, uint64_t year) {
+    uint64_t days = 0;
+
+    switch (months) {
+        case 11:
+            days += 30;
+
+        case 10:
+            days += 31;
+
+        case 9:
+            days += 30;
+
+        case 8:
+            days += 31;
+
+        case 7:
+            days += 31;
+
+        case 6:
+            days += 30;
+
+        case 5:
+            days += 31;
+
+        case 4:
+            days += 30;
+
+        case 3:
+            days += 31;
+
+        case 2:
+            days += 28;
+
+            if ((year % 4 == 0) && ((year % 100 != 0) || (year % 400 == 0))) {
+                days++;
+            }
+
+        case 1:
+            days += 31;
+
+        default:
+            break;
+    }
+
+    return days * 86400;
 }
