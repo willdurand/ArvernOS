@@ -96,7 +96,7 @@ int main() {
                 } else if (strncmp(readline, "uptime", 6) == 0) {
                     uptime();
                 } else {
-                    printf("invalid readline\n");
+                    printf("invalid command\n");
                 }
 
                 readline_index = 0;
