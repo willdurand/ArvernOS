@@ -1,6 +1,7 @@
 #include "kmain.h"
-#include <core/elf.h>
+#include <core/cmos.h>
 #include <core/debug.h>
+#include <core/elf.h>
 #include <core/isr.h>
 #include <core/syscall.h>
 #include <core/timer.h>
@@ -92,7 +93,11 @@ void kmain(uint64_t addr) {
     syscall_init();
     print_ok();
 
-    print_step("initializing clock/timer");
+    print_step("initializing real time clock");
+    cmos_init();
+    print_ok();
+
+    print_step("initializing timer");
     timer_init();
     print_ok();
 
