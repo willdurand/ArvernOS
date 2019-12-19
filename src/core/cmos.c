@@ -14,7 +14,7 @@ uint64_t boot_time = 0;
 void cmos_init() {
     cmos_rtc_t rtc = cmos_read_rtc();
     boot_time = secs_of_years(rtc.year - 1) + secs_of_month(rtc.month - 1,
-                rtc.year) + (rtc.day - 1) * 86400 + rtc.hours * 3600 + rtc.minutes * 60 + +rtc.seconds;
+                rtc.year) + (rtc.day - 1) * 86400 + rtc.hours * 3600 + rtc.minutes * 60 + rtc.seconds;
 }
 
 uint64_t cmos_boot_time() {
