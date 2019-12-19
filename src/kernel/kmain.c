@@ -9,6 +9,8 @@
 #include <drivers/screen.h>
 #include <drivers/screen.h>
 #include <drivers/serial.h>
+#include <fs/vfs.h>
+#include <fs/debug.h>
 #include <kernel/kshell.h>
 #include <kernel/panic.h>
 #include <mmu/alloc.h>
@@ -106,6 +108,14 @@ void kmain(uint64_t addr) {
     print_step("initializing keyboard");
     keyboard_init();
     print_ok();
+
+    print_step("initializing vfs");
+    vfs_init();
+    print_ok();
+
+    vfs_mount("/", debug_fs_init());
+    inode_t root = vfs_namei("/");
+    vfs_write(root, "hhhello, vfs\n", 5, 2);
 
     multiboot_tag_module_t* module = find_multiboot_tag(mbi, MULTIBOOT_TAG_TYPE_MODULE);
 
