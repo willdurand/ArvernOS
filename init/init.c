@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdint.h>
+#include "cdate.h"
 
 #define READLINE_SIZE           256
 #define PROMPT                  "(init) "
-#define NB_DOCUMENTED_COMMANDS  6
+#define NB_DOCUMENTED_COMMANDS  7
 
 void date() {
     printf("implement me\n");
@@ -24,6 +25,7 @@ void uptime() {
 
 int main() {
     const char* commands[][NB_DOCUMENTED_COMMANDS] = {
+        {"cal", "displays a calendar"},
         {"clear", "clear the terminal screen"},
         {"date", "print the system date and time"},
         {"exit", "exit the shell"},
@@ -83,6 +85,8 @@ int main() {
                             }
                         }
                     }
+                } else if (strncmp(readline, "cal", 3) == 0) {
+                    cdate();
                 } else if (strncmp(readline, "date", 4) == 0) {
                     date();
                 } else if (strncmp(readline, "clear", 5) == 0) {
