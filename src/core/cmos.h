@@ -30,11 +30,17 @@ typedef struct cmos_rtc {
     uint8_t century;
 } cmos_rtc_t;
 
+void cmos_init();
+
 /**
  * Reads and returns the RTC data from the CMOS.
  *
  * @return RTC data
  */
 cmos_rtc_t cmos_read_rtc();
+
+/**
+ */
+uint64_t cmos_boot_time();
 
 #endif
