@@ -13,7 +13,7 @@ LIBS   = ../build/libc-willOS.a
 
 default: init
 
-init: init.c
+init: init.c cdate.c
 	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
 
 clean:
