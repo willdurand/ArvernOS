@@ -2,11 +2,14 @@
 #ifndef SYS_SYSCALL_H
 #define SYS_SYSCALL_H
 
-#define INT_SYSCALL   "int $0x80"
-#define NB_SYSCALLS   3
-#define SYSCALL_TEST  1
-#define SYSCALL_WRITE 2
-#define SYSCALL_READ  3
+#include <sys/time.h>
+
+#define INT_SYSCALL           "int $0x80"
+#define NB_SYSCALLS           4
+#define SYSCALL_TEST          1
+#define SYSCALL_WRITE         2
+#define SYSCALL_READ          3
+#define SYSCALL_GETTIMEOFDAY  4
 
 /**
  * Implements a syscall for testing purpose only. It takes a string as input
@@ -29,5 +32,10 @@ void write(char c);
  * @return a scancode
  */
 char read();
+
+/**
+ * Implements the gettimeofday syscall.
+ */
+int gettimeofday(struct timeval* p, void* z);
 
 #endif

@@ -1,4 +1,6 @@
 #include "syscall.h"
+#include <core/cmos.h>
+#include <core/timer.h>
 #include <drivers/keyboard.h>
 #include <drivers/screen.h>
 #include <kernel/panic.h>
@@ -15,11 +17,13 @@ void syscall_print_registers(registers_t* registers);
 void syscall_test(registers_t* registers);
 void syscall_write(registers_t* registers);
 void syscall_read(registers_t* registers);
+void syscall_gettimeofday(registers_t* registers);
 
 void syscall_init() {
     syscall_register_handler(SYSCALL_TEST, syscall_test);
     syscall_register_handler(SYSCALL_WRITE, syscall_write);
     syscall_register_handler(SYSCALL_READ, syscall_read);
+    syscall_register_handler(SYSCALL_GETTIMEOFDAY, syscall_gettimeofday);
 }
 
 void syscall_register_handler(uint8_t id, syscall_handler_t handler) {
@@ -47,6 +51,17 @@ void syscall_write(registers_t* registers) {
 
 void syscall_read(registers_t* registers) {
     registers->rdx = keyboard_get_scancode();
+}
+
+void syscall_gettimeofday(registers_t* registers) {
+    struct timeval* t = registers->rbx;
+
+    t->tv_sec = cmos_boot_time() + timer_uptime();
+    // TODO: set a correct value, see:
+    // https://www.gnu.org/software/libc/manual/html_node/Elapsed-Time.html
+    t->tv_usec = 0;
+
+    DEBUG("gettimeofday=%u", t->tv_sec);
 }
 
 void syscall_print_registers(registers_t* registers) {
