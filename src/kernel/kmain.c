@@ -14,7 +14,6 @@
 #include <mmu/alloc.h>
 #include <mmu/frame.h>
 #include <mmu/paging.h>
-#include <mem.h>
 #include <stdio.h>
 #include <string.h>
 

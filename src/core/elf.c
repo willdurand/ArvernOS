@@ -1,7 +1,6 @@
 #include "elf.h"
 #include <core/debug.h>
 #include <mmu/paging.h>
-#include <mem.h>
 #include <string.h>
 
 int is_elf(elf_header_t* elf);

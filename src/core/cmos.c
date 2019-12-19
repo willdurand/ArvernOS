@@ -1,6 +1,5 @@
 #include "cmos.h"
 #include <core/port.h>
-#include <mem.h>
 #include <stdbool.h>
 
 uint8_t read_register(uint8_t reg);

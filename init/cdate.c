@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <mem.h>
 
 #include "cdate.h"
 #include "config.h"

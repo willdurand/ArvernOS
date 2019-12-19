@@ -1,5 +1,4 @@
 #include "screen.h"
-#include <mem.h>
 #include <string.h>
 #include <stddef.h>
 #include <core/port.h>

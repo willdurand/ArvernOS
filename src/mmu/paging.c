@@ -2,8 +2,8 @@
 #include <mmu/debug.h>
 #include <kernel/panic.h>
 #include <stdio.h>
-#include <mem.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define MMU_DEBUG_PAGE_ENTRY(message, e)  MMU_DEBUG("%s " \
                                           "page entry addr=%p present=%d " \

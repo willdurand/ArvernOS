@@ -2,7 +2,7 @@
 #include <kernel/panic.h>
 #include <mmu/bitmap.h>
 #include <mmu/debug.h>
-#include <mem.h>
+#include <string.h>
 
 uint64_t read_mmap(uint64_t request);
 

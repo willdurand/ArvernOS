@@ -1,4 +1,4 @@
-#include <mem.h>
+#include <string.h>
 
 void* memcpy(void* dest, const void* src, size_t bytes) {
     const char* s = (char*) src;
