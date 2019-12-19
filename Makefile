@@ -88,7 +88,8 @@ debug: $(ISO)
 
 clean: ## remove build artifacts
 	find . -name '*.orig' -exec rm "{}" ";"
-	rm -f $(OBJECTS) $(LIBK_SOURCES) $(LIBC_SOURCES) $(KERNEL) $(ISO) $(LIBK) $(LIBC)
+	find . -name '*.o' -exec rm "{}" ";"
+	rm -f $(LIBK_SOURCES) $(LIBC_SOURCES) $(KERNEL) $(ISO) $(LIBK) $(LIBC)
 	rm -rf $(BUILD_DIR)
 	$(MAKE) -C init/ clean
 .PHONY: clean
