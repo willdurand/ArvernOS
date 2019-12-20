@@ -26,7 +26,8 @@ void print_welcome_messge() {
     screen_color_scheme(COLOR_LIGHT_BLUE, COLOR_BLACK);
     printf("%s\n", KERNEL_ASCII);
     screen_color_scheme(COLOR_WHITE, COLOR_BLACK);
-    printf("%s %s / Built on: %s at %s\n\n", KERNEL_NAME, KERNEL_VERSION, KERNEL_DATE, KERNEL_TIME);
+    printf("%s %s (%s) / Built on: %s at %s\n\n", KERNEL_NAME, KERNEL_VERSION,
+            GIT_HASH, KERNEL_DATE, KERNEL_TIME);
 }
 
 void print_step(const char* msg) {

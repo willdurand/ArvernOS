@@ -25,7 +25,10 @@ OBJECTS := $(patsubst %.asm,%.o,$(shell find asm -name '*.asm'))
 LIBK_SOURCES := $(patsubst %.c,%_k.o,$(shell find libs src -name '*.c'))
 LIBC_SOURCES := $(patsubst %.c,%.o,$(shell find src/libc libs -name '*.c'))
 
-CFLAGS = -W -Wall -pedantic -std=c11 -O2 -ffreestanding -nostdlib \
+GIT_HASH := $(shell git rev-parse --short HEAD)
+
+CFLAGS = -DGIT_HASH=\"$(GIT_HASH)\" \
+				 -W -Wall -pedantic -std=c11 -O2 -ffreestanding -nostdlib \
 				 -fno-builtin -fno-stack-protector -mno-red-zone \
 				 -I src/include/ -I src/ -I libs/
 

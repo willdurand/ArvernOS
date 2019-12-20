@@ -20,6 +20,10 @@
 #define KERNEL_DATE     __DATE__
 #define KERNEL_TIME     __TIME__
 
+#ifndef GIT_HASH
+#define GIT_HASH "dirty"
+#endif
+
 /**
  * This is the entrypoint of the kernel (C code).
  *
