@@ -27,7 +27,7 @@ void print_welcome_messge() {
     printf("%s\n", KERNEL_ASCII);
     screen_color_scheme(COLOR_WHITE, COLOR_BLACK);
     printf("%s %s (%s) / Built on: %s at %s\n\n", KERNEL_NAME, KERNEL_VERSION,
-            GIT_HASH, KERNEL_DATE, KERNEL_TIME);
+           GIT_HASH, KERNEL_DATE, KERNEL_TIME);
 }
 
 void print_step(const char* msg) {
@@ -35,11 +35,11 @@ void print_step(const char* msg) {
 }
 
 void print_ok() {
-    printf("[ ");
+    printf("  [");
     screen_color_scheme(COLOR_GREEN, COLOR_BLACK);
     printf("OK");
     screen_color_scheme(COLOR_WHITE, COLOR_BLACK);
-    printf(" ]");
+    printf("]");
 }
 
 void print_ko() {
