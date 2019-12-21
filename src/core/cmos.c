@@ -1,6 +1,7 @@
 #include "cmos.h"
 #include <core/port.h>
 #include <stdbool.h>
+#include <string.h>
 
 uint8_t read_register(uint8_t reg);
 bool update_in_progress();

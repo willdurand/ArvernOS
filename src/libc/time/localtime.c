@@ -43,22 +43,6 @@ static int year_is_leap(int year) {
     return ((year % 4 == 0) && ((year % 100 != 0) || (year % 400 == 0)));
 }
 
-static unsigned int secs_of_years(int years) {
-    unsigned int days = 0;
-
-    while (years > 1969) {
-        days += 365;
-
-        if (year_is_leap(years)) {
-            days++;
-        }
-
-        years--;
-    }
-
-    return days * 86400;
-}
-
 // 0 was a Thursday
 
 static int day_of_week(long seconds) {
@@ -107,16 +91,6 @@ static long days_in_month(int month, int year) {
     }
 
     return 0;
-}
-
-static long secs_of_month(int months, int year) {
-    long days = 0;
-
-    for (int i = 1; i < months; ++i) {
-        days += days_in_month(months, year);
-    }
-
-    return days * SEC_DAY;
 }
 
 struct tm* localtime_r(const time_t* timep, struct tm* _timevalue) {

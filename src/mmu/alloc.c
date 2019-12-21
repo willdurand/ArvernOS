@@ -3,6 +3,7 @@
 #include <mmu/bitmap.h>
 #include <mmu/debug.h>
 #include <mmu/paging.h>
+#include <string.h>
 
 bitmap_t allocated_pages[HEAP_SIZE / PAGE_SIZE];
 uint64_t heap_end_page;
