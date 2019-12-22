@@ -10,6 +10,7 @@ uint64_t tar_read(inode_t node, void* buffer, uint64_t size, uint64_t offset);
 inode_t tar_finddir(inode_t inode, const char* name);
 dirent_t* tar_readdir(inode_t inode, uint64_t num);
 bool starts_with(const char* s, const char* prefix);
+uint64_t count_chars(const char* s, char c);
 
 tar_header_t* headers[32];
 
@@ -91,7 +92,6 @@ uint64_t tar_read(inode_t node, void* buffer, uint64_t size, uint64_t offset) {
     return 0;
 }
 
-// FIXME: This implementation does not really work well yet...
 inode_t tar_finddir(inode_t inode, const char* name) {
     DEBUG("finding name=%s", name);
     inode_t node = malloc(sizeof(vfs_node_t));
@@ -99,24 +99,24 @@ inode_t tar_finddir(inode_t inode, const char* name) {
     tar_header_t* header = 0;
 
     for (uint64_t i = 0; headers[i] != 0; i++) {
-        char* name = malloc(strlen(headers[i]->name) * sizeof(char));
-        strcpy(name, headers[i]->name);
+        char* hn = malloc(strlen(headers[i]->name) * sizeof(char));
+        strcpy(hn, headers[i]->name);
 
-        DEBUG("reading name=%s name=%s", name, name);
+        DEBUG("reading header_name=%s name=%s", hn, name);
 
         if (headers[i]->type == TAR_DIRECTORY) {
-            name[strlen(name) - 1] = '\0';
-            DEBUG("updated name=%s", name);
+            hn[strlen(hn) - 1] = '\0';
+            DEBUG("updated header_name=%s", hn);
         }
 
-        if (strncmp(name, name, strlen(name)) == 0) {
+        if (strncmp(name, hn, strlen(name)) == 0) {
             header = headers[i];
             node->entry = i;
-            free(name);
+            free(hn);
             break;
         }
 
-        free(name);
+        free(hn);
     }
 
     if (!header) {
@@ -143,70 +143,94 @@ inode_t tar_finddir(inode_t inode, const char* name) {
     return node;
 }
 
-// FIXME: This implementation does not really work well yet...
+// If the current node is a directory, we need a way of enumerating it's
+// contents. Readdir should return the n'th child node of a directory or 0
+// otherwise. It returns a `dirent_t*`.
 dirent_t* tar_readdir(inode_t inode, uint64_t num) {
+    if (inode->type != FS_DIRECTORY) {
+        return 0;
+    }
+
+    DEBUG("trying to find child node %u in %s", num, inode->name);
+
     dirent_t* dir = malloc(sizeof(dirent_t));
     inode_t node = malloc(sizeof(vfs_node_t));
 
-    DEBUG("inode name=%s", inode->name);
-
     char* prefix = malloc(strlen(inode->name) * sizeof(char));
+    uint64_t nb_slashes = 0;
 
-    if (strncmp(inode->name, "/", strlen(inode->name)) == 0) {
-        prefix[0] = '\0';
+    if (strlen(inode->name) == 1 && inode->name[0] == '/') {
+        strcpy(prefix, "");
     } else {
         strcpy(prefix, inode->name);
+        nb_slashes = 1;
     }
 
     DEBUG("prefix=%s", prefix);
 
-    tar_header_t* header = 0;
+    uint64_t i = 0;
+    uint64_t j = -1;
+    bool found = false;
 
-    uint64_t j = 0;
-
-    for (uint64_t i = 0; headers[i] != 0; i++) {
-        DEBUG("reading name=%s", headers[i]->name);
+    while (headers[i] != 0) {
+        DEBUG("name=%s", headers[i]->name);
 
         if (starts_with(headers[i]->name, prefix)) {
+            // TODO: filter out level + 1 files
             j++;
         }
 
-        if (num == j) {
-            header = headers[i];
+        if ((j + 2) == num) {
+            found = true;
+
+            switch (headers[i]->type) {
+                case TAR_FILE:
+                    strcpy(node->name, headers[i]->name + strlen(prefix));
+                    node->type = FS_FILE;
+                    break;
+
+                case TAR_DIRECTORY:
+                    strcpy(node->name, headers[i]->name);
+                    node->type = FS_DIRECTORY;
+                    break;
+            }
+
             node->entry = i;
             break;
         }
+
+        i++;
     }
 
     free(prefix);
 
-    if (!header) {
-        DEBUG("%s", "no header found");
-
-        free(node);
-        free(dir);
+    if (!found) {
         return 0;
     }
 
-    strcpy(node->name, header->name);
     node->driver = &tar_driver;
-
-    switch (header->type) {
-        case TAR_FILE:
-            node->type = FS_FILE;
-            break;
-
-        case TAR_DIRECTORY:
-            node->type = FS_DIRECTORY;
-            break;
-    }
+    node->parent = inode;
 
     strcpy(dir->name, node->name);
     dir->inode = node;
+
+    DEBUG("returning directory entry=%s", dir->name);
 
     return dir;
 }
 
 bool starts_with(const char* s, const char* prefix) {
     return strncmp(s, prefix, strlen(prefix)) == 0 ? true : false;
+}
+
+uint64_t count_chars(const char* s, char c) {
+    uint64_t ret = 0;
+
+    while (*s != 0) {
+        if (*s++ == c) {
+            ret++;
+        }
+    }
+
+    return ret;
 }
