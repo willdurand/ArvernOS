@@ -112,10 +112,60 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:ac12282062cbe908153f85e20f13a699b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmos_8h.html#ac12282062cbe908153f85e20f13a699b">cmos_init</a> ()</td></tr>
+<tr class="separator:ac12282062cbe908153f85e20f13a699b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adfa7700f437e353519065098860d64f9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structcmos__rtc__t.html">cmos_rtc_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmos_8h.html#adfa7700f437e353519065098860d64f9">cmos_read_rtc</a> ()</td></tr>
 <tr class="separator:adfa7700f437e353519065098860d64f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a075a41918112363e92d77ce1e86d171b"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmos_8h.html#a075a41918112363e92d77ce1e86d171b">cmos_boot_time</a> ()</td></tr>
+<tr class="separator:a075a41918112363e92d77ce1e86d171b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a075a41918112363e92d77ce1e86d171b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a075a41918112363e92d77ce1e86d171b">&#9670;&nbsp;</a></span>cmos_boot_time()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint64_t cmos_boot_time </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns the boot time in seconds since January 1, 1970 (unix time).</p>
+<dl class="section return"><dt>Returns</dt><dd>the boot (unix) time </dd></dl>
+
+</div>
+</div>
+<a id="ac12282062cbe908153f85e20f13a699b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac12282062cbe908153f85e20f13a699b">&#9670;&nbsp;</a></span>cmos_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cmos_init </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Initializes the CMOS Real Time Clock. </p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="cmos_8h_ac12282062cbe908153f85e20f13a699b_cgraph.png" border="0" usemap="#cmos_8h_ac12282062cbe908153f85e20f13a699b_cgraph" alt=""/></div>
+<map name="cmos_8h_ac12282062cbe908153f85e20f13a699b_cgraph" id="cmos_8h_ac12282062cbe908153f85e20f13a699b_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,83,31"/>
+<area shape="rect" href="cmos_8h.html#adfa7700f437e353519065098860d64f9" title=" " alt="" coords="131,5,240,31"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="adfa7700f437e353519065098860d64f9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adfa7700f437e353519065098860d64f9">&#9670;&nbsp;</a></span>cmos_read_rtc()</h2>
 
@@ -132,6 +182,15 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Reads and returns the RTC data from the CMOS.</p>
 <dl class="section return"><dt>Returns</dt><dd>RTC data </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="cmos_8h_adfa7700f437e353519065098860d64f9_icgraph.png" border="0" usemap="#cmos_8h_adfa7700f437e353519065098860d64f9_icgraph" alt=""/></div>
+<map name="cmos_8h_adfa7700f437e353519065098860d64f9_icgraph" id="cmos_8h_adfa7700f437e353519065098860d64f9_icgraph">
+<area shape="rect" title=" " alt="" coords="131,5,240,31"/>
+<area shape="rect" href="cmos_8h.html#ac12282062cbe908153f85e20f13a699b" title=" " alt="" coords="5,5,83,31"/>
+</map>
+</div>
 
 </div>
 </div>

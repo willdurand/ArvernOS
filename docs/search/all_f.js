@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['willos_125',['willOS',['../index.html',1,'']]],
-  ['write_5fcr3_126',['write_cr3',['../register_8h.html#ab9c808b3703f96bb87dd67b0db9142e5',1,'register.c']]]
+  ['unmap_132',['unmap',['../paging_8h.html#a71d704c874eecb8fa6cc99e8c873e890',1,'paging.c']]],
+  ['unused_133',['UNUSED',['../stdlib_8h.html#a86d500a34c624c2cae56bc25a31b12f3',1,'stdlib.h']]]
 ];

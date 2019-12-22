@@ -91,15 +91,81 @@ $(document).ready(function(){initNavTree('include_2sys_2syscall_8h.html','');});
 <div class="title">syscall.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
+<div class="textblock"><code>#include &lt;sys/time.h&gt;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for syscall.h:</div>
+<div class="dyncontent">
+<div class="center"><img src="include_2sys_2syscall_8h__incl.png" border="0" usemap="#src_2include_2sys_2syscall_8h" alt=""/></div>
+<map name="src_2include_2sys_2syscall_8h" id="src_2include_2sys_2syscall_8h">
+<area shape="rect" title=" " alt="" coords="5,5,169,31"/>
+<area shape="rect" href="sys_2time_8h_source.html" title=" " alt="" coords="46,79,128,104"/>
+<area shape="rect" href="types_8h_source.html" title=" " alt="" coords="43,152,131,177"/>
+<area shape="rect" title=" " alt="" coords="55,225,119,251"/>
+</map>
+</div>
+</div>
 <p><a href="include_2sys_2syscall_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:afc62fdd40cdd010568045694291ee7d1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2sys_2syscall_8h.html#afc62fdd40cdd010568045694291ee7d1">test</a> (const char *s)</td></tr>
 <tr class="separator:afc62fdd40cdd010568045694291ee7d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a753ae93018186742db7445504f7b4ab0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2sys_2syscall_8h.html#a753ae93018186742db7445504f7b4ab0">write</a> (char c)</td></tr>
+<tr class="separator:a753ae93018186742db7445504f7b4ab0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c1e02d7a003dcb3b86188ed0ea6de78"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2sys_2syscall_8h.html#a6c1e02d7a003dcb3b86188ed0ea6de78">read</a> ()</td></tr>
+<tr class="separator:a6c1e02d7a003dcb3b86188ed0ea6de78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08c6fa45afb77767891dc6fb73d1010f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2sys_2syscall_8h.html#a08c6fa45afb77767891dc6fb73d1010f">gettimeofday</a> (struct <a class="el" href="structtimeval.html">timeval</a> *p, void *z)</td></tr>
+<tr class="separator:a08c6fa45afb77767891dc6fb73d1010f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a08c6fa45afb77767891dc6fb73d1010f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08c6fa45afb77767891dc6fb73d1010f">&#9670;&nbsp;</a></span>gettimeofday()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int gettimeofday </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="structtimeval.html">timeval</a> *&#160;</td>
+          <td class="paramname"><em>p</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>z</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Implements the gettimeofday syscall. </p>
+
+</div>
+</div>
+<a id="a6c1e02d7a003dcb3b86188ed0ea6de78"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c1e02d7a003dcb3b86188ed0ea6de78">&#9670;&nbsp;</a></span>read()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char read </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Implements the read (from keyboard) syscall.</p>
+<dl class="section return"><dt>Returns</dt><dd>a scancode </dd></dl>
+
+</div>
+</div>
 <a id="afc62fdd40cdd010568045694291ee7d1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afc62fdd40cdd010568045694291ee7d1">&#9670;&nbsp;</a></span>test()</h2>
 
@@ -119,6 +185,31 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">s</td><td>a string to print on the screen </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a753ae93018186742db7445504f7b4ab0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a753ae93018186742db7445504f7b4ab0">&#9670;&nbsp;</a></span>write()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void write </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>c</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Implements the write (to screen) syscall.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">c</td><td>the character to print on the screen </td></tr>
   </table>
   </dd>
 </dl>

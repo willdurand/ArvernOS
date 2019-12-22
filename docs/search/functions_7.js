@@ -1,5 +1,9 @@
 var searchData=
 [
-  ['map_194',['map',['../paging_8h.html#a31b7b687f7cd7773e3dd5107bcdea030',1,'paging.c']]],
-  ['map_5fpage_5fto_5fframe_195',['map_page_to_frame',['../paging_8h.html#a5dd0a3132223e82f998eb88ffd6b7876',1,'paging.c']]]
+  ['kernel_5fpanic_208',['kernel_panic',['../panic_8h.html#acd2b4a8b19af5b3201990bbdeb5cf5e6',1,'panic.c']]],
+  ['keyboard_5fget_5fscancode_209',['keyboard_get_scancode',['../keyboard_8h.html#a7f253db86f85d1a41dbbafa69b943f5f',1,'keyboard.c']]],
+  ['keyboard_5finit_210',['keyboard_init',['../keyboard_8h.html#aaeb4e4a3c4813ee1efc6b98bba9ec781',1,'keyboard.c']]],
+  ['kmain_211',['kmain',['../kmain_8h.html#a3a723148ea74ca575865f61d277c0657',1,'kmain.c']]],
+  ['kshell_5fprint_5fprompt_212',['kshell_print_prompt',['../kshell_8h.html#af0dfb69566e1acd19453a42d8e973e90',1,'kshell.c']]],
+  ['kshell_5frun_213',['kshell_run',['../kshell_8h.html#a6c773ce937d0e97008441fd2b5909533',1,'kshell.c']]]
 ];

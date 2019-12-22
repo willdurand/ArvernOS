@@ -1,5 +1,11 @@
 var searchData=
 [
-  ['heap_5fsize_20',['HEAP_SIZE',['../alloc_8h.html#a1b45302695680930829cac31d65e41e1',1,'alloc.h']]],
-  ['heap_5fstart_21',['HEAP_START',['../alloc_8h.html#ae9739bcecd10d5962cc10c12bf01594f',1,'alloc.h']]]
+  ['find_5fmultiboot_5ftag_17',['find_multiboot_tag',['../boot_8h.html#a62d6a6eaa877711b6b8308030f3f3dc0',1,'boot.c']]],
+  ['find_5freserved_5fareas_18',['find_reserved_areas',['../boot_8h.html#ae87c8fda1b62f7ace33b2e3ad24292c2',1,'boot.c']]],
+  ['frame_2eh_19',['frame.h',['../frame_8h.html',1,'']]],
+  ['frame_5fallocate_20',['frame_allocate',['../frame_8h.html#a2c7f040adf876d7b49ee46f594ed6679',1,'frame.c']]],
+  ['frame_5fcontaining_5faddress_21',['frame_containing_address',['../frame_8h.html#a40b65cfd28ddd6d88557a11a95e4fdab',1,'frame.c']]],
+  ['frame_5fdeallocate_22',['frame_deallocate',['../frame_8h.html#a00af179c263448b20c29a4d6f75d91b1',1,'frame.c']]],
+  ['frame_5finit_23',['frame_init',['../frame_8h.html#ada91ff5ef3ceb241baf359ac078bb2d7',1,'frame.c']]],
+  ['frame_5fstart_5faddress_24',['frame_start_address',['../frame_8h.html#a4271c2a0f8373b3c676377e9774299ee',1,'frame.c']]]
 ];
