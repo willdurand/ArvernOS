@@ -9,6 +9,12 @@ int strncmp(const char* s, const char* r, int len);
 
 char* strcpy(char* dest, const char* src);
 
+char* strsep(char** stringp, const char* delim);
+
+int strcspn(const char* s1, const char* s2);
+
+char* strdup(const char* s);
+
 void* memcpy(void* dest, const void* src, size_t bytes);
 
 void* memset(void* str, int c, size_t bytes);
