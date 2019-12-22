@@ -1,3 +1,4 @@
+/** @file */
 #ifndef FS_DEBUG_H
 #define FS_DEBUG_H
 
@@ -6,9 +7,17 @@
 
 #define FS_DEBUG_FILENAME "/debug"
 
+/**
+ * @brief Creates a "debug" File System.
+ *
+ * This "debug" file system is based on Thomas Lovén's work:
+ * http://thomasloven.com/blog/2013/12/Debug-Filesystem/. The idea is to have a
+ * very simple file system to test the virtual file system implementation. It
+ * is only possible to write to this file system, and doing this will output
+ * the content to the screen.
+ *
+ * @return the "root" inode of the debug file system
+ */
 inode_t debug_fs_init();
-uint64_t debug_stat(inode_t node, struct stat* st);
-uint64_t debug_isatty(inode_t node);
-uint64_t debug_write(inode_t node, void* buffer, uint64_t size, uint64_t offset);
 
 #endif
