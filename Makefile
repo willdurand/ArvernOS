@@ -100,7 +100,6 @@ clean: ## remove build artifacts
 =======
 	rm -f $(LIBK_SOURCES) $(LIBC_SOURCES) $(KERNEL) $(ISO) $(LIBK) $(LIBC)
 	rm -rf $(BUILD_DIR)
-
 	$(MAKE) -C init/ clean
 	rm -rf $(INITRD_DIR)/bin
 >>>>>>> Refactor initrd
