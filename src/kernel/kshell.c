@@ -112,7 +112,7 @@ const char* commands[][NB_DOCUMENTED_COMMANDS] = {
     {"clear", "clear the terminal screen"},
     {"date", "print the system date and time"},
     {"help", "display information about willOS shell commands"},
-    {"reboot", "stopping and restarting the system"},
+    {"ls", "list files"},
     {"selftest", "run the willOS test suite"},
     {"uptime", "tell how long the system has been running"},
 };
@@ -162,8 +162,6 @@ void date() {
 void clear() {
     screen_clear();
 }
-
-extern void reboot();
 
 void uptime() {
     printf("up %u seconds\n", timer_uptime());
@@ -255,19 +253,6 @@ void ls(const char* command) {
     }
 }
 
-void init() {
-    inode_t ino = vfs_namei("/bin/init");
-    char* buf = malloc(35000);
-    vfs_read(ino, buf, 35000, 0);
-    elf_header_t* elf = elf_load(buf);
-
-    typedef int callable(void);
-    callable* c = (callable*)(elf->entry);
-    int res = c();
-
-    free(buf);
-}
-
 void run_command(const char* command) {
     DEBUG("command='%s'", command);
 
@@ -279,8 +264,6 @@ void run_command(const char* command) {
 
     if (strncmp(command, "help", 4) == 0) {
         help(command);
-    } else if (strncmp(command, "init", 4) == 0) {
-        init();
     } else if (strncmp(command, "ls", 2) == 0) {
         ls(command);
     } else if (strncmp(command, "cat", 3) == 0) {
@@ -289,8 +272,6 @@ void run_command(const char* command) {
         date();
     } else if (strncmp(command, "clear", 5) == 0) {
         clear();
-    } else if (strncmp(command, "reboot", 6) == 0) {
-        reboot();
     } else if (strncmp(command, "uptime", 6) == 0) {
         uptime();
     } else if (strncmp(command, "selftest", 8) == 0) {
