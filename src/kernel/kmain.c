@@ -96,7 +96,7 @@ void kmain(uint64_t addr) {
     syscall_init();
     print_ok();
 
-    print_step("initializing real time clock");
+    print_step("initializing real time clock (cmos)");
     cmos_init();
     print_ok();
 
@@ -110,32 +110,20 @@ void kmain(uint64_t addr) {
     keyboard_init();
     print_ok();
 
-    print_step("initializing vfs");
+    print_step("initializing virtual file system");
     vfs_init();
     print_ok();
 
+    print_step("mounting init ram disk");
     multiboot_tag_module_t* module = find_multiboot_tag(mbi, MULTIBOOT_TAG_TYPE_MODULE);
+    inode_t initrd = vfs_mount("/", tar_fs_init((uint64_t)module->mod_start));
 
-    vfs_mount("/", tar_fs_init((uint64_t)module->mod_start));
-    inode_t debug = vfs_mount("/debug", debug_fs_init());
-
-    /*
-    print_step("loading grub module (elf)");
-    elf_header_t* elf = elf_load((uint64_t*)module->mod_start);
-
-    if (elf) {
-        DEBUG("loaded elf entry=%p", elf->entry);
+    if (initrd) {
+        vfs_mount("/debug", debug_fs_init());
         print_ok();
-
-        typedef int callable(void);
-        callable* c = (callable*)(elf->entry);
-        int res = c();
-
-        UNUSED(res);
     } else {
         print_ko();
     }
-    */
 
     // kshell
     printf("\n");

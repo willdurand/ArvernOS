@@ -57,15 +57,12 @@ uint64_t tar_read_headers(uint64_t address) {
         }
 
         headers[i] = header;
-
     }
 
     return i;
-
 }
 
 uint64_t get_size(const char* in) {
-
     uint64_t size = 0;
     uint64_t j;
     uint64_t count = 1;
@@ -75,7 +72,6 @@ uint64_t get_size(const char* in) {
     }
 
     return size;
-
 }
 
 uint64_t tar_read(inode_t node, void* buffer, uint64_t size, uint64_t offset) {
