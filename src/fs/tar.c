@@ -1,13 +1,15 @@
 #include "tar.h"
+#include <core/debug.h>
+#include <stdbool.h>
 #include <stdint.h>
 #include <string.h>
-#include <core/debug.h>
 
 uint64_t get_size(const char* in);
 uint64_t tar_read_headers(uint64_t address);
 uint64_t debug_read(inode_t node, void* buffer, uint64_t size, uint64_t offset);
 inode_t tar_finddir(inode_t inode, const char* name);
 dirent_t* tar_readdir(inode_t inode, uint64_t num);
+bool starts_with(const char* s, const char* prefix);
 
 tar_header_t* headers[32];
 
@@ -98,13 +100,24 @@ inode_t tar_finddir(inode_t inode, const char* name) {
     tar_header_t* header = 0;
 
     for (uint64_t i = 0; headers[i] != 0; i++) {
-        DEBUG("reading filename=%s name=%s", headers[i]->filename, name);
+        char* filename = malloc(strlen(headers[i]->filename) * sizeof(char));
+        strcpy(filename, headers[i]->filename);
 
-        if (strncmp(name, headers[i]->filename, strlen(headers[i]->filename)) == 0) {
+        DEBUG("reading filename=%s name=%s", filename, name);
+
+        if (headers[i]->type == TAR_DIRECTORY) {
+            filename[strlen(filename) - 1] = '\0';
+            DEBUG("updated filename=%s", filename);
+        }
+
+        if (strncmp(name, filename, strlen(filename)) == 0) {
             header = headers[i];
             node->entry = i;
+            free(filename);
             break;
         }
+
+        free(filename);
     }
 
     if (!header) {
@@ -135,6 +148,18 @@ dirent_t* tar_readdir(inode_t inode, uint64_t num) {
     dirent_t* dir = malloc(sizeof(dirent_t));
     inode_t node = malloc(sizeof(vfs_node_t));
 
+    DEBUG("inode name=%s", inode->name);
+
+    char* prefix = malloc(strlen(inode->name) * sizeof(char));
+
+    if (strncmp(inode->name, "/", strlen(inode->name)) == 0) {
+        prefix[0] = '\0';
+    } else {
+        strcpy(prefix, inode->name);
+    }
+
+    DEBUG("prefix=%s", prefix);
+
     tar_header_t* header = 0;
 
     uint64_t j = 0;
@@ -142,7 +167,7 @@ dirent_t* tar_readdir(inode_t inode, uint64_t num) {
     for (uint64_t i = 0; headers[i] != 0; i++) {
         DEBUG("reading filename=%s", headers[i]->filename);
 
-        if (strncmp(inode->name, headers[i]->filename, strlen(headers[i]->filename)) == 0) {
+        if (starts_with(headers[i]->filename, prefix)) {
             j++;
         }
 
@@ -153,7 +178,11 @@ dirent_t* tar_readdir(inode_t inode, uint64_t num) {
         }
     }
 
+    free(prefix);
+
     if (!header) {
+        DEBUG("%s", "no header found");
+
         free(node);
         free(dir);
         return 0;
@@ -176,4 +205,8 @@ dirent_t* tar_readdir(inode_t inode, uint64_t num) {
     dir->inode = node;
 
     return dir;
+}
+
+bool starts_with(const char* s, const char* prefix) {
+    return strncmp(s, prefix, strlen(prefix)) == 0 ? true : false;
 }

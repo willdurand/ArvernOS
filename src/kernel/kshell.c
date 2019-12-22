@@ -206,9 +206,43 @@ void cat(const char* command) {
         return;
     }
 
+    if (f->type != FS_FILE) {
+        printf("'%s' is not a printable file\n", f->name);
+        return;
+    }
+
     char buf[512];
     vfs_read(f, &buf, sizeof(buf), 0);
     printf("%s", buf);
+}
+
+void ls(const char* command) {
+    const char* arg = command + 3;
+    inode_t ino = vfs_namei(arg);
+
+    if (!ino) {
+        printf("no such file or directory\n");
+        return;
+    }
+
+    if (ino->type != FS_DIRECTORY) {
+        printf("'%s' is not a directory\n", ino->name);
+        return;
+    }
+
+    uint64_t num = 0;
+
+    while (1) {
+        dirent_t* dir = vfs_readdir(ino, num++);
+
+        if (dir == 0) {
+            break;
+        }
+
+        printf("%s\n", dir->name);
+
+        free(dir);
+    }
 }
 
 void init() {
@@ -237,6 +271,8 @@ void run_command(const char* command) {
         help(command);
     } else if (strncmp(command, "init", 4) == 0) {
         init();
+    } else if (strncmp(command, "ls", 2) == 0) {
+        ls(command);
     } else if (strncmp(command, "cat", 3) == 0) {
         cat(command);
     } else if (strncmp(command, "date", 4) == 0) {
