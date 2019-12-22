@@ -1,13 +1,14 @@
-CC   ?= gcc
-LD   ?= ld
-AR   ?= ar
 NASM ?= nasm
 QEMU ?= qemu-system-x86_64
 
 ifeq ($(shell uname -s),Darwin)
-	CC = x86_64-pc-elf-gcc
-	LD = x86_64-pc-elf-ld
-	AR = x86_64-pc-elf-ar
+	CC ?= x86_64-pc-elf-gcc
+	LD ?= x86_64-pc-elf-ld
+	AR ?= x86_64-pc-elf-ar
+else
+	CC ?= gcc
+	LD ?= ld
+	AR ?= ar
 endif
 
 OS_NAME    = willOS
