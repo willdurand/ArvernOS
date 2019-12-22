@@ -119,7 +119,7 @@ void kmain(uint64_t addr) {
     inode_t initrd = vfs_mount("/", tar_fs_init((uint64_t)module->mod_start));
 
     if (initrd) {
-        vfs_mount("/debug", debug_fs_init());
+        vfs_mount(FS_DEBUG_FILENAME, debug_fs_init());
         print_ok();
     } else {
         print_ko();
