@@ -1,6 +1,7 @@
 /build/
 /init/init
-*.o
 *.a
 *.bin
+*.o
+*.so
 .gdb_history
