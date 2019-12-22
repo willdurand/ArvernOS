@@ -86,9 +86,12 @@ uint64_t tar_read(inode_t node, void* buffer, uint64_t size, uint64_t offset) {
         return size;
     }
 
+    // TODO: add support for other types like symlinks (at least)
+
     return 0;
 }
 
+// FIXME: This implementation does not really work well yet...
 inode_t tar_finddir(inode_t inode, const char* name) {
     DEBUG("finding name=%s", name);
     inode_t node = malloc(sizeof(vfs_node_t));
@@ -140,6 +143,7 @@ inode_t tar_finddir(inode_t inode, const char* name) {
     return node;
 }
 
+// FIXME: This implementation does not really work well yet...
 dirent_t* tar_readdir(inode_t inode, uint64_t num) {
     dirent_t* dir = malloc(sizeof(dirent_t));
     inode_t node = malloc(sizeof(vfs_node_t));
