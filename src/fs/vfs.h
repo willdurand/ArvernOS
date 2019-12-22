@@ -50,8 +50,10 @@ typedef struct vfs_node {
     inode_t younger;
     uint64_t type;
     vfs_driver_t* driver;
+    int entry;
 } vfs_node_t;
 
+void vfs_init();
 uint64_t vfs_open(inode_t inode, uint64_t mode);
 uint64_t vfs_close(inode_t inode);
 uint64_t vfs_read(inode_t inode, void* ptr, uint64_t length, uint64_t offset);

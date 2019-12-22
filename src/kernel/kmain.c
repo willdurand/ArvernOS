@@ -11,6 +11,7 @@
 #include <drivers/serial.h>
 #include <fs/vfs.h>
 #include <fs/debug.h>
+#include <fs/tar.h>
 #include <kernel/kshell.h>
 #include <kernel/panic.h>
 #include <mmu/alloc.h>
@@ -113,12 +114,12 @@ void kmain(uint64_t addr) {
     vfs_init();
     print_ok();
 
-    vfs_mount("/", debug_fs_init());
-    inode_t root = vfs_namei("/");
-    vfs_write(root, "hhhello, vfs\n", 5, 2);
-
     multiboot_tag_module_t* module = find_multiboot_tag(mbi, MULTIBOOT_TAG_TYPE_MODULE);
 
+    vfs_mount("/", tar_fs_init((uint64_t)module->mod_start));
+    inode_t debug = vfs_mount("/debug", debug_fs_init());
+
+    /*
     print_step("loading grub module (elf)");
     elf_header_t* elf = elf_load((uint64_t*)module->mod_start);
 
@@ -134,6 +135,7 @@ void kmain(uint64_t addr) {
     } else {
         print_ko();
     }
+    */
 
     // kshell
     printf("\n");
