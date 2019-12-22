@@ -19,7 +19,7 @@ void alloc_init() {
         allocated_pages[i] = 0;
     }
 
-    MMU_DEBUG(
+    DEBUG(
         "heap_start_page=%u heap_end_page=%u max_pages=%u",
         heap_start_page, heap_end_page, max_pages
     );
