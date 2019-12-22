@@ -1,6 +1,6 @@
 /build/
-/sysroot/info
-/sysroot/init
+/initrd/bin/
+/initrd/info
 /userland/bin/
 *.a
 *.bin

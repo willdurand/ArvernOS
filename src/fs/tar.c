@@ -82,6 +82,8 @@ uint64_t debug_read(inode_t node, void* buffer, uint64_t size, uint64_t offset) 
     if (node->type == FS_FILE) {
         tar_header_t* header = headers[node->entry];
         uint64_t size = get_size(header->size);
+        DEBUG("reading file size=%u", size);
+
         memcpy(buffer, (void*)header + 512, size);
         return size;
     }
@@ -98,7 +100,7 @@ inode_t tar_finddir(inode_t inode, const char* name) {
     for (uint64_t i = 0; headers[i] != 0; i++) {
         DEBUG("reading filename=%s name=%s", headers[i]->filename, name);
 
-        if (strncmp(name, headers[i]->filename, strlen(name)) == 0) {
+        if (strncmp(name, headers[i]->filename, strlen(headers[i]->filename)) == 0) {
             header = headers[i];
             node->entry = i;
             break;
@@ -140,7 +142,7 @@ dirent_t* tar_readdir(inode_t inode, uint64_t num) {
     for (uint64_t i = 0; headers[i] != 0; i++) {
         DEBUG("reading filename=%s", headers[i]->filename);
 
-        if (strncmp(inode->name, headers[i]->filename, strlen(inode->name)) == 0) {
+        if (strncmp(inode->name, headers[i]->filename, strlen(headers[i]->filename)) == 0) {
             j++;
         }
 

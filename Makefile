@@ -21,6 +21,8 @@ KERNEL     = $(KERNEL_DIR)/kernel.bin
 ISO        = $(BUILD_DIR)/$(OS_NAME).iso
 LIBC       = $(BUILD_DIR)/libc-$(OS_NAME).a
 LIBK       = $(BUILD_DIR)/libk-$(OS_NAME).a
+INITRD_DIR = initrd
+INITRD_TAR = $(KERNEL_DIR)/initrd.tar
 
 ASM_OBJECTS  := $(patsubst %.asm,%.o,$(shell find asm -name '*.asm'))
 LIBK_OBJECTS := $(patsubst %.c,%_k.o,$(shell find libs src -name '*.c'))
@@ -74,10 +76,9 @@ iso: ## build the image of the OS (.iso)
 iso: $(ISO)
 .PHONY: iso
 
-$(ISO): $(KERNEL) init.tar
+$(ISO): $(KERNEL) $(INITRD_TAR)
 	mkdir -p $(GRUB_DIR)
 	cp -R grub/* $(GRUB_DIR)
-	cp init.tar $(KERNEL_DIR)
 	grub-mkrescue -o $@ $(ISO_DIR)
 
 run: ## run the OS
@@ -94,8 +95,7 @@ debug: $(ISO)
 clean: ## remove build artifacts
 	find . -name '*.orig' -exec rm "{}" ";"
 	find . -name '*.o' -exec rm "{}" ";"
-	rm -rf $(BUILD_DIR) userland/bin/
-	rm -f sysroot/{info,init}
+	rm -rf $(BUILD_DIR) userland/bin/ $(INITRD_DIR)/{info,init}
 .PHONY: clean
 
 fmt: ## automatically format the code with astyle
@@ -134,10 +134,14 @@ version: ## print tool versions
 	$(LD) --version
 .PHONY: version
 
-init.tar: init
+$(INITRD_TAR): init
 	cp -R userland/bin sysroot/
-	echo "willOS build info\n\nhash: $(GIT_HASH)\ndate: $(shell date)" > sysroot/info
-	cd sysroot && tar -cvf ../init.tar *
+	echo "willOS build info\n\nhash: $(GIT_HASH)\ndate: $(shell date)" > $(INITRD_DIR)/info
+	cd $(INITRD_DIR) && tar -cvf ../$(INITRD_TAR) *
+
+initrd: ## build the init ram disk
+initrd: $(INITRD_TAR)
+.PHONY: initrd
 
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
