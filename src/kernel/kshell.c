@@ -256,7 +256,7 @@ void ls(const char* command) {
 }
 
 void init() {
-    inode_t ino = vfs_namei("/init");
+    inode_t ino = vfs_namei("/bin/init");
     char* buf = malloc(35000);
     vfs_read(ino, buf, 35000, 0);
     elf_header_t* elf = elf_load(buf);

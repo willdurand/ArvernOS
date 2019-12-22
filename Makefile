@@ -95,7 +95,15 @@ debug: $(ISO)
 clean: ## remove build artifacts
 	find . -name '*.orig' -exec rm "{}" ";"
 	find . -name '*.o' -exec rm "{}" ";"
+<<<<<<< HEAD
 	rm -rf $(BUILD_DIR) userland/bin/ $(INITRD_DIR)/{info,init}
+=======
+	rm -f $(LIBK_SOURCES) $(LIBC_SOURCES) $(KERNEL) $(ISO) $(LIBK) $(LIBC)
+	rm -rf $(BUILD_DIR)
+
+	$(MAKE) -C init/ clean
+	rm -rf $(INITRD_DIR)/bin
+>>>>>>> Refactor initrd
 .PHONY: clean
 
 fmt: ## automatically format the code with astyle
@@ -135,7 +143,7 @@ version: ## print tool versions
 .PHONY: version
 
 $(INITRD_TAR): init
-	cp -R userland/bin sysroot/
+	cp init/init $(INITRD_DIR)/bin
 	echo "willOS build info\n\nhash: $(GIT_HASH)\ndate: $(shell date)" > $(INITRD_DIR)/info
 	cd $(INITRD_DIR) && tar -cvf ../$(INITRD_TAR) *
 
