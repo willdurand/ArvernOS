@@ -10,7 +10,6 @@ uint64_t tar_read(inode_t node, void* buffer, uint64_t size, uint64_t offset);
 inode_t tar_finddir(inode_t inode, const char* name);
 dirent_t* tar_readdir(inode_t inode, uint64_t num);
 bool starts_with(const char* s, const char* prefix);
-uint64_t count_chars(const char* s, char c);
 
 tar_header_t* headers[32];
 
@@ -221,16 +220,4 @@ dirent_t* tar_readdir(inode_t inode, uint64_t num) {
 
 bool starts_with(const char* s, const char* prefix) {
     return strncmp(s, prefix, strlen(prefix)) == 0 ? true : false;
-}
-
-uint64_t count_chars(const char* s, char c) {
-    uint64_t ret = 0;
-
-    while (*s != 0) {
-        if (*s++ == c) {
-            ret++;
-        }
-    }
-
-    return ret;
 }
