@@ -4,6 +4,7 @@
 #include <core/elf.h>
 #include <core/timer.h>
 #include <drivers/screen.h>
+#include <fs/debug.h>
 #include <fs/vfs.h>
 #include <sys/syscall.h>
 #include <stdio.h>
@@ -168,33 +169,42 @@ void uptime() {
     printf("up %u seconds\n", timer_uptime());
 }
 
-void selftest() {
-    printf("willOS selftest\n");
+void print_selftest_header(const char* name) {
+    screen_color_scheme(COLOR_BROWN, COLOR_BLACK);
+    printf("\n[%s]\n", name);
+    screen_color_scheme(COLOR_WHITE, COLOR_BLACK);
+}
 
-    printf("\n[interrupts]\n");
-    printf("    invoking breakpoint exception\n");
+void selftest() {
+    print_selftest_header("interrupts");
+    printf("  invoking breakpoint exception\n");
     __asm__("int3");
 
-    printf("\n[syscalls]\n");
-    printf("    syscalling\n");
+    print_selftest_header("syscalls");
+    printf("  syscalling\n");
     test("kshell");
 
-    printf("\n[memory]\n");
+    print_selftest_header("memory");
     char* str = 0x42;
     printf("    pointer before malloc(): p=%p\n", str);
     int str_len = 9;
     str = (char*)malloc(str_len * sizeof(char));
 
     if (str == 0) {
-        printf("    failed\n");
+        printf("  failed\n");
     } else {
-        printf("    success! p=%p", str);
+        printf("  success! p=%p", str);
         strncpy(str, "it works", str_len);
         printf(" and value is: %s\n", str);
         free(str);
     }
 
-    printf("\nall good!\n");
+    print_selftest_header("filesystem");
+    inode_t debug = vfs_namei(FS_DEBUG_FILENAME);
+    const char* message = "  this message should be written to the console\n";
+    vfs_write(debug, message, strlen(message), 0);
+
+    printf("\ndone.\n");
 }
 
 void cat(const char* command) {
