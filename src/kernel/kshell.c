@@ -1,8 +1,10 @@
 #include "kshell.h"
 #include <core/cmos.h>
 #include <core/debug.h>
+#include <core/elf.h>
 #include <core/timer.h>
 #include <drivers/screen.h>
+#include <fs/vfs.h>
 #include <sys/syscall.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -197,10 +199,29 @@ void selftest() {
 
 void cat(const char* command) {
     const char* arg = command + 4;
+    inode_t f = vfs_namei(arg);
+
+    if (!f) {
+        printf("no such file or directory\n");
+        return;
+    }
 
     char buf[512];
-    vfs_read(vfs_namei(arg), &buf, sizeof(buf), 0);
+    vfs_read(f, &buf, sizeof(buf), 0);
     printf("%s", buf);
+}
+
+void init() {
+    inode_t ino = vfs_namei("/init");
+    char* buf = malloc(35000);
+    vfs_read(ino, buf, 35000, 0);
+    elf_header_t* elf = elf_load(buf);
+
+    typedef int callable(void);
+    callable* c = (callable*)(elf->entry);
+    int res = c();
+
+    free(buf);
 }
 
 void run_command(const char* command) {
@@ -214,6 +235,8 @@ void run_command(const char* command) {
 
     if (strncmp(command, "help", 4) == 0) {
         help(command);
+    } else if (strncmp(command, "init", 4) == 0) {
+        init();
     } else if (strncmp(command, "cat", 3) == 0) {
         cat(command);
     } else if (strncmp(command, "date", 4) == 0) {
