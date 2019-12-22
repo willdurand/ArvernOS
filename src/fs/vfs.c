@@ -206,7 +206,7 @@ inode_t vfs_namei_mount(const char* path, inode_t root) {
 
         if (!next) {
             DEBUG("%s", "no next, returning 0");
-            //free(current);
+            vfs_free(current);
             return 0;
         }
 
@@ -216,7 +216,7 @@ inode_t vfs_namei_mount(const char* path, inode_t root) {
             current->child = next;
         }
 
-        //free(current);
+        vfs_free(current);
         current = next;
     }
 
@@ -249,7 +249,7 @@ inode_t vfs_namei_mount(const char* path, inode_t root) {
             vfs_root = root;
         }
 
-        free(current);
+        vfs_free(current);
         current = root;
     }
 
@@ -274,4 +274,12 @@ inode_t vfs_umount(const char* path) {
     DEBUG("umounting path=%s", path);
     // TODO: implement me
     return 0;
+}
+
+void vfs_free(inode_t inode) {
+    if (inode->parent != 0) {
+        return;
+    }
+
+    free(inode);
 }

@@ -67,5 +67,6 @@ inode_t vfs_finddir(inode_t inode, const char* name);
 inode_t vfs_mount(const char* path, inode_t root);
 inode_t vfs_namei(const char* path);
 inode_t vfs_umount(const char* path);
+void vfs_free(inode_t inode);
 
 #endif

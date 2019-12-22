@@ -121,7 +121,7 @@ inode_t tar_finddir(inode_t inode, const char* name) {
 
     if (!header) {
         DEBUG("did not find name=%s", name);
-        free(node);
+        vfs_free(node);
         return 0;
     }
 
