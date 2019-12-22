@@ -74,10 +74,10 @@ iso: ## build the image of the OS (.iso)
 iso: $(ISO)
 .PHONY: iso
 
-$(ISO): $(KERNEL) userland
+$(ISO): $(KERNEL) init.tar
 	mkdir -p $(GRUB_DIR)
 	cp -R grub/* $(GRUB_DIR)
-	cp -R userland/bin $(KERNEL_DIR)
+	cp init.tar $(KERNEL_DIR)
 	grub-mkrescue -o $@ $(ISO_DIR)
 
 run: ## run the OS
@@ -95,6 +95,7 @@ clean: ## remove build artifacts
 	find . -name '*.orig' -exec rm "{}" ";"
 	find . -name '*.o' -exec rm "{}" ";"
 	rm -rf $(BUILD_DIR) userland/bin/
+	rm -f sysroot/{info,init}
 .PHONY: clean
 
 fmt: ## automatically format the code with astyle
@@ -132,6 +133,11 @@ version: ## print tool versions
 	$(CC) --version
 	$(LD) --version
 .PHONY: version
+
+init.tar: init
+	cp -R userland/bin sysroot/
+	echo "willOS build info\n\nhash: $(GIT_HASH)\ndate: $(shell date)" > sysroot/info
+	cd sysroot && tar -cvf ../init.tar *
 
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'

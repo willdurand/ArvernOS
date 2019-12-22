@@ -105,12 +105,13 @@ unsigned char keymap[][128] = {
 #define NB_DOCUMENTED_COMMANDS 6
 
 const char* commands[][NB_DOCUMENTED_COMMANDS] = {
-    {"help", "display information about willOS shell commands"},
-    {"date", "print the system date and time"},
+    {"cat", "print on the standard output"},
     {"clear", "clear the terminal screen"},
+    {"date", "print the system date and time"},
+    {"help", "display information about willOS shell commands"},
     {"reboot", "stopping and restarting the system"},
-    {"uptime", "tell how long the system has been running"},
     {"selftest", "run the willOS test suite"},
+    {"uptime", "tell how long the system has been running"},
 };
 
 unsigned char get_char(uint8_t scancode, bool shift, bool caps_lock) {
@@ -194,6 +195,14 @@ void selftest() {
     printf("\nall good!\n");
 }
 
+void cat(const char* command) {
+    const char* arg = command + 4;
+
+    char buf[512];
+    vfs_read(vfs_namei(arg), &buf, sizeof(buf), 0);
+    printf("%s", buf);
+}
+
 void run_command(const char* command) {
     DEBUG("command='%s'", command);
 
@@ -205,6 +214,8 @@ void run_command(const char* command) {
 
     if (strncmp(command, "help", 4) == 0) {
         help(command);
+    } else if (strncmp(command, "cat", 3) == 0) {
+        cat(command);
     } else if (strncmp(command, "date", 4) == 0) {
         date();
     } else if (strncmp(command, "clear", 5) == 0) {

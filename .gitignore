@@ -1,7 +1,10 @@
 /build/
+/sysroot/info
+/sysroot/init
 /userland/bin/
 *.a
 *.bin
 *.o
 *.so
+*.tar
 .gdb_history
