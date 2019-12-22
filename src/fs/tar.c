@@ -6,7 +6,7 @@
 
 uint64_t get_size(const char* in);
 uint64_t tar_read_headers(uint64_t address);
-uint64_t debug_read(inode_t node, void* buffer, uint64_t size, uint64_t offset);
+uint64_t tar_read(inode_t node, void* buffer, uint64_t size, uint64_t offset);
 inode_t tar_finddir(inode_t inode, const char* name);
 dirent_t* tar_readdir(inode_t inode, uint64_t num);
 bool starts_with(const char* s, const char* prefix);
@@ -16,7 +16,7 @@ tar_header_t* headers[32];
 vfs_driver_t tar_driver = {
     0, // open
     0, // close
-    debug_read, // read
+    tar_read, // read
     0, // write
     0, // link
     0, // unlink
@@ -78,7 +78,7 @@ uint64_t get_size(const char* in) {
 
 }
 
-uint64_t debug_read(inode_t node, void* buffer, uint64_t size, uint64_t offset) {
+uint64_t tar_read(inode_t node, void* buffer, uint64_t size, uint64_t offset) {
     DEBUG("name=%s type=%d", node->name, node->type);
 
     if (node->type == FS_FILE) {
