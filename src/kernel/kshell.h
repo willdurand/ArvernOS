@@ -7,7 +7,7 @@
 /// The number of characters to keep in the command line buffer.
 #define READLINE_SIZE   256
 /// The shell prompt.
-#define PROMPT          "$ "
+#define PROMPT          "kshell> "
 /// The scancode for the <kbd>arrow up</kbd> key.
 #define KB_ARROW_UP     72
 /// The scancode for the <kbd>backspace</kbd> key.
