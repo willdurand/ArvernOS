@@ -17,7 +17,7 @@ void assert_impl(bool expr, const char* func, const char* message) {
 }
 
 int summary_impl(const char* name) {
-    printf("\n%-51s failures: %2d / total: %2d\n", name, failures, assertions);
+    printf("\n=> %-48s failures: %2d / total: %2d\n", name, failures, assertions);
 
     return failures == 0 ? 0 : 1;
 }

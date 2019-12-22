@@ -120,10 +120,10 @@ test: ## run unit tests
 test: CFLAGS += -fPIC
 test: libc
 	mkdir -p $(BUILD_DIR)/libc/string
-	@for file in $(TEST_FILES); do \
+	for file in $(TEST_FILES); do \
 		echo ; \
 		gcc -shared src/$$file.o -o build/$$file.so ; \
-		gcc -I./test/ test/$$file.c -o build/$$file ; \
+		gcc -I./test/ -O0 test/$$file.c -o build/$$file ; \
 		LD_PRELOAD=./build/$$file.so ./build/$$file ; \
 	done
 .PHONY: test
