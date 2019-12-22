@@ -8,7 +8,7 @@
 #define FS_DEBUG_FILENAME "/debug"
 
 /**
- * @brief Creates a "debug" File System.
+ * @brief Creates a "debug" file system.
  *
  * This "debug" file system is based on Thomas Lovén's work:
  * http://thomasloven.com/blog/2013/12/Debug-Filesystem/. The idea is to have a

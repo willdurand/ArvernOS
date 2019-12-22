@@ -45,7 +45,7 @@ uint64_t tar_read_headers(uint64_t address) {
     for (i = 0; ; i++) {
         tar_header_t* header = (tar_header_t*)address;
 
-        if (header->filename[0] == '\0') {
+        if (header->name[0] == '\0') {
             break;
         }
 
@@ -96,24 +96,24 @@ inode_t tar_finddir(inode_t inode, const char* name) {
     tar_header_t* header = 0;
 
     for (uint64_t i = 0; headers[i] != 0; i++) {
-        char* filename = malloc(strlen(headers[i]->filename) * sizeof(char));
-        strcpy(filename, headers[i]->filename);
+        char* name = malloc(strlen(headers[i]->name) * sizeof(char));
+        strcpy(name, headers[i]->name);
 
-        DEBUG("reading filename=%s name=%s", filename, name);
+        DEBUG("reading name=%s name=%s", name, name);
 
         if (headers[i]->type == TAR_DIRECTORY) {
-            filename[strlen(filename) - 1] = '\0';
-            DEBUG("updated filename=%s", filename);
+            name[strlen(name) - 1] = '\0';
+            DEBUG("updated name=%s", name);
         }
 
-        if (strncmp(name, filename, strlen(filename)) == 0) {
+        if (strncmp(name, name, strlen(name)) == 0) {
             header = headers[i];
             node->entry = i;
-            free(filename);
+            free(name);
             break;
         }
 
-        free(filename);
+        free(name);
     }
 
     if (!header) {
@@ -122,7 +122,7 @@ inode_t tar_finddir(inode_t inode, const char* name) {
         return 0;
     }
 
-    strcpy(node->name, header->filename);
+    strcpy(node->name, header->name);
     node->driver = &tar_driver;
 
     switch (header->type) {
@@ -161,9 +161,9 @@ dirent_t* tar_readdir(inode_t inode, uint64_t num) {
     uint64_t j = 0;
 
     for (uint64_t i = 0; headers[i] != 0; i++) {
-        DEBUG("reading filename=%s", headers[i]->filename);
+        DEBUG("reading name=%s", headers[i]->name);
 
-        if (starts_with(headers[i]->filename, prefix)) {
+        if (starts_with(headers[i]->name, prefix)) {
             j++;
         }
 
@@ -184,7 +184,7 @@ dirent_t* tar_readdir(inode_t inode, uint64_t num) {
         return 0;
     }
 
-    strcpy(node->name, header->filename);
+    strcpy(node->name, header->name);
     node->driver = &tar_driver;
 
     switch (header->type) {
