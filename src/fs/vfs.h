@@ -5,14 +5,13 @@
 
 #define VFS_NAME_MAX_SIZE 256
 
-#define FS_MOUNT       0x01
-#define FS_FILE        0x02
-#define FS_DIRECTORY   0x03
-#define FS_CHARDEVICE  0x04
-#define FS_BLOCKDEVICE 0x05
-#define FS_PIPE        0x06
-#define FS_SYMLINK     0x07
-#define FS_MOUNTPOINT  0x08
+#define FS_MOUNT       0x1
+#define FS_FILE        0x2
+#define FS_DIRECTORY   0x3
+#define FS_CHARDEVICE  0x4
+#define FS_BLOCKDEVICE 0x5
+#define FS_PIPE        0x6
+#define FS_SYMLINK     0x7
 
 struct vfs_node;
 

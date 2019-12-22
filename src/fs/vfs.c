@@ -88,17 +88,17 @@ uint64_t vfs_mkdir(inode_t inode, const char* name) {
 
 dirent_t* vfs_readdir(inode_t inode, uint64_t num) {
     if (inode->type & FS_MOUNT) {
+        DEBUG("%s is a mountpoint", inode->name);
+
         if (num == 0) {
             dirent_t* ret = malloc(sizeof(dirent_t));
             ret->inode = inode;
             strcpy(ret->name, ".");
-
             return ret;
         } else if (num == 1) {
             dirent_t* ret = malloc(sizeof(dirent_t));
             ret->inode = inode->parent;
             strcpy(ret->name, "..");
-
             return ret;
         }
     }
