@@ -2,11 +2,11 @@
 #include <stdlib.h>
 
 char* strdup(const char* s) {
-    size_t size = strlen(s) + 1;
-    char* ret = malloc(size * sizeof(char));
+    size_t len = strlen(s) + 1;
+    char* ret = malloc(len * sizeof(char));
 
     if (ret) {
-        strcpy(ret, s);
+        strncpy(ret, s, len);
     }
 
     return ret;
