@@ -112,9 +112,9 @@ dirent_t* vfs_readdir(inode_t inode, uint64_t num) {
 
 inode_t vfs_finddir(inode_t inode, const char* name) {
     if (inode->type & FS_MOUNT) {
-        if (!strncmp(name, ".", 1)) {
+        if (!strncmp(name, ".", strlen(name))) {
             return inode;
-        } else if (!strncmp(name, "..", 2)) {
+        } else if (!strncmp(name, "..", strlen(name))) {
             return inode->parent;
         }
     }
@@ -200,8 +200,7 @@ inode_t vfs_namei_mount(const char* path, inode_t root) {
 
     char* name;
 
-    while (current && (name = strsep(&pth, "/"))) {
-        DEBUG("name=%s", name);
+    while (current && (name = strsep(&pth, "/")) && *name) {
         inode_t next = vfs_finddir(current, name);
 
         if (!next) {
