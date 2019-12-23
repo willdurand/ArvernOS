@@ -9,6 +9,9 @@ int strncmp(const char* s, const char* r, int len);
 
 char* strcpy(char* dest, const char* src);
 
+/// This is actually a safer implementation based on `strlcpy()`.
+char* strncpy(char* dest, const char* src, size_t len);
+
 char* strsep(char** str, const char* sep);
 
 int strcspn(const char* s1, const char* s2);
