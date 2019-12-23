@@ -226,7 +226,7 @@ void cat(const char* command) {
 
 void ls(const char* command) {
     const char* arg = command + 3;
-    inode_t ino = vfs_namei(arg);
+    inode_t ino = strlen(arg) == 0 ? vfs_namei("/") : vfs_namei(arg);
 
     if (!ino) {
         printf("no such file or directory\n");
