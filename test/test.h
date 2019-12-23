@@ -7,7 +7,7 @@
 int assertions = 0;
 int failures = 0;
 
-void assert_impl(bool expr, const char* func, const char* message) {
+void _assert(bool expr, const char* func, const char* message) {
     printf("it %-66s [%s]\n", message, expr ? "pass" : "fail");
     assertions++;
 
@@ -16,13 +16,13 @@ void assert_impl(bool expr, const char* func, const char* message) {
     }
 }
 
-int summary_impl(const char* name) {
+int _test_summary(const char* name) {
     printf("\n=> %-48s failures: %2d / total: %2d\n", name, failures, assertions);
 
     return failures == 0 ? 0 : 1;
 }
 
-#define assert(expr, message)   assert_impl((expr), __func__, message)
-#define test_summary()          summary_impl(__FILE__)
+#define assert(expr, message)   _assert((expr), __func__, message)
+#define test_summary()          _test_summary(__FILE__)
 
 #endif
