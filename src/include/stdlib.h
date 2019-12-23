@@ -14,8 +14,4 @@
 /// and we are aware of this variable not being used on purpose.
 #define UNUSED(x) (void)(x)
 
-void itoa(int n, char* str, int base);
-
-void ulltoa(uint64_t n, char* str, int base);
-
 #endif
