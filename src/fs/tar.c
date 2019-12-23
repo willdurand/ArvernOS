@@ -2,6 +2,7 @@
 #include <core/debug.h>
 #include <stdbool.h>
 #include <stdint.h>
+#include <stdlib.h>
 #include <string.h>
 
 uint64_t get_size(const char* in);
