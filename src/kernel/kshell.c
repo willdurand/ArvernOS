@@ -179,13 +179,14 @@ void selftest() {
     printf("\n[memory]\n");
     char* str = 0x42;
     printf("    pointer before malloc(): p=%p\n", str);
-    str = (char*)malloc(9 * sizeof(char));
+    int str_len = 9;
+    str = (char*)malloc(str_len * sizeof(char));
 
     if (str == 0) {
         printf("    failed\n");
     } else {
         printf("    success! p=%p", str);
-        strcpy(str, "it works");
+        strncpy(str, "it works", str_len);
         printf(" and value is: %s\n", str);
         free(str);
     }
@@ -260,7 +261,7 @@ void kshell_run(uint8_t scancode) {
         case KB_ARROW_UP:
             if (key_was_released) {
                 reset_readline();
-                strcpy(readline, last_readline);
+                strncpy(readline, last_readline, READLINE_SIZE);
                 printf(readline);
                 readline_index = strlen(readline);
             }
@@ -299,7 +300,7 @@ void kshell_run(uint8_t scancode) {
             if (key_was_released) {
                 printf("\n");
                 run_command((const char*)readline);
-                strcpy(last_readline, readline);
+                strncpy(last_readline, readline, READLINE_SIZE);
                 reset_readline();
                 kshell_print_prompt();
             }
