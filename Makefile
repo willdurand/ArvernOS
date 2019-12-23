@@ -25,11 +25,12 @@ LIBK       = $(BUILD_DIR)/libk-$(OS_NAME).a
 OBJECTS := $(patsubst %.asm,%.o,$(shell find asm -name '*.asm'))
 LIBK_SOURCES := $(patsubst %.c,%_k.o,$(shell find libs src -name '*.c'))
 LIBC_SOURCES := $(patsubst %.c,%.o,$(shell find src/libc libs -name '*.c'))
+TEST_FILES := $(patsubst test/%.c,%,$(shell find test -name '*.c'))
 
 GIT_HASH := $(shell git rev-parse --short HEAD)
 
 CFLAGS = -DGIT_HASH=\"$(GIT_HASH)\" \
-				 -W -Wall -pedantic -std=c11 -O2 -ffreestanding -nostdlib \
+				 -Wall -pedantic -std=c11 -O2 -ffreestanding -nostdlib \
 				 -fno-builtin -fno-stack-protector -mno-red-zone \
 				 -I src/include/ -I src/ -I libs/
 
@@ -114,6 +115,18 @@ init: libc
 	rm -f init/init
 	$(MAKE) -C init/
 .PHONY: init
+
+test: ## run unit tests
+test: CFLAGS += -fPIC
+test: libc
+	mkdir -p $(BUILD_DIR)/libc/string
+	for file in $(TEST_FILES); do \
+		echo ; \
+		gcc -shared src/$$file.o -o build/$$file.so ; \
+		gcc -I./test/ -O0 test/$$file.c -o build/$$file ; \
+		LD_PRELOAD=./build/$$file.so ./build/$$file ; \
+	done
+.PHONY: test
 
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'

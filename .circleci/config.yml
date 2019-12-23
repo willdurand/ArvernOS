@@ -13,3 +13,4 @@ jobs:
       - run: test -f build/libc-willOS.a
       - run: test -f build/libk-willOS.a
       - run: test -f build/willOS.iso
+      - run: make clean test
