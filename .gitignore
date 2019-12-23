@@ -1,5 +1,5 @@
 /build/
-/init/init
+/userland/bin/
 *.a
 *.bin
 *.o

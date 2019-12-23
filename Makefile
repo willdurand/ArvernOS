@@ -74,10 +74,10 @@ iso: ## build the image of the OS (.iso)
 iso: $(ISO)
 .PHONY: iso
 
-$(ISO): $(KERNEL) init
+$(ISO): $(KERNEL) userland
 	mkdir -p $(GRUB_DIR)
 	cp -R grub/* $(GRUB_DIR)
-	cp init/init $(KERNEL_DIR)
+	cp -R userland/bin $(KERNEL_DIR)
 	grub-mkrescue -o $@ $(ISO_DIR)
 
 run: ## run the OS
@@ -94,9 +94,7 @@ debug: $(ISO)
 clean: ## remove build artifacts
 	find . -name '*.orig' -exec rm "{}" ";"
 	find . -name '*.o' -exec rm "{}" ";"
-	rm -f $(LIBK_OBJECTS) $(LIBC_OBJECTS) $(KERNEL) $(ISO) $(LIBK) $(LIBC)
-	rm -rf $(BUILD_DIR)
-	$(MAKE) -C init/ clean
+	rm -rf $(BUILD_DIR) userland/bin/
 .PHONY: clean
 
 fmt: ## automatically format the code with astyle
@@ -110,11 +108,10 @@ gdb: $(ISO)
 	qemu-system-x86_64 -s -S -cdrom $< -serial file:/tmp/serial.log
 .PHONY: gdb
 
-init: ## compile the 'init' program (statically linked to libc)
-init: libc
-	rm -f init/init
-	$(MAKE) -C init/
-.PHONY: init
+userland: ## compile the userland programs (statically linked to libc)
+userland: libc
+	$(MAKE) -C userland/init/
+.PHONY: userland
 
 test: ## run unit tests
 test: CC=gcc
