@@ -1,14 +1,14 @@
-NASM ?= nasm
-QEMU ?= qemu-system-x86_64
+NASM = nasm
+QEMU = qemu-system-x86_64
 
 ifeq ($(shell uname -s),Darwin)
-	CC ?= x86_64-pc-elf-gcc
-	LD ?= x86_64-pc-elf-ld
-	AR ?= x86_64-pc-elf-ar
+	CC = x86_64-pc-elf-gcc
+	LD = x86_64-pc-elf-ld
+	AR = x86_64-pc-elf-ar
 else
-	CC ?= gcc
-	LD ?= ld
-	AR ?= ar
+	CC = gcc
+	LD = ld
+	AR = ar
 endif
 
 OS_NAME    = willOS
@@ -22,10 +22,10 @@ ISO        = $(BUILD_DIR)/$(OS_NAME).iso
 LIBC       = $(BUILD_DIR)/libc-$(OS_NAME).a
 LIBK       = $(BUILD_DIR)/libk-$(OS_NAME).a
 
-OBJECTS := $(patsubst %.asm,%.o,$(shell find asm -name '*.asm'))
-LIBK_SOURCES := $(patsubst %.c,%_k.o,$(shell find libs src -name '*.c'))
-LIBC_SOURCES := $(patsubst %.c,%.o,$(shell find src/libc libs -name '*.c'))
-TEST_FILES := $(patsubst test/%.c,%,$(shell find test -name '*.c'))
+ASM_OBJECTS  := $(patsubst %.asm,%.o,$(shell find asm -name '*.asm'))
+LIBK_OBJECTS := $(patsubst %.c,%_k.o,$(shell find libs src -name '*.c'))
+LIBC_OBJECTS := $(patsubst %.c,%.o,$(shell find src/libc libs -name '*.c'))
+TEST_FILES 	 := $(patsubst test/%.c,%,$(shell find test -name '*.c'))
 
 GIT_HASH := $(shell git rev-parse --short HEAD)
 
@@ -42,27 +42,27 @@ kernel: ## compile the kernel
 kernel: $(KERNEL)
 .PHONY: kernel
 
-$(KERNEL): $(OBJECTS) $(LIBK)
+$(KERNEL): $(ASM_OBJECTS) $(LIBK)
 	mkdir -p $(KERNEL_DIR)
-	$(LD) --nmagic --output=$@ --script=$(LINKER) $(OBJECTS) $(LIBK)
+	$(LD) --nmagic --output=$@ --script=$(LINKER) $(ASM_OBJECTS) $(LIBK)
 
-$(OBJECTS): %.o: %.asm
+$(ASM_OBJECTS): %.o: %.asm
 	mkdir -p $(BUILD_DIR)
 	$(NASM) -f elf64 $<
 
-$(LIBK_SOURCES): CFLAGS += -D__is_libk
-$(LIBK_SOURCES): %_k.o: %.c
+$(LIBK_OBJECTS): CFLAGS += -D__is_libk
+$(LIBK_OBJECTS): %_k.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(LIBC_SOURCES): CFLAGS += -D__is_libc
-$(LIBC_SOURCES): %.o: %.c
+$(LIBC_OBJECTS): CFLAGS += -D__is_libc
+$(LIBC_OBJECTS): %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(LIBK): $(LIBK_SOURCES)
+$(LIBK): $(LIBK_OBJECTS)
 	mkdir -p $(BUILD_DIR)
 	$(AR) rcs $@ $^
 
-$(LIBC): $(LIBC_SOURCES)
+$(LIBC): $(LIBC_OBJECTS)
 	mkdir -p $(BUILD_DIR)
 	$(AR) rcs $@ $^
 
@@ -94,7 +94,7 @@ debug: $(ISO)
 clean: ## remove build artifacts
 	find . -name '*.orig' -exec rm "{}" ";"
 	find . -name '*.o' -exec rm "{}" ";"
-	rm -f $(LIBK_SOURCES) $(LIBC_SOURCES) $(KERNEL) $(ISO) $(LIBK) $(LIBC)
+	rm -f $(LIBK_OBJECTS) $(LIBC_OBJECTS) $(KERNEL) $(ISO) $(LIBK) $(LIBC)
 	rm -rf $(BUILD_DIR)
 	$(MAKE) -C init/ clean
 .PHONY: clean
@@ -117,6 +117,9 @@ init: libc
 .PHONY: init
 
 test: ## run unit tests
+test: CC=gcc
+test: LD=ld
+test: AR=ar
 test: CFLAGS += -fPIC
 test: libc
 	mkdir -p $(BUILD_DIR)/libc/string
@@ -127,6 +130,11 @@ test: libc
 		LD_PRELOAD=./build/$$file.so ./build/$$file ; \
 	done
 .PHONY: test
+
+version: ## print tool versions
+	$(CC) --version
+	$(LD) --version
+.PHONY: version
 
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'

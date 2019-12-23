@@ -1,7 +1,7 @@
 ifeq ($(shell uname -s),Darwin)
-	CC ?= x86_64-pc-elf-gcc
+	CC = x86_64-pc-elf-gcc
 else
-	CC ?= gcc
+	CC = gcc
 endif
 
 # Add `-no-pie` to disable the PIE feature that causes `gcc` to not create an
