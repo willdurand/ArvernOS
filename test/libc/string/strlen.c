@@ -3,7 +3,7 @@
 #include <string.h>
 
 int main() {
-    char *s1 = malloc(sizeof(char) * 2);
+    char* s1 = malloc(sizeof(char) * 2);
     strcpy(s1, "s1");
 
     assert(strlen(s1) == 2, "returns the length of the string");
