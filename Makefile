@@ -124,7 +124,7 @@ test: libc
 		echo ; \
 		gcc -shared src/$$file.o -o build/$$file.so ; \
 		gcc -I./test/ -O0 test/$$file.c -o build/$$file ; \
-		LD_PRELOAD=./build/$$file.so ./build/$$file ; \
+		LD_PRELOAD=./build/$$file.so ./build/$$file || exit 1 ; \
 	done
 .PHONY: test
 

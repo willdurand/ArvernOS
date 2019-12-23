@@ -1,21 +1,21 @@
 #include <string.h>
 #include <core/debug.h>
 
-char* strsep(char** stringp, const char* delim) {
-    char* begin = *stringp;
+char* strsep(char** str, const char* sep) {
+    char* s = *str, *end;
 
-    if (*begin == '\0') {
+    if (!s) {
         return 0;
     }
 
-    char* end = begin + strcspn(begin, delim);
+    end = s + strcspn(s, sep);
 
     if (*end) {
-        *end++ = '\0';
-        *stringp = end;
+        *end++ = 0;
     } else {
-        *stringp = 0;
+        end = 0;
     }
 
-    return begin;
+    *str = end;
+    return s;
 }
