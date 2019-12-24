@@ -67,7 +67,6 @@ uint64_t tar_read_headers(uint64_t address) {
     return i;
 }
 
-
 uint64_t get_size(const char* in) {
     uint64_t size = 0;
     uint64_t j;
@@ -98,7 +97,6 @@ uint64_t tar_read(inode_t node, void* buffer, uint64_t size, uint64_t offset) {
         }
 
         strncpy(buffer, (void*)header + 512 + offset, size + 1);
-        DEBUG("header_size=%u size=%u", header_size, size);
         return size - offset;
     }
 
@@ -110,35 +108,38 @@ uint64_t tar_read(inode_t node, void* buffer, uint64_t size, uint64_t offset) {
 inode_t tar_finddir(inode_t inode, const char* name) {
     inode_t node = malloc(sizeof(vfs_node_t));
 
-    // Make the full path of the inode + name.
-    char n[VFS_NAME_MAX_SIZE];
+    char* fullpath;
 
     if (inode->data >= 0) {
-        strcpy(n, headers[inode->data]->name);
-        strcat(n, name);
+        fullpath = malloc((strlen(headers[inode->data]->name) + strlen(name) + 1) * sizeof(char));
+        strcpy(fullpath, headers[inode->data]->name);
+        strcat(fullpath, name);
     } else {
-        strcpy(n, name);
+        fullpath = malloc((strlen(name) + 1) * sizeof(char));
+        strcpy(fullpath, name);
     }
 
     tar_header_t* header = 0;
 
     for (uint64_t i = 0; headers[i] != 0; i++) {
-        char* hn = strdup(headers[i]->name);
+        char* header_name = strdup(headers[i]->name);
 
         // Remove the trailing slash when the current TAR file is a directory.
         if (headers[i]->type == TAR_DIRECTORY) {
-            hn[strlen(hn) - 1] = '\0';
+            header_name[strlen(header_name) - 1] = '\0';
         }
 
-        if (strncmp(n, hn, strlen(n)) == 0) {
+        if (strncmp(fullpath, header_name, strlen(fullpath)) == 0) {
             header = headers[i];
             node->data = i;
-            free(hn);
+            free(header_name);
             break;
         }
 
-        free(hn);
+        free(header_name);
     }
+
+    free(fullpath);
 
     if (!header) {
         DEBUG("did not find name=%s", name);
@@ -172,15 +173,15 @@ dirent_t* tar_readdir(inode_t inode, uint64_t num) {
         return 0;
     }
 
-    char* n = malloc((strlen(inode->name) + 1) * sizeof(char));
+    char* name = malloc((strlen(inode->name) + 1) * sizeof(char));
 
     if (inode->data >= 0) {
-        strcpy(n, inode->name);
+        strcpy(name, inode->name);
     } else {
-        strcpy(n, "");
+        strcpy(name, "");
     }
 
-    int level = get_level(n);
+    int level = get_level(name);
 
     dirent_t* dir = malloc(sizeof(dirent_t));
     inode_t node = malloc(sizeof(vfs_node_t));
@@ -196,7 +197,7 @@ dirent_t* tar_readdir(inode_t inode, uint64_t num) {
             header_level--;
         }
 
-        if (starts_with(headers[i]->name, n) && level == header_level) {
+        if (starts_with(headers[i]->name, name) && level == header_level) {
             j++;
         }
 
@@ -213,7 +214,9 @@ dirent_t* tar_readdir(inode_t inode, uint64_t num) {
                     break;
             }
 
-            strcpy(node->name, headers[i]->name + strlen(n));
+            // Only copy the name of the inode without `name` (which is likely
+            // the path to this inode).
+            strcpy(node->name, headers[i]->name + strlen(name));
             node->data = i;
             break;
         }
@@ -221,7 +224,7 @@ dirent_t* tar_readdir(inode_t inode, uint64_t num) {
         i++;
     }
 
-    free(n);
+    free(name);
 
     if (!found) {
         return 0;
