@@ -11,6 +11,7 @@ uint64_t tar_read(inode_t node, void* buffer, uint64_t size, uint64_t offset);
 inode_t tar_finddir(inode_t inode, const char* name);
 dirent_t* tar_readdir(inode_t inode, uint64_t num);
 uint64_t tar_stat(inode_t node, stat_t* st);
+uint64_t tar_isatty(inode_t node);
 bool starts_with(const char* s, const char* prefix);
 int get_level(const char* path);
 
@@ -24,7 +25,7 @@ vfs_driver_t tar_driver = {
     0, // link
     0, // unlink
     tar_stat, // stat
-    0, // isatty
+    tar_isatty, // isatty
     0, // mkdir
     tar_readdir, // readdir
     tar_finddir, // finddir
@@ -246,6 +247,10 @@ uint64_t tar_stat(inode_t inode, stat_t* st) {
         st->size = get_size(headers[inode->data]->size);
     }
 
+    return 0;
+}
+
+uint64_t tar_isatty(inode_t node) {
     return 0;
 }
 

@@ -38,7 +38,7 @@ uint64_t debug_stat(inode_t node, stat_t* st) {
 }
 
 uint64_t debug_isatty(inode_t node) {
-    return 1;
+    return 0;
 }
 
 uint64_t debug_write(inode_t node, void* buffer, uint64_t size, uint64_t offset) {
