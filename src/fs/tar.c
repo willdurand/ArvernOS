@@ -11,6 +11,7 @@ uint64_t tar_read(inode_t node, void* buffer, uint64_t size, uint64_t offset);
 inode_t tar_finddir(inode_t inode, const char* name);
 dirent_t* tar_readdir(inode_t inode, uint64_t num);
 bool starts_with(const char* s, const char* prefix);
+int get_level(const char* path);
 
 tar_header_t* headers[32];
 
@@ -34,6 +35,7 @@ inode_t tar_fs_init(uint64_t address) {
     strcpy(node->name, "tar");
     node->driver = &tar_driver;
     node->type = FS_DIRECTORY;
+    node->data = -1;
 
     tar_read_headers(address);
 
@@ -63,6 +65,7 @@ uint64_t tar_read_headers(uint64_t address) {
     return i;
 }
 
+
 uint64_t get_size(const char* in) {
     uint64_t size = 0;
     uint64_t j;
@@ -77,14 +80,24 @@ uint64_t get_size(const char* in) {
 
 uint64_t tar_read(inode_t node, void* buffer, uint64_t size, uint64_t offset) {
     DEBUG("name=%s type=%d", node->name, node->type);
+    // Empty buffer.
+    strcpy(buffer, "");
 
-    if (node->type == FS_FILE) {
-        tar_header_t* header = headers[node->entry];
-        uint64_t size = get_size(header->size);
-        DEBUG("reading file size=%u", size);
+    if (vfs_inode_type(node) == FS_FILE) {
+        tar_header_t* header = headers[node->data];
+        uint64_t header_size = get_size(header->size);
 
-        memcpy(buffer, (void*)header + 512, size);
-        return size;
+        if (size > header_size) {
+            size = header_size;
+        }
+
+        if (offset > size) {
+            offset = size;
+        }
+
+        strncpy(buffer, (void*)header + 512 + offset, size + 1);
+        DEBUG("header_size=%u size=%u", header_size, size);
+        return size - offset;
     }
 
     // TODO: add support for other types like symlinks (at least)
@@ -93,25 +106,31 @@ uint64_t tar_read(inode_t node, void* buffer, uint64_t size, uint64_t offset) {
 }
 
 inode_t tar_finddir(inode_t inode, const char* name) {
-    DEBUG("finding name=%s", name);
     inode_t node = malloc(sizeof(vfs_node_t));
+
+    // Make the full path of the inode + name.
+    char n[VFS_NAME_MAX_SIZE];
+
+    if (inode->data >= 0) {
+        strcpy(n, headers[inode->data]->name);
+        strcat(n, name);
+    } else {
+        strcpy(n, name);
+    }
 
     tar_header_t* header = 0;
 
     for (uint64_t i = 0; headers[i] != 0; i++) {
-        char* hn = malloc(strlen(headers[i]->name) * sizeof(char));
-        strcpy(hn, headers[i]->name);
+        char* hn = strdup(headers[i]->name);
 
-        DEBUG("reading header_name=%s name=%s", hn, name);
-
+        // Remove the trailing slash when the current TAR file is a directory.
         if (headers[i]->type == TAR_DIRECTORY) {
             hn[strlen(hn) - 1] = '\0';
-            DEBUG("updated header_name=%s", hn);
         }
 
-        if (strncmp(name, hn, strlen(name)) == 0) {
+        if (strncmp(n, hn, strlen(n)) == 0) {
             header = headers[i];
-            node->entry = i;
+            node->data = i;
             free(hn);
             break;
         }
@@ -147,36 +166,35 @@ inode_t tar_finddir(inode_t inode, const char* name) {
 // contents. Readdir should return the n'th child node of a directory or 0
 // otherwise. It returns a `dirent_t*`.
 dirent_t* tar_readdir(inode_t inode, uint64_t num) {
-    if (inode->type != FS_DIRECTORY) {
+    if (vfs_inode_type(inode) != FS_DIRECTORY) {
         return 0;
     }
 
-    DEBUG("trying to find child node %u in %s", num, inode->name);
+    char* n = malloc((strlen(inode->name) + 1) * sizeof(char));
+
+    if (inode->data >= 0) {
+        strcpy(n, inode->name);
+    } else {
+        strcpy(n, "");
+    }
+
+    int level = get_level(n);
 
     dirent_t* dir = malloc(sizeof(dirent_t));
     inode_t node = malloc(sizeof(vfs_node_t));
-
-    char* prefix = malloc(strlen(inode->name) * sizeof(char));
-    uint64_t nb_slashes = 0;
-
-    if (strlen(inode->name) == 1 && inode->name[0] == '/') {
-        strcpy(prefix, "");
-    } else {
-        strcpy(prefix, inode->name);
-        nb_slashes = 1;
-    }
-
-    DEBUG("prefix=%s", prefix);
 
     uint64_t i = 0;
     uint64_t j = -1;
     bool found = false;
 
     while (headers[i] != 0) {
-        DEBUG("name=%s", headers[i]->name);
+        int header_level = get_level(headers[i]->name);
 
-        if (starts_with(headers[i]->name, prefix)) {
-            // TODO: filter out level + 1 files
+        if (headers[i]->type == TAR_DIRECTORY) {
+            header_level--;
+        }
+
+        if (starts_with(headers[i]->name, n) && level == header_level) {
             j++;
         }
 
@@ -185,30 +203,29 @@ dirent_t* tar_readdir(inode_t inode, uint64_t num) {
 
             switch (headers[i]->type) {
                 case TAR_FILE:
-                    strcpy(node->name, headers[i]->name + strlen(prefix));
                     node->type = FS_FILE;
                     break;
 
                 case TAR_DIRECTORY:
-                    strcpy(node->name, headers[i]->name);
                     node->type = FS_DIRECTORY;
                     break;
             }
 
-            node->entry = i;
+            strcpy(node->name, headers[i]->name + strlen(n));
+            node->data = i;
             break;
         }
 
         i++;
     }
 
-    free(prefix);
+    free(n);
 
     if (!found) {
         return 0;
     }
 
-    node->driver = &tar_driver;
+    node->driver = inode->driver;
     node->parent = inode;
 
     strcpy(dir->name, node->name);
@@ -221,4 +238,16 @@ dirent_t* tar_readdir(inode_t inode, uint64_t num) {
 
 bool starts_with(const char* s, const char* prefix) {
     return strncmp(s, prefix, strlen(prefix)) == 0 ? true : false;
+}
+
+int get_level(const char* path) {
+    int level = 0;
+
+    for (int i = 0; i < strlen(path); i++) {
+        if (path[i] == '/') {
+            level++;
+        }
+    }
+
+    return level;
 }

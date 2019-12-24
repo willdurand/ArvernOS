@@ -1,10 +1,9 @@
 #ifndef CORE_DEBUG_H
 #define CORE_DEBUG_H
 
+#ifdef ENABLE_KERNEL_DEBUG
 #include <drivers/serial.h>
 #include <stdio.h>
-
-#ifdef ENABLE_KERNEL_DEBUG
 
 static const uint16_t serial_com1 = SERIAL_COM1;
 
@@ -36,7 +35,18 @@ static const uint16_t serial_com1 = SERIAL_COM1;
 #endif
 
 #else
+
+#ifdef ENABLE_DEBUG_FOR_TEST
+#include <stdio.h>
+
+#define DEBUG(format, ...)  printf("DEBUG %s:%d:%s(): " format "\n", \
+                            __FILE__, __LINE__, __func__, __VA_ARGS__)
+#else
+
 #define DEBUG(format, ...)
+
+#endif
+
 #endif
 
 #endif

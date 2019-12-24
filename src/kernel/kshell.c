@@ -233,7 +233,7 @@ void ls(const char* command) {
         return;
     }
 
-    if (ino->type != FS_DIRECTORY) {
+    if (vfs_inode_type(ino) != FS_DIRECTORY) {
         printf("'%s' is not a directory\n", ino->name);
         return;
     }
