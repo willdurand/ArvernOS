@@ -101,6 +101,14 @@ int main() {
     free(de);
     end_describe();
 
+    describe("tar_stat()");
+    stat_t stat;
+    vfs_stat(vfs_namei("/home/will/file"), &stat);
+    assert(stat.size == 13, "sets the file size");
+    vfs_stat(vfs_namei("/home/will/"), &stat);
+    assert(stat.size == 0, "sets a size of zero when inode is a directory");
+    end_describe();
+
     free(tarfile);
     free(home);
     free(root);

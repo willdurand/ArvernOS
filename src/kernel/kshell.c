@@ -247,7 +247,9 @@ void ls(const char* command) {
             break;
         }
 
-        printf("%s\n", dir->name);
+        stat_t stat;
+        vfs_stat(dir->inode, &stat);
+        printf("%6d %s\n", stat.size, dir->name);
 
         free(dir);
     }
