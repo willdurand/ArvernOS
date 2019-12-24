@@ -226,33 +226,69 @@ void cat(const char* command) {
 
 void ls(const char* command) {
     const char* arg = command + 3;
-    inode_t ino = strlen(arg) == 0 ? vfs_namei("/") : vfs_namei(arg);
+    inode_t inode = strlen(arg) == 0 ? vfs_namei("/") : vfs_namei(arg);
 
-    if (!ino) {
+    if (!inode) {
         printf("no such file or directory\n");
         return;
     }
 
-    if (vfs_inode_type(ino) != FS_DIRECTORY) {
-        printf("'%s' is not a directory\n", ino->name);
+    if (vfs_inode_type(inode) != FS_DIRECTORY) {
+        printf("'%s' is not a directory\n", inode->name);
+        vfs_free(inode);
         return;
     }
 
     uint64_t num = 0;
 
     while (1) {
-        dirent_t* dir = vfs_readdir(ino, num++);
+        dirent_t* de = vfs_readdir(inode, num++);
 
-        if (dir == 0) {
+        if (!de) {
             break;
         }
 
         stat_t stat;
-        vfs_stat(dir->inode, &stat);
-        printf("%6d %s\n", stat.size, dir->name);
+        vfs_stat(de->inode, &stat);
+        printf("%6d %s\n", stat.size, de->name);
 
-        free(dir);
+        free(de);
     }
+
+    vfs_free(inode);
+}
+
+int try_exec(const char* command) {
+    inode_t inode = vfs_namei(command);
+
+    if (!inode) {
+        return -1;
+    }
+
+    if (vfs_inode_type(inode) != FS_FILE) {
+        vfs_free(inode);
+        return -2;
+    }
+
+    stat_t stat;
+    vfs_stat(inode, &stat);
+
+    char* buf = malloc((stat.size + 1) * sizeof(char));
+    uint64_t bytes_read = vfs_read(inode, buf, stat.size, 0);
+
+    DEBUG("bytes_read=%u", bytes_read);
+
+    elf_header_t* elf = elf_load(buf);
+
+    if (elf) {
+        typedef int callable(void);
+        callable* c = (callable*)(elf->entry);
+        c();
+    }
+
+    free(buf);
+
+    return 0;
 }
 
 void run_command(const char* command) {
@@ -279,7 +315,9 @@ void run_command(const char* command) {
     } else if (strncmp(command, "selftest", 8) == 0) {
         selftest();
     } else {
-        printf("invalid command\n");
+        if (!try_exec(command)) {
+            printf("invalid command\n");
+        }
     }
 }
 
