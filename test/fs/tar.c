@@ -109,6 +109,10 @@ int main() {
     assert(stat.size == 0, "sets a size of zero when inode is a directory");
     end_describe();
 
+    describe("tar_isatty()");
+    assert(vfs_isatty(root) == 0, "returns 0");
+    end_describe();
+
     free(tarfile);
     free(home);
     free(root);
