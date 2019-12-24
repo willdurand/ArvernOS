@@ -27,7 +27,7 @@ INITRD_TAR = $(KERNEL_DIR)/initrd.tar
 ASM_OBJECTS  := $(patsubst %.asm,%.o,$(shell find asm -name '*.asm'))
 LIBK_OBJECTS := $(patsubst %.c,%_k.o,$(shell find libs src -name '*.c'))
 LIBC_OBJECTS := $(patsubst %.c,%.o,$(shell find src/libc libs -name '*.c'))
-TEST_FILES 	 := $(patsubst test/%.c,%,$(shell find test -name '*.c'))
+TEST_FILES 	 := $(patsubst test/%.c,%,$(shell find test/libc -name '*.c'))
 
 GIT_HASH := $(shell git rev-parse --short HEAD)
 
@@ -127,6 +127,10 @@ test: libc
 		gcc -I./test/ -O0 test/$$file.c -o build/$$file ; \
 		LD_PRELOAD=./build/$$file.so ./build/$$file || exit 1 ; \
 	done
+	gcc -DENABLE_DEBUG_FOR_TEST -I./test -I./src/ -o $(BUILD_DIR)/tar test/fs/tar.c src/fs/tar.c src/fs/vfs.c
+	./$(BUILD_DIR)/tar
+	gcc -DENABLE_DEBUG_FOR_TEST -I./test -I./src/ -o $(BUILD_DIR)/vfs test/fs/vfs.c src/fs/vfs.c
+	./$(BUILD_DIR)/vfs
 .PHONY: test
 
 version: ## print tool versions

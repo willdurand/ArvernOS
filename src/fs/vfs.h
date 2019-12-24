@@ -5,13 +5,14 @@
 
 #define VFS_NAME_MAX_SIZE 256
 
-#define FS_MOUNT       0x1
-#define FS_FILE        0x2
-#define FS_DIRECTORY   0x3
-#define FS_CHARDEVICE  0x4
-#define FS_BLOCKDEVICE 0x5
-#define FS_PIPE        0x6
-#define FS_SYMLINK     0x7
+#define FS_MOUNTPOINT  0x01
+#define FS_FILE        0x02
+#define FS_DIRECTORY   0x04
+#define FS_CHARDEVICE  0x08
+#define FS_BLOCKDEVICE 0x10
+#define FS_PIPE        0x20
+#define FS_SYMLINK     0x40
+#define FS_MASK        0xFE
 
 struct vfs_node;
 
@@ -49,7 +50,7 @@ typedef struct vfs_node {
     inode_t younger;
     uint64_t type;
     vfs_driver_t* driver;
-    int entry;
+    int data;
 } vfs_node_t;
 
 void vfs_init();
@@ -68,5 +69,6 @@ inode_t vfs_mount(const char* path, inode_t root);
 inode_t vfs_namei(const char* path);
 inode_t vfs_umount(const char* path);
 void vfs_free(inode_t inode);
+int vfs_inode_type(inode_t inode);
 
 #endif

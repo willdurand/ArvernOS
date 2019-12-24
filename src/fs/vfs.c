@@ -87,9 +87,8 @@ uint64_t vfs_mkdir(inode_t inode, const char* name) {
 }
 
 dirent_t* vfs_readdir(inode_t inode, uint64_t num) {
-    if (inode->type & FS_MOUNT) {
-        DEBUG("%s is a mountpoint", inode->name);
-
+    // Support '.' and '..' special files in directories.
+    if (vfs_inode_type(inode) == FS_DIRECTORY) {
         if (num == 0) {
             dirent_t* ret = malloc(sizeof(dirent_t));
             ret->inode = inode;
@@ -111,7 +110,7 @@ dirent_t* vfs_readdir(inode_t inode, uint64_t num) {
 }
 
 inode_t vfs_finddir(inode_t inode, const char* name) {
-    if (inode->type & FS_MOUNT) {
+    if (vfs_inode_type(inode) == FS_DIRECTORY) {
         if (!strncmp(name, ".", strlen(name))) {
             return inode;
         } else if (!strncmp(name, "..", strlen(name))) {
@@ -190,18 +189,16 @@ inode_t vfs_find_root(char** path) {
 
 inode_t vfs_namei_mount(const char* path, inode_t root) {
     char* npath = strdup(path);
-    DEBUG("path=%s npath=%s", path, npath);
-
     char* pth = &npath[1];
-    DEBUG("pth=%s", pth);
 
     inode_t current = vfs_find_root(&pth);
-    DEBUG("current=%p current->name=%s pth=%s", current, current->name, pth);
 
     char* name;
 
     while (current && (name = strsep(&pth, "/")) && *name) {
         inode_t next = vfs_finddir(current, name);
+
+        DEBUG("name=%s next=%s", name, next->name);
 
         if (!next) {
             DEBUG("%s", "no next, returning 0");
@@ -242,7 +239,7 @@ inode_t vfs_namei_mount(const char* path, inode_t root) {
         }
 
         strcpy(root->name, current->name);
-        root->type |= FS_MOUNT;
+        root->type |= FS_MOUNTPOINT;
 
         if (current == vfs_root) {
             vfs_root = root;
@@ -281,4 +278,8 @@ void vfs_free(inode_t inode) {
     }
 
     free(inode);
+}
+
+int vfs_inode_type(inode_t inode) {
+    return inode->type & FS_MASK;
 }
