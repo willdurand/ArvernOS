@@ -133,7 +133,9 @@ inode_t tar_finddir(inode_t inode, const char* name) {
             header_name[strlen(header_name) - 1] = '\0';
         }
 
-        if (strncmp(fullpath, header_name, strlen(fullpath)) == 0) {
+        DEBUG("fullpath=%s header_name=%s", fullpath, header_name);
+
+        if (strncmp(fullpath, header_name, strlen(header_name)) == 0) {
             header = headers[i];
             node->data = i;
             free(header_name);
