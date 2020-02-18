@@ -1,6 +1,10 @@
 #ifndef _LIBALLOC_H
 #define _LIBALLOC_H
 
+/**
+ * Source code taken from https://github.com/blanham/liballoc 
+ */
+
 /** \defgroup ALLOCHOOKS liballoc hooks 
  *
  * These are the OS specific functions which need to 
