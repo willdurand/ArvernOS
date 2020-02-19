@@ -9,12 +9,12 @@ int64_t elf_do_reloc(elf_header_t *hdr, elf_rel_t *rel, elf_section_header_t *re
 
 static inline elf_section_header_t *elf_section_header(elf_header_t *header) {
 
-    return (elf_section_header_t *)(((uint64_t)header) + header->sh_offset);
+    return (elf_section_header_t *)((uint64_t)header + header->sh_offset);
 }
 
 static inline elf_section_header_t *elf_section(elf_header_t *header, int index) {
 
-    return &elf_section_header(header)[index];
+    return elf_section_header(header) + index;
 }
 
 static inline char *elf_str_table(elf_header_t *header) {
@@ -24,7 +24,7 @@ static inline char *elf_str_table(elf_header_t *header) {
         return NULL;
     }
 
-    return (char *)((void*)header + elf_section(header, header->strtab_index)->offset);
+    return (char *)((uint64_t)header + elf_section(header, header->strtab_index)->offset);
 }
 
 static inline char *elf_lookup_string(elf_header_t *header, int offset) {
@@ -131,7 +131,7 @@ elf_header_t* elf_load(uint8_t* data) {
 
     for(uint16_t i = 0; i < elf->sh_num; i++) {
 
-        elf_section_header_t *section = &sections[i];
+        elf_section_header_t *section = sections + i;
 
         char *name = section->name == 0 ? NULL : elf_lookup_string(elf, section->name);
 
@@ -155,9 +155,8 @@ elf_header_t* elf_load(uint8_t* data) {
                 DEBUG("%s", "Read Progbits");
 
                 memcpy(memory, (void *)((uint64_t)elf + section->offset), section->size);
-            }
 
-            if(section->type == ELF_SECTION_TYPE_NOBITS) {
+            } else if(section->type == ELF_SECTION_TYPE_NOBITS) {
 
                 memset(memory, 0, section->size);
             }
@@ -168,7 +167,7 @@ elf_header_t* elf_load(uint8_t* data) {
 
     for(uint16_t i = 0; i < elf->sh_num; i++) {
 
-        elf_section_header_t *section = &sections[i];
+        elf_section_header_t *section = sections + i;
 
         DEBUG("Phase 2 processing section %d (type: %d)", i, section->type);
 
@@ -212,6 +211,51 @@ elf_header_t* elf_load(uint8_t* data) {
     DEBUG("elf entry is now at: %p", elf->entry);
 
     return elf;
+}
+
+void elf_unload(elf_header_t *elf) {
+
+    DEBUG("%s", "Unloading an elf file");
+
+    elf_section_header_t *sections = elf_section_header(elf);
+
+    for(uint16_t i = 0; i < elf->sh_num; i++) {
+
+        elf_section_header_t *section = &sections[i];
+
+        if(section->flags & ELF_SECTION_FLAG_ALLOC && section->size > 0) {
+
+            char *name = section->name == 0 ? NULL : elf_lookup_string(elf, section->name);
+
+            if(name == NULL) {
+
+                name = "(Unknown)";
+            }
+
+            DEBUG(
+                "Freeing section %d (name: %d (\"%s\"), type: %d)",
+                i, section, section->name, name, section->type);
+
+            free((void*)section->addr);
+        }
+    }
+    
+    elf_program_header_t* program_header = (elf_program_header_t*)((uint64_t)elf + elf->ph_offset);
+
+    for (uint16_t i = 0; i < elf->ph_num; i++) {
+
+        if (program_header[i].type == ELF_PROGRAM_TYPE_LOAD) {
+
+            DEBUG(
+                "Unmapping program header: type=%d addr=%p",
+                program_header[i].type,
+                program_header[i].virtual_address
+            );
+
+
+            unmap(page_containing_address(program_header[i].virtual_address));
+        }
+    }
 }
 
 int is_elf(elf_header_t* elf) {
