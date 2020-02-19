@@ -14,7 +14,7 @@ static inline elf_section_header_t *elf_section_header(elf_header_t *header) {
 
 static inline elf_section_header_t *elf_section(elf_header_t *header, int index) {
 
-    return elf_section_header(header) + index;
+    return &elf_section_header(header)[index];
 }
 
 static inline char *elf_str_table(elf_header_t *header) {
@@ -131,7 +131,7 @@ elf_header_t* elf_load(uint8_t* data) {
 
     for(uint16_t i = 0; i < elf->sh_num; i++) {
 
-        elf_section_header_t *section = sections + i;
+        elf_section_header_t *section = &sections[i];
 
         char *name = section->name == 0 ? NULL : elf_lookup_string(elf, section->name);
 
@@ -168,7 +168,7 @@ elf_header_t* elf_load(uint8_t* data) {
 
     for(uint16_t i = 0; i < elf->sh_num; i++) {
 
-        elf_section_header_t *section = sections + i;
+        elf_section_header_t *section = &sections[i];
 
         DEBUG("Phase 2 processing section %d (type: %d)", i, section->type);
 
