@@ -142,7 +142,7 @@ elf_header_t* elf_load(uint8_t* data) {
 
         DEBUG(
             "Phase 1 processing section %d (name: %d (\"%s\"), type: %d)",
-            i, section, section->name, name, section->type);
+            i, section->name, name, section->type);
 
         if(section->flags & ELF_SECTION_FLAG_ALLOC && section->size > 0) {
 
