@@ -71,8 +71,12 @@ void load_segment(uint64_t* data, elf_program_header_t* program_header) {
 
     uint32_t flags = PAGING_FLAG_PRESENT;
 
-    if (program_header->flags & ELF_PT_W) {
+    if (program_header->flags & ELF_PROGRAM_FLAG_W) {
         flags |= PAGING_FLAG_WRITABLE;
+    }
+
+    if(!(program_header->flags & ELF_PROGRAM_FLAG_X)) {
+        flags |= PAGING_FLAG_NO_EXECUTE;
     }
 
     DEBUG("load segment at addr=%p with flags=%#x", addr, flags);

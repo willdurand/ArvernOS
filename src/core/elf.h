@@ -3,6 +3,7 @@
 #define CORE_ELF_H
 
 #include <stdint.h>
+#include <stdlib.h>
 
 #define ELF_TYPE_NONE               0 //No file type
 #define ELF_TYPE_REL                1 //Relocatable object file
@@ -19,10 +20,18 @@
 #define ELF_PROGRAM_TYPE_DYNAMIC    2 //Dynamic linking tables
 #define ELF_PROGRAM_TYPE_INTERP     3 //Program interpreter path name
 #define ELF_PROGRAM_TYPE_NOTE       4 //Note sections
+#define ELF_PROGRAM_TYPE_SHLIB      5 //Reserved
+#define ELF_PROGRAM_TYPE_PHDR       6 //Program header table
+#define ELF_PROGRAM_TYPE_LOOS       0x60000000 //Environment-specific use
+#define ELF_PROGRAM_TYPE_HIOS       0x6FFFFFFF //Environment-specific use
+#define ELF_PROGRAM_TYPE_LOPROC     0x70000000 //Processor-specific use
+#define ELF_PROGRAM_TYPE_HIPROC     0x7FFFFFFF //Processor-specific use
 
-#define ELF_PT_X 0x1
-#define ELF_PT_R 0x2
-#define ELF_PT_W 0x4
+#define ELF_PROGRAM_FLAG_X          0x1 //Execute permission
+#define ELF_PROGRAM_FLAG_W          0x2 //Write permission
+#define ELF_PROGRAM_FLAG_R          0x4 //Read permission
+#define ELF_PROGRAM_FLAG_MASKOS     0x00FF0000 //Reserved for enviroment-specific use
+#define ELF_PROGRAM_FLAG_MASKPROC   0xFF000000 //Reserved for processor-specific use
 
 #define ELF_ID_MAG0                 0 //File identification
 #define ELF_ID_MAG1                 1 //File identification
@@ -73,9 +82,81 @@
 #define ELF_SECTION_FLAG_MASKOS     0x0F000000 //Environment-specific use
 #define ELF_SECTION_FLAG_MASKPROC   0xF0000000 //Processor-specific use
 
+#define ELF_SYMBOL_BINDING_LOCAL    0 //Not visible outside of the object file
+#define ELF_SYMBOL_BINDING_GLOBAL   1 //Global symbol
+#define ELF_SYMBOL_BINDING_WEAK     2 //Global scope, but lower precedence than global symbols
+#define ELF_SYMBOL_BINDING_LOOS     10 //Environment-specific use
+#define ELF_SYMBOL_BINDING_HIOS     12 //Environment-specific use
+#define ELF_SYMBOL_BINDING_LOPROC   13 //Processor-specific use
+#define ELF_SYMBOL_BINDING_HIPROC   15 //Processor-specific use
+
+#define ELF_SYMBOL_TYPE_NOTYPE      0 //No type specified (e.g., absolute symbol)
+#define ELF_SYMBOL_TYPE_OBJECT      1 //Data Object
+#define ELF_SYMBOL_TYPE_FUNC        2 //Function entry point
+#define ELF_SYMBOL_TYPE_SECTION     3 //Associated with a section
+#define ELF_SYMBOL_TYPE_FILE        4 //Source file associated with the object
+#define ELF_SYMBOL_TYPE_LOOS        10 //Environment-specific use
+#define ELF_SYMBOL_TYPE_HIOS        12 //Environment-specific use
+#define ELF_SYMBOL_TYPE_LOPROC      13 //Processor-specific use
+#define ELF_SYMBOL_TYPE_HIPROC      15 //Processor-specific use
+
+#define ELF_DYNAMIC_TABLE_TYPE_NULL     0 //End of dynamic array
+#define ELF_DYNAMIC_TABLE_TYPE_NEEDED   1 //String table offset of a needed library (val)
+#define ELF_DYNAMIC_TABLE_TYPE_PLTRELSZ 2 //Size, in bytes, of the relocation entries associated with the process linkage (val)
+#define ELF_DYNAMIC_TABLE_TYPE_PLTGOT   3 //Address associated with the linkage table. Specific meaning is processor-dependent. (ptr)
+#define ELF_DYNAMIC_TABLE_TYPE_HASH     4 //Address of the symbol hash table (ptr)
+#define ELF_DYNAMIC_TABLE_TYPE_STRTAB   5 //Address of the dynamic string table (ptr)
+#define ELF_DYNAMIC_TABLE_TYPE_SYMTAB   6 //Address of the dynamic symbol table (ptr)
+#define ELF_DYNAMIC_TABLE_TYPE_RELA     7 //Address of a relocation table with Rela entries (ptr)
+#define ELF_DYNAMIC_TABLE_TYPE_RELASZ   8 //Size, in bytes, of the Rela relocation table (val)
+#define ELF_DYNAMIC_TABLE_TYPE_RELAENT  9 //Size, in bytes, of each Rela relocation entry (val)
+#define ELF_DYNAMIC_TABLE_TYPE_STRSZ    10 //Size, in bytes, of the string table (val)
+#define ELF_DYNAMIC_TABLE_TYPE_SYMENT   11 //Size, in bytes, of each symbol entry (val)
+#define ELF_DYNAMIC_TABLE_TYPE_INIT     12 //Address of the initialization function (ptr)
+#define ELF_DYNAMIC_TABLE_TYPE_FINI     13 //Address of the termination function (ptr)
+#define ELF_DYNAMIC_TABLE_TYPE_SONAME   14 //String table offset to the name of this shared object (val)
+#define ELF_DYNAMIC_TABLE_TYPE_RPATH    15 //String table offset to the shared library search path string (val)
+
+//The presence of this dynamic table entry modifies the
+//symbol resolution algorithm for references within the
+//library. Symbols defined within the library are used to
+//resolve references before the dynamic linker searches the
+//usual search path.
+#define ELF_DYNAMIC_TABLE_TYPE_SYMBOLIC 16
+
+#define ELF_DYNAMIC_TABLE_TYPE_REL      17 //Address of a relocation table with Rel entries (ptr)
+#define ELF_DYNAMIC_TABLE_TYPE_RELSZ    18 //Size, in bytes, of the Rel relocation table (val)
+#define ELF_DYNAMIC_TABLE_TYPE_RELENT   19 //Size, in bytes, of each Rel relocation entry (val)
+#define ELF_DYNAMIC_TABLE_TYPE_PLTREL   20 //Type of relocation entry used for the procedure linkage table. The val member contains either TABLE_TYPE_REL or TABLE_TYPE_RELA.
+#define ELF_DYNAMIC_TABLE_TYPE_DEBUG    21 //Reserved for debug usage (ptr)
+
+//The presence of this dynamic table entry signals that the
+//relocation table contains relocations for a non-writable
+//segment.
+#define ELF_DYNAMIC_TABLE_TYPE_TEXTREL  22 
+
+#define ELF_DYNAMIC_TABLE_TYPE_JMPREL   23 //Address of the relocations associated with the procedure linkage table (ptr)
+
+//The presence of this dynamic table entry signals that the
+//dynamic loader should process all relocations for this object
+//before transferring control to the program.
+#define ELF_DYNAMIC_TABLE_TYPE_BIND_NOW 24
+
+#define ELF_DYNAMIC_TABLE_TYPE_INIT_ARRAY   25 //Pointer to an array of pointers to initialization functions (ptr)
+#define ELF_DYNAMIC_TABLE_TYPE_FINI_ARRAY   26 //Pointer to an array of pointers to termination functions (ptr)
+#define ELF_DYNAMIC_TABLE_TYPE_INIT_ARRAYSZ 27 //Size, in bytes, of the array of initialization functions (val)
+#define ELF_DYNAMIC_TABLE_TYPE_FINI_ARRAYSZ 28 //Size, in bytes, of the array of termination functions (val)
+#define ELF_DYNAMIC_TABLE_TYPE_LOOS         0x60000000 //Defines a range of dynamic table tags that are reserved for environment-specific use
+#define ELF_DYNAMIC_TABLE_TYPE_HIOS         0x6FFFFFFF //Defines a range of dynamic table tags that are reserved for environment-specific use
+#define ELF_DYNAMIC_TABLE_TYPE_LOPROC       0x70000000 //Defines a range of dynamic table tags that are reserved for processor-specific use.
+#define ELF_DYNAMIC_TABLE_TYPE_HIPROC       0x7FFFFFFF //Defines a range of dynamic table tags that are reserved for processor-specific use.
+
 #define ELF_R_SYM(i) ((i) >> 32)
 #define ELF_R_TYPE ((i) & 0xFFFFFFFFL)
 #define ELF_R_INFO(s, t) (((s) << 32) + ((t) & 0xFFFFFFFFL))
+
+# define ELF_SYMBOL_BIND(INFO)	((INFO) >> 4)
+# define ELF_SYMBOL_TYPE(INFO)	((INFO) & 0x0F)
 
 typedef struct elf_header {
 
@@ -149,6 +230,114 @@ typedef struct elf_program_header {
 
 } __attribute__((packed)) elf_program_header_t;
 
+typedef struct elf_dyn {
+
+    int64_t tag; //Type of dynamic entry
+    union {
+
+        uint64_t value; //Represents int values
+        uint64_t ptr; //Represents virtual addresses
+    } un; 
+
+} __attribute__((packed)) elf_dyn_t;
+
+
+
 elf_header_t* elf_load(uint64_t* data);
 
+static inline elf_section_header_t *elf_section_header(elf_header_t *header) {
+
+    return (elf_section_header_t *)((uint64_t)header + header->sh_offset);
+}
+
+static inline elf_section_header_t *elf_section(elf_header_t *header, int index) {
+
+    return &elf_section_header(header)[index];
+}
+
+static inline char *elf_str_table(elf_header_t *header) {
+
+    if(header->strtab_index == ELF_SECTION_INDEX_UNDEFINED) {
+
+        return NULL;
+    }
+
+    return (char*)header + elf_section(header, header->strtab_index)->offset;
+}
+
+static inline char *elf_lookup_string(elf_header_t *header, int offset) {
+
+	char *strtab = elf_str_table(header);
+
+	if(strtab == NULL) {
+
+        return NULL;
+
+    }
+
+	return strtab + offset;
+}
+static int elf_get_symval(elf_header_t *header, int table, uint32_t index) {
+
+	if(table == ELF_SECTION_INDEX_UNDEFINED || index == ELF_SECTION_INDEX_UNDEFINED) {
+        
+        return 0;
+    }
+
+	elf_section_header_t *symtab = elf_section(header, table);
+ 
+	uint32_t symtab_entries = symtab->size / symtab->entsize;
+	if(index >= symtab_entries) {
+
+		DEBUG("Symbol Index out of Range (%d:%u).\n", table, index);
+
+		return 0;
+	}
+ 
+	int symaddr = (uint64_t)header + symtab->offset;
+
+	elf_symbol_t *symbol = &((elf_symbol_t *)symaddr)[index];
+
+	if(symbol->sectionTableIndex == ELF_SECTION_INDEX_UNDEFINED) {
+
+		// External symbol, lookup value
+		elf_section_header_t *strtab = elf_section(header, symtab->link);
+		const char *name = (const char *)header + strtab->offset + symbol->name;
+ 
+		extern void *elf_lookup_symbol(const char *name);
+		void *target = elf_lookup_symbol(name);
+ 
+		if(target == NULL) {
+            
+			// Extern symbol not found
+			if(ELF_SYMBOL_BIND(symbol->info) & ELF_SYMBOL_BINDING_WEAK) {
+
+				// Weak symbol initialized as 0
+				return 0;
+
+			} else {
+
+				DEBUG("Undefined External Symbol : %s.\n", name);
+
+				return 0;
+			}
+
+		} else {
+
+			return (int)target;
+		}
+
+	} else if(symbol->sectionTableIndex == ELF_SECTION_INDEX_ABS) {
+
+		// Absolute symbol
+		return symbol->value;
+
+	} else {
+
+		// Internally defined symbol
+		elf_section_header_t *target = elf_section(header, symbol->sectionTableIndex);
+
+		return (int)header + symbol->value + target->offset;
+	}
+}
 #endif
