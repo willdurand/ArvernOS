@@ -72,7 +72,7 @@ void* liballoc_alloc(int number_of_pages) {
 
     MMU_DEBUG("allocated %d pages at addr=%p", number_of_pages, addr);
 
-    return addr;
+    return (void *)addr;
 }
 
 int liballoc_free(void* ptr, int number_of_pages) {

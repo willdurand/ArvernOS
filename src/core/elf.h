@@ -244,4 +244,6 @@ typedef struct elf_dyn {
 } __attribute__((packed)) elf_dyn_t;
 
 elf_header_t* elf_load(uint8_t* data);
+
+void elf_unload(elf_header_t *elf);
 #endif

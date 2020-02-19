@@ -284,6 +284,8 @@ int try_exec(const char* command) {
         typedef int callable(void);
         callable* c = (callable*)(elf->entry);
         c();
+
+        elf_unload(elf);
     }
 
     free(buf);
