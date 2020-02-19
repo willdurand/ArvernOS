@@ -294,10 +294,10 @@ int64_t elf_do_reloc(elf_header_t *hdr, elf_rel_t *rel, elf_section_header_t *re
 
 	if(ELF_R_SYM(rel->info) != ELF_SECTION_INDEX_UNDEFINED) {
 
-		symval = elf_get_symval(hdr, reltab->link, ELF_R_SYM(rel->info));
+        symval = elf_get_symval(hdr, reltab->link, ELF_R_SYM(rel->info));
 
-		if(symval == ELF_RELOC_ERR) {
-            
+        if(symval == ELF_RELOC_ERR) {
+
             return ELF_RELOC_ERR;
         }
 	}
@@ -305,45 +305,45 @@ int64_t elf_do_reloc(elf_header_t *hdr, elf_rel_t *rel, elf_section_header_t *re
 	// Relocate based on type
 	switch(ELF_R_TYPE(rel->info)) {
 
-		case R_AMD64_NONE:
+        case R_AMD64_NONE:
 
-			// No relocation
-			break;
+            // No relocation
+            break;
 
-		case R_AMD64_64:
+        case R_AMD64_64:
 
-			// Symbol + Offset
-			*ref = DO_AMD64_64(symval, *ref);
+            // Symbol + Offset
+            *ref = DO_AMD64_64(symval, *ref);
 
-			break;
+            break;
 
-		case R_AMD64_32:
+        case R_AMD64_32:
 
-			// Symbol + Offset
-			*ref = DO_AMD64_32(symval, *ref);
+            // Symbol + Offset
+            *ref = DO_AMD64_32(symval, *ref);
 
-			break;
+            break;
 
-		case R_AMD64_PC64:
+        case R_AMD64_PC64:
 
-			// Symbol + Offset - Section Offset
-			*ref = DO_AMD64_PC64(symval, *ref, (int64_t)ref);
+            // Symbol + Offset - Section Offset
+            *ref = DO_AMD64_PC64(symval, *ref, (int64_t)ref);
 
-			break;
+            break;
 
-		case R_AMD64_PC32:
+        case R_AMD64_PC32:
 
-			// Symbol + Offset - Section Offset
-			*ref = DO_AMD64_PC32(symval, *ref, (int64_t)ref);
+            // Symbol + Offset - Section Offset
+            *ref = DO_AMD64_PC32(symval, *ref, (int64_t)ref);
 
-			break;
+            break;
 
-		default:
+        default:
 
-			// Relocation type not supported, display error and return
-			DEBUG("Unsupported Relocation Type (%d).\n", ELF_R_TYPE(rel->info));
+            // Relocation type not supported, display error and return
+            DEBUG("Unsupported Relocation Type (%d).\n", ELF_R_TYPE(rel->info));
 
-			return ELF_RELOC_ERR;
+            return ELF_RELOC_ERR;
 	}
 
 	return symval;
