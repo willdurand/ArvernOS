@@ -152,11 +152,13 @@
 #define ELF_DYNAMIC_TABLE_TYPE_HIPROC       0x7FFFFFFF //Defines a range of dynamic table tags that are reserved for processor-specific use.
 
 #define ELF_R_SYM(i) ((i) >> 32)
-#define ELF_R_TYPE ((i) & 0xFFFFFFFFL)
+#define ELF_R_TYPE(i) ((i) & 0xFFFFFFFFL)
 #define ELF_R_INFO(s, t) (((s) << 32) + ((t) & 0xFFFFFFFFL))
 
-# define ELF_SYMBOL_BIND(INFO)	((INFO) >> 4)
-# define ELF_SYMBOL_TYPE(INFO)	((INFO) & 0x0F)
+#define ELF_SYMBOL_BIND(INFO)	((INFO) >> 4)
+#define ELF_SYMBOL_TYPE(INFO)	((INFO) & 0x0F)
+
+#define ELF_RELOC_ERR -1
 
 typedef struct elf_header {
 
@@ -241,103 +243,5 @@ typedef struct elf_dyn {
 
 } __attribute__((packed)) elf_dyn_t;
 
-
-
 elf_header_t* elf_load(uint64_t* data);
-
-static inline elf_section_header_t *elf_section_header(elf_header_t *header) {
-
-    return (elf_section_header_t *)((uint64_t)header + header->sh_offset);
-}
-
-static inline elf_section_header_t *elf_section(elf_header_t *header, int index) {
-
-    return &elf_section_header(header)[index];
-}
-
-static inline char *elf_str_table(elf_header_t *header) {
-
-    if(header->strtab_index == ELF_SECTION_INDEX_UNDEFINED) {
-
-        return NULL;
-    }
-
-    return (char*)header + elf_section(header, header->strtab_index)->offset;
-}
-
-static inline char *elf_lookup_string(elf_header_t *header, int offset) {
-
-	char *strtab = elf_str_table(header);
-
-	if(strtab == NULL) {
-
-        return NULL;
-
-    }
-
-	return strtab + offset;
-}
-static int elf_get_symval(elf_header_t *header, int table, uint32_t index) {
-
-	if(table == ELF_SECTION_INDEX_UNDEFINED || index == ELF_SECTION_INDEX_UNDEFINED) {
-        
-        return 0;
-    }
-
-	elf_section_header_t *symtab = elf_section(header, table);
- 
-	uint32_t symtab_entries = symtab->size / symtab->entsize;
-	if(index >= symtab_entries) {
-
-		DEBUG("Symbol Index out of Range (%d:%u).\n", table, index);
-
-		return 0;
-	}
- 
-	int symaddr = (uint64_t)header + symtab->offset;
-
-	elf_symbol_t *symbol = &((elf_symbol_t *)symaddr)[index];
-
-	if(symbol->sectionTableIndex == ELF_SECTION_INDEX_UNDEFINED) {
-
-		// External symbol, lookup value
-		elf_section_header_t *strtab = elf_section(header, symtab->link);
-		const char *name = (const char *)header + strtab->offset + symbol->name;
- 
-		extern void *elf_lookup_symbol(const char *name);
-		void *target = elf_lookup_symbol(name);
- 
-		if(target == NULL) {
-            
-			// Extern symbol not found
-			if(ELF_SYMBOL_BIND(symbol->info) & ELF_SYMBOL_BINDING_WEAK) {
-
-				// Weak symbol initialized as 0
-				return 0;
-
-			} else {
-
-				DEBUG("Undefined External Symbol : %s.\n", name);
-
-				return 0;
-			}
-
-		} else {
-
-			return (int)target;
-		}
-
-	} else if(symbol->sectionTableIndex == ELF_SECTION_INDEX_ABS) {
-
-		// Absolute symbol
-		return symbol->value;
-
-	} else {
-
-		// Internally defined symbol
-		elf_section_header_t *target = elf_section(header, symbol->sectionTableIndex);
-
-		return (int)header + symbol->value + target->offset;
-	}
-}
 #endif
