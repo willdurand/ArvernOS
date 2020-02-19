@@ -319,6 +319,7 @@ int try_exec(const char* command) {
         callable* c = (callable*)(elf->entry);
         c();
 
+        //TODO
         //elf_unload(elf);
     }
 

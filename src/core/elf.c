@@ -130,10 +130,12 @@ elf_header_t* elf_load(uint8_t* data) {
 
     elf_section_header_t* sections = elf_section_header(elf);
 
+    //We need two phases to load all the sections before loading the program code
     for (uint16_t i = 0; i < elf->sh_num; i++) {
 
         elf_section_header_t* section = sections + i;
 
+        //Try to get the section's name
         char* name = section->name == 0 ? NULL : elf_lookup_string(elf, section->name);
 
         if (name == NULL) {
@@ -144,12 +146,14 @@ elf_header_t* elf_load(uint8_t* data) {
         DEBUG("Phase 1 processing section %d (name: %d (\"%s\"), type: %d, flags: %#lld)", i,
             section->name, name, section->type, section->flags);
 
+        //First we allocate each section that requires allocation and has a valid size
         if (section->flags & ELF_SECTION_FLAG_ALLOC && section->size > 0) {
 
             void* memory = malloc(section->size);
 
             DEBUG("Allocated memory for this section (%lld bytes).\n", section->size);
 
+            //If we're progbits, we're supposed to copy the memory in this section
             if (section->type == ELF_SECTION_TYPE_PROGBITS) {
 
                 DEBUG("%s", "Read Progbits for this section");
@@ -157,26 +161,48 @@ elf_header_t* elf_load(uint8_t* data) {
                 memcpy(memory, (void*)((uint64_t)elf + section->offset),
                     section->size);
 
-            } else if (section->type == ELF_SECTION_TYPE_NOBITS) {
+            } else if (section->type == ELF_SECTION_TYPE_NOBITS) { //If we're nobits, we're supposed to be zero-inited
 
                 DEBUG("%s", "Zero-memory'd this section");
 
                 memset(memory, 0, section->size);
             }
 
-            section->addr = (uint64_t)memory;
+            section->addr = (uint64_t)memory; //Store the local memory for safe-keeping
+        }
+        else if(section->type == ELF_SECTION_TYPE_SYMTAB || section->type == ELF_SECTION_TYPE_STRTAB) {
+
+            DEBUG("%s", "Loading Symbol or String table");
+
+            elf_symbol_t *table = (elf_symbol_t*)malloc(section->size);
+
+            memcpy(table, data + section->offset, section->size);
+
+            section->addr = (uint64_t)table;
         }
     }
 
+    //Phase 2
     for (uint16_t i = 0; i < elf->sh_num; i++) {
 
         elf_section_header_t* section = sections + i;
 
         DEBUG("Phase 2 processing section %d (type: %d)", i, section->type);
 
-        if (section->type == ELF_SECTION_TYPE_REL) {
+        //Handle relocations
+        if(section->type == ELF_SECTION_TYPE_REL) {
 
-            DEBUG("Relocating %d elements", section->size / section->entsize);
+            int entry_count = section->size / section->entsize;
+
+            if (section->entsize != sizeof(elf_rel_t)) {
+
+                DEBUG("%s", "Section entry size doesn't match rel_t size");
+
+                //TODO: Cleanup
+                return NULL;
+            }
+
+            DEBUG("Relocating %d elements in REL section", entry_count);
 
             for (uint64_t index = 0; index < section->size / section->entsize; index++) {
 
@@ -190,6 +216,89 @@ elf_header_t* elf_load(uint8_t* data) {
 
                     // TODO: Cleanup
                     return NULL;
+                }
+            }
+
+        } else if (section->type == ELF_SECTION_TYPE_RELA) {
+
+            int entry_count = section->size / section->entsize;
+
+            if(section->entsize != sizeof(elf_rela_t)) {
+
+                DEBUG("%s", "Section entry size doesn't match rela_t size");
+
+                //TODO: Cleanup
+                return NULL;
+            }
+
+            DEBUG("Relocating %d elements in RELA section", entry_count);
+
+            elf_rela_t *entries = (elf_rela_t *)malloc(section->size);
+
+            section->addr = (uint64_t)entries;
+
+            memcpy(entries, data + section->offset, section->size);
+
+            //Get the section we're relocating
+            elf_section_header_t *relocation_section = elf_section(elf, section->info);
+            char *relocation_data = (char *)relocation_section->addr;
+
+            //Get the symbol table for this relocation table
+            elf_section_header_t *symbol_table_section = elf_section(elf, section->link);
+            elf_symbol_t *symbol_table = (elf_symbol_t *)symbol_table_section->addr;
+
+            //Get the string table for the symbol table
+            elf_section_header_t *string_table_section = elf_section(elf, symbol_table_section->link);
+            char *string_table = (char *)string_table_section->addr;
+
+            //Relocate all entries
+            for(uint64_t index = 0; index < entry_count; index++) {
+
+                elf_rela_t *entry = entries + index;
+
+                //Get the symbol for this entry
+                elf_symbol_t *symbol = symbol_table + entry->symbol;
+                char *symbol_name = string_table + symbol->name;
+
+                if(entry->type == ELF_REL_TYPE_64) {
+
+                    uint64_t *location = (uint64_t *)relocation_data + entry->offset;
+
+                    if(symbol->sectionTableIndex > 0) {
+
+                        if (symbol->name != 0) {
+
+                            DEBUG("Relocating symbol %s", symbol_name);
+
+                        } else {
+
+                            elf_section_header_t* string_table = elf_section(elf, elf->strtab_index);
+                            elf_section_header_t* section = elf_section(elf, symbol->sectionTableIndex);
+
+                            DEBUG("Relocating symbol %s+%lld", ((char*)string_table->addr) + section->name, entry->addend);
+                        }
+
+                        //Find the symbol
+                        elf_section_header_t* symbol_section = elf_section(elf, symbol->sectionTableIndex);
+                        uint64_t symbol_value = symbol_section->addr + symbol->value + entry->addend;
+
+                        //Store the location
+                        *location = symbol_value;
+
+                    } else {
+
+                        DEBUG("Unknown symbol %s", symbol_name);
+
+                        //TODO: Cleanup
+
+                        return NULL;
+                    }
+
+                } else {
+
+                    DEBUG("Unknown relocation type: %d\n", entry->type);
+
+                    return 1;
                 }
             }
         }
