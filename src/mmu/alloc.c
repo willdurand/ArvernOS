@@ -64,9 +64,6 @@ void* liballoc_alloc(int number_of_pages) {
     }
 
     uint64_t addr = page_start_address(heap_start_page + first_free_page);
-    // TODO: I am actually not sure about this, but that should not hurt I
-    // guess.
-    void* ptr = memset((void*)addr, 0, (first_free_page - 1) * PAGE_SIZE);
 
     for (uint64_t i = 0; i < number_of_pages; i++) {
         bitmap_set(allocated_pages, first_free_page + i);
@@ -75,7 +72,7 @@ void* liballoc_alloc(int number_of_pages) {
 
     MMU_DEBUG("allocated %d pages at addr=%p", number_of_pages, addr);
 
-    return ptr;
+    return addr;
 }
 
 int liballoc_free(void* ptr, int number_of_pages) {

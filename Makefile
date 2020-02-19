@@ -52,13 +52,11 @@ $(ASM_OBJECTS): %.o: %.asm
 	mkdir -p $(BUILD_DIR)
 	$(NASM) -f elf64 $<
 
-$(LIBK_OBJECTS): CFLAGS += -D__is_libk
 $(LIBK_OBJECTS): %_k.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -D__is_libk -c $< -o $@
 
-$(LIBC_OBJECTS): CFLAGS += -D__is_libc
 $(LIBC_OBJECTS): %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -D__is_libc -c $< -o $@
 
 $(LIBK): $(LIBK_OBJECTS)
 	mkdir -p $(BUILD_DIR)
@@ -89,7 +87,7 @@ run: $(ISO)
 debug: ## build and run the OS in debug mode
 debug: CFLAGS += $(DEBUG_CFLAGS)
 debug: $(ISO)
-	$(QEMU) -cdrom $< -serial file:/tmp/serial.log
+	$(QEMU) -cdrom $< -serial file:/tmp/serial.log -m 1G
 .PHONY: debug
 
 clean: ## remove build artifacts

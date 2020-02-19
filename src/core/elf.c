@@ -4,17 +4,17 @@
 #include <string.h>
 
 int is_elf(elf_header_t* elf);
-void load_segment(uint64_t* data, elf_program_header_t* program_header);
+void load_segment(uint8_t* data, elf_program_header_t* program_header);
 int64_t elf_do_reloc(elf_header_t *hdr, elf_rel_t *rel, elf_section_header_t *reltab);
 
 static inline elf_section_header_t *elf_section_header(elf_header_t *header) {
 
-    return (elf_section_header_t *)((uint64_t)header + header->sh_offset);
+    return (elf_section_header_t *)(((uint64_t)header) + header->sh_offset);
 }
 
 static inline elf_section_header_t *elf_section(elf_header_t *header, int index) {
 
-    return &elf_section_header(header)[index];
+    return elf_section_header(header) + index;
 }
 
 static inline char *elf_str_table(elf_header_t *header) {
@@ -24,7 +24,7 @@ static inline char *elf_str_table(elf_header_t *header) {
         return NULL;
     }
 
-    return (char*)header + elf_section(header, header->strtab_index)->offset;
+    return (char *)((void*)header + elf_section(header, header->strtab_index)->offset);
 }
 
 static inline char *elf_lookup_string(elf_header_t *header, int offset) {
@@ -34,7 +34,6 @@ static inline char *elf_lookup_string(elf_header_t *header, int offset) {
 	if(strtab == NULL) {
 
         return NULL;
-
     }
 
 	return strtab + offset;
@@ -110,7 +109,7 @@ static int64_t elf_get_symval(elf_header_t *header, int table, uint32_t index) {
 	}
 }
 
-elf_header_t* elf_load(uint64_t* data) {
+elf_header_t* elf_load(uint8_t* data) {
 
     elf_header_t* elf = (elf_header_t*)data;
 
@@ -123,39 +122,55 @@ elf_header_t* elf_load(uint64_t* data) {
 
     DEBUG(
         "file header: machine=%#x version=%#x type=%d entry=%p header_size=%u "
-        "ph_size=%u ph_num=%d ph_offset=%u sh_size=%u sh_num=%d",
+        "ph_size=%u ph_num=%d ph_offset=%llu sh_size=%u sh_num=%d sh_offset=%llu strtab_index=%d",
         elf->machine, elf->version, elf->type, elf->entry, elf->header_size, elf->ph_size,
-        elf->ph_num, elf->ph_offset, elf->sh_size, elf->sh_num
+        elf->ph_num, elf->ph_offset, elf->sh_size, elf->sh_num, elf->sh_offset, elf->strtab_index
     );
 
     elf_section_header_t *sections = elf_section_header(elf);
 
-    for(uint64_t i = 0; i < elf->sh_num; i++) {
+    for(uint16_t i = 0; i < elf->sh_num; i++) {
 
-        elf_section_header_t *section = &sections[i];
+        elf_section_header_t *section = sections + i;
 
-        if(section->type == ELF_SECTION_TYPE_NOBITS) {
+        char *name = section->name == 0 ? NULL : elf_lookup_string(elf, section->name);
 
-            if(section->size == 0) {
+        if(name == NULL) {
 
-                continue;
+            name = "(Unknown)";
+        }
+
+        DEBUG(
+            "Phase 1 processing section %d (name: %d (\"%s\"), type: %d)",
+            i, section, section->name, name, section->type);
+
+        if(section->flags & ELF_SECTION_FLAG_ALLOC && section->size > 0) {
+
+            void *memory = malloc(section->size);
+
+            DEBUG("Allocated memory for this section (%lld bytes).\n", section->size);
+
+            if(section->type == ELF_SECTION_TYPE_PROGBITS) {
+
+                DEBUG("%s", "Read Progbits");
+
+                memcpy(memory, (void *)((uint64_t)elf + section->offset), section->size);
             }
 
-            if(section->flags & ELF_SECTION_FLAG_ALLOC) {
+            if(section->type == ELF_SECTION_TYPE_NOBITS) {
 
-                void *memory = malloc(section->size);
                 memset(memory, 0, section->size);
-
-                section->offset = (int64_t)memory - (int64_t)elf;
-
-                DEBUG("Allocated memory for a section (%lld bytes).\n", section->size);
             }
+
+            section->addr = (uint64_t)memory;
         }
     }
 
-    for(uint64_t i = 0; i < elf->sh_num; i++) {
+    for(uint16_t i = 0; i < elf->sh_num; i++) {
 
-        elf_section_header_t *section = &sections[i];
+        elf_section_header_t *section = sections + i;
+
+        DEBUG("Phase 2 processing section %d (type: %d)", i, section->type);
 
         if(section->type == ELF_SECTION_TYPE_REL) {
 
@@ -176,9 +191,11 @@ elf_header_t* elf_load(uint64_t* data) {
         }
     }
 
+    DEBUG("%s", "Phase 3 processing program headers");
+
     elf_program_header_t* program_header = (elf_program_header_t*)((uint64_t)data + elf->ph_offset);
 
-    for (uint64_t i = 0; i < elf->ph_num; i++) {
+    for (uint16_t i = 0; i < elf->ph_num; i++) {
 
         DEBUG(
             "program header: type=%d addr=%p",
@@ -204,6 +221,30 @@ int is_elf(elf_header_t* elf) {
     if ((elf->identity[0] == 0x7f) && !strncmp((char*)&elf->identity[1], "ELF", 3)) {
 
         iself = 0;
+    }
+
+    if(iself == 0) {
+
+        DEBUG("%s", "validating elf structs");
+
+        if(elf->header_size != sizeof(elf_header_t)) {
+
+            DEBUG("%s", "Invalid elf header size");
+
+            iself = -1;
+
+        } else if(elf->ph_size != sizeof(elf_program_header_t)) {
+
+            DEBUG("%s", "Invalid program header size");
+
+            iself = -1;
+
+        } else if(elf->sh_size != sizeof(elf_section_header_t)) {
+
+            DEBUG("%s", "Invalid section header size");
+
+            iself = -1;
+        }
     }
 
     if (iself != -1) {
@@ -250,6 +291,7 @@ int64_t elf_do_reloc(elf_header_t *hdr, elf_rel_t *rel, elf_section_header_t *re
 
 	// Symbol value
 	int64_t symval = 0;
+
 	if(ELF_R_SYM(rel->info) != ELF_SECTION_INDEX_UNDEFINED) {
 
 		symval = elf_get_symval(hdr, reltab->link, ELF_R_SYM(rel->info));
@@ -307,7 +349,7 @@ int64_t elf_do_reloc(elf_header_t *hdr, elf_rel_t *rel, elf_section_header_t *re
 	return symval;
 }
 
-void load_segment(uint64_t* data, elf_program_header_t* program_header) {
+void load_segment(uint8_t* data, elf_program_header_t* program_header) {
 
     uint64_t mem_size = program_header->mem_size;      // Size in memory
     uint64_t file_size = program_header->file_size;    // Size in file
@@ -317,10 +359,12 @@ void load_segment(uint64_t* data, elf_program_header_t* program_header) {
     uint32_t flags = PAGING_FLAG_PRESENT;
 
     if (program_header->flags & ELF_PROGRAM_FLAG_W) {
+
         flags |= PAGING_FLAG_WRITABLE;
     }
 
     if(!(program_header->flags & ELF_PROGRAM_FLAG_X)) {
+
         flags |= PAGING_FLAG_NO_EXECUTE;
     }
 
