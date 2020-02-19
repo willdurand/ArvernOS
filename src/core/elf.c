@@ -5,108 +5,107 @@
 
 int is_elf(elf_header_t* elf);
 void load_segment(uint8_t* data, elf_program_header_t* program_header);
-int64_t elf_do_reloc(elf_header_t *hdr, elf_rel_t *rel, elf_section_header_t *reltab);
+int64_t elf_do_reloc(elf_header_t* hdr, elf_rel_t* rel, elf_section_header_t* reltab);
 
-static inline elf_section_header_t *elf_section_header(elf_header_t *header) {
+static inline elf_section_header_t* elf_section_header(elf_header_t* header) {
 
-    return (elf_section_header_t *)((uint64_t)header + header->sh_offset);
+    return (elf_section_header_t*)((uint64_t)header + header->sh_offset);
 }
 
-static inline elf_section_header_t *elf_section(elf_header_t *header, int index) {
+static inline elf_section_header_t* elf_section(elf_header_t* header, int index) {
 
     return elf_section_header(header) + index;
 }
 
-static inline char *elf_str_table(elf_header_t *header) {
+static inline char* elf_str_table(elf_header_t* header) {
 
-    if(header->strtab_index == ELF_SECTION_INDEX_UNDEFINED) {
-
-        return NULL;
-    }
-
-    return (char *)((uint64_t)header + elf_section(header, header->strtab_index)->offset);
-}
-
-static inline char *elf_lookup_string(elf_header_t *header, int offset) {
-
-	char *strtab = elf_str_table(header);
-
-	if(strtab == NULL) {
+    if (header->strtab_index == ELF_SECTION_INDEX_UNDEFINED) {
 
         return NULL;
     }
 
-	return strtab + offset;
+    return (char*)((uint64_t)header + elf_section(header, header->strtab_index)->offset);
 }
 
-static void *elf_lookup_symbol(elf_header_t *header, const char *name) {
+static inline char* elf_lookup_string(elf_header_t* header, int offset) {
 
-    //TODO
+    char* strtab = elf_str_table(header);
+
+    if (strtab == NULL) {
+
+        return NULL;
+    }
+
+    return strtab + offset;
+}
+
+static void* elf_lookup_symbol(elf_header_t* header, const char* name) {
+
+    // TODO
     return NULL;
 }
 
-static int64_t elf_get_symval(elf_header_t *header, int table, uint32_t index) {
+static int64_t elf_get_symval(elf_header_t* header, int table, uint32_t index) {
+    if (table == ELF_SECTION_INDEX_UNDEFINED || index == ELF_SECTION_INDEX_UNDEFINED) {
 
-	if(table == ELF_SECTION_INDEX_UNDEFINED || index == ELF_SECTION_INDEX_UNDEFINED) {
-        
         return 0;
     }
 
-	elf_section_header_t *symtab = elf_section(header, table);
- 
-	uint32_t symtab_entries = symtab->size / symtab->entsize;
+    elf_section_header_t* symtab = elf_section(header, table);
 
-	if(index >= symtab_entries) {
+    uint32_t symtab_entries = symtab->size / symtab->entsize;
 
-		DEBUG("Symbol Index out of Range (%d:%u).\n", table, index);
+    if (index >= symtab_entries) {
 
-		return ELF_RELOC_ERR;
-	}
- 
-	uint64_t symaddr = (uint64_t)header + symtab->offset;
+        DEBUG("Symbol Index out of Range (%d:%u).\n", table, index);
 
-	elf_symbol_t *symbol = &((elf_symbol_t *)symaddr)[index];
+        return ELF_RELOC_ERR;
+    }
 
-	if(symbol->sectionTableIndex == ELF_SECTION_INDEX_UNDEFINED) {
+    uint64_t symaddr = (uint64_t)header + symtab->offset;
 
-		// External symbol, lookup value
-		elf_section_header_t *strtab = elf_section(header, symtab->link);
-		const char *name = (const char *)header + strtab->offset + symbol->name;
- 
-		void *target = elf_lookup_symbol(header, name);
- 
-		if(target == NULL) {
+    elf_symbol_t* symbol = &((elf_symbol_t*)symaddr)[index];
 
-			// Extern symbol not found
-			if(ELF_SYMBOL_BIND(symbol->info) & ELF_SYMBOL_BINDING_WEAK) {
+    if (symbol->sectionTableIndex == ELF_SECTION_INDEX_UNDEFINED) {
 
-				// Weak symbol initialized as 0
-				return 0;
+        // External symbol, lookup value
+        elf_section_header_t* strtab = elf_section(header, symtab->link);
+        const char* name = (const char*)header + strtab->offset + symbol->name;
 
-			} else {
+        void* target = elf_lookup_symbol(header, name);
 
-				DEBUG("Undefined External Symbol : %s.\n", name);
+        if (target == NULL) {
 
-				return ELF_RELOC_ERR;
-			}
+            // Extern symbol not found
+            if (ELF_SYMBOL_BIND(symbol->info) & ELF_SYMBOL_BINDING_WEAK) {
 
-		} else {
+                // Weak symbol initialized as 0
+                return 0;
 
-			return (int64_t)target;
-		}
+            } else {
 
-	} else if(symbol->sectionTableIndex == ELF_SECTION_INDEX_ABS) {
+                DEBUG("Undefined External Symbol : %s.\n", name);
 
-		// Absolute symbol
-		return symbol->value;
+                return ELF_RELOC_ERR;
+            }
 
-	} else {
+        } else {
 
-		// Internally defined symbol
-		elf_section_header_t *target = elf_section(header, symbol->sectionTableIndex);
+            return (int64_t)target;
+        }
 
-		return (int64_t)header + symbol->value + target->offset;
-	}
+    } else if (symbol->sectionTableIndex == ELF_SECTION_INDEX_ABS) {
+
+        // Absolute symbol
+        return symbol->value;
+
+    } else {
+
+        // Internally defined symbol
+        elf_section_header_t* target = elf_section(header, symbol->sectionTableIndex);
+
+        return (int64_t)header + symbol->value + target->offset;
+    }
 }
 
 elf_header_t* elf_load(uint8_t* data) {
@@ -122,41 +121,42 @@ elf_header_t* elf_load(uint8_t* data) {
 
     DEBUG(
         "file header: machine=%#x version=%#x type=%d entry=%p header_size=%u "
-        "ph_size=%u ph_num=%d ph_offset=%llu sh_size=%u sh_num=%d sh_offset=%llu strtab_index=%d",
-        elf->machine, elf->version, elf->type, elf->entry, elf->header_size, elf->ph_size,
-        elf->ph_num, elf->ph_offset, elf->sh_size, elf->sh_num, elf->sh_offset, elf->strtab_index
-    );
+        "ph_size=%u ph_num=%d ph_offset=%llu sh_size=%u sh_num=%d sh_offset=%llu "
+        "strtab_index=%d",
+        elf->machine, elf->version, elf->type, elf->entry, elf->header_size,
+        elf->ph_size, elf->ph_num, elf->ph_offset, elf->sh_size, elf->sh_num,
+        elf->sh_offset, elf->strtab_index);
 
-    elf_section_header_t *sections = elf_section_header(elf);
+    elf_section_header_t* sections = elf_section_header(elf);
 
-    for(uint16_t i = 0; i < elf->sh_num; i++) {
+    for (uint16_t i = 0; i < elf->sh_num; i++) {
 
-        elf_section_header_t *section = sections + i;
+        elf_section_header_t* section = sections + i;
 
-        char *name = section->name == 0 ? NULL : elf_lookup_string(elf, section->name);
+        char* name = section->name == 0 ? NULL : elf_lookup_string(elf, section->name);
 
-        if(name == NULL) {
+        if (name == NULL) {
 
             name = "(Unknown)";
         }
 
-        DEBUG(
-            "Phase 1 processing section %d (name: %d (\"%s\"), type: %d)",
-            i, section->name, name, section->type);
+        DEBUG("Phase 1 processing section %d (name: %d (\"%s\"), type: %d)", i,
+            section->name, name, section->type);
 
-        if(section->flags & ELF_SECTION_FLAG_ALLOC && section->size > 0) {
+        if (section->flags & ELF_SECTION_FLAG_ALLOC && section->size > 0) {
 
-            void *memory = malloc(section->size);
+            void* memory = malloc(section->size);
 
             DEBUG("Allocated memory for this section (%lld bytes).\n", section->size);
 
-            if(section->type == ELF_SECTION_TYPE_PROGBITS) {
+            if (section->type == ELF_SECTION_TYPE_PROGBITS) {
 
                 DEBUG("%s", "Read Progbits");
 
-                memcpy(memory, (void *)((uint64_t)elf + section->offset), section->size);
+                memcpy(memory, (void*)((uint64_t)elf + section->offset),
+                    section->size);
 
-            } else if(section->type == ELF_SECTION_TYPE_NOBITS) {
+            } else if (section->type == ELF_SECTION_TYPE_NOBITS) {
 
                 memset(memory, 0, section->size);
             }
@@ -165,25 +165,25 @@ elf_header_t* elf_load(uint8_t* data) {
         }
     }
 
-    for(uint16_t i = 0; i < elf->sh_num; i++) {
+    for (uint16_t i = 0; i < elf->sh_num; i++) {
 
-        elf_section_header_t *section = sections + i;
+        elf_section_header_t* section = sections + i;
 
         DEBUG("Phase 2 processing section %d (type: %d)", i, section->type);
 
-        if(section->type == ELF_SECTION_TYPE_REL) {
+        if (section->type == ELF_SECTION_TYPE_REL) {
 
-            for(uint64_t index = 0; index < section->size / section->entsize; index++) {
+            for (uint64_t index = 0; index < section->size / section->entsize; index++) {
 
-                elf_rel_t *reltab = &((elf_rel_t *)((uint64_t)elf + section->offset))[index];
+                elf_rel_t* reltab = &((elf_rel_t*)((uint64_t)elf + section->offset))[index];
 
                 int result = elf_do_reloc(elf, reltab, section);
 
-                if(result == ELF_RELOC_ERR) {
+                if (result == ELF_RELOC_ERR) {
 
                     DEBUG("%s", "Failed to reloc symbol.");
 
-                    //TODO: Cleanup
+                    // TODO: Cleanup
                     return NULL;
                 }
             }
@@ -196,11 +196,8 @@ elf_header_t* elf_load(uint8_t* data) {
 
     for (uint16_t i = 0; i < elf->ph_num; i++) {
 
-        DEBUG(
-            "program header: type=%d addr=%p",
-            program_header[i].type,
-            program_header[i].virtual_address
-        );
+        DEBUG("program header: type=%d addr=%p", program_header[i].type,
+            program_header[i].virtual_address);
 
         if (program_header[i].type == ELF_PROGRAM_TYPE_LOAD) {
 
@@ -213,53 +210,47 @@ elf_header_t* elf_load(uint8_t* data) {
     return elf;
 }
 
-void elf_unload(elf_header_t *elf) {
-
+void elf_unload(elf_header_t* elf) {
     DEBUG("%s", "Unloading an elf file");
 
-    elf_section_header_t *sections = elf_section_header(elf);
+    elf_section_header_t* sections = elf_section_header(elf);
 
-    for(uint16_t i = 0; i < elf->sh_num; i++) {
+    for (uint16_t i = 0; i < elf->sh_num; i++) {
 
-        elf_section_header_t *section = &sections[i];
+        elf_section_header_t* section = &sections[i];
 
-        if(section->flags & ELF_SECTION_FLAG_ALLOC && section->size > 0) {
+        if (section->flags & ELF_SECTION_FLAG_ALLOC && section->size > 0) {
 
-            char *name = section->name == 0 ? NULL : elf_lookup_string(elf, section->name);
+            char* name = section->name == 0 ? NULL : elf_lookup_string(elf, section->name);
 
-            if(name == NULL) {
+            if (name == NULL) {
 
                 name = "(Unknown)";
             }
 
-            DEBUG(
-                "Freeing section %d (name: %d (\"%s\"), type: %d)",
-                i, section, section->name, name, section->type);
+            DEBUG("Freeing section %d (name: %d (\"%s\"), type: %d)", i, section,
+                section->name, name, section->type);
 
             free((void*)section->addr);
         }
     }
-    
+
     elf_program_header_t* program_header = (elf_program_header_t*)((uint64_t)elf + elf->ph_offset);
 
     for (uint16_t i = 0; i < elf->ph_num; i++) {
 
         if (program_header[i].type == ELF_PROGRAM_TYPE_LOAD) {
 
-            DEBUG(
-                "Unmapping program header: type=%d addr=%p",
-                program_header[i].type,
-                program_header[i].virtual_address
-            );
-
+            DEBUG("Unmapping program header: type=%d addr=%p", program_header[i].type,
+                program_header[i].virtual_address);
 
             unmap(page_containing_address(program_header[i].virtual_address));
         }
     }
 }
 
-int is_elf(elf_header_t* elf) {
-
+int is_elf(elf_header_t* elf)
+{
     int iself = -1;
 
     if ((elf->identity[0] == 0x7f) && !strncmp((char*)&elf->identity[1], "ELF", 3)) {
@@ -267,23 +258,23 @@ int is_elf(elf_header_t* elf) {
         iself = 0;
     }
 
-    if(iself == 0) {
+    if (iself == 0) {
 
         DEBUG("%s", "validating elf structs");
 
-        if(elf->header_size != sizeof(elf_header_t)) {
+        if (elf->header_size != sizeof(elf_header_t)) {
 
             DEBUG("%s", "Invalid elf header size");
 
             iself = -1;
 
-        } else if(elf->ph_size != sizeof(elf_program_header_t)) {
+        } else if (elf->ph_size != sizeof(elf_program_header_t)) {
 
             DEBUG("%s", "Invalid program header size");
 
             iself = -1;
 
-        } else if(elf->sh_size != sizeof(elf_section_header_t)) {
+        } else if (elf->sh_size != sizeof(elf_section_header_t)) {
 
             DEBUG("%s", "Invalid section header size");
 
@@ -299,106 +290,106 @@ int is_elf(elf_header_t* elf) {
     return iself;
 }
 
-#define R_AMD64_NONE        0 //None
-#define R_AMD64_64          1 //word64 (S + A)
-#define R_AMD64_PC32        2 //word32 (S + A - P)
-#define R_AMD64_GOT32       3 //word32 (G + A)
-#define R_AMD64_PLT32       4 //word32 (L + A - P)
-#define R_AMD64_COPY        5 //None
-#define R_AMD64_GLOB_DAT    6 //word64 (S)
-#define R_AMD64_JUMP_SLOT   7 //word64 (S)
-#define R_AMD64_RELATIVE    8 //word64 (B + A)
-#define R_AMD64_GOTPCREL    9 //word32 (G + GOT + A - P)
-#define R_AMD64_32          10 //word32 (S + A)
-#define R_AMD64_32S         11 //word32 (S + A)
-#define R_AMD64_16          12 //word16 (S + A)
-#define R_AMD64_PC16        13 //word16 (S + A - P)
-#define R_AMD64_8           14 //word8 (S + A)
-#define R_AMD64_PC8         15 //word8 (S + A - P)
-#define R_AMD64_PC64        24 //word64 (S + A - P)
-#define R_AMD64_GOTOFF64    25 //word64 (S + A - GOT)
-#define R_AMD64_GOTPC32     26 //word32 (GOT + A + P)
-#define R_AMD64_SIZE32      32 //word32 (Z + A)
-#define R_AMD64_SIZE64      33 //word64 (Z + A)
+#define R_AMD64_NONE 0 // None
+#define R_AMD64_64 1 // word64 (S + A)
+#define R_AMD64_PC32 2 // word32 (S + A - P)
+#define R_AMD64_GOT32 3 // word32 (G + A)
+#define R_AMD64_PLT32 4 // word32 (L + A - P)
+#define R_AMD64_COPY 5 // None
+#define R_AMD64_GLOB_DAT 6 // word64 (S)
+#define R_AMD64_JUMP_SLOT 7 // word64 (S)
+#define R_AMD64_RELATIVE 8 // word64 (B + A)
+#define R_AMD64_GOTPCREL 9 // word32 (G + GOT + A - P)
+#define R_AMD64_32 10 // word32 (S + A)
+#define R_AMD64_32S 11 // word32 (S + A)
+#define R_AMD64_16 12 // word16 (S + A)
+#define R_AMD64_PC16 13 // word16 (S + A - P)
+#define R_AMD64_8 14 // word8 (S + A)
+#define R_AMD64_PC8 15 // word8 (S + A - P)
+#define R_AMD64_PC64 24 // word64 (S + A - P)
+#define R_AMD64_GOTOFF64 25 // word64 (S + A - GOT)
+#define R_AMD64_GOTPC32 26 // word32 (GOT + A + P)
+#define R_AMD64_SIZE32 32 // word32 (Z + A)
+#define R_AMD64_SIZE64 33 // word64 (Z + A)
 
 #define DO_AMD64_64(S, A) ((S) + (A))
 #define DO_AMD64_32(S, A) (uint32_t)((S) + (A))
 #define DO_AMD64_PC64(S, A, P) ((S) + (A) - (P))
 #define DO_AMD64_PC32(S, A, P) (uint32_t)((S) + (A) - (P))
 
-int64_t elf_do_reloc(elf_header_t *hdr, elf_rel_t *rel, elf_section_header_t *reltab) {
+int64_t elf_do_reloc(elf_header_t* hdr, elf_rel_t* rel, elf_section_header_t* reltab) {
 
-	elf_section_header_t *target = elf_section(hdr, reltab->info);
- 
-	int64_t addr = (int64_t)hdr + target->offset;
-	int64_t *ref = (int64_t *)(addr + rel->offset);
+    elf_section_header_t* target = elf_section(hdr, reltab->info);
 
-	// Symbol value
-	int64_t symval = 0;
+    int64_t addr = (int64_t)hdr + target->offset;
+    int64_t* ref = (int64_t*)(addr + rel->offset);
 
-	if(ELF_R_SYM(rel->info) != ELF_SECTION_INDEX_UNDEFINED) {
+    // Symbol value
+    int64_t symval = 0;
+
+    if (ELF_R_SYM(rel->info) != ELF_SECTION_INDEX_UNDEFINED) {
 
         symval = elf_get_symval(hdr, reltab->link, ELF_R_SYM(rel->info));
 
-        if(symval == ELF_RELOC_ERR) {
+        if (symval == ELF_RELOC_ERR) {
 
             return ELF_RELOC_ERR;
         }
-	}
+    }
 
-	// Relocate based on type
-	switch(ELF_R_TYPE(rel->info)) {
+    // Relocate based on type
+    switch (ELF_R_TYPE(rel->info)) {
 
-        case R_AMD64_NONE:
+    case R_AMD64_NONE:
 
-            // No relocation
-            break;
+        // No relocation
+        break;
 
-        case R_AMD64_64:
+    case R_AMD64_64:
 
-            // Symbol + Offset
-            *ref = DO_AMD64_64(symval, *ref);
+        // Symbol + Offset
+        *ref = DO_AMD64_64(symval, *ref);
 
-            break;
+        break;
 
-        case R_AMD64_32:
+    case R_AMD64_32:
 
-            // Symbol + Offset
-            *ref = DO_AMD64_32(symval, *ref);
+        // Symbol + Offset
+        *ref = DO_AMD64_32(symval, *ref);
 
-            break;
+        break;
 
-        case R_AMD64_PC64:
+    case R_AMD64_PC64:
 
-            // Symbol + Offset - Section Offset
-            *ref = DO_AMD64_PC64(symval, *ref, (int64_t)ref);
+        // Symbol + Offset - Section Offset
+        *ref = DO_AMD64_PC64(symval, *ref, (int64_t)ref);
 
-            break;
+        break;
 
-        case R_AMD64_PC32:
+    case R_AMD64_PC32:
 
-            // Symbol + Offset - Section Offset
-            *ref = DO_AMD64_PC32(symval, *ref, (int64_t)ref);
+        // Symbol + Offset - Section Offset
+        *ref = DO_AMD64_PC32(symval, *ref, (int64_t)ref);
 
-            break;
+        break;
 
-        default:
+    default:
 
-            // Relocation type not supported, display error and return
-            DEBUG("Unsupported Relocation Type (%d).\n", ELF_R_TYPE(rel->info));
+        // Relocation type not supported, display error and return
+        DEBUG("Unsupported Relocation Type (%d).\n", ELF_R_TYPE(rel->info));
 
-            return ELF_RELOC_ERR;
-	}
+        return ELF_RELOC_ERR;
+    }
 
-	return symval;
+    return symval;
 }
 
 void load_segment(uint8_t* data, elf_program_header_t* program_header) {
 
-    uint64_t mem_size = program_header->mem_size;      // Size in memory
-    uint64_t file_size = program_header->file_size;    // Size in file
-    uint64_t addr = program_header->virtual_address;   // Offset in memory
-    uint64_t offset = program_header->offset;          // Offset in file
+    uint64_t mem_size = program_header->mem_size; // Size in memory
+    uint64_t file_size = program_header->file_size; // Size in file
+    uint64_t addr = program_header->virtual_address; // Offset in memory
+    uint64_t offset = program_header->offset; // Offset in file
 
     uint32_t flags = PAGING_FLAG_PRESENT;
 
@@ -407,7 +398,7 @@ void load_segment(uint8_t* data, elf_program_header_t* program_header) {
         flags |= PAGING_FLAG_WRITABLE;
     }
 
-    if(!(program_header->flags & ELF_PROGRAM_FLAG_X)) {
+    if (!(program_header->flags & ELF_PROGRAM_FLAG_X)) {
 
         flags |= PAGING_FLAG_NO_EXECUTE;
     }
