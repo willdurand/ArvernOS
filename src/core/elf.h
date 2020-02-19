@@ -133,7 +133,7 @@
 //The presence of this dynamic table entry signals that the
 //relocation table contains relocations for a non-writable
 //segment.
-#define ELF_DYNAMIC_TABLE_TYPE_TEXTREL  22 
+#define ELF_DYNAMIC_TABLE_TYPE_TEXTREL  22
 
 #define ELF_DYNAMIC_TABLE_TYPE_JMPREL   23 //Address of the relocations associated with the procedure linkage table (ptr)
 
@@ -159,6 +159,8 @@
 #define ELF_SYMBOL_TYPE(INFO)	((INFO) & 0x0F)
 
 #define ELF_RELOC_ERR -1
+
+#define ELF_REL_TYPE_64 1
 
 typedef struct elf_header {
 
@@ -214,7 +216,8 @@ typedef struct elf_rel {
 typedef struct elf_rela {
 
     uint64_t offset; //Address of reference
-    uint64_t info; //Symbol index and type of relocation
+    uint32_t type; //Type of relocation
+    uint32_t symbol; //Symbol index
     int64_t addend; //Constant part of expression
 
 } __attribute__((packed)) elf_rela_t;
@@ -239,7 +242,7 @@ typedef struct elf_dyn {
 
         uint64_t value; //Represents int values
         uint64_t ptr; //Represents virtual addresses
-    } un; 
+    } un;
 
 } __attribute__((packed)) elf_dyn_t;
 
