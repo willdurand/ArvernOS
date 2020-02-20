@@ -24,7 +24,6 @@ void uptime() {
 }
 
 int main() {
-    
     const char* commands[][NB_DOCUMENTED_COMMANDS] = {
         {"cal", "displays a calendar"},
         {"clear", "clear the terminal screen"},
