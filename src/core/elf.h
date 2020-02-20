@@ -155,8 +155,8 @@
 #define ELF_R_TYPE(i) ((i) & 0xFFFFFFFFL)
 #define ELF_R_INFO(s, t) (((s) << 32) + ((t) & 0xFFFFFFFFL))
 
-#define ELF_SYMBOL_BIND(INFO)	((INFO) >> 4)
-#define ELF_SYMBOL_TYPE(INFO)	((INFO) & 0x0F)
+#define ELF_SYMBOL_BIND(INFO)   ((INFO) >> 4)
+#define ELF_SYMBOL_TYPE(INFO)   ((INFO) & 0x0F)
 
 #define ELF_RELOC_ERR -1
 
@@ -248,5 +248,5 @@ typedef struct elf_dyn {
 
 elf_header_t* elf_load(uint8_t* data);
 
-void elf_unload(elf_header_t *elf);
+void elf_unload(elf_header_t* elf);
 #endif

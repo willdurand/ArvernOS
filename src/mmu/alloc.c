@@ -45,7 +45,7 @@ void* liballoc_alloc(int number_of_pages) {
 
             counter++;
 
-            if(counter == number_of_pages) {
+            if (counter == number_of_pages) {
 
                 first_free_page = i - (counter - 1);
 
@@ -58,7 +58,7 @@ void* liballoc_alloc(int number_of_pages) {
         }
     }
 
-    if(first_free_page == 0) {
+    if (first_free_page == 0) {
 
         PANIC("no free pages for alloc of %d pages", number_of_pages);
     }
@@ -72,7 +72,7 @@ void* liballoc_alloc(int number_of_pages) {
 
     MMU_DEBUG("allocated %d pages at addr=%p", number_of_pages, addr);
 
-    return (void *)addr;
+    return (void*)addr;
 }
 
 int liballoc_free(void* ptr, int number_of_pages) {
