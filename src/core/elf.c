@@ -144,7 +144,7 @@ elf_header_t* elf_load(uint8_t* data) {
         }
 
         DEBUG("Phase 1 processing section %d (name: %d (\"%s\"), type: %d, flags: %#lld)", i,
-            section->name, name, section->type, section->flags);
+              section->name, name, section->type, section->flags);
 
         //First we allocate each section that requires allocation and has a valid size
         if (section->flags & ELF_SECTION_FLAG_ALLOC && section->size > 0) {
@@ -159,9 +159,10 @@ elf_header_t* elf_load(uint8_t* data) {
                 DEBUG("%s", "Read Progbits for this section");
 
                 memcpy(memory, (void*)((uint64_t)elf + section->offset),
-                    section->size);
+                       section->size);
 
-            } else if (section->type == ELF_SECTION_TYPE_NOBITS) { //If we're nobits, we're supposed to be zero-inited
+            } else if (section->type ==
+                       ELF_SECTION_TYPE_NOBITS) { //If we're nobits, we're supposed to be zero-inited
 
                 DEBUG("%s", "Zero-memory'd this section");
 
@@ -169,12 +170,11 @@ elf_header_t* elf_load(uint8_t* data) {
             }
 
             section->addr = (uint64_t)memory; //Store the local memory for safe-keeping
-        }
-        else if(section->type == ELF_SECTION_TYPE_SYMTAB || section->type == ELF_SECTION_TYPE_STRTAB) {
+        } else if (section->type == ELF_SECTION_TYPE_SYMTAB || section->type == ELF_SECTION_TYPE_STRTAB) {
 
             DEBUG("%s", "Loading Symbol or String table");
 
-            elf_symbol_t *table = (elf_symbol_t*)malloc(section->size);
+            elf_symbol_t* table = (elf_symbol_t*)malloc(section->size);
 
             memcpy(table, data + section->offset, section->size);
 
@@ -190,7 +190,7 @@ elf_header_t* elf_load(uint8_t* data) {
         DEBUG("Phase 2 processing section %d (type: %d)", i, section->type);
 
         //Handle relocations
-        if(section->type == ELF_SECTION_TYPE_REL) {
+        if (section->type == ELF_SECTION_TYPE_REL) {
 
             int entry_count = section->size / section->entsize;
 
@@ -223,7 +223,7 @@ elf_header_t* elf_load(uint8_t* data) {
 
             int entry_count = section->size / section->entsize;
 
-            if(section->entsize != sizeof(elf_rela_t)) {
+            if (section->entsize != sizeof(elf_rela_t)) {
 
                 DEBUG("%s", "Section entry size doesn't match rela_t size");
 
@@ -233,38 +233,38 @@ elf_header_t* elf_load(uint8_t* data) {
 
             DEBUG("Relocating %d elements in RELA section", entry_count);
 
-            elf_rela_t *entries = (elf_rela_t *)malloc(section->size);
+            elf_rela_t* entries = (elf_rela_t*)malloc(section->size);
 
             section->addr = (uint64_t)entries;
 
             memcpy(entries, data + section->offset, section->size);
 
             //Get the section we're relocating
-            elf_section_header_t *relocation_section = elf_section(elf, section->info);
-            char *relocation_data = (char *)relocation_section->addr;
+            elf_section_header_t* relocation_section = elf_section(elf, section->info);
+            char* relocation_data = (char*)relocation_section->addr;
 
             //Get the symbol table for this relocation table
-            elf_section_header_t *symbol_table_section = elf_section(elf, section->link);
-            elf_symbol_t *symbol_table = (elf_symbol_t *)symbol_table_section->addr;
+            elf_section_header_t* symbol_table_section = elf_section(elf, section->link);
+            elf_symbol_t* symbol_table = (elf_symbol_t*)symbol_table_section->addr;
 
             //Get the string table for the symbol table
-            elf_section_header_t *string_table_section = elf_section(elf, symbol_table_section->link);
-            char *string_table = (char *)string_table_section->addr;
+            elf_section_header_t* string_table_section = elf_section(elf, symbol_table_section->link);
+            char* string_table = (char*)string_table_section->addr;
 
             //Relocate all entries
-            for(uint64_t index = 0; index < entry_count; index++) {
+            for (uint64_t index = 0; index < entry_count; index++) {
 
-                elf_rela_t *entry = entries + index;
+                elf_rela_t* entry = entries + index;
 
                 //Get the symbol for this entry
-                elf_symbol_t *symbol = symbol_table + entry->symbol;
-                char *symbol_name = string_table + symbol->name;
+                elf_symbol_t* symbol = symbol_table + entry->symbol;
+                char* symbol_name = string_table + symbol->name;
 
-                if(entry->type == ELF_REL_TYPE_64) {
+                if (entry->type == ELF_REL_TYPE_64) {
 
-                    uint64_t *location = (uint64_t *)relocation_data + entry->offset;
+                    uint64_t* location = (uint64_t*)relocation_data + entry->offset;
 
-                    if(symbol->sectionTableIndex > 0) {
+                    if (symbol->sectionTableIndex > 0) {
 
                         if (symbol->name != 0) {
 
@@ -310,10 +310,10 @@ elf_header_t* elf_load(uint8_t* data) {
 
     for (uint16_t i = 0; i < elf->ph_num; i++) {
 
-        elf_program_header_t *program_header = program_headers + i;
+        elf_program_header_t* program_header = program_headers + i;
 
         DEBUG("program header: type=%d addr=%p", program_header->type,
-            program_header->virtual_address);
+              program_header->virtual_address);
 
         if (program_header->type == ELF_PROGRAM_TYPE_LOAD) {
 
@@ -336,12 +336,12 @@ void elf_unload(elf_header_t* elf) {
 
     for (uint16_t i = 0; i < elf->ph_num; i++) {
 
-        elf_program_header_t *program_header = program_headers + i;
+        elf_program_header_t* program_header = program_headers + i;
 
         if (program_header->type == ELF_PROGRAM_TYPE_LOAD) {
 
             DEBUG("Unmapping program header: type=%d addr=%p", program_header->type,
-                program_header->virtual_address);
+                  program_header->virtual_address);
 
             unmap(page_containing_address(program_header->virtual_address));
         }
@@ -363,15 +363,14 @@ void elf_unload(elf_header_t* elf) {
             }
 
             DEBUG("Freeing section %d (name: %d (\"%s\"), type: %d)", i, section,
-                section->name, name, section->type);
+                  section->name, name, section->type);
 
             free((void*)section->addr);
         }
     }
 }
 
-int is_elf(elf_header_t* elf)
-{
+int is_elf(elf_header_t* elf) {
     int iself = -1;
 
     if ((elf->identity[0] == 0x7f) && !strncmp((char*)&elf->identity[1], "ELF", 3)) {
@@ -461,45 +460,45 @@ int64_t elf_do_reloc(elf_header_t* hdr, elf_rel_t* rel, elf_section_header_t* re
     // Relocate based on type
     switch (ELF_R_TYPE(rel->info)) {
 
-    case R_AMD64_NONE:
+        case R_AMD64_NONE:
 
-        // No relocation
-        break;
+            // No relocation
+            break;
 
-    case R_AMD64_64:
+        case R_AMD64_64:
 
-        // Symbol + Offset
-        *ref = DO_AMD64_64(symval, *ref);
+            // Symbol + Offset
+            *ref = DO_AMD64_64(symval, *ref);
 
-        break;
+            break;
 
-    case R_AMD64_32:
+        case R_AMD64_32:
 
-        // Symbol + Offset
-        *ref = DO_AMD64_32(symval, *ref);
+            // Symbol + Offset
+            *ref = DO_AMD64_32(symval, *ref);
 
-        break;
+            break;
 
-    case R_AMD64_PC64:
+        case R_AMD64_PC64:
 
-        // Symbol + Offset - Section Offset
-        *ref = DO_AMD64_PC64(symval, *ref, (int64_t)ref);
+            // Symbol + Offset - Section Offset
+            *ref = DO_AMD64_PC64(symval, *ref, (int64_t)ref);
 
-        break;
+            break;
 
-    case R_AMD64_PC32:
+        case R_AMD64_PC32:
 
-        // Symbol + Offset - Section Offset
-        *ref = DO_AMD64_PC32(symval, *ref, (int64_t)ref);
+            // Symbol + Offset - Section Offset
+            *ref = DO_AMD64_PC32(symval, *ref, (int64_t)ref);
 
-        break;
+            break;
 
-    default:
+        default:
 
-        // Relocation type not supported, display error and return
-        DEBUG("Unsupported Relocation Type (%d).\n", ELF_R_TYPE(rel->info));
+            // Relocation type not supported, display error and return
+            DEBUG("Unsupported Relocation Type (%d).\n", ELF_R_TYPE(rel->info));
 
-        return ELF_RELOC_ERR;
+            return ELF_RELOC_ERR;
     }
 
     return symval;
