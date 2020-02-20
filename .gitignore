@@ -8,3 +8,4 @@ userland/bin/
 *.so
 *.tar
 .gdb_history
+.DS_Store

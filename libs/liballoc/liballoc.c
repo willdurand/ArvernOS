@@ -3,10 +3,10 @@
 /**  Durand's Amazing Super Duper Memory functions.  */
 
 #define VERSION     "1.1"
-#define ALIGNMENT   4ul             ///< This is the byte alignment that memory must be allocated on. IMPORTANT for GTK and other stuff.
+#define ALIGNMENT   16ul//4ul               ///< This is the byte alignment that memory must be allocated on. IMPORTANT for GTK and other stuff.
 
-#define ALIGN_TYPE      unsigned short
-#define ALIGN_INFO      sizeof(ALIGN_TYPE)  ///< Alignment information is stored right before the pointer. This is the number of bytes of information stored there.
+#define ALIGN_TYPE      char ///unsigned char[16] /// unsigned short
+#define ALIGN_INFO      sizeof(ALIGN_TYPE)*16   ///< Alignment information is stored right before the pointer. This is the number of bytes of information stored there.
 
 
 #define USE_CASE1
@@ -86,12 +86,12 @@ struct  liballoc_minor {
 static struct liballoc_major* l_memRoot = NULL; ///< The root memory block acquired from the system.
 static struct liballoc_major* l_bestBet = NULL; ///< The major with the most free memory.
 
-static int l_pageSize  =
-    4096;          ///< The size of an individual page. Set up in liballoc_init.
-static int l_pageCount =
-    16;            ///< The number of pages to request per chunk. Set up in liballoc_init.
-static long long l_allocated = 0;       ///< Running total of allocated memory.
-static long long l_inuse     = 0;       ///< Running total of used memory.
+static unsigned int l_pageSize  =
+    4096;         ///< The size of an individual page. Set up in liballoc_init.
+static unsigned int l_pageCount =
+    16;           ///< The number of pages to request per chunk. Set up in liballoc_init.
+static unsigned long long l_allocated = 0;      ///< Running total of allocated memory.
+static unsigned long long l_inuse    = 0;       ///< Running total of used memory.
 
 
 static long long l_warningCount = 0;        ///< Number of warnings encountered
@@ -104,8 +104,8 @@ static long long l_possibleOverruns = 0;    ///< Number of possible overruns
 
 // ***********   HELPER FUNCTIONS  *******************************
 
-static void*    liballoc_memset(void* s, int c, size_t n) {
-    int i;
+static void* liballoc_memset(void* s, int c, size_t n) {
+    unsigned int i;
 
     for (i = 0; i < n ; i++) {
         ((char*)s)[i] = c;
@@ -113,8 +113,7 @@ static void*    liballoc_memset(void* s, int c, size_t n) {
 
     return s;
 }
-
-static void*    liballoc_memcpy(void* s1, const void* s2, size_t n) {
+static void* liballoc_memcpy(void* s1, const void* s2, size_t n) {
     char* cdest;
     char* csrc;
     unsigned int* ldest = (unsigned int*)s1;
@@ -135,7 +134,6 @@ static void*    liballoc_memcpy(void* s1, const void* s2, size_t n) {
 
     return s1;
 }
-
 
 
 #if defined DEBUG || defined INFO
@@ -249,7 +247,7 @@ void* PREFIX(malloc)(size_t req_size) {
     struct liballoc_major* maj;
     struct liballoc_minor* min;
     struct liballoc_minor* new_min;
-    size_t size = req_size;
+    unsigned long size = req_size;
 
     // For alignment, we adjust size so there's enough space to align.
     if (ALIGNMENT > 1) {
@@ -742,7 +740,7 @@ void* PREFIX(calloc)(size_t nobj, size_t size) {
 void*   PREFIX(realloc)(void* p, size_t size) {
     void* ptr;
     struct liballoc_minor* min;
-    int real_size;
+    unsigned int real_size;
 
     // Honour the case of size == 0 => free old and return NULL
     if (size == 0) {
@@ -823,7 +821,3 @@ void*   PREFIX(realloc)(void* p, size_t size) {
 
     return ptr;
 }
-
-
-
-

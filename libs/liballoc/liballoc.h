@@ -1,6 +1,9 @@
 #ifndef _LIBALLOC_H
 #define _LIBALLOC_H
 
+/**
+ * Source code taken from https://github.com/blanham/liballoc
+ */
 
 /** \defgroup ALLOCHOOKS liballoc hooks
  *
@@ -11,29 +14,13 @@
 
 /** @{ */
 
-
+#include <stdlib.h>
 
 // If we are told to not define our own size_t, then we skip the define.
-#ifndef _ALLOC_SKIP_DEFINE
+//#define _HAVE_UINTPTR_T
+//typedef   unsigned long   uintptr_t;
 
-#ifndef _HAVE_SIZE_T
-#define _HAVE_SIZE_T
-typedef unsigned int    size_t;
-#endif
-
-#ifndef _HAVE_UINTPTR_T
-#define _HAVE_UINTPTR_T
-typedef unsigned long long  uintptr_t;
-#endif
-
-
-
-#ifndef NULL
-#define NULL        0
-#endif
-
-#endif
-
+//This lets you prefix malloc and friends
 #define PREFIX(func)        func
 
 #ifdef __cplusplus
@@ -66,7 +53,7 @@ extern int liballoc_unlock();
  * \return NULL if the pages were not allocated.
  * \return A pointer to the allocated memory.
  */
-extern void* liballoc_alloc(int);
+extern void* liballoc_alloc(size_t);
 
 /** This frees previously allocated memory. The void* parameter passed
  * to the function is the exact same value returned from a previous
@@ -76,15 +63,15 @@ extern void* liballoc_alloc(int);
  *
  * \return 0 if the memory was successfully freed.
  */
-extern int liballoc_free(void*, int);
+extern int liballoc_free(void*, size_t);
 
 
 
 
-void*     PREFIX(malloc)(size_t);               ///< The standard function.
-void*     PREFIX(realloc)(void*, size_t);       ///< The standard function.
-void*     PREFIX(calloc)(size_t, size_t);       ///< The standard function.
-void      PREFIX(free)(void*);                  ///< The standard function.
+extern void*    PREFIX(malloc)(size_t);             ///< The standard function.
+extern void*    PREFIX(realloc)(void*, size_t);         ///< The standard function.
+extern void*    PREFIX(calloc)(size_t, size_t);     ///< The standard function.
+extern void     PREFIX(free)(void*);                    ///< The standard function.
 
 
 #ifdef __cplusplus
