@@ -9,8 +9,7 @@ int failures = 0;
 bool has_describe = 0;
 
 void _assert(bool expr, const char* func, const char* message) {
-    if (!expr)
-    {
+    if (!expr) {
         printf("\033[0;31m");
     }
 
