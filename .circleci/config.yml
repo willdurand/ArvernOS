@@ -5,15 +5,23 @@ jobs:
       - image: circleci/buildpack-deps
     steps:
       - checkout
-      - run: sudo apt-get update
-      - run: sudo apt-get install -y nasm xorriso build-essential grub2-common grub-pc-bin astyle
-      - run: make
-      - run: test -f build/isofiles/boot/kernel.bin
-      - run: test -f build/isofiles/boot/initrd.tar
-      - run: test -f build/libc-willOS.a
-      - run: test -f build/libk-willOS.a
-      - run: test -f build/willOS.iso
-      - run: make clean test
+      - run:
+          name: install dependencies
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y nasm xorriso build-essential grub2-common grub-pc-bin astyle
+      - run:
+          name: build
+          command: |
+            make
+            test -f build/isofiles/boot/kernel.bin
+            test -f build/isofiles/boot/initrd.tar
+            test -f build/libc-willOS.a
+            test -f build/libk-willOS.a
+            test -f build/willOS.iso
+      - run:
+          name: test
+          command: make clean test
       - run:
           name: astyle
           command: |
