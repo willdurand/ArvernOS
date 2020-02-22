@@ -48,6 +48,8 @@ int main() {
     describe("tar_finddir()");
     inode_t not_found = vfs_namei("/home/will/fileeee");
     assert(not_found == 0, "returns 0 when file is not found");
+    not_found = vfs_namei("/inf");
+    assert(not_found == 0, "returns 0 when partial file name is not found");
 
     inode_t home = vfs_namei("/home");
     assert(vfs_inode_type(home) == FS_DIRECTORY, "can find a directory");
