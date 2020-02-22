@@ -19,6 +19,7 @@ KERNEL_DIR = $(ISO_DIR)/boot
 GRUB_DIR   = $(KERNEL_DIR)/grub
 KERNEL     = $(KERNEL_DIR)/kernel.bin
 ISO        = $(BUILD_DIR)/$(OS_NAME).iso
+IMG        = $(BUILD_DIR)/$(OS_NAME).img
 LIBC       = $(BUILD_DIR)/libc-$(OS_NAME).a
 LIBK       = $(BUILD_DIR)/libk-$(OS_NAME).a
 INITRD_DIR = initrd
@@ -81,6 +82,15 @@ $(ISO): $(KERNEL) $(INITRD_TAR)
 	cp -R grub/* $(GRUB_DIR)
 	grub-mkrescue -o $@ $(ISO_DIR)
 
+img: ## build a hard disk image of the OS (.img)
+img: $(IMG)
+.PHONY: img
+
+$(IMG): $(KERNEL) $(INITRD_TAR)
+	mkdir -p $(GRUB_DIR)
+	cp -R grub/* $(GRUB_DIR)
+	sudo sh makeimg.sh $(IMG) $(ISO_DIR)
+
 run: ## run the OS
 run: $(ISO)
 	$(QEMU) -cdrom $<
@@ -91,6 +101,12 @@ debug: CFLAGS += $(DEBUG_CFLAGS)
 debug: $(ISO)
 	$(QEMU) -cdrom $< -serial file:/tmp/serial.log
 .PHONY: debug
+
+debug-img: ## build and run the OS in debug mode
+debug-img: CFLAGS += $(DEBUG_CFLAGS)
+debug-img: $(IMG)
+	$(QEMU) -hda $< -serial file:/tmp/serial.log
+.PHONY: debug-img
 
 clean: ## remove build artifacts
 	find . -name '*.orig' -exec rm "{}" ";"
