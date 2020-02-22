@@ -112,7 +112,7 @@ void map_page_to_frame(uint64_t page, uint64_t frame, uint64_t flags);
 void map(uint64_t page_number, uint64_t flags);
 
 /**
- * Maps multiple pages in a row if possible
+ * Maps multiple pages in a row if possible.
  *
  * @param start_page_number the first page of the sequence
  * @param number_of_pages the amount of pages to map
@@ -128,7 +128,7 @@ void map_multiple(uint64_t start_page_number, uint32_t number_of_pages, uint64_t
 void unmap(uint64_t page_number);
 
 /**
- * Unmaps multiple pages
+ * Unmaps multiple consecutive pages.
  *
  * @param start_page_number the first page of the sequence
  * @param number_of_pages the amount of pages to unmap

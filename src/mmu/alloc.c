@@ -37,26 +37,22 @@ int liballoc_unlock() {
 
 void* liballoc_alloc(int number_of_pages) {
     uint64_t first_free_page = 0;
-    uint32_t counter = 0;
+    uint32_t free_page_count = 0;
 
     for (uint64_t i = 1; i <= max_pages; i++) {
         if (bitmap_get(allocated_pages, i) == false) {
+            free_page_count++;
 
-            counter++;
-
-            if (counter == number_of_pages) {
-
-                first_free_page = i - (counter - 1);
+            if (free_page_count == number_of_pages) {
+                first_free_page = i - (free_page_count - 1);
                 break;
             }
         } else {
-
-            counter = 0;
+            free_page_count = 0;
         }
     }
 
     if (first_free_page == 0) {
-
         PANIC("no free pages for alloc of %d pages", number_of_pages);
     }
 
