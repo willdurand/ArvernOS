@@ -90,6 +90,8 @@ $(IMG): $(KERNEL) $(INITRD_TAR)
 	mkdir -p $(GRUB_DIR)
 	cp -R grub/* $(GRUB_DIR)
 	sudo sh makeimg.sh $(IMG) $(ISO_DIR)
+	sudo chown -R ${USER}: $(IMG)
+
 
 run: ## run the OS
 run: $(ISO)
