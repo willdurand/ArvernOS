@@ -311,17 +311,13 @@ void map(uint64_t page_number, uint64_t flags) {
 }
 
 void map_multiple(uint64_t start_page_number, uint32_t number_of_pages, uint64_t flags) {
-
     for (uint32_t i = 0; i < number_of_pages; i++) {
-
         map(start_page_number + i, flags);
     }
 }
 
 void unmap_multiple(uint64_t start_page_number, uint32_t number_of_pages) {
-
     for (uint32_t i = 0; i < number_of_pages; i++) {
-
         unmap(start_page_number + i);
     }
 }
@@ -334,7 +330,6 @@ uint32_t paging_amount_for_byte_size(uint64_t start_address, uint64_t byte_size)
     uint32_t difference = (uint32_t)(end_page - start_page);
 
     if (difference == 0) {
-
         return 1;
     }
 
