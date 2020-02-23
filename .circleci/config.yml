@@ -26,4 +26,4 @@ jobs:
           name: astyle
           command: |
             make fmt
-            git diff --exit-code || (echo "Please run 'make fmt' to format the code and fix this problem"; false)
+            git diff --exit-code || (echo "\n\nPlease run 'make fmt' to format the code and fix the problem(s) above"; false)
