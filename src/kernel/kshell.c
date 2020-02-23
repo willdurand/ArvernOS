@@ -295,7 +295,6 @@ int try_exec(const char* command) {
 }
 
 int overflowtest() {
-
     char c[12];
     strcpy(c, "123456789012345678901234567890");
     return 1;
