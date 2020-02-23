@@ -323,7 +323,7 @@ void run_command(const char* command) {
         uptime();
     } else if (strncmp(command, "selftest", 8) == 0) {
         selftest();
-    } else if(strncmp(command, "overflow", 8) == 0) {
+    } else if (strncmp(command, "overflow", 8) == 0) {
         overflowtest();
     } else {
         if (try_exec(command) != 0) {

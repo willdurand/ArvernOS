@@ -101,7 +101,7 @@ int main() {
                     reboot();
                 } else if (strncmp(readline, "uptime", 6) == 0) {
                     uptime();
-                } else if(strncmp(readline, "overflow", 8) == 0) {
+                } else if (strncmp(readline, "overflow", 8) == 0) {
                     overflow();
                 } else {
                     printf("invalid command\n");
