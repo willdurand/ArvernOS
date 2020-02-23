@@ -280,11 +280,14 @@ int try_exec(const char* command) {
 
     elf_header_t* elf = elf_load(buf);
 
-    if (elf) {
-        typedef int callable(void);
-        callable* c = (callable*)(elf->entry);
-        c();
+    if (!elf) {
+        free(buf);
+        return -3;
     }
+
+    typedef int callable(void);
+    callable* c = (callable*)(elf->entry);
+    c();
 
     free(buf);
 
@@ -315,8 +318,8 @@ void run_command(const char* command) {
     } else if (strncmp(command, "selftest", 8) == 0) {
         selftest();
     } else {
-        if (!try_exec(command)) {
-            printf("invalid command\n");
+        if (try_exec(command) != 0) {
+            printf("invalid kshell command\n");
         }
     }
 }
