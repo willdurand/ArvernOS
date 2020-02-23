@@ -112,10 +112,36 @@ void map_page_to_frame(uint64_t page, uint64_t frame, uint64_t flags);
 void map(uint64_t page_number, uint64_t flags);
 
 /**
+ * Maps multiple pages in a row if possible.
+ *
+ * @param start_page_number the first page of the sequence
+ * @param number_of_pages the amount of pages to map
+ * @param flags the paging flags
+ */
+void map_multiple(uint64_t start_page_number, uint32_t number_of_pages, uint64_t flags);
+
+/**
  * Unmaps (free) a page.
  *
  * @param page_number a page number (not an address)
  */
 void unmap(uint64_t page_number);
+
+/**
+ * Unmaps multiple consecutive pages.
+ *
+ * @param start_page_number the first page of the sequence
+ * @param number_of_pages the amount of pages to unmap
+ */
+void unmap_multiple(uint64_t start_page_number, uint32_t number_of_pages);
+
+/**
+ * Calculates how many pages are needed for a range of addresses.
+ *
+ * @param start_address the starting virtual address
+ * @param byte_size the amount of bytes
+ * @return the amount of pages required for mapping from start_address until start_address + byte_size
+ */
+uint32_t paging_amount_for_byte_size(uint64_t start_address, uint64_t byte_size);
 
 #endif
