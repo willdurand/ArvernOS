@@ -136,10 +136,11 @@ void unmap(uint64_t page_number);
 void unmap_multiple(uint64_t start_page_number, uint32_t number_of_pages);
 
 /**
- * Calculates how many pages are needed for a range of addresses
+ * Calculates how many pages are needed for a range of addresses.
  *
  * @param start_address the starting virtual address
  * @param byte_size the amount of bytes
+ * @return the amount of pages required for mapping from start_address until start_address + byte_size
  */
 uint32_t paging_amount_for_byte_size(uint64_t start_address, uint64_t byte_size);
 
