@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#ifdef __is_libk
+#ifndef __is_libc
 #include <kernel/panic.h>
 #endif
 
@@ -18,7 +18,7 @@ uintptr_t __stack_chk_guard = STACK_CHK_GUARD;
 void __stack_chk_fail(void)
 {
 #ifdef __is_libc
-printf("Stack Smashing Detected (TODO: Abort() impl)");
+printf("Stack Smashing Detected (TODO: abort() impl)");
 #else
 PANIC("Stack Smashing Detected");
 #endif

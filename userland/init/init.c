@@ -23,6 +23,12 @@ void uptime() {
     printf("implement me\n");
 }
 
+int overflow() {
+    char c[12];
+    strcpy(c, "123456789012345678901234567890");
+    return 1;
+}
+
 int main() {
     const char* commands[][NB_DOCUMENTED_COMMANDS] = {
         {"cal", "displays a calendar"},
@@ -95,6 +101,8 @@ int main() {
                     reboot();
                 } else if (strncmp(readline, "uptime", 6) == 0) {
                     uptime();
+                } else if(strncmp(readline, "overflow", 8) == 0) {
+                    overflow();
                 } else {
                     printf("invalid command\n");
                 }
