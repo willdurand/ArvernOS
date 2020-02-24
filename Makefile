@@ -33,7 +33,7 @@ GIT_HASH := $(shell git rev-parse --short HEAD)
 
 CFLAGS = -DGIT_HASH=\"$(GIT_HASH)\" \
 				 -Wall -pedantic -std=c11 -O2 -ffreestanding -nostdlib \
-				 -fno-builtin -fno-stack-protector -mno-red-zone \
+				 -fno-builtin -fstack-protector-all -mno-red-zone \
 				 -I src/include/ -I src/ -I libs/
 
 DEBUG_CFLAGS = -DENABLE_KERNEL_DEBUG -DDEBUG_WITH_COLORS -DDISABLE_MMU_DEBUG
@@ -89,7 +89,7 @@ run: $(ISO)
 debug: ## build and run the OS in debug mode
 debug: CFLAGS += $(DEBUG_CFLAGS)
 debug: $(ISO)
-	$(QEMU) -cdrom $< -serial file:/tmp/serial.log
+	$(QEMU) -cdrom $< -serial file:/tmp/serial.log -m 1G
 .PHONY: debug
 
 clean: ## remove build artifacts

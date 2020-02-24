@@ -5,7 +5,7 @@
 
 #define READLINE_SIZE           256
 #define PROMPT                  "(init) "
-#define NB_DOCUMENTED_COMMANDS  7
+#define NB_DOCUMENTED_COMMANDS  8
 
 void date() {
     printf("implement me\n");
@@ -23,6 +23,12 @@ void uptime() {
     printf("implement me\n");
 }
 
+int overflow() {
+    char c[12];
+    strcpy(c, "123456789012345678901234567890");
+    return 1;
+}
+
 int main() {
     const char* commands[][NB_DOCUMENTED_COMMANDS] = {
         {"cal", "displays a calendar"},
@@ -32,6 +38,7 @@ int main() {
         {"help", "display information about willOS shell commands"},
         {"reboot", "stopping and restarting the system"},
         {"uptime", "tell how long the system has been running"},
+        {"overflow", "test the stack buffer overflow protection"},
     };
 
     char readline[READLINE_SIZE] = {0};
@@ -95,6 +102,8 @@ int main() {
                     reboot();
                 } else if (strncmp(readline, "uptime", 6) == 0) {
                     uptime();
+                } else if (strncmp(readline, "overflow", 8) == 0) {
+                    overflow();
                 } else {
                     printf("invalid command\n");
                 }

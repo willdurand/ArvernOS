@@ -12,7 +12,7 @@ TARGET   = $(BIN_DIR)/init
 # executable if needed, see: https://access.redhat.com/blogs/766093/posts/1975793
 CFLAGS = -Wl,-emain -Wall -pedantic -std=c11 -O2 -ffreestanding -nostdlib \
 				 -D__is_libc \
-				 -fno-builtin -fno-stack-protector -I $(ROOT_DIR)/src/include/ -I $(ROOT_DIR)/libs/
+				 -fno-builtin -fstack-protector-all -I $(ROOT_DIR)/src/include/ -I $(ROOT_DIR)/libs/
 LIBS   = $(ROOT_DIR)/build/libc-willOS.a
 
 default: $(TARGET)
