@@ -1,19 +1,5 @@
 var searchData=
 [
-  ['idt_2eh_28',['idt.h',['../idt_8h.html',1,'']]],
-  ['idt_5fentries_29',['IDT_ENTRIES',['../idt_8h.html#a2a59a505aa55f15c152f30f811fbd310',1,'idt.h']]],
-  ['idt_5fgate_5foptions_5ft_30',['idt_gate_options_t',['../structidt__gate__options__t.html',1,'']]],
-  ['idt_5fgate_5ft_31',['idt_gate_t',['../structidt__gate__t.html',1,'']]],
-  ['idt_5finit_32',['idt_init',['../idt_8h.html#a88d4205d069421eb4f8e7577285f1180',1,'idt.c']]],
-  ['idt_5fregister_5fgate_33',['idt_register_gate',['../idt_8h.html#a8af8af8cf5ecf069d893ba9a96d55c7e',1,'idt.c']]],
-  ['idt_5fregister_5finterrupt_34',['idt_register_interrupt',['../idt_8h.html#ae9b2767929a9d9b6851a7c60cb64e55c',1,'idt.c']]],
-  ['idt_5fregister_5ft_35',['idt_register_t',['../structidt__register__t.html',1,'']]],
-  ['irq_5fdisable_36',['irq_disable',['../isr_8h.html#ab925df19b13ecfb0441d5ea0b4adaf5c',1,'isr.c']]],
-  ['irq_5fhandler_37',['irq_handler',['../isr_8h.html#a775b2177e54c4af963376f822f53a243',1,'isr.c']]],
-  ['irq_5finit_38',['irq_init',['../isr_8h.html#a0eee1178db521b54c55074c2bdfebc73',1,'isr.c']]],
-  ['isr_2eh_39',['isr.h',['../isr_8h.html',1,'']]],
-  ['isr_5fhandler_40',['isr_handler',['../isr_8h.html#a7cb233bc15b15bdafb22a1b23de2dd2f',1,'isr.c']]],
-  ['isr_5finit_41',['isr_init',['../isr_8h.html#a2ea31f33125954459edbe7f4d7971ffa',1,'isr.c']]],
-  ['isr_5fregister_5fhandler_42',['isr_register_handler',['../isr_8h.html#a053905294332afc031508a03e6e10c86',1,'isr.c']]],
-  ['isr_5ft_43',['isr_t',['../isr_8h.html#a578e4aa356e844b0e91f9c4980d36cba',1,'isr.h']]]
+  ['heap_5fsize_46',['HEAP_SIZE',['../alloc_8h.html#a1b45302695680930829cac31d65e41e1',1,'alloc.h']]],
+  ['heap_5fstart_47',['HEAP_START',['../alloc_8h.html#ae9739bcecd10d5962cc10c12bf01594f',1,'alloc.h']]]
 ];

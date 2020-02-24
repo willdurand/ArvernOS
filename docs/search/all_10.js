@@ -1,4 +1,10 @@
 var searchData=
 [
-  ['video_5faddress_134',['VIDEO_ADDRESS',['../screen_8h.html#a446862b030fd0351d3b4b871147dd625',1,'screen.h']]]
+  ['read_119',['read',['../include_2sys_2syscall_8h.html#a6c1e02d7a003dcb3b86188ed0ea6de78',1,'read.c']]],
+  ['read_5fcr2_120',['read_cr2',['../register_8h.html#a7b2de5d97ae8b57fd726fa100087f2b9',1,'register.c']]],
+  ['read_5fcr3_121',['read_cr3',['../register_8h.html#a37758a1d9dd7aa158743e035016ea79b',1,'register.c']]],
+  ['readline_5fsize_122',['READLINE_SIZE',['../kshell_8h.html#ac75983952a0074eee55efdb2cc0a5773',1,'kshell.h']]],
+  ['register_2eh_123',['register.h',['../register_8h.html',1,'']]],
+  ['registers_5ft_124',['registers_t',['../structregisters__t.html',1,'']]],
+  ['reserved_5fareas_5ft_125',['reserved_areas_t',['../structreserved__areas__t.html',1,'']]]
 ];

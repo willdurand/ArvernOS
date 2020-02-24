@@ -1,8 +1,10 @@
 var annotated_dup =
 [
     [ "cmos_rtc_t", "structcmos__rtc__t.html", null ],
+    [ "dirent_t", "structdirent__t.html", null ],
     [ "elf_header_t", "structelf__header__t.html", null ],
     [ "elf_program_header_t", "structelf__program__header__t.html", null ],
+    [ "elf_section_header_t", "structelf__section__header__t.html", "structelf__section__header__t" ],
     [ "idt_gate_options_t", "structidt__gate__options__t.html", null ],
     [ "idt_gate_t", "structidt__gate__t.html", null ],
     [ "idt_register_t", "structidt__register__t.html", null ],
@@ -21,7 +23,11 @@ var annotated_dup =
     [ "registers_t", "structregisters__t.html", null ],
     [ "reserved_areas_t", "structreserved__areas__t.html", null ],
     [ "stack_t", "structstack__t.html", null ],
+    [ "stat_t", "structstat__t.html", null ],
+    [ "tar_header_t", "structtar__header__t.html", null ],
     [ "timeval", "structtimeval.html", null ],
     [ "timezone", "structtimezone.html", null ],
-    [ "tm", "structtm.html", null ]
+    [ "tm", "structtm.html", null ],
+    [ "vfs_driver_t", "structvfs__driver__t.html", null ],
+    [ "vfs_node_t", "structvfs__node__t.html", null ]
 ];

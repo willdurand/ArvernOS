@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['elf_2eh_14',['elf.h',['../elf_8h.html',1,'']]],
-  ['elf_5fheader_5ft_15',['elf_header_t',['../structelf__header__t.html',1,'']]],
-  ['elf_5fprogram_5fheader_5ft_16',['elf_program_header_t',['../structelf__program__header__t.html',1,'']]]
+  ['debug_2eh_16',['debug.h',['../fs_2debug_8h.html',1,'']]],
+  ['debug_5ffs_5finit_17',['debug_fs_init',['../fs_2debug_8h.html#a4a4e513b97927b8a57a3b1ea6183ab32',1,'debug.c']]],
+  ['dirent_5ft_18',['dirent_t',['../structdirent__t.html',1,'']]]
 ];

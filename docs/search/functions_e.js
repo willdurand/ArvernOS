@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['write_237',['write',['../include_2sys_2syscall_8h.html#a753ae93018186742db7445504f7b4ab0',1,'write.c']]],
-  ['write_5fcr3_238',['write_cr3',['../register_8h.html#ab9c808b3703f96bb87dd67b0db9142e5',1,'register.c']]]
+  ['unmap_283',['unmap',['../paging_8h.html#a71d704c874eecb8fa6cc99e8c873e890',1,'paging.c']]],
+  ['unmap_5fmultiple_284',['unmap_multiple',['../paging_8h.html#af2eea286ae7a39c9e24ec2e4914edf14',1,'paging.c']]]
 ];

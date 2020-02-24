@@ -148,8 +148,14 @@ Functions</h2></td></tr>
 <tr class="separator:a5dd0a3132223e82f998eb88ffd6b7876"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a31b7b687f7cd7773e3dd5107bcdea030"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="paging_8h.html#a31b7b687f7cd7773e3dd5107bcdea030">map</a> (uint64_t page_number, uint64_t flags)</td></tr>
 <tr class="separator:a31b7b687f7cd7773e3dd5107bcdea030"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab063ff074fc27894763609d156c8cd74"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="paging_8h.html#ab063ff074fc27894763609d156c8cd74">map_multiple</a> (uint64_t start_page_number, uint32_t number_of_pages, uint64_t flags)</td></tr>
+<tr class="separator:ab063ff074fc27894763609d156c8cd74"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a71d704c874eecb8fa6cc99e8c873e890"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="paging_8h.html#a71d704c874eecb8fa6cc99e8c873e890">unmap</a> (uint64_t page_number)</td></tr>
 <tr class="separator:a71d704c874eecb8fa6cc99e8c873e890"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2eea286ae7a39c9e24ec2e4914edf14"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="paging_8h.html#af2eea286ae7a39c9e24ec2e4914edf14">unmap_multiple</a> (uint64_t start_page_number, uint32_t number_of_pages)</td></tr>
+<tr class="separator:af2eea286ae7a39c9e24ec2e4914edf14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd78a6bfbdc7cbbe0e578e52eccad8bf"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="paging_8h.html#acd78a6bfbdc7cbbe0e578e52eccad8bf">paging_amount_for_byte_size</a> (uint64_t start_address, uint64_t byte_size)</td></tr>
+<tr class="separator:acd78a6bfbdc7cbbe0e578e52eccad8bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a31b7b687f7cd7773e3dd5107bcdea030"></a>
@@ -193,10 +199,77 @@ Here is the call graph for this function:</div>
 <area shape="rect" title=" " alt="" coords="5,80,53,105"/>
 <area shape="rect" href="frame_8h.html#a2c7f040adf876d7b49ee46f594ed6679" title=" " alt="" coords="118,55,227,80"/>
 <area shape="rect" href="paging_8h.html#a5dd0a3132223e82f998eb88ffd6b7876" title=" " alt="" coords="101,104,245,129"/>
-<area shape="rect" href="bitmap_8h.html#ade4512f18861f6f5c803538112111455" title=" " alt="" coords="339,5,426,31"/>
+<area shape="rect" href="bitmap_8h.html#a7ed3c2384b34eafa2aba19aa6e856865" title=" " alt="" coords="339,5,426,31"/>
 <area shape="rect" href="bitmap_8h.html#ae60e1e9970fe0c4f68ee27902adbebfa" title=" " alt="" coords="339,55,425,80"/>
 <area shape="rect" href="frame_8h.html#a40b65cfd28ddd6d88557a11a95e4fdab" title=" " alt="" coords="293,104,471,129"/>
 <area shape="rect" href="paging_8h.html#aac53c30ffef4782a7e0bc3f919fc3b07" title=" " alt="" coords="327,153,437,179"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="paging_8h_a31b7b687f7cd7773e3dd5107bcdea030_icgraph.png" border="0" usemap="#paging_8h_a31b7b687f7cd7773e3dd5107bcdea030_icgraph" alt=""/></div>
+<map name="paging_8h_a31b7b687f7cd7773e3dd5107bcdea030_icgraph" id="paging_8h_a31b7b687f7cd7773e3dd5107bcdea030_icgraph">
+<area shape="rect" title=" " alt="" coords="154,5,201,31"/>
+<area shape="rect" href="paging_8h.html#ab063ff074fc27894763609d156c8cd74" title=" " alt="" coords="5,5,106,31"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ab063ff074fc27894763609d156c8cd74"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab063ff074fc27894763609d156c8cd74">&#9670;&nbsp;</a></span>map_multiple()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void map_multiple </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>start_page_number</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>number_of_pages</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>flags</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Maps multiple pages in a row if possible.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">start_page_number</td><td>the first page of the sequence </td></tr>
+    <tr><td class="paramname">number_of_pages</td><td>the amount of pages to map </td></tr>
+    <tr><td class="paramname">flags</td><td>the paging flags </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="paging_8h_ab063ff074fc27894763609d156c8cd74_cgraph.png" border="0" usemap="#paging_8h_ab063ff074fc27894763609d156c8cd74_cgraph" alt=""/></div>
+<map name="paging_8h_ab063ff074fc27894763609d156c8cd74_cgraph" id="paging_8h_ab063ff074fc27894763609d156c8cd74_cgraph">
+<area shape="rect" title=" " alt="" coords="5,80,106,105"/>
+<area shape="rect" href="paging_8h.html#a31b7b687f7cd7773e3dd5107bcdea030" title=" " alt="" coords="154,80,201,105"/>
+<area shape="rect" href="frame_8h.html#a2c7f040adf876d7b49ee46f594ed6679" title=" " alt="" coords="267,55,376,80"/>
+<area shape="rect" href="paging_8h.html#a5dd0a3132223e82f998eb88ffd6b7876" title=" " alt="" coords="249,104,394,129"/>
+<area shape="rect" href="bitmap_8h.html#a7ed3c2384b34eafa2aba19aa6e856865" title=" " alt="" coords="487,5,575,31"/>
+<area shape="rect" href="bitmap_8h.html#ae60e1e9970fe0c4f68ee27902adbebfa" title=" " alt="" coords="488,55,574,80"/>
+<area shape="rect" href="frame_8h.html#a40b65cfd28ddd6d88557a11a95e4fdab" title=" " alt="" coords="442,104,620,129"/>
+<area shape="rect" href="paging_8h.html#aac53c30ffef4782a7e0bc3f919fc3b07" title=" " alt="" coords="476,153,586,179"/>
 </map>
 </div>
 
@@ -257,8 +330,9 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="paging_8h_a5dd0a3132223e82f998eb88ffd6b7876_icgraph.png" border="0" usemap="#paging_8h_a5dd0a3132223e82f998eb88ffd6b7876_icgraph" alt=""/></div>
 <map name="paging_8h_a5dd0a3132223e82f998eb88ffd6b7876_icgraph" id="paging_8h_a5dd0a3132223e82f998eb88ffd6b7876_icgraph">
-<area shape="rect" title=" " alt="" coords="101,5,245,31"/>
-<area shape="rect" href="paging_8h.html#a31b7b687f7cd7773e3dd5107bcdea030" title=" " alt="" coords="5,5,53,31"/>
+<area shape="rect" title=" " alt="" coords="249,5,394,31"/>
+<area shape="rect" href="paging_8h.html#a31b7b687f7cd7773e3dd5107bcdea030" title=" " alt="" coords="154,5,201,31"/>
+<area shape="rect" href="paging_8h.html#ab063ff074fc27894763609d156c8cd74" title=" " alt="" coords="5,5,106,31"/>
 </map>
 </div>
 
@@ -292,8 +366,9 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="paging_8h_a8cecba5b00cd544790f3a2fbb1503660_icgraph.png" border="0" usemap="#paging_8h_a8cecba5b00cd544790f3a2fbb1503660_icgraph" alt=""/></div>
 <map name="paging_8h_a8cecba5b00cd544790f3a2fbb1503660_icgraph" id="paging_8h_a8cecba5b00cd544790f3a2fbb1503660_icgraph">
-<area shape="rect" title=" " alt="" coords="127,5,301,31"/>
-<area shape="rect" href="alloc_8h.html#a0de47e42c61353f53c07a4274b87f864" title=" " alt="" coords="5,5,79,31"/>
+<area shape="rect" title=" " alt="" coords="253,31,427,56"/>
+<area shape="rect" href="alloc_8h.html#a0de47e42c61353f53c07a4274b87f864" title=" " alt="" coords="69,5,142,31"/>
+<area shape="rect" href="paging_8h.html#acd78a6bfbdc7cbbe0e578e52eccad8bf" title=" " alt="" coords="5,55,205,80"/>
 </map>
 </div>
 
@@ -327,8 +402,55 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="paging_8h_a7fdbe7d41abc360ddd26ea67b004cba4_icgraph.png" border="0" usemap="#paging_8h_a7fdbe7d41abc360ddd26ea67b004cba4_icgraph" alt=""/></div>
 <map name="paging_8h_a7fdbe7d41abc360ddd26ea67b004cba4_icgraph" id="paging_8h_a7fdbe7d41abc360ddd26ea67b004cba4_icgraph">
-<area shape="rect" title=" " alt="" coords="115,5,255,31"/>
-<area shape="rect" href="paging_8h.html#a71d704c874eecb8fa6cc99e8c873e890" title=" " alt="" coords="5,5,67,31"/>
+<area shape="rect" title=" " alt="" coords="279,5,418,31"/>
+<area shape="rect" href="paging_8h.html#a71d704c874eecb8fa6cc99e8c873e890" title=" " alt="" coords="169,5,231,31"/>
+<area shape="rect" href="paging_8h.html#af2eea286ae7a39c9e24ec2e4914edf14" title=" " alt="" coords="5,5,121,31"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="acd78a6bfbdc7cbbe0e578e52eccad8bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd78a6bfbdc7cbbe0e578e52eccad8bf">&#9670;&nbsp;</a></span>paging_amount_for_byte_size()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t paging_amount_for_byte_size </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>start_address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>byte_size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Calculates how many pages are needed for a range of addresses.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">start_address</td><td>the starting virtual address </td></tr>
+    <tr><td class="paramname">byte_size</td><td>the amount of bytes </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the amount of pages required for mapping from start_address until start_address + byte_size </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="paging_8h_acd78a6bfbdc7cbbe0e578e52eccad8bf_cgraph.png" border="0" usemap="#paging_8h_acd78a6bfbdc7cbbe0e578e52eccad8bf_cgraph" alt=""/></div>
+<map name="paging_8h_acd78a6bfbdc7cbbe0e578e52eccad8bf_cgraph" id="paging_8h_acd78a6bfbdc7cbbe0e578e52eccad8bf_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,205,31"/>
+<area shape="rect" href="paging_8h.html#a8cecba5b00cd544790f3a2fbb1503660" title=" " alt="" coords="253,5,427,31"/>
 </map>
 </div>
 
@@ -385,9 +507,10 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="paging_8h_aac53c30ffef4782a7e0bc3f919fc3b07_icgraph.png" border="0" usemap="#paging_8h_aac53c30ffef4782a7e0bc3f919fc3b07_icgraph" alt=""/></div>
 <map name="paging_8h_aac53c30ffef4782a7e0bc3f919fc3b07_icgraph" id="paging_8h_aac53c30ffef4782a7e0bc3f919fc3b07_icgraph">
-<area shape="rect" title=" " alt="" coords="293,5,403,31"/>
-<area shape="rect" href="paging_8h.html#a5dd0a3132223e82f998eb88ffd6b7876" title=" " alt="" coords="101,5,245,31"/>
-<area shape="rect" href="paging_8h.html#a31b7b687f7cd7773e3dd5107bcdea030" title=" " alt="" coords="5,5,53,31"/>
+<area shape="rect" title=" " alt="" coords="442,5,551,31"/>
+<area shape="rect" href="paging_8h.html#a5dd0a3132223e82f998eb88ffd6b7876" title=" " alt="" coords="249,5,394,31"/>
+<area shape="rect" href="paging_8h.html#a31b7b687f7cd7773e3dd5107bcdea030" title=" " alt="" coords="154,5,201,31"/>
+<area shape="rect" href="paging_8h.html#ab063ff074fc27894763609d156c8cd74" title=" " alt="" coords="5,5,106,31"/>
 </map>
 </div>
 
@@ -425,6 +548,64 @@ Here is the call graph for this function:</div>
 <area shape="rect" href="paging_8h.html#a7fdbe7d41abc360ddd26ea67b004cba4" title=" " alt="" coords="115,79,255,104"/>
 <area shape="rect" href="bitmap_8h.html#acbd3f5323acaf517704e69c47396119f" title=" " alt="" coords="326,5,423,31"/>
 <area shape="rect" href="frame_8h.html#a4271c2a0f8373b3c676377e9774299ee" title=" " alt="" coords="303,55,446,80"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="paging_8h_a71d704c874eecb8fa6cc99e8c873e890_icgraph.png" border="0" usemap="#paging_8h_a71d704c874eecb8fa6cc99e8c873e890_icgraph" alt=""/></div>
+<map name="paging_8h_a71d704c874eecb8fa6cc99e8c873e890_icgraph" id="paging_8h_a71d704c874eecb8fa6cc99e8c873e890_icgraph">
+<area shape="rect" title=" " alt="" coords="169,5,231,31"/>
+<area shape="rect" href="paging_8h.html#af2eea286ae7a39c9e24ec2e4914edf14" title=" " alt="" coords="5,5,121,31"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="af2eea286ae7a39c9e24ec2e4914edf14"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af2eea286ae7a39c9e24ec2e4914edf14">&#9670;&nbsp;</a></span>unmap_multiple()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void unmap_multiple </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>start_page_number</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>number_of_pages</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Unmaps multiple consecutive pages.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">start_page_number</td><td>the first page of the sequence </td></tr>
+    <tr><td class="paramname">number_of_pages</td><td>the amount of pages to unmap </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="paging_8h_af2eea286ae7a39c9e24ec2e4914edf14_cgraph.png" border="0" usemap="#paging_8h_af2eea286ae7a39c9e24ec2e4914edf14_cgraph" alt=""/></div>
+<map name="paging_8h_af2eea286ae7a39c9e24ec2e4914edf14_cgraph" id="paging_8h_af2eea286ae7a39c9e24ec2e4914edf14_cgraph">
+<area shape="rect" title=" " alt="" coords="5,55,121,80"/>
+<area shape="rect" href="paging_8h.html#a71d704c874eecb8fa6cc99e8c873e890" title=" " alt="" coords="169,55,231,80"/>
+<area shape="rect" href="frame_8h.html#a00af179c263448b20c29a4d6f75d91b1" title=" " alt="" coords="287,29,410,55"/>
+<area shape="rect" href="paging_8h.html#a7fdbe7d41abc360ddd26ea67b004cba4" title=" " alt="" coords="279,79,418,104"/>
+<area shape="rect" href="bitmap_8h.html#acbd3f5323acaf517704e69c47396119f" title=" " alt="" coords="489,5,587,31"/>
+<area shape="rect" href="frame_8h.html#a4271c2a0f8373b3c676377e9774299ee" title=" " alt="" coords="466,55,610,80"/>
 </map>
 </div>
 

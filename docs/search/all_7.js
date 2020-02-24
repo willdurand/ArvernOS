@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['heap_5fsize_26',['HEAP_SIZE',['../alloc_8h.html#a1b45302695680930829cac31d65e41e1',1,'alloc.h']]],
-  ['heap_5fstart_27',['HEAP_START',['../alloc_8h.html#ae9739bcecd10d5962cc10c12bf01594f',1,'alloc.h']]]
+  ['gettimeofday_45',['gettimeofday',['../include_2sys_2syscall_8h.html#a08c6fa45afb77767891dc6fb73d1010f',1,'gettimeofday.c']]]
 ];

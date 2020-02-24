@@ -1,9 +1,12 @@
 var searchData=
 [
-  ['kernel_5fpanic_208',['kernel_panic',['../panic_8h.html#acd2b4a8b19af5b3201990bbdeb5cf5e6',1,'panic.c']]],
-  ['keyboard_5fget_5fscancode_209',['keyboard_get_scancode',['../keyboard_8h.html#a7f253db86f85d1a41dbbafa69b943f5f',1,'keyboard.c']]],
-  ['keyboard_5finit_210',['keyboard_init',['../keyboard_8h.html#aaeb4e4a3c4813ee1efc6b98bba9ec781',1,'keyboard.c']]],
-  ['kmain_211',['kmain',['../kmain_8h.html#a3a723148ea74ca575865f61d277c0657',1,'kmain.c']]],
-  ['kshell_5fprint_5fprompt_212',['kshell_print_prompt',['../kshell_8h.html#af0dfb69566e1acd19453a42d8e973e90',1,'kshell.c']]],
-  ['kshell_5frun_213',['kshell_run',['../kshell_8h.html#a6c773ce937d0e97008441fd2b5909533',1,'kshell.c']]]
+  ['idt_5finit_243',['idt_init',['../idt_8h.html#a88d4205d069421eb4f8e7577285f1180',1,'idt.c']]],
+  ['idt_5fregister_5fgate_244',['idt_register_gate',['../idt_8h.html#a8af8af8cf5ecf069d893ba9a96d55c7e',1,'idt.c']]],
+  ['idt_5fregister_5finterrupt_245',['idt_register_interrupt',['../idt_8h.html#ae9b2767929a9d9b6851a7c60cb64e55c',1,'idt.c']]],
+  ['irq_5fdisable_246',['irq_disable',['../isr_8h.html#ab925df19b13ecfb0441d5ea0b4adaf5c',1,'isr.c']]],
+  ['irq_5fhandler_247',['irq_handler',['../isr_8h.html#a775b2177e54c4af963376f822f53a243',1,'isr.c']]],
+  ['irq_5finit_248',['irq_init',['../isr_8h.html#a0eee1178db521b54c55074c2bdfebc73',1,'isr.c']]],
+  ['isr_5fhandler_249',['isr_handler',['../isr_8h.html#a7cb233bc15b15bdafb22a1b23de2dd2f',1,'isr.c']]],
+  ['isr_5finit_250',['isr_init',['../isr_8h.html#a2ea31f33125954459edbe7f4d7971ffa',1,'isr.c']]],
+  ['isr_5fregister_5fhandler_251',['isr_register_handler',['../isr_8h.html#a053905294332afc031508a03e6e10c86',1,'isr.c']]]
 ];

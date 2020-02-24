@@ -1,22 +1,4 @@
 var searchData=
 [
-  ['page_5fcontaining_5faddress_74',['page_containing_address',['../paging_8h.html#a8cecba5b00cd544790f3a2fbb1503660',1,'paging.c']]],
-  ['page_5fentry_5ft_75',['page_entry_t',['../structpage__entry__t.html',1,'']]],
-  ['page_5fsize_76',['PAGE_SIZE',['../frame_8h.html#a7d467c1d283fdfa1f2081ba1e0d01b6e',1,'frame.h']]],
-  ['page_5fstart_5faddress_77',['page_start_address',['../paging_8h.html#a7fdbe7d41abc360ddd26ea67b004cba4',1,'paging.c']]],
-  ['page_5ftable_5ft_78',['page_table_t',['../structpage__table__t.html',1,'']]],
-  ['paging_2eh_79',['paging.h',['../paging_8h.html',1,'']]],
-  ['paging_5fflag_5fno_5fexecute_80',['PAGING_FLAG_NO_EXECUTE',['../paging_8h.html#a9b636c6433bad872f80f46458db566f7',1,'paging.h']]],
-  ['paging_5fflag_5fpresent_81',['PAGING_FLAG_PRESENT',['../paging_8h.html#a28ff91b933f24d95e25ec5f03a736117',1,'paging.h']]],
-  ['paging_5fflag_5fwritable_82',['PAGING_FLAG_WRITABLE',['../paging_8h.html#adac89a5c7c54309cb4a4570d0f8cf75c',1,'paging.h']]],
-  ['paging_5finit_83',['paging_init',['../paging_8h.html#a44fe56c079dc6d3c0d4b29f5b9dab5a5',1,'paging.c']]],
-  ['panic_84',['PANIC',['../panic_8h.html#a8f54a1e3c548236aa6a60f4596699819',1,'panic.h']]],
-  ['panic_2eh_85',['panic.h',['../panic_8h.html',1,'']]],
-  ['pf_5fcaused_5fby_5fwrite_86',['PF_CAUSED_BY_WRITE',['../isr_8h.html#aae7afaff148e4f0f9212e8281cfa6b79',1,'isr.h']]],
-  ['pf_5finstruction_5ffetch_87',['PF_INSTRUCTION_FETCH',['../isr_8h.html#ab07f8f9ace844e31f94b9b1049325a98',1,'isr.h']]],
-  ['pf_5fmalformed_5ftable_88',['PF_MALFORMED_TABLE',['../isr_8h.html#ab05b226866002973346b2da22ab6907f',1,'isr.h']]],
-  ['pf_5fprotection_5fviolation_89',['PF_PROTECTION_VIOLATION',['../isr_8h.html#a589ec46ff7327ddc8fd86c1352ded786',1,'isr.h']]],
-  ['pf_5fuser_5fmode_90',['PF_USER_MODE',['../isr_8h.html#ab2c012aeaf9d7e17ce719abf3476e5d8',1,'isr.h']]],
-  ['port_2eh_91',['port.h',['../port_8h.html',1,'']]],
-  ['prompt_92',['PROMPT',['../kshell_8h.html#accdbea14ea06c15e271784368bd993e8',1,'kshell.h']]]
+  ['link_82',['link',['../structelf__section__header__t.html#a27a1ee484cbaf8f724621a6cbd247e9c',1,'elf_section_header_t']]]
 ];

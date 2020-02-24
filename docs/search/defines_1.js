@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['idt_5fentries_244',['IDT_ENTRIES',['../idt_8h.html#a2a59a505aa55f15c152f30f811fbd310',1,'idt.h']]]
+  ['heap_5fsize_312',['HEAP_SIZE',['../alloc_8h.html#a1b45302695680930829cac31d65e41e1',1,'alloc.h']]],
+  ['heap_5fstart_313',['HEAP_START',['../alloc_8h.html#ae9739bcecd10d5962cc10c12bf01594f',1,'alloc.h']]]
 ];

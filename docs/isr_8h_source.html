@@ -95,12 +95,12 @@ $(document).ready(function(){initNavTree('isr_8h_source.html','');});
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#define PIC1        0x20 // Master PIC</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#define PIC2        0xA0 // Slave PIC</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#define PIC1_DATA   (PIC1 + 1)</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#define PIC2_DATA   (PIC2 + 1)</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#define PIC_EOI     0x20 // end of interrupt</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#define IRQ_BASE    0x20</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#define PIC1      0x20 // Master PIC</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#define PIC2      0xA0 // Slave PIC</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#define PIC1_DATA (PIC1 + 1)</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#define PIC2_DATA (PIC2 + 1)</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#define PIC_EOI   0x20 // end of interrupt</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#define IRQ_BASE  0x20</span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">// exceptions, cf. http://wiki.osdev.org/Exceptions</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#define EXCEPTION_DE 0</span></div>
@@ -130,10 +130,10 @@ $(document).ready(function(){initNavTree('isr_8h_source.html','');});
 <div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="isr_8h.html#ac2b32acaa2085663ec396320d2e72fdb">   40</a></span>&#160;<span class="preprocessor">#define SYSCALL 0x80</span></div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
 <div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="isr_8h.html#a589ec46ff7327ddc8fd86c1352ded786">   44</a></span>&#160;<span class="preprocessor">#define PF_PROTECTION_VIOLATION 1 &lt;&lt; 0</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#define PF_CAUSED_BY_WRITE      1 &lt;&lt; 1</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#define PF_USER_MODE            1 &lt;&lt; 2</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#define PF_MALFORMED_TABLE      1 &lt;&lt; 3</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#define PF_INSTRUCTION_FETCH    1 &lt;&lt; 4</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#define PF_CAUSED_BY_WRITE 1 &lt;&lt; 1</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#define PF_USER_MODE 1 &lt;&lt; 2</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#define PF_MALFORMED_TABLE 1 &lt;&lt; 3</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#define PF_INSTRUCTION_FETCH 1 &lt;&lt; 4</span></div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="comment">// These functions are declared in the `interrupts.asm` file.</span></div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">void</span> isr0();</div>
@@ -177,70 +177,72 @@ $(document).ready(function(){initNavTree('isr_8h_source.html','');});
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">void</span> isr0x80();</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
-<div class="line"><a name="l00104"></a><span class="lineno"><a class="line" href="structregisters__t.html">  104</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>registers {</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    uint64_t r15;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    uint64_t r14;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    uint64_t r13;</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    uint64_t r12;</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    uint64_t r11;</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    uint64_t r10;</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    uint64_t r9;</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    uint64_t r8;</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    uint64_t rbp;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    uint64_t rdi;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    uint64_t rsi;</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    uint64_t rdx;</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    uint64_t rcx;</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    uint64_t rbx;</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    uint64_t rax;</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;} __attribute__((packed)) <a class="code" href="structregisters__t.html">registers_t</a>;</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160; </div>
-<div class="line"><a name="l00122"></a><span class="lineno"><a class="line" href="structstack__t.html">  122</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>stack {</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    uint64_t instruction_pointer;</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    uint64_t code_segment;</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    uint64_t cpu_flags;</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    uint64_t stack_pointer;</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    uint64_t stack_segment;</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;} __attribute__((packed)) <a class="code" href="structstack__t.html">stack_t</a>;</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160; </div>
-<div class="line"><a name="l00131"></a><span class="lineno"><a class="line" href="isr_8h.html#a578e4aa356e844b0e91f9c4980d36cba">  131</a></span>&#160;<span class="keyword">typedef</span> void (*<a class="code" href="isr_8h.html#a578e4aa356e844b0e91f9c4980d36cba">isr_t</a>)(<a class="code" href="structstack__t.html">stack_t</a>* stack);</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160; </div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="keywordtype">void</span> <a class="code" href="isr_8h.html#a2ea31f33125954459edbe7f4d7971ffa">isr_init</a>();</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160; </div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;<span class="keywordtype">void</span> <a class="code" href="isr_8h.html#a0eee1178db521b54c55074c2bdfebc73">irq_init</a>();</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160; </div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;<span class="keywordtype">void</span> <a class="code" href="isr_8h.html#ab925df19b13ecfb0441d5ea0b4adaf5c">irq_disable</a>();</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160; </div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;<span class="keywordtype">void</span> <a class="code" href="isr_8h.html#a7cb233bc15b15bdafb22a1b23de2dd2f">isr_handler</a>(uint64_t <span class="keywordtype">id</span>, uint64_t stack) __asm__(<span class="stringliteral">&quot;isr_handler&quot;</span>);</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160; </div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;<span class="keywordtype">void</span> <a class="code" href="isr_8h.html#a775b2177e54c4af963376f822f53a243">irq_handler</a>(uint64_t <span class="keywordtype">id</span>, uint64_t stack) __asm__(<span class="stringliteral">&quot;irq_handler&quot;</span>);</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160; </div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;<span class="keywordtype">void</span> <a class="code" href="isr_8h.html#a053905294332afc031508a03e6e10c86">isr_register_handler</a>(uint64_t <span class="keywordtype">id</span>, <a class="code" href="isr_8h.html#a578e4aa356e844b0e91f9c4980d36cba">isr_t</a> handler);</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160; </div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00104"></a><span class="lineno"><a class="line" href="structregisters__t.html">  104</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>registers</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;{</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  uint64_t r15;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  uint64_t r14;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  uint64_t r13;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  uint64_t r12;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  uint64_t r11;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  uint64_t r10;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  uint64_t r9;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;  uint64_t r8;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  uint64_t rbp;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;  uint64_t rdi;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  uint64_t rsi;</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;  uint64_t rdx;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  uint64_t rcx;</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;  uint64_t rbx;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  uint64_t rax;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;} __attribute__((packed)) <a class="code" href="structregisters__t.html">registers_t</a>;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
+<div class="line"><a name="l00123"></a><span class="lineno"><a class="line" href="structstack__t.html">  123</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>stack</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;{</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;  uint64_t instruction_pointer;</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;  uint64_t code_segment;</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;  uint64_t cpu_flags;</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;  uint64_t stack_pointer;</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;  uint64_t stack_segment;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;} __attribute__((packed)) <a class="code" href="structstack__t.html">stack_t</a>;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160; </div>
+<div class="line"><a name="l00133"></a><span class="lineno"><a class="line" href="isr_8h.html#a578e4aa356e844b0e91f9c4980d36cba">  133</a></span>&#160;<span class="keyword">typedef</span> void (*<a class="code" href="isr_8h.html#a578e4aa356e844b0e91f9c4980d36cba">isr_t</a>)(<a class="code" href="structstack__t.html">stack_t</a>* stack);</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160; </div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;<span class="keywordtype">void</span> <a class="code" href="isr_8h.html#a2ea31f33125954459edbe7f4d7971ffa">isr_init</a>();</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160; </div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;<span class="keywordtype">void</span> <a class="code" href="isr_8h.html#a0eee1178db521b54c55074c2bdfebc73">irq_init</a>();</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160; </div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;<span class="keywordtype">void</span> <a class="code" href="isr_8h.html#ab925df19b13ecfb0441d5ea0b4adaf5c">irq_disable</a>();</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160; </div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;<span class="keywordtype">void</span> <a class="code" href="isr_8h.html#a7cb233bc15b15bdafb22a1b23de2dd2f">isr_handler</a>(uint64_t <span class="keywordtype">id</span>, uint64_t stack) __asm__(<span class="stringliteral">&quot;isr_handler&quot;</span>);</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160; </div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;<span class="keywordtype">void</span> <a class="code" href="isr_8h.html#a775b2177e54c4af963376f822f53a243">irq_handler</a>(uint64_t <span class="keywordtype">id</span>, uint64_t stack) __asm__(<span class="stringliteral">&quot;irq_handler&quot;</span>);</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160; </div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;<span class="keywordtype">void</span> <a class="code" href="isr_8h.html#a053905294332afc031508a03e6e10c86">isr_register_handler</a>(uint64_t <span class="keywordtype">id</span>, <a class="code" href="isr_8h.html#a578e4aa356e844b0e91f9c4980d36cba">isr_t</a> handler);</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160; </div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <div class="ttc" id="aport_8h_html"><div class="ttname"><a href="port_8h.html">port.h</a></div></div>
-<div class="ttc" id="acore_2syscall_8h_html_a362ef819e2d72c9411f40f5d87c5587a"><div class="ttname"><a href="core_2syscall_8h.html#a362ef819e2d72c9411f40f5d87c5587a">syscall_handler</a></div><div class="ttdeci">void syscall_handler(registers_t *registers)</div><div class="ttdef"><b>Definition:</b> syscall.c:33</div></div>
-<div class="ttc" id="aidt_8h_html_ae9b2767929a9d9b6851a7c60cb64e55c"><div class="ttname"><a href="idt_8h.html#ae9b2767929a9d9b6851a7c60cb64e55c">idt_register_interrupt</a></div><div class="ttdeci">void idt_register_interrupt(uint16_t n, uint64_t handler)</div><div class="ttdef"><b>Definition:</b> idt.c:28</div></div>
+<div class="ttc" id="acore_2syscall_8h_html_a362ef819e2d72c9411f40f5d87c5587a"><div class="ttname"><a href="core_2syscall_8h.html#a362ef819e2d72c9411f40f5d87c5587a">syscall_handler</a></div><div class="ttdeci">void syscall_handler(registers_t *registers)</div><div class="ttdef"><b>Definition:</b> syscall.c:35</div></div>
+<div class="ttc" id="aidt_8h_html_ae9b2767929a9d9b6851a7c60cb64e55c"><div class="ttname"><a href="idt_8h.html#ae9b2767929a9d9b6851a7c60cb64e55c">idt_register_interrupt</a></div><div class="ttdeci">void idt_register_interrupt(uint16_t n, uint64_t handler)</div><div class="ttdef"><b>Definition:</b> idt.c:29</div></div>
 <div class="ttc" id="aidt_8h_html"><div class="ttname"><a href="idt_8h.html">idt.h</a></div></div>
-<div class="ttc" id="aisr_8h_html_a0eee1178db521b54c55074c2bdfebc73"><div class="ttname"><a href="isr_8h.html#a0eee1178db521b54c55074c2bdfebc73">irq_init</a></div><div class="ttdeci">void irq_init()</div><div class="ttdef"><b>Definition:</b> isr.c:128</div></div>
-<div class="ttc" id="apanic_8h_html_a8f54a1e3c548236aa6a60f4596699819"><div class="ttname"><a href="panic_8h.html#a8f54a1e3c548236aa6a60f4596699819">PANIC</a></div><div class="ttdeci">#define PANIC(...)</div><div class="ttdoc">This macro should only be used when something goes terribly wrong.</div><div class="ttdef"><b>Definition:</b> panic.h:13</div></div>
-<div class="ttc" id="aisr_8h_html_a7cb233bc15b15bdafb22a1b23de2dd2f"><div class="ttname"><a href="isr_8h.html#a7cb233bc15b15bdafb22a1b23de2dd2f">isr_handler</a></div><div class="ttdeci">void isr_handler(uint64_t id, uint64_t stack) __asm__(&quot;isr_handler&quot;)</div><div class="ttdef"><b>Definition:</b> isr.c:136</div></div>
+<div class="ttc" id="aisr_8h_html_a0eee1178db521b54c55074c2bdfebc73"><div class="ttname"><a href="isr_8h.html#a0eee1178db521b54c55074c2bdfebc73">irq_init</a></div><div class="ttdeci">void irq_init()</div><div class="ttdef"><b>Definition:</b> isr.c:127</div></div>
+<div class="ttc" id="apanic_8h_html_a8f54a1e3c548236aa6a60f4596699819"><div class="ttname"><a href="panic_8h.html#a8f54a1e3c548236aa6a60f4596699819">PANIC</a></div><div class="ttdeci">#define PANIC(...)</div><div class="ttdoc">This macro should only be used when something goes terribly wrong.</div><div class="ttdef"><b>Definition:</b> panic.h:15</div></div>
+<div class="ttc" id="aisr_8h_html_a7cb233bc15b15bdafb22a1b23de2dd2f"><div class="ttname"><a href="isr_8h.html#a7cb233bc15b15bdafb22a1b23de2dd2f">isr_handler</a></div><div class="ttdeci">void isr_handler(uint64_t id, uint64_t stack) __asm__(&quot;isr_handler&quot;)</div><div class="ttdef"><b>Definition:</b> isr.c:137</div></div>
 <div class="ttc" id="astructregisters__t_html"><div class="ttname"><a href="structregisters__t.html">registers_t</a></div><div class="ttdef"><b>Definition:</b> isr.h:104</div></div>
-<div class="ttc" id="aisr_8h_html_a053905294332afc031508a03e6e10c86"><div class="ttname"><a href="isr_8h.html#a053905294332afc031508a03e6e10c86">isr_register_handler</a></div><div class="ttdeci">void isr_register_handler(uint64_t id, isr_t handler)</div><div class="ttdef"><b>Definition:</b> isr.c:182</div></div>
-<div class="ttc" id="astructstack__t_html"><div class="ttname"><a href="structstack__t.html">stack_t</a></div><div class="ttdef"><b>Definition:</b> isr.h:122</div></div>
+<div class="ttc" id="aisr_8h_html_a053905294332afc031508a03e6e10c86"><div class="ttname"><a href="isr_8h.html#a053905294332afc031508a03e6e10c86">isr_register_handler</a></div><div class="ttdeci">void isr_register_handler(uint64_t id, isr_t handler)</div><div class="ttdef"><b>Definition:</b> isr.c:184</div></div>
+<div class="ttc" id="astructstack__t_html"><div class="ttname"><a href="structstack__t.html">stack_t</a></div><div class="ttdef"><b>Definition:</b> isr.h:123</div></div>
 <div class="ttc" id="aidt_8h_html_a88d4205d069421eb4f8e7577285f1180"><div class="ttname"><a href="idt_8h.html#a88d4205d069421eb4f8e7577285f1180">idt_init</a></div><div class="ttdeci">void idt_init()</div><div class="ttdef"><b>Definition:</b> idt.c:6</div></div>
 <div class="ttc" id="aisr_8h_html_ac2b32acaa2085663ec396320d2e72fdb"><div class="ttname"><a href="isr_8h.html#ac2b32acaa2085663ec396320d2e72fdb">SYSCALL</a></div><div class="ttdeci">#define SYSCALL</div><div class="ttdoc">This is the ID of the special interrupt for syscalls.</div><div class="ttdef"><b>Definition:</b> isr.h:40</div></div>
 <div class="ttc" id="astdio_8h_html"><div class="ttname"><a href="stdio_8h.html">stdio.h</a></div></div>
-<div class="ttc" id="aisr_8h_html_a2ea31f33125954459edbe7f4d7971ffa"><div class="ttname"><a href="isr_8h.html#a2ea31f33125954459edbe7f4d7971ffa">isr_init</a></div><div class="ttdeci">void isr_init()</div><div class="ttdef"><b>Definition:</b> isr.c:57</div></div>
-<div class="ttc" id="aisr_8h_html_a775b2177e54c4af963376f822f53a243"><div class="ttname"><a href="isr_8h.html#a775b2177e54c4af963376f822f53a243">irq_handler</a></div><div class="ttdeci">void irq_handler(uint64_t id, uint64_t stack) __asm__(&quot;irq_handler&quot;)</div><div class="ttdef"><b>Definition:</b> isr.c:169</div></div>
+<div class="ttc" id="aisr_8h_html_a2ea31f33125954459edbe7f4d7971ffa"><div class="ttname"><a href="isr_8h.html#a2ea31f33125954459edbe7f4d7971ffa">isr_init</a></div><div class="ttdeci">void isr_init()</div><div class="ttdef"><b>Definition:</b> isr.c:55</div></div>
+<div class="ttc" id="aisr_8h_html_a775b2177e54c4af963376f822f53a243"><div class="ttname"><a href="isr_8h.html#a775b2177e54c4af963376f822f53a243">irq_handler</a></div><div class="ttdeci">void irq_handler(uint64_t id, uint64_t stack) __asm__(&quot;irq_handler&quot;)</div><div class="ttdef"><b>Definition:</b> isr.c:170</div></div>
 <div class="ttc" id="acore_2syscall_8h_html"><div class="ttname"><a href="core_2syscall_8h.html">syscall.h</a></div></div>
 <div class="ttc" id="aregister_8h_html_a7b2de5d97ae8b57fd726fa100087f2b9"><div class="ttname"><a href="register_8h.html#a7b2de5d97ae8b57fd726fa100087f2b9">read_cr2</a></div><div class="ttdeci">uint64_t read_cr2()</div><div class="ttdef"><b>Definition:</b> register.c:3</div></div>
 <div class="ttc" id="apanic_8h_html"><div class="ttname"><a href="panic_8h.html">panic.h</a></div></div>
 <div class="ttc" id="aregister_8h_html"><div class="ttname"><a href="register_8h.html">register.h</a></div></div>
 <div class="ttc" id="aisr_8h_html_ab925df19b13ecfb0441d5ea0b4adaf5c"><div class="ttname"><a href="isr_8h.html#ab925df19b13ecfb0441d5ea0b4adaf5c">irq_disable</a></div><div class="ttdeci">void irq_disable()</div><div class="ttdef"><b>Definition:</b> isr.c:132</div></div>
-<div class="ttc" id="aisr_8h_html_a578e4aa356e844b0e91f9c4980d36cba"><div class="ttname"><a href="isr_8h.html#a578e4aa356e844b0e91f9c4980d36cba">isr_t</a></div><div class="ttdeci">void(* isr_t)(stack_t *stack)</div><div class="ttdoc">This type represents an interrupt handler.</div><div class="ttdef"><b>Definition:</b> isr.h:131</div></div>
+<div class="ttc" id="aisr_8h_html_a578e4aa356e844b0e91f9c4980d36cba"><div class="ttname"><a href="isr_8h.html#a578e4aa356e844b0e91f9c4980d36cba">isr_t</a></div><div class="ttdeci">void(* isr_t)(stack_t *stack)</div><div class="ttdoc">This type represents an interrupt handler.</div><div class="ttdef"><b>Definition:</b> isr.h:133</div></div>
 <div class="ttc" id="astdlib_8h_html"><div class="ttname"><a href="stdlib_8h.html">stdlib.h</a></div></div>
 <div class="ttc" id="aisr_8h_html"><div class="ttname"><a href="isr_8h.html">isr.h</a></div></div>
 <!-- start footer part -->

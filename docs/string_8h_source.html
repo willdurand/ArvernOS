@@ -100,19 +100,23 @@ $(document).ready(function(){initNavTree('string_8h_source.html','');});
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keywordtype">char</span>* strcpy(<span class="keywordtype">char</span>* dest, <span class="keyword">const</span> <span class="keywordtype">char</span>* src);</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keywordtype">char</span>* strsep(<span class="keywordtype">char</span>** stringp, <span class="keyword">const</span> <span class="keywordtype">char</span>* delim);</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keywordtype">int</span> strcspn(<span class="keyword">const</span> <span class="keywordtype">char</span>* s1, <span class="keyword">const</span> <span class="keywordtype">char</span>* s2);</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keywordtype">char</span>* strdup(<span class="keyword">const</span> <span class="keywordtype">char</span>* s);</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keywordtype">void</span>* memcpy(<span class="keywordtype">void</span>* dest, <span class="keyword">const</span> <span class="keywordtype">void</span>* src, <span class="keywordtype">size_t</span> bytes);</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keywordtype">void</span>* memset(<span class="keywordtype">void</span>* str, <span class="keywordtype">int</span> c, <span class="keywordtype">size_t</span> bytes);</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keywordtype">void</span>* memmove(<span class="keywordtype">void</span>* dest, <span class="keyword">const</span> <span class="keywordtype">void</span>* src, <span class="keywordtype">size_t</span> len);</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keywordtype">char</span>* strncpy(<span class="keywordtype">char</span>* dest, <span class="keyword">const</span> <span class="keywordtype">char</span>* src, <span class="keywordtype">size_t</span> len);</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keywordtype">char</span>* strsep(<span class="keywordtype">char</span>** str, <span class="keyword">const</span> <span class="keywordtype">char</span>* sep);</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keywordtype">int</span> strcspn(<span class="keyword">const</span> <span class="keywordtype">char</span>* s1, <span class="keyword">const</span> <span class="keywordtype">char</span>* s2);</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keywordtype">char</span>* strdup(<span class="keyword">const</span> <span class="keywordtype">char</span>* s);</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keywordtype">char</span>* strcat(<span class="keywordtype">char</span>* dest, <span class="keyword">const</span> <span class="keywordtype">char</span>* src);</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keywordtype">void</span>* memcpy(<span class="keywordtype">void</span>* dest, <span class="keyword">const</span> <span class="keywordtype">void</span>* src, <span class="keywordtype">size_t</span> bytes);</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keywordtype">void</span>* memset(<span class="keywordtype">void</span>* str, <span class="keywordtype">int</span> c, <span class="keywordtype">size_t</span> bytes);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keywordtype">void</span>* memmove(<span class="keywordtype">void</span>* dest, <span class="keyword">const</span> <span class="keywordtype">void</span>* src, <span class="keywordtype">size_t</span> len);</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

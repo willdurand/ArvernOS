@@ -95,22 +95,24 @@ $(document).ready(function(){initNavTree('panic_8h_source.html','');});
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;core/debug.h&gt;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#define __PANIC(format, ...)    DEBUG(format &quot;%s&quot;, __VA_ARGS__); \</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">                                kernel_panic(&quot;\nPANIC in %s() (line %d): &quot; \</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">                                format &quot;%s&quot;, \</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">                                __func__, __LINE__, __VA_ARGS__);</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="panic_8h.html#a8f54a1e3c548236aa6a60f4596699819">   13</a></span>&#160;<span class="preprocessor">#define PANIC(...)              __PANIC(__VA_ARGS__, &quot;\n&quot;)</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keywordtype">void</span> <a class="code" href="panic_8h.html#acd2b4a8b19af5b3201990bbdeb5cf5e6">kernel_panic</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* format, ...);</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#define __PANIC(format, ...)                                                   \</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">  DEBUG(format &quot;%s&quot;, __VA_ARGS__);                                             \</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">  kernel_panic(&quot;\nPANIC in %s() (line %d): &quot; format &quot;%s&quot;,                      \</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">               __func__,                                                       \</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">               __LINE__,                                                       \</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">               __VA_ARGS__);</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="panic_8h.html#a8f54a1e3c548236aa6a60f4596699819">   15</a></span>&#160;<span class="preprocessor">#define PANIC(...) __PANIC(__VA_ARGS__, &quot;\n&quot;)</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keywordtype">void</span> <a class="code" href="panic_8h.html#acd2b4a8b19af5b3201990bbdeb5cf5e6">kernel_panic</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* format, ...);</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <div class="ttc" id="apanic_8h_html_acd2b4a8b19af5b3201990bbdeb5cf5e6"><div class="ttname"><a href="panic_8h.html#acd2b4a8b19af5b3201990bbdeb5cf5e6">kernel_panic</a></div><div class="ttdeci">void kernel_panic(const char *format,...)</div><div class="ttdef"><b>Definition:</b> panic.c:6</div></div>
 <div class="ttc" id="ascreen_8h_html"><div class="ttname"><a href="screen_8h.html">screen.h</a></div></div>
 <div class="ttc" id="astdio_8h_html"><div class="ttname"><a href="stdio_8h.html">stdio.h</a></div></div>
-<div class="ttc" id="ascreen_8h_html_a76b60bda57a03e2f113f3cea03f45731"><div class="ttname"><a href="screen_8h.html#a76b60bda57a03e2f113f3cea03f45731">screen_color_scheme</a></div><div class="ttdeci">void screen_color_scheme(uint8_t fg, uint8_t bg)</div><div class="ttdef"><b>Definition:</b> screen.c:29</div></div>
+<div class="ttc" id="ascreen_8h_html_a76b60bda57a03e2f113f3cea03f45731"><div class="ttname"><a href="screen_8h.html#a76b60bda57a03e2f113f3cea03f45731">screen_color_scheme</a></div><div class="ttdeci">void screen_color_scheme(uint8_t fg, uint8_t bg)</div><div class="ttdef"><b>Definition:</b> screen.c:30</div></div>
 <div class="ttc" id="apanic_8h_html"><div class="ttname"><a href="panic_8h.html">panic.h</a></div></div>
 <div class="ttc" id="aisr_8h_html_ab925df19b13ecfb0441d5ea0b4adaf5c"><div class="ttname"><a href="isr_8h.html#ab925df19b13ecfb0441d5ea0b4adaf5c">irq_disable</a></div><div class="ttdeci">void irq_disable()</div><div class="ttdef"><b>Definition:</b> isr.c:132</div></div>
 <div class="ttc" id="aisr_8h_html"><div class="ttname"><a href="isr_8h.html">isr.h</a></div></div>

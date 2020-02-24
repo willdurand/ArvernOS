@@ -95,55 +95,104 @@ $(document).ready(function(){initNavTree('elf_8h_source.html','');});
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#define ELF_TYPE_EXECUTABLE 0x2</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#define ELF_PT_LOAD 0x1</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#define ELF_PT_X 0x1</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#define ELF_PT_R 0x2</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#define ELF_PT_W 0x4</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="structelf__header__t.html">   15</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>elf_header {</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> identity[16];</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    uint16_t type;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    uint16_t machine;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    uint32_t version;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    uint64_t entry;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    uint64_t ph_offset;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    uint64_t sh_offset;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    uint32_t flags;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    uint16_t header_size;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    uint16_t ph_size;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    uint16_t ph_num;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    uint16_t sh_size;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    uint16_t sh_num;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    uint16_t strtab_index;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;} __attribute__((packed)) <a class="code" href="structelf__header__t.html">elf_header_t</a>;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="structelf__program__header__t.html">   32</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>elf_program_header {</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    uint32_t type;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    uint32_t flags;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    uint64_t offset;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    uint64_t virtual_address;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    uint64_t physical_address;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    uint64_t file_size;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    uint64_t mem_size;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    uint64_t align;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;} __attribute__((packed)) <a class="code" href="structelf__program__header__t.html">elf_program_header_t</a>;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<a class="code" href="structelf__header__t.html">elf_header_t</a>* elf_load(uint64_t* data);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="elf_8h.html#ad2f1035ee9df02bd3d7504cb7f6c97d8">    8</a></span>&#160;<span class="preprocessor">#define ELF_TYPE_EXECUTABLE 0x2</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
+<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="elf_8h.html#a91b22ae4cdb3d9394d57ec173ea5256e">   11</a></span>&#160;<span class="preprocessor">#define ELF_PROGRAM_TYPE_LOAD 0x1</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="elf_8h.html#aebb74ea17fe6a8dd9668bb43fbcdd522">   14</a></span>&#160;<span class="preprocessor">#define ELF_PROGRAM_FLAG_EXECUTE 0x1</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#define ELF_PROGRAM_FLAG_WRITE 0x2</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#define ELF_PROGRAM_FLAG_READ 0x4</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
+<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="elf_8h.html#a1ac7576ab82427c66ba8da14152d6f7e">   21</a></span>&#160;<span class="preprocessor">#define ELF_SECTION_INDEX_UNDEFINED 0</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="elf_8h.html#a84b27771d4d79a5dc8097d391230f4ec">   24</a></span>&#160;<span class="preprocessor">#define ELF_SECTION_TYPE_NULL 0</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#define ELF_SECTION_TYPE_PROGBITS 1</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#define ELF_SECTION_TYPE_NOBITS 8</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="elf_8h.html#a3a1972be53e555b161cdc088e3630d3f">   31</a></span>&#160;<span class="preprocessor">#define ELF_SECTION_FLAG_WRITE 0x1</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#define ELF_SECTION_FLAG_ALLOC 0x2</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#define ELF_SECTION_FLAG_EXECINSTR 0x4</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="structelf__header__t.html">   37</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>elf_header</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;{</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> identity[16];</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  uint16_t type;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  uint16_t machine;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  uint32_t version;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  uint64_t entry;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  uint64_t ph_offset;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  uint64_t sh_offset;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  uint32_t flags;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  uint16_t header_size;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  uint16_t ph_size;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  uint16_t ph_num;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  uint16_t sh_size;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  uint16_t sh_num;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  uint16_t strtab_index;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;} __attribute__((packed)) <a class="code" href="structelf__header__t.html">elf_header_t</a>;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="structelf__program__header__t.html">   55</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>elf_program_header</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;{</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  uint32_t type;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  uint32_t flags;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  uint64_t offset;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  uint64_t virtual_address;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  uint64_t physical_address;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  uint64_t file_size;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  uint64_t mem_size;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  uint64_t align;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;} __attribute__((packed)) <a class="code" href="structelf__program__header__t.html">elf_program_header_t</a>;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
+<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="structelf__section__header__t.html">   67</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>elf_section_header</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;{</div>
+<div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="structelf__section__header__t.html#ac874b50ab72c734c2b5eb5dfd02d989b">   69</a></span>&#160;  uint32_t <a class="code" href="structelf__section__header__t.html#ac874b50ab72c734c2b5eb5dfd02d989b">name</a>;      </div>
+<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="structelf__section__header__t.html#ab3e8497598ec17fe886336ace990e3ad">   70</a></span>&#160;  uint32_t <a class="code" href="structelf__section__header__t.html#ab3e8497598ec17fe886336ace990e3ad">type</a>;      </div>
+<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="structelf__section__header__t.html#a9f359cf835d1a06da5445ef3100033df">   71</a></span>&#160;  uint64_t <a class="code" href="structelf__section__header__t.html#a9f359cf835d1a06da5445ef3100033df">flags</a>;     </div>
+<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="structelf__section__header__t.html#a91fafb0c8ffac552999cf59fd1dd5e49">   72</a></span>&#160;  uint64_t <a class="code" href="structelf__section__header__t.html#a91fafb0c8ffac552999cf59fd1dd5e49">addr</a>;      </div>
+<div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="structelf__section__header__t.html#a2d090693f40eb11ca29ef3b20420dd67">   73</a></span>&#160;  uint64_t <a class="code" href="structelf__section__header__t.html#a2d090693f40eb11ca29ef3b20420dd67">offset</a>;    </div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="structelf__section__header__t.html#a0a71f9f90c90da99840b3697675b2b46">   74</a></span>&#160;  uint64_t <a class="code" href="structelf__section__header__t.html#a0a71f9f90c90da99840b3697675b2b46">size</a>;      </div>
+<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="structelf__section__header__t.html#a27a1ee484cbaf8f724621a6cbd247e9c">   75</a></span>&#160;  uint32_t <a class="code" href="structelf__section__header__t.html#a27a1ee484cbaf8f724621a6cbd247e9c">link</a>;      </div>
+<div class="line"><a name="l00076"></a><span class="lineno"><a class="line" href="structelf__section__header__t.html#ade2f8bd3a40f8d6c37034c3a2530067d">   76</a></span>&#160;  uint32_t <a class="code" href="structelf__section__header__t.html#ade2f8bd3a40f8d6c37034c3a2530067d">info</a>;      </div>
+<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="structelf__section__header__t.html#a8b33ed92712f7306d917be33cc7fb127">   77</a></span>&#160;  uint64_t <a class="code" href="structelf__section__header__t.html#a8b33ed92712f7306d917be33cc7fb127">addralign</a>; </div>
+<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="structelf__section__header__t.html#afe55e22dc0bc25ce8354bb602ba79857">   78</a></span>&#160;  uint64_t <a class="code" href="structelf__section__header__t.html#afe55e22dc0bc25ce8354bb602ba79857">entsize</a>;   </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;} __attribute__((packed)) <a class="code" href="structelf__section__header__t.html">elf_section_header_t</a>;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<a class="code" href="structelf__header__t.html">elf_header_t</a>* elf_load(uint8_t* data);</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
+<div class="ttc" id="aelf_8h_html_ad809e88a9dfe4e461a4d1b0038852dde"><div class="ttname"><a href="elf_8h.html#ad809e88a9dfe4e461a4d1b0038852dde">ELF_SECTION_TYPE_PROGBITS</a></div><div class="ttdeci">#define ELF_SECTION_TYPE_PROGBITS</div><div class="ttdoc">Information defined by the program.</div><div class="ttdef"><b>Definition:</b> elf.h:26</div></div>
+<div class="ttc" id="aelf_8h_html_a45926a423fe3ac8717e2fe6c8b019be5"><div class="ttname"><a href="elf_8h.html#a45926a423fe3ac8717e2fe6c8b019be5">ELF_SECTION_FLAG_ALLOC</a></div><div class="ttdeci">#define ELF_SECTION_FLAG_ALLOC</div><div class="ttdoc">Section is allocated in memory image of program.</div><div class="ttdef"><b>Definition:</b> elf.h:33</div></div>
+<div class="ttc" id="aelf_8h_html_a1ac7576ab82427c66ba8da14152d6f7e"><div class="ttname"><a href="elf_8h.html#a1ac7576ab82427c66ba8da14152d6f7e">ELF_SECTION_INDEX_UNDEFINED</a></div><div class="ttdeci">#define ELF_SECTION_INDEX_UNDEFINED</div><div class="ttdoc">Undefined or meaningless section reference.</div><div class="ttdef"><b>Definition:</b> elf.h:21</div></div>
+<div class="ttc" id="astructelf__section__header__t_html_ab3e8497598ec17fe886336ace990e3ad"><div class="ttname"><a href="structelf__section__header__t.html#ab3e8497598ec17fe886336ace990e3ad">elf_section_header_t::type</a></div><div class="ttdeci">uint32_t type</div><div class="ttdoc">Section Type.</div><div class="ttdef"><b>Definition:</b> elf.h:70</div></div>
+<div class="ttc" id="aelf_8h_html_a74612116b892ac0e50d807ee75baff04"><div class="ttname"><a href="elf_8h.html#a74612116b892ac0e50d807ee75baff04">ELF_SECTION_FLAG_EXECINSTR</a></div><div class="ttdeci">#define ELF_SECTION_FLAG_EXECINSTR</div><div class="ttdoc">Contains executable instructions.</div><div class="ttdef"><b>Definition:</b> elf.h:35</div></div>
+<div class="ttc" id="apaging_8h_html_ab063ff074fc27894763609d156c8cd74"><div class="ttname"><a href="paging_8h.html#ab063ff074fc27894763609d156c8cd74">map_multiple</a></div><div class="ttdeci">void map_multiple(uint64_t start_page_number, uint32_t number_of_pages, uint64_t flags)</div><div class="ttdef"><b>Definition:</b> paging.c:345</div></div>
 <div class="ttc" id="apaging_8h_html_adac89a5c7c54309cb4a4570d0f8cf75c"><div class="ttname"><a href="paging_8h.html#adac89a5c7c54309cb4a4570d0f8cf75c">PAGING_FLAG_WRITABLE</a></div><div class="ttdeci">#define PAGING_FLAG_WRITABLE</div><div class="ttdoc">It is allowed to write to this page.</div><div class="ttdef"><b>Definition:</b> paging.h:15</div></div>
-<div class="ttc" id="astructelf__program__header__t_html"><div class="ttname"><a href="structelf__program__header__t.html">elf_program_header_t</a></div><div class="ttdef"><b>Definition:</b> elf.h:32</div></div>
+<div class="ttc" id="astructelf__section__header__t_html_a2d090693f40eb11ca29ef3b20420dd67"><div class="ttname"><a href="structelf__section__header__t.html#a2d090693f40eb11ca29ef3b20420dd67">elf_section_header_t::offset</a></div><div class="ttdeci">uint64_t offset</div><div class="ttdoc">Offset in file.</div><div class="ttdef"><b>Definition:</b> elf.h:73</div></div>
+<div class="ttc" id="astructelf__section__header__t_html"><div class="ttname"><a href="structelf__section__header__t.html">elf_section_header_t</a></div><div class="ttdef"><b>Definition:</b> elf.h:67</div></div>
+<div class="ttc" id="astructelf__program__header__t_html"><div class="ttname"><a href="structelf__program__header__t.html">elf_program_header_t</a></div><div class="ttdef"><b>Definition:</b> elf.h:55</div></div>
 <div class="ttc" id="apaging_8h_html_a28ff91b933f24d95e25ec5f03a736117"><div class="ttname"><a href="paging_8h.html#a28ff91b933f24d95e25ec5f03a736117">PAGING_FLAG_PRESENT</a></div><div class="ttdeci">#define PAGING_FLAG_PRESENT</div><div class="ttdoc">The page is currently in memory.</div><div class="ttdef"><b>Definition:</b> paging.h:13</div></div>
-<div class="ttc" id="apaging_8h_html_a8cecba5b00cd544790f3a2fbb1503660"><div class="ttname"><a href="paging_8h.html#a8cecba5b00cd544790f3a2fbb1503660">page_containing_address</a></div><div class="ttdeci">uint64_t page_containing_address(uint64_t virtual_address)</div><div class="ttdef"><b>Definition:</b> paging.c:64</div></div>
-<div class="ttc" id="apaging_8h_html_a31b7b687f7cd7773e3dd5107bcdea030"><div class="ttname"><a href="paging_8h.html#a31b7b687f7cd7773e3dd5107bcdea030">map</a></div><div class="ttdeci">void map(uint64_t page_number, uint64_t flags)</div><div class="ttdef"><b>Definition:</b> paging.c:303</div></div>
+<div class="ttc" id="astructelf__section__header__t_html_ac874b50ab72c734c2b5eb5dfd02d989b"><div class="ttname"><a href="structelf__section__header__t.html#ac874b50ab72c734c2b5eb5dfd02d989b">elf_section_header_t::name</a></div><div class="ttdeci">uint32_t name</div><div class="ttdoc">Section Name.</div><div class="ttdef"><b>Definition:</b> elf.h:69</div></div>
+<div class="ttc" id="astructelf__section__header__t_html_a8b33ed92712f7306d917be33cc7fb127"><div class="ttname"><a href="structelf__section__header__t.html#a8b33ed92712f7306d917be33cc7fb127">elf_section_header_t::addralign</a></div><div class="ttdeci">uint64_t addralign</div><div class="ttdoc">Address alignment boundary.</div><div class="ttdef"><b>Definition:</b> elf.h:77</div></div>
+<div class="ttc" id="apaging_8h_html_a8cecba5b00cd544790f3a2fbb1503660"><div class="ttname"><a href="paging_8h.html#a8cecba5b00cd544790f3a2fbb1503660">page_containing_address</a></div><div class="ttdeci">uint64_t page_containing_address(uint64_t virtual_address)</div><div class="ttdef"><b>Definition:</b> paging.c:77</div></div>
+<div class="ttc" id="astructelf__section__header__t_html_a9f359cf835d1a06da5445ef3100033df"><div class="ttname"><a href="structelf__section__header__t.html#a9f359cf835d1a06da5445ef3100033df">elf_section_header_t::flags</a></div><div class="ttdeci">uint64_t flags</div><div class="ttdoc">Section attributes.</div><div class="ttdef"><b>Definition:</b> elf.h:71</div></div>
+<div class="ttc" id="astructelf__section__header__t_html_a0a71f9f90c90da99840b3697675b2b46"><div class="ttname"><a href="structelf__section__header__t.html#a0a71f9f90c90da99840b3697675b2b46">elf_section_header_t::size</a></div><div class="ttdeci">uint64_t size</div><div class="ttdoc">Size of section.</div><div class="ttdef"><b>Definition:</b> elf.h:74</div></div>
+<div class="ttc" id="astructelf__section__header__t_html_afe55e22dc0bc25ce8354bb602ba79857"><div class="ttname"><a href="structelf__section__header__t.html#afe55e22dc0bc25ce8354bb602ba79857">elf_section_header_t::entsize</a></div><div class="ttdeci">uint64_t entsize</div><div class="ttdoc">Size of entries, if section has table.</div><div class="ttdef"><b>Definition:</b> elf.h:78</div></div>
 <div class="ttc" id="aelf_8h_html"><div class="ttname"><a href="elf_8h.html">elf.h</a></div></div>
+<div class="ttc" id="astructelf__section__header__t_html_a27a1ee484cbaf8f724621a6cbd247e9c"><div class="ttname"><a href="structelf__section__header__t.html#a27a1ee484cbaf8f724621a6cbd247e9c">elf_section_header_t::link</a></div><div class="ttdeci">uint32_t link</div><div class="ttdoc">Link to other section.</div><div class="ttdef"><b>Definition:</b> elf.h:75</div></div>
+<div class="ttc" id="aelf_8h_html_a2a7fd8c2131e9096afda3d7c9552e9cc"><div class="ttname"><a href="elf_8h.html#a2a7fd8c2131e9096afda3d7c9552e9cc">ELF_SECTION_TYPE_NOBITS</a></div><div class="ttdeci">#define ELF_SECTION_TYPE_NOBITS</div><div class="ttdoc">Uninitialized Space (doesn't use any space in the file).</div><div class="ttdef"><b>Definition:</b> elf.h:28</div></div>
 <div class="ttc" id="apaging_8h_html"><div class="ttname"><a href="paging_8h.html">paging.h</a></div></div>
-<div class="ttc" id="astructelf__header__t_html"><div class="ttname"><a href="structelf__header__t.html">elf_header_t</a></div><div class="ttdef"><b>Definition:</b> elf.h:15</div></div>
+<div class="ttc" id="aelf_8h_html_ad2f1035ee9df02bd3d7504cb7f6c97d8"><div class="ttname"><a href="elf_8h.html#ad2f1035ee9df02bd3d7504cb7f6c97d8">ELF_TYPE_EXECUTABLE</a></div><div class="ttdeci">#define ELF_TYPE_EXECUTABLE</div><div class="ttdoc">Executable ELF Type.</div><div class="ttdef"><b>Definition:</b> elf.h:8</div></div>
+<div class="ttc" id="aelf_8h_html_aebb74ea17fe6a8dd9668bb43fbcdd522"><div class="ttname"><a href="elf_8h.html#aebb74ea17fe6a8dd9668bb43fbcdd522">ELF_PROGRAM_FLAG_EXECUTE</a></div><div class="ttdeci">#define ELF_PROGRAM_FLAG_EXECUTE</div><div class="ttdoc">Execute Program Flag.</div><div class="ttdef"><b>Definition:</b> elf.h:14</div></div>
+<div class="ttc" id="apaging_8h_html_a9b636c6433bad872f80f46458db566f7"><div class="ttname"><a href="paging_8h.html#a9b636c6433bad872f80f46458db566f7">PAGING_FLAG_NO_EXECUTE</a></div><div class="ttdeci">#define PAGING_FLAG_NO_EXECUTE</div><div class="ttdoc">Forbids executing code on this page.</div><div class="ttdef"><b>Definition:</b> paging.h:17</div></div>
+<div class="ttc" id="astructelf__section__header__t_html_a91fafb0c8ffac552999cf59fd1dd5e49"><div class="ttname"><a href="structelf__section__header__t.html#a91fafb0c8ffac552999cf59fd1dd5e49">elf_section_header_t::addr</a></div><div class="ttdeci">uint64_t addr</div><div class="ttdoc">Virtual Address in memory.</div><div class="ttdef"><b>Definition:</b> elf.h:72</div></div>
+<div class="ttc" id="aelf_8h_html_a91b22ae4cdb3d9394d57ec173ea5256e"><div class="ttname"><a href="elf_8h.html#a91b22ae4cdb3d9394d57ec173ea5256e">ELF_PROGRAM_TYPE_LOAD</a></div><div class="ttdeci">#define ELF_PROGRAM_TYPE_LOAD</div><div class="ttdoc">Loadable program type.</div><div class="ttdef"><b>Definition:</b> elf.h:11</div></div>
+<div class="ttc" id="aelf_8h_html_a3a1972be53e555b161cdc088e3630d3f"><div class="ttname"><a href="elf_8h.html#a3a1972be53e555b161cdc088e3630d3f">ELF_SECTION_FLAG_WRITE</a></div><div class="ttdeci">#define ELF_SECTION_FLAG_WRITE</div><div class="ttdoc">Contains writable data.</div><div class="ttdef"><b>Definition:</b> elf.h:31</div></div>
+<div class="ttc" id="apaging_8h_html_acd78a6bfbdc7cbbe0e578e52eccad8bf"><div class="ttname"><a href="paging_8h.html#acd78a6bfbdc7cbbe0e578e52eccad8bf">paging_amount_for_byte_size</a></div><div class="ttdeci">uint32_t paging_amount_for_byte_size(uint64_t start_address, uint64_t byte_size)</div><div class="ttdef"><b>Definition:</b> paging.c:361</div></div>
+<div class="ttc" id="aelf_8h_html_ab36eb4cef46757b73b7357a6bdbd381a"><div class="ttname"><a href="elf_8h.html#ab36eb4cef46757b73b7357a6bdbd381a">ELF_PROGRAM_FLAG_WRITE</a></div><div class="ttdeci">#define ELF_PROGRAM_FLAG_WRITE</div><div class="ttdoc">Write Program Flag.</div><div class="ttdef"><b>Definition:</b> elf.h:16</div></div>
+<div class="ttc" id="astructelf__header__t_html"><div class="ttname"><a href="structelf__header__t.html">elf_header_t</a></div><div class="ttdef"><b>Definition:</b> elf.h:37</div></div>
+<div class="ttc" id="astructelf__section__header__t_html_ade2f8bd3a40f8d6c37034c3a2530067d"><div class="ttname"><a href="structelf__section__header__t.html#ade2f8bd3a40f8d6c37034c3a2530067d">elf_section_header_t::info</a></div><div class="ttdeci">uint32_t info</div><div class="ttdoc">Miscellaneous information.</div><div class="ttdef"><b>Definition:</b> elf.h:76</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>

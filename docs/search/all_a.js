@@ -1,16 +1,20 @@
 var searchData=
 [
-  ['map_61',['map',['../paging_8h.html#a31b7b687f7cd7773e3dd5107bcdea030',1,'paging.c']]],
-  ['map_5fpage_5fto_5fframe_62',['map_page_to_frame',['../paging_8h.html#a5dd0a3132223e82f998eb88ffd6b7876',1,'paging.c']]],
-  ['max_5fframes_63',['MAX_FRAMES',['../frame_8h.html#a5b4055201d2d8170e179b1ceaa438b9c',1,'frame.h']]],
-  ['multiboot_5felf_5fsections_5fentry_5ft_64',['multiboot_elf_sections_entry_t',['../structmultiboot__elf__sections__entry__t.html',1,'']]],
-  ['multiboot_5finfo_5ft_65',['multiboot_info_t',['../structmultiboot__info__t.html',1,'']]],
-  ['multiboot_5fmmap_5fentry_5ft_66',['multiboot_mmap_entry_t',['../structmultiboot__mmap__entry__t.html',1,'']]],
-  ['multiboot_5ftag_5fbasic_5fmeminfo_5ft_67',['multiboot_tag_basic_meminfo_t',['../structmultiboot__tag__basic__meminfo__t.html',1,'']]],
-  ['multiboot_5ftag_5fbootdev_5ft_68',['multiboot_tag_bootdev_t',['../structmultiboot__tag__bootdev__t.html',1,'']]],
-  ['multiboot_5ftag_5felf_5fsections_5ft_69',['multiboot_tag_elf_sections_t',['../structmultiboot__tag__elf__sections__t.html',1,'']]],
-  ['multiboot_5ftag_5fmmap_5ft_70',['multiboot_tag_mmap_t',['../structmultiboot__tag__mmap__t.html',1,'']]],
-  ['multiboot_5ftag_5fmodule_5ft_71',['multiboot_tag_module_t',['../structmultiboot__tag__module__t.html',1,'']]],
-  ['multiboot_5ftag_5fstring_5ft_72',['multiboot_tag_string_t',['../structmultiboot__tag__string__t.html',1,'']]],
-  ['multiboot_5ftag_5ft_73',['multiboot_tag_t',['../structmultiboot__tag__t.html',1,'']]]
+  ['kb_5farrow_5fup_65',['KB_ARROW_UP',['../kshell_8h.html#a85cb0c863f1b67d9b99c728634295929',1,'kshell.h']]],
+  ['kb_5fbackspace_66',['KB_BACKSPACE',['../kshell_8h.html#a0b41f74350cf619c4f080a98d06eec85',1,'kshell.h']]],
+  ['kb_5fcaps_5flock_67',['KB_CAPS_LOCK',['../kshell_8h.html#a8d228ccce74894dba08d2d8f9f2e07da',1,'kshell.h']]],
+  ['kb_5fenter_68',['KB_ENTER',['../kshell_8h.html#a70388a0a0edc2a476657e42919b55655',1,'kshell.h']]],
+  ['kb_5flctrl_69',['KB_LCTRL',['../kshell_8h.html#a4b2c4a854e18a53335445bfc731cdd51',1,'kshell.h']]],
+  ['kb_5flshift_70',['KB_LSHIFT',['../kshell_8h.html#aa118eb14764e4006d95472b4e7a44b59',1,'kshell.h']]],
+  ['kb_5frshift_71',['KB_RSHIFT',['../kshell_8h.html#a2e1993a35d9afd0cfd9335fc50572add',1,'kshell.h']]],
+  ['kb_5ftab_72',['KB_TAB',['../kshell_8h.html#a6d0663a1794be11a94aee789b2d22925',1,'kshell.h']]],
+  ['kernel_5fpanic_73',['kernel_panic',['../panic_8h.html#acd2b4a8b19af5b3201990bbdeb5cf5e6',1,'panic.c']]],
+  ['keyboard_2eh_74',['keyboard.h',['../keyboard_8h.html',1,'']]],
+  ['keyboard_5fget_5fscancode_75',['keyboard_get_scancode',['../keyboard_8h.html#a7f253db86f85d1a41dbbafa69b943f5f',1,'keyboard.c']]],
+  ['keyboard_5finit_76',['keyboard_init',['../keyboard_8h.html#aaeb4e4a3c4813ee1efc6b98bba9ec781',1,'keyboard.c']]],
+  ['kmain_77',['kmain',['../kmain_8h.html#a3a723148ea74ca575865f61d277c0657',1,'kmain.c']]],
+  ['kmain_2eh_78',['kmain.h',['../kmain_8h.html',1,'']]],
+  ['kshell_2eh_79',['kshell.h',['../kshell_8h.html',1,'']]],
+  ['kshell_5fprint_5fprompt_80',['kshell_print_prompt',['../kshell_8h.html#af0dfb69566e1acd19453a42d8e973e90',1,'kshell.c']]],
+  ['kshell_5frun_81',['kshell_run',['../kshell_8h.html#a6c773ce937d0e97008441fd2b5909533',1,'kshell.c']]]
 ];
