@@ -1,6 +1,6 @@
 #include "paging.h"
-#include <mmu/debug.h>
 #include <kernel/panic.h>
+#include <mmu/debug.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,8 +8,8 @@
 #define MMU_DEBUG_PAGE_ENTRY(message, e)  MMU_DEBUG("%s " \
                                           "page entry addr=%p present=%d " \
                                           "writable=%d no_execute=%d", \
-                                          message, e.addr, e.present, \
-                                          e.writable, e.no_execute)
+                                          message, (e).addr, (e).present, \
+                                          (e).writable, (e).no_execute)
 
 void zero_table(page_table_t* table);
 page_table_t* next_table_address(page_table_t* table, uint64_t index);
@@ -39,7 +39,7 @@ page_table_t* next_table_address(page_table_t* table, uint64_t index) {
 
     if (table->entries[index].huge_page == 1) {
         MMU_DEBUG("huge page detected for table=%p index=%u, returning 0", table, index);
-        // TODO: fix this problem. Huge page is detected and we are not able to
+        // TODO(william): fix this problem. Huge page is detected and we are not able to
         // create a page table because of this. This prevents an ELF to load...
         // That's pretty bad :(
         //return 0;
@@ -90,9 +90,10 @@ uint64_t translate_page(uint64_t page_number) {
             frame_number += p2_index(page_number) * PAGE_ENTRIES + p1_index(page_number);
 
             return frame_number;
-        } else {
-            PANIC("misaligned 1GB page=%u", page_number);
         }
+
+        PANIC("misaligned 1GB page=%u", page_number);
+
     }
 
     if (p3 == 0) {
@@ -110,9 +111,10 @@ uint64_t translate_page(uint64_t page_number) {
             frame_number += p1_index(page_number);
 
             return frame_number;
-        } else {
-            PANIC("misaligned 2MB page=%u", page_number);
         }
+
+        PANIC("misaligned 2MB page=%u", page_number);
+
     }
 
     if (p2 == 0) {
@@ -148,7 +150,7 @@ uint64_t p1_index(uint64_t page) {
 
 uint64_t pointed_frame(page_entry_t entry) {
     if (entry.present) {
-        return frame_containing_address((uint64_t)entry.addr);
+        return frame_containing_address(entry.addr);
     }
 
     return 0;
@@ -289,7 +291,7 @@ void unmap(uint64_t page_number) {
     memset(&p1->entries[p1_index(page_number)], 0, sizeof(page_entry_t));
     MMU_DEBUG_PAGE_ENTRY("cleared", p1->entries[p1_index(page_number)]);
 
-    // TODO: free p(1,2,3) table if empty
+    // TODO(william): free p(1,2,3) table if empty
 
     frame_deallocate(frame_number);
 

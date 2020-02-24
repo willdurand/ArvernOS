@@ -9,9 +9,9 @@
 #include <drivers/screen.h>
 #include <drivers/screen.h>
 #include <drivers/serial.h>
-#include <fs/vfs.h>
 #include <fs/debug.h>
 #include <fs/tar.h>
+#include <fs/vfs.h>
 #include <kernel/kshell.h>
 #include <kernel/panic.h>
 #include <mmu/alloc.h>
@@ -58,7 +58,9 @@ void check_interrupts() {
 
     uint32_t tick = timer_tick();
 
-    while (tick == timer_tick()) ;
+    while (tick == timer_tick()) {
+        ;
+    }
 
     print_ok();
 }

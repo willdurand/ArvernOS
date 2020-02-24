@@ -4,10 +4,10 @@
 #include <drivers/keyboard.h>
 #include <drivers/screen.h>
 #include <kernel/panic.h>
-#include <sys/syscall.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>
+#include <sys/syscall.h>
 
 syscall_handler_t syscall_handlers[NB_SYSCALLS];
 
@@ -57,7 +57,7 @@ void syscall_gettimeofday(registers_t* registers) {
     struct timeval* t = registers->rbx;
 
     t->tv_sec = cmos_boot_time() + timer_uptime();
-    // TODO: set a correct value, see:
+    // TODO(william): set a correct value, see:
     // https://www.gnu.org/software/libc/manual/html_node/Elapsed-Time.html
     t->tv_usec = 0;
 

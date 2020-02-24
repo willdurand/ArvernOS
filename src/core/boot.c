@@ -1,6 +1,6 @@
 #include "boot.h"
-#include <stdio.h>
 #include <core/debug.h>
+#include <stdio.h>
 
 void* find_multiboot_tag(multiboot_info_t* mbi, uint16_t type) {
     for (
@@ -128,12 +128,12 @@ reserved_areas_t find_reserved_areas(multiboot_info_t* mbi) {
                         continue;
                     }
 
-                    if (((uint64_t)(elf->addr)) < reserved.kernel_start) {
-                        reserved.kernel_start = (uint64_t) elf->addr;
+                    if (((elf->addr)) < reserved.kernel_start) {
+                        reserved.kernel_start = elf->addr;
                     }
 
-                    if (((uint64_t)(elf->addr)) + elf->size > reserved.kernel_end) {
-                        reserved.kernel_end = (uint64_t) elf->addr;
+                    if (((elf->addr)) + elf->size > reserved.kernel_end) {
+                        reserved.kernel_end = elf->addr;
                         reserved.kernel_end += elf->size;
                     }
                 }

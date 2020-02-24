@@ -80,7 +80,7 @@ uint64_t get_size(const char* in) {
 }
 
 uint64_t tar_read(inode_t node, void* buffer, uint64_t size, uint64_t offset) {
-    DEBUG("name=%s type=%d size=%u offset=%u", node->name, vfs_inode_type(node), size, offset);
+    DEBUG("name=%s type=%d size=%lu offset=%lu", node->name, vfs_inode_type(node), size, offset);
     // Empty buffer.
     strcpy(buffer, "");
 
@@ -96,7 +96,7 @@ uint64_t tar_read(inode_t node, void* buffer, uint64_t size, uint64_t offset) {
             offset = size;
         }
 
-        DEBUG("copying %d bytes (offset=%u header_size=%d)", size, offset, header_size);
+        DEBUG("copying %ld bytes (offset=%lu header_size=%ld)", size, offset, header_size);
 
         memcpy(buffer, (void*)header + 512 + offset, size);
         ((char*)buffer)[size] = '\0';
@@ -104,7 +104,7 @@ uint64_t tar_read(inode_t node, void* buffer, uint64_t size, uint64_t offset) {
         return size - offset;
     }
 
-    // TODO: add support for other types like symlinks (at least)
+    // TODO(william): add support for other types like symlinks (at least)
 
     return 0;
 }
@@ -168,7 +168,7 @@ inode_t tar_finddir(inode_t inode, const char* name) {
             break;
     }
 
-    DEBUG("found name=%s type=%d", node->name, node->type);
+    DEBUG("found name=%s type=%ld", node->name, node->type);
 
     return node;
 }

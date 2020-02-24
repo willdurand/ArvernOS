@@ -18,7 +18,7 @@ static const uint16_t serial_com1 = SERIAL_COM1;
 // qemu config in `Makefile`). That would not work otherwise, I think.
 #define DEBUG(format, ...)  fctprintf(&serial_stream_output, \
                             (void*)&serial_com1, \
-                            "%sDEBUG%s %s%s:%d:%s():%s " format "\n", \
+                            "%sDEBUG%s %s%s:%ld:%s():%s " format "\n", \
                             ANSICOLOR_FG_CYAN, \
                             ANSICOLOR_RESET, \
                             ANSICOLOR_FG_LIGHTGRAY, \
@@ -29,7 +29,7 @@ static const uint16_t serial_com1 = SERIAL_COM1;
 
 #define DEBUG(format, ...)  fctprintf(&serial_stream_output, \
                             (void*)&serial_com1, \
-                            "DEBUG %s:%d:%s(): " format "\n", \
+                            "DEBUG %s:%ld:%s(): " format "\n", \
                             __FILE__, __LINE__, __func__, __VA_ARGS__)
 
 #endif

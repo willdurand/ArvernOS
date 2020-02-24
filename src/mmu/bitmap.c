@@ -1,6 +1,6 @@
 #include "bitmap.h"
 
-bool bitmap_get(bitmap_t* b, uint64_t n) {
+bool bitmap_get(const bitmap_t* b, uint64_t n) {
     return b[WORD_OFFSET(n)] & ((bitmap_t)1 << (BIT_OFFSET(n))) ? true : false;
 }
 

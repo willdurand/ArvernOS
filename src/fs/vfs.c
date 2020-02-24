@@ -1,7 +1,7 @@
 #include "vfs.h"
-#include <string.h>
-#include <stdlib.h>
 #include <core/debug.h>
+#include <stdlib.h>
+#include <string.h>
 
 inode_t vfs_find_root(char** path);
 inode_t vfs_namei_mount(const char* path, inode_t root);
@@ -94,7 +94,9 @@ dirent_t* vfs_readdir(inode_t inode, uint64_t num) {
             ret->inode = inode;
             strcpy(ret->name, ".");
             return ret;
-        } else if (num == 1) {
+        }
+
+        if (num == 1) {
             dirent_t* ret = malloc(sizeof(dirent_t));
             ret->inode = inode->parent;
             strcpy(ret->name, "..");
@@ -113,7 +115,9 @@ inode_t vfs_finddir(inode_t inode, const char* name) {
     if (vfs_inode_type(inode) == FS_DIRECTORY) {
         if (!strncmp(name, ".", strlen(name))) {
             return inode;
-        } else if (!strncmp(name, "..", strlen(name))) {
+        }
+
+        if (!strncmp(name, "..", strlen(name))) {
             return inode->parent;
         }
     }
@@ -184,7 +188,7 @@ inode_t vfs_find_root(char** path) {
 
     DEBUG("found root=%s", mount->name);
 
-    return (inode_t)mount;
+    return mount;
 }
 
 inode_t vfs_namei_mount(const char* path, inode_t root) {
@@ -268,7 +272,7 @@ inode_t vfs_namei(const char* path) {
 
 inode_t vfs_umount(const char* path) {
     DEBUG("umounting path=%s", path);
-    // TODO: implement me
+    // TODO(william): implement me
     return 0;
 }
 

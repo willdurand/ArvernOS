@@ -21,7 +21,7 @@ enum { BITS_PER_WORD = sizeof(bitmap_t) * CHAR_BIT };
  * @param n the bit to check
  * @return `true` when the bit to check is set, `false` otherwise
  */
-bool bitmap_get(bitmap_t* b, uint64_t n);
+bool bitmap_get(const bitmap_t* b, uint64_t n);
 
 /**
  * Sets a bit (sets it to `true`).
