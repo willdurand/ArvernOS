@@ -18,38 +18,42 @@ struct vfs_node;
 
 typedef struct vfs_node* inode_t;
 
-typedef struct stat {
-    uint64_t size;
+typedef struct stat
+{
+  uint64_t size;
 } stat_t;
 
-typedef struct dirent {
-    char name[VFS_NAME_MAX_SIZE];
-    inode_t inode;
+typedef struct dirent
+{
+  char name[VFS_NAME_MAX_SIZE];
+  inode_t inode;
 } dirent_t;
 
-typedef struct vfs_driver {
-    uint64_t (*open)(inode_t inode, uint64_t mode);
-    uint64_t (*close)(inode_t inode);
-    uint64_t (*read)(inode_t inode, void* ptr, uint64_t length, uint64_t offset);
-    uint64_t (*write)(inode_t inode, void* ptr, uint64_t length, uint64_t offset);
-    uint64_t (*link)(inode_t inode, inode_t parent, const char* name);
-    uint64_t (*unlink)(inode_t inode, const char* name);
-    uint64_t (*stat)(inode_t inode, stat_t* stat);
-    uint64_t (*isatty)(inode_t inode);
-    uint64_t (*mkdir)(inode_t inode, const char* name);
-    dirent_t* (*readdir)(inode_t inode, uint64_t num);
-    inode_t (*finddir)(inode_t inode, const char* name);
+typedef struct vfs_driver
+{
+  uint64_t (*open)(inode_t inode, uint64_t mode);
+  uint64_t (*close)(inode_t inode);
+  uint64_t (*read)(inode_t inode, void* ptr, uint64_t length, uint64_t offset);
+  uint64_t (*write)(inode_t inode, void* ptr, uint64_t length, uint64_t offset);
+  uint64_t (*link)(inode_t inode, inode_t parent, const char* name);
+  uint64_t (*unlink)(inode_t inode, const char* name);
+  uint64_t (*stat)(inode_t inode, stat_t* stat);
+  uint64_t (*isatty)(inode_t inode);
+  uint64_t (*mkdir)(inode_t inode, const char* name);
+  dirent_t* (*readdir)(inode_t inode, uint64_t num);
+  inode_t (*finddir)(inode_t inode, const char* name);
 } vfs_driver_t;
 
-typedef struct vfs_node {
-    char name[VFS_NAME_MAX_SIZE];
-    inode_t parent;
-    inode_t child;
-    inode_t older;
-    inode_t younger;
-    uint64_t type;
-    vfs_driver_t* driver;
-    int data;
+typedef struct vfs_node
+{
+  char name[VFS_NAME_MAX_SIZE];
+  inode_t parent;
+  inode_t child;
+  inode_t older;
+  inode_t younger;
+  uint64_t type;
+  vfs_driver_t* driver;
+  int data;
 } vfs_node_t;
 
 void vfs_init();

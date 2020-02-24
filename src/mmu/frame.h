@@ -5,10 +5,10 @@
 #include <core/boot.h>
 
 /// The default page size.
-#define PAGE_SIZE       4096
+#define PAGE_SIZE 4096
 
 /// The number of frames that we can allocate (we consider 256MB for now).
-#define MAX_FRAMES      (256 * 1000000) / PAGE_SIZE
+#define MAX_FRAMES (256 * 1000000) / PAGE_SIZE
 
 /**
  * Initializes the frame allocator (physical memory management).

@@ -3,9 +3,10 @@
 
 #include <time.h>
 
-struct  s_cdate {
-    time_t time;
-    struct tm* tm;
+struct s_cdate
+{
+  time_t time;
+  struct tm* tm;
 };
 
 typedef struct s_cdate t_cdate;

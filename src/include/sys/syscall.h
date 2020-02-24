@@ -4,12 +4,12 @@
 
 #include <sys/time.h>
 
-#define INT_SYSCALL           "int $0x80"
-#define NB_SYSCALLS           4
-#define SYSCALL_TEST          1
-#define SYSCALL_WRITE         2
-#define SYSCALL_READ          3
-#define SYSCALL_GETTIMEOFDAY  4
+#define INT_SYSCALL          "int $0x80"
+#define NB_SYSCALLS          4
+#define SYSCALL_TEST         1
+#define SYSCALL_WRITE        2
+#define SYSCALL_READ         3
+#define SYSCALL_GETTIMEOFDAY 4
 
 /**
  * Implements a syscall for testing purpose only. It takes a string as input

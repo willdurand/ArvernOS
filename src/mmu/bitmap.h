@@ -9,10 +9,13 @@
 /// This type represents a bitmap (bitset).
 typedef uint64_t bitmap_t;
 
-enum { BITS_PER_WORD = sizeof(bitmap_t) * CHAR_BIT };
+enum
+{
+  BITS_PER_WORD = sizeof(bitmap_t) * CHAR_BIT
+};
 
-#define WORD_OFFSET(b)  ((b) / BITS_PER_WORD)
-#define BIT_OFFSET(b)   ((b) % BITS_PER_WORD)
+#define WORD_OFFSET(b) ((b) / BITS_PER_WORD)
+#define BIT_OFFSET(b)  ((b) % BITS_PER_WORD)
 
 /**
  * Returns `true` when the bit is set, `false` otherwise.

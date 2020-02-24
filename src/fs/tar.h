@@ -13,15 +13,16 @@
 #define TAR_FILE      '0'
 #define TAR_DIRECTORY '5'
 
-typedef struct tar_header {
-    char name[100];
-    char mode[8];
-    char uid[8];
-    char gid[8];
-    char size[12];
-    char mtime[12];
-    char checksum[8];
-    char type;
+typedef struct tar_header
+{
+  char name[100];
+  char mode[8];
+  char uid[8];
+  char gid[8];
+  char size[12];
+  char mtime[12];
+  char checksum[8];
+  char type;
 } tar_header_t;
 
 /**

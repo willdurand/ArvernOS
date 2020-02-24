@@ -8,7 +8,7 @@
 /// all serial ports (COM1, COM2, COM3, COM4) have their ports in the same
 /// order, but they start at different values.
 
-#define SERIAL_COM1                     0x3F8
+#define SERIAL_COM1 0x3F8
 
 #define SERIAL_DATA_PORT(base)          (base)
 #define SERIAL_FIFO_COMMAND_PORT(base)  (base + 2)
@@ -18,14 +18,14 @@
 
 /// Tells the serial port to expect first the highest 8 bits on the data port,
 /// then the lowest 8 bits will follow.
-#define SERIAL_LINE_ENABLE_DLAB         0x80
+#define SERIAL_LINE_ENABLE_DLAB 0x80
 
 /// 115200 bauds.
 #define SERIAL_SPEED_115200 1
 /// 57600 bauds.
-#define SERIAL_SPEED_57600  2
+#define SERIAL_SPEED_57600 2
 /// 38400 bauds.
-#define SERIAL_SPEED_38400  3
+#define SERIAL_SPEED_38400 3
 
 /**
  * Initializes the serial driver.

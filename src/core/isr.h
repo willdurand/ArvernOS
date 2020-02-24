@@ -4,12 +4,12 @@
 
 #include <stdint.h>
 
-#define PIC1        0x20 // Master PIC
-#define PIC2        0xA0 // Slave PIC
-#define PIC1_DATA   (PIC1 + 1)
-#define PIC2_DATA   (PIC2 + 1)
-#define PIC_EOI     0x20 // end of interrupt
-#define IRQ_BASE    0x20
+#define PIC1      0x20 // Master PIC
+#define PIC2      0xA0 // Slave PIC
+#define PIC1_DATA (PIC1 + 1)
+#define PIC2_DATA (PIC2 + 1)
+#define PIC_EOI   0x20 // end of interrupt
+#define IRQ_BASE  0x20
 
 // exceptions, cf. http://wiki.osdev.org/Exceptions
 #define EXCEPTION_DE 0
@@ -46,18 +46,18 @@
 /// write. Else the access that caused the page fault is a memory read. This
 /// bit does not necessarily indicate the cause of the page fault was a read or
 /// write violation.
-#define PF_CAUSED_BY_WRITE      1 << 1
+#define PF_CAUSED_BY_WRITE 1 << 1
 /// If this flag is set, an access in user mode (CPL=3) caused the page fault.
 /// Else an access in supervisor mode (CPL=0, 1, or 2) caused the page fault.
 /// This bit does not necessarily indicate the cause of the page fault was a
 /// privilege violation.
-#define PF_USER_MODE            1 << 2
+#define PF_USER_MODE 1 << 2
 /// If this flag is set, the page fault is a result of the processor reading a
 /// 1 from a reserved field within a page-translation-table entry.
-#define PF_MALFORMED_TABLE      1 << 3
+#define PF_MALFORMED_TABLE 1 << 3
 /// If this flag is set, it indicates that the access that caused the page
 /// fault was an instruction fetch.
-#define PF_INSTRUCTION_FETCH    1 << 4
+#define PF_INSTRUCTION_FETCH 1 << 4
 
 // These functions are declared in the `interrupts.asm` file.
 extern void isr0();
@@ -101,30 +101,32 @@ extern void irq4();
 
 extern void isr0x80();
 
-typedef struct registers {
-    uint64_t r15;
-    uint64_t r14;
-    uint64_t r13;
-    uint64_t r12;
-    uint64_t r11;
-    uint64_t r10;
-    uint64_t r9;
-    uint64_t r8;
-    uint64_t rbp;
-    uint64_t rdi;
-    uint64_t rsi;
-    uint64_t rdx;
-    uint64_t rcx;
-    uint64_t rbx;
-    uint64_t rax;
+typedef struct registers
+{
+  uint64_t r15;
+  uint64_t r14;
+  uint64_t r13;
+  uint64_t r12;
+  uint64_t r11;
+  uint64_t r10;
+  uint64_t r9;
+  uint64_t r8;
+  uint64_t rbp;
+  uint64_t rdi;
+  uint64_t rsi;
+  uint64_t rdx;
+  uint64_t rcx;
+  uint64_t rbx;
+  uint64_t rax;
 } __attribute__((packed)) registers_t;
 
-typedef struct stack {
-    uint64_t instruction_pointer;
-    uint64_t code_segment;
-    uint64_t cpu_flags;
-    uint64_t stack_pointer;
-    uint64_t stack_segment;
+typedef struct stack
+{
+  uint64_t instruction_pointer;
+  uint64_t code_segment;
+  uint64_t cpu_flags;
+  uint64_t stack_pointer;
+  uint64_t stack_segment;
 } __attribute__((packed)) stack_t;
 
 /// This type represents an interrupt handler.
