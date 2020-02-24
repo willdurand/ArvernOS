@@ -4,13 +4,15 @@
 
 #include <core/debug.h>
 
-#define __PANIC(format, ...)    DEBUG(format "%s", __VA_ARGS__); \
-                                kernel_panic("\nPANIC in %s() (line %d): " \
-                                format "%s", \
-                                __func__, __LINE__, __VA_ARGS__);
+#define __PANIC(format, ...)                                                   \
+  DEBUG(format "%s", __VA_ARGS__);                                             \
+  kernel_panic("\nPANIC in %s() (line %d): " format "%s",                      \
+               __func__,                                                       \
+               __LINE__,                                                       \
+               __VA_ARGS__);
 
 /// This macro should only be used when something goes terribly wrong.
-#define PANIC(...)              __PANIC(__VA_ARGS__, "\n")
+#define PANIC(...) __PANIC(__VA_ARGS__, "\n")
 
 /**
  * Handles a kernel panic.
