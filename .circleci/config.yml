@@ -9,7 +9,7 @@ jobs:
           name: install dependencies
           command: |
             sudo apt-get update
-            sudo apt-get install -y nasm xorriso build-essential grub2-common grub-pc-bin astyle
+            sudo apt-get install -y nasm xorriso build-essential grub2-common grub-pc-bin
       - run:
           name: build
           command: |

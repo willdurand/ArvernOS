@@ -98,9 +98,8 @@ clean: ## remove build artifacts
 	rm -rf $(BUILD_DIR) userland/bin/ $(INITRD_DIR)/{info,bin/}
 .PHONY: clean
 
-fmt: ## automatically format the code with astyle
-	astyle --project=.astylerc --recursive "*.c,*.h"
-	@find . -name '*.orig' -exec rm "{}" ";"
+fmt: ## automatically format the code with clang-format
+	find . -type f \( -name '*.c' -o -name '*.h' \) -exec clang-format -style=file -i "{}" ";"
 .PHONY: fmt
 
 gdb: ## build, run the OS in debug mode and GDB
