@@ -5,7 +5,7 @@
 
 #define READLINE_SIZE           256
 #define PROMPT                  "(init) "
-#define NB_DOCUMENTED_COMMANDS  7
+#define NB_DOCUMENTED_COMMANDS  8
 
 void date() {
     printf("implement me\n");
@@ -38,6 +38,7 @@ int main() {
         {"help", "display information about willOS shell commands"},
         {"reboot", "stopping and restarting the system"},
         {"uptime", "tell how long the system has been running"},
+        {"overflow", "test the stack buffer overflow protection"},
     };
 
     char readline[READLINE_SIZE] = {0};

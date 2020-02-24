@@ -105,7 +105,7 @@ unsigned char keymap[][128] = {
     {0},
 };
 
-#define NB_DOCUMENTED_COMMANDS 6
+#define NB_DOCUMENTED_COMMANDS 8
 
 const char* commands[][NB_DOCUMENTED_COMMANDS] = {
     {"cat", "print on the standard output"},
@@ -115,6 +115,7 @@ const char* commands[][NB_DOCUMENTED_COMMANDS] = {
     {"ls", "list files"},
     {"selftest", "run the willOS test suite"},
     {"uptime", "tell how long the system has been running"},
+    {"overflow", "test the stack buffer overflow protection"},
 };
 
 unsigned char get_char(uint8_t scancode, bool shift, bool caps_lock) {
@@ -294,7 +295,7 @@ int try_exec(const char* command) {
     return 0;
 }
 
-int overflowtest() {
+int overflow() {
     char c[12];
     strcpy(c, "123456789012345678901234567890");
     return 1;
@@ -324,7 +325,7 @@ void run_command(const char* command) {
     } else if (strncmp(command, "selftest", 8) == 0) {
         selftest();
     } else if (strncmp(command, "overflow", 8) == 0) {
-        overflowtest();
+        overflow();
     } else {
         if (try_exec(command) != 0) {
             printf("invalid kshell command\n");
