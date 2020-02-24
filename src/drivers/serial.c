@@ -58,18 +58,16 @@ bool serial_received(uint16_t com)
 
 char serial_read(uint16_t com)
 {
-  while (serial_received(com) == 0) {
+  while (serial_received(com) == 0)
     ;
-  }
 
   return port_byte_in(com);
 }
 
 void serial_write(uint16_t com, char c)
 {
-  while (serial_is_transmit_fifo_empty(com) == 0) {
+  while (serial_is_transmit_fifo_empty(com) == 0)
     ;
-  }
 
   port_byte_out(com, c);
 }

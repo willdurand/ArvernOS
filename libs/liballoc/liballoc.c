@@ -4,8 +4,8 @@
 
 #define VERSION "1.1"
 #define ALIGNMENT                                                              \
-  16ul // 4ul               ///< This is the byte alignment that memory must be
-       // allocated on. IMPORTANT for GTK and other stuff.
+  16ul ///< This is the byte alignment that memory must be allocated on.
+       ///< IMPORTANT for GTK and other stuff.
 
 #define ALIGN_TYPE char /// unsigned char[16] /// unsigned short
 #define ALIGN_INFO                                                             \

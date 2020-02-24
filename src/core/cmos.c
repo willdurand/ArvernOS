@@ -31,9 +31,8 @@ cmos_rtc_t cmos_read_rtc()
 
   // This uses the "read registers until you get the same values twice in a
   // row" technique to avoid getting inconsistent values due to RTC updates
-  while (update_in_progress()) {
+  while (update_in_progress())
     ;
-  }
 
   // read a first time
   rtc.seconds = read_register(CMOS_REG_SECONDS);
@@ -49,9 +48,8 @@ cmos_rtc_t cmos_read_rtc()
     // prepare to read a second time
     memcpy(&last, &rtc, sizeof(cmos_rtc_t));
 
-    while (update_in_progress()) {
+    while (update_in_progress())
       ;
-    }
 
     // read a second time
     rtc.seconds = read_register(CMOS_REG_SECONDS);

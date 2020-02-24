@@ -47,7 +47,7 @@ static const uint16_t serial_com1 = SERIAL_COM1;
 #include <stdio.h>
 
 #define DEBUG(format, ...)                                                     \
-  printf("DEBUG %s:%d:%s(): " format "\n",                                     \
+  printf("DEBUG %s:%ld:%s(): " format "\n",                                    \
          __FILE__,                                                             \
          __LINE__,                                                             \
          __func__,                                                             \
