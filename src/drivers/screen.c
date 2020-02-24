@@ -1,8 +1,8 @@
 #include "screen.h"
-#include <string.h>
-#include <stddef.h>
-#include <core/port.h>
 #include <core/debug.h>
+#include <core/port.h>
+#include <stddef.h>
+#include <string.h>
 
 #define FB_COMMAND_PORT         0x3D4
 #define FB_DATA_PORT            0x3D5

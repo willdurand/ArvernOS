@@ -1,5 +1,5 @@
-#include <string.h>
 #include <core/debug.h>
+#include <string.h>
 
 char* strsep(char** str, const char* sep) {
     char* s = *str, *end;
