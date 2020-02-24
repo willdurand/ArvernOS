@@ -32,8 +32,8 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * WITH THE SOFTWARE.
  */
-#include <time.h>
 #include <sys/syscall.h>
+#include <time.h>
 
 #define SEC_DAY 86400
 
@@ -131,27 +131,31 @@ struct tm* localtime_r(const time_t* timep, struct tm* _timevalue) {
                                     _timevalue->tm_yday = (*timep - year_sec) / SEC_DAY;
                                     _timevalue->tm_isdst = 0; // never because UTC
                                     return _timevalue;
-                                } else {
-                                    seconds += secs;
                                 }
+
+                                seconds += secs;
+
                             }
 
                             return NULL;
-                        } else {
-                            seconds += secs;
                         }
+
+                        seconds += secs;
+
                     }
 
                     return NULL;
-                } else {
-                    seconds += secs;
                 }
+
+                seconds += secs;
+
             }
 
             return NULL;
-        } else {
-            seconds += secs;
         }
+
+        seconds += secs;
+
     }
 
     return (void*)0; // uh what

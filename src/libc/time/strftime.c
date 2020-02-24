@@ -33,9 +33,9 @@
  * WITH THE SOFTWARE.
  */
 #include <stddef.h>
-#include <time.h>
-#include <sys/time.h>
 #include <stdio.h>
+#include <sys/time.h>
+#include <time.h>
 
 static char* weekdays[] = {
     "Sunday",

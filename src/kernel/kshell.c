@@ -6,11 +6,11 @@
 #include <drivers/screen.h>
 #include <fs/debug.h>
 #include <fs/vfs.h>
-#include <sys/syscall.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdbool.h>
+#include <sys/syscall.h>
 
 unsigned char keymap[][128] = {
     {0},
@@ -164,7 +164,7 @@ void clear() {
 }
 
 void uptime() {
-    printf("up %u seconds\n", timer_uptime());
+    printf("up %llu seconds\n", timer_uptime());
 }
 
 void print_selftest_header(const char* name) {
@@ -250,7 +250,7 @@ void ls(const char* command) {
 
         stat_t stat;
         vfs_stat(de->inode, &stat);
-        printf("%6d %s\n", stat.size, de->name);
+        printf("%6llu %s\n", stat.size, de->name);
 
         free(de);
     }
@@ -307,7 +307,7 @@ void run_command(const char* command) {
         return;
     }
 
-    // TODO: implement and use `strktok()` to get the command and the arguments.
+    // TODO(william): implement and use `strktok()` to get the command and the arguments.
 
     if (strncmp(command, "help", 4) == 0) {
         help(command);
@@ -374,7 +374,7 @@ void kshell_run(uint8_t scancode) {
             if (key_was_released) {
                 reset_readline();
                 strncpy(readline, last_readline, READLINE_SIZE);
-                printf(readline);
+                printf("%s", readline);
                 readline_index = strlen(readline);
             }
 
