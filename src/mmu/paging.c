@@ -22,6 +22,7 @@ uint64_t p1_index(uint64_t page);
 page_table_t* next_table_create(page_table_t* table, uint64_t index);
 page_table_t* get_p4();
 void paging_set_entry(page_entry_t* entry, uint64_t addr, uint64_t flags);
+uint32_t paging_flags_for_entry(page_entry_t* entry);
 
 void paging_init(multiboot_info_t* mbi) {
     UNUSED(*mbi);
@@ -192,7 +193,7 @@ void map_page_to_frame(uint64_t page, uint64_t frame, uint64_t flags) {
 
     page_entry_t entry = p1->entries[p1_idx];
 
-    if (entry.addr != 0) {
+    if (entry.addr != 0 && paging_flags_for_entry(&entry) != (flags | PAGING_FLAG_PRESENT)) {
         PANIC("%s", "entry should be unused");
     }
 
@@ -325,7 +326,6 @@ void unmap_multiple(uint64_t start_page_number, uint32_t number_of_pages) {
 }
 
 uint32_t paging_amount_for_byte_size(uint64_t start_address, uint64_t byte_size) {
-
     uint64_t start_page = page_containing_address(start_address);
     uint64_t end_page = page_containing_address(start_address + byte_size);
 
@@ -336,4 +336,22 @@ uint32_t paging_amount_for_byte_size(uint64_t start_address, uint64_t byte_size)
     }
 
     return difference;
+}
+
+uint32_t paging_flags_for_entry(page_entry_t* entry) {
+    uint32_t flags = 0;
+
+    if (entry->present) {
+        flags |= PAGING_FLAG_PRESENT;
+    }
+
+    if (entry->no_execute) {
+        flags |= PAGING_FLAG_NO_EXECUTE;
+    }
+
+    if (entry->writable) {
+        flags |= PAGING_FLAG_WRITABLE;
+    }
+
+    return flags;
 }
