@@ -194,22 +194,22 @@ opt_uint64_t translate_page(uint64_t page_number)
 
 uint64_t p4_index(uint64_t page)
 {
-  return (page >> 27) & 0777;
+  return (page >> 27) & 0x1FF;
 }
 
 uint64_t p3_index(uint64_t page)
 {
-  return (page >> 18) & 0777;
+  return (page >> 18) & 0x1FF;
 }
 
 uint64_t p2_index(uint64_t page)
 {
-  return (page >> 9) & 0777;
+  return (page >> 9) & 0x1FF;
 }
 
 uint64_t p1_index(uint64_t page)
 {
-  return (page >> 0) & 0777;
+  return (page >> 0) & 0x1FF;
 }
 
 opt_uint64_t pointed_frame(page_entry_t entry)
@@ -237,17 +237,6 @@ void map_page_to_frame(uint64_t page, uint64_t frame, uint64_t flags)
 
   uint64_t frame_number = frame_containing_address(frame);
 
-  opt_uint64_t old_frame_number = translate_page(page);
-
-  if(!old_frame_number.is_valid) {
-    PANIC("page=%u does not have a valid frame number", page);
-  }
-
-  if (old_frame_number.value == frame_number) {
-    MMU_DEBUG("page=%u already mapped to frame=%u", page, frame_number);
-    return;
-  }
-
   uint64_t p4_idx = p4_index(page);
   uint64_t p3_idx = p3_index(page);
   uint64_t p2_idx = p2_index(page);
@@ -272,8 +261,7 @@ void map_page_to_frame(uint64_t page, uint64_t frame, uint64_t flags)
 
   page_entry_t entry = p1->entries[p1_idx];
 
-  if (entry.addr != 0 &&
-      paging_flags_for_entry(&entry) != (flags | PAGING_FLAG_PRESENT)) {
+  if (entry.addr != 0) {
     PANIC("%s", "entry should be unused");
   }
 
@@ -296,12 +284,14 @@ page_table_t* next_table_create(page_table_t* table, uint64_t index)
 
   bool was_created = false;
 
-  page_entry_t entry = table->entries[index];
+  page_table_t* next_table = next_table_address(table, index);
+  MMU_DEBUG("next table=%p", next_table);
 
-  if (entry.present) {
-    MMU_DEBUG("page entry at index=%d is present", index);
-  } else {
-    MMU_DEBUG("page entry at index=%d is not present, creating entry", index);
+  if(next_table == NULL) {
+
+    if(table->entries[index].huge_page) {
+      PANIC("mapping code does not support huge pages");
+    }
 
     uint64_t frame = frame_allocate();
 
@@ -309,20 +299,13 @@ page_table_t* next_table_create(page_table_t* table, uint64_t index)
       PANIC("%s", "frame is unexpectedly equal to 0");
     }
 
-    paging_set_entry(&entry, frame, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
+    page_entry_t *entry = &table->entries[index];
 
-    table->entries[index] = entry;
+    paging_set_entry(entry, frame, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
 
     MMU_DEBUG_PAGE_ENTRY("created", table->entries[index]);
 
     was_created = true;
-  }
-
-  page_table_t* next_table = next_table_address(table, index);
-  MMU_DEBUG("next table=%p", next_table);
-
-  if(next_table == NULL) {
-    PANIC("failed to create next_table");
   }
 
   if (was_created) {
