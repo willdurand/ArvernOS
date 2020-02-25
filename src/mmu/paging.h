@@ -5,6 +5,7 @@
 #include <core/boot.h>
 #include <mmu/frame.h>
 #include <stdint.h>
+#include <sys/types.h>
 
 #define PAGE_ENTRIES 512
 #define P4_TABLE     0xfffffffffffff000
@@ -77,7 +78,7 @@ void paging_init(multiboot_info_t* mbi);
  * @param virtual_address a virtual address (page)
  * @returns a page number
  */
-uint64_t page_containing_address(uint64_t virtual_address);
+opt_uint64_t page_containing_address(uint64_t virtual_address);
 
 /**
  * Returns the virtual start address of a page.
@@ -93,7 +94,7 @@ uint64_t page_start_address(uint64_t page_number);
  * @param page_number a page number (not an address)
  * @returns a frame number
  */
-uint64_t translate_page(uint64_t page_number);
+opt_uint64_t translate_page(uint64_t page_number);
 
 /**
  * Maps a page (number) to a frame (physical address).
@@ -147,7 +148,7 @@ void unmap_multiple(uint64_t start_page_number, uint32_t number_of_pages);
  * @return the amount of pages required for mapping from start_address until
  * start_address + byte_size
  */
-uint32_t paging_amount_for_byte_size(uint64_t start_address,
-                                     uint64_t byte_size);
+opt_uint32_t paging_amount_for_byte_size(uint64_t start_address,
+                                         uint64_t byte_size);
 
 #endif

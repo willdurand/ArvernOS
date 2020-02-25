@@ -12,8 +12,15 @@ uint64_t max_pages;
 
 void alloc_init()
 {
-  heap_end_page = page_containing_address(HEAP_START + HEAP_SIZE - 1);
-  heap_start_page = page_containing_address(HEAP_START);
+  opt_uint64_t heap_end_page_opt = page_containing_address(HEAP_START + HEAP_SIZE - 1);
+  opt_uint64_t heap_start_page_opt = page_containing_address(HEAP_START);
+
+  if(!heap_end_page_opt.is_valid || !heap_start_page_opt.is_valid) {
+    PANIC("Failed to initialize heap: pages are invalid");
+  }
+
+  heap_end_page = heap_end_page_opt.value;
+  heap_start_page = heap_start_page_opt.value;
   max_pages = heap_end_page - heap_start_page + 1;
 
   for (uint64_t i = 0; i < HEAP_SIZE / PAGE_SIZE; i++) {
@@ -77,14 +84,19 @@ void* liballoc_alloc(int number_of_pages)
 
 int liballoc_free(void* ptr, int number_of_pages)
 {
-  uint64_t page = page_containing_address((uint64_t)ptr);
+  opt_uint64_t page = page_containing_address((uint64_t)ptr);
+
+  if(!page.is_valid) {
+    PANIC("failed to free due to invalid page (ptr=%p)", ptr);
+  }
+
   MMU_DEBUG("ptr=%p page=%u", ptr, page);
 
   for (uint64_t i = 0; i < number_of_pages; i++) {
     bitmap_clear(allocated_pages, i);
   }
 
-  unmap_multiple(page, number_of_pages);
+  unmap_multiple(page.value, number_of_pages);
 
   MMU_DEBUG(
     "free'ed ptr=%p page=%u number_of_pages=%d", ptr, page, number_of_pages);

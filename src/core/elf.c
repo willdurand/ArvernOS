@@ -62,9 +62,13 @@ elf_header_t* elf_load(uint8_t* data)
     // First we allocate each section that requires allocation and has a valid
     // size
     if (section->flags & ELF_SECTION_FLAG_ALLOC && section->size > 0) {
-      uint64_t start_page = page_containing_address(section->addr);
-      uint32_t number_of_pages =
+      opt_uint64_t start_page = page_containing_address(section->addr);
+      opt_uint32_t number_of_pages =
         paging_amount_for_byte_size(section->addr, section->size);
+
+      if(!start_page.is_valid || !number_of_pages.is_valid) {
+        continue;
+      }
 
       uint32_t flags = 0;
 
@@ -76,7 +80,7 @@ elf_header_t* elf_load(uint8_t* data)
         flags |= PAGING_FLAG_NO_EXECUTE;
       }
 
-      map_multiple(start_page, number_of_pages, flags);
+      map_multiple(start_page.value, number_of_pages.value, flags);
 
       DEBUG("Allocated memory for this section (%lld bytes).\n", section->size);
 
@@ -164,14 +168,14 @@ void load_segment(uint8_t* data, elf_program_header_t* program_header)
 
   DEBUG("load segment at addr=%p with flags=%#x", addr, flags);
 
-  uint64_t start_page = page_containing_address(addr);
-  uint32_t number_of_pages = paging_amount_for_byte_size(addr, mem_size);
+  opt_uint64_t start_page = page_containing_address(addr);
+  opt_uint32_t number_of_pages = paging_amount_for_byte_size(addr, mem_size);
 
-  if (mem_size == 0) {
+  if (mem_size == 0 || !start_page.is_valid || !number_of_pages.is_valid) {
     return;
   }
 
-  map_multiple(start_page, number_of_pages, flags);
+  map_multiple(start_page.value, number_of_pages.value, flags);
 
   memcpy((void*)addr, data + offset, file_size);
   memset((void*)(addr + file_size), 0, mem_size - file_size);

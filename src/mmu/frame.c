@@ -3,8 +3,9 @@
 #include <mmu/bitmap.h>
 #include <mmu/debug.h>
 #include <string.h>
+#include <sys/types.h>
 
-uint64_t read_mmap(uint64_t request);
+opt_uint64_t read_mmap(uint64_t request);
 
 multiboot_tag_mmap_t* memory_area;
 uint64_t kernel_start;
@@ -40,8 +41,11 @@ void frame_init(multiboot_info_t* mbi)
         kernel_end);
 }
 
-uint64_t read_mmap(uint64_t request)
+opt_uint64_t read_mmap(uint64_t request)
 {
+  opt_uint64_t out_value;
+  out_value.is_valid = false;
+
   uint64_t cur_num = 0;
 
   for (multiboot_mmap_entry_t* entry = memory_area->entries;
@@ -62,14 +66,17 @@ uint64_t read_mmap(uint64_t request)
       }
 
       if (cur_num == request && addr != 0) {
-        return addr;
+        out_value.value = addr;
+        out_value.is_valid = true;
+
+        return out_value;
       }
 
       cur_num++;
     }
   }
 
-  return 0;
+  return out_value;
 }
 
 uint64_t frame_allocate()
@@ -83,16 +90,16 @@ uint64_t frame_allocate()
     }
   }
 
-  uint64_t addr = read_mmap(free_frame);
+  opt_uint64_t addr = read_mmap(free_frame);
 
-  if (addr == 0) {
+  if (!addr.is_valid) {
     PANIC("%s", "failed to allocate a new frame");
   }
 
-  MMU_DEBUG("allocated frame with addr=%p free_frame=%u", addr, free_frame);
+  MMU_DEBUG("allocated frame with addr=%p free_frame=%u", addr.value, free_frame);
   bitmap_set(allocated_frames, free_frame);
 
-  return addr;
+  return addr.value;
 }
 
 void frame_deallocate(uint64_t frame_number)

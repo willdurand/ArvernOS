@@ -9,22 +9,22 @@ typedef int64_t suseconds_t;
 
 #ifndef __is_libc
 typedef struct opt_uint8 {
-    bool valid;
+    bool is_valid;
     uint8_t value;
 } opt_uint8_t;
 
 typedef struct opt_uint16 {
-    bool valid;
+    bool is_valid;
     uint16_t value;
 } opt_uint16_t;
 
 typedef struct opt_uint32 {
-    bool valid;
+    bool is_valid;
     uint32_t value;
 } opt_uint32_t;
 
 typedef struct opt_uint64 {
-    bool valid;
+    bool is_valid;
     uint64_t value;
 } opt_uint64_t;
 

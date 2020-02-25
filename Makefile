@@ -6,9 +6,9 @@ ifeq ($(shell uname -s),Darwin)
 	LD = x86_64-pc-elf-ld
 	AR = x86_64-pc-elf-ar
 else
-	CC = gcc
-	LD = ld
-	AR = ar
+	CC = x86_64-elf-gcc
+	LD = x86_64-elf-ld
+	AR = x86_64-elf-ar
 endif
 
 OS_NAME    = willOS
@@ -36,7 +36,7 @@ CFLAGS = -DGIT_HASH=\"$(GIT_HASH)\" \
 				 -fno-builtin -fstack-protector-all -mno-red-zone \
 				 -I src/include/ -I src/ -I libs/
 
-DEBUG_CFLAGS = -DENABLE_KERNEL_DEBUG -DDEBUG_WITH_COLORS -DDISABLE_MMU_DEBUG
+DEBUG_CFLAGS = -DENABLE_KERNEL_DEBUG -DDEBUG_WITH_COLORS #-DDISABLE_MMU_DEBUG
 
 default: iso
 
