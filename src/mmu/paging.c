@@ -129,50 +129,46 @@ opt_uint64_t translate_page(uint64_t page_number)
     return out_value;
   }
 
-  if (p4->entries[p4_index(page_number)].huge_page) {
-    opt_uint64_t frame_number = pointed_frame(p3->entries[p3_index(page_number)]);
+  page_entry_t *p3_entry = &p3->entries[p3_index(page_number)];
 
-    if(frame_number.is_valid) {
-      MMU_DEBUG("1GB huge page=%u frame=%u", page_number, frame_number.value);
+  opt_uint64_t start_frame = pointed_frame(*p3_entry);
 
-      if (frame_number.value % (PAGE_ENTRIES * PAGE_ENTRIES) == 0) {
-        frame_number.value +=
-          p2_index(page_number) * PAGE_ENTRIES + p1_index(page_number);
+  if(start_frame.is_valid && p3_entry->huge_page == 1) {
+    MMU_DEBUG("1GB huge page=%u frame=%u", page_number, start_frame.value);
 
-        out_value.value = frame_number.value;
-        out_value.is_valid = true;
+    if(start_frame.value % (PAGE_ENTRIES * PAGE_ENTRIES) == 0) {
+      out_value.value = start_frame.value + p2_index(page_number) * PAGE_ENTRIES + p1_index(page_number);
+      out_value.is_valid = true;
 
-        return out_value;
-      }
+      return out_value;
+    } else {
+      PANIC("misaligned 1GB page=%u", page_number);
     }
-
-    PANIC("misaligned 1GB page=%u", page_number);
   }
 
   page_table_t* p2 = next_table_address(p3, p3_index(page_number));
 
-  if (p2 == NULL) {
-    MMU_DEBUG("did not find p2 (%p), returning NULL", p2);
-    return out_value;
-  }
+  if(p2 != NULL) {
 
-  if (p3->entries[p3_index(page_number)].huge_page) {
-    opt_uint64_t frame_number = pointed_frame(p2->entries[p2_index(page_number)]);
+    page_entry_t *p2_entry = &p2->entries[p2_index(page_number)];
 
-    if(frame_number.is_valid) {
-      MMU_DEBUG("2MB huge page=%u frame=%u", page_number, frame_number.value);
+    start_frame = pointed_frame(*p2_entry);
 
-      if (frame_number.value % PAGE_ENTRIES == 0) {
-        frame_number.value += p1_index(page_number);
+    if(start_frame.is_valid && p2_entry->huge_page == 1) {
+      MMU_DEBUG("2MB huge page=%u frame=%u", page_number, start_frame.value);
 
-        out_value.value = frame_number.value;
+      if(start_frame.value % PAGE_ENTRIES == 0) {
+        out_value.value = start_frame.value + p1_index(page_number);
         out_value.is_valid = true;
 
         return out_value;
+      } else {
+        PANIC("misaligned 2MB page=%u", page_number);
       }
     }
-
-    PANIC("misaligned 2MB page=%u", page_number);
+  } else {
+    MMU_DEBUG("did not find p2 (%p), returning NULL", p2);
+    return out_value;
   }
 
   page_table_t* p1 = next_table_address(p2, p2_index(page_number));
@@ -306,9 +302,9 @@ page_table_t* next_table_create(page_table_t* table, uint64_t index)
     MMU_DEBUG_PAGE_ENTRY("created", table->entries[index]);
 
     was_created = true;
-  }
 
-  if (was_created) {
+    next_table = next_table_address(table, index);
+
     zero_table(next_table);
     MMU_DEBUG("zero'ed table=%p", next_table);
   }
