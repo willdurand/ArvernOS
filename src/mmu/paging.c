@@ -190,22 +190,22 @@ opt_uint64_t translate_page(uint64_t page_number)
 
 uint64_t p4_index(uint64_t page)
 {
-  return (page >> 27) & 0x1FF;
+  return (page >> 27) & 0777;
 }
 
 uint64_t p3_index(uint64_t page)
 {
-  return (page >> 18) & 0x1FF;
+  return (page >> 18) & 0777;
 }
 
 uint64_t p2_index(uint64_t page)
 {
-  return (page >> 9) & 0x1FF;
+  return (page >> 9) & 0777;
 }
 
 uint64_t p1_index(uint64_t page)
 {
-  return (page >> 0) & 0x1FF;
+  return (page >> 0) & 0777;
 }
 
 opt_uint64_t pointed_frame(page_entry_t entry)
