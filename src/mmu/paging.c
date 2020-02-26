@@ -67,19 +67,19 @@ page_table_t *next_table_address(page_table_t* table, uint64_t index)
 opt_uint64_t translate(uint64_t virtual_address)
 {
   opt_uint64_t out_value;
-  out_value.is_valid = false;
+  out_value.has_value = false;
 
   uint64_t offset = virtual_address % PAGE_SIZE;
   opt_uint64_t page = page_containing_address(virtual_address);
 
-  if(page.is_valid) {
+  if(page.has_value) {
 
     opt_uint64_t frame = translate_page(page.value);
 
-    if(frame.is_valid) {
+    if(frame.has_value) {
 
       out_value.value = frame.value * PAGE_SIZE + offset;
-      out_value.is_valid = true;
+      out_value.has_value = true;
 
       return out_value;
     }
@@ -91,7 +91,7 @@ opt_uint64_t translate(uint64_t virtual_address)
 opt_uint64_t page_containing_address(uint64_t virtual_address)
 {
   opt_uint64_t out_value;
-  out_value.is_valid = false;
+  out_value.has_value = false;
 
   // So the address space is split into two halves: the higher half
   // containing addresses with sign extension and the lower half containing
@@ -100,7 +100,7 @@ opt_uint64_t page_containing_address(uint64_t virtual_address)
       virtual_address >= 0xffff800000000000) {
 
     out_value.value = virtual_address / PAGE_SIZE;
-    out_value.is_valid = true;
+    out_value.has_value = true;
 
     MMU_DEBUG("page_containing_address returning %lld for %p", out_value.value, out_value.value);
 
@@ -119,7 +119,7 @@ uint64_t page_start_address(uint64_t page_number)
 opt_uint64_t translate_page(uint64_t page_number)
 {
   opt_uint64_t out_value;
-  out_value.is_valid = false;
+  out_value.has_value = false;
   page_table_t* p4 = get_p4();
 
   page_table_t* p3 = next_table_address(p4, p4_index(page_number));
@@ -133,12 +133,12 @@ opt_uint64_t translate_page(uint64_t page_number)
 
   opt_uint64_t start_frame = pointed_frame(*p3_entry);
 
-  if(start_frame.is_valid && p3_entry->huge_page == 1) {
+  if(start_frame.has_value && p3_entry->huge_page == 1) {
     MMU_DEBUG("1GB huge page=%u frame=%u", page_number, start_frame.value);
 
     if(start_frame.value % (PAGE_ENTRIES * PAGE_ENTRIES) == 0) {
       out_value.value = start_frame.value + p2_index(page_number) * PAGE_ENTRIES + p1_index(page_number);
-      out_value.is_valid = true;
+      out_value.has_value = true;
 
       return out_value;
     } else {
@@ -154,12 +154,12 @@ opt_uint64_t translate_page(uint64_t page_number)
 
     start_frame = pointed_frame(*p2_entry);
 
-    if(start_frame.is_valid && p2_entry->huge_page == 1) {
+    if(start_frame.has_value && p2_entry->huge_page == 1) {
       MMU_DEBUG("2MB huge page=%u frame=%u", page_number, start_frame.value);
 
       if(start_frame.value % PAGE_ENTRIES == 0) {
         out_value.value = start_frame.value + p1_index(page_number);
-        out_value.is_valid = true;
+        out_value.has_value = true;
 
         return out_value;
       } else {
@@ -180,7 +180,7 @@ opt_uint64_t translate_page(uint64_t page_number)
 
   opt_uint64_t frame = pointed_frame(p1->entries[p1_index(page_number)]);
 
-  if(!frame.is_valid) {
+  if(!frame.has_value) {
 
     PANIC("misaligned p1 page=%u", page_number);
   }
@@ -211,11 +211,11 @@ uint64_t p1_index(uint64_t page)
 opt_uint64_t pointed_frame(page_entry_t entry)
 {
   opt_uint64_t out_value;
-  out_value.is_valid = false;
+  out_value.has_value = false;
 
   if (entry.present) {
     out_value.value = frame_containing_address(entry.addr);
-    out_value.is_valid = true;
+    out_value.has_value = true;
 
     return out_value;
   }
@@ -344,7 +344,7 @@ void unmap(uint64_t page_number)
 {
   uint64_t addr = page_start_address(page_number);
 
-  if (!translate(addr).is_valid) {
+  if (!translate(addr).has_value) {
     PANIC("cannot unmap page=%u because it is not mapped", page_number);
   }
 
@@ -376,7 +376,7 @@ void unmap(uint64_t page_number)
 
   opt_uint64_t frame_number = pointed_frame(entry);
 
-  if(!frame_number.is_valid) {
+  if(!frame_number.has_value) {
     PANIC("invalid frame number while unmapping page=%u", page_number);
   }
 
@@ -424,13 +424,13 @@ void unmap_multiple(uint64_t start_page_number, uint32_t number_of_pages)
 opt_uint32_t paging_amount_for_byte_size(uint64_t start_address, uint64_t byte_size)
 {
   opt_uint32_t out_value;
-  out_value.is_valid = true;
+  out_value.has_value = true;
 
   opt_uint64_t start_page = page_containing_address(start_address);
   opt_uint64_t end_page = page_containing_address(start_address + byte_size);
 
-  if(!start_page.is_valid || !end_page.is_valid) {
-    out_value.is_valid = false;
+  if(!start_page.has_value || !end_page.has_value) {
+    out_value.has_value = false;
 
     return out_value;
   }

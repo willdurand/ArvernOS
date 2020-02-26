@@ -66,7 +66,7 @@ elf_header_t* elf_load(uint8_t* data)
       opt_uint32_t number_of_pages =
         paging_amount_for_byte_size(section->addr, section->size);
 
-      if(!start_page.is_valid || !number_of_pages.is_valid) {
+      if(!start_page.has_value || !number_of_pages.has_value) {
         continue;
       }
 
@@ -171,7 +171,7 @@ void load_segment(uint8_t* data, elf_program_header_t* program_header)
   opt_uint64_t start_page = page_containing_address(addr);
   opt_uint32_t number_of_pages = paging_amount_for_byte_size(addr, mem_size);
 
-  if (mem_size == 0 || !start_page.is_valid || !number_of_pages.is_valid) {
+  if (mem_size == 0 || !start_page.has_value || !number_of_pages.has_value) {
     return;
   }
 

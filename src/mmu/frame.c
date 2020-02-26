@@ -44,7 +44,7 @@ void frame_init(multiboot_info_t* mbi)
 opt_uint64_t read_mmap(uint64_t request)
 {
   opt_uint64_t out_value;
-  out_value.is_valid = false;
+  out_value.has_value = false;
 
   uint64_t cur_num = 0;
 
@@ -67,7 +67,7 @@ opt_uint64_t read_mmap(uint64_t request)
 
       if (cur_num == request && addr != 0) {
         out_value.value = addr;
-        out_value.is_valid = true;
+        out_value.has_value = true;
 
         return out_value;
       }
@@ -92,7 +92,7 @@ uint64_t frame_allocate()
 
   opt_uint64_t addr = read_mmap(free_frame);
 
-  if (!addr.is_valid) {
+  if (!addr.has_value) {
     PANIC("%s", "failed to allocate a new frame");
   }
 

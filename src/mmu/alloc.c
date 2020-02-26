@@ -15,7 +15,7 @@ void alloc_init()
   opt_uint64_t heap_end_page_opt = page_containing_address(HEAP_START + HEAP_SIZE - 1);
   opt_uint64_t heap_start_page_opt = page_containing_address(HEAP_START);
 
-  if(!heap_end_page_opt.is_valid || !heap_start_page_opt.is_valid) {
+  if(!heap_end_page_opt.has_value || !heap_start_page_opt.has_value) {
     PANIC("Failed to initialize heap: pages are invalid");
   }
 
@@ -86,7 +86,7 @@ int liballoc_free(void* ptr, int number_of_pages)
 {
   opt_uint64_t page = page_containing_address((uint64_t)ptr);
 
-  if(!page.is_valid) {
+  if(!page.has_value) {
     PANIC("failed to free due to invalid page (ptr=%p)", ptr);
   }
 
