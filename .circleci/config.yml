@@ -2,14 +2,15 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/buildpack-deps
+      - image: cimg/base:2020.01
     steps:
       - checkout
       - run:
           name: install dependencies
           command: |
             sudo apt-get update
-            sudo apt-get install -y nasm xorriso build-essential grub2-common grub-pc-bin
+            sudo apt-get install -y nasm xorriso build-essential grub2-common grub-pc-bin clang-format-9
+            sudo update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-9 100
       - run:
           name: build
           command: |
@@ -23,7 +24,7 @@ jobs:
           name: test
           command: make clean test
       - run:
-          name: astyle
+          name: fmt
           command: |
             make fmt
             git diff --exit-code || (echo "\n\nPlease run 'make fmt' to format the code and fix the problem(s) above"; false)
