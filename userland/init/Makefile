@@ -1,7 +1,7 @@
 ifeq ($(shell uname -s),Darwin)
 	CC = x86_64-pc-elf-gcc
 else
-	CC = x86_64-elf-gcc
+	CC = gcc
 endif
 
 ROOT_DIR = ../..

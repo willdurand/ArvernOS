@@ -6,9 +6,9 @@ ifeq ($(shell uname -s),Darwin)
 	LD = x86_64-pc-elf-ld
 	AR = x86_64-pc-elf-ar
 else
-	CC = x86_64-elf-gcc
-	LD = x86_64-elf-ld
-	AR = x86_64-elf-ar
+	CC = gcc
+	LD = ld
+	AR = ar
 endif
 
 OS_NAME    = willOS
