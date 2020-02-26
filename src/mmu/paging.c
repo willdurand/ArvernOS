@@ -178,14 +178,7 @@ opt_uint64_t translate_page(uint64_t page_number)
     return out_value;
   }
 
-  opt_uint64_t frame = pointed_frame(p1->entries[p1_index(page_number)]);
-
-  if(!frame.has_value) {
-
-    PANIC("misaligned p1 page=%u", page_number);
-  }
-
-  return frame;
+  return pointed_frame(p1->entries[p1_index(page_number)]);
 }
 
 uint64_t p4_index(uint64_t page)
@@ -232,6 +225,14 @@ void map_page_to_frame(uint64_t page, uint64_t frame, uint64_t flags)
             flags);
 
   uint64_t frame_number = frame_containing_address(frame);
+
+  opt_uint64_t translated_page = translate_page(page);
+
+  if(translated_page.has_value && translated_page.value == frame_number) {
+    MMU_DEBUG("page=%u already mapped to frame=%u", page, frame_number);
+
+    return;
+  }
 
   uint64_t p4_idx = p4_index(page);
   uint64_t p3_idx = p3_index(page);
