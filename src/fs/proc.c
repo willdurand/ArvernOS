@@ -1,6 +1,7 @@
 #include "proc.h"
 #include <core/debug.h>
 #include <core/timer.h>
+#include <kernel/kmain.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -25,12 +26,13 @@ vfs_driver_t proc_driver = {
   proc_finddir, // finddir
 };
 
-#define NB_PROC_FILES 3
+#define NB_PROC_FILES 4
 
-const char* proc_files[3] = {
+const char* proc_files[NB_PROC_FILES] = {
   ".",
   "..",
   "uptime",
+  "version",
 };
 
 inode_t proc_fs_init()
@@ -112,8 +114,8 @@ uint64_t proc_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
     return 0;
   }
 
+  char buf[256];
   if (strncmp(node->name, "uptime", 6) == 0) {
-    char buf[20];
     // Linux returns two numbers according to the man page (quoted below):
     // http://man7.org/linux/man-pages/man5/proc.5.html.
     //
@@ -122,24 +124,27 @@ uint64_t proc_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
     // spent in the idle process.
     //
     // We do not have the notion of process yet so there is only one value.
-    snprintf(buf, 20, "%ld\n", timer_uptime());
-    uint8_t len = strlen(buf);
-
-    if (size > len) {
-      size = len;
-    }
-
-    if (offset > size) {
-      offset = size;
-    }
-
-    memcpy(buffer, (void*)buf + offset, size);
-    ((char*)buffer)[size] = '\0';
-
-    return size - offset;
+    snprintf(buf, 256, "%ld\n", timer_uptime());
+  } else if (strncmp(node->name, "version", 6) == 0) {
+    snprintf(buf, 256, "%s %s (%s)\n", KERNEL_NAME, KERNEL_VERSION, GIT_HASH);
+  } else {
+    return 0;
   }
 
-  return 0;
+  uint8_t len = strlen(buf);
+
+  if (size > len) {
+    size = len;
+  }
+
+  if (offset > size) {
+    offset = size;
+  }
+
+  memcpy(buffer, (void*)buf + offset, size);
+  ((char*)buffer)[size] = '\0';
+
+  return size - offset;
 }
 
 uint64_t proc_stat(inode_t node, stat_t* st)
