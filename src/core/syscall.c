@@ -3,7 +3,10 @@
 #include <core/timer.h>
 #include <drivers/keyboard.h>
 #include <drivers/screen.h>
+#include <errno.h>
+#include <fs/vfs.h>
 #include <kernel/panic.h>
+#include <proc/fd.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,6 +21,8 @@ void syscall_test(registers_t* registers);
 void syscall_write(registers_t* registers);
 void syscall_read(registers_t* registers);
 void syscall_gettimeofday(registers_t* registers);
+void syscall_open(registers_t* registers);
+void syscall_close(registers_t* registers);
 
 void syscall_init()
 {
@@ -25,6 +30,8 @@ void syscall_init()
   syscall_register_handler(SYSCALL_WRITE, syscall_write);
   syscall_register_handler(SYSCALL_READ, syscall_read);
   syscall_register_handler(SYSCALL_GETTIMEOFDAY, syscall_gettimeofday);
+  syscall_register_handler(SYSCALL_OPEN, syscall_open);
+  syscall_register_handler(SYSCALL_CLOSE, syscall_close);
 }
 
 void syscall_register_handler(uint8_t id, syscall_handler_t handler)
@@ -56,7 +63,42 @@ void syscall_write(registers_t* registers)
 
 void syscall_read(registers_t* registers)
 {
-  registers->rdx = keyboard_get_scancode();
+  errno = 0;
+
+  int fd = (int)registers->rbx;
+  char* buf = (char*)registers->rcx;
+  size_t count = (size_t)registers->rsi;
+
+  if (fd == FD_STDIN) {
+    uint8_t scancode = keyboard_get_scancode();
+
+    if (scancode) {
+      buf[0] = scancode;
+      registers->rdx = 1;
+    }
+
+    return;
+  }
+
+  if (fd < 3) {
+    DEBUG("invalid file descriptor fd=%d", fd);
+    registers->rdx = -1;
+    errno = EPERM;
+    return;
+  }
+
+  DEBUG("fd=%d buf=%p count=%d", fd, buf, count);
+
+  file_descriptor_t* desc = get_file_descriptor(fd);
+
+  if (desc == 0) {
+    DEBUG("file descriptor fd=%d not found", fd);
+    registers->rdx = -1;
+    errno = EBADF;
+    return;
+  }
+
+  registers->rdx = vfs_read(desc->inode, buf, count, desc->offset);
 }
 
 void syscall_gettimeofday(registers_t* registers)
@@ -69,6 +111,54 @@ void syscall_gettimeofday(registers_t* registers)
   t->tv_usec = 0;
 
   DEBUG("gettimeofday=%u", t->tv_sec);
+}
+
+void syscall_open(registers_t* registers)
+{
+  errno = 0;
+
+  const char* pathname = registers->rbx;
+  uint32_t flags = registers->rcx;
+
+  inode_t inode = vfs_namei(pathname);
+
+  if (inode == 0) {
+    registers->rdx = -2;
+    errno = ENOENT;
+    return;
+  }
+
+  registers->rdx = create_file_descriptor(inode, flags);
+
+  DEBUG("open fd=%d inode=%p flags=%d", registers->rdx, inode, flags);
+}
+
+void syscall_close(registers_t* registers)
+{
+  errno = 0;
+
+  int fd = (int)registers->rbx;
+
+  if (fd < 3) {
+    DEBUG("invalid file descriptor fd=%d", fd);
+    registers->rdx = -1;
+    errno = EPERM;
+    return;
+  }
+
+  file_descriptor_t* desc = get_file_descriptor(fd);
+
+  if (desc == 0) {
+    DEBUG("file descriptor fd=%d not found", fd);
+    registers->rdx = -1;
+    errno = EBADF;
+    return;
+  }
+
+  registers->rdx = vfs_close(desc->inode);
+  delete_file_descriptor(fd);
+
+  DEBUG("close fd=%d", fd);
 }
 
 void syscall_print_registers(registers_t* registers)
