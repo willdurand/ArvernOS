@@ -57,7 +57,7 @@ uint64_t vfs_link(inode_t inode, inode_t parent, const char* name)
     return inode->driver->link(inode, parent, name);
   }
 
-  return -1;
+  return 0;
 }
 
 uint64_t vfs_unlink(inode_t inode, const char* name)
@@ -66,7 +66,7 @@ uint64_t vfs_unlink(inode_t inode, const char* name)
     return inode->driver->unlink(inode, name);
   }
 
-  return -1;
+  return 0;
 }
 
 uint64_t vfs_stat(inode_t inode, stat_t* stat)
@@ -75,7 +75,7 @@ uint64_t vfs_stat(inode_t inode, stat_t* stat)
     return inode->driver->stat(inode, stat);
   }
 
-  return -1;
+  return 0;
 }
 
 uint64_t vfs_isatty(inode_t inode)
@@ -84,7 +84,7 @@ uint64_t vfs_isatty(inode_t inode)
     return inode->driver->isatty(inode);
   }
 
-  return -1;
+  return 0;
 }
 
 uint64_t vfs_mkdir(inode_t inode, const char* name)
@@ -93,7 +93,7 @@ uint64_t vfs_mkdir(inode_t inode, const char* name)
     return inode->driver->mkdir(inode, name);
   }
 
-  return -1;
+  return 0;
 }
 
 dirent_t* vfs_readdir(inode_t inode, uint64_t num)
@@ -115,11 +115,12 @@ dirent_t* vfs_readdir(inode_t inode, uint64_t num)
     }
   }
 
+  dirent_t* de = 0;
   if (inode->driver->readdir) {
-    return inode->driver->readdir(inode, num);
+    de = inode->driver->readdir(inode, num);
   }
 
-  return 0;
+  return de;
 }
 
 inode_t vfs_finddir(inode_t inode, const char* name)
@@ -132,6 +133,15 @@ inode_t vfs_finddir(inode_t inode, const char* name)
     if (!strncmp(name, "..", strlen(name))) {
       return inode->parent;
     }
+  }
+
+  // Try to return mounted filesystems first.
+  inode_t ino = inode->child;
+  while (ino) {
+    if (strncmp(name, ino->name, strlen(name)) == 0) {
+      return ino;
+    }
+    ino = ino->older;
   }
 
   if (inode->driver->finddir) {

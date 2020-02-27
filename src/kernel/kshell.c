@@ -141,7 +141,7 @@ void selftest()
   }
 
   print_selftest_header("filesystem");
-  inode_t debug = vfs_namei(FS_DEBUG_FILENAME);
+  inode_t debug = vfs_namei(FS_DEBUG_MOUNTPOINT);
   const char* message = "  this message should be written to the console\n";
   vfs_write(debug, message, strlen(message), 0);
 
