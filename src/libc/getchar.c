@@ -75,7 +75,8 @@ char getchar()
   char c = -1;
 
   while (c == -1) {
-    uint8_t scancode = read();
+    uint8_t scancode;
+    read(0, &scancode, 1);
     bool key_was_released = false;
 
     if (scancode > 128) {
