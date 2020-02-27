@@ -35,6 +35,10 @@ int main()
   assert(strcmp(de->name, "uptime") == 0,
          "returns the uptime file in position #2");
   free(de);
+  de = vfs_readdir(root, 3);
+  assert(strcmp(de->name, "version") == 0,
+         "returns the version file in position #3");
+  free(de);
   end_describe();
 
   describe("proc_finddir()");
