@@ -69,7 +69,7 @@ void syscall_read(registers_t* registers)
   char* buf = (char*)registers->rcx;
   size_t count = (size_t)registers->rsi;
 
-  if (fd == 0) {
+  if (fd == FD_STDIN) {
     uint8_t scancode = keyboard_get_scancode();
 
     if (scancode) {
@@ -115,6 +115,8 @@ void syscall_gettimeofday(registers_t* registers)
 
 void syscall_open(registers_t* registers)
 {
+  errno = 0;
+
   const char* pathname = registers->rbx;
   uint32_t flags = registers->rcx;
 
@@ -133,6 +135,8 @@ void syscall_open(registers_t* registers)
 
 void syscall_close(registers_t* registers)
 {
+  errno = 0;
+
   int fd = (int)registers->rbx;
 
   if (fd < 3) {

@@ -2,7 +2,6 @@
 #include <core/cmos.h>
 #include <core/debug.h>
 #include <core/elf.h>
-#include <core/timer.h>
 #include <drivers/screen.h>
 #include <fs/debug.h>
 #include <fs/vfs.h>
@@ -55,7 +54,7 @@ unsigned char keymap[][128] = {
   { 0 },
 };
 
-#define NB_DOCUMENTED_COMMANDS 7
+#define NB_DOCUMENTED_COMMANDS 6
 
 const char* commands[][NB_DOCUMENTED_COMMANDS] = {
   { "cat", "print on the standard output" },
@@ -63,7 +62,6 @@ const char* commands[][NB_DOCUMENTED_COMMANDS] = {
   { "help", "display information about willOS shell commands" },
   { "ls", "list files" },
   { "selftest", "run the willOS test suite" },
-  { "uptime", "tell how long the system has been running" },
   { "overflow", "test the stack buffer overflow protection" },
 };
 
@@ -101,11 +99,6 @@ void help(const char* command)
 void clear()
 {
   screen_clear();
-}
-
-void uptime()
-{
-  printf("up %llu seconds\n", timer_uptime());
 }
 
 void print_selftest_header(const char* name)
@@ -266,8 +259,6 @@ void run_command(const char* command)
     cat(command);
   } else if (strncmp(command, "clear", 5) == 0) {
     clear();
-  } else if (strncmp(command, "uptime", 6) == 0) {
-    uptime();
   } else if (strncmp(command, "selftest", 8) == 0) {
     selftest();
   } else if (strncmp(command, "overflow", 8) == 0) {

@@ -22,7 +22,7 @@ int create_file_descriptor(inode_t inode, uint32_t flags)
 
 file_descriptor_t* get_file_descriptor(int fd)
 {
-  if (fd >= (NB_FILE_DESCRIPTORS - 1)) {
+  if (fd >= NB_FILE_DESCRIPTORS) {
     return 0;
   }
 
@@ -31,7 +31,7 @@ file_descriptor_t* get_file_descriptor(int fd)
 
 void delete_file_descriptor(int fd)
 {
-  if (fd >= (NB_FILE_DESCRIPTORS - 1)) {
+  if (fd >= NB_FILE_DESCRIPTORS) {
     return;
   }
 

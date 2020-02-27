@@ -2,6 +2,7 @@
 
 #ifdef __is_libc
 
+#include <proc/fd.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <sys/syscall.h>
@@ -76,7 +77,7 @@ char getchar()
 
   while (c == -1) {
     uint8_t scancode;
-    read(0, &scancode, 1);
+    read(FD_STDIN, &scancode, 1);
     bool key_was_released = false;
 
     if (scancode > 128) {

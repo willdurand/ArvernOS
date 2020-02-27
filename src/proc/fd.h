@@ -4,6 +4,10 @@
 #include <fs/vfs.h>
 #include <stdint.h>
 
+#define FD_STDIN  0
+#define FD_STDOUT 1
+#define FD_STDERR 2
+
 typedef struct file_descriptor
 {
   inode_t inode;
