@@ -43,6 +43,8 @@ int main()
   inode_t uptime = vfs_namei("/uptime");
   assert(vfs_inode_type(uptime) == FS_FILE, "finds the uptime file");
   free(uptime);
+  inode_t not_uptime = vfs_namei("/uptimee");
+  assert(not_uptime == 0, "returns 0 when file is not found");
   end_describe();
 
   describe("proc_isatty()");

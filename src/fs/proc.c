@@ -25,6 +25,14 @@ vfs_driver_t proc_driver = {
   proc_finddir, // finddir
 };
 
+#define NB_PROC_FILES 3
+
+const char* proc_files[3] = {
+  ".",
+  "..",
+  "uptime",
+};
+
 inode_t proc_fs_init()
 {
   inode_t node = malloc(sizeof(vfs_node_t));
@@ -45,7 +53,7 @@ dirent_t* proc_readdir(inode_t inode, uint64_t num)
     return 0;
   }
 
-  if (num < 2) {
+  if (num < 2 || num >= NB_PROC_FILES) {
     return 0;
   }
 
@@ -55,16 +63,7 @@ dirent_t* proc_readdir(inode_t inode, uint64_t num)
   node->driver = inode->driver;
   node->parent = inode;
   node->type = FS_FILE;
-
-  switch (num) {
-    case 2:
-      strcpy(node->name, "uptime");
-      break;
-    default:
-      // That is because we do not support other files yet.
-      return 0;
-  }
-
+  strcpy(node->name, proc_files[num]);
   strcpy(dir->name, node->name);
   dir->inode = node;
 
@@ -75,20 +74,23 @@ dirent_t* proc_readdir(inode_t inode, uint64_t num)
 
 inode_t proc_finddir(inode_t inode, const char* name)
 {
-  if (strncmp(name, "uptime", 6) != 0) {
-    return 0;
+  for (int idx = 2; idx < NB_PROC_FILES; idx++) {
+    if (strlen(name) == strlen(proc_files[idx]) &&
+        strncmp(name, proc_files[idx], strlen(proc_files[idx])) == 0) {
+      inode_t node = malloc(sizeof(vfs_node_t));
+
+      strcpy(node->name, proc_files[idx]);
+      node->driver = &proc_driver;
+      node->parent = inode;
+      node->type = FS_FILE;
+
+      DEBUG("found name=%s type=%ld", node->name, node->type);
+
+      return node;
+    }
   }
 
-  inode_t node = malloc(sizeof(vfs_node_t));
-
-  strcpy(node->name, "uptime");
-  node->driver = &proc_driver;
-  node->parent = inode;
-  node->type = FS_FILE;
-
-  DEBUG("found name=%s type=%ld", node->name, node->type);
-
-  return node;
+  return 0;
 }
 
 uint64_t proc_isatty(inode_t node)
@@ -111,7 +113,7 @@ uint64_t proc_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
   }
 
   if (strncmp(node->name, "uptime", 6) == 0) {
-    char buf[40];
+    char buf[20];
     // Linux returns two numbers according to the man page (quoted below):
     // http://man7.org/linux/man-pages/man5/proc.5.html.
     //
@@ -120,7 +122,7 @@ uint64_t proc_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
     // spent in the idle process.
     //
     // We do not have the notion of process yet so there is only one value.
-    snprintf(buf, 40, "%ld\n", timer_uptime());
+    snprintf(buf, 20, "%ld\n", timer_uptime());
     uint8_t len = strlen(buf);
 
     if (size > len) {
