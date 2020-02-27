@@ -9,6 +9,7 @@
 #include <drivers/screen.h>
 #include <drivers/serial.h>
 #include <fs/debug.h>
+#include <fs/proc.h>
 #include <fs/tar.h>
 #include <fs/vfs.h>
 #include <kernel/kshell.h>
@@ -131,7 +132,8 @@ void kmain(uint64_t addr)
   inode_t initrd = vfs_mount("/", tar_fs_init((uint64_t)module->mod_start));
 
   if (initrd) {
-    vfs_mount(FS_DEBUG_FILENAME, debug_fs_init());
+    vfs_mount(FS_DEBUG_MOUNTPOINT, debug_fs_init());
+    vfs_mount(FS_PROC_MOUNTPOINT, proc_fs_init());
     print_ok();
   } else {
     print_ko();

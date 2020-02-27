@@ -95,7 +95,7 @@ debug: $(ISO)
 clean: ## remove build artifacts
 	find . -name '*.orig' -exec rm "{}" ";"
 	find . -name '*.o' -exec rm "{}" ";"
-	rm -rf $(BUILD_DIR) userland/bin/ $(INITRD_DIR)/{info,bin/}
+	rm -rf $(BUILD_DIR) userland/bin/ $(INITRD_DIR)/{info,bin/,proc/}
 .PHONY: clean
 
 fmt: ## automatically format the code with clang-format
@@ -119,6 +119,7 @@ test: LD=ld
 test: AR=ar
 test: CFLAGS += -fPIC
 test: libc
+	# libc
 	mkdir -p $(BUILD_DIR)/libc/string
 	for file in $(TEST_FILES); do \
 		echo ; \
@@ -126,10 +127,15 @@ test: libc
 		gcc -I./test/ -O0 test/$$file.c -o build/$$file ; \
 		LD_PRELOAD=./build/$$file.so ./build/$$file || exit 1 ; \
 	done
+	# tar
 	gcc -DENABLE_DEBUG_FOR_TEST -I./test -I./src/ -o $(BUILD_DIR)/tar test/fs/tar.c src/fs/tar.c src/fs/vfs.c
 	./$(BUILD_DIR)/tar
+	# vfs
 	gcc -DENABLE_DEBUG_FOR_TEST -I./test -I./src/ -o $(BUILD_DIR)/vfs test/fs/vfs.c src/fs/vfs.c
 	./$(BUILD_DIR)/vfs
+	# proc
+	gcc -DENABLE_DEBUG_FOR_TEST -I./test -I./src/ -o $(BUILD_DIR)/proc test/fs/proc.c src/fs/proc.c src/fs/vfs.c
+	./$(BUILD_DIR)/proc
 .PHONY: test
 
 version: ## print tool versions
@@ -140,6 +146,7 @@ version: ## print tool versions
 $(INITRD_TAR): userland
 	cp -R userland/bin $(INITRD_DIR)
 	echo "willOS build info\n\nhash: $(GIT_HASH)\ndate: $(shell date)" > $(INITRD_DIR)/info
+	mkdir -p $(INITRD_DIR)/proc
 	cd $(INITRD_DIR) && tar -cvf ../$(INITRD_TAR) *
 
 initrd: ## build the init ram disk
