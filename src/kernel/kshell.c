@@ -55,12 +55,11 @@ unsigned char keymap[][128] = {
   { 0 },
 };
 
-#define NB_DOCUMENTED_COMMANDS 8
+#define NB_DOCUMENTED_COMMANDS 7
 
 const char* commands[][NB_DOCUMENTED_COMMANDS] = {
   { "cat", "print on the standard output" },
   { "clear", "clear the terminal screen" },
-  { "date", "print the system date and time" },
   { "help", "display information about willOS shell commands" },
   { "ls", "list files" },
   { "selftest", "run the willOS test suite" },
@@ -97,19 +96,6 @@ void help(const char* command)
   }
 
   printf("no help for this command\n");
-}
-
-void date()
-{
-  cmos_rtc_t rtc = cmos_read_rtc();
-
-  printf("%4d-%02d-%02d %02d:%02d:%02d UTC\n",
-         rtc.year,
-         rtc.month,
-         rtc.day,
-         rtc.hours,
-         rtc.minutes,
-         rtc.seconds);
 }
 
 void clear()
@@ -278,8 +264,6 @@ void run_command(const char* command)
     ls(command);
   } else if (strncmp(command, "cat", 3) == 0) {
     cat(command);
-  } else if (strncmp(command, "date", 4) == 0) {
-    date();
   } else if (strncmp(command, "clear", 5) == 0) {
     clear();
   } else if (strncmp(command, "uptime", 6) == 0) {

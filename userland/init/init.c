@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 
 #define READLINE_SIZE          256
 #define PROMPT                 "(init) "
@@ -9,7 +10,13 @@
 
 void date()
 {
-  printf("implement me\n");
+  time_t now;
+  char buf[40];
+
+  time(&now);
+  strftime(buf, 40, "%c", localtime(&now));
+
+  printf("%s\n", buf);
 }
 
 void clear()
