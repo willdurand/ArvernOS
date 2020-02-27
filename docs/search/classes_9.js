@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['vfs_5fdriver_5ft_201',['vfs_driver_t',['../structvfs__driver__t.html',1,'']]],
-  ['vfs_5fnode_5ft_202',['vfs_node_t',['../structvfs__node__t.html',1,'']]]
+  ['stack_5ft_209',['stack_t',['../structstack__t.html',1,'']]],
+  ['stat_5ft_210',['stat_t',['../structstat__t.html',1,'']]]
 ];

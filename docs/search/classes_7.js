@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['stack_5ft_195',['stack_t',['../structstack__t.html',1,'']]],
-  ['stat_5ft_196',['stat_t',['../structstat__t.html',1,'']]]
+  ['page_5fentry_5ft_205',['page_entry_t',['../structpage__entry__t.html',1,'']]],
+  ['page_5ftable_5ft_206',['page_table_t',['../structpage__table__t.html',1,'']]]
 ];
