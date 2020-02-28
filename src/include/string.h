@@ -5,6 +5,8 @@
 
 size_t strlen(const char* s);
 
+int strcmp(const char* s1, const char* s2);
+
 int strncmp(const char* s, const char* r, int len);
 
 char* strcpy(char* dest, const char* src);
@@ -29,5 +31,7 @@ void* memmove(void* dest, const void* src, size_t len);
 char* strtok(char* str, const char* delim);
 
 size_t strspn(const char* s1, const char* s2);
+
+char* strchr(const char* s, int c);
 
 #endif
