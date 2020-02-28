@@ -13,7 +13,7 @@ TARGET   = $(BIN_DIR)/init
 CFLAGS = -Wl,-emain -Wall -pedantic -std=c11 -O0 -ffreestanding -nostdlib \
 				 -D__is_libc \
 				 -fno-builtin -fstack-protector-all -I $(ROOT_DIR)/src/include/ -I $(ROOT_DIR)/libs/
-LIBS   = $(ROOT_DIR)/build/libc-willOS.a
+LIBS   = $(ROOT_DIR)/build/libc-$(OS_NAME).a
 
 default: $(TARGET)
 

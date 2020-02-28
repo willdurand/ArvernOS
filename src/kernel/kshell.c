@@ -59,9 +59,9 @@ unsigned char keymap[][128] = {
 const char* commands[][NB_DOCUMENTED_COMMANDS] = {
   { "cat", "print on the standard output" },
   { "clear", "clear the terminal screen" },
-  { "help", "display information about willOS shell commands" },
+  { "help", "display information about system shell commands" },
   { "ls", "list files" },
-  { "selftest", "run the willOS test suite" },
+  { "selftest", "run the system test suite" },
   { "overflow", "test the stack buffer overflow protection" },
 };
 

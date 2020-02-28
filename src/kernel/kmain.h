@@ -10,7 +10,9 @@
   "      o  |  | / \\(_ \n"                                                    \
   "  \\^/ |  |  | \\_/__)\n"
 
-#define KERNEL_NAME "willOS"
+#ifndef KERNEL_NAME
+#define KERNEL_NAME "noname OS"
+#endif
 
 #ifdef ENABLE_KERNEL_DEBUG
 #define KERNEL_VERSION "DEBUG MODE"
