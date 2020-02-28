@@ -62,7 +62,7 @@ int main()
     { "clear", "clear the terminal screen" },
     { "date", "print the system date and time" },
     { "exit", "exit the shell" },
-    { "help", "display information about willOS shell commands" },
+    { "help", "display information about shell commands" },
     { "reboot", "stopping and restarting the system" },
     { "uptime", "tell how long the system has been running" },
     { "overflow", "test the stack buffer overflow protection" },

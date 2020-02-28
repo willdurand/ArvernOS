@@ -17,12 +17,15 @@ LINKER     = linker.ld
 ISO_DIR    = $(BUILD_DIR)/isofiles
 KERNEL_DIR = $(ISO_DIR)/boot
 GRUB_DIR   = $(KERNEL_DIR)/grub
-KERNEL     = $(KERNEL_DIR)/kernel.bin
+GRUB_CFG   = $(GRUB_DIR)/grub.cfg
+KERNEL_BIN = kernel.bin
+KERNEL     = $(KERNEL_DIR)/$(KERNEL_BIN)
 ISO        = $(BUILD_DIR)/$(OS_NAME).iso
 LIBC       = $(BUILD_DIR)/libc-$(OS_NAME).a
 LIBK       = $(BUILD_DIR)/libk-$(OS_NAME).a
 INITRD_DIR = initrd
-INITRD_TAR = $(KERNEL_DIR)/initrd.tar
+INITRD_TAR = initrd.tar
+INITRD     = $(KERNEL_DIR)/$(INITRD_TAR)
 
 ASM_OBJECTS  := $(patsubst %.asm,%.o,$(shell find asm -name '*.asm'))
 LIBK_OBJECTS := $(patsubst %.c,%_k.o,$(shell find libs src -name '*.c'))
@@ -31,7 +34,8 @@ TEST_FILES 	 := $(patsubst test/%.c,%,$(shell find test/libc -name '*.c'))
 
 GIT_HASH := $(shell git rev-parse --short HEAD)
 
-CFLAGS = -DGIT_HASH=\"$(GIT_HASH)\" \
+CFLAGS = -DKERNEL_NAME=\"$(OS_NAME)\" \
+				 -DGIT_HASH=\"$(GIT_HASH)\" \
 				 -Wall -pedantic -std=c11 -O2 -ffreestanding -nostdlib \
 				 -fno-builtin -fstack-protector-all -mno-red-zone \
 				 -I src/include/ -I src/ -I libs/
@@ -76,9 +80,25 @@ iso: ## build the image of the OS (.iso)
 iso: $(ISO)
 .PHONY: iso
 
-$(ISO): $(KERNEL) $(INITRD_TAR)
+# See: https://stackoverflow.com/questions/649246/is-it-possible-to-create-a-multi-line-string-variable-in-a-makefile/649462#649462
+define GRUB_CFG_BODY
+set timeout=0
+set default=0
+
+menuentry "$(OS_NAME)" {
+    multiboot2 /boot/$(KERNEL_BIN)
+    module2 /boot/$(INITRD_TAR)
+    boot
+}
+endef
+
+export GRUB_CFG_BODY
+
+$(GRUB_CFG):
 	mkdir -p $(GRUB_DIR)
-	cp -R grub/* $(GRUB_DIR)
+	echo "$$GRUB_CFG_BODY" > $@
+
+$(ISO): $(KERNEL) $(INITRD) $(GRUB_CFG)
 	grub-mkrescue -o $@ $(ISO_DIR)
 
 run: ## run the OS
@@ -110,7 +130,7 @@ gdb: $(ISO)
 
 userland: ## compile the userland programs (statically linked to libc)
 userland: libc
-	$(MAKE) -C userland/init/
+	$(MAKE) -C userland/init/ OS_NAME="$(OS_NAME)"
 .PHONY: userland
 
 test: ## run unit tests
@@ -143,14 +163,14 @@ version: ## print tool versions
 	$(LD) --version
 .PHONY: version
 
-$(INITRD_TAR): userland
+$(INITRD): userland
 	cp -R userland/bin $(INITRD_DIR)
-	echo "willOS build info\n\nhash: $(GIT_HASH)\ndate: $(shell date)" > $(INITRD_DIR)/info
+	echo "$(OS_NAME) build info\n\nhash: $(GIT_HASH)\ndate: $(shell date)" > $(INITRD_DIR)/info
 	mkdir -p $(INITRD_DIR)/proc
-	cd $(INITRD_DIR) && tar -cvf ../$(INITRD_TAR) *
+	cd $(INITRD_DIR) && tar -cvf ../$(INITRD) *
 
 initrd: ## build the init ram disk
-initrd: $(INITRD_TAR)
+initrd: $(INITRD)
 .PHONY: initrd
 
 help:
