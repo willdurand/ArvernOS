@@ -26,4 +26,8 @@ void* memset(void* str, int c, size_t bytes);
 
 void* memmove(void* dest, const void* src, size_t len);
 
+char* strtok(char* str, const char* delim);
+
+size_t strspn(const char* s1, const char* s2);
+
 #endif
