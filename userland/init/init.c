@@ -99,7 +99,7 @@ int main()
 
         printf("\n");
 
-        // TODO: implement and use `strktok()` to get the readline and
+        // TODO: implement and use `strtok()` to get the readline and
         // the arguments.
 
         if (strncmp(readline, "exit", 4) == 0) {

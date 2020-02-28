@@ -248,7 +248,7 @@ void run_command(const char* command)
     return;
   }
 
-  // TODO(william): implement and use `strktok()` to get the command and the
+  // TODO(william): implement and use `strtok()` to get the command and the
   // arguments.
 
   if (strncmp(command, "help", 4) == 0) {
