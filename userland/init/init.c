@@ -2,6 +2,8 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
+#include <sys/reboot.h>
+#include <sys/syscall.h>
 #include <time.h>
 
 #define READLINE_SIZE          256
@@ -24,9 +26,10 @@ void clear()
   printf("implement me\n");
 }
 
-void reboot()
+void _reboot()
 {
-  printf("implement me\n");
+  printf("Restarting system now...\n");
+  reboot(REBOOT_CMD_RESTART);
 }
 
 void uptime()
@@ -123,7 +126,7 @@ int main()
         } else if (strncmp(readline, "clear", 5) == 0) {
           clear();
         } else if (strncmp(readline, "reboot", 6) == 0) {
-          reboot();
+          _reboot();
         } else if (strncmp(readline, "uptime", 6) == 0) {
           uptime();
         } else if (strncmp(readline, "overflow", 8) == 0) {

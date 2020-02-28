@@ -1,5 +1,6 @@
 #include "syscall.h"
 #include <core/cmos.h>
+#include <core/reboot.h>
 #include <core/timer.h>
 #include <drivers/keyboard.h>
 #include <drivers/screen.h>
@@ -23,6 +24,7 @@ void syscall_read(registers_t* registers);
 void syscall_gettimeofday(registers_t* registers);
 void syscall_open(registers_t* registers);
 void syscall_close(registers_t* registers);
+void syscall_reboot(registers_t* registers);
 
 void syscall_init()
 {
@@ -32,6 +34,7 @@ void syscall_init()
   syscall_register_handler(SYSCALL_GETTIMEOFDAY, syscall_gettimeofday);
   syscall_register_handler(SYSCALL_OPEN, syscall_open);
   syscall_register_handler(SYSCALL_CLOSE, syscall_close);
+  syscall_register_handler(SYSCALL_REBOOT, syscall_reboot);
 }
 
 void syscall_register_handler(uint8_t id, syscall_handler_t handler)
@@ -159,6 +162,15 @@ void syscall_close(registers_t* registers)
   delete_file_descriptor(fd);
 
   DEBUG("close fd=%d", fd);
+}
+
+void syscall_reboot(registers_t* registers)
+{
+  int command = (int)registers->rbx;
+
+  DEBUG("reboot command=%d", command);
+
+  registers->rdx = kreboot(command);
 }
 
 void syscall_print_registers(registers_t* registers)
