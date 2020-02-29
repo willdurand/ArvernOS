@@ -1,59 +1,11 @@
-#include "cdate.h"
+#include "init.h"
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
-#include <sys/reboot.h>
-#include <sys/syscall.h>
-#include <time.h>
 
 #define READLINE_SIZE          256
 #define PROMPT                 "(init) "
-#define NB_DOCUMENTED_COMMANDS 8
-
-void date()
-{
-  time_t now;
-  char buf[40];
-
-  time(&now);
-  strftime(buf, 40, "%c", localtime(&now));
-
-  printf("%s\n", buf);
-}
-
-void clear()
-{
-  printf("implement me\n");
-}
-
-void _reboot()
-{
-  printf("Restarting system now...\n");
-  reboot(REBOOT_CMD_RESTART);
-}
-
-void uptime()
-{
-  int fd = open("/proc/uptime", 0); // O_RDONLY
-
-  char buf[20];
-  if (read(fd, buf, 20) > 0) {
-    // Remove `\n` in the content read from /proc/uptime
-    buf[strlen(buf) - 1] = '\0';
-    printf("up %s seconds\n", buf);
-  } else {
-    printf("failed to read /proc/uptime\n");
-  }
-
-  close(fd);
-}
-
-int overflow()
-{
-  char c[12];
-  strcpy(c, "123456789012345678901234567890");
-  return 1;
-}
+#define NB_DOCUMENTED_COMMANDS 9
 
 int main()
 {
@@ -121,7 +73,7 @@ int main()
             }
           }
         } else if (strcmp(readline, "cal") == 0) {
-          cdate();
+          cal();
         } else if (strcmp(readline, "date") == 0) {
           date();
         } else if (strcmp(readline, "clear") == 0) {
