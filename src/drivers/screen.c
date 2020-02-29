@@ -40,11 +40,17 @@ void screen_clear()
   screen_row = 0;
 }
 
-void screen_print(const char* str)
+size_t screen_print(const char* str, size_t count)
 {
-  for (size_t i = 0; i < strlen(str); i++) {
+  if (count > strlen(str)) {
+    count = strlen(str);
+  }
+
+  for (size_t i = 0; i < count; i++) {
     screen_write(str[i]);
   }
+
+  return count;
 }
 
 uint8_t color_scheme(uint8_t fg, uint8_t bg)
@@ -75,7 +81,7 @@ void screen_write(char c)
 
     screen_write_at(0x0, screen_scheme, screen_col, screen_row);
   } else if (c == '\t') {
-    screen_print("    ");
+    screen_print("    ", 4);
   } else if (c == '\r') {
     screen_col = 0;
   } else {

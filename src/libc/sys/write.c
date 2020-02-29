@@ -1,6 +1,12 @@
 #include <sys/syscall.h>
 
-void write(char c)
+ssize_t write(int fd, const void* buf, size_t count)
 {
-  __asm__(INT_SYSCALL : /* no output */ : "a"(SYSCALL_WRITE), "b"(c));
+  ssize_t ret;
+
+  __asm__(INT_SYSCALL
+          : "=d"(ret)
+          : "a"(SYSCALL_WRITE), "b"(fd), "c"(buf), "S"(count));
+
+  return ret;
 }

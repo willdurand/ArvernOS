@@ -6,6 +6,7 @@
 #define SCREEN_H
 
 #include <stdint.h>
+#include <sys/types.h>
 
 /// The address of the frame buffer.
 #define VIDEO_ADDRESS 0xB8000
@@ -50,8 +51,10 @@ void screen_write(char c);
  * Prints a string to the screen.
  *
  * @param str the string to print to the screen
+ * @param count the number of characters to write
+ * @return the numberof characters printed to the screen
  */
-void screen_print(const char* str);
+size_t screen_print(const char* str, size_t count);
 
 /**
  * Changes the color scheme of the screen (background and foreground) that will
