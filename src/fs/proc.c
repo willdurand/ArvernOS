@@ -10,7 +10,7 @@ dirent_t* proc_readdir(inode_t inode, uint64_t num);
 inode_t proc_finddir(inode_t inode, const char* name);
 uint64_t proc_isatty(inode_t node);
 uint64_t proc_read(inode_t node, void* buffer, uint64_t size, uint64_t offset);
-uint64_t proc_stat(inode_t node, stat_t* st);
+uint64_t proc_stat(inode_t inode, stat_t* st);
 uint64_t proc_write(inode_t inode, void* ptr, uint64_t length, uint64_t offset);
 
 vfs_driver_t proc_driver = {
@@ -156,10 +156,15 @@ uint64_t proc_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
   return size - offset;
 }
 
-uint64_t proc_stat(inode_t node, stat_t* st)
+uint64_t proc_stat(inode_t inode, stat_t* st)
 {
   memset(st, 0, sizeof(stat_t));
-  st->size = 0;
+  st->size = 1; // Set a default value to show that the file is not empty.
+
+  if (strcmp(inode->name, "hostname") == 0) {
+    st->size = strlen(hostname);
+  }
+
   return 0;
 }
 
@@ -169,11 +174,11 @@ uint64_t proc_write(inode_t inode, void* ptr, uint64_t length, uint64_t offset)
     return 0;
   }
 
-  if (strlen(ptr) > 12) {
-    hostname = realloc(hostname, sizeof(char) * (strlen(ptr) + 1));
+  if (length > strlen(DEFAULT_HOSTNAME)) {
+    hostname = realloc(hostname, sizeof(char) * (length + 1));
   }
 
-  strcpy(hostname, ptr);
+  strncpy(hostname, ptr, length);
 
-  return strlen(ptr);
+  return strlen(hostname);
 }
