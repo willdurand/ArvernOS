@@ -1,3 +1,4 @@
+#include "init.h"
 #include <stdio.h>
 #include <string.h>
 #include <sys/syscall.h>
