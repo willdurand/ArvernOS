@@ -52,39 +52,44 @@ int main()
 
         printf("\n");
 
-        // TODO: implement and use `strtok()` to get the readline and
-        // the arguments.
+        char* command = strtok(readline, " ");
+        char* first_arg = strtok(NULL, " ");
 
-        if (strncmp(readline, "exit", 4) == 0) {
+        // Comsume all other arguments.
+        while (strtok(NULL, " ") != NULL) {
+          ;
+        }
+
+        if (strcmp(command, "exit") == 0) {
           return 0;
-        } else if (strncmp(readline, "help", 4) == 0) {
-          if (strlen(readline) == 4) {
+        } else if (strcmp(command, "help") == 0) {
+          if (first_arg == NULL) {
             for (uint8_t i = 0; i < NB_DOCUMENTED_COMMANDS; i++) {
               printf("%-10s %s\n", commands[i][0], commands[i][1]);
             }
           } else {
-            const char* arg = readline + 5;
-
             for (uint8_t i = 0; i < NB_DOCUMENTED_COMMANDS; i++) {
-              if (strncmp(arg, commands[i][0], strlen(commands[i][0])) == 0) {
-                printf("%s - %s\n", arg, commands[i][1]);
+              if (strcmp(first_arg, commands[i][0]) == 0) {
+                printf("%s - %s\n", first_arg, commands[i][1]);
                 break;
               }
             }
           }
-        } else if (strcmp(readline, "cal") == 0) {
+        } else if (strcmp(command, "cal") == 0) {
+          printf("in cal\n");
           cal();
-        } else if (strcmp(readline, "date") == 0) {
+        } else if (strcmp(command, "date") == 0) {
+          printf("in date\n");
           date();
-        } else if (strcmp(readline, "clear") == 0) {
+        } else if (strcmp(command, "clear") == 0) {
           clear();
-        } else if (strncmp(readline, "hostname", 8) == 0) {
-          hostname(readline);
-        } else if (strcmp(readline, "reboot") == 0) {
+        } else if (strcmp(command, "hostname") == 0) {
+          hostname(first_arg);
+        } else if (strcmp(command, "reboot") == 0) {
           _reboot();
-        } else if (strcmp(readline, "uptime") == 0) {
+        } else if (strcmp(command, "uptime") == 0) {
           uptime();
-        } else if (strcmp(readline, "overflow") == 0) {
+        } else if (strcmp(command, "overflow") == 0) {
           overflow();
         } else {
           printf("invalid command\n");

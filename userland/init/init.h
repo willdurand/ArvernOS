@@ -9,7 +9,7 @@ void clear();
 
 void date();
 
-void hostname(const char* readline);
+void hostname(char* arg);
 
 int overflow();
 

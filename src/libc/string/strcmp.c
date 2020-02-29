@@ -2,9 +2,13 @@
 
 int strcmp(const char* s1, const char* s2)
 {
-  while (*s1 && (*s1++ == *s2++)) {
-    ;
+  unsigned char c1, c2;
+
+  while ((c1 = *s1++) == (c2 = *s2++)) {
+    if (c1 == '\0') {
+      return 0;
+    }
   }
 
-  return *(const unsigned char*)s1 - *(const unsigned char*)s2;
+  return c1 - c2;
 }
