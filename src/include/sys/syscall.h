@@ -26,11 +26,14 @@
 void test(const char* s);
 
 /**
- * Implements the write (to screen) syscall.
+ * Implements the write syscall.
  *
- * @param c the character to print on the screen
+ * @param fd a file descriptor ID
+ * @param buf a buffer that contains the bytes to write
+ * @param count the maximum number of bytes to write
+ * @return the actual number of bytes write or -1 in case of an error
  */
-void write(char c);
+ssize_t write(int fd, const void* buf, size_t count);
 
 /**
  * Implements the read syscall. `read()` attempts to read up to `count` bytes

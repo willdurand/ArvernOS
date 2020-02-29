@@ -61,7 +61,20 @@ void syscall_test(registers_t* registers)
 
 void syscall_write(registers_t* registers)
 {
-  screen_write((char)registers->rbx);
+  errno = 0;
+
+  int fd = (int)registers->rbx;
+  char* buf = (char*)registers->rcx;
+  size_t count = (size_t)registers->rsi;
+
+  if (fd != FD_STDOUT) {
+    DEBUG("invalid file descriptor fd=%d", fd);
+    registers->rdx = -1;
+    errno = EPERM;
+    return;
+  }
+
+  registers->rdx = screen_print(buf, count);
 }
 
 void syscall_read(registers_t* registers)
