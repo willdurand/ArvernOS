@@ -63,6 +63,7 @@ int main()
     { "date", "print the system date and time" },
     { "exit", "exit the shell" },
     { "help", "display information about shell commands" },
+    { "hostname", "print or update the system hostname" },
     { "reboot", "stopping and restarting the system" },
     { "uptime", "tell how long the system has been running" },
     { "overflow", "test the stack buffer overflow protection" },
@@ -119,17 +120,19 @@ int main()
               }
             }
           }
-        } else if (strncmp(readline, "cal", 3) == 0) {
+        } else if (strcmp(readline, "cal") == 0) {
           cdate();
-        } else if (strncmp(readline, "date", 4) == 0) {
+        } else if (strcmp(readline, "date") == 0) {
           date();
-        } else if (strncmp(readline, "clear", 5) == 0) {
+        } else if (strcmp(readline, "clear") == 0) {
           clear();
-        } else if (strncmp(readline, "reboot", 6) == 0) {
+        } else if (strncmp(readline, "hostname", 8) == 0) {
+          hostname(readline);
+        } else if (strcmp(readline, "reboot") == 0) {
           _reboot();
-        } else if (strncmp(readline, "uptime", 6) == 0) {
+        } else if (strcmp(readline, "uptime") == 0) {
           uptime();
-        } else if (strncmp(readline, "overflow", 8) == 0) {
+        } else if (strcmp(readline, "overflow") == 0) {
           overflow();
         } else {
           printf("invalid command\n");
