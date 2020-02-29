@@ -76,10 +76,8 @@ int main()
             }
           }
         } else if (strcmp(command, "cal") == 0) {
-          printf("in cal\n");
           cal();
         } else if (strcmp(command, "date") == 0) {
-          printf("in date\n");
           date();
         } else if (strcmp(command, "clear") == 0) {
           clear();
