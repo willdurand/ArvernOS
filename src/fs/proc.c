@@ -26,13 +26,10 @@ vfs_driver_t proc_driver = {
   proc_finddir, // finddir
 };
 
-#define NB_PROC_FILES 4
+#define NB_PROC_FILES 5
 
 const char* proc_files[NB_PROC_FILES] = {
-  ".",
-  "..",
-  "uptime",
-  "version",
+  ".", "..", "uptime", "version", "hostname",
 };
 
 inode_t proc_fs_init()
@@ -115,7 +112,7 @@ uint64_t proc_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
   }
 
   char buf[256];
-  if (strncmp(node->name, "uptime", 6) == 0) {
+  if (strcmp(node->name, "uptime") == 0) {
     // Linux returns two numbers according to the man page (quoted below):
     // http://man7.org/linux/man-pages/man5/proc.5.html.
     //
@@ -125,8 +122,10 @@ uint64_t proc_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
     //
     // We do not have the notion of process yet so there is only one value.
     snprintf(buf, 256, "%ld\n", timer_uptime());
-  } else if (strncmp(node->name, "version", 6) == 0) {
+  } else if (strcmp(node->name, "version") == 0) {
     snprintf(buf, 256, "%s %s (%s)\n", KERNEL_NAME, KERNEL_VERSION, GIT_HASH);
+  } else if (strcmp(node->name, "hostname") == 0) {
+    snprintf(buf, 256, "%s\n", "my-hostname");
   } else {
     return 0;
   }
