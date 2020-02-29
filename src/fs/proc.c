@@ -11,12 +11,13 @@ inode_t proc_finddir(inode_t inode, const char* name);
 uint64_t proc_isatty(inode_t node);
 uint64_t proc_read(inode_t node, void* buffer, uint64_t size, uint64_t offset);
 uint64_t proc_stat(inode_t node, stat_t* st);
+uint64_t proc_write(inode_t inode, void* ptr, uint64_t length, uint64_t offset);
 
 vfs_driver_t proc_driver = {
   0,            // open
   0,            // close
   proc_read,    // read
-  0,            // write
+  proc_write,   // write
   0,            // link
   0,            // unlink
   proc_stat,    // stat
@@ -26,14 +27,17 @@ vfs_driver_t proc_driver = {
   proc_finddir, // finddir
 };
 
-#define NB_PROC_FILES 4
+#define NB_PROC_FILES 5
 
 const char* proc_files[NB_PROC_FILES] = {
-  ".",
-  "..",
-  "uptime",
-  "version",
+  ".", "..", "uptime", "version", "hostname",
 };
+
+#define DEFAULT_HOSTNAME "machine"
+
+// This is the variable containing the `hostname` value of the system.
+// TODO: move this variable somewhere else...
+char* hostname;
 
 inode_t proc_fs_init()
 {
@@ -42,6 +46,9 @@ inode_t proc_fs_init()
   strcpy(node->name, "proc");
   node->driver = &proc_driver;
   node->type = FS_DIRECTORY;
+
+  hostname = malloc(sizeof(char) * (strlen(DEFAULT_HOSTNAME) + 1));
+  strcpy(hostname, DEFAULT_HOSTNAME);
 
   return node;
 }
@@ -115,7 +122,7 @@ uint64_t proc_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
   }
 
   char buf[256];
-  if (strncmp(node->name, "uptime", 6) == 0) {
+  if (strcmp(node->name, "uptime") == 0) {
     // Linux returns two numbers according to the man page (quoted below):
     // http://man7.org/linux/man-pages/man5/proc.5.html.
     //
@@ -125,8 +132,10 @@ uint64_t proc_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
     //
     // We do not have the notion of process yet so there is only one value.
     snprintf(buf, 256, "%ld\n", timer_uptime());
-  } else if (strncmp(node->name, "version", 6) == 0) {
+  } else if (strcmp(node->name, "version") == 0) {
     snprintf(buf, 256, "%s %s (%s)\n", KERNEL_NAME, KERNEL_VERSION, GIT_HASH);
+  } else if (strcmp(node->name, "hostname") == 0) {
+    snprintf(buf, 256, "%s\n", hostname);
   } else {
     return 0;
   }
@@ -152,4 +161,19 @@ uint64_t proc_stat(inode_t node, stat_t* st)
   memset(st, 0, sizeof(stat_t));
   st->size = 0;
   return 0;
+}
+
+uint64_t proc_write(inode_t inode, void* ptr, uint64_t length, uint64_t offset)
+{
+  if (strcmp(inode->name, "hostname") != 0) {
+    return 0;
+  }
+
+  if (strlen(ptr) > 12) {
+    hostname = realloc(hostname, sizeof(char) * (strlen(ptr) + 1));
+  }
+
+  strcpy(hostname, ptr);
+
+  return strlen(ptr);
 }

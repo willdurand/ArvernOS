@@ -67,14 +67,30 @@ void syscall_write(registers_t* registers)
   char* buf = (char*)registers->rcx;
   size_t count = (size_t)registers->rsi;
 
-  if (fd != FD_STDOUT) {
+  if (fd == FD_STDOUT || fd == FD_STDERR) {
+    registers->rdx = screen_print(buf, count);
+    return;
+  }
+
+  if (fd < 3) {
     DEBUG("invalid file descriptor fd=%d", fd);
     registers->rdx = -1;
     errno = EPERM;
     return;
   }
 
-  registers->rdx = screen_print(buf, count);
+  DEBUG("fd=%d buf=%p count=%d", fd, buf, count);
+
+  file_descriptor_t* desc = get_file_descriptor(fd);
+
+  if (desc == 0) {
+    DEBUG("file descriptor fd=%d not found", fd);
+    registers->rdx = -1;
+    errno = EBADF;
+    return;
+  }
+
+  registers->rdx = vfs_write(desc->inode, buf, count, desc->offset);
 }
 
 void syscall_read(registers_t* registers)

@@ -17,6 +17,6 @@ LIBS   = $(ROOT_DIR)/build/libc-$(OS_NAME).a
 
 default: $(TARGET)
 
-$(TARGET): init.c cdate.c
+$(TARGET): init.c cdate.c hostname.c
 	mkdir -p $(BIN_DIR)
 	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
