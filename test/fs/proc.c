@@ -5,6 +5,8 @@
 #include <string.h>
 #include <test.h>
 
+#define BUF_SIZE 20
+
 // This is a fake implementation.
 uint64_t timer_uptime()
 {
@@ -14,6 +16,8 @@ uint64_t timer_uptime()
 int main()
 {
   vfs_init();
+
+  char buf[BUF_SIZE];
 
   describe("proc_fs_init()");
   inode_t root = vfs_mount("/", proc_fs_init());
@@ -39,6 +43,10 @@ int main()
   assert(strcmp(de->name, "version") == 0,
          "returns the version file in position #3");
   free(de);
+  de = vfs_readdir(root, 4);
+  assert(strcmp(de->name, "hostname") == 0,
+         "returns the hostname file in position #4");
+  free(de);
   end_describe();
 
   describe("proc_finddir()");
@@ -56,15 +64,14 @@ int main()
   end_describe();
 
   describe("proc_read()");
-  char buf[20];
-  uint64_t bytes_read = vfs_read(vfs_namei("/uptime"), &buf, sizeof(buf), 0);
+  uint64_t bytes_read = vfs_read(vfs_namei("/uptime"), &buf, BUF_SIZE, 0);
   assert(strcmp(buf, "123\n") == 0, "reads the content of the uptime file");
   assert(bytes_read == 4, "returns the number of bytes read");
-  bytes_read = vfs_read(vfs_namei("/uptime"), &buf, sizeof(buf), 1);
+  bytes_read = vfs_read(vfs_namei("/uptime"), &buf, BUF_SIZE, 1);
   assert(strcmp(buf, "23\n") == 0,
          "reads the content of the uptime file with offset");
   assert(bytes_read == 3, "returns the number of bytes read with offset");
-  bytes_read = vfs_read(vfs_namei("/uptime"), &buf, sizeof(buf), 4);
+  bytes_read = vfs_read(vfs_namei("/uptime"), &buf, BUF_SIZE, 4);
   assert(strcmp(buf, "") == 0, "handles big offsets");
   assert(bytes_read == 0, "returns no bytes read when offset is too big");
   end_describe();
@@ -72,7 +79,29 @@ int main()
   describe("proc_stat()");
   stat_t stat;
   vfs_stat(vfs_namei("/uptime"), &stat);
-  assert(stat.size == 0, "sets the size to 0");
+  assert(stat.size == 1, "sets the size to 1 by default");
+  vfs_stat(vfs_namei("/hostname"), &stat);
+  assert(stat.size > 0, "sets the correct size for hostname");
+  end_describe();
+
+  describe("proc_write()");
+  char* new_hostname = "new-hostname";
+  uint64_t bytes_written =
+    vfs_write(vfs_namei("/hostname"), new_hostname, strlen(new_hostname), 0);
+  vfs_read(vfs_namei("/hostname"), &buf, BUF_SIZE, 0);
+  // Remove the trailing newline.
+  buf[strlen(buf) - 1] = '\0';
+  assert(strcmp(buf, new_hostname) == 0, "writes the new hostname value");
+  assert(bytes_written == strlen(new_hostname),
+         "returns the number of bytes written");
+  char* long_hostname = "this-is-a-super-looooooong-host-name";
+  bytes_written =
+    vfs_write(vfs_namei("/hostname"), long_hostname, strlen(long_hostname), 0);
+  assert(bytes_written == strlen(long_hostname),
+         "reallocs memory to deal with long hostname values");
+  bytes_written =
+    vfs_write(vfs_namei("/uptime"), new_hostname, strlen(new_hostname), 0);
+  assert(bytes_written == 0, "does not allow write to uptime");
   end_describe();
 
   free(root);
