@@ -18,11 +18,8 @@ vfs_driver_t proc_driver = {
   0,            // close
   proc_read,    // read
   proc_write,   // write
-  0,            // link
-  0,            // unlink
   proc_stat,    // stat
   proc_isatty,  // isatty
-  0,            // mkdir
   proc_readdir, // readdir
   proc_finddir, // finddir
 };

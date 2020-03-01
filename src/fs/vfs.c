@@ -51,24 +51,6 @@ uint64_t vfs_write(inode_t inode, void* ptr, uint64_t length, uint64_t offset)
   return 0;
 }
 
-uint64_t vfs_link(inode_t inode, inode_t parent, const char* name)
-{
-  if (inode->driver->link) {
-    return inode->driver->link(inode, parent, name);
-  }
-
-  return 0;
-}
-
-uint64_t vfs_unlink(inode_t inode, const char* name)
-{
-  if (inode->driver->unlink) {
-    return inode->driver->unlink(inode, name);
-  }
-
-  return 0;
-}
-
 uint64_t vfs_stat(inode_t inode, stat_t* stat)
 {
   if (inode->driver->stat) {
@@ -82,15 +64,6 @@ uint64_t vfs_isatty(inode_t inode)
 {
   if (inode->driver->isatty) {
     return inode->driver->isatty(inode);
-  }
-
-  return 0;
-}
-
-uint64_t vfs_mkdir(inode_t inode, const char* name)
-{
-  if (inode->driver->mkdir) {
-    return inode->driver->mkdir(inode, name);
   }
 
   return 0;

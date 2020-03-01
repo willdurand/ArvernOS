@@ -22,11 +22,8 @@ vfs_driver_t tar_driver = {
   0,           // close
   tar_read,    // read
   0,           // write
-  0,           // link
-  0,           // unlink
   tar_stat,    // stat
   tar_isatty,  // isatty
-  0,           // mkdir
   tar_readdir, // readdir
   tar_finddir, // finddir
 };

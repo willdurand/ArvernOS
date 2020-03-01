@@ -15,11 +15,8 @@ vfs_driver_t debug_driver = {
   0,            // close
   0,            // read
   debug_write,  // write
-  0,            // link
-  0,            // unlink
   debug_stat,   // stat
   debug_isatty, // isatty
-  0,            // mkdir
   0,            // readdir
   0             // finddir
 };
