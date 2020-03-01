@@ -15,4 +15,9 @@
  */
 inode_t proc_fs_init();
 
+/**
+ * This function is used to de-initialize the "proc" file system.
+ */
+void proc_fs_deinit();
+
 #endif

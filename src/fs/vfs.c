@@ -10,7 +10,7 @@ vfs_node_t* vfs_root;
 
 void vfs_init()
 {
-  vfs_root = malloc(sizeof(vfs_node_t));
+  vfs_root = calloc(1, sizeof(vfs_node_t));
   vfs_root->parent = vfs_root;
   strcpy(vfs_root->name, "/");
 }
@@ -204,6 +204,7 @@ inode_t vfs_namei_mount(const char* path, inode_t root)
     if (!next) {
       DEBUG("%s", "no next, returning 0");
       vfs_free(current);
+      free(npath);
       return 0;
     }
 
