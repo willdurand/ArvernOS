@@ -30,15 +30,16 @@ const char* proc_files[NB_PROC_FILES] = {
   ".", "..", "uptime", "version", "hostname",
 };
 
-#define DEFAULT_HOSTNAME "machine"
+#define DEFAULT_HOSTNAME    "machine"
+#define MAX_HOSTNAME_LENGTH 50
 
 // This is the variable containing the `hostname` value of the system.
 // TODO: move this variable somewhere else...
-char* hostname;
+char* hostname = 0;
 
 inode_t proc_fs_init()
 {
-  inode_t node = malloc(sizeof(vfs_node_t));
+  inode_t node = calloc(1, sizeof(vfs_node_t));
 
   strcpy(node->name, "proc");
   node->driver = &proc_driver;
@@ -50,7 +51,12 @@ inode_t proc_fs_init()
   return node;
 }
 
-// If the current node is a directory, we need a way of enumerating it's
+void proc_fs_deinit()
+{
+  free(hostname);
+}
+
+// If the current node is a directory, we need a way of enumerating its
 // contents. Readdir should return the n'th child node of a directory or 0
 // otherwise. It returns a `dirent_t*`.
 dirent_t* proc_readdir(inode_t inode, uint64_t num)
@@ -63,13 +69,14 @@ dirent_t* proc_readdir(inode_t inode, uint64_t num)
     return 0;
   }
 
-  dirent_t* dir = malloc(sizeof(dirent_t));
-  inode_t node = malloc(sizeof(vfs_node_t));
+  dirent_t* dir = calloc(1, sizeof(dirent_t));
+  inode_t node = calloc(1, sizeof(vfs_node_t));
 
+  strcpy(node->name, proc_files[num]);
   node->driver = inode->driver;
   node->parent = inode;
   node->type = FS_FILE;
-  strcpy(node->name, proc_files[num]);
+
   strcpy(dir->name, node->name);
   dir->inode = node;
 
@@ -81,9 +88,8 @@ dirent_t* proc_readdir(inode_t inode, uint64_t num)
 inode_t proc_finddir(inode_t inode, const char* name)
 {
   for (int idx = 2; idx < NB_PROC_FILES; idx++) {
-    if (strlen(name) == strlen(proc_files[idx]) &&
-        strncmp(name, proc_files[idx], strlen(proc_files[idx])) == 0) {
-      inode_t node = malloc(sizeof(vfs_node_t));
+    if (strcmp(name, proc_files[idx]) == 0) {
+      inode_t node = calloc(1, sizeof(vfs_node_t));
 
       strcpy(node->name, proc_files[idx]);
       node->driver = &proc_driver;
@@ -172,7 +178,18 @@ uint64_t proc_write(inode_t inode, void* ptr, uint64_t length, uint64_t offset)
   }
 
   if (length > strlen(DEFAULT_HOSTNAME)) {
-    hostname = realloc(hostname, sizeof(char) * (length + 1));
+    if (length > MAX_HOSTNAME_LENGTH) {
+      length = MAX_HOSTNAME_LENGTH;
+    }
+
+    char* tmp = realloc(hostname, sizeof(char) * (length + 1));
+
+    if (!tmp) {
+      DEBUG("%s", "failed to reallocate memory for hostname");
+      return 0;
+    }
+
+    hostname = tmp;
   }
 
   strncpy(hostname, ptr, length);

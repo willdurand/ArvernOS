@@ -9,7 +9,7 @@ jobs:
           name: install dependencies
           command: |
             sudo apt-get update
-            sudo apt-get install -y nasm xorriso build-essential grub2-common grub-pc-bin clang-format-9
+            sudo apt-get install -y nasm xorriso build-essential grub2-common grub-pc-bin clang-format-9 valgrind
             sudo update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-9 100
       - run:
           name: build
