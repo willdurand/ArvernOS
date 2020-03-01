@@ -24,8 +24,11 @@ int main()
   fread(tarfile, 1, size, file);
   fclose(file);
 
+  inode_t root, home, info, home_will, home_will_file;
+
   describe("tar_fs_init()");
-  inode_t root = vfs_mount("/", tar_fs_init((uint64_t)tarfile));
+  inode_t tarfs = tar_fs_init((uint64_t)tarfile);
+  root = vfs_mount("/", tarfs);
   assert(root != 0, "can be mounted");
   assert(strcmp(root->name, "/") == 0, "is mounted to /");
   assert(vfs_inode_type(root) == FS_DIRECTORY, "is a directory");
@@ -33,18 +36,24 @@ int main()
   end_describe();
 
   describe("tar_read()");
+  info = vfs_namei("/info");
   char buf[20];
-  uint64_t bytes_read = vfs_read(vfs_namei("/info"), &buf, sizeof(buf), 0);
+  uint64_t bytes_read = vfs_read(info, &buf, sizeof(buf), 0);
   assert(strcmp(buf, "info file\n") == 0, "reads the content of a file");
   assert(bytes_read == 10, "returns the number of bytes read");
-  bytes_read = vfs_read(vfs_namei("/info"), &buf, sizeof(buf), 5);
+  bytes_read = vfs_read(info, &buf, sizeof(buf), 5);
   assert(strcmp(buf, "file\n") == 0, "reads a file at a given offset");
   assert(bytes_read == 5, "returns the number of bytes read with offset");
+  free(info);
 
-  bytes_read = vfs_read(vfs_namei("/home/will/file"), &buf, sizeof(buf), 0);
+  home_will_file = vfs_namei("/home/will/file");
+  bytes_read = vfs_read(home_will_file, &buf, sizeof(buf), 0);
   assert(strcmp(buf, "some content\n") == 0,
          "reads the content of a file in a sub-directory");
   assert(bytes_read == 13, "returns the number of bytes read");
+  free(home_will_file->parent->parent); // home
+  free(home_will_file->parent);         // will
+  free(home_will_file);                 // file
   end_describe();
 
   describe("tar_finddir()");
@@ -53,18 +62,21 @@ int main()
   not_found = vfs_namei("/inf");
   assert(not_found == 0, "returns 0 when partial file name is not found");
 
-  inode_t home = vfs_namei("/home");
+  home = vfs_namei("/home");
   assert(vfs_inode_type(home) == FS_DIRECTORY, "can find a directory");
-  assert(strcmp(home->name, "home/") == 0,
+  assert(strcmp(home->name, "home") == 0,
          "returns a directory with the right name");
   inode_t home2 = vfs_namei("/home/");
-  assert(strcmp(home->name, "home/") == 0, "supports trailing slash");
+  assert(strcmp(home->name, "home") == 0, "supports trailing slash");
+  free(home);
   free(home2);
 
   inode_t will = vfs_namei("/home/will/");
   assert(vfs_inode_type(will) == FS_DIRECTORY, "can find a sub-directory");
-  assert(strcmp(will->name, "home/will/") == 0,
+  assert(strcmp(will->name, "home/will") == 0,
          "returns a sub-directory with the right name");
+  free(will->parent);
+  free(will);
   end_describe();
 
   dirent_t* de;
@@ -80,12 +92,16 @@ int main()
   de = vfs_readdir(root, 2);
   assert(strcmp(de->name, "home/") == 0,
          "returns the first entry in the TAR file");
+  free(de->inode);
   free(de);
   de = vfs_readdir(root, 3);
   assert(strcmp(de->name, "info") == 0, "returns the second direct child of /");
-  printf("name=%s\n", de->name);
+  free(de->inode);
   free(de);
   end_describe();
+
+  free(tarfs);
+  free(tarfile);
 
   describe("tar_readdir() with a directory");
   de = vfs_readdir(home, 0);
@@ -99,6 +115,7 @@ int main()
   de = vfs_readdir(home, 2);
   assert(strcmp(de->name, "will/") == 0,
          "returns the first direct child in /home/");
+  free(de->inode);
   free(de);
   end_describe();
 
@@ -107,15 +124,23 @@ int main()
   assert(strcmp(de->name, "file") == 0,
          "returns the first direct child in /home/will/");
   assert(vfs_inode_type(de->inode) == FS_FILE, "returns a file");
+  free(de->inode);
   free(de);
   end_describe();
 
   describe("tar_stat()");
+  home_will_file = vfs_namei("/home/will/file");
   stat_t stat;
-  vfs_stat(vfs_namei("/home/will/file"), &stat);
+  vfs_stat(home_will_file, &stat);
   assert(stat.size == 13, "sets the file size");
-  vfs_stat(vfs_namei("/home/will/"), &stat);
+  free(home_will_file->parent->parent);
+  free(home_will_file->parent);
+  free(home_will_file);
+  home_will = vfs_namei("/home/will/");
+  vfs_stat(home_will, &stat);
   assert(stat.size == 0, "sets a size of zero when inode is a directory");
+  free(home_will->parent);
+  free(home_will);
   end_describe();
 
   describe("tar_isatty()");
@@ -123,9 +148,7 @@ int main()
   end_describe();
 
   free(tarfile);
-  free(home);
   free(root);
-  free(will);
 
   return test_summary();
 }

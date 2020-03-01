@@ -17,7 +17,7 @@ void vfs_init()
 
 uint64_t vfs_open(inode_t inode, uint64_t mode)
 {
-  if (inode->driver->open) {
+  if (inode->driver && inode->driver->open) {
     return inode->driver->open(inode, mode);
   }
 
@@ -26,7 +26,7 @@ uint64_t vfs_open(inode_t inode, uint64_t mode)
 
 uint64_t vfs_close(inode_t inode)
 {
-  if (inode->driver->close) {
+  if (inode->driver && inode->driver->close) {
     return inode->driver->close(inode);
   }
 
@@ -35,7 +35,7 @@ uint64_t vfs_close(inode_t inode)
 
 uint64_t vfs_read(inode_t inode, void* ptr, uint64_t length, uint64_t offset)
 {
-  if (inode->driver->read) {
+  if (inode->driver && inode->driver->read) {
     return inode->driver->read(inode, ptr, length, offset);
   }
 
@@ -44,7 +44,7 @@ uint64_t vfs_read(inode_t inode, void* ptr, uint64_t length, uint64_t offset)
 
 uint64_t vfs_write(inode_t inode, void* ptr, uint64_t length, uint64_t offset)
 {
-  if (inode->driver->write) {
+  if (inode->driver && inode->driver->write) {
     return inode->driver->write(inode, ptr, length, offset);
   }
 
@@ -53,7 +53,7 @@ uint64_t vfs_write(inode_t inode, void* ptr, uint64_t length, uint64_t offset)
 
 uint64_t vfs_stat(inode_t inode, stat_t* stat)
 {
-  if (inode->driver->stat) {
+  if (inode->driver && inode->driver->stat) {
     return inode->driver->stat(inode, stat);
   }
 
@@ -62,7 +62,7 @@ uint64_t vfs_stat(inode_t inode, stat_t* stat)
 
 uint64_t vfs_isatty(inode_t inode)
 {
-  if (inode->driver->isatty) {
+  if (inode->driver && inode->driver->isatty) {
     return inode->driver->isatty(inode);
   }
 
@@ -89,7 +89,7 @@ dirent_t* vfs_readdir(inode_t inode, uint64_t num)
   }
 
   dirent_t* de = 0;
-  if (inode->driver->readdir) {
+  if (inode->driver && inode->driver->readdir) {
     de = inode->driver->readdir(inode, num);
   }
 
@@ -117,35 +117,8 @@ inode_t vfs_finddir(inode_t inode, const char* name)
     ino = ino->older;
   }
 
-  if (inode->driver->finddir) {
+  if (inode->driver && inode->driver->finddir) {
     return inode->driver->finddir(inode, name);
-  }
-
-  if (inode->driver->readdir) {
-    int num = 0;
-    dirent_t* de;
-
-    while (1) {
-      de = vfs_readdir(inode, num);
-
-      if (!de) {
-        return 0;
-      }
-
-      if (!strncmp(name, de->name, strlen(name))) {
-        break;
-      }
-
-      free(de->name);
-      free(de);
-      num++;
-    }
-
-    inode_t ret = de->inode;
-    free(de->name);
-    free(de);
-
-    return ret;
   }
 
   return 0;
@@ -158,12 +131,12 @@ inode_t vfs_find_root(char** path)
 
   char* name;
 
-  while ((name = strsep(path, "/"))) {
+  while ((name = strsep(path, "/")) != 0) {
     DEBUG("current->name=%s name=%s", current->name, name);
     current = current->child;
 
     while (current) {
-      if (strncmp(current->name, name, strlen(current->name)) == 0) {
+      if (strcmp(current->name, name) == 0) {
         mount = current;
         break;
       }
@@ -194,28 +167,30 @@ inode_t vfs_namei_mount(const char* path, inode_t root)
 
   inode_t current = vfs_find_root(&pth);
 
-  char* name;
+  if (strcmp(path, "/") != 0) {
+    char* name;
 
-  while (current && (name = strsep(&pth, "/")) && *name) {
-    inode_t next = vfs_finddir(current, name);
+    while (current && (name = strsep(&pth, "/")) != 0) {
+      inode_t next = vfs_finddir(current, name);
 
-    DEBUG("name=%s next=%s", name, next->name);
+      if (!next) {
+        DEBUG("%s", "no next, returning 0");
+        vfs_free(current);
+        free(npath);
+        return 0;
+      }
 
-    if (!next) {
-      DEBUG("%s", "no next, returning 0");
+      DEBUG("name=%s next_name=%s", name, next->name);
+
+      if (root) {
+        next->parent = current;
+        next->older = current->child;
+        current->child = next;
+      }
+
       vfs_free(current);
-      free(npath);
-      return 0;
+      current = next;
     }
-
-    if (root) {
-      next->parent = current;
-      next->older = current->child;
-      current->child = next;
-    }
-
-    vfs_free(current);
-    current = next;
   }
 
   free(npath);
@@ -259,9 +234,7 @@ inode_t vfs_namei_mount(const char* path, inode_t root)
 inode_t vfs_mount(const char* path, inode_t root)
 {
   DEBUG("mounting path=%s root_fs=%s", path, root->name);
-  inode_t node = vfs_namei_mount(path, root);
-  DEBUG("mounted path=%s", path);
-  return node;
+  return vfs_namei_mount(path, root);
 }
 
 inode_t vfs_namei(const char* path)

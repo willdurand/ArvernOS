@@ -148,8 +148,8 @@ test: libc
 		LD_PRELOAD=./build/$$file.so ./build/$$file || exit 1 ; \
 	done
 	# tar
-	gcc -DENABLE_DEBUG_FOR_TEST -I./test -I./src/ -o $(BUILD_DIR)/tar test/fs/tar.c src/fs/tar.c src/fs/vfs.c
-	./$(BUILD_DIR)/tar
+	gcc -g -DENABLE_DEBUG_FOR_TEST -I./test -I./src/ -o $(BUILD_DIR)/tar test/fs/tar.c src/fs/tar.c src/fs/vfs.c
+	valgrind --track-origins=yes --leak-check=full --show-leak-kinds=all ./$(BUILD_DIR)/tar
 	# vfs
 	gcc -DENABLE_DEBUG_FOR_TEST -I./test -I./src/ -o $(BUILD_DIR)/vfs test/fs/vfs.c src/fs/vfs.c
 	./$(BUILD_DIR)/vfs
