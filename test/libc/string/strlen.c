@@ -4,7 +4,7 @@
 
 int main()
 {
-  char* s1 = malloc(sizeof(char) * 2);
+  char* s1 = malloc(sizeof(char) * 3);
   strcpy(s1, "s1");
 
   assert(strlen(s1) == 2, "returns the length of the string");

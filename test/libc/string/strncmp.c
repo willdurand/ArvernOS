@@ -5,7 +5,7 @@
 
 int main()
 {
-  char* s1 = malloc(sizeof(char) * 2);
+  char* s1 = malloc(sizeof(char) * 3);
   strcpy(s1, "s1");
 
   assert(strncmp(s1, "s1", 2) == 0, "returns 0 when strings are equal");
