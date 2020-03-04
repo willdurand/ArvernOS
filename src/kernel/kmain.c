@@ -126,7 +126,7 @@ void kmain(uint64_t addr)
   vfs_init();
   print_ok();
 
-  print_step("mounting init ram disk");
+  print_step("mounting all file systems");
   multiboot_tag_module_t* module =
     find_multiboot_tag(mbi, MULTIBOOT_TAG_TYPE_MODULE);
   inode_t initrd = vfs_mount("/", tar_fs_init((uint64_t)module->mod_start));
