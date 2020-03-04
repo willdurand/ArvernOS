@@ -137,6 +137,7 @@ void selftest()
   inode_t debug = vfs_namei(FS_DEBUG_MOUNTPOINT);
   const char* message = "  this message should be written to the console\n";
   vfs_write(debug, message, strlen(message), 0);
+  vfs_free(debug);
 
   printf("\ndone.\n");
 }
@@ -153,12 +154,14 @@ void cat(const char* command)
 
   if (f->type != FS_FILE) {
     printf("'%s' is not a printable file\n", f->name);
+    vfs_free(f);
     return;
   }
 
   char buf[512];
   vfs_read(f, &buf, sizeof(buf), 0);
   printf("%s", buf);
+  vfs_free(f);
 }
 
 void ls(const char* command)
@@ -190,6 +193,7 @@ void ls(const char* command)
     vfs_stat(de->inode, &stat);
     printf("%6llu %s\n", stat.size, de->name);
 
+    vfs_free(de->inode);
     free(de);
   }
 
@@ -220,6 +224,7 @@ int try_exec(const char* command)
   elf_header_t* elf = elf_load(buf);
 
   if (!elf) {
+    vfs_free(inode);
     free(buf);
     return -3;
   }
@@ -228,6 +233,7 @@ int try_exec(const char* command)
   callable* c = (callable*)(elf->entry);
   c();
 
+  vfs_free(inode);
   free(buf);
 
   return 0;
