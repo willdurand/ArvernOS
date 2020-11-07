@@ -11,6 +11,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/syscall.h>
 
 syscall_handler_t syscall_handlers[NB_SYSCALLS];
@@ -66,6 +67,12 @@ void syscall_write(registers_t* registers)
   int fd = (int)registers->rbx;
   char* buf = (char*)registers->rcx;
   size_t count = (size_t)registers->rsi;
+
+  if (fd == FD_STDOUT &&
+      strncmp(buf, ESCAPE_SEQUENCE_CLEAR, strlen(ESCAPE_SEQUENCE_CLEAR)) == 0) {
+    screen_clear();
+    return;
+  }
 
   if (fd == FD_STDOUT || fd == FD_STDERR) {
     registers->rdx = screen_print(buf, count);

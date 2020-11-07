@@ -4,6 +4,8 @@
 
 #include <printf/printf.h>
 
+#define ESCAPE_SEQUENCE_CLEAR "\e[3J\e[H\e[2J"
+
 /**
  * This function is needed for the `printf/printf.h` lib.
  */
@@ -24,6 +26,11 @@ void putchar(char c);
  * @return the character read
  */
 char getchar();
+
+/**
+ * Prints a special escape sequence to clear the screen.
+ */
+void print_clear();
 
 #endif
 
