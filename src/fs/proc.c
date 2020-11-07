@@ -192,7 +192,7 @@ uint64_t proc_write(inode_t inode, void* ptr, uint64_t length, uint64_t offset)
     hostname = tmp;
   }
 
-  strncpy(hostname, ptr, length);
+  strncpy(hostname, ptr, length + 1);
 
   return strlen(hostname);
 }
