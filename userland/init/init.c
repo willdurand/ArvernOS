@@ -11,14 +11,15 @@ int main()
 {
   const char* commands[][NB_DOCUMENTED_COMMANDS] = {
     { "cal", "displays a calendar" },
+    { "cat", "print on the standard output" },
     { "clear", "clear the terminal screen" },
     { "date", "print the system date and time" },
     { "exit", "exit the shell" },
     { "help", "display information about shell commands" },
     { "hostname", "print or update the system hostname" },
+    { "overflow", "test the stack buffer overflow protection" },
     { "reboot", "stopping and restarting the system" },
     { "uptime", "tell how long the system has been running" },
-    { "overflow", "test the stack buffer overflow protection" },
   };
 
   char readline[READLINE_SIZE] = { 0 };
@@ -77,6 +78,8 @@ int main()
           }
         } else if (strcmp(command, "cal") == 0) {
           cal();
+        } else if (strcmp(command, "cat") == 0) {
+          cat(first_arg);
         } else if (strcmp(command, "date") == 0) {
           date();
         } else if (strcmp(command, "clear") == 0) {

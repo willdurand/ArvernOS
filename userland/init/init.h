@@ -5,6 +5,8 @@ void _reboot();
 
 void cal();
 
+void cat(char* arg);
+
 void clear();
 
 void date();

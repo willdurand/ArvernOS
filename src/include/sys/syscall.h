@@ -74,7 +74,7 @@ int close(int fd);
  *
  * @param command a reboot command
  * @return when `command` is `REBOOT_CMD_RESTART`, it does not return. -1 is
- * returned in case of an error, 0 otherwise.
+ * returned in case of an error, 0 otherwise
  */
 int reboot(int command);
 
