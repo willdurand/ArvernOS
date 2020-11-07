@@ -18,7 +18,7 @@ uintptr_t __stack_chk_guard = STACK_CHK_GUARD;
 void __stack_chk_fail(void)
 {
 #ifdef __is_libc
-  printf("Stack Smashing Detected (TODO: abort() impl)");
+  printf("Stack Smashing Detected (TODO: abort() impl)\n");
 #else
   PANIC("Stack Smashing Detected");
 #endif
