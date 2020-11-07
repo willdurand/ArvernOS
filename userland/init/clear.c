@@ -3,5 +3,5 @@
 
 void clear()
 {
-  printf("implement me\n");
+  print_clear();
 }
