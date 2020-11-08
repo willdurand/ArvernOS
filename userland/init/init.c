@@ -5,12 +5,11 @@
 
 #define READLINE_SIZE          256
 #define PROMPT                 "(init) "
-#define NB_DOCUMENTED_COMMANDS 9
+#define NB_DOCUMENTED_COMMANDS 8
 
 int main()
 {
   const char* commands[][NB_DOCUMENTED_COMMANDS] = {
-    { "cal", "displays a calendar" },
     { "clear", "clear the terminal screen" },
     { "date", "print the system date and time" },
     { "exit", "exit the shell" },
@@ -75,8 +74,6 @@ int main()
               }
             }
           }
-        } else if (strcmp(command, "cal") == 0) {
-          cal();
         } else if (strcmp(command, "date") == 0) {
           date();
         } else if (strcmp(command, "clear") == 0) {

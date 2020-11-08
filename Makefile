@@ -131,6 +131,7 @@ gdb: $(ISO)
 userland: ## compile the userland programs (statically linked to libc)
 userland: libc
 	$(MAKE) -C userland/init/ OS_NAME="$(OS_NAME)"
+	$(MAKE) -C userland/cal/ OS_NAME="$(OS_NAME)"
 .PHONY: userland
 
 test: ## run unit tests

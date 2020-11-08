@@ -3,8 +3,6 @@
 
 void _reboot();
 
-void cal();
-
 void clear();
 
 void date();
