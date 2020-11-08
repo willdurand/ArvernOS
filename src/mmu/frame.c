@@ -32,7 +32,7 @@ void frame_init(multiboot_info_t* mbi)
   multiboot_end = reserved.multiboot_end;
   memset(allocated_frames, 0, MAX_FRAMES / BITS_PER_WORD);
 
-  DEBUG("Initialized frame allocator with multiboot_start = %p "
+  DEBUG("initialized frame allocator with multiboot_start = %p "
         "multiboot_end=%p kernel_start=%p kernel_end=%p",
         multiboot_start,
         multiboot_end,

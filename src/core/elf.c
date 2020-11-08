@@ -48,10 +48,10 @@ elf_header_t* elf_load(uint8_t* data)
       section->name == 0 ? NULL : elf_lookup_string(elf, section->name);
 
     if (name == NULL) {
-      name = "(None)";
+      name = "(none)";
     }
 
-    DEBUG("Phase 1 processing section %d (name: %d (\"%s\"), type: %d, flags: "
+    DEBUG("phase 1 processing section %d (name: %d (\"%s\"), type: %d, flags: "
           "%#lld)",
           i,
           section->name,
@@ -78,11 +78,11 @@ elf_header_t* elf_load(uint8_t* data)
 
       map_multiple(start_page, number_of_pages, flags);
 
-      DEBUG("Allocated memory for this section (%lld bytes).\n", section->size);
+      DEBUG("allocated memory for this section (%lld bytes)", section->size);
 
       // If we're progbits, we're supposed to copy the memory in this section
       if (section->type == ELF_SECTION_TYPE_PROGBITS) {
-        DEBUG("%s", "Read Progbits for this section");
+        DEBUG("%s", "read Progbits for this section");
 
         memcpy((void*)section->addr,
                (void*)((uint64_t)elf + section->offset),
@@ -90,7 +90,7 @@ elf_header_t* elf_load(uint8_t* data)
       } else if (section->type ==
                  ELF_SECTION_TYPE_NOBITS) { // If we're nobits, we're supposed
                                             // to be zero-inited
-        DEBUG("%s", "Zero-memory'd this section");
+        DEBUG("%s", "zero-memory'd this section");
 
         memset((void*)section->addr, 0, section->size);
       }
@@ -128,11 +128,11 @@ int is_elf(elf_header_t* elf)
     DEBUG("%s", "validating elf structs");
 
     if (elf->header_size != sizeof(elf_header_t)) {
-      DEBUG("%s", "Invalid elf header size");
+      DEBUG("%s", "invalid elf header size");
 
       iself = -1;
     } else if (elf->ph_size != sizeof(elf_program_header_t)) {
-      DEBUG("%s", "Invalid program header size");
+      DEBUG("%s", "invalid program header size");
 
       iself = -1;
     }
