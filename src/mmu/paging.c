@@ -328,7 +328,7 @@ void unmap(uint64_t page_number)
   // cf. http://os.phil-opp.com/modifying-page-tables.html#unmap
   __asm__("invlpg (%0)" : /* no output */ : "r"(addr) : "memory");
 
-  MMU_DEBUG("unapped page=%u addr=%p", page_number, addr);
+  MMU_DEBUG("unmapped page=%u addr=%p", page_number, addr);
 }
 
 void map(uint64_t page_number, uint64_t flags)
@@ -346,6 +346,10 @@ void map_multiple(uint64_t start_page_number,
                   uint32_t number_of_pages,
                   uint64_t flags)
 {
+  MMU_DEBUG("mapping %d pages, starting at page=%d",
+            number_of_pages,
+            start_page_number);
+
   for (uint32_t i = 0; i < number_of_pages; i++) {
     map(start_page_number + i, flags);
   }
@@ -353,6 +357,10 @@ void map_multiple(uint64_t start_page_number,
 
 void unmap_multiple(uint64_t start_page_number, uint32_t number_of_pages)
 {
+  MMU_DEBUG("unmapping %d pages, starting at page=%d",
+            number_of_pages,
+            start_page_number);
+
   for (uint32_t i = 0; i < number_of_pages; i++) {
     unmap(start_page_number + i);
   }
