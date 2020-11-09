@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/syscall.h>
+#include <time.h>
 
 unsigned char keymap[][128] = {
   { 0 },         { 27 },       { '1', '!' }, { '2', '@' }, { '3', '#' },
@@ -54,7 +55,7 @@ unsigned char keymap[][128] = {
   { 0 },
 };
 
-#define NB_DOCUMENTED_COMMANDS 6
+#define NB_DOCUMENTED_COMMANDS 9
 
 const char* commands[][NB_DOCUMENTED_COMMANDS] = {
   { "cat", "print on the standard output" },
@@ -63,6 +64,9 @@ const char* commands[][NB_DOCUMENTED_COMMANDS] = {
   { "ls", "list files" },
   { "selftest", "run the system test suite" },
   { "overflow", "test the stack buffer overflow protection" },
+  { "date", "Today's date" },
+  { "cd", "change directory"},
+  { "pwd", "present working directory"},
 };
 
 unsigned char get_char(uint8_t scancode, bool shift, bool caps_lock)
@@ -167,7 +171,11 @@ void cat(const char* command)
 void ls(const char* command)
 {
   const char* arg = command + 3;
-  inode_t inode = strlen(arg) == 0 ? vfs_namei("/") : vfs_namei(arg);
+  inode_t fname = vfs_pwd();
+  //printf("%s\n",fname);
+  
+  //if no directory name then list the current directory else the list from the name given
+  inode_t inode = strlen(arg) == 0 ? vfs_namei(fname) : vfs_namei(arg);
 
   if (!inode) {
     printf("no such file or directory\n");
@@ -198,6 +206,48 @@ void ls(const char* command)
   }
 
   vfs_free(inode);
+}
+
+void cd(const char* command)
+{
+  const char* arg = command + 3;
+  inode_t f = vfs_namei(arg);
+
+  //for checking if the directory exists
+  if (!f) {
+    printf("no such file or directory\n");
+    return;
+  }
+  if (f->type  != FS_DIRECTORY) {
+    printf("'%s' is not a directory. Can't cd\n", f->name);
+    vfs_free(f);
+    return;
+  }
+  printf("Directory exist\n");
+  //changing the path
+  vfs_cd(f, arg);
+  vfs_free(f);
+}
+
+void pwd()
+{ 
+        //displaying the current directory
+	printf("%s\n",vfs_pwd());
+}
+
+void date(){
+	char str[]="Today's date is ";
+	time_t t;
+	struct tm*  ptm;
+	char cur_time[128];
+	t = time(NULL);
+	ptm = localtime(&t);		    
+	strftime(cur_time, 128, "%d-%b-%Y", ptm);
+	strcat(str,cur_time);
+	
+	
+        printf("%s\n",str);
+        
 }
 
 int try_exec(const char* command)
@@ -271,6 +321,12 @@ void run_command(const char* command)
     selftest();
   } else if (strncmp(command, "overflow", 8) == 0) {
     overflow();
+  } else if (strncmp(command, "cd", 2) == 0) {
+    cd(command);
+  } else if (strncmp(command, "pwd", 3) == 0) {
+    pwd();
+  } else if (strncmp(command, "date", 4) == 0) {
+    date();
   } else {
     if (try_exec(command) != 0) {
       printf("invalid kshell command\n");

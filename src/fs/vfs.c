@@ -15,6 +15,18 @@ void vfs_init()
   strcpy(vfs_root->name, "/");
 }
 
+void vfs_cd(inode_t inode, char* path)
+{
+  //for changing the directory from parent to child
+  vfs_root->parent = vfs_root;
+  strcpy(vfs_root->name,path);
+}
+
+char* vfs_pwd(){
+        //returning the current working directory
+	return vfs_root->name;
+}
+
 uint64_t vfs_open(inode_t inode, uint64_t mode)
 {
   if (inode->driver->open) {
