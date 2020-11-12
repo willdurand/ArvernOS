@@ -147,15 +147,17 @@ test: libc
 		gcc -I./test/ -O0 test/$$file.c -o build/$$file ; \
 		LD_PRELOAD=./build/$$file.so ./build/$$file || exit 1 ; \
 	done
-	# tar
+	# fs/tar
 	gcc -DENABLE_DEBUG_FOR_TEST -I./test -I./src/ -o $(BUILD_DIR)/tar test/fs/tar.c src/fs/tar.c src/fs/vfs.c
 	./$(BUILD_DIR)/tar
-	# vfs
+	# fs/vfs
 	gcc -DENABLE_DEBUG_FOR_TEST -I./test -I./src/ -o $(BUILD_DIR)/vfs test/fs/vfs.c src/fs/vfs.c
 	./$(BUILD_DIR)/vfs
-	# proc
+	# fs/proc
 	gcc -g -DENABLE_DEBUG_FOR_TEST -I./test -I./src/ -o $(BUILD_DIR)/proc test/fs/proc.c src/fs/proc.c src/fs/vfs.c
-	valgrind --track-origins=yes --leak-check=yes ./$(BUILD_DIR)/proc
+	# mmu
+	gcc -Wformat=0 -g -DLOAD_INCLUDE_PROXIES -DENABLE_DEBUG_FOR_TEST -I./test -I./src/ -o $(BUILD_DIR)/frame test/mmu/frame.c src/mmu/frame.c src/core/boot.c src/mmu/bitmap.c
+	valgrind --track-origins=yes --leak-check=yes ./$(BUILD_DIR)/frame
 .PHONY: test
 
 version: ## print tool versions
