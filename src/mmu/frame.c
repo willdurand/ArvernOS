@@ -3,8 +3,9 @@
 #include <mmu/bitmap.h>
 #include <mmu/debug.h>
 #include <string.h>
+#include <sys/types.h>
 
-uint64_t read_mmap(uint64_t request);
+opt_uint64_t read_mmap(uint64_t request);
 
 multiboot_tag_mmap_t* memory_area;
 uint64_t kernel_start;
@@ -18,6 +19,11 @@ void frame_init(multiboot_info_t* mbi)
   reserved_areas_t reserved = find_reserved_areas(mbi);
   multiboot_tag_mmap_t* mmap = find_multiboot_tag(mbi, MULTIBOOT_TAG_TYPE_MMAP);
 
+  _frame_init(reserved, mmap);
+}
+
+void _frame_init(reserved_areas_t reserved, multiboot_tag_mmap_t* mmap)
+{
   MMU_DEBUG("multiboot_start = %p, multiboot_end = %p",
             reserved.multiboot_start,
             reserved.multiboot_end);
@@ -40,7 +46,50 @@ void frame_init(multiboot_info_t* mbi)
         kernel_end);
 }
 
-uint64_t read_mmap(uint64_t request)
+uint64_t frame_allocate()
+{
+  uint64_t frame_number = 0;
+
+  for (uint64_t i = 0; i < MAX_FRAMES; i++) {
+    if (bitmap_get(allocated_frames, i) == false) {
+      frame_number = i;
+      break;
+    }
+  }
+
+  opt_uint64_t ret = read_mmap(frame_number);
+
+  if (!ret.has_value) {
+    PANIC("failed to allocate a new frame (frame=%u)", frame_number);
+  }
+
+  DEBUG("allocated frame=%u addr=%p", frame_number, ret.value);
+  bitmap_set(allocated_frames, frame_number);
+
+  return ret.value;
+}
+
+void frame_deallocate(uint64_t frame_number)
+{
+  uint64_t addr = frame_start_address(frame_number);
+
+  MMU_DEBUG("deallocating frame=%u addr=%p", frame_number, addr);
+  bitmap_clear(allocated_frames, frame_number);
+  // FIXME: do we need this?
+  // memset((void*)addr, 0, PAGE_SIZE);
+}
+
+uint64_t frame_containing_address(uint64_t physical_address)
+{
+  return physical_address / PAGE_SIZE;
+}
+
+uint64_t frame_start_address(uint64_t frame_number)
+{
+  return frame_number * PAGE_SIZE;
+}
+
+opt_uint64_t read_mmap(uint64_t request)
 {
   uint64_t cur_num = 0;
 
@@ -61,56 +110,13 @@ uint64_t read_mmap(uint64_t request)
         continue;
       }
 
-      if (cur_num == request && addr != 0) {
-        return addr;
+      if (cur_num == request) {
+        return (opt_uint64_t){ .has_value = true, .value = addr };
       }
 
       cur_num++;
     }
   }
 
-  return 0;
-}
-
-uint64_t frame_allocate()
-{
-  uint64_t free_frame = 0;
-
-  for (uint64_t i = 1; i <= MAX_FRAMES; i++) {
-    if (bitmap_get(allocated_frames, i) == false) {
-      free_frame = i;
-      break;
-    }
-  }
-
-  uint64_t addr = read_mmap(free_frame);
-
-  if (addr == 0) {
-    PANIC("%s", "failed to allocate a new frame");
-  }
-
-  MMU_DEBUG("allocated frame with addr=%p free_frame=%u", addr, free_frame);
-  bitmap_set(allocated_frames, free_frame);
-
-  return addr;
-}
-
-void frame_deallocate(uint64_t frame_number)
-{
-  uint64_t addr = frame_start_address(frame_number);
-
-  MMU_DEBUG("deallocating frame=%u addr=%p", frame_number, addr);
-
-  bitmap_clear(allocated_frames, frame_number);
-  memset((void*)addr, 0, PAGE_SIZE);
-}
-
-uint64_t frame_containing_address(uint64_t physical_address)
-{
-  return physical_address / PAGE_SIZE;
-}
-
-uint64_t frame_start_address(uint64_t frame_number)
-{
-  return frame_number * PAGE_SIZE;
+  return (opt_uint64_t){ .has_value = false, .value = 0 };
 }

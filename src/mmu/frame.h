@@ -45,4 +45,7 @@ uint64_t frame_containing_address(uint64_t physical_address);
  */
 uint64_t frame_start_address(uint64_t frame_number);
 
+/// For testing purposes.
+void _frame_init(reserved_areas_t reserved, multiboot_tag_mmap_t* mmap);
+
 #endif
