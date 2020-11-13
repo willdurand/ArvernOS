@@ -109,7 +109,7 @@ run: $(ISO)
 debug: ## build and run the OS in debug mode
 debug: CFLAGS += $(DEBUG_CFLAGS)
 debug: $(ISO)
-	$(QEMU) -cdrom $< -serial file:/tmp/serial.log -m 1G
+	$(QEMU) -cdrom $< -serial file:/tmp/serial.log -m 500M
 .PHONY: debug
 
 clean: ## remove build artifacts
