@@ -1,4 +1,5 @@
 #include "paging.h"
+#include <core/register.h>
 #include <core/utils.h>
 #include <kernel/panic.h>
 #include <mmu/debug.h>
@@ -6,12 +7,15 @@
 #include <stdlib.h>
 #include <string.h>
 
+// TODO: enabling the guard page produces a page fault...
+//#define ENABLE_GUARD_PAGE
+
 #define MMU_DEBUG_PAGE_ENTRY(message, e)                                       \
   MMU_DEBUG("%s "                                                              \
             "page entry addr=%p present=%d "                                   \
             "writable=%d no_execute=%d user_accessible=%d",                    \
             message,                                                           \
-            (e).addr,                                                          \
+            (e).packed & 0x000ffffffffff000,                                   \
             (e).present,                                                       \
             (e).writable,                                                      \
             (e).no_execute,                                                    \
@@ -19,21 +23,141 @@
 
 void zero_table(page_table_t* table);
 page_table_t* next_table_address(page_table_t* table, uint64_t index);
-uint64_t translate(uint64_t virtual_address);
+opt_uint64_t translate(uint64_t virtual_address);
 opt_uint64_t pointed_frame(page_entry_t entry);
 uint64_t p4_index(uint64_t page);
 page_table_t* next_table_create(page_table_t* table, uint64_t index);
 page_table_t* get_p4();
 void paging_set_entry(page_entry_t* entry, uint64_t addr, uint64_t flags);
-uint32_t paging_flags_for_entry(page_entry_t* entry);
 opt_uint64_t paging_frame_allocate();
 void paging_frame_deallocate(uint64_t frame_number);
+void identity_map(uint64_t physical_address, uint64_t flags);
 
-page_table_t* p4 = (page_table_t*)P4_TABLE;
+page_table_t* active_p4_table = (page_table_t*)P4_TABLE;
+
+extern void load_p4(uint64_t addr);
 
 void paging_init(multiboot_info_t* mbi)
 {
-  UNUSED(*mbi);
+  uint64_t efer = read_msr(IA32_EFER);
+  write_msr(IA32_EFER, efer | (1 << 11));
+  DEBUG("enabled NXE bit old_efer=%p new_efer=%p", efer, read_msr(IA32_EFER));
+
+  write_cr0(read_cr0() | (1 << 16));
+  DEBUG("%s", "enabled write protection (cr0)");
+
+  uint64_t inactive_page_table_frame = paging_frame_allocate().value;
+  uint64_t temporary_page = page_containing_address(0xcafebabe);
+
+  map_page_to_frame(temporary_page,
+                    inactive_page_table_frame,
+                    PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
+
+  page_table_t* inactive_page_table =
+    (page_table_t*)page_start_address(temporary_page);
+  // now we are able to zero the table
+  zero_table(inactive_page_table);
+  // set up recursive mapping for the table
+  paging_set_entry(&inactive_page_table->entries[511],
+                   inactive_page_table_frame,
+                   PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
+  unmap(temporary_page);
+
+  uint64_t backup_addr = read_cr3();
+  DEBUG("backup_addr=%p backup_frame=%d",
+        backup_addr,
+        frame_containing_address(backup_addr));
+
+  // map temporary_page to current p4 table
+  map_page_to_frame(
+    temporary_page, backup_addr, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
+
+  page_table_t* p4_table = (page_table_t*)page_start_address(temporary_page);
+
+  // overwrite recursive mapping
+  paging_set_entry(&active_p4_table->entries[511],
+                   inactive_page_table_frame,
+                   PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
+  write_cr3(read_cr3());
+
+  DEBUG("%s", "mapping elf sections");
+  multiboot_tag_elf_sections_t* tag =
+    find_multiboot_tag(mbi, MULTIBOOT_TAG_TYPE_ELF_SECTIONS);
+
+  uint64_t i;
+  multiboot_elf_sections_entry_t* elf;
+
+  for (i = 0, elf = ((multiboot_tag_elf_sections_t*)tag)->sections;
+       i < ((multiboot_tag_elf_sections_t*)tag)->num;
+       elf =
+         (multiboot_elf_sections_entry_t*)((uint64_t)elf +
+                                           ((multiboot_tag_elf_sections_t*)tag)
+                                             ->section_size),
+      i++) {
+    if (!(elf->flags | MULTIBOOT_ELF_SECTION_FLAG_ALLOCATED)) {
+      continue;
+    }
+
+    uint64_t start_frame_number = frame_containing_address(elf->addr);
+    uint64_t end_frame_number = frame_containing_address(elf->addr + elf->size);
+
+    for (uint64_t i = start_frame_number; i <= end_frame_number; i++) {
+      uint64_t flags = 0;
+
+      if (elf->flags | MULTIBOOT_ELF_SECTION_FLAG_ALLOCATED) {
+        flags |= PAGING_FLAG_PRESENT;
+      }
+
+      if (elf->flags | MULTIBOOT_ELF_SECTION_FLAG_WRITABLE) {
+        flags |= PAGING_FLAG_WRITABLE;
+      }
+
+      if (!(elf->flags | MULTIBOOT_ELF_SECTION_FLAG_EXECUTABLE)) {
+        flags |= PAGING_FLAG_NO_EXECUTE;
+      }
+
+      identity_map(frame_start_address(i), flags);
+    }
+  }
+  DEBUG("%s", "elf sections mapped!");
+
+  reserved_areas_t reserved = find_reserved_areas(mbi);
+  uint64_t multiboot_start_frame =
+    frame_containing_address(reserved.multiboot_start);
+  uint64_t multiboot_end_frame =
+    frame_containing_address(reserved.multiboot_end - 1);
+
+  DEBUG("mapping multiboot info: start_frame=%d end_frame=%d",
+        multiboot_start_frame,
+        multiboot_end_frame);
+
+  for (uint64_t i = multiboot_start_frame; i <= multiboot_end_frame; i++) {
+    identity_map(frame_start_address(i), PAGING_FLAG_PRESENT);
+  }
+  DEBUG("%s", "multiboot info mapped!");
+
+  identity_map(0xB8000, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
+  DEBUG("%s", "mapped VGA!");
+
+  // restore recursive mapping to original p4 table
+  paging_set_entry(&p4_table->entries[511],
+                   backup_addr,
+                   PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
+  write_cr3(read_cr3());
+  DEBUG("%s", "restored recursive mapping");
+
+  unmap(temporary_page);
+
+  write_cr3(inactive_page_table_frame);
+  DEBUG("%s", "switched to new table");
+
+#ifdef ENABLE_GUARD_PAGE
+  uint64_t old_page_table_frame =
+    frame_start_address(frame_containing_address(backup_addr));
+  uint64_t old_page_table = page_containing_address(old_page_table_frame);
+  unmap(old_page_table);
+  DEBUG("guard page at %p", page_start_address(old_page_table));
+#endif
 }
 
 void zero_table(page_table_t* table)
@@ -41,7 +165,7 @@ void zero_table(page_table_t* table)
   memset((void*)table, 0, sizeof(page_table_t));
 
   for (uint32_t i = 0; i < PAGE_ENTRIES; i++) {
-    table->entries[i] = (page_entry_t){ .present = 0 };
+    table->entries[i].packed = 0;
   }
 }
 
@@ -57,9 +181,6 @@ page_table_t* next_table_address(page_table_t* table, uint64_t index)
   if (table->entries[index].huge_page == 1) {
     MMU_DEBUG(
       "huge page detected for table=%p index=%u, returning 0", table, index);
-    // TODO(william): fix this problem. Huge page is detected and we
-    // are not able to create a page table because of this. This
-    // prevents an ELF to load... That's pretty bad :(
     return 0;
   }
 
@@ -75,22 +196,26 @@ page_table_t* next_table_address(page_table_t* table, uint64_t index)
   return next_table;
 }
 
-// Translates a virtual address to the corresponding physical
-// address.
-uint64_t translate(uint64_t virtual_address)
+// Translates a virtual address to the corresponding physical address.
+opt_uint64_t translate(uint64_t virtual_address)
 {
   uint64_t offset = virtual_address % PAGE_SIZE;
   uint64_t page = page_containing_address(virtual_address);
   opt_uint64_t frame = translate_page(page);
 
-  return frame.value * PAGE_SIZE + offset;
+  if (!frame.has_value) {
+    return frame;
+  }
+
+  return (opt_uint64_t){ .has_value = true,
+                         .value = frame.value * PAGE_SIZE + offset };
 }
 
 uint64_t page_containing_address(uint64_t virtual_address)
 {
-  // So the address space is split into two halves: the higher half
-  // containing addresses with sign extension and the lower half
-  // containing addresses without. Everything in between is invalid.
+  // So the address space is split into two halves: the higher half containing
+  // addresses with sign extension and the lower half containing addresses
+  // without. Everything in between is invalid.
   if (virtual_address < 0x0000800000000000 ||
       virtual_address >= 0xffff800000000000) {
     return virtual_address / PAGE_SIZE;
@@ -111,44 +236,45 @@ opt_uint64_t translate_page(uint64_t page_number)
 
   page_table_t* p3 = next_table_address(p4, p4_index(page_number));
 
-  if (p4->entries[p4_index(page_number)].huge_page) {
-    opt_uint64_t frame = pointed_frame(p3->entries[_p3_index(page_number)]);
+  if (p3) {
+    page_entry_t p3_entry = p3->entries[_p3_index(page_number)];
+    opt_uint64_t frame = pointed_frame(p3_entry);
 
-    MMU_DEBUG("1GB huge page=%u frame=%u", page_number, frame.value);
+    if (frame.has_value && p3_entry.huge_page) {
+      MMU_DEBUG("1GB huge page=%u frame=%u", page_number, frame.value);
 
-    if (frame.value % (PAGE_ENTRIES * PAGE_ENTRIES) == 0) {
-      frame.value +=
-        _p2_index(page_number) * PAGE_ENTRIES + _p1_index(page_number);
+      if (frame.value % (PAGE_ENTRIES * PAGE_ENTRIES) == 0) {
+        frame.value +=
+          _p2_index(page_number) * PAGE_ENTRIES + _p1_index(page_number);
 
-      return frame;
+        return frame;
+      }
+
+      PANIC("misaligned 1GB page=%u", page_number);
     }
-
-    PANIC("misaligned 1GB page=%u", page_number);
-  }
-
-  if (p3 == 0) {
+  } else {
     DEBUG("did not find p3 (%p), returning no value", p3);
     return (opt_uint64_t){ .has_value = false, .value = 0 };
   }
 
   page_table_t* p2 = next_table_address(p3, _p3_index(page_number));
 
-  if (p3->entries[_p3_index(page_number)].huge_page) {
-    opt_uint64_t frame = pointed_frame(p2->entries[_p2_index(page_number)]);
+  if (p2) {
+    if (p3->entries[_p3_index(page_number)].huge_page) {
+      opt_uint64_t frame = pointed_frame(p2->entries[_p2_index(page_number)]);
 
-    MMU_DEBUG("2MB huge page=%u frame=%u", page_number, frame.value);
+      MMU_DEBUG("2MB huge page=%u frame=%u", page_number, frame.value);
 
-    if (frame.value % PAGE_ENTRIES == 0) {
-      frame.value += _p1_index(page_number);
+      if (frame.value % PAGE_ENTRIES == 0) {
+        frame.value += _p1_index(page_number);
 
-      return frame;
+        return frame;
+      }
+
+      PANIC("misaligned 2MB page=%u", page_number);
     }
-
-    PANIC("misaligned 2MB page=%u", page_number);
-  }
-
-  if (p2 == 0) {
-    DEBUG("did not find p2 (%p), returning no value", p2);
+  } else {
+    MMU_DEBUG("did not find p2 (%p), returning no value", p2);
     return (opt_uint64_t){ .has_value = false, .value = 0 };
   }
 
@@ -188,7 +314,8 @@ opt_uint64_t pointed_frame(page_entry_t entry)
 
   if (entry.present) {
     return (opt_uint64_t){ .has_value = true,
-                           .value = frame_containing_address(entry.addr) };
+                           .value = frame_containing_address(
+                             entry.packed & 0x000ffffffffff000) };
   }
 
   return (opt_uint64_t){ .has_value = false, .value = 0 };
@@ -196,13 +323,13 @@ opt_uint64_t pointed_frame(page_entry_t entry)
 
 void map_page_to_frame(uint64_t page, uint64_t frame, uint64_t flags)
 {
+  uint64_t frame_number = frame_containing_address(frame);
+
   DEBUG("mapping page=%u to frame=%p (number=%d) with flags=%#x",
         page,
         frame,
-        frame_containing_address(frame),
+        frame_number,
         flags);
-
-  uint64_t frame_number = frame_containing_address(frame);
 
   opt_uint64_t maybe_frame = translate_page(page);
   if (maybe_frame.has_value && maybe_frame.value == frame_number) {
@@ -234,27 +361,17 @@ void map_page_to_frame(uint64_t page, uint64_t frame, uint64_t flags)
 
   page_entry_t* entry = &p1->entries[p1_idx];
 
-  if (entry->addr != 0 &&
-      paging_flags_for_entry(entry) != (flags | PAGING_FLAG_PRESENT)) {
+  if (entry->packed != 0) {
     PANIC("%s", "entry should be unused");
   }
 
-  MMU_DEBUG("frame=%p (number=%d)...", frame, frame_containing_address(frame));
-  MMU_DEBUG_PAGE_ENTRY("before set", (*entry));
-
-  paging_set_entry(entry, (uint64_t)frame, flags | PAGING_FLAG_PRESENT);
-
-  MMU_DEBUG_PAGE_ENTRY("after set", (*entry));
-
+  paging_set_entry(entry, (uint64_t)frame, flags);
   p1->entries[p1_idx] = *entry;
 
-  MMU_DEBUG("mapped page=%u to frame=%p (number=%d)...",
-            page,
-            frame,
-            frame_containing_address(frame));
-  MMU_DEBUG_PAGE_ENTRY("...with", p1->entries[p1_idx]);
-
-  MMU_DEBUG("entry addr=%p in p1[%d]", p1->entries[p1_idx].addr, p1_idx);
+  DEBUG("mapped page=%u to frame=%p (number=%d)",
+        page,
+        frame,
+        frame_containing_address(frame));
 }
 
 page_table_t* next_table_create(page_table_t* table, uint64_t index)
@@ -303,7 +420,8 @@ void paging_set_entry(page_entry_t* entry, uint64_t addr, uint64_t flags)
     PANIC("trying to set an invalid address: %p", addr);
   }
 
-  entry->addr = addr;
+  entry->packed &= 0xfff0000000000fff;
+  entry->packed |= addr;
 
   if (flags & PAGING_FLAG_PRESENT) {
     entry->present = 1;
@@ -322,28 +440,31 @@ void paging_set_entry(page_entry_t* entry, uint64_t addr, uint64_t flags)
 
 page_table_t* get_p4()
 {
-  return p4;
+  return active_p4_table;
 }
 
 void _set_p4(page_table_t* table)
 {
   MMU_DEBUG("setting p4 to addr=%p", table);
 
-  p4 = table;
+  active_p4_table = table;
 }
 
 void unmap(uint64_t page_number)
 {
   uint64_t addr = page_start_address(page_number);
 
+  DEBUG("unmapping page_number=%d addr=%p", page_number, addr);
+
 #ifndef TEST_ENV
-  // Do not call `translat()` here, otherwise our test suite wouldn't be able
+  // Do not call `translate()` here, otherwise our test suite wouldn't be able
   // to fake the calls to `next_table_address()` right after.
-  if (translate(addr) == 0) {
+  if (!translate(addr).has_value) {
     DEBUG("cannot unmap page=%u (start_address=%p) because it is "
           "not mapped",
           page_number,
           addr);
+    return;
   }
 #endif
 
@@ -354,14 +475,15 @@ void unmap(uint64_t page_number)
 
   page_entry_t entry = p1->entries[_p1_index(page_number)];
   opt_uint64_t frame = pointed_frame(entry);
+
+  if (!frame.has_value) {
+    PANIC("trying to unmap an entry without a frame");
+  }
+
   uint64_t frame_number = frame.value;
 
-  memset(&p1->entries[_p1_index(page_number)], 0, sizeof(page_entry_t));
-  MMU_DEBUG_PAGE_ENTRY("cleared", p1->entries[_p1_index(page_number)]);
-
-  // TODO(william): free p(1,2,3) table if empty
-
-  paging_frame_deallocate(frame_number);
+  MMU_DEBUG_PAGE_ENTRY("clearing", entry);
+  p1->entries[_p1_index(page_number)].packed = 0;
 
 #ifndef TEST_ENV
   // flush the translation lookaside buffer
@@ -369,7 +491,12 @@ void unmap(uint64_t page_number)
   __asm__("invlpg (%0)" : /* no output */ : "r"(addr) : "memory");
 #endif
 
-  MMU_DEBUG("unmapped page=%u addr=%p", page_number, addr);
+  // TODO(william): free p(1,2,3) table if empty
+
+  // FIXME: this does not work when uncommented...
+  // paging_frame_deallocate(frame_number);
+
+  DEBUG("unmapped page=%u addr=%p", page_number, addr);
 }
 
 void map(uint64_t page_number, uint64_t flags)
@@ -379,8 +506,6 @@ void map(uint64_t page_number, uint64_t flags)
   if (!frame.has_value) {
     PANIC("out of memory");
   }
-
-  MMU_DEBUG("mapping page=%d", page_number);
 
   map_page_to_frame(page_number, frame.value, flags);
 }
@@ -423,25 +548,6 @@ uint32_t paging_amount_for_byte_size(uint64_t start_address, uint64_t byte_size)
   return difference;
 }
 
-uint32_t paging_flags_for_entry(page_entry_t* entry)
-{
-  uint32_t flags = 0;
-
-  if (entry->present) {
-    flags |= PAGING_FLAG_PRESENT;
-  }
-
-  if (entry->no_execute) {
-    flags |= PAGING_FLAG_NO_EXECUTE;
-  }
-
-  if (entry->writable) {
-    flags |= PAGING_FLAG_WRITABLE;
-  }
-
-  return flags;
-}
-
 opt_uint64_t paging_frame_allocate()
 {
 #ifdef TEST_ENV
@@ -456,6 +562,12 @@ void paging_frame_deallocate(uint64_t frame_number)
 #ifdef TEST_ENV
   test_frame_deallocate(frame_number);
 #else
-  frame_allocate(frame_number);
+  frame_deallocate(frame_number);
 #endif
+}
+
+void identity_map(uint64_t physical_address, uint64_t flags)
+{
+  uint64_t page = page_containing_address(physical_address);
+  map_page_to_frame(page, physical_address, flags);
 }

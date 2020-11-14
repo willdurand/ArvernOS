@@ -126,6 +126,9 @@ void kmain(uint64_t addr)
   vfs_init();
   print_ok();
 
+  // TODO: this does not work when paging is enabled, likely because we need to
+  // map the module first.
+  /*
   print_step("mounting all file systems");
   multiboot_tag_module_t* module =
     find_multiboot_tag(mbi, MULTIBOOT_TAG_TYPE_MODULE);
@@ -138,6 +141,7 @@ void kmain(uint64_t addr)
   } else {
     print_ko();
   }
+  */
 
   // kshell
   printf("\n");

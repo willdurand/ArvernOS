@@ -66,7 +66,7 @@ elf_header_t* elf_load(uint8_t* data)
       uint32_t number_of_pages =
         paging_amount_for_byte_size(section->addr, section->size);
 
-      uint32_t flags = 0;
+      uint32_t flags = PAGING_FLAG_PRESENT;
 
       if (section->flags & ELF_SECTION_FLAG_WRITE) {
         flags |= PAGING_FLAG_WRITABLE;

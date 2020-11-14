@@ -72,10 +72,8 @@ void frame_deallocate(uint64_t frame_number)
 {
   uint64_t addr = frame_start_address(frame_number);
 
-  MMU_DEBUG("deallocating frame=%u addr=%p", frame_number, addr);
+  DEBUG("deallocating frame=%u addr=%p", frame_number, addr);
   bitmap_clear(allocated_frames, frame_number);
-  // FIXME: do we need this?
-  // memset((void*)addr, 0, PAGE_SIZE);
 }
 
 uint64_t frame_containing_address(uint64_t physical_address)

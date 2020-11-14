@@ -102,7 +102,7 @@ int main()
 
   // reset fake next_table impl.
   next_table_index = 3;
-  map(page, /* flags */ 0);
+  map(page, PAGING_FLAG_PRESENT);
 
   // reset fake next_table impl.
   next_table_index = 3;
