@@ -5,20 +5,19 @@
 #include <mmu/paging.h>
 #include <string.h>
 
-bitmap_t allocated_pages[HEAP_SIZE / PAGE_SIZE];
+#define ALLOC_BITMAP_SIZE (HEAP_SIZE / PAGE_SIZE) / BITS_PER_WORD
+
+bitmap_t allocated_pages[ALLOC_BITMAP_SIZE];
 uint64_t heap_end_page;
 uint64_t heap_start_page;
 uint64_t max_pages;
 
 void alloc_init()
 {
+  memset(allocated_pages, 0, ALLOC_BITMAP_SIZE);
   heap_end_page = page_containing_address(HEAP_START + HEAP_SIZE - 1);
   heap_start_page = page_containing_address(HEAP_START);
   max_pages = heap_end_page - heap_start_page + 1;
-
-  for (uint64_t i = 0; i < HEAP_SIZE / PAGE_SIZE; i++) {
-    allocated_pages[i] = 0;
-  }
 
   DEBUG("heap_start_page=%u heap_end_page=%u max_pages=%u",
         heap_start_page,

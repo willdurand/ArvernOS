@@ -4,6 +4,8 @@
 #include <mmu/debug.h>
 #include <string.h>
 
+#define FRAME_BITMAP_SIZE MAX_FRAMES / BITS_PER_WORD
+
 opt_uint64_t read_mmap(uint64_t request);
 
 multiboot_tag_mmap_t* memory_area;
@@ -11,7 +13,7 @@ uint64_t kernel_start;
 uint64_t kernel_end;
 uint64_t multiboot_start;
 uint64_t multiboot_end;
-bitmap_t allocated_frames[MAX_FRAMES / BITS_PER_WORD];
+bitmap_t allocated_frames[FRAME_BITMAP_SIZE];
 
 void frame_init(multiboot_info_t* mbi)
 {
@@ -35,7 +37,7 @@ void _frame_init(reserved_areas_t reserved, multiboot_tag_mmap_t* mmap)
   kernel_end = reserved.kernel_end;
   multiboot_start = reserved.multiboot_start;
   multiboot_end = reserved.multiboot_end;
-  memset(allocated_frames, 0, MAX_FRAMES / BITS_PER_WORD);
+  memset(allocated_frames, 0, FRAME_BITMAP_SIZE);
 
   DEBUG("initialized frame allocator with multiboot_start = %p "
         "multiboot_end=%p kernel_start=%p kernel_end=%p",
