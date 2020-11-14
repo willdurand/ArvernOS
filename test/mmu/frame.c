@@ -35,30 +35,30 @@ int main()
 
   describe("frame_deallocate()");
   for (int i = 0; i < 6; i++) {
-    uint64_t frame = frame_allocate();
-    frame_deallocate(frame_containing_address(frame));
+    opt_uint64_t frame = frame_allocate();
+    frame_deallocate(frame_containing_address(frame.value));
   }
   end_describe();
 
   describe("frame_allocate()");
   for (int i = 0; i < 5; i++) {
-    uint64_t frame = frame_allocate();
+    opt_uint64_t frame = frame_allocate();
 
-    assert(frame == (0x1000 * i), "allocates a frame");
-    uint64_t frame_num = frame_containing_address(frame);
+    assert(frame.value == (0x1000 * i), "allocates a frame");
+    uint64_t frame_num = frame_containing_address(frame.value);
     assert(frame_num == i, "returns the frame number");
-    assert(frame_start_address(frame_num) == frame,
+    assert(frame_start_address(frame_num) == frame.value,
            "returns the correct address");
   }
-  uint64_t frame = frame_allocate();
-  assert(frame == 0x014000, "allocates a frame after reserved area");
+  opt_uint64_t frame = frame_allocate();
+  assert(frame.value == 0x014000, "allocates a frame after reserved area");
   end_describe();
 
   describe("frame_deallocate()");
   uint64_t expected_frame = 0x2000;
   frame_deallocate(frame_containing_address(expected_frame));
-  uint64_t reused_frame = frame_allocate();
-  assert(reused_frame == expected_frame,
+  opt_uint64_t reused_frame = frame_allocate();
+  assert(reused_frame.value == expected_frame,
          "allocates previously deallocated frame");
   end_describe();
 
