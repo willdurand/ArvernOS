@@ -162,7 +162,7 @@ test: libc
 	gcc -g -DENABLE_DEBUG_FOR_TEST -I./test -I./src/ -o $(BUILD_DIR)/bitmap test/mmu/bitmap.c src/mmu/bitmap.c
 	./$(BUILD_DIR)/bitmap
 	# mmu/paging
-	gcc -Wformat=0 -g -DENABLE_DEBUG_FOR_TEST -DTEST_ENV -I./test -I./test/proxies -I./src/ -o $(BUILD_DIR)/paging test/mmu/paging.c src/mmu/paging.c src/core/boot.c src/mmu/frame.c src/mmu/bitmap.c
+	gcc -Wformat=0 -g -DENABLE_DEBUG_FOR_TEST -DTEST_ENV -I./test -I./test/proxies -I./src/ -o $(BUILD_DIR)/paging test/mmu/paging.c src/mmu/paging.c src/core/boot.c src/mmu/frame.c src/mmu/bitmap.c src/core/register.c
 	./$(BUILD_DIR)/paging
 .PHONY: test
 
