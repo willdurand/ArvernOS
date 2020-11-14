@@ -3,6 +3,7 @@
 #define MMU_FRAME_H
 
 #include <core/boot.h>
+#include <sys/types.h>
 
 /// The default page size.
 #define PAGE_SIZE 4096
@@ -18,9 +19,9 @@ void frame_init(multiboot_info_t* mbi);
 /**
  * Allocates a frame and returns its physical address.
  *
- * @returns a physical address (frame)
+ * @returns a physical address (frame) (optional)
  */
-uint64_t frame_allocate();
+opt_uint64_t frame_allocate();
 
 /**
  * Deallocates (free) a frame.

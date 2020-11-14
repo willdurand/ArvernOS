@@ -5,6 +5,7 @@
 #include <core/boot.h>
 #include <mmu/frame.h>
 #include <stdint.h>
+#include <sys/types.h>
 
 #define PAGE_ENTRIES 512
 #define P4_TABLE     0xfffffffffffff000
@@ -91,9 +92,9 @@ uint64_t page_start_address(uint64_t page_number);
  * Translates a page number to a frame number.
  *
  * @param page_number a page number (not an address)
- * @returns a frame number
+ * @returns a frame number (optional)
  */
-uint64_t translate_page(uint64_t page_number);
+opt_uint64_t translate_page(uint64_t page_number);
 
 /**
  * Maps a page (number) to a frame (physical address).

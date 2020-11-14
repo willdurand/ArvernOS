@@ -18,7 +18,7 @@
 void zero_table(page_table_t* table);
 page_table_t* next_table_address(page_table_t* table, uint64_t index);
 uint64_t translate(uint64_t virtual_address);
-uint64_t pointed_frame(page_entry_t entry);
+opt_uint64_t pointed_frame(page_entry_t entry);
 uint64_t p4_index(uint64_t page);
 uint64_t p3_index(uint64_t page);
 uint64_t p2_index(uint64_t page);
@@ -59,7 +59,7 @@ page_table_t* next_table_address(page_table_t* table, uint64_t index)
   page_table_t* next_table =
     (page_table_t*)(((uint64_t)table << 9) | (index << 12));
 
-  MMU_DEBUG("addr=%p next table=%p", (uint64_t)table, next_table);
+  MMU_DEBUG("addr=%p, next table=%p", (uint64_t)table, next_table);
 
   return next_table;
 }
@@ -69,9 +69,9 @@ uint64_t translate(uint64_t virtual_address)
 {
   uint64_t offset = virtual_address % PAGE_SIZE;
   uint64_t page = page_containing_address(virtual_address);
-  uint64_t frame = translate_page(page);
+  opt_uint64_t frame = translate_page(page);
 
-  return frame * PAGE_SIZE + offset;
+  return frame.value * PAGE_SIZE + offset;
 }
 
 uint64_t page_containing_address(uint64_t virtual_address)
@@ -93,56 +93,58 @@ uint64_t page_start_address(uint64_t page_number)
   return page_number * PAGE_SIZE;
 }
 
-uint64_t translate_page(uint64_t page_number)
+opt_uint64_t translate_page(uint64_t page_number)
 {
   page_table_t* p4 = get_p4();
 
   page_table_t* p3 = next_table_address(p4, p4_index(page_number));
 
   if (p4->entries[p4_index(page_number)].huge_page) {
-    uint64_t frame_number = pointed_frame(p3->entries[p3_index(page_number)]);
-    MMU_DEBUG("1GB huge page=%u frame=%u", page_number, frame_number);
+    opt_uint64_t frame = pointed_frame(p3->entries[p3_index(page_number)]);
 
-    if (frame_number % (PAGE_ENTRIES * PAGE_ENTRIES) == 0) {
-      frame_number +=
+    MMU_DEBUG("1GB huge page=%u frame=%u", page_number, frame.value);
+
+    if (frame.value % (PAGE_ENTRIES * PAGE_ENTRIES) == 0) {
+      frame.value +=
         p2_index(page_number) * PAGE_ENTRIES + p1_index(page_number);
 
-      return frame_number;
+      return frame;
     }
 
     PANIC("misaligned 1GB page=%u", page_number);
   }
 
   if (p3 == 0) {
-    MMU_DEBUG("did not find p3 (%p), returning 0", p3);
-    return 0;
+    DEBUG("did not find p3 (%p), returning no value", p3);
+    return (opt_uint64_t){ .has_value = false, .value = 0 };
   }
 
   page_table_t* p2 = next_table_address(p3, p3_index(page_number));
 
   if (p3->entries[p3_index(page_number)].huge_page) {
-    uint64_t frame_number = pointed_frame(p2->entries[p2_index(page_number)]);
-    MMU_DEBUG("2MB huge page=%u frame=%u", page_number, frame_number);
+    opt_uint64_t frame = pointed_frame(p2->entries[p2_index(page_number)]);
 
-    if (frame_number % PAGE_ENTRIES == 0) {
-      frame_number += p1_index(page_number);
+    MMU_DEBUG("2MB huge page=%u frame=%u", page_number, frame.value);
 
-      return frame_number;
+    if (frame.value % PAGE_ENTRIES == 0) {
+      frame.value += p1_index(page_number);
+
+      return frame;
     }
 
     PANIC("misaligned 2MB page=%u", page_number);
   }
 
   if (p2 == 0) {
-    MMU_DEBUG("did not find p2 (%p), returning 0", p2);
-    return 0;
+    DEBUG("did not find p2 (%p), returning no value", p2);
+    return (opt_uint64_t){ .has_value = false, .value = 0 };
   }
 
   page_table_t* p1 = next_table_address(p2, p2_index(page_number));
 
   if (p1 == 0) {
-    MMU_DEBUG("did not find p1 (%p), returning 0", p1);
-    return 0;
+    DEBUG("did not find p1 (%p), returning no value", p1);
+    return (opt_uint64_t){ .has_value = false, .value = 0 };
   }
 
   return pointed_frame(p1->entries[p1_index(page_number)]);
@@ -168,27 +170,29 @@ uint64_t p1_index(uint64_t page)
   return (page >> 0) & 0777;
 }
 
-uint64_t pointed_frame(page_entry_t entry)
+opt_uint64_t pointed_frame(page_entry_t entry)
 {
   if (entry.present) {
-    return frame_containing_address(entry.addr);
+    return (opt_uint64_t){ .has_value = true,
+                           .value = frame_containing_address(entry.addr) };
   }
 
-  return 0;
+  return (opt_uint64_t){ .has_value = false, .value = 0 };
 }
 
 void map_page_to_frame(uint64_t page, uint64_t frame, uint64_t flags)
 {
-  MMU_DEBUG("mapping page=%u to frame=%p (number=%d) with flags=%#x",
-            page,
-            frame,
-            frame_containing_address(frame),
-            flags);
+  DEBUG("mapping page=%u to frame=%p (number=%d) with flags=%#x",
+        page,
+        frame,
+        frame_containing_address(frame),
+        flags);
 
   uint64_t frame_number = frame_containing_address(frame);
 
-  if (translate_page(page) == frame_number) {
-    MMU_DEBUG("page=%u already mapped to frame=%u", page, frame_number);
+  opt_uint64_t maybe_frame = translate_page(page);
+  if (maybe_frame.has_value && maybe_frame.value == frame_number) {
+    DEBUG("page=%u already mapped to frame=%u", page, frame_number);
     return;
   }
 
@@ -247,13 +251,14 @@ page_table_t* next_table_create(page_table_t* table, uint64_t index)
   } else {
     MMU_DEBUG("page entry at index=%d is not present, creating entry", index);
 
-    uint64_t frame = frame_allocate();
+    opt_uint64_t frame = frame_allocate();
 
-    if (frame == 0) {
-      PANIC("%s", "frame is unexpectedly equal to 0");
+    if (!frame.has_value) {
+      PANIC("%s", "frame is unexpectedly missing");
     }
 
-    paging_set_entry(&entry, frame, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
+    paging_set_entry(
+      &entry, frame.value, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
 
     table->entries[index] = entry;
 
@@ -306,7 +311,9 @@ void unmap(uint64_t page_number)
   uint64_t addr = page_start_address(page_number);
 
   if (translate(addr) == 0) {
-    PANIC("cannot unmap page=%u because it is not mapped", page_number);
+    DEBUG("cannot unmap page=%u (start_address=%p) because it is not mapped",
+          page_number,
+          addr);
   }
 
   page_table_t* p4 = get_p4();
@@ -315,7 +322,8 @@ void unmap(uint64_t page_number)
   page_table_t* p1 = next_table_address(p2, p2_index(page_number));
 
   page_entry_t entry = p1->entries[p1_index(page_number)];
-  uint64_t frame_number = pointed_frame(entry);
+  opt_uint64_t frame = pointed_frame(entry);
+  uint64_t frame_number = frame.value;
 
   memset(&p1->entries[p1_index(page_number)], 0, sizeof(page_entry_t));
   MMU_DEBUG_PAGE_ENTRY("cleared", p1->entries[p1_index(page_number)]);
@@ -333,13 +341,15 @@ void unmap(uint64_t page_number)
 
 void map(uint64_t page_number, uint64_t flags)
 {
-  uint64_t frame = frame_allocate();
+  opt_uint64_t frame = frame_allocate();
 
-  if (frame == 0) {
+  if (!frame.has_value) {
     PANIC("out of memory");
   }
 
-  map_page_to_frame(page_number, frame, flags);
+  MMU_DEBUG("mapping page=%d", page_number);
+
+  map_page_to_frame(page_number, frame.value, flags);
 }
 
 void map_multiple(uint64_t start_page_number,

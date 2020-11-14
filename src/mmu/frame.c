@@ -3,7 +3,6 @@
 #include <mmu/bitmap.h>
 #include <mmu/debug.h>
 #include <string.h>
-#include <sys/types.h>
 
 opt_uint64_t read_mmap(uint64_t request);
 
@@ -46,7 +45,7 @@ void _frame_init(reserved_areas_t reserved, multiboot_tag_mmap_t* mmap)
         kernel_end);
 }
 
-uint64_t frame_allocate()
+opt_uint64_t frame_allocate()
 {
   uint64_t frame_number = 0;
 
@@ -57,16 +56,14 @@ uint64_t frame_allocate()
     }
   }
 
-  opt_uint64_t ret = read_mmap(frame_number);
+  opt_uint64_t frame = read_mmap(frame_number);
 
-  if (!ret.has_value) {
-    PANIC("failed to allocate a new frame (frame=%u)", frame_number);
+  if (frame.has_value) {
+    MMU_DEBUG("allocated frame=%u addr=%p", frame_number, frame.value);
+    bitmap_set(allocated_frames, frame_number);
   }
 
-  DEBUG("allocated frame=%u addr=%p", frame_number, ret.value);
-  bitmap_set(allocated_frames, frame_number);
-
-  return ret.value;
+  return frame;
 }
 
 void frame_deallocate(uint64_t frame_number)
