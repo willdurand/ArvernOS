@@ -37,7 +37,7 @@ void _frame_init(reserved_areas_t reserved, multiboot_tag_mmap_t* mmap)
   kernel_end = reserved.kernel_end;
   multiboot_start = reserved.multiboot_start;
   multiboot_end = reserved.multiboot_end;
-  memset(allocated_frames, 0, FRAME_BITMAP_SIZE);
+  memset(allocated_frames, 0, FRAME_BITMAP_SIZE * sizeof(bitmap_t));
 
   DEBUG("initialized frame allocator with multiboot_start = %p "
         "multiboot_end=%p kernel_start=%p kernel_end=%p",
