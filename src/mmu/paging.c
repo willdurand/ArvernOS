@@ -354,7 +354,6 @@ void unmap(uint64_t page_number)
 
   page_entry_t entry = p1->entries[_p1_index(page_number)];
   opt_uint64_t frame = pointed_frame(entry);
-
   uint64_t frame_number = frame.value;
 
   memset(&p1->entries[_p1_index(page_number)], 0, sizeof(page_entry_t));
