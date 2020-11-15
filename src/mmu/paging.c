@@ -31,7 +31,10 @@ page_table_t* p4 = (page_table_t*)P4_TABLE;
 
 void paging_init(multiboot_info_t* mbi)
 {
-  // UNUSED(*mbi);
+  // TODO: fix this...
+#ifndef TEST_ENV
+  UNUSED(*mbi);
+#endif
 }
 
 void zero_table(page_table_t* table)
