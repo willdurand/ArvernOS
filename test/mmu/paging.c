@@ -33,6 +33,12 @@ opt_uint64_t test_frame_allocate()
   return (opt_uint64_t){ .has_value = false, .value = 0 };
 }
 
+void test_frame_deallocate(uint64_t frame_number)
+{
+  assert(frame_number == frame_containing_address((uint64_t)&fake_frame[0]),
+         "deallocates the expected frame");
+}
+
 page_table_t* test_next_table()
 {
   switch (next_table_index--) {
@@ -96,12 +102,10 @@ int main()
 
   // reset fake next_table impl.
   next_table_index = 3;
-
   map(page, /* flags */ 0);
 
   // reset fake next_table impl.
   next_table_index = 3;
-
   assert(translate_page(page).has_value, "returns a frame when mapped");
 
   // reset fake next_table impl.
@@ -111,10 +115,20 @@ int main()
          "returns the expected frame");
   end_describe();
 
-  free(fake_p4);
-  free(fake_p3);
-  free(fake_p2);
+  describe("unmap()");
+  // reset fake next_table impl.
+  next_table_index = 3;
+  unmap(page);
+
+  // reset fake next_table impl.
+  next_table_index = 3;
+  assert(!translate_page(page).has_value, "returns no frame when not mapped");
+  end_describe();
+
   free(fake_p1);
+  free(fake_p2);
+  free(fake_p3);
+  free(fake_p4);
 
   return test_summary();
 }

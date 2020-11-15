@@ -27,6 +27,7 @@ page_table_t* get_p4();
 void paging_set_entry(page_entry_t* entry, uint64_t addr, uint64_t flags);
 uint32_t paging_flags_for_entry(page_entry_t* entry);
 opt_uint64_t paging_frame_allocate();
+void paging_frame_deallocate(uint64_t frame_number);
 
 page_table_t* p4 = (page_table_t*)P4_TABLE;
 
@@ -335,12 +336,16 @@ void unmap(uint64_t page_number)
 {
   uint64_t addr = page_start_address(page_number);
 
+#ifndef TEST_ENV
+  // Do not call `translat()` here, otherwise our test suite wouldn't be able
+  // to fake the calls to `next_table_address()` right after.
   if (translate(addr) == 0) {
     DEBUG("cannot unmap page=%u (start_address=%p) because it is "
           "not mapped",
           page_number,
           addr);
   }
+#endif
 
   page_table_t* p4 = get_p4();
   page_table_t* p3 = next_table_address(p4, p4_index(page_number));
@@ -356,11 +361,13 @@ void unmap(uint64_t page_number)
 
   // TODO(william): free p(1,2,3) table if empty
 
-  frame_deallocate(frame_number);
+  paging_frame_deallocate(frame_number);
 
+#ifndef TEST_ENV
   // flush the translation lookaside buffer
   // cf. http://os.phil-opp.com/modifying-page-tables.html#unmap
   __asm__("invlpg (%0)" : /* no output */ : "r"(addr) : "memory");
+#endif
 
   MMU_DEBUG("unmapped page=%u addr=%p", page_number, addr);
 }
@@ -442,4 +449,13 @@ opt_uint64_t paging_frame_allocate()
 #endif
 
   return frame_allocate();
+}
+
+void paging_frame_deallocate(uint64_t frame_number)
+{
+#ifdef TEST_ENV
+  test_frame_deallocate(frame_number);
+#else
+  frame_allocate(frame_number);
+#endif
 }
