@@ -166,6 +166,7 @@ uint64_t _p1_index(uint64_t page);
 
 #ifdef TEST_ENV
 opt_uint64_t test_frame_allocate();
+void test_frame_deallocate(uint64_t frame_number);
 page_table_t* test_next_table();
 #endif
 
