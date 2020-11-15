@@ -23,7 +23,7 @@ typedef struct page_entry
 {
   uint8_t present : 1;
   uint8_t writable : 1;
-  uint8_t user_accessable : 1;
+  uint8_t user_accessible : 1;
   uint8_t write_thru_cache : 1;
   uint8_t disable_cache : 1;
   uint8_t accessed : 1;
@@ -33,6 +33,11 @@ typedef struct page_entry
   uint8_t OS_1 : 1;
   uint8_t OS_2 : 1;
   uint8_t OS_3 : 1;
+#ifdef TEST_ENV
+  // This seems needed because our test env uses addresses that aren't
+  // necessarily 52bit only.
+  uint64_t addr : 51;
+#else
   uint64_t addr : 40;
   uint8_t OS_4 : 1;
   uint8_t OS_5 : 1;
@@ -45,6 +50,7 @@ typedef struct page_entry
   uint8_t OS_C : 1;
   uint8_t OS_D : 1;
   uint8_t OS_E : 1;
+#endif
   uint8_t no_execute : 1;
 } __attribute__((packed)) page_entry_t;
 
@@ -150,5 +156,17 @@ void unmap_multiple(uint64_t start_page_number, uint32_t number_of_pages);
  */
 uint32_t paging_amount_for_byte_size(uint64_t start_address,
                                      uint64_t byte_size);
+
+// The functions below are exposed for testing purposes.
+
+void _set_p4(page_table_t* p4);
+uint64_t _p3_index(uint64_t page);
+uint64_t _p2_index(uint64_t page);
+uint64_t _p1_index(uint64_t page);
+
+#ifdef TEST_ENV
+opt_uint64_t test_frame_allocate();
+page_table_t* test_next_table();
+#endif
 
 #endif
