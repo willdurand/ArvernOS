@@ -1,6 +1,7 @@
 #include "timer.h"
 #include <core/isr.h>
 #include <core/port.h>
+#include <core/utils.h>
 #include <stdlib.h>
 
 uint64_t tick = 0;

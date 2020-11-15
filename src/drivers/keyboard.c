@@ -2,6 +2,7 @@
 #include <core/debug.h>
 #include <core/isr.h>
 #include <core/port.h>
+#include <core/utils.h>
 #include <stdlib.h>
 
 #define RING_BUFFER_SIZE 8
