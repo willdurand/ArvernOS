@@ -139,6 +139,16 @@ void paging_init(multiboot_info_t* mbi)
   identity_map(0xB8000, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
   DEBUG("%s", "mapped VGA!");
 
+  DEBUG("%s", "mapping multiboot module");
+  multiboot_tag_module_t* module =
+    find_multiboot_tag(mbi, MULTIBOOT_TAG_TYPE_MODULE);
+  uint64_t initrd_location = (uint64_t)module->mod_start;
+  uint64_t initrd_end = (uint64_t)module->mod_end;
+  for (uint64_t addr = initrd_location; addr < initrd_end; addr += PAGE_SIZE) {
+    identity_map(addr, PAGING_FLAG_PRESENT);
+  }
+  DEBUG("%s", "mapped multiboot module!");
+
   // restore recursive mapping to original p4 table
   paging_set_entry(&p4_table->entries[511],
                    backup_addr,
