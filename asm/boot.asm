@@ -189,9 +189,9 @@ p3_table:
 p2_table:
     resb 4096
 ; cf. http://os.phil-opp.com/allocating-frames.html
-; the stack now has 16kB (four pages)
+; the stack now has 64kB
 stack_bottom:
-    resb 4096 * 4
+    resb 4096 * 16
 stack_top:
 
 ; -----------------------------------------------------------------------------
