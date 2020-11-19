@@ -6,6 +6,8 @@
 #define HEAP_START 0x40000000
 /// The size of the heap.
 #define HEAP_SIZE 200 * 1024 // 200 KiB
+/// The number of pages that we can allocate.
+#define MAX_PAGES HEAP_SIZE / PAGE_SIZE
 
 /**
  * Initializes the heap memory allocator.
