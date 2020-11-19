@@ -6,19 +6,18 @@ SECTIONS {
     /* sets the load address of the first section to 1 MiB (convention) */
     . = 1M;
 
-    .text :
+    .rodata :
     {
         /* ensure that the multiboot header is at the beginning */
         KEEP(*(.multiboot_header))
-        /* next we put the .text section */
-        *(.text)
+        *(.rodata .rodata.*)
         . = ALIGN(4K);
     }
 
-    /* read-only data. */
-    .rodata :
+    .text :
     {
-        *(.rodata .rodata.*)
+        /* next we put the .text section */
+        *(.text)
         . = ALIGN(4K);
     }
 
