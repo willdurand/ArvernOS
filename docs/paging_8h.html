@@ -325,9 +325,8 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="paging_8h_a5dd0a3132223e82f998eb88ffd6b7876_icgraph.png" border="0" usemap="#paging_8h_a5dd0a3132223e82f998eb88ffd6b7876_icgraph" alt=""/></div>
 <map name="paging_8h_a5dd0a3132223e82f998eb88ffd6b7876_icgraph" id="paging_8h_a5dd0a3132223e82f998eb88ffd6b7876_icgraph">
-<area shape="rect" title=" " alt="" coords="284,31,424,57"/>
-<area shape="rect" href="paging_8h.html#a31b7b687f7cd7773e3dd5107bcdea030" title=" " alt="" coords="171,5,217,32"/>
-<area shape="rect" href="paging_8h.html#a44fe56c079dc6d3c0d4b29f5b9dab5a5" title="Initializes paging to separate virtual and physical memory." alt="" coords="152,56,236,83"/>
+<area shape="rect" title=" " alt="" coords="247,5,387,32"/>
+<area shape="rect" href="paging_8h.html#a31b7b687f7cd7773e3dd5107bcdea030" title=" " alt="" coords="152,5,199,32"/>
 <area shape="rect" href="paging_8h.html#ab063ff074fc27894763609d156c8cd74" title=" " alt="" coords="5,5,104,32"/>
 </map>
 </div>
@@ -362,10 +361,9 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="paging_8h_a8cecba5b00cd544790f3a2fbb1503660_icgraph.png" border="0" usemap="#paging_8h_a8cecba5b00cd544790f3a2fbb1503660_icgraph" alt=""/></div>
 <map name="paging_8h_a8cecba5b00cd544790f3a2fbb1503660_icgraph" id="paging_8h_a8cecba5b00cd544790f3a2fbb1503660_icgraph">
-<area shape="rect" title=" " alt="" coords="248,56,417,83"/>
+<area shape="rect" title=" " alt="" coords="248,31,417,57"/>
 <area shape="rect" href="alloc_8h.html#a0de47e42c61353f53c07a4274b87f864" title=" " alt="" coords="66,5,139,32"/>
 <area shape="rect" href="paging_8h.html#acd78a6bfbdc7cbbe0e578e52eccad8bf" title=" " alt="" coords="5,56,200,83"/>
-<area shape="rect" href="paging_8h.html#a44fe56c079dc6d3c0d4b29f5b9dab5a5" title="Initializes paging to separate virtual and physical memory." alt="" coords="61,107,145,133"/>
 </map>
 </div>
 
@@ -399,13 +397,12 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="paging_8h_a7fdbe7d41abc360ddd26ea67b004cba4_icgraph.png" border="0" usemap="#paging_8h_a7fdbe7d41abc360ddd26ea67b004cba4_icgraph" alt=""/></div>
 <map name="paging_8h_a7fdbe7d41abc360ddd26ea67b004cba4_icgraph" id="paging_8h_a7fdbe7d41abc360ddd26ea67b004cba4_icgraph">
-<area shape="rect" title=" " alt="" coords="501,56,637,83"/>
+<area shape="rect" title=" " alt="" coords="501,31,637,57"/>
 <area shape="rect" href="paging_8h.html#a5dd0a3132223e82f998eb88ffd6b7876" title=" " alt="" coords="313,5,453,32"/>
-<area shape="rect" href="paging_8h.html#a44fe56c079dc6d3c0d4b29f5b9dab5a5" title="Initializes paging to separate virtual and physical memory." alt="" coords="167,56,251,83"/>
-<area shape="rect" href="paging_8h.html#a71d704c874eecb8fa6cc99e8c873e890" title=" " alt="" coords="353,107,414,133"/>
+<area shape="rect" href="paging_8h.html#a71d704c874eecb8fa6cc99e8c873e890" title=" " alt="" coords="353,56,414,83"/>
 <area shape="rect" href="paging_8h.html#a31b7b687f7cd7773e3dd5107bcdea030" title=" " alt="" coords="185,5,232,32"/>
 <area shape="rect" href="paging_8h.html#ab063ff074fc27894763609d156c8cd74" title=" " alt="" coords="5,5,104,32"/>
-<area shape="rect" href="paging_8h.html#af2eea286ae7a39c9e24ec2e4914edf14" title=" " alt="" coords="152,107,265,133"/>
+<area shape="rect" href="paging_8h.html#af2eea286ae7a39c9e24ec2e4914edf14" title=" " alt="" coords="152,56,265,83"/>
 </map>
 </div>
 
@@ -477,27 +474,6 @@ Here is the call graph for this function:</div>
 <p>The bootloader (assembly code) already set up a 4-level paging hierarchy that maps every page of our kernel to a physical frame. It does this because paging is mandatory in 64-bit mode on x86_64.</p>
 <p>This means that every memory address that we used in our kernel was a virtual address. Accessing the VGA buffer at address <code>0xb8000</code> only worked because the bootloader identity mapped that memory page, which means that it mapped the virtual page <code>0xb8000</code> to the physical frame <code>0xb8000</code>.</p>
 <p>In addition, this improves safety since illegal memory accesses cause page fault exceptions instead of modifying arbitrary physical memory. That being said, identity mapping clutters the virtual address space and makes it more difficult to find continuous memory regions of larger sizes (like 1000 KiB). </p>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="paging_8h_a44fe56c079dc6d3c0d4b29f5b9dab5a5_cgraph.png" border="0" usemap="#paging_8h_a44fe56c079dc6d3c0d4b29f5b9dab5a5_cgraph" alt=""/></div>
-<map name="paging_8h_a44fe56c079dc6d3c0d4b29f5b9dab5a5_cgraph" id="paging_8h_a44fe56c079dc6d3c0d4b29f5b9dab5a5_cgraph">
-<area shape="rect" title="Initializes paging to separate virtual and physical memory." alt="" coords="5,284,89,311"/>
-<area shape="rect" href="boot_8h.html#a62d6a6eaa877711b6b8308030f3f3dc0" title=" " alt="" coords="158,5,286,32"/>
-<area shape="rect" href="frame_8h.html#a40b65cfd28ddd6d88557a11a95e4fdab" title=" " alt="" coords="355,56,529,83"/>
-<area shape="rect" href="paging_8h.html#a5dd0a3132223e82f998eb88ffd6b7876" title=" " alt="" coords="152,107,292,133"/>
-<area shape="rect" href="paging_8h.html#a7fdbe7d41abc360ddd26ea67b004cba4" title=" " alt="" coords="374,157,510,184"/>
-<area shape="rect" href="paging_8h.html#a8cecba5b00cd544790f3a2fbb1503660" title=" " alt="" coords="137,208,307,235"/>
-<area shape="rect" href="register_8h.html#a89763d209b83a61f0f2c9a01022f7f88" title=" " alt="" coords="186,259,258,285"/>
-<area shape="rect" href="register_8h.html#a37758a1d9dd7aa158743e035016ea79b" title=" " alt="" coords="186,309,258,336"/>
-<area shape="rect" href="register_8h.html#af21f5b42b403d57093c91fc8f27a3ddd" title=" " alt="" coords="184,360,260,387"/>
-<area shape="rect" href="paging_8h.html#a71d704c874eecb8fa6cc99e8c873e890" title=" " alt="" coords="191,411,253,437"/>
-<area shape="rect" href="register_8h.html#a92cb192d651acbfd554a2967b181c9c7" title=" " alt="" coords="185,461,259,488"/>
-<area shape="rect" href="register_8h.html#ab9c808b3703f96bb87dd67b0db9142e5" title=" " alt="" coords="185,512,259,539"/>
-<area shape="rect" href="register_8h.html#ac3e2bceb28a2f9ed020739e145654935" title=" " alt="" coords="183,563,261,589"/>
-<area shape="rect" href="paging_8h.html#af0b742de52d063fb8f1c524c2c4e8923" title=" " alt="" coords="389,107,495,133"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -529,10 +505,9 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="paging_8h_af0b742de52d063fb8f1c524c2c4e8923_icgraph.png" border="0" usemap="#paging_8h_af0b742de52d063fb8f1c524c2c4e8923_icgraph" alt=""/></div>
 <map name="paging_8h_af0b742de52d063fb8f1c524c2c4e8923_icgraph" id="paging_8h_af0b742de52d063fb8f1c524c2c4e8923_icgraph">
-<area shape="rect" title=" " alt="" coords="472,31,579,57"/>
-<area shape="rect" href="paging_8h.html#a5dd0a3132223e82f998eb88ffd6b7876" title=" " alt="" coords="284,31,424,57"/>
-<area shape="rect" href="paging_8h.html#a31b7b687f7cd7773e3dd5107bcdea030" title=" " alt="" coords="171,5,217,32"/>
-<area shape="rect" href="paging_8h.html#a44fe56c079dc6d3c0d4b29f5b9dab5a5" title="Initializes paging to separate virtual and physical memory." alt="" coords="152,56,236,83"/>
+<area shape="rect" title=" " alt="" coords="435,5,541,32"/>
+<area shape="rect" href="paging_8h.html#a5dd0a3132223e82f998eb88ffd6b7876" title=" " alt="" coords="247,5,387,32"/>
+<area shape="rect" href="paging_8h.html#a31b7b687f7cd7773e3dd5107bcdea030" title=" " alt="" coords="152,5,199,32"/>
 <area shape="rect" href="paging_8h.html#ab063ff074fc27894763609d156c8cd74" title=" " alt="" coords="5,5,104,32"/>
 </map>
 </div>
@@ -575,9 +550,8 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="paging_8h_a71d704c874eecb8fa6cc99e8c873e890_icgraph.png" border="0" usemap="#paging_8h_a71d704c874eecb8fa6cc99e8c873e890_icgraph" alt=""/></div>
 <map name="paging_8h_a71d704c874eecb8fa6cc99e8c873e890_icgraph" id="paging_8h_a71d704c874eecb8fa6cc99e8c873e890_icgraph">
-<area shape="rect" title=" " alt="" coords="167,31,228,57"/>
-<area shape="rect" href="paging_8h.html#a44fe56c079dc6d3c0d4b29f5b9dab5a5" title="Initializes paging to separate virtual and physical memory." alt="" coords="20,5,104,32"/>
-<area shape="rect" href="paging_8h.html#af2eea286ae7a39c9e24ec2e4914edf14" title=" " alt="" coords="5,56,119,83"/>
+<area shape="rect" title=" " alt="" coords="167,5,228,32"/>
+<area shape="rect" href="paging_8h.html#af2eea286ae7a39c9e24ec2e4914edf14" title=" " alt="" coords="5,5,119,32"/>
 </map>
 </div>
 

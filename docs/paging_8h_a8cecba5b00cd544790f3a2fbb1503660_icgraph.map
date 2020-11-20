@@ -1,6 +1,5 @@
 <map id="page_containing_address" name="page_containing_address">
-<area shape="rect" id="node1" title=" " alt="" coords="248,56,417,83"/>
+<area shape="rect" id="node1" title=" " alt="" coords="248,31,417,57"/>
 <area shape="rect" id="node2" href="$alloc_8h.html#a0de47e42c61353f53c07a4274b87f864" title=" " alt="" coords="66,5,139,32"/>
 <area shape="rect" id="node3" href="$paging_8h.html#acd78a6bfbdc7cbbe0e578e52eccad8bf" title=" " alt="" coords="5,56,200,83"/>
-<area shape="rect" id="node4" href="$paging_8h.html#a44fe56c079dc6d3c0d4b29f5b9dab5a5" title="Initializes paging to separate virtual and physical memory." alt="" coords="61,107,145,133"/>
 </map>
