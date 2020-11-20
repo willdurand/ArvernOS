@@ -13,7 +13,7 @@ uint64_t kernel_start;
 uint64_t kernel_end;
 uint64_t multiboot_start;
 uint64_t multiboot_end;
-bitmap_t allocated_frames[FRAME_BITMAP_SIZE];
+bitmap_t allocated_frames[FRAME_BITMAP_SIZE] = { 0 };
 
 void frame_init(multiboot_info_t* mbi)
 {
@@ -37,14 +37,14 @@ void _frame_init(reserved_areas_t reserved, multiboot_tag_mmap_t* mmap)
   kernel_end = reserved.kernel_end;
   multiboot_start = reserved.multiboot_start;
   multiboot_end = reserved.multiboot_end;
-  memset(allocated_frames, 0, FRAME_BITMAP_SIZE * sizeof(bitmap_t));
 
   DEBUG("initialized frame allocator with multiboot_start = %p "
-        "multiboot_end=%p kernel_start=%p kernel_end=%p",
+        "multiboot_end=%p kernel_start=%p kernel_end=%p used_count=%d",
         multiboot_start,
         multiboot_end,
         kernel_start,
-        kernel_end);
+        kernel_end,
+        frame_get_used_count());
 }
 
 opt_uint64_t frame_allocate()
