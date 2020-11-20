@@ -21,6 +21,9 @@
             (e).no_execute,                                                    \
             (e).user_accessible)
 
+void enable_nxe_bit();
+void enable_write_protection();
+void remap_kernel(multiboot_info_t* mbi);
 void zero_table(page_table_t* table);
 page_table_t* next_table_address(page_table_t* table, uint64_t index);
 opt_uint64_t translate(uint64_t virtual_address);
@@ -40,13 +43,13 @@ extern void load_p4(uint64_t addr);
 
 void paging_init(multiboot_info_t* mbi)
 {
-  uint64_t efer = read_msr(IA32_EFER);
-  write_msr(IA32_EFER, efer | (1 << 11));
-  DEBUG("enabled NXE bit old_efer=%p new_efer=%p", efer, read_msr(IA32_EFER));
+  enable_nxe_bit();
+  enable_write_protection();
+  remap_kernel(mbi);
+}
 
-  write_cr0(read_cr0() | (1 << 16));
-  DEBUG("%s", "enabled write protection (cr0)");
-
+void remap_kernel(multiboot_info_t* mbi)
+{
   uint64_t inactive_page_table_frame = paging_frame_allocate().value;
   uint64_t temporary_page = page_containing_address(0xcafebabe);
 
@@ -172,6 +175,19 @@ void paging_init(multiboot_info_t* mbi)
   unmap(old_page_table);
   DEBUG("guard page at %p", page_start_address(old_page_table));
 #endif
+}
+
+void enable_nxe_bit()
+{
+  uint64_t efer = read_msr(IA32_EFER);
+  write_msr(IA32_EFER, efer | (1 << 11));
+  DEBUG("enabled NXE bit old_efer=%p new_efer=%p", efer, read_msr(IA32_EFER));
+}
+
+void enable_write_protection()
+{
+  write_cr0(read_cr0() | (1 << 16));
+  DEBUG("%s", "enabled write protection (cr0)");
 }
 
 void zero_table(page_table_t* table)
