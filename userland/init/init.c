@@ -5,7 +5,7 @@
 
 #define READLINE_SIZE          256
 #define PROMPT                 "(init) "
-#define NB_DOCUMENTED_COMMANDS 7
+#define NB_DOCUMENTED_COMMANDS 6
 
 int main()
 {
@@ -15,7 +15,6 @@ int main()
     { "help", "display information about shell commands" },
     { "hostname", "print or update the system hostname" },
     { "reboot", "stopping and restarting the system" },
-    { "uptime", "tell how long the system has been running" },
     { "overflow", "test the stack buffer overflow protection" },
   };
 
@@ -79,8 +78,6 @@ int main()
           hostname(first_arg);
         } else if (strcmp(command, "reboot") == 0) {
           _reboot();
-        } else if (strcmp(command, "uptime") == 0) {
-          uptime();
         } else if (strcmp(command, "overflow") == 0) {
           overflow();
         } else {

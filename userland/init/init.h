@@ -9,6 +9,4 @@ void hostname(char* arg);
 
 int overflow();
 
-void uptime();
-
 #endif
