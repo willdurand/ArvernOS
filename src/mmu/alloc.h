@@ -2,6 +2,8 @@
 #ifndef MMU_ALLOC_H
 #define MMU_ALLOC_H
 
+#include <sys/types.h>
+
 /// The virtual address to the start of the heap memory.
 #define HEAP_START 0x40000000
 /// The size of the heap.
@@ -13,5 +15,9 @@
  * Initializes the heap memory allocator.
  */
 void alloc_init();
+
+uint64_t alloc_get_used_count();
+
+uint64_t alloc_get_max_count();
 
 #endif

@@ -5,6 +5,8 @@
 #include <drivers/screen.h>
 #include <fs/debug.h>
 #include <fs/vfs.h>
+#include <mmu/alloc.h>
+#include <mmu/frame.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -54,7 +56,7 @@ unsigned char keymap[][128] = {
   { 0 },
 };
 
-#define NB_DOCUMENTED_COMMANDS 6
+#define NB_DOCUMENTED_COMMANDS 7
 
 const char* commands[][NB_DOCUMENTED_COMMANDS] = {
   { "cat", "print on the standard output" },
@@ -63,6 +65,7 @@ const char* commands[][NB_DOCUMENTED_COMMANDS] = {
   { "ls", "list files" },
   { "selftest", "run the system test suite" },
   { "overflow", "test the stack buffer overflow protection" },
+  { "meminfo", "display memory information" },
 };
 
 unsigned char get_char(uint8_t scancode, bool shift, bool caps_lock)
@@ -248,11 +251,18 @@ int try_exec(const char* command)
   return 0;
 }
 
-int overflow()
+void overflow()
 {
   char c[12];
   strcpy(c, "123456789012345678901234567890");
-  return 1;
+}
+
+void meminfo()
+{
+  printf(
+    "frames      : %6d/%d\n", frame_get_used_count(), frame_get_max_count());
+  printf(
+    "heap (pages): %6d/%d\n", alloc_get_used_count(), alloc_get_max_count());
 }
 
 void run_command(const char* command)
@@ -278,6 +288,8 @@ void run_command(const char* command)
     selftest();
   } else if (strncmp(command, "overflow", 8) == 0) {
     overflow();
+  } else if (strncmp(command, "meminfo", 7) == 0) {
+    meminfo();
   } else {
     if (try_exec(command) != 0) {
       printf("invalid kshell command\n");

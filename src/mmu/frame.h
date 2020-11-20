@@ -46,6 +46,20 @@ uint64_t frame_containing_address(uint64_t physical_address);
  */
 uint64_t frame_start_address(uint64_t frame_number);
 
+/**
+ * Returns the number of frames currently used.
+ *
+ * @return the number of frames currently used
+ */
+uint64_t frame_get_used_count();
+
+/**
+ * Returns the number of frames that the system can possibly allocate.
+ *
+ * @return the maximum number of frames
+ */
+uint64_t frame_get_max_count();
+
 /// For testing purposes.
 void _frame_init(reserved_areas_t reserved, multiboot_tag_mmap_t* mmap);
 

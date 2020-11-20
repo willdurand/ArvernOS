@@ -115,3 +115,21 @@ opt_uint64_t read_mmap(uint64_t request)
 
   return (opt_uint64_t){ .has_value = false, .value = 0 };
 }
+
+uint64_t frame_get_used_count()
+{
+  uint64_t count = 0;
+
+  for (uint64_t i = 0; i < MAX_FRAMES; i++) {
+    if (bitmap_get(allocated_frames, i)) {
+      count++;
+    }
+  }
+
+  return count;
+}
+
+uint64_t frame_get_max_count()
+{
+  return MAX_FRAMES;
+}

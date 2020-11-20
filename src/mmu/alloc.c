@@ -3,7 +3,6 @@
 #include <mmu/debug.h>
 #include <mmu/paging.h>
 #include <string.h>
-#include <sys/types.h>
 
 uint64_t heap_end_page;
 uint64_t heap_start_page;
@@ -69,4 +68,14 @@ int liballoc_free(void* ptr, int number_of_pages)
   DEBUG("free'd ptr=%p page=%u number_of_pages=%d", ptr, page, number_of_pages);
 
   return 0;
+}
+
+uint64_t alloc_get_used_count()
+{
+  return next_free_page;
+}
+
+uint64_t alloc_get_max_count()
+{
+  return MAX_PAGES;
 }
