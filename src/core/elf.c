@@ -60,15 +60,17 @@ elf_header_t* elf_load(uint8_t* data)
           section->flags);
 
     // First we allocate each section that requires allocation and has a valid
-    // size
-    if (section->flags & ELF_SECTION_FLAG_ALLOC && section->size > 0) {
+    // size.
+    if ((section->flags & ELF_SECTION_FLAG_ALLOC) && section->size > 0) {
       uint64_t start_page = page_containing_address(section->addr);
       uint32_t number_of_pages =
         paging_amount_for_byte_size(section->addr, section->size);
 
       uint32_t flags = PAGING_FLAG_PRESENT;
 
-      if (section->flags & ELF_SECTION_FLAG_WRITE) {
+      if ((section->flags & ELF_SECTION_FLAG_WRITE) ||
+          section->type == ELF_SECTION_TYPE_PROGBITS ||
+          section->type == ELF_SECTION_TYPE_NOBITS) {
         flags |= PAGING_FLAG_WRITABLE;
       }
 
@@ -78,18 +80,25 @@ elf_header_t* elf_load(uint8_t* data)
 
       map_multiple(start_page, number_of_pages, flags);
 
-      DEBUG("allocated memory for this section (%lld bytes)", section->size);
+      DEBUG(
+        "allocated memory for this section (%lld bytes) (number_of_pages=%d)",
+        section->size,
+        number_of_pages);
 
       // If we're progbits, we're supposed to copy the memory in this section
       if (section->type == ELF_SECTION_TYPE_PROGBITS) {
-        DEBUG("%s", "read Progbits for this section");
+        void* dest = (void*)section->addr;
+        void* src = (void*)((uint64_t)elf + section->offset);
 
-        memcpy((void*)section->addr,
-               (void*)((uint64_t)elf + section->offset),
-               section->size);
+        DEBUG("copying progbits for this section: dest=%p src=%p size=%lld",
+              dest,
+              src,
+              section->size);
+
+        memcpy(dest, src, section->size);
       } else if (section->type ==
                  ELF_SECTION_TYPE_NOBITS) { // If we're nobits, we're supposed
-                                            // to be zero-inited
+                                            // to be zero-init'ed.
         DEBUG("%s", "zero-memory'd this section");
 
         memset((void*)section->addr, 0, section->size);

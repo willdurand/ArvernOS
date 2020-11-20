@@ -51,7 +51,7 @@ void* liballoc_alloc(int number_of_pages)
                number_of_pages,
                PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
 
-  MMU_DEBUG("allocated %d pages at addr=%p", number_of_pages, addr);
+  DEBUG("allocated %d pages at addr=%p", number_of_pages, addr);
 
   return (void*)addr;
 }
@@ -66,8 +66,7 @@ int liballoc_free(void* ptr, int number_of_pages)
 
   unmap_multiple(page, number_of_pages);
 
-  MMU_DEBUG(
-    "free'd ptr=%p page=%u number_of_pages=%d", ptr, page, number_of_pages);
+  DEBUG("free'd ptr=%p page=%u number_of_pages=%d", ptr, page, number_of_pages);
 
   return 0;
 }

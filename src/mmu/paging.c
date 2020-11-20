@@ -335,14 +335,16 @@ void map_page_to_frame(uint64_t page, uint64_t frame, uint64_t flags)
 {
   uint64_t frame_number = frame_containing_address(frame);
 
-  DEBUG("mapping page=%u to frame=%p (number=%d) with flags=%#x",
-        page,
-        frame,
-        frame_number,
-        flags);
+  DEBUG(
+    "mapping page=%u (start_addr=%p) to frame=%p (number=%d) with flags=%#x",
+    page,
+    page_start_address(page),
+    frame,
+    frame_number,
+    flags);
 
   opt_uint64_t maybe_frame = translate_page(page);
-  if (maybe_frame.has_value && maybe_frame.value == frame_number) {
+  if (maybe_frame.has_value) {
     DEBUG("page=%u already mapped to frame=%u", page, frame_number);
     return;
   }
@@ -549,11 +551,7 @@ uint32_t paging_amount_for_byte_size(uint64_t start_address, uint64_t byte_size)
   uint64_t start_page = page_containing_address(start_address);
   uint64_t end_page = page_containing_address(start_address + byte_size);
 
-  uint32_t difference = (uint32_t)(end_page - start_page);
-
-  if (difference == 0) {
-    return 1;
-  }
+  uint32_t difference = (uint32_t)(end_page - start_page) + 1;
 
   return difference;
 }
