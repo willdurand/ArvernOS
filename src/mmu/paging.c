@@ -34,6 +34,7 @@ void paging_frame_deallocate(uint64_t frame_number);
 void identity_map(uint64_t physical_address, uint64_t flags);
 
 page_table_t* active_p4_table = (page_table_t*)P4_TABLE;
+bool can_deallocate_frames = false;
 
 extern void load_p4(uint64_t addr);
 
@@ -79,6 +80,9 @@ void paging_init(multiboot_info_t* mbi)
                    inactive_page_table_frame,
                    PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
   write_cr3(read_cr3());
+
+  // We shouldn't deallocate the `inactive_page_table_frame`.
+  can_deallocate_frames = true;
 
   DEBUG("%s", "mapping elf sections");
   multiboot_tag_elf_sections_t* tag =
@@ -505,8 +509,9 @@ void unmap(uint64_t page_number)
 
   // TODO(william): free p(1,2,3) table if empty
 
-  // FIXME: this does not work when uncommented...
-  // paging_frame_deallocate(frame_number);
+  if (can_deallocate_frames) {
+    paging_frame_deallocate(frame_number);
+  }
 
   DEBUG("unmapped page=%u addr=%p", page_number, addr);
 }

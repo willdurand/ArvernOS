@@ -70,9 +70,7 @@ opt_uint64_t frame_allocate()
 
 void frame_deallocate(uint64_t frame_number)
 {
-  uint64_t addr = frame_start_address(frame_number);
-
-  DEBUG("deallocating frame=%u addr=%p", frame_number, addr);
+  DEBUG("deallocating frame=%u", frame_number);
   bitmap_clear(allocated_frames, frame_number);
 }
 
