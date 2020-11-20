@@ -1,0 +1,4 @@
+<map id="write_msr" name="write_msr">
+<area shape="rect" id="node1" title=" " alt="" coords="137,5,216,32"/>
+<area shape="rect" id="node2" href="$paging_8h.html#a44fe56c079dc6d3c0d4b29f5b9dab5a5" title="Initializes paging to separate virtual and physical memory." alt="" coords="5,5,89,32"/>
+</map>

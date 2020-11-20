@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['flags_308',['flags',['../structelf__section__header__t.html#a9f359cf835d1a06da5445ef3100033df',1,'elf_section_header_t']]]
+  ['flags_328',['flags',['../structelf__section__header.html#a4a2021e43cc873ee45d437b720ccd5c1',1,'elf_section_header']]]
 ];

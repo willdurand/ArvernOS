@@ -1,5 +1,6 @@
 <map id="map_page_to_frame" name="map_page_to_frame">
-<area shape="rect" id="node1" title=" " alt="" coords="5,31,150,56"/>
-<area shape="rect" id="node2" href="$frame_8h.html#a40b65cfd28ddd6d88557a11a95e4fdab" title=" " alt="" coords="198,5,376,31"/>
-<area shape="rect" id="node3" href="$paging_8h.html#aac53c30ffef4782a7e0bc3f919fc3b07" title=" " alt="" coords="232,55,342,80"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,56,145,83"/>
+<area shape="rect" id="node2" href="$frame_8h.html#a40b65cfd28ddd6d88557a11a95e4fdab" title=" " alt="" coords="193,5,368,32"/>
+<area shape="rect" id="node3" href="$paging_8h.html#a7fdbe7d41abc360ddd26ea67b004cba4" title=" " alt="" coords="213,56,349,83"/>
+<area shape="rect" id="node4" href="$paging_8h.html#af0b742de52d063fb8f1c524c2c4e8923" title=" " alt="" coords="227,107,334,133"/>
 </map>

@@ -1,6 +1,7 @@
 <map id="frame_containing_address" name="frame_containing_address">
-<area shape="rect" id="node1" title=" " alt="" coords="442,5,620,31"/>
-<area shape="rect" id="node2" href="$paging_8h.html#a5dd0a3132223e82f998eb88ffd6b7876" title=" " alt="" coords="249,5,394,31"/>
-<area shape="rect" id="node3" href="$paging_8h.html#a31b7b687f7cd7773e3dd5107bcdea030" title=" " alt="" coords="154,5,201,31"/>
-<area shape="rect" id="node4" href="$paging_8h.html#ab063ff074fc27894763609d156c8cd74" title=" " alt="" coords="5,5,106,31"/>
+<area shape="rect" id="node1" title=" " alt="" coords="472,31,647,57"/>
+<area shape="rect" id="node2" href="$paging_8h.html#a5dd0a3132223e82f998eb88ffd6b7876" title=" " alt="" coords="284,5,424,32"/>
+<area shape="rect" id="node5" href="$paging_8h.html#a44fe56c079dc6d3c0d4b29f5b9dab5a5" title="Initializes paging to separate virtual and physical memory." alt="" coords="152,56,236,83"/>
+<area shape="rect" id="node3" href="$paging_8h.html#a31b7b687f7cd7773e3dd5107bcdea030" title=" " alt="" coords="171,5,217,32"/>
+<area shape="rect" id="node4" href="$paging_8h.html#ab063ff074fc27894763609d156c8cd74" title=" " alt="" coords="5,5,104,32"/>
 </map>

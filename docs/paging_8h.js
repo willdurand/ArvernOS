@@ -1,7 +1,7 @@
 var paging_8h =
 [
-    [ "page_entry_t", "structpage__entry__t.html", null ],
-    [ "page_table_t", "structpage__table__t.html", null ],
+    [ "page_entry", "structpage__entry.html", null ],
+    [ "page_table", "structpage__table.html", null ],
     [ "PAGING_FLAG_NO_EXECUTE", "paging_8h.html#a9b636c6433bad872f80f46458db566f7", null ],
     [ "PAGING_FLAG_PRESENT", "paging_8h.html#a28ff91b933f24d95e25ec5f03a736117", null ],
     [ "PAGING_FLAG_WRITABLE", "paging_8h.html#adac89a5c7c54309cb4a4570d0f8cf75c", null ],
@@ -12,7 +12,7 @@ var paging_8h =
     [ "page_start_address", "paging_8h.html#a7fdbe7d41abc360ddd26ea67b004cba4", null ],
     [ "paging_amount_for_byte_size", "paging_8h.html#acd78a6bfbdc7cbbe0e578e52eccad8bf", null ],
     [ "paging_init", "paging_8h.html#a44fe56c079dc6d3c0d4b29f5b9dab5a5", null ],
-    [ "translate_page", "paging_8h.html#aac53c30ffef4782a7e0bc3f919fc3b07", null ],
+    [ "translate_page", "paging_8h.html#af0b742de52d063fb8f1c524c2c4e8923", null ],
     [ "unmap", "paging_8h.html#a71d704c874eecb8fa6cc99e8c873e890", null ],
     [ "unmap_multiple", "paging_8h.html#af2eea286ae7a39c9e24ec2e4914edf14", null ]
 ];

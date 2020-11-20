@@ -1,7 +1,7 @@
 var isr_8h =
 [
-    [ "registers_t", "structregisters__t.html", null ],
-    [ "stack_t", "structstack__t.html", null ],
+    [ "registers", "structregisters.html", null ],
+    [ "stack", "structstack.html", null ],
     [ "PF_CAUSED_BY_WRITE", "isr_8h.html#aae7afaff148e4f0f9212e8281cfa6b79", null ],
     [ "PF_INSTRUCTION_FETCH", "isr_8h.html#ab07f8f9ace844e31f94b9b1049325a98", null ],
     [ "PF_MALFORMED_TABLE", "isr_8h.html#ab05b226866002973346b2da22ab6907f", null ],

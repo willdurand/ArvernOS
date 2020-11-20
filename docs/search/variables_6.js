@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['offset_312',['offset',['../structelf__section__header__t.html#a2d090693f40eb11ca29ef3b20420dd67',1,'elf_section_header_t']]]
+  ['offset_332',['offset',['../structelf__section__header.html#a339e23262116f345f3db15e540a68c7d',1,'elf_section_header']]]
 ];

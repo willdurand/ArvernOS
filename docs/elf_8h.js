@@ -1,8 +1,8 @@
 var elf_8h =
 [
-    [ "elf_header_t", "structelf__header__t.html", null ],
-    [ "elf_program_header_t", "structelf__program__header__t.html", null ],
-    [ "elf_section_header_t", "structelf__section__header__t.html", "structelf__section__header__t" ],
+    [ "elf_header", "structelf__header.html", null ],
+    [ "elf_program_header", "structelf__program__header.html", null ],
+    [ "elf_section_header", "structelf__section__header.html", "structelf__section__header" ],
     [ "ELF_PROGRAM_FLAG_EXECUTE", "elf_8h.html#aebb74ea17fe6a8dd9668bb43fbcdd522", null ],
     [ "ELF_PROGRAM_FLAG_READ", "elf_8h.html#a298d65fe2846f0a9c5485dea535d1cd5", null ],
     [ "ELF_PROGRAM_FLAG_WRITE", "elf_8h.html#ab36eb4cef46757b73b7357a6bdbd381a", null ],

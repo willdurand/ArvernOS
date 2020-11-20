@@ -1,4 +1,5 @@
 <map id="find_multiboot_tag" name="find_multiboot_tag">
-<area shape="rect" id="node1" title=" " alt="" coords="133,5,264,31"/>
-<area shape="rect" id="node2" href="$frame_8h.html#ada91ff5ef3ceb241baf359ac078bb2d7" title=" " alt="" coords="5,5,85,31"/>
+<area shape="rect" id="node1" title=" " alt="" coords="137,31,265,57"/>
+<area shape="rect" id="node2" href="$frame_8h.html#ada91ff5ef3ceb241baf359ac078bb2d7" title=" " alt="" coords="8,5,87,32"/>
+<area shape="rect" id="node3" href="$paging_8h.html#a44fe56c079dc6d3c0d4b29f5b9dab5a5" title="Initializes paging to separate virtual and physical memory." alt="" coords="5,56,89,83"/>
 </map>

@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['willos_179',['willOS',['../index.html',1,'']]],
-  ['write_180',['write',['../include_2sys_2syscall_8h.html#a753ae93018186742db7445504f7b4ab0',1,'write.c']]],
-  ['write_5fcr3_181',['write_cr3',['../register_8h.html#ab9c808b3703f96bb87dd67b0db9142e5',1,'register.c']]]
+  ['willos_188',['willOS',['../index.html',1,'']]],
+  ['write_189',['write',['../include_2sys_2syscall_8h.html#abb39b21888372e95ad3e5c59b166f5c8',1,'write.c']]],
+  ['write_5fcr0_190',['write_cr0',['../register_8h.html#a92cb192d651acbfd554a2967b181c9c7',1,'register.c']]],
+  ['write_5fcr3_191',['write_cr3',['../register_8h.html#ab9c808b3703f96bb87dd67b0db9142e5',1,'register.c']]],
+  ['write_5fmsr_192',['write_msr',['../register_8h.html#ac3e2bceb28a2f9ed020739e145654935',1,'register.c']]]
 ];

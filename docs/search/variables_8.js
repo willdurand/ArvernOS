@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['type_314',['type',['../structelf__section__header__t.html#ab3e8497598ec17fe886336ace990e3ad',1,'elf_section_header_t']]]
+  ['type_334',['type',['../structelf__section__header.html#ab0d7872314f57276d02d909ad858604f',1,'elf_section_header']]]
 ];
