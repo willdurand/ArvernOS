@@ -1,20 +1,27 @@
 #include "alloc.h"
 #include <kernel/panic.h>
+#include <mmu/bitmap.h>
 #include <mmu/debug.h>
 #include <mmu/paging.h>
 #include <string.h>
+#include <sys/types.h>
+
+#define ALLOC_BITMAP_SIZE MAX_PAGES / BITS_PER_WORD
 
 uint64_t heap_end_page;
 uint64_t heap_start_page;
-uint64_t next_free_page;
+bitmap_t allocated_pages[ALLOC_BITMAP_SIZE] = { 0 };
 
 void alloc_init()
 {
   heap_end_page = page_containing_address(HEAP_START + HEAP_SIZE - 1);
   heap_start_page = page_containing_address(HEAP_START);
-  next_free_page = 0;
 
-  DEBUG("heap_start_page=%u heap_end_page=%u", heap_start_page, heap_end_page);
+  DEBUG("initialized heap allocator with heap_start_page=%u heap_end_page=%u "
+        "used_count=%d",
+        heap_start_page,
+        heap_end_page,
+        alloc_get_used_count());
 }
 
 int liballoc_lock()
@@ -33,9 +40,19 @@ void* liballoc_alloc(int number_of_pages)
 {
   opt_uint64_t first_free_page = { .has_value = false, .value = 0 };
 
-  if (next_free_page + number_of_pages < MAX_PAGES) {
-    first_free_page.has_value = true;
-    first_free_page.value = next_free_page;
+  uint32_t free_page_count = 0;
+  for (uint64_t i = 0; i < MAX_PAGES; i++) {
+    if (bitmap_get(allocated_pages, i) == false) {
+      free_page_count++;
+
+      if (free_page_count == number_of_pages) {
+        first_free_page.has_value = true;
+        first_free_page.value = i > number_of_pages ? i - number_of_pages : 0;
+        break;
+      }
+    } else {
+      free_page_count = 0;
+    }
   }
 
   if (!first_free_page.has_value) {
@@ -44,7 +61,9 @@ void* liballoc_alloc(int number_of_pages)
 
   uint64_t addr = page_start_address(heap_start_page + first_free_page.value);
 
-  next_free_page += number_of_pages;
+  for (uint64_t i = 0; i < number_of_pages; i++) {
+    bitmap_set(allocated_pages, first_free_page.value + i);
+  }
 
   map_multiple(heap_start_page + first_free_page.value,
                number_of_pages,
@@ -60,10 +79,13 @@ int liballoc_free(void* ptr, int number_of_pages)
   uint64_t page = page_containing_address((uint64_t)ptr);
   MMU_DEBUG("ptr=%p page=%u", ptr, page);
 
-  // TODO: we cannot decrement `next_free_page` for now. We should use a bitmap
-  // in order to reclaim free'd pages.
-
   unmap_multiple(page, number_of_pages);
+
+  uint64_t first_free_page =
+    page_containing_address((uint64_t)ptr - HEAP_START);
+  for (uint64_t i = 0; i < number_of_pages; i++) {
+    bitmap_clear(allocated_pages, first_free_page + i);
+  }
 
   DEBUG("free'd ptr=%p page=%u number_of_pages=%d", ptr, page, number_of_pages);
 
@@ -72,7 +94,15 @@ int liballoc_free(void* ptr, int number_of_pages)
 
 uint64_t alloc_get_used_count()
 {
-  return next_free_page;
+  uint64_t count = 0;
+
+  for (uint64_t i = 0; i < MAX_PAGES; i++) {
+    if (bitmap_get(allocated_pages, i)) {
+      count++;
+    }
+  }
+
+  return count;
 }
 
 uint64_t alloc_get_max_count()
