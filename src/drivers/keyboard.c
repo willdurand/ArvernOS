@@ -19,8 +19,6 @@ static void keyboard_callback(stack_t* stack)
   if (status & 0x01) {
     uint8_t scancode = port_byte_in(KEYBOARD_DATA_PORT);
 
-    DEBUG("received scancode: %d", scancode);
-
     if (buffer_length == RING_BUFFER_SIZE) {
       DEBUG("%s", "ring buffer is full");
       return;
