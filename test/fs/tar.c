@@ -55,15 +55,15 @@ int main()
 
   inode_t home = vfs_namei("/home");
   assert(vfs_inode_type(home) == FS_DIRECTORY, "can find a directory");
-  assert(strcmp(home->name, "home/") == 0,
+  assert(strcmp(home->name, "home") == 0,
          "returns a directory with the right name");
   inode_t home2 = vfs_namei("/home/");
-  assert(strcmp(home->name, "home/") == 0, "supports trailing slash");
+  assert(strcmp(home->name, "home") == 0, "supports trailing slash");
   free(home2);
 
   inode_t will = vfs_namei("/home/will/");
   assert(vfs_inode_type(will) == FS_DIRECTORY, "can find a sub-directory");
-  assert(strcmp(will->name, "home/will/") == 0,
+  assert(strcmp(will->name, "home/will") == 0,
          "returns a sub-directory with the right name");
   end_describe();
 

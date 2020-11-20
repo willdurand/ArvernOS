@@ -216,3 +216,46 @@ char* elf_lookup_string(elf_header_t* header, int offset)
 
   return strtab + offset;
 }
+
+void elf_unload(elf_header_t* elf)
+{
+  elf_section_header_t* sections = get_elf_section_header(elf);
+
+  for (uint16_t i = 0; i < elf->sh_num; i++) {
+    elf_section_header_t* section = sections + i;
+
+    // Try to get the section's name
+    char* name = section->name == 0 ? 0 : elf_lookup_string(elf, section->name);
+
+    if (name == 0) {
+      name = "(none)";
+    }
+
+    DEBUG("unloading section %d (name: %d (\"%s\")", i, section->name, name);
+
+    if ((section->flags & ELF_SECTION_FLAG_ALLOC) && section->size > 0) {
+      uint64_t start_page = page_containing_address(section->addr);
+      uint32_t number_of_pages =
+        paging_amount_for_byte_size(section->addr, section->size);
+
+      unmap_multiple(start_page, number_of_pages);
+    }
+  }
+
+  elf_program_header_t* program_header =
+    (elf_program_header_t*)((uint64_t)elf + elf->ph_offset);
+
+  for (uint64_t i = 0; i < elf->ph_num; i++) {
+    if (program_header[i].type == ELF_PROGRAM_TYPE_LOAD) {
+      uint64_t mem_size = program_header[i].mem_size;
+      uint64_t addr = program_header[i].virtual_address;
+
+      uint64_t start_page = page_containing_address(addr);
+      uint32_t number_of_pages = paging_amount_for_byte_size(addr, mem_size);
+
+      unmap_multiple(start_page, number_of_pages);
+    }
+  }
+
+  DEBUG("%s", "unloaded elf");
+}

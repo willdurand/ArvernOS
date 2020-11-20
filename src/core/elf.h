@@ -80,4 +80,6 @@ typedef struct elf_section_header
 
 elf_header_t* elf_load(uint8_t* data);
 
+void elf_unload(elf_header_t* elf);
+
 #endif

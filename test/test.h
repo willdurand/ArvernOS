@@ -4,15 +4,17 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+#define RED   "\033[0;31m"
+#define CYAN  "\033[0;36m"
+#define RESET "\033[0m"
+
 int assertions = 0;
 int failures = 0;
 bool has_describe = 0;
 
 void _assert(bool expr, const char* func, const char* message)
 {
-  if (!expr) {
-    printf("\033[0;31m");
-  }
+  printf(expr ? CYAN : RED);
 
   if (has_describe) {
     printf("  it %-64s [%s]\n", message, expr ? "pass" : "fail");
@@ -20,9 +22,7 @@ void _assert(bool expr, const char* func, const char* message)
     printf("it %-66s [%s]\n", message, expr ? "pass" : "fail");
   }
 
-  if (!expr) {
-    printf("\033[0m");
-  }
+  printf(RESET);
 
   assertions++;
 
@@ -33,7 +33,9 @@ void _assert(bool expr, const char* func, const char* message)
 
 void _describe(const char* message)
 {
+  printf(CYAN);
   printf("\n%s\n", message);
+  printf(RESET);
   has_describe = true;
 }
 
@@ -44,7 +46,9 @@ void _end_describe()
 
 int _test_summary(const char* name)
 {
+  printf(CYAN);
   printf("\n=> %-48s failures: %2d / total: %2d\n", name, failures, assertions);
+  printf(RESET);
 
   return failures == 0 ? 0 : 1;
 }

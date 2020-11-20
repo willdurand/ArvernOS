@@ -23,7 +23,7 @@ vfs_driver_t debug_driver = {
 
 inode_t debug_fs_init()
 {
-  inode_t node = malloc(sizeof(vfs_node_t));
+  inode_t node = calloc(1, sizeof(vfs_node_t));
 
   strcpy(node->name, "debug");
   node->driver = &debug_driver;

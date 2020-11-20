@@ -233,7 +233,7 @@ int try_exec(const char* command)
   callable* c = (callable*)(elf->entry);
   c();
 
-  // TODO: unload elf
+  elf_unload(elf);
 
   vfs_free(inode);
   free(buf);
