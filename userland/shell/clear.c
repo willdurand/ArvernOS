@@ -1,4 +1,4 @@
-#include "init.h"
+#include "shell.h"
 #include <stdio.h>
 
 void clear()

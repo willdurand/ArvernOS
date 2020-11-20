@@ -1,10 +1,10 @@
-#include "init.h"
+#include "shell.h"
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 
 #define READLINE_SIZE          256
-#define PROMPT                 "(init) "
+#define PROMPT                 "(sh) "
 #define NB_DOCUMENTED_COMMANDS 6
 
 int main()

@@ -1,5 +1,5 @@
-#ifndef INIT_H
-#define INIT_H
+#ifndef SHELL_H
+#define SHELL_H
 
 void _reboot();
 
