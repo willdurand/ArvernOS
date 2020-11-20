@@ -10,4 +10,6 @@
 
 #include <liballoc/liballoc.h>
 
+int atoi(char* s);
+
 #endif

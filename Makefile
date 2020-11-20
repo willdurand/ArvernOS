@@ -30,7 +30,7 @@ INITRD     = $(KERNEL_DIR)/$(INITRD_TAR)
 ASM_OBJECTS  := $(patsubst %.asm,%.o,$(shell find asm -name '*.asm'))
 LIBK_OBJECTS := $(patsubst %.c,%_k.o,$(shell find libs src -name '*.c'))
 LIBC_OBJECTS := $(patsubst %.c,%.o,$(shell find src/libc libs -name '*.c'))
-TEST_FILES 	 := $(patsubst test/%.c,%,$(shell find test/libc -name '*.c'))
+TEST_FILES   := $(patsubst test/%.c,%,$(shell find test/libc -name '*.c'))
 
 GIT_HASH := $(shell git rev-parse --short HEAD)
 
