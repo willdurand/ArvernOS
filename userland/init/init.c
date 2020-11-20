@@ -5,13 +5,12 @@
 
 #define READLINE_SIZE          256
 #define PROMPT                 "(init) "
-#define NB_DOCUMENTED_COMMANDS 8
+#define NB_DOCUMENTED_COMMANDS 7
 
 int main()
 {
   const char* commands[][NB_DOCUMENTED_COMMANDS] = {
     { "clear", "clear the terminal screen" },
-    { "date", "print the system date and time" },
     { "exit", "exit the shell" },
     { "help", "display information about shell commands" },
     { "hostname", "print or update the system hostname" },
@@ -74,8 +73,6 @@ int main()
               }
             }
           }
-        } else if (strcmp(command, "date") == 0) {
-          date();
         } else if (strcmp(command, "clear") == 0) {
           clear();
         } else if (strcmp(command, "hostname") == 0) {

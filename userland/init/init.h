@@ -5,8 +5,6 @@ void _reboot();
 
 void clear();
 
-void date();
-
 void hostname(char* arg);
 
 int overflow();

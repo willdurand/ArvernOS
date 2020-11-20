@@ -1,3 +1,3 @@
-BIN_NAME = cal
+BIN_NAME = date
 
 include ../Makefile.include

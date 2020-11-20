@@ -1,8 +1,7 @@
-#include "init.h"
 #include <stdio.h>
 #include <time.h>
 
-void date()
+int main()
 {
   time_t now;
   char buf[40];
@@ -11,4 +10,6 @@ void date()
   strftime(buf, 40, "%c", localtime(&now));
 
   printf("%s\n", buf);
+
+  return 0;
 }
