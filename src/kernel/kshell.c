@@ -205,6 +205,13 @@ int try_exec(const char* command)
   inode_t inode = vfs_namei(command);
 
   if (!inode) {
+    char* buf = malloc(strlen(command) + 5);
+    sprintf(buf, "/bin/%s", command);
+    inode = vfs_namei(buf);
+    free(buf);
+  }
+
+  if (!inode) {
     return -1;
   }
 
