@@ -8,6 +8,9 @@ ROOT_DIR = ../..
 BIN_DIR  = ../bin
 TARGET   = $(BIN_DIR)/$(BIN_NAME)
 
+LOCAL_BUILD_DIR = ../local-build
+LOCAL_BUILD_TARGET = $(LOCAL_BUILD_DIR)/$(BIN_NAME)
+
 # Add `-no-pie` to disable the PIE feature that causes `gcc` to not create an
 # executable if needed, see: https://access.redhat.com/blogs/766093/posts/1975793
 CFLAGS = -Wl,-emain -Wall -pedantic -std=c11 -O0 -ffreestanding -nostdlib \
@@ -20,3 +23,14 @@ default: $(TARGET)
 $(TARGET): *.c
 	mkdir -p $(BIN_DIR)
 	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
+
+local: CC=gcc
+local: CFLAGS=-Wall -pedantic -std=c11 -O0
+local: *.c
+	mkdir -p $(LOCAL_BUILD_DIR)
+	$(CC) -o $(LOCAL_BUILD_TARGET) $^ $(CFLAGS)
+.PHONY: local
+
+clean:
+	rm -f $(TARGET) $(LOCAL_BUILD_TARGET)
+.PHONY: clean

@@ -2,6 +2,7 @@ build/
 initrd/bin/
 initrd/info
 userland/bin/
+userland/local-build/
 *.a
 *.bin
 *.o
