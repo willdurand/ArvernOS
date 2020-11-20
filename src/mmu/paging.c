@@ -7,9 +7,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-// TODO: enabling the guard page produces a page fault...
-//#define ENABLE_GUARD_PAGE
-
 #define MMU_DEBUG_PAGE_ENTRY(message, e)                                       \
   MMU_DEBUG("%s "                                                              \
             "page entry addr=%p present=%d "                                   \
@@ -168,13 +165,11 @@ void remap_kernel(multiboot_info_t* mbi)
   write_cr3(inactive_page_table_frame);
   DEBUG("%s", "switched to new table");
 
-#ifdef ENABLE_GUARD_PAGE
   uint64_t old_page_table_frame =
     frame_start_address(frame_containing_address(backup_addr));
   uint64_t old_page_table = page_containing_address(old_page_table_frame);
   unmap(old_page_table);
   DEBUG("guard page at %p", page_start_address(old_page_table));
-#endif
 }
 
 void enable_nxe_bit()
