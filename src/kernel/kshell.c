@@ -253,12 +253,17 @@ void overflow()
 
 void meminfo()
 {
-  printf("frames      : %6llu/%llu\n",
-         frame_get_used_count(),
-         frame_get_max_count());
-  printf("heap (pages): %6llu/%llu\n",
-         alloc_get_used_count(),
-         alloc_get_max_count());
+  uint64_t used_frames = frame_get_used_count();
+  uint64_t max_frames = frame_get_max_count();
+  uint64_t used_heap = alloc_get_used_count();
+  uint64_t max_heap = alloc_get_max_count();
+
+  printf("frames: %6llu/%llu\n", used_frames, max_frames);
+  printf("heap  : %6llu/%llu KiB [%llu/%llu]\n",
+         (used_heap * PAGE_SIZE) / 1024,
+         (max_heap * PAGE_SIZE) / 1024,
+         used_heap,
+         max_heap);
 }
 
 void run_command(const char* command)
