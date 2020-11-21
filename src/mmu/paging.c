@@ -278,7 +278,7 @@ opt_uint64_t translate_page(uint64_t page_number)
       PANIC("misaligned 1GB page=%u", page_number);
     }
   } else {
-    DEBUG("did not find p3 (%p), returning no value", p3);
+    MMU_DEBUG("did not find p3 (%p), returning no value", p3);
     return (opt_uint64_t){ .has_value = false, .value = 0 };
   }
 
