@@ -1,7 +1,8 @@
-#include "shell.h"
 #include <stdio.h>
 
-void clear()
+int main()
 {
   print_clear();
+
+  return 0;
 }

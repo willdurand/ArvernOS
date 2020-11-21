@@ -3,8 +3,6 @@
 
 void _reboot();
 
-void clear();
-
 void hostname(char* arg);
 
 #endif

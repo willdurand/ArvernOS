@@ -56,11 +56,10 @@ unsigned char keymap[][128] = {
   { 0 },
 };
 
-#define NB_DOCUMENTED_COMMANDS 7
+#define NB_DOCUMENTED_COMMANDS 6
 
 const char* commands[][NB_DOCUMENTED_COMMANDS] = {
   { "cat", "print on the standard output" },
-  { "clear", "clear the terminal screen" },
   { "help", "display information about system shell commands" },
   { "ls", "list files" },
   { "selftest", "run the system test suite" },
@@ -97,11 +96,6 @@ void help(const char* command)
   }
 
   printf("no help for this command\n");
-}
-
-void clear()
-{
-  screen_clear();
 }
 
 void print_selftest_header(const char* name)
@@ -282,8 +276,6 @@ void run_command(const char* command)
     ls(command);
   } else if (strncmp(command, "cat", 3) == 0) {
     cat(command);
-  } else if (strncmp(command, "clear", 5) == 0) {
-    clear();
   } else if (strncmp(command, "selftest", 8) == 0) {
     selftest();
   } else if (strncmp(command, "overflow", 8) == 0) {
@@ -413,7 +405,7 @@ void kshell_run(uint8_t scancode)
                 break;
 
               case 'l':
-                clear();
+                screen_clear();
                 reset_readline();
                 kshell_print_prompt();
                 break;
