@@ -339,9 +339,10 @@ void kshell_run(uint8_t scancode)
       break;
 
     case KB_ARROW_UP:
-      if (key_was_released) {
+      if (key_was_released && strlen(last_readline) > 0) {
         reset_readline();
         strncpy(readline, last_readline, READLINE_SIZE);
+        memset(last_readline, 0, READLINE_SIZE);
         printf("%s", readline);
         readline_index = strlen(readline);
       }
