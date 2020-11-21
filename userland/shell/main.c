@@ -5,7 +5,7 @@
 
 #define READLINE_SIZE          256
 #define PROMPT                 "(sh) "
-#define NB_DOCUMENTED_COMMANDS 6
+#define NB_DOCUMENTED_COMMANDS 5
 
 int main()
 {
@@ -15,7 +15,6 @@ int main()
     { "help", "display information about shell commands" },
     { "hostname", "print or update the system hostname" },
     { "reboot", "stopping and restarting the system" },
-    { "overflow", "test the stack buffer overflow protection" },
   };
 
   char readline[READLINE_SIZE] = { 0 };
@@ -78,8 +77,6 @@ int main()
           hostname(first_arg);
         } else if (strcmp(command, "reboot") == 0) {
           _reboot();
-        } else if (strcmp(command, "overflow") == 0) {
-          overflow();
         } else {
           printf("invalid command\n");
         }

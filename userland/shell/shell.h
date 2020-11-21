@@ -7,6 +7,4 @@ void clear();
 
 void hostname(char* arg);
 
-int overflow();
-
 #endif
