@@ -15,15 +15,12 @@ uint8_t color_scheme(uint8_t fg, uint8_t bg);
 void move_cursor(uint16_t pos);
 
 uint8_t screen_scheme;
-char* framebuffer;
-int screen_col;
-int screen_row;
+char* framebuffer = (char*)VIDEO_ADDRESS;
+int screen_col = 0;
+int screen_row = 0;
 
 void screen_init()
 {
-  framebuffer = (char*)VIDEO_ADDRESS;
-  screen_col = 0;
-  screen_row = 0;
   screen_color_scheme(COLOR_WHITE, COLOR_BLACK);
 }
 
