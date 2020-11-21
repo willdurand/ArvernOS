@@ -17,7 +17,7 @@ void* find_multiboot_tag(multiboot_info_t* mbi, uint16_t type)
 
 reserved_areas_t find_reserved_areas(multiboot_info_t* mbi)
 {
-  multiboot_tag_t* tag;
+  multiboot_tag_t* tag = NULL;
   reserved_areas_t reserved = { .kernel_start = -1,
                                 .kernel_end = 0,
                                 .multiboot_start = (uint64_t)mbi,
@@ -57,7 +57,7 @@ reserved_areas_t find_reserved_areas(multiboot_info_t* mbi)
         break;
 
       case MULTIBOOT_TAG_TYPE_MMAP: {
-        multiboot_mmap_entry_t* mmap;
+        multiboot_mmap_entry_t* mmap = NULL;
 
         for (mmap = ((multiboot_tag_mmap_t*)tag)->entries;
              (uint8_t*)mmap < (uint8_t*)tag + tag->size;
@@ -89,9 +89,9 @@ reserved_areas_t find_reserved_areas(multiboot_info_t* mbi)
         break;
 
       case MULTIBOOT_TAG_TYPE_ELF_SECTIONS: {
-        multiboot_elf_sections_entry_t* elf;
+        multiboot_elf_sections_entry_t* elf = NULL;
 
-        uint32_t i;
+        uint32_t i = 0;
 
         for (
           i = 0, elf = ((multiboot_tag_elf_sections_t*)tag)->sections;

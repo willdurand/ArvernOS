@@ -44,7 +44,7 @@ inode_t tar_fs_init(uint64_t address)
 
 uint64_t tar_read_headers(uint64_t address)
 {
-  uint64_t i;
+  uint64_t i = 0;
 
   for (i = 0;; i++) {
     tar_header_t* header = (tar_header_t*)address;
@@ -69,7 +69,7 @@ uint64_t tar_read_headers(uint64_t address)
 uint64_t get_size(const char* in)
 {
   uint64_t size = 0;
-  uint64_t j;
+  uint64_t j = 0;
   uint64_t count = 1;
 
   for (j = 11; j > 0; j--, count *= 8) {
@@ -112,7 +112,7 @@ uint64_t tar_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
     return size - offset;
   }
 
-  // TODO(william): add support for other types like symlinks (at least)
+  // TODO: add support for other types like symlinks (at least)
 
   return 0;
 }
@@ -121,7 +121,7 @@ inode_t tar_finddir(inode_t inode, const char* name)
 {
   inode_t node = calloc(1, sizeof(vfs_node_t));
 
-  char* fullpath;
+  char* fullpath = NULL;
 
   if (inode->data >= 0) {
     fullpath = malloc((strlen(headers[inode->data]->name) + strlen(name) + 1) *

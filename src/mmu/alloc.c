@@ -6,7 +6,7 @@
 #include <string.h>
 #include <sys/types.h>
 
-#define ALLOC_BITMAP_SIZE MAX_PAGES / BITS_PER_WORD
+#define ALLOC_BITMAP_SIZE (MAX_PAGES / BITS_PER_WORD)
 
 uint64_t heap_end_page;
 uint64_t heap_start_page;

@@ -2,7 +2,7 @@
 
 uint64_t read_cr0()
 {
-  uint64_t value;
+  uint64_t value = 0;
 
   __asm__("mov %%cr0, %0" : "=r"(value) : /* no input */);
 
@@ -11,7 +11,7 @@ uint64_t read_cr0()
 
 uint64_t read_cr2()
 {
-  uint64_t value;
+  uint64_t value = 0;
 
   __asm__("mov %%cr2, %0" : "=r"(value) : /* no input */);
 
@@ -20,7 +20,7 @@ uint64_t read_cr2()
 
 uint64_t read_cr3()
 {
-  uint64_t value;
+  uint64_t value = 0;
 
   __asm__("mov %%cr3, %0" : "=r"(value) : /* no input */);
 
@@ -39,7 +39,7 @@ void write_cr3(uint64_t value)
 
 uint64_t read_msr(uint64_t msr)
 {
-  uint32_t low, high;
+  uint32_t low = 0, high = 0;
 
   __asm__("rdmsr" : "=a"(low), "=d"(high) : "c"(msr));
 

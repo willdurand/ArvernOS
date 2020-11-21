@@ -88,15 +88,12 @@ void remap_kernel(multiboot_info_t* mbi)
   multiboot_tag_elf_sections_t* tag =
     find_multiboot_tag(mbi, MULTIBOOT_TAG_TYPE_ELF_SECTIONS);
 
-  uint64_t i;
-  multiboot_elf_sections_entry_t* elf;
+  uint64_t i = 0;
+  multiboot_elf_sections_entry_t* elf = NULL;
 
-  for (i = 0, elf = ((multiboot_tag_elf_sections_t*)tag)->sections;
-       i < ((multiboot_tag_elf_sections_t*)tag)->num;
+  for (i = 0, elf = (tag)->sections; i < (tag)->num;
        elf =
-         (multiboot_elf_sections_entry_t*)((uint64_t)elf +
-                                           ((multiboot_tag_elf_sections_t*)tag)
-                                             ->section_size),
+         (multiboot_elf_sections_entry_t*)((uint64_t)elf + (tag)->section_size),
       i++) {
     if (!(elf->flags | MULTIBOOT_ELF_SECTION_FLAG_ALLOCATED)) {
       continue;
@@ -392,7 +389,7 @@ void map_page_to_frame(uint64_t page, uint64_t frame, uint64_t flags)
     PANIC("%s", "entry should be unused");
   }
 
-  paging_set_entry(entry, (uint64_t)frame, flags);
+  paging_set_entry(entry, frame, flags);
   p1->entries[p1_idx] = *entry;
 
   DEBUG("mapped page=%u to frame=%p (number=%d)",
@@ -518,7 +515,7 @@ void unmap(uint64_t page_number)
   __asm__("invlpg (%0)" : /* no output */ : "r"(addr) : "memory");
 #endif
 
-  // TODO(william): free p(1,2,3) table if empty
+  // TODO: free p(1,2,3) table if empty
 
   if (can_deallocate_frames) {
     paging_frame_deallocate(frame_number);

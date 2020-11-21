@@ -129,7 +129,7 @@ inode_t vfs_find_root(char** path)
   inode_t current = vfs_root;
   inode_t mount = current;
 
-  char* name;
+  char* name = NULL;
 
   while ((name = strsep(path, "/")) != 0) {
     DEBUG("current->name=%s name=%s", current->name, name);
@@ -168,7 +168,7 @@ inode_t vfs_namei_mount(const char* path, inode_t root)
   inode_t current = vfs_find_root(&pth);
 
   if (strcmp(path, "/") != 0) {
-    char* name;
+    char* name = NULL;
 
     while (current && (name = strsep(&pth, "/")) != 0) {
       inode_t next = vfs_finddir(current, name);
@@ -246,7 +246,7 @@ inode_t vfs_namei(const char* path)
 inode_t vfs_umount(const char* path)
 {
   DEBUG("umounting path=%s", path);
-  // TODO(william): implement me
+  // TODO: implement me
   return 0;
 }
 

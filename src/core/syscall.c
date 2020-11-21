@@ -145,7 +145,7 @@ void syscall_gettimeofday(registers_t* registers)
   struct timeval* t = registers->rbx;
 
   t->tv_sec = cmos_boot_time() + timer_uptime();
-  // TODO(william): set a correct value, see:
+  // TODO: set a correct value, see:
   // https://www.gnu.org/software/libc/manual/html_node/Elapsed-Time.html
   t->tv_usec = 0;
 

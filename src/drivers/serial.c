@@ -9,7 +9,6 @@
 void serial_write(uint16_t com, char c);
 bool serial_received(uint16_t com);
 bool serial_is_transmit_fifo_empty(uint16_t com);
-// TODO(william): could be exposed later if needed
 char serial_read(uint16_t com);
 
 void serial_init(uint16_t com, uint16_t speed)

@@ -4,7 +4,7 @@
 #include <mmu/debug.h>
 #include <string.h>
 
-#define FRAME_BITMAP_SIZE MAX_FRAMES / BITS_PER_WORD
+#define FRAME_BITMAP_SIZE (MAX_FRAMES / BITS_PER_WORD)
 
 opt_uint64_t read_mmap(uint64_t request);
 

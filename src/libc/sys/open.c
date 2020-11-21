@@ -2,7 +2,7 @@
 
 int open(const char* pathname, uint32_t flags, ...)
 {
-  int fd;
+  int fd = 0;
 
   __asm__(INT_SYSCALL
           : "=d"(fd)

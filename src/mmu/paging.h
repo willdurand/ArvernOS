@@ -160,7 +160,7 @@ uint32_t paging_amount_for_byte_size(uint64_t start_address,
 
 // The functions below are exposed for testing purposes.
 
-void _set_p4(page_table_t* p4);
+void _set_p4(page_table_t* table);
 uint64_t _p3_index(uint64_t page);
 uint64_t _p2_index(uint64_t page);
 uint64_t _p1_index(uint64_t page);

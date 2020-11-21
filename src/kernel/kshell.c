@@ -253,10 +253,12 @@ void overflow()
 
 void meminfo()
 {
-  printf(
-    "frames      : %6d/%d\n", frame_get_used_count(), frame_get_max_count());
-  printf(
-    "heap (pages): %6d/%d\n", alloc_get_used_count(), alloc_get_max_count());
+  printf("frames      : %6llu/%llu\n",
+         frame_get_used_count(),
+         frame_get_max_count());
+  printf("heap (pages): %6llu/%llu\n",
+         alloc_get_used_count(),
+         alloc_get_max_count());
 }
 
 void run_command(const char* command)
@@ -267,8 +269,7 @@ void run_command(const char* command)
     return;
   }
 
-  // TODO(william): implement and use `strtok()` to get the command and the
-  // arguments.
+  // TODO: implement and use `strtok()` to get the command and the arguments.
 
   if (strncmp(command, "help", 4) == 0) {
     help(command);

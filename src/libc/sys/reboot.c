@@ -2,7 +2,7 @@
 
 int reboot(int command)
 {
-  int ret;
+  int ret = 0;
 
   __asm__(INT_SYSCALL : "=d"(ret) : "a"(SYSCALL_REBOOT), "b"(command));
 

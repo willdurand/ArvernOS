@@ -2,7 +2,7 @@
 
 int close(int fd)
 {
-  int ret;
+  int ret = 0;
 
   __asm__(INT_SYSCALL : "=d"(ret) : "a"(SYSCALL_CLOSE), "b"(fd));
 
