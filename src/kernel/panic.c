@@ -1,11 +1,11 @@
 #include "panic.h"
 #include <core/isr.h>
-#include <drivers/screen.h>
+#include <drivers/vga_text.h>
 #include <stdio.h>
 
 void kernel_panic(const char* format, ...)
 {
-  screen_color_scheme(COLOR_RED, COLOR_BLACK);
+  vga_text_color_scheme(COLOR_RED, COLOR_BLACK);
 
   va_list arg;
   va_start(arg, format);
