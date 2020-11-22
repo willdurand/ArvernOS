@@ -5,15 +5,16 @@
 
 void kernel_panic(const char* format, ...)
 {
-  vga_text_color_scheme(COLOR_RED, COLOR_BLACK);
+  printf("\033[0;31m");
 
   va_list arg;
   va_start(arg, format);
   vprintf(format, arg);
   va_end(arg);
 
-  printf("\n\n%45s", "SYSTEM HALTED!");
+  printf("\n\n%45s\033[0m", "SYSTEM HALTED!");
 
+  vga_text_disable_cursor();
   irq_disable();
 
   while (1) {

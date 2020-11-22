@@ -3,9 +3,9 @@
 #include <core/reboot.h>
 #include <core/timer.h>
 #include <drivers/keyboard.h>
-#include <drivers/vga_text.h>
 #include <errno.h>
 #include <fs/vfs.h>
+#include <kernel/console.h>
 #include <kernel/panic.h>
 #include <proc/fd.h>
 #include <stdint.h>
@@ -68,14 +68,8 @@ void syscall_write(registers_t* registers)
   char* buf = (char*)registers->rcx;
   size_t count = (size_t)registers->rsi;
 
-  if (fd == FD_STDOUT &&
-      strncmp(buf, ESCAPE_SEQUENCE_CLEAR, strlen(ESCAPE_SEQUENCE_CLEAR)) == 0) {
-    vga_text_clear();
-    return;
-  }
-
   if (fd == FD_STDOUT || fd == FD_STDERR) {
-    registers->rdx = vga_text_print(buf, count);
+    registers->rdx = console_write(buf, count);
     return;
   }
 
