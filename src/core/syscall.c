@@ -3,7 +3,7 @@
 #include <core/reboot.h>
 #include <core/timer.h>
 #include <drivers/keyboard.h>
-#include <drivers/screen.h>
+#include <drivers/vga_text.h>
 #include <errno.h>
 #include <fs/vfs.h>
 #include <kernel/panic.h>
@@ -70,12 +70,12 @@ void syscall_write(registers_t* registers)
 
   if (fd == FD_STDOUT &&
       strncmp(buf, ESCAPE_SEQUENCE_CLEAR, strlen(ESCAPE_SEQUENCE_CLEAR)) == 0) {
-    screen_clear();
+    vga_text_clear();
     return;
   }
 
   if (fd == FD_STDOUT || fd == FD_STDERR) {
-    registers->rdx = screen_print(buf, count);
+    registers->rdx = vga_text_print(buf, count);
     return;
   }
 

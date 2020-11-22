@@ -2,16 +2,16 @@
  * @file
  * @see https://en.wikipedia.org/wiki/VGA-compatible_text_mode
  */
-#ifndef SCREEN_H
-#define SCREEN_H
+#ifndef VGA_TEXT_H
+#define VGA_TEXT_H
 
 #include <stdint.h>
 #include <sys/types.h>
 
 /// The address of the frame buffer.
-#define VIDEO_ADDRESS 0xB8000
-#define SCREEN_WIDTH  80
-#define SCREEN_HEIGHT 25
+#define VIDEO_ADDRESS   0xB8000
+#define VGA_TEXT_WIDTH  80
+#define VGA_TEXT_HEIGHT 25
 
 static const uint8_t COLOR_BLACK = 0;
 static const uint8_t COLOR_BLUE = 1;
@@ -31,30 +31,30 @@ static const uint8_t COLOR_LIGHT_BROWN = 14;
 static const uint8_t COLOR_WHITE = 15;
 
 /**
- * Initializes the screen driver.
+ * Initializes the VGA text mode driver.
  */
-void screen_init();
+void vga_text_init();
 
 /**
  * Clears the entire screen.
  */
-void screen_clear();
+void vga_text_clear();
 
 /**
  * Writes a character to the screen.
  *
  * @param c the character to write to the screen
  */
-void screen_write(char c);
+void vga_text_write(char c);
 
 /**
  * Prints a string to the screen.
  *
  * @param str the string to print to the screen
- * @param count the number of characters to write
- * @return the numberof characters printed to the screen
+ * @param count the number of characters to print
+ * @return the number of characters printed to the screen
  */
-size_t screen_print(const char* str, size_t count);
+size_t vga_text_print(const char* str, size_t count);
 
 /**
  * Changes the color scheme of the screen (background and foreground) that will
@@ -63,6 +63,6 @@ size_t screen_print(const char* str, size_t count);
  * @param fg the foreground color
  * @param bg the background color
  */
-void screen_color_scheme(uint8_t fg, uint8_t bg);
+void vga_text_color_scheme(uint8_t fg, uint8_t bg);
 
 #endif

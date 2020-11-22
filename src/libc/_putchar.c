@@ -1,11 +1,11 @@
 #include <stdio.h>
 
 #ifdef __is_libk
-#include <drivers/screen.h>
+#include <drivers/vga_text.h>
 
 void _putchar(char c)
 {
-  screen_write(c);
+  vga_text_write(c);
 }
 
 #else

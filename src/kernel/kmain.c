@@ -6,8 +6,8 @@
 #include <core/syscall.h>
 #include <core/timer.h>
 #include <drivers/keyboard.h>
-#include <drivers/screen.h>
 #include <drivers/serial.h>
+#include <drivers/vga_text.h>
 #include <fs/debug.h>
 #include <fs/proc.h>
 #include <fs/tar.h>
@@ -27,9 +27,9 @@ void check_interrupts();
 
 void print_welcome_messge()
 {
-  screen_color_scheme(COLOR_LIGHT_BLUE, COLOR_BLACK);
+  vga_text_color_scheme(COLOR_LIGHT_BLUE, COLOR_BLACK);
   printf("%s\n", KERNEL_ASCII);
-  screen_color_scheme(COLOR_WHITE, COLOR_BLACK);
+  vga_text_color_scheme(COLOR_WHITE, COLOR_BLACK);
   printf("%s %s (%s) / Built on: %s at %s\n\n",
          KERNEL_NAME,
          KERNEL_VERSION,
@@ -46,18 +46,18 @@ void print_step(const char* msg)
 void print_ok()
 {
   printf("  [");
-  screen_color_scheme(COLOR_GREEN, COLOR_BLACK);
+  vga_text_color_scheme(COLOR_GREEN, COLOR_BLACK);
   printf("OK");
-  screen_color_scheme(COLOR_WHITE, COLOR_BLACK);
+  vga_text_color_scheme(COLOR_WHITE, COLOR_BLACK);
   printf("]");
 }
 
 void print_ko()
 {
   printf("[");
-  screen_color_scheme(COLOR_RED, COLOR_BLACK);
+  vga_text_color_scheme(COLOR_RED, COLOR_BLACK);
   printf("FAIL");
-  screen_color_scheme(COLOR_WHITE, COLOR_BLACK);
+  vga_text_color_scheme(COLOR_WHITE, COLOR_BLACK);
   printf("]");
 }
 
@@ -76,8 +76,8 @@ void check_interrupts()
 
 void kmain(uint64_t addr)
 {
-  screen_init();
-  screen_clear();
+  vga_text_init();
+  vga_text_clear();
 
   multiboot_info_t* mbi = (multiboot_info_t*)addr;
 
