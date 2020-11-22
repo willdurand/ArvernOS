@@ -2,7 +2,6 @@
 #include <core/cmos.h>
 #include <core/debug.h>
 #include <core/elf.h>
-#include <drivers/vga_text.h>
 #include <fs/debug.h>
 #include <fs/vfs.h>
 #include <mmu/alloc.h>
@@ -100,9 +99,7 @@ void help(const char* command)
 
 void print_selftest_header(const char* name)
 {
-  vga_text_color_scheme(COLOR_BROWN, COLOR_BLACK);
-  printf("\n[%s]\n", name);
-  vga_text_color_scheme(COLOR_WHITE, COLOR_BLACK);
+  printf("\n\033[1;33m[%s]\033[0m\n", name);
 }
 
 void selftest()
@@ -297,9 +294,7 @@ void run_command(const char* command)
 
 void kshell_print_prompt()
 {
-  vga_text_color_scheme(COLOR_CYAN, COLOR_BLACK);
-  printf(PROMPT);
-  vga_text_color_scheme(COLOR_WHITE, COLOR_BLACK);
+  printf("\033[0;36m%s\033[0m", PROMPT);
 }
 
 char readline[READLINE_SIZE] = { 0 };
@@ -411,7 +406,7 @@ void kshell_run(uint8_t scancode)
                 break;
 
               case 'l':
-                vga_text_clear();
+                printf("\033[H\033[2J");
                 reset_readline();
                 kshell_print_prompt();
                 break;

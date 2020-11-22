@@ -17,17 +17,16 @@
 #define LIGHT_CYAN    "\x1B[1;36m"
 #define WHITE         "\x1B[37m"
 #define LIGHT_WHITE   "\x1B[1;37m"
-//#define RESET          "\x1B[0m"
-#define RESET ""
+#define RESET         "\x1B[0m"
 
 // Normal text color
-const char normal[] = ""; // WHITE;
+const char normal[] = WHITE;
 
 // Dark text color, used for day tags
-const char darken[] = ""; // LIGHT_RED;
+const char darken[] = LIGHT_RED;
 
 // Active color, for time, and current day indication
-const char active[] = ""; // LIGHT_GREEN;
+const char active[] = LIGHT_GREEN;
 
 // Time & date format,
 // SEE strftime MANPAGE FOR MORE EXPANSIONS
