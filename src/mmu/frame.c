@@ -6,7 +6,7 @@
 
 opt_uint64_t read_mmap(uint64_t request);
 
-multiboot_tag_mmap_t* memory_area;
+multiboot_tag_mmap_t* memory_area = NULL;
 uint64_t kernel_start;
 uint64_t kernel_end;
 uint64_t multiboot_start;
@@ -16,13 +16,9 @@ bitmap_t allocated_frames[(MAX_FRAMES / BITS_PER_WORD) + 1] = { 0 };
 void frame_init(multiboot_info_t* mbi)
 {
   reserved_areas_t reserved = find_reserved_areas(mbi);
-  multiboot_tag_mmap_t* mmap = find_multiboot_tag(mbi, MULTIBOOT_TAG_TYPE_MMAP);
+  multiboot_tag_mmap_t* mmap =
+    (multiboot_tag_mmap_t*)find_multiboot_tag(mbi, MULTIBOOT_TAG_TYPE_MMAP);
 
-  _frame_init(reserved, mmap);
-}
-
-void _frame_init(reserved_areas_t reserved, multiboot_tag_mmap_t* mmap)
-{
   MMU_DEBUG("multiboot_start = %p, multiboot_end = %p",
             reserved.multiboot_start,
             reserved.multiboot_end);
@@ -43,6 +39,15 @@ void _frame_init(reserved_areas_t reserved, multiboot_tag_mmap_t* mmap)
         kernel_start,
         kernel_end,
         frame_get_used_count());
+}
+
+void _frame_init(reserved_areas_t reserved, multiboot_tag_mmap_t* mmap)
+{
+  memory_area = mmap;
+  kernel_start = reserved.kernel_start;
+  kernel_end = reserved.kernel_end;
+  multiboot_start = reserved.multiboot_start;
+  multiboot_end = reserved.multiboot_end;
 }
 
 opt_uint64_t frame_allocate()

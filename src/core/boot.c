@@ -4,15 +4,18 @@
 
 void* find_multiboot_tag(multiboot_info_t* mbi, uint16_t type)
 {
+  multiboot_tag_t* tag = NULL;
+
   // `*tag` points to the first tag of the multiboot_info_t struct
-  for (multiboot_tag_t* tag = mbi->tags; tag->type != MULTIBOOT_TAG_TYPE_END;
+  for (tag = (multiboot_tag_t*)mbi->tags; tag->type != MULTIBOOT_TAG_TYPE_END;
        tag = (multiboot_tag_t*)((uint8_t*)tag + ((tag->size + 7) & ~7))) {
     if (tag->type == type) {
+      DEBUG("found tag for type=%d", type);
       return tag;
     }
   }
 
-  return 0;
+  return NULL;
 }
 
 reserved_areas_t find_reserved_areas(multiboot_info_t* mbi)

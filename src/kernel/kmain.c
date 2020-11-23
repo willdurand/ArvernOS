@@ -121,7 +121,7 @@ void kmain(uint64_t addr)
 
   print_step("mounting all file systems");
   multiboot_tag_module_t* module =
-    find_multiboot_tag(mbi, MULTIBOOT_TAG_TYPE_MODULE);
+    (multiboot_tag_module_t*)find_multiboot_tag(mbi, MULTIBOOT_TAG_TYPE_MODULE);
   inode_t initrd = vfs_mount("/", tar_fs_init((uint64_t)module->mod_start));
 
   if (initrd) {

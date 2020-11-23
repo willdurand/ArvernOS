@@ -86,7 +86,8 @@ void remap_kernel(multiboot_info_t* mbi)
 
   DEBUG("%s", "mapping elf sections");
   multiboot_tag_elf_sections_t* tag =
-    find_multiboot_tag(mbi, MULTIBOOT_TAG_TYPE_ELF_SECTIONS);
+    (multiboot_tag_elf_sections_t*)find_multiboot_tag(
+      mbi, MULTIBOOT_TAG_TYPE_ELF_SECTIONS);
 
   uint64_t i = 0;
   multiboot_elf_sections_entry_t* elf = NULL;
@@ -139,7 +140,7 @@ void remap_kernel(multiboot_info_t* mbi)
 
   DEBUG("%s", "mapping multiboot module");
   multiboot_tag_module_t* module =
-    find_multiboot_tag(mbi, MULTIBOOT_TAG_TYPE_MODULE);
+    (multiboot_tag_module_t*)find_multiboot_tag(mbi, MULTIBOOT_TAG_TYPE_MODULE);
   uint64_t initrd_location = (uint64_t)module->mod_start;
   uint64_t initrd_end = (uint64_t)module->mod_end;
   for (uint64_t addr = initrd_location; addr < initrd_end; addr += PAGE_SIZE) {
