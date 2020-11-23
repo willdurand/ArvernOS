@@ -5,14 +5,14 @@ var paging_8h =
     [ "PAGING_FLAG_NO_EXECUTE", "paging_8h.html#a9b636c6433bad872f80f46458db566f7", null ],
     [ "PAGING_FLAG_PRESENT", "paging_8h.html#a28ff91b933f24d95e25ec5f03a736117", null ],
     [ "PAGING_FLAG_WRITABLE", "paging_8h.html#adac89a5c7c54309cb4a4570d0f8cf75c", null ],
-    [ "map", "paging_8h.html#a31b7b687f7cd7773e3dd5107bcdea030", null ],
-    [ "map_multiple", "paging_8h.html#ab063ff074fc27894763609d156c8cd74", null ],
-    [ "map_page_to_frame", "paging_8h.html#a5dd0a3132223e82f998eb88ffd6b7876", null ],
-    [ "page_containing_address", "paging_8h.html#a8cecba5b00cd544790f3a2fbb1503660", null ],
-    [ "page_start_address", "paging_8h.html#a7fdbe7d41abc360ddd26ea67b004cba4", null ],
+    [ "map", "paging_8h.html#af55681dc6c9ebb94b26ea497afe673f8", null ],
+    [ "map_multiple", "paging_8h.html#a623291cd42facbd946e92e5307abe313", null ],
+    [ "map_page_to_frame", "paging_8h.html#a21d6881f3057672ad78c4334d8e0158f", null ],
+    [ "page_containing_address", "paging_8h.html#a4a8869be87726e3c57c4856fc7b3531c", null ],
+    [ "page_start_address", "paging_8h.html#a96f5f0b5adaea47eda3e10c93401b2bf", null ],
     [ "paging_amount_for_byte_size", "paging_8h.html#acd78a6bfbdc7cbbe0e578e52eccad8bf", null ],
     [ "paging_init", "paging_8h.html#a44fe56c079dc6d3c0d4b29f5b9dab5a5", null ],
-    [ "translate_page", "paging_8h.html#af0b742de52d063fb8f1c524c2c4e8923", null ],
-    [ "unmap", "paging_8h.html#a71d704c874eecb8fa6cc99e8c873e890", null ],
-    [ "unmap_multiple", "paging_8h.html#af2eea286ae7a39c9e24ec2e4914edf14", null ]
+    [ "translate_page", "paging_8h.html#a93e89a9ca57751d1b04f8d95ccbddb4b", null ],
+    [ "unmap", "paging_8h.html#a2556847794baa9bcb9be757f7f67f6b4", null ],
+    [ "unmap_multiple", "paging_8h.html#aaf4d9db68debae8e51bab96105966d07", null ]
 ];

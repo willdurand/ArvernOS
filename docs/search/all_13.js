@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['unmap_185',['unmap',['../paging_8h.html#a71d704c874eecb8fa6cc99e8c873e890',1,'paging.c']]],
-  ['unmap_5fmultiple_186',['unmap_multiple',['../paging_8h.html#af2eea286ae7a39c9e24ec2e4914edf14',1,'paging.c']]]
+  ['unmap_183',['unmap',['../paging_8h.html#a2556847794baa9bcb9be757f7f67f6b4',1,'paging.c']]],
+  ['unmap_5fmultiple_184',['unmap_multiple',['../paging_8h.html#aaf4d9db68debae8e51bab96105966d07',1,'paging.c']]]
 ];
