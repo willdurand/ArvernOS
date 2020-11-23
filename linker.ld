@@ -17,21 +17,21 @@ SECTIONS {
     .text :
     {
         /* next we put the .text section */
-        *(.text)
+        *(.text. .text.*)
         . = ALIGN(4K);
     }
 
     /* read-write data (initialized) */
     .data :
     {
-        *(.data)
+        *(.data .data.*)
         . = ALIGN(4K);
     }
 
     /* read-write data (uninitialized) and stack */
     .bss :
     {
-        *(.bss)
+        *(.bss .bss.*)
         . = ALIGN(4K);
     }
 
