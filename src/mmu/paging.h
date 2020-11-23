@@ -60,6 +60,8 @@ typedef struct page_table
   page_entry_t entries[PAGE_ENTRIES];
 } page_table_t;
 
+typedef uint64_t page_number_t;
+
 /**
  * @brief Initializes paging to separate virtual and physical memory.
  *
@@ -76,6 +78,11 @@ typedef struct page_table
  * fault exceptions instead of modifying arbitrary physical memory. That being
  * said, identity mapping clutters the virtual address space and makes it more
  * difficult to find continuous memory regions of larger sizes (like 1000 KiB).
+ *
+ * We remap the kernel and other useful sections/addresses in this function,
+ * then we enable write protection, the NXE bit and we switch to our own table.
+ * This allows us to make everything safer. Memory is still identity mapped,
+ * which isn't great but it works for now.
  */
 void paging_init(multiboot_info_t* mbi);
 
@@ -85,15 +92,15 @@ void paging_init(multiboot_info_t* mbi);
  * @param virtual_address a virtual address (page)
  * @returns a page number
  */
-uint64_t page_containing_address(uint64_t virtual_address);
+page_number_t page_containing_address(uint64_t virtual_address);
 
 /**
  * Returns the virtual start address of a page.
  *
- * @param page_number a page number (not an address)
+ * @param page_number a page number
  * @returns a virtual address (page)
  */
-uint64_t page_start_address(uint64_t page_number);
+uint64_t page_start_address(page_number_t page_number);
 
 /**
  * Translates a page number to a frame number.
@@ -101,7 +108,7 @@ uint64_t page_start_address(uint64_t page_number);
  * @param page_number a page number (not an address)
  * @returns a frame number (optional)
  */
-opt_uint64_t translate_page(uint64_t page_number);
+opt_uint64_t translate_page(page_number_t page_number);
 
 /**
  * Maps a page (number) to a frame (physical address).
@@ -110,7 +117,9 @@ opt_uint64_t translate_page(uint64_t page_number);
  * @param frame a physical address (frame)
  * @param flags paging flags
  */
-void map_page_to_frame(uint64_t page, uint64_t frame, uint64_t flags);
+void map_page_to_frame(page_number_t page_number,
+                       uint64_t frame,
+                       uint64_t flags);
 
 /**
  * Convenient function to map a pager (number) without providing a frame. The
@@ -119,7 +128,7 @@ void map_page_to_frame(uint64_t page, uint64_t frame, uint64_t flags);
  * @param page_number a page number (not an address)
  * @param flags paging flags
  */
-void map(uint64_t page_number, uint64_t flags);
+void map(page_number_t page_number, uint64_t flags);
 
 /**
  * Maps multiple pages in a row if possible.
@@ -128,7 +137,7 @@ void map(uint64_t page_number, uint64_t flags);
  * @param number_of_pages the amount of pages to map
  * @param flags the paging flags
  */
-void map_multiple(uint64_t start_page_number,
+void map_multiple(page_number_t start_page_number,
                   uint32_t number_of_pages,
                   uint64_t flags);
 
@@ -137,7 +146,7 @@ void map_multiple(uint64_t start_page_number,
  *
  * @param page_number a page number (not an address)
  */
-void unmap(uint64_t page_number);
+void unmap(page_number_t page_number);
 
 /**
  * Unmaps multiple consecutive pages.
@@ -145,7 +154,7 @@ void unmap(uint64_t page_number);
  * @param start_page_number the first page of the sequence
  * @param number_of_pages the amount of pages to unmap
  */
-void unmap_multiple(uint64_t start_page_number, uint32_t number_of_pages);
+void unmap_multiple(page_number_t start_page_number, uint32_t number_of_pages);
 
 /**
  * Calculates how many pages are needed for a range of addresses.
@@ -161,13 +170,13 @@ uint32_t paging_amount_for_byte_size(uint64_t start_address,
 // The functions below are exposed for testing purposes.
 
 void _set_p4(page_table_t* table);
-uint64_t _p3_index(uint64_t page);
-uint64_t _p2_index(uint64_t page);
-uint64_t _p1_index(uint64_t page);
+uint64_t _p3_index(page_number_t page_number);
+uint64_t _p2_index(page_number_t page_number);
+uint64_t _p1_index(page_number_t page_number);
 
 #ifdef TEST_ENV
 opt_uint64_t test_frame_allocate();
-void test_frame_deallocate(uint64_t frame_number);
+void test_frame_deallocate(frame_number_t frame_number);
 page_table_t* test_next_table();
 #endif
 
