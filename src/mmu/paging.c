@@ -103,21 +103,17 @@ void remap_kernel(multiboot_info_t* mbi)
     frame_number_t end_frame_number =
       frame_containing_address(elf->addr + elf->size);
 
+    uint64_t flags = PAGING_FLAG_PRESENT;
+
+    if (elf->flags | MULTIBOOT_ELF_SECTION_FLAG_WRITABLE) {
+      flags |= PAGING_FLAG_WRITABLE;
+    }
+
+    if (!(elf->flags | MULTIBOOT_ELF_SECTION_FLAG_EXECUTABLE)) {
+      flags |= PAGING_FLAG_NO_EXECUTE;
+    }
+
     for (uint64_t i = start_frame_number; i <= end_frame_number; i++) {
-      uint64_t flags = 0;
-
-      if (elf->flags | MULTIBOOT_ELF_SECTION_FLAG_ALLOCATED) {
-        flags |= PAGING_FLAG_PRESENT;
-      }
-
-      if (elf->flags | MULTIBOOT_ELF_SECTION_FLAG_WRITABLE) {
-        flags |= PAGING_FLAG_WRITABLE;
-      }
-
-      if (!(elf->flags | MULTIBOOT_ELF_SECTION_FLAG_EXECUTABLE)) {
-        flags |= PAGING_FLAG_NO_EXECUTE;
-      }
-
       identity_map(frame_start_address(i), flags);
     }
   }
