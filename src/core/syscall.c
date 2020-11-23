@@ -14,7 +14,8 @@
 #include <string.h>
 #include <sys/syscall.h>
 
-syscall_handler_t syscall_handlers[NB_SYSCALLS];
+// `+ 1` because it is a 1-based index.
+syscall_handler_t syscall_handlers[NB_SYSCALLS + 1];
 
 void syscall_register_handler(uint8_t id, syscall_handler_t handler);
 void syscall_print_registers(registers_t* registers);
@@ -136,7 +137,7 @@ void syscall_read(registers_t* registers)
 
 void syscall_gettimeofday(registers_t* registers)
 {
-  struct timeval* t = registers->rbx;
+  struct timeval* t = (struct timeval*)registers->rbx;
 
   t->tv_sec = cmos_boot_time() + timer_uptime();
   // TODO: set a correct value, see:
@@ -150,7 +151,7 @@ void syscall_open(registers_t* registers)
 {
   errno = 0;
 
-  const char* pathname = registers->rbx;
+  const char* pathname = (const char*)registers->rbx;
   uint32_t flags = registers->rcx;
 
   inode_t inode = vfs_namei(pathname);
