@@ -114,7 +114,7 @@ debug: $(ISO)
 .PHONY: debug
 
 run-debug: ## build and run the OS in debug mode
-run-debug: QEMU_OPTIONS += -serial file:/tmp/serial.log
+run-debug: QEMU_OPTIONS += -serial file:./logs/serial.log
 run-debug: debug run
 .PHONY: run-debug
 
@@ -128,10 +128,10 @@ fmt: ## automatically format the code with clang-format
 	find . -type f \( -name '*.c' -o -name '*.h' \) -exec clang-format -style=file -i "{}" ";"
 .PHONY: fmt
 
-gdb: ## build, run the OS in debug mode and GDB
-gdb: CFLAGS += $(DEBUG_CFLAGS) -g -O0
-gdb: $(ISO)
-	qemu-system-x86_64 -s -S -cdrom $< -serial file:/tmp/serial.log
+gdb: ## build, run the OS in debug mode and enable GDB
+gdb: CFLAGS += -g -O0
+gdb: QEMU_OPTIONS += -s -S
+gdb: debug run
 .PHONY: gdb
 
 userland: ## compile the userland programs (statically linked to libc)
