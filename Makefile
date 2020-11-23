@@ -42,6 +42,8 @@ CFLAGS = -DKERNEL_NAME=\"$(OS_NAME)\" \
 
 DEBUG_CFLAGS = -DENABLE_KERNEL_DEBUG -DDEBUG_WITH_COLORS -DDISABLE_MMU_DEBUG
 
+QEMU_OPTIONS =
+
 default: iso
 
 kernel: ## compile the kernel
@@ -103,14 +105,18 @@ $(ISO): $(KERNEL) $(INITRD) $(GRUB_CFG)
 
 run: ## run the OS
 run: $(ISO)
-	$(QEMU) -cdrom $<
+	$(QEMU) -cdrom $< -m 500M $(QEMU_OPTIONS)
 .PHONY: run
 
-debug: ## build and run the OS in debug mode
+debug: ## build the OS in debug mode
 debug: CFLAGS += $(DEBUG_CFLAGS)
 debug: $(ISO)
-	$(QEMU) -cdrom $< -serial file:/tmp/serial.log -m 500M
 .PHONY: debug
+
+run-debug: ## build and run the OS in debug mode
+run-debug: QEMU_OPTIONS += -serial file:/tmp/serial.log
+run-debug: debug run
+.PHONY: run-debug
 
 clean: ## remove build artifacts
 	find . -name '*.orig' -exec rm "{}" ";"
@@ -173,6 +179,7 @@ test: libc
 version: ## print tool versions
 	$(CC) --version
 	$(LD) --version
+	$(QEMU) --version
 .PHONY: version
 
 $(INITRD): userland
