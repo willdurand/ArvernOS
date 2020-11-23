@@ -25,12 +25,12 @@ void zero_table(page_table_t* table);
 page_table_t* next_table_address(page_table_t* table, uint64_t index);
 opt_uint64_t translate(uint64_t virtual_address);
 opt_uint64_t pointed_frame(page_entry_t entry);
-uint64_t p4_index(uint64_t page);
+uint64_t p4_index(page_number_t page_number);
 page_table_t* next_table_create(page_table_t* table, uint64_t index);
 page_table_t* get_p4();
 void paging_set_entry(page_entry_t* entry, uint64_t addr, uint64_t flags);
 opt_uint64_t paging_frame_allocate();
-void paging_frame_deallocate(uint64_t frame_number);
+void paging_frame_deallocate(frame_number_t frame_number);
 void identity_map(uint64_t physical_address, uint64_t flags);
 
 page_table_t* active_p4_table = (page_table_t*)P4_TABLE;
@@ -48,7 +48,7 @@ void paging_init(multiboot_info_t* mbi)
 void remap_kernel(multiboot_info_t* mbi)
 {
   uint64_t inactive_page_table_frame = paging_frame_allocate().value;
-  uint64_t temporary_page = page_containing_address(0xcafebabe);
+  page_number_t temporary_page = page_containing_address(0xcafebabe);
 
   map_page_to_frame(temporary_page,
                     inactive_page_table_frame,
@@ -99,8 +99,9 @@ void remap_kernel(multiboot_info_t* mbi)
       continue;
     }
 
-    uint64_t start_frame_number = frame_containing_address(elf->addr);
-    uint64_t end_frame_number = frame_containing_address(elf->addr + elf->size);
+    frame_number_t start_frame_number = frame_containing_address(elf->addr);
+    frame_number_t end_frame_number =
+      frame_containing_address(elf->addr + elf->size);
 
     for (uint64_t i = start_frame_number; i <= end_frame_number; i++) {
       uint64_t flags = 0;
@@ -123,9 +124,9 @@ void remap_kernel(multiboot_info_t* mbi)
   DEBUG("%s", "elf sections mapped!");
 
   reserved_areas_t reserved = find_reserved_areas(mbi);
-  uint64_t multiboot_start_frame =
+  frame_number_t multiboot_start_frame =
     frame_containing_address(reserved.multiboot_start);
-  uint64_t multiboot_end_frame =
+  frame_number_t multiboot_end_frame =
     frame_containing_address(reserved.multiboot_end - 1);
 
   DEBUG("mapping multiboot info: start_frame=%d end_frame=%d",
@@ -164,7 +165,7 @@ void remap_kernel(multiboot_info_t* mbi)
 
   uint64_t old_page_table_frame =
     frame_start_address(frame_containing_address(backup_addr));
-  uint64_t old_page_table = page_containing_address(old_page_table_frame);
+  page_number_t old_page_table = page_containing_address(old_page_table_frame);
   unmap(old_page_table);
   DEBUG("guard page at %p", page_start_address(old_page_table));
 }
@@ -222,7 +223,7 @@ page_table_t* next_table_address(page_table_t* table, uint64_t index)
 opt_uint64_t translate(uint64_t virtual_address)
 {
   uint64_t offset = virtual_address % PAGE_SIZE;
-  uint64_t page = page_containing_address(virtual_address);
+  page_number_t page = page_containing_address(virtual_address);
   opt_uint64_t frame = translate_page(page);
 
   if (!frame.has_value) {
@@ -233,7 +234,7 @@ opt_uint64_t translate(uint64_t virtual_address)
                          .value = frame.value * PAGE_SIZE + offset };
 }
 
-uint64_t page_containing_address(uint64_t virtual_address)
+page_number_t page_containing_address(uint64_t virtual_address)
 {
   // So the address space is split into two halves: the higher half containing
   // addresses with sign extension and the lower half containing addresses
@@ -247,12 +248,12 @@ uint64_t page_containing_address(uint64_t virtual_address)
   return 0; // never reached but avoid a GCC warning.
 }
 
-uint64_t page_start_address(uint64_t page_number)
+uint64_t page_start_address(page_number_t page_number)
 {
   return page_number * PAGE_SIZE;
 }
 
-opt_uint64_t translate_page(uint64_t page_number)
+opt_uint64_t translate_page(page_number_t page_number)
 {
   page_table_t* p4 = get_p4();
 
@@ -310,24 +311,24 @@ opt_uint64_t translate_page(uint64_t page_number)
   return pointed_frame(p1->entries[_p1_index(page_number)]);
 }
 
-uint64_t p4_index(uint64_t page)
+uint64_t p4_index(page_number_t page_number)
 {
-  return (page >> 27) & 0777;
+  return (page_number >> 27) & 0777;
 }
 
-uint64_t _p3_index(uint64_t page)
+uint64_t _p3_index(page_number_t page_number)
 {
-  return (page >> 18) & 0777;
+  return (page_number >> 18) & 0777;
 }
 
-uint64_t _p2_index(uint64_t page)
+uint64_t _p2_index(page_number_t page_number)
 {
-  return (page >> 9) & 0777;
+  return (page_number >> 9) & 0777;
 }
 
-uint64_t _p1_index(uint64_t page)
+uint64_t _p1_index(page_number_t page_number)
 {
-  return (page >> 0) & 0777;
+  return (page_number >> 0) & 0777;
 }
 
 opt_uint64_t pointed_frame(page_entry_t entry)
@@ -343,28 +344,30 @@ opt_uint64_t pointed_frame(page_entry_t entry)
   return (opt_uint64_t){ .has_value = false, .value = 0 };
 }
 
-void map_page_to_frame(uint64_t page, uint64_t frame, uint64_t flags)
+void map_page_to_frame(page_number_t page_number,
+                       uint64_t frame,
+                       uint64_t flags)
 {
-  uint64_t frame_number = frame_containing_address(frame);
+  frame_number_t frame_number = frame_containing_address(frame);
 
   DEBUG(
     "mapping page=%u (start_addr=%p) to frame=%p (number=%d) with flags=%#x",
-    page,
-    page_start_address(page),
+    page_number,
+    page_start_address(page_number),
     frame,
     frame_number,
     flags);
 
-  opt_uint64_t maybe_frame = translate_page(page);
+  opt_uint64_t maybe_frame = translate_page(page_number);
   if (maybe_frame.has_value) {
-    DEBUG("page=%u already mapped to frame=%u", page, frame_number);
+    DEBUG("page=%u already mapped to frame=%u", page_number, frame_number);
     return;
   }
 
-  uint64_t p4_idx = p4_index(page);
-  uint64_t p3_idx = _p3_index(page);
-  uint64_t p2_idx = _p2_index(page);
-  uint64_t p1_idx = _p1_index(page);
+  uint64_t p4_idx = p4_index(page_number);
+  uint64_t p3_idx = _p3_index(page_number);
+  uint64_t p2_idx = _p2_index(page_number);
+  uint64_t p1_idx = _p1_index(page_number);
 
   MMU_DEBUG(
     "p1_idx=%u p2_idx=%u p3_idx=%u p4_idx=%u", p1_idx, p2_idx, p3_idx, p4_idx);
@@ -393,7 +396,7 @@ void map_page_to_frame(uint64_t page, uint64_t frame, uint64_t flags)
   p1->entries[p1_idx] = *entry;
 
   DEBUG("mapped page=%u to frame=%p (number=%d)",
-        page,
+        page_number,
         frame,
         frame_containing_address(frame));
 }
@@ -474,7 +477,7 @@ void _set_p4(page_table_t* table)
   active_p4_table = table;
 }
 
-void unmap(uint64_t page_number)
+void unmap(page_number_t page_number)
 {
   uint64_t addr = page_start_address(page_number);
 
@@ -504,7 +507,7 @@ void unmap(uint64_t page_number)
     PANIC("trying to unmap an entry without a frame");
   }
 
-  uint64_t frame_number = frame.value;
+  frame_number_t frame_number = frame.value;
 
   MMU_DEBUG_PAGE_ENTRY("clearing", entry);
   p1->entries[_p1_index(page_number)].packed = 0;
@@ -524,7 +527,7 @@ void unmap(uint64_t page_number)
   DEBUG("unmapped page=%u addr=%p", page_number, addr);
 }
 
-void map(uint64_t page_number, uint64_t flags)
+void map(page_number_t page_number, uint64_t flags)
 {
   opt_uint64_t frame = paging_frame_allocate();
 
@@ -548,7 +551,7 @@ void map_multiple(uint64_t start_page_number,
   }
 }
 
-void unmap_multiple(uint64_t start_page_number, uint32_t number_of_pages)
+void unmap_multiple(page_number_t start_page_number, uint32_t number_of_pages)
 {
   MMU_DEBUG("unmapping %d pages, starting at page=%d",
             number_of_pages,
@@ -561,8 +564,8 @@ void unmap_multiple(uint64_t start_page_number, uint32_t number_of_pages)
 
 uint32_t paging_amount_for_byte_size(uint64_t start_address, uint64_t byte_size)
 {
-  uint64_t start_page = page_containing_address(start_address);
-  uint64_t end_page = page_containing_address(start_address + byte_size);
+  page_number_t start_page = page_containing_address(start_address);
+  page_number_t end_page = page_containing_address(start_address + byte_size);
 
   uint32_t difference = (uint32_t)(end_page - start_page) + 1;
 
@@ -578,7 +581,7 @@ opt_uint64_t paging_frame_allocate()
   return frame_allocate();
 }
 
-void paging_frame_deallocate(uint64_t frame_number)
+void paging_frame_deallocate(frame_number_t frame_number)
 {
 #ifdef TEST_ENV
   test_frame_deallocate(frame_number);
@@ -589,6 +592,6 @@ void paging_frame_deallocate(uint64_t frame_number)
 
 void identity_map(uint64_t physical_address, uint64_t flags)
 {
-  uint64_t page = page_containing_address(physical_address);
+  page_number_t page = page_containing_address(physical_address);
   map_page_to_frame(page, physical_address, flags);
 }

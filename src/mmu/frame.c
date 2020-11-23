@@ -68,18 +68,18 @@ opt_uint64_t frame_allocate()
   return frame;
 }
 
-void frame_deallocate(uint64_t frame_number)
+void frame_deallocate(frame_number_t frame_number)
 {
   DEBUG("deallocating frame=%u", frame_number);
   bitmap_clear(allocated_frames, frame_number);
 }
 
-uint64_t frame_containing_address(uint64_t physical_address)
+frame_number_t frame_containing_address(uint64_t physical_address)
 {
   return physical_address / PAGE_SIZE;
 }
 
-uint64_t frame_start_address(uint64_t frame_number)
+uint64_t frame_start_address(frame_number_t frame_number)
 {
   return frame_number * PAGE_SIZE;
 }

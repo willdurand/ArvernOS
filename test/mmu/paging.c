@@ -33,7 +33,7 @@ opt_uint64_t test_frame_allocate()
   return (opt_uint64_t){ .has_value = false, .value = 0 };
 }
 
-void test_frame_deallocate(uint64_t frame_number)
+void test_frame_deallocate(frame_number_t frame_number)
 {
   assert(frame_number == frame_containing_address((uint64_t)&fake_frame[0]),
          "deallocates the expected frame");
