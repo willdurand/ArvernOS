@@ -28,7 +28,7 @@ Use [Docker](https://docs.docker.com/) with the provided
 
 ```
 $ docker build -t willos/toolchain .
-$ docker run --rm -v $(pwd):/app willos/toolchain make
+$ docker run -it --rm -v $(pwd):/app willos/toolchain make
 ```
 
 ### MacOS
@@ -76,11 +76,17 @@ To build the ISO (this is the default target), run:
 $ make iso
 ```
 
+To build the ISO in DEBUG mode, run:
+
+```
+$ make debug
+```
+
 To compile the OS in DEBUG mode, build the ISO, and start `qemu` with the OS
 loaded, run:
 
 ```
-$ make debug
+$ make run-debug
 ```
 
 **Note:** in DEBUG mode, logging uses the serial port `COM1` to write various
