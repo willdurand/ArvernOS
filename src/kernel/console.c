@@ -1,5 +1,6 @@
 #include "console.h"
 #include <drivers/vga_text.h>
+#include <string.h>
 #include <vtconsole/vtconsole.h>
 
 void on_paint_callback(vtconsole_t* vtc, vtcell_t* cell, int x, int y);
