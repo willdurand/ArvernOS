@@ -6,11 +6,9 @@
 #include <string.h>
 #include <sys/types.h>
 
-#define ALLOC_BITMAP_SIZE (MAX_PAGES / BITS_PER_WORD)
-
 uint64_t heap_end_page;
 uint64_t heap_start_page;
-bitmap_t allocated_pages[ALLOC_BITMAP_SIZE] = { 0 };
+bitmap_t allocated_pages[(MAX_PAGES / BITS_PER_WORD) + 1] = { 0 };
 
 void alloc_init()
 {
