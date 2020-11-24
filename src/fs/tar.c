@@ -143,8 +143,6 @@ inode_t tar_finddir(inode_t inode, const char* name)
       header_name[strlen(header_name) - 1] = '\0';
     }
 
-    DEBUG("comparing fullpath=%s and header_name=%s", fullpath, header_name);
-
     if (strcmp(fullpath, header_name) == 0) {
       header = headers[i];
       node->data = i;
@@ -219,8 +217,6 @@ dirent_t* tar_readdir(inode_t inode, uint64_t num)
     if (headers[i]->type == TAR_DIRECTORY) {
       header_level--;
     }
-
-    DEBUG("comparing header_name=%s and name=%s", headers[i]->name, name);
 
     if (starts_with(headers[i]->name, name) && level == header_level) {
       j++;
