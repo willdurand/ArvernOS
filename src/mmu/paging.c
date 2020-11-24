@@ -185,7 +185,7 @@ void zero_table(page_table_t* table)
   memset((void*)table, 0, sizeof(page_table_t));
 
   for (uint32_t i = 0; i < PAGE_ENTRIES; i++) {
-    table->entries[i].packed = 0;
+    table->entries[i] = (page_entry_t){ 0 };
   }
 }
 
