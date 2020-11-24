@@ -15,7 +15,8 @@ LOCAL_BUILD_TARGET = $(LOCAL_BUILD_DIR)/$(BIN_NAME)
 # executable if needed, see: https://access.redhat.com/blogs/766093/posts/1975793
 CFLAGS = -Wl,-emain -Wall -pedantic -std=c11 -O0 -ffreestanding -nostdlib \
 				 -D__is_libc \
-				 -fno-builtin -fstack-protector-all -I $(ROOT_DIR)/src/include/ -I $(ROOT_DIR)/libs/
+				 -fno-builtin -I $(ROOT_DIR)/src/include/ -I $(ROOT_DIR)/libs/ \
+				 #-no-pie -fno-pie
 LIBS   = $(ROOT_DIR)/build/libc-$(OS_NAME).a
 
 default: $(TARGET)
