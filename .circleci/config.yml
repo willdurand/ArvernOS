@@ -2,15 +2,25 @@ version: 2
 jobs:
   build:
     docker:
-      - image: cimg/base:2020.01
+      - image: cimg/base:2020.11
     steps:
       - checkout
       - run:
           name: install dependencies
           command: |
             sudo apt-get update
-            sudo apt-get install -y nasm xorriso build-essential grub2-common grub-pc-bin clang-format-9 valgrind
+            sudo apt-get install -y \
+              build-essential \
+              nasm \
+              xorriso \
+              grub2-common \
+              grub-pc-bin \
+              git \
+              clang-format-9 \
+              valgrind \
+              gcc-10
             sudo update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-9 100
+            sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 10
       - run:
           name: build
           command: |
