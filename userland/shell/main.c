@@ -30,7 +30,8 @@ int main()
           break;
         }
 
-        printf("\b");
+        // destructive backspace
+        printf("\b \b");
 
         if (readline_index >= 1) {
           readline_index--;
