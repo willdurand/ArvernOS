@@ -134,7 +134,7 @@ uint64_t proc_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
     // spent in the idle process.
     //
     // We do not have the notion of process yet so there is only one value.
-    snprintf(buf, 256, "%llu\n", timer_uptime());
+    snprintf(buf, 256, "%lu\n", timer_uptime());
   } else if (strcmp(node->name, "version") == 0) {
     snprintf(buf, 256, "%s %s (%s)\n", KERNEL_NAME, KERNEL_VERSION, GIT_HASH);
   } else if (strcmp(node->name, "hostname") == 0) {
