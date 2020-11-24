@@ -363,7 +363,8 @@ void kshell_run(uint8_t scancode)
 
     case KB_BACKSPACE:
       if (key_was_released && readline_index > 0) {
-        printf("\b");
+        // destructive backspace
+        printf("\b \b");
         readline_index--;
         readline[readline_index] = 0;
       }
