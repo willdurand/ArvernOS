@@ -35,10 +35,10 @@ TEST_FILES   := $(patsubst test/%.c,%,$(shell find test/libc -name '*.c'))
 GIT_HASH := $(shell git rev-parse --short HEAD)
 
 CFLAGS = -DKERNEL_NAME=\"$(OS_NAME)\" \
-				 -DGIT_HASH=\"$(GIT_HASH)\" \
-				 -Wall -pedantic -std=c11 -O2 -ffreestanding -nostdlib \
-				 -fno-builtin -fstack-protector-all -mno-red-zone \
-				 -I src/include/ -I src/ -I libs/
+	 -DGIT_HASH=\"$(GIT_HASH)\" \
+	 -Wall -pedantic -std=c11 -O0 -ffreestanding -nostdlib \
+	 -fno-builtin -fstack-protector -mno-red-zone \
+	 -I src/include/ -I src/ -I libs/
 
 DEBUG_CFLAGS = -DENABLE_KERNEL_DEBUG -DDEBUG_WITH_COLORS -DDISABLE_MMU_DEBUG
 
