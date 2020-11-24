@@ -1,5 +1,5 @@
 ifeq ($(shell uname -s),Darwin)
-	CC = x86_64-pc-elf-gcc
+	CC = x86_64-elf-gcc
 else
 	CC = gcc
 endif
@@ -16,7 +16,7 @@ LOCAL_BUILD_TARGET = $(LOCAL_BUILD_DIR)/$(BIN_NAME)
 CFLAGS = -Wl,-emain -Wall -pedantic -std=c11 -O0 -ffreestanding -nostdlib \
 				 -D__is_libc \
 				 -fno-builtin -I $(ROOT_DIR)/src/include/ -I $(ROOT_DIR)/libs/ \
-				 #-no-pie -fno-pie
+				 -no-pie -fno-pie
 LIBS   = $(ROOT_DIR)/build/libc-$(OS_NAME).a
 
 default: $(TARGET)

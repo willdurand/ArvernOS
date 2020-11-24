@@ -39,19 +39,16 @@ Install [Homebrew](https://brew.sh/), then run the following commands:
 $ brew install nasm
 $ brew install xorriso
 $ brew install qemu
+$ brew install x86_64-elf-gcc
 ```
 
-You need to tap `hawkw/x86_64-pc-elf` to install the cross-compilation toolchain:
+You need to tap `hawkw/x86_64-pc-elf` and `hawkw/grub` to be able to install the
+GRUB utility:
 
 ```
 $ brew tap hawkw/x86_64-pc-elf
-$ brew install x86_64-pc-elf-gcc
-```
-
-You need to tap `hawkw/grub` to install the GRUB utility:
-
-```
 $ brew tap hawkw/grub
+$ brew install x86_64-pc-elf-gcc
 $ brew install grub --with-x86_64-pc-elf --HEAD
 ```
 
