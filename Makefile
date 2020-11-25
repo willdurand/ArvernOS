@@ -44,6 +44,22 @@ DEBUG_CFLAGS = -DENABLE_KERNEL_DEBUG -DDEBUG_WITH_COLORS -DDISABLE_MMU_DEBUG
 
 QEMU_OPTIONS =
 
+GRUB_KERNEL_CMDLINE =
+
+# See: https://stackoverflow.com/questions/649246/is-it-possible-to-create-a-multi-line-string-variable-in-a-makefile/649462#649462
+define GRUB_CFG_BODY
+set timeout=0
+set default=0
+
+menuentry "$(OS_NAME)" {
+    multiboot2 /boot/$(KERNEL_BIN) $(GRUB_KERNEL_CMDLINE)
+    module2 /boot/$(INITRD_TAR)
+    boot
+}
+endef
+
+export GRUB_CFG_BODY
+
 default: iso
 
 kernel: ## compile the kernel
@@ -82,20 +98,6 @@ iso: ## build the image of the OS (.iso)
 iso: $(ISO)
 .PHONY: iso
 
-# See: https://stackoverflow.com/questions/649246/is-it-possible-to-create-a-multi-line-string-variable-in-a-makefile/649462#649462
-define GRUB_CFG_BODY
-set timeout=0
-set default=0
-
-menuentry "$(OS_NAME)" {
-    multiboot2 /boot/$(KERNEL_BIN)
-    module2 /boot/$(INITRD_TAR)
-    boot
-}
-endef
-
-export GRUB_CFG_BODY
-
 $(GRUB_CFG):
 	mkdir -p $(GRUB_DIR)
 	echo "$$GRUB_CFG_BODY" > $@
@@ -117,6 +119,12 @@ run-debug: ## run the OS in debug mode
 run-debug: QEMU_OPTIONS += -serial file:./logs/serial.log
 run-debug: debug run
 .PHONY: run-debug
+
+run-test: ## run the OS in test mode
+run-test: QEMU_OPTIONS += -curses
+run-test: GRUB_KERNEL_CMDLINE = "boot-and-exit"
+run-test: run
+.PHONY: run-test
 
 clean: ## remove build artifacts
 	find . -name '*.orig' -exec rm "{}" ";"

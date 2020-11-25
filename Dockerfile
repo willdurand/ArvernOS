@@ -12,7 +12,8 @@ RUN apt-get update && \
       git \
       clang-format-9 \
       valgrind \
-      gcc-10
+      gcc-10 \
+      qemu-system
 
 RUN update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-9 100
 

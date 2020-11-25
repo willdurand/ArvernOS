@@ -3,6 +3,7 @@
 #include <core/debug.h>
 #include <core/elf.h>
 #include <core/isr.h>
+#include <core/port.h>
 #include <core/syscall.h>
 #include <core/timer.h>
 #include <drivers/keyboard.h>
@@ -130,6 +131,18 @@ void kmain(uint64_t addr)
     print_ok();
   } else {
     print_ko();
+  }
+
+  multiboot_tag_string_t* cmdline = (multiboot_tag_string_t*)find_multiboot_tag(
+    mbi, MULTIBOOT_TAG_TYPE_CMDLINE);
+
+  if (cmdline && strcmp(cmdline->string, "boot-and-exit") == 0) {
+    printf("\n\nboot sequence completed, exiting now...");
+    irq_disable();
+    // Power-off for QEMU, see: https://wiki.osdev.org/Shutdown
+    port_word_out(0x604, 0x2000);
+
+    return;
   }
 
   // kshell

@@ -18,7 +18,8 @@ jobs:
               git \
               clang-format-9 \
               valgrind \
-              gcc-10
+              gcc-10 \
+              qemu-system
             sudo update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-9 100
             sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 10
       - run:
@@ -31,10 +32,14 @@ jobs:
             test -f build/libk-willOS.a
             test -f build/willOS.iso
       - run:
-          name: test
+          name: unit tests
           command: make clean test
       - run:
           name: fmt
           command: |
             make fmt
             git diff --exit-code || (echo "\n\nPlease run 'make fmt' to format the code and fix the problem(s) above"; false)
+      - run:
+          name: integration tests
+          command: |
+            make clean run-test
