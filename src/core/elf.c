@@ -171,6 +171,7 @@ void load_segment(uint8_t* data, elf_program_header_t* program_header)
   uint64_t addr = program_header->virtual_address; // Offset in memory
   uint64_t offset = program_header->offset;        // Offset in file
 
+  // We need WRITABLE because we copy data right after.
   uint32_t flags = PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE;
 
   if (!(program_header->flags & ELF_PROGRAM_FLAG_EXECUTE)) {
