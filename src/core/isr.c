@@ -255,16 +255,33 @@ void page_fault_handler(stack_t* stack)
   // This handler needs the `error_code`, so let's retrieve it.
   uint64_t error_code = ((uint64_t*)stack)[-1];
 
+  int isPresent = (error_code >> 0) & 1;
+  int isWrite = (error_code >> 1) & 1;
+  int isUser = (error_code >> 2) & 1;
+  int isReservedWrite = (error_code >> 3) & 1;
+  int isInstructionFetch = (error_code >> 4) & 1;
+
   PANIC("Exception: PAGE FAULT\n"
-        "  accessed address    = %p\n"
-        "  error code          = %#x\n"
-        "  instruction_pointer = %p\n"
-        "  code_segment        = %x\n"
-        "  cpu_flags           = %#x\n"
-        "  stack_pointer       = %p\n"
-        "  stack_segment       = %x\n",
+        "  accessed address         = %p\n"
+        "  error code               = %#x\n"
+        "  error details:\n"
+        "    is_present             = %s\n"
+        "    is_write               = %s\n"
+        "    is_user                = %s\n"
+        "    is_reserved write      = %s\n"
+        "    is_instruction fetch   = %s\n"
+        "  instruction_pointer      = %p\n"
+        "  code_segment             = %x\n"
+        "  cpu_flags                = %#x\n"
+        "  stack_pointer            = %p\n"
+        "  stack_segment            = %x\n",
         read_cr2(),
         error_code,
+        isPresent != 0 ? "YES" : "NO",
+        isWrite != 0 ? "YES" : "NO",
+        isUser != 0 ? "YES" : "NO",
+        isReservedWrite != 0 ? "YES" : "NO",
+        isInstructionFetch != 0 ? "YES" : "NO",
         stack->instruction_pointer,
         stack->code_segment,
         stack->cpu_flags,
