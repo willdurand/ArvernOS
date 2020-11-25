@@ -61,7 +61,7 @@ elf_header_t* elf_load(uint8_t* data)
           section->size);
 
     if (section->type == ELF_SECTION_TYPE_NOTE) {
-      DEBUG("Ignoring section %d (%d (\"%s\")), since it is a note section",
+      DEBUG("ignoring note section %d (%d - \"%s\")",
             i,
             section->name,
             name);
