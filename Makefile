@@ -113,7 +113,7 @@ debug: CFLAGS += $(DEBUG_CFLAGS)
 debug: $(ISO)
 .PHONY: debug
 
-run-debug: ## build and run the OS in debug mode
+run-debug: ## run the OS in debug mode
 run-debug: QEMU_OPTIONS += -serial file:./logs/serial.log
 run-debug: debug run
 .PHONY: run-debug
