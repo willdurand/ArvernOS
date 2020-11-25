@@ -10,13 +10,13 @@
 #define MMU_DEBUG_PAGE_ENTRY(message, e)                                       \
   MMU_DEBUG("%s "                                                              \
             "page entry addr=%p present=%d "                                   \
-            "writable=%d no_execute=%d user_accessible=%d",                    \
+            "writable=%d no_execute=%d huge_page=%d",                          \
             message,                                                           \
             (e).packed & 0x000ffffffffff000,                                   \
             (e).present,                                                       \
             (e).writable,                                                      \
             (e).no_execute,                                                    \
-            (e).user_accessible)
+            (e).huge_page)
 
 void enable_nxe_bit();
 void enable_write_protection();
@@ -404,9 +404,9 @@ page_table_t* next_table_create(page_table_t* table, uint64_t index)
 
   bool was_created = false;
 
-  page_entry_t entry = table->entries[index];
+  page_entry_t* entry = &table->entries[index];
 
-  if (entry.present) {
+  if (entry->present) {
     MMU_DEBUG("page entry at index=%d is present", index);
   } else {
     MMU_DEBUG("page entry at index=%d is not present, creating entry", index);
@@ -418,9 +418,7 @@ page_table_t* next_table_create(page_table_t* table, uint64_t index)
     }
 
     paging_set_entry(
-      &entry, frame.value, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
-
-    table->entries[index] = entry;
+      entry, frame.value, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
 
     MMU_DEBUG_PAGE_ENTRY("created", table->entries[index]);
 
@@ -444,8 +442,7 @@ void paging_set_entry(page_entry_t* entry, uint64_t addr, uint64_t flags)
     PANIC("trying to set an invalid address: %p", addr);
   }
 
-  entry->packed &= 0xfff0000000000fff;
-  entry->packed |= addr;
+  entry->packed = addr & 0x000ffffffffff000;
 
   if (flags & PAGING_FLAG_PRESENT) {
     entry->present = 1;
