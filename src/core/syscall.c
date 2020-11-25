@@ -58,7 +58,7 @@ void syscall_handler(registers_t* registers)
 
 void syscall_test(registers_t* registers)
 {
-  printf("    (syscall_test) hello, %s!\n", registers->rbx);
+  printf("  (syscall_test) hello, %s!\n", registers->rbx);
 }
 
 void syscall_write(registers_t* registers)

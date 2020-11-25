@@ -111,7 +111,7 @@ void selftest()
 
   print_selftest_header("memory");
   char* str = 0x42;
-  printf("    pointer before malloc(): p=%p\n", str);
+  printf("  pointer before malloc(): p=%p\n", str);
   int str_len = 9;
   str = (char*)malloc(str_len * sizeof(char));
 
