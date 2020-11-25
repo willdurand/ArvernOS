@@ -24,6 +24,8 @@
 #define ELF_SECTION_TYPE_NULL 0
 /// Information defined by the program.
 #define ELF_SECTION_TYPE_PROGBITS 1
+/// Program notes.
+#define ELF_SECTION_TYPE_NOTE 7
 /// Uninitialized Space (doesn't use any space in the file).
 #define ELF_SECTION_TYPE_NOBITS 8
 
