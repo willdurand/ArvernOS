@@ -235,6 +235,12 @@ void elf_unload(elf_header_t* elf)
       name = "(none)";
     }
 
+    if (section->type == ELF_SECTION_TYPE_NOTE) {
+      DEBUG("ignoring note section %d (%d - \"%s\")", i, section->name, name);
+
+      continue;
+    }
+
     DEBUG("unloading section %d (name: %d (\"%s\")", i, section->name, name);
 
     if ((section->flags & ELF_SECTION_FLAG_ALLOC) && section->size > 0) {
