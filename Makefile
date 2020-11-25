@@ -147,6 +147,7 @@ userland: libc
 	$(MAKE) -C userland/cal/ OS_NAME="$(OS_NAME)"
 	$(MAKE) -C userland/clear/ OS_NAME="$(OS_NAME)"
 	$(MAKE) -C userland/date/ OS_NAME="$(OS_NAME)"
+	$(MAKE) -C userland/meminfo/ OS_NAME="$(OS_NAME)"
 	$(MAKE) -C userland/shell/ OS_NAME="$(OS_NAME)"
 	$(MAKE) -C userland/uptime/ OS_NAME="$(OS_NAME)"
 .PHONY: userland
