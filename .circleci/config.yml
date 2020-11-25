@@ -42,4 +42,5 @@ jobs:
       - run:
           name: integration tests
           command: |
+            export TERM=xterm
             make clean run-test
