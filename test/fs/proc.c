@@ -13,6 +13,30 @@ uint64_t timer_uptime()
   return 123;
 }
 
+// This is a fake implementation.
+uint64_t frame_get_used_count()
+{
+  return 1;
+}
+
+// This is a fake implementation.
+uint64_t frame_get_max_count()
+{
+  return 123;
+}
+
+// This is a fake implementation.
+uint64_t alloc_get_used_count()
+{
+  return 4;
+}
+
+// This is a fake implementation.
+uint64_t alloc_get_max_count()
+{
+  return 567;
+}
+
 int main()
 {
   vfs_init();

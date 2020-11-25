@@ -172,7 +172,7 @@ test: libc
 	gcc -DENABLE_DEBUG_FOR_TEST -I./test -I./src/ -o $(BUILD_DIR)/vfs test/fs/vfs.c src/fs/vfs.c
 	./$(BUILD_DIR)/vfs
 	# fs/proc
-	gcc -g -DENABLE_DEBUG_FOR_TEST -I./test -I./src/ -o $(BUILD_DIR)/proc test/fs/proc.c src/fs/proc.c src/fs/vfs.c
+	gcc -g -DENABLE_DEBUG_FOR_TEST -I./test -I./test/proxies -I./src/ -o $(BUILD_DIR)/proc test/fs/proc.c src/fs/proc.c src/fs/vfs.c
 	# mmu/frame
 	gcc -Wformat=0 -g -DENABLE_DEBUG_FOR_TEST -I./test -I./test/proxies -I./src/ -o $(BUILD_DIR)/frame test/mmu/frame.c src/mmu/frame.c src/core/boot.c src/mmu/bitmap.c
 	valgrind --track-origins=yes --leak-check=yes ./$(BUILD_DIR)/frame

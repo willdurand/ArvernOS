@@ -4,8 +4,6 @@
 #include <core/elf.h>
 #include <fs/debug.h>
 #include <fs/vfs.h>
-#include <mmu/alloc.h>
-#include <mmu/frame.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -55,7 +53,7 @@ unsigned char keymap[][128] = {
   { 0 },
 };
 
-#define NB_DOCUMENTED_COMMANDS 6
+#define NB_DOCUMENTED_COMMANDS 5
 
 const char* commands[][NB_DOCUMENTED_COMMANDS] = {
   { "cat", "print on the standard output" },
@@ -63,7 +61,6 @@ const char* commands[][NB_DOCUMENTED_COMMANDS] = {
   { "ls", "list files" },
   { "selftest", "run the system test suite" },
   { "overflow", "test the stack buffer overflow protection" },
-  { "meminfo", "display memory information" },
 };
 
 unsigned char get_char(uint8_t scancode, bool shift, bool caps_lock)
@@ -248,21 +245,6 @@ void overflow()
   strcpy(c, "123456789012345678901234567890");
 }
 
-void meminfo()
-{
-  uint64_t used_frames = frame_get_used_count();
-  uint64_t max_frames = frame_get_max_count();
-  uint64_t used_heap = alloc_get_used_count();
-  uint64_t max_heap = alloc_get_max_count();
-
-  printf("frames: %6llu/%llu\n", used_frames, max_frames);
-  printf("heap  : %6llu/%llu KiB [%llu/%llu]\n",
-         (used_heap * PAGE_SIZE) / 1024,
-         (max_heap * PAGE_SIZE) / 1024,
-         used_heap,
-         max_heap);
-}
-
 void run_command(const char* command)
 {
   DEBUG("command='%s'", command);
@@ -283,8 +265,6 @@ void run_command(const char* command)
     selftest();
   } else if (strncmp(command, "overflow", 8) == 0) {
     overflow();
-  } else if (strncmp(command, "meminfo", 7) == 0) {
-    meminfo();
   } else {
     if (try_exec(command) != 0) {
       printf("invalid kshell command\n");
