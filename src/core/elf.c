@@ -61,12 +61,12 @@ elf_header_t* elf_load(uint8_t* data)
           section->size);
 
     if (section->type == ELF_SECTION_TYPE_NOTE) {
-        DEBUG("Ignoring section %d (%d (\"%s\")), since it is a note section",
+      DEBUG("Ignoring section %d (%d (\"%s\")), since it is a note section",
             i,
             section->name,
             name);
 
-        continue;
+      continue;
     }
 
     // First we allocate each section that requires allocation and has a valid
