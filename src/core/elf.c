@@ -52,12 +52,22 @@ elf_header_t* elf_load(uint8_t* data)
     }
 
     DEBUG("phase 1 processing section %d (name: %d (\"%s\"), type: %d, flags: "
-          "%#lld)",
+          "%#lld, size: %d)",
           i,
           section->name,
           name,
           section->type,
-          section->flags);
+          section->flags,
+          section->size);
+
+    if(section->type == ELF_SECTION_TYPE_NOTE) {
+        DEBUG("Ignoring section %d (%d (\"%s\")), since it is a note section",
+            i,
+            section->name,
+            name);
+
+        continue;
+    }
 
     // First we allocate each section that requires allocation and has a valid
     // size.
@@ -161,11 +171,7 @@ void load_segment(uint8_t* data, elf_program_header_t* program_header)
   uint64_t addr = program_header->virtual_address; // Offset in memory
   uint64_t offset = program_header->offset;        // Offset in file
 
-  uint32_t flags = PAGING_FLAG_PRESENT;
-
-  if (program_header->flags & ELF_PROGRAM_FLAG_WRITE) {
-    flags |= PAGING_FLAG_WRITABLE;
-  }
+  uint32_t flags = PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE;
 
   if (!(program_header->flags & ELF_PROGRAM_FLAG_EXECUTE)) {
     flags |= PAGING_FLAG_NO_EXECUTE;
