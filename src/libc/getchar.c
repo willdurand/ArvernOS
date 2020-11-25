@@ -70,7 +70,6 @@ char getchar()
   };
 
   static bool caps_lock_mode = false;
-  static bool ctrl_mode = false;
   static bool shift_mode = false;
 
   char c = -1;
@@ -103,15 +102,6 @@ char getchar()
           shift_mode = false;
         } else {
           shift_mode = true;
-        }
-
-        break;
-
-      case KB_LCTRL:
-        if (key_was_released) {
-          ctrl_mode = false;
-        } else {
-          ctrl_mode = true;
         }
 
         break;

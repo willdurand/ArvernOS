@@ -110,7 +110,7 @@ void selftest()
   test("kshell");
 
   print_selftest_header("memory");
-  char* str = 0x42;
+  char* str = (void*)0x42;
   printf("  pointer before malloc(): p=%p\n", str);
   int str_len = 9;
   str = (char*)malloc(str_len * sizeof(char));
@@ -127,7 +127,7 @@ void selftest()
   print_selftest_header("filesystem");
   inode_t debug = vfs_namei(FS_DEBUG_MOUNTPOINT);
   const char* message = "  this message should be written to the console\n";
-  vfs_write(debug, message, strlen(message), 0);
+  vfs_write(debug, (void*)message, strlen(message), 0);
   vfs_free(debug);
 
   printf("\ndone.\n");
@@ -219,7 +219,7 @@ int try_exec(const char* command)
 
   DEBUG("bytes_read=%u", bytes_read);
 
-  elf_header_t* elf = elf_load(buf);
+  elf_header_t* elf = elf_load((uint8_t*)buf);
 
   if (!elf) {
     vfs_free(inode);

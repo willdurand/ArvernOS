@@ -106,7 +106,7 @@ uint64_t tar_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
           offset,
           header_size);
 
-    memcpy(buffer, (void*)header + 512 + offset, size);
+    memcpy(buffer, (char*)header + 512 + offset, size);
     ((char*)buffer)[size] = '\0';
 
     return size - offset;

@@ -170,7 +170,7 @@ uint64_t proc_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
     offset = size;
   }
 
-  memcpy(buffer, (void*)buf + offset, size);
+  memcpy(buffer, (char*)buf + offset, size);
   ((char*)buffer)[size] = '\0';
 
   return size - offset;
