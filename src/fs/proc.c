@@ -2,6 +2,8 @@
 #include <core/debug.h>
 #include <core/timer.h>
 #include <kernel/kmain.h>
+#include <mmu/alloc.h>
+#include <mmu/frame.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -24,10 +26,10 @@ vfs_driver_t proc_driver = {
   proc_finddir, // finddir
 };
 
-#define NB_PROC_FILES 5
+#define NB_PROC_FILES 6
 
 const char* proc_files[NB_PROC_FILES] = {
-  ".", "..", "uptime", "version", "hostname",
+  ".", "..", "hostname", "meminfo", "uptime", "version",
 };
 
 #define DEFAULT_HOSTNAME    "machine"
@@ -139,6 +141,21 @@ uint64_t proc_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
     snprintf(buf, 256, "%s %s (%s)\n", KERNEL_NAME, KERNEL_VERSION, GIT_HASH);
   } else if (strcmp(node->name, "hostname") == 0) {
     snprintf(buf, 256, "%s\n", hostname);
+  } else if (strcmp(node->name, "meminfo") == 0) {
+    uint64_t used_frames = frame_get_used_count();
+    uint64_t max_frames = frame_get_max_count();
+    uint64_t used_heap = alloc_get_used_count();
+    uint64_t max_heap = alloc_get_max_count();
+
+    snprintf(buf,
+             256,
+             "frames: %6lu/%lu\nheap  : %6lu/%lu KiB [%lu/%lu]\n",
+             used_frames,
+             max_frames,
+             (used_heap * PAGE_SIZE) / 1024,
+             (max_heap * PAGE_SIZE) / 1024,
+             used_heap,
+             max_heap);
   } else {
     return 0;
   }
