@@ -18,7 +18,7 @@ struct vfs_node;
 
 typedef struct vfs_node* inode_t;
 
-typedef struct stat
+typedef struct _stat
 {
   uint64_t size;
 } stat_t;
