@@ -7,50 +7,50 @@
 #include <kernel/panic.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 stack_t* get_stack(uint64_t id, uint64_t stack);
-
 void breakpoint_handler(stack_t* stack);
 void double_fault_handler(stack_t* stack);
 void page_fault_handler(stack_t* stack);
 
-const char* exception_messages[] = { "Division By Zero",
-                                     "Debug",
-                                     "Non Maskable Interrupt",
-                                     "Breakpoint",
-                                     "Into Detected Overflow",
-                                     "Out of Bounds",
-                                     "Invalid Opcode",
-                                     "No Coprocessor",
+static const char* exception_messages[] = { "Division By Zero",
+                                            "Debug",
+                                            "Non Maskable Interrupt",
+                                            "Breakpoint",
+                                            "Into Detected Overflow",
+                                            "Out of Bounds",
+                                            "Invalid Opcode",
+                                            "No Coprocessor",
 
-                                     "Double Fault",
-                                     "Coprocessor Segment Overrun",
-                                     "Bad TSS",
-                                     "Segment Not Present",
-                                     "Stack Fault",
-                                     "General Protection Fault",
-                                     "Page Fault",
-                                     "Unknown Interrupt",
+                                            "Double Fault",
+                                            "Coprocessor Segment Overrun",
+                                            "Bad TSS",
+                                            "Segment Not Present",
+                                            "Stack Fault",
+                                            "General Protection Fault",
+                                            "Page Fault",
+                                            "Unknown Interrupt",
 
-                                     "Coprocessor Fault",
-                                     "Alignment Check",
-                                     "Machine Check",
-                                     "Reserved",
-                                     "Reserved",
-                                     "Reserved",
-                                     "Reserved",
-                                     "Reserved",
+                                            "Coprocessor Fault",
+                                            "Alignment Check",
+                                            "Machine Check",
+                                            "Reserved",
+                                            "Reserved",
+                                            "Reserved",
+                                            "Reserved",
+                                            "Reserved",
 
-                                     "Reserved",
-                                     "Reserved",
-                                     "Reserved",
-                                     "Reserved",
-                                     "Reserved",
-                                     "Reserved",
-                                     "Reserved",
-                                     "Reserved" };
+                                            "Reserved",
+                                            "Reserved",
+                                            "Reserved",
+                                            "Reserved",
+                                            "Reserved",
+                                            "Reserved",
+                                            "Reserved",
+                                            "Reserved" };
 
-isr_t interrupt_handlers[256];
+static isr_t interrupt_handlers[256] = { 0 };
 
 void isr_init()
 {

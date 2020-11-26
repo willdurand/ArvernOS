@@ -1,12 +1,10 @@
 #include "idt.h"
 
-idt_gate_t idt[IDT_ENTRIES];
-idt_register_t idt_reg;
+static idt_gate_t idt[IDT_ENTRIES] = { 0 };
 
 void idt_init()
 {
-  idt_reg.base = (uint64_t)&idt;
-  idt_reg.limit = IDT_ENTRIES * sizeof(idt_gate_t) - 1;
+  idt_register_t idt_reg = { .base = (uint64_t)idt, .limit = sizeof(idt) - 1 };
   __asm__("lidt %0" : : "m"(idt_reg));
 }
 
