@@ -33,8 +33,8 @@ opt_uint64_t paging_frame_allocate();
 void paging_frame_deallocate(frame_number_t frame_number);
 void identity_map(uint64_t physical_address, uint64_t flags);
 
-page_table_t* active_p4_table = (page_table_t*)P4_TABLE;
-bool can_deallocate_frames = false;
+static page_table_t* active_p4_table = (page_table_t*)P4_TABLE;
+static bool can_deallocate_frames = false;
 
 extern void load_p4(uint64_t addr);
 
@@ -83,6 +83,11 @@ void remap_kernel(multiboot_info_t* mbi)
 
   // We shouldn't deallocate the `inactive_page_table_frame`.
   can_deallocate_frames = true;
+
+  // Map page for interrupts.
+  // TODO: investigate why this is needed.
+  identity_map(0x0, PAGING_FLAG_PRESENT);
+  DEBUG("%s", "mapped page=0 for interrupts");
 
   DEBUG("%s", "mapping elf sections");
   multiboot_tag_elf_sections_t* tag =
