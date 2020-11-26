@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-uint64_t debug_stat(inode_t node, struct stat* st);
+uint64_t debug_stat(inode_t node, stat_t* st);
 uint64_t debug_write(inode_t node,
                      void* buffer,
                      uint64_t size,

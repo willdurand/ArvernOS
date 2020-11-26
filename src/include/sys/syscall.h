@@ -4,11 +4,12 @@
 
 #include <stdint.h>
 #include <stdio.h>
+#include <sys/stat.h>
 #include <sys/time.h>
 #include <sys/types.h>
 
 #define INT_SYSCALL          "int $0x80"
-#define NB_SYSCALLS          7
+#define NB_SYSCALLS          8
 #define SYSCALL_TEST         1
 #define SYSCALL_WRITE        2
 #define SYSCALL_READ         3
@@ -16,6 +17,7 @@
 #define SYSCALL_OPEN         5
 #define SYSCALL_CLOSE        6
 #define SYSCALL_REBOOT       7
+#define SYSCALL_FSTAT        8
 
 /**
  * Implements a syscall for testing purpose only. It takes a string as input
@@ -45,6 +47,15 @@ ssize_t write(int fd, const void* buf, size_t count);
  * @return the actual number of bytes read or -1 in case of an error
  */
 ssize_t read(int fd, void* buf, size_t count);
+
+/**
+ * Implements the fstat syscall.
+ *
+ * @param fd a file descriptor ID
+ * @param statbuf a stat structure
+ * @return 0 on success or -1 in case of an error
+ */
+int fstat(int fd, struct stat* statbuf);
 
 /**
  * Implements the gettimeofday syscall.

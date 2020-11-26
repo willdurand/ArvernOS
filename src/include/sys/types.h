@@ -8,6 +8,7 @@ typedef int64_t time_t;
 typedef int64_t suseconds_t;
 typedef uint64_t size_t;
 typedef int64_t ssize_t;
+typedef int64_t off_t;
 
 #ifndef __is_libc
 typedef struct opt_uint8

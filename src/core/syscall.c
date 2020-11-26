@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
 #include <sys/syscall.h>
 
 // `+ 1` because it is a 1-based index.
@@ -27,6 +28,7 @@ void syscall_gettimeofday(registers_t* registers);
 void syscall_open(registers_t* registers);
 void syscall_close(registers_t* registers);
 void syscall_reboot(registers_t* registers);
+void syscall_fstat(registers_t* registers);
 
 void syscall_init()
 {
@@ -37,6 +39,7 @@ void syscall_init()
   syscall_register_handler(SYSCALL_OPEN, syscall_open);
   syscall_register_handler(SYSCALL_CLOSE, syscall_close);
   syscall_register_handler(SYSCALL_REBOOT, syscall_reboot);
+  syscall_register_handler(SYSCALL_FSTAT, syscall_fstat);
 }
 
 void syscall_register_handler(uint8_t id, syscall_handler_t handler)
@@ -202,6 +205,36 @@ void syscall_reboot(registers_t* registers)
   DEBUG("reboot command=%d", command);
 
   registers->rdx = kreboot(command);
+}
+
+void syscall_fstat(registers_t* registers)
+{
+  errno = 0;
+
+  int fd = (int)registers->rbx;
+  struct stat* statbuf = (struct stat*)registers->rcx;
+
+  if (fd < 3) {
+    DEBUG("invalid file descriptor fd=%d", fd);
+    registers->rdx = -1;
+    errno = EPERM;
+    return;
+  }
+
+  file_descriptor_t* desc = get_file_descriptor(fd);
+
+  if (desc == 0) {
+    DEBUG("file descriptor fd=%d not found", fd);
+    registers->rdx = -1;
+    errno = EBADF;
+    return;
+  }
+
+  stat_t stat;
+  vfs_stat(desc->inode, &stat);
+  statbuf->st_size = stat.size;
+
+  registers->rdx = 0;
 }
 
 void syscall_print_registers(registers_t* registers)
