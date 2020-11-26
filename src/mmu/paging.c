@@ -96,13 +96,14 @@ void remap_kernel(multiboot_info_t* mbi)
        elf =
          (multiboot_elf_sections_entry_t*)((uint64_t)elf + (tag)->section_size),
       i++) {
-    if (!(elf->flags | MULTIBOOT_ELF_SECTION_FLAG_ALLOCATED)) {
+    if (!(elf->flags | MULTIBOOT_ELF_SECTION_FLAG_ALLOCATED) ||
+        elf->size == 0) {
       continue;
     }
 
     frame_number_t start_frame_number = frame_containing_address(elf->addr);
     frame_number_t end_frame_number =
-      frame_containing_address(elf->addr + elf->size);
+      frame_containing_address(elf->addr + elf->size - 1);
 
     uint64_t flags = PAGING_FLAG_PRESENT;
 
@@ -138,13 +139,19 @@ void remap_kernel(multiboot_info_t* mbi)
   identity_map(0xB8000, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
   DEBUG("%s", "mapped VGA!");
 
-  DEBUG("%s", "mapping multiboot module");
   multiboot_tag_module_t* module =
     (multiboot_tag_module_t*)find_multiboot_tag(mbi, MULTIBOOT_TAG_TYPE_MODULE);
-  uint64_t initrd_location = (uint64_t)module->mod_start;
-  uint64_t initrd_end = (uint64_t)module->mod_end;
-  for (uint64_t addr = initrd_location; addr < initrd_end; addr += PAGE_SIZE) {
-    identity_map(addr, PAGING_FLAG_PRESENT);
+  frame_number_t initrd_start_frame =
+    frame_containing_address((uint64_t)module->mod_start);
+  frame_number_t initrd_end_frame =
+    frame_containing_address((uint64_t)module->mod_end - 1);
+
+  DEBUG("mapping multiboot module: start_frame=%d end_frame=%d",
+        initrd_start_frame,
+        initrd_end_frame);
+
+  for (uint64_t i = initrd_start_frame; i <= initrd_end_frame; i++) {
+    identity_map(frame_start_address(i), PAGING_FLAG_PRESENT);
   }
   DEBUG("%s", "mapped multiboot module!");
 
@@ -357,7 +364,7 @@ void map_page_to_frame(page_number_t page_number,
 
   opt_uint64_t maybe_frame = translate_page(page_number);
   if (maybe_frame.has_value) {
-    DEBUG("page=%u already mapped to frame=%u", page_number, frame_number);
+    DEBUG("page=%u already mapped to frame=%u", page_number, maybe_frame.value);
     return;
   }
 
