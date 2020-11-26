@@ -10,49 +10,6 @@
 #include <string.h>
 #include <sys/syscall.h>
 
-unsigned char keymap[][128] = {
-  { 0 },         { 27 },       { '1', '!' }, { '2', '@' }, { '3', '#' },
-  { '4', '$' },  { '5', '%' }, { '6', '^' }, { '7', '&' }, { '8', '*' },
-  { '9', '(' },  { '0', ')' }, { '-', '_' }, { '=', '+' }, { '\b' },
-  { '\t' },      { 'q', 'Q' }, { 'w', 'W' }, { 'e', 'E' }, { 'r', 'R' },
-  { 't', 'T' },  { 'y', 'Y' }, { 'u', 'U' }, { 'i', 'I' }, { 'o', 'O' },
-  { 'p', 'P' },  { '[', '{' }, { ']', '}' }, { '\n' },     { 0 },
-  { 'a', 'A' },  { 's', 'S' }, { 'd', 'D' }, { 'f', 'F' }, { 'g', 'G' },
-  { 'h', 'H' },  { 'j', 'J' }, { 'k', 'K' }, { 'l', 'L' }, { ';', ':' },
-  { '\'', '"' }, { '`', '~' }, { 0 }, // Left shift
-  { '\\', '|' }, { 'z', 'Z' }, { 'x', 'X' }, { 'c', 'C' }, { 'v', 'V' },
-  { 'b', 'B' },  { 'n', 'N' }, { 'm', 'M' }, { ',', '<' }, { '.', '>' },
-  { '/', '?' },  { 0 },                             // Right shift
-  { '*' },       { 0 },                             // Alt
-  { ' ' },                                          // Space
-  { 0 },                                            // Caps lock
-  { 0 },                                            // F1
-  { 0 },                                            // F2
-  { 0 },                                            // F3
-  { 0 },                                            // F4
-  { 0 },                                            // F5
-  { 0 },                                            // F6
-  { 0 },                                            // F8
-  { 0 },                                            // F7
-  { 0 },                                            // F9
-  { 0 },                                            // F10
-  { 0 },                                            // Num lock
-  { 0 },                                            // Scroll lock
-  { 0 },                                            // Home key
-  { 0 },                                            // Arrow up
-  { 0 },                                            // Page up
-  { '-' },       { 0 },                             // Arrow left
-  { 0 },         { 0 },                             // Arrow right
-  { '+' },       { 0 },                             // End
-  { 0 },                                            // Arrow down
-  { 0 },                                            // Page down
-  { 0 },                                            // Insert ket
-  { 0 },                                            // Deltee key
-  { 0 },         { 0 },        { 0 },        { 0 }, // F11
-  { 0 },                                            // F12
-  { 0 },
-};
-
 #define NB_DOCUMENTED_COMMANDS 5
 
 const char* commands[][NB_DOCUMENTED_COMMANDS] = {
@@ -65,6 +22,49 @@ const char* commands[][NB_DOCUMENTED_COMMANDS] = {
 
 unsigned char get_char(uint8_t scancode, bool shift, bool caps_lock)
 {
+  unsigned char keymap[][128] = {
+    { 0 },         { 27 },       { '1', '!' }, { '2', '@' }, { '3', '#' },
+    { '4', '$' },  { '5', '%' }, { '6', '^' }, { '7', '&' }, { '8', '*' },
+    { '9', '(' },  { '0', ')' }, { '-', '_' }, { '=', '+' }, { '\b' },
+    { '\t' },      { 'q', 'Q' }, { 'w', 'W' }, { 'e', 'E' }, { 'r', 'R' },
+    { 't', 'T' },  { 'y', 'Y' }, { 'u', 'U' }, { 'i', 'I' }, { 'o', 'O' },
+    { 'p', 'P' },  { '[', '{' }, { ']', '}' }, { '\n' },     { 0 },
+    { 'a', 'A' },  { 's', 'S' }, { 'd', 'D' }, { 'f', 'F' }, { 'g', 'G' },
+    { 'h', 'H' },  { 'j', 'J' }, { 'k', 'K' }, { 'l', 'L' }, { ';', ':' },
+    { '\'', '"' }, { '`', '~' }, { 0 }, // Left shift
+    { '\\', '|' }, { 'z', 'Z' }, { 'x', 'X' }, { 'c', 'C' }, { 'v', 'V' },
+    { 'b', 'B' },  { 'n', 'N' }, { 'm', 'M' }, { ',', '<' }, { '.', '>' },
+    { '/', '?' },  { 0 },                             // Right shift
+    { '*' },       { 0 },                             // Alt
+    { ' ' },                                          // Space
+    { 0 },                                            // Caps lock
+    { 0 },                                            // F1
+    { 0 },                                            // F2
+    { 0 },                                            // F3
+    { 0 },                                            // F4
+    { 0 },                                            // F5
+    { 0 },                                            // F6
+    { 0 },                                            // F8
+    { 0 },                                            // F7
+    { 0 },                                            // F9
+    { 0 },                                            // F10
+    { 0 },                                            // Num lock
+    { 0 },                                            // Scroll lock
+    { 0 },                                            // Home key
+    { 0 },                                            // Arrow up
+    { 0 },                                            // Page up
+    { '-' },       { 0 },                             // Arrow left
+    { 0 },         { 0 },                             // Arrow right
+    { '+' },       { 0 },                             // End
+    { 0 },                                            // Arrow down
+    { 0 },                                            // Page down
+    { 0 },                                            // Insert ket
+    { 0 },                                            // Deltee key
+    { 0 },         { 0 },        { 0 },        { 0 }, // F11
+    { 0 },                                            // F12
+    { 0 },
+  };
+
   if ((caps_lock || shift) && keymap[scancode][1]) {
     return keymap[scancode][1];
   }
@@ -296,6 +296,10 @@ void reset_readline()
 
 void kshell_run(uint8_t scancode)
 {
+  if (scancode == 0) {
+    return;
+  }
+
   bool key_was_released = false;
 
   if (scancode > 128) {
