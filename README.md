@@ -88,7 +88,7 @@ $ make run-debug
 
 **Note:** in DEBUG mode, logging uses the serial port `COM1` to write various
 debugging information. `qemu` is configured to write the output of this serial
-port to `./logs/serial.log`.
+port to `./logs/debug.log`.
 
 To compile the OS in normal mode, build the ISO, and start `qemu` with the OS
 loaded, run:
