@@ -80,10 +80,7 @@ int main()
         }
 
         readline_index = 0;
-
-        for (unsigned int i = 0; i < READLINE_SIZE; i++) {
-          readline[i] = 0;
-        }
+        memset(readline, 0, READLINE_SIZE);
 
         printf(PROMPT);
 
