@@ -42,11 +42,12 @@ int main()
         break;
 
       case '\n':
+        printf("\n");
+
         if (*readline == 0) {
+          printf(PROMPT);
           break;
         }
-
-        printf("\n");
 
         char* command = strtok(readline, " ");
         char* first_arg = strtok(NULL, " ");
