@@ -369,13 +369,11 @@ void map_page_to_frame(page_number_t page_number,
                        uint64_t frame,
                        uint64_t flags)
 {
-  frame_number_t frame_number = frame_containing_address(frame);
-
   DEBUG("mapping page=%u (start_addr=%p) to frame=%u (start_addr=%p) with "
         "flags=%#x",
         page_number,
         page_start_address(page_number),
-        frame_number,
+        frame_containing_address(frame),
         frame,
         flags);
 

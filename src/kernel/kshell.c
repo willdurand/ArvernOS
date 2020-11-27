@@ -201,9 +201,7 @@ int try_exec(const char* command)
   vfs_stat(inode, &stat);
 
   char* buf = malloc((stat.size + 1) * sizeof(char));
-  uint64_t bytes_read = vfs_read(inode, buf, stat.size, 0);
-
-  DEBUG("bytes_read=%u", bytes_read);
+  vfs_read(inode, buf, stat.size, 0);
 
   elf_header_t* elf = elf_load((uint8_t*)buf);
 
