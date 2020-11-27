@@ -17,25 +17,6 @@
 /// Read Program Flag.
 #define ELF_PROGRAM_FLAG_READ 0x4
 
-/// Undefined or meaningless section reference.
-#define ELF_SECTION_INDEX_UNDEFINED 0
-
-/// Unused section header.
-#define ELF_SECTION_TYPE_NULL 0
-/// Information defined by the program.
-#define ELF_SECTION_TYPE_PROGBITS 1
-/// Program notes.
-#define ELF_SECTION_TYPE_NOTE 7
-/// Uninitialized Space (doesn't use any space in the file).
-#define ELF_SECTION_TYPE_NOBITS 8
-
-/// Contains writable data.
-#define ELF_SECTION_FLAG_WRITE 0x1
-/// Section is allocated in memory image of program.
-#define ELF_SECTION_FLAG_ALLOC 0x2
-/// Contains executable instructions.
-#define ELF_SECTION_FLAG_EXECINSTR 0x4
-
 typedef struct elf_header
 {
   unsigned char identity[16];
@@ -68,10 +49,10 @@ typedef struct elf_program_header
 
 typedef struct elf_section_header
 {
-  uint32_t name;      ///< Section Name
-  uint32_t type;      ///< Section Type
+  uint32_t name;      ///< Section name
+  uint32_t type;      ///< Section type
   uint64_t flags;     ///< Section attributes
-  uint64_t addr;      ///< Virtual Address in memory
+  uint64_t addr;      ///< Virtual address in memory
   uint64_t offset;    ///< Offset in file
   uint64_t size;      ///< Size of section
   uint32_t link;      ///< Link to other section
