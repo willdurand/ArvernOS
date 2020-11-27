@@ -3,13 +3,11 @@
 #define MMU_FRAME_H
 
 #include <core/boot.h>
+#include <mmu/bitmap.h>
 #include <sys/types.h>
 
 /// The default page size.
 #define PAGE_SIZE 4096
-
-/// The number of frames that we can allocate (we consider 500MB for now).
-#define MAX_FRAMES ((500 * 1000000) / PAGE_SIZE)
 
 typedef uint64_t frame_number_t;
 
@@ -63,6 +61,7 @@ uint64_t frame_get_used_count();
 uint64_t frame_get_max_count();
 
 /// For testing purposes.
-void _frame_init(reserved_areas_t reserved, multiboot_tag_mmap_t* mmap);
+void _frame_init(reserved_areas_t* reserved, multiboot_tag_mmap_t* mmap);
+void _frame_init_bitmap(bitmap_t* addr);
 
 #endif
