@@ -162,18 +162,22 @@ uint64_t proc_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
 
   uint8_t len = strlen(buf);
 
+  if (offset > len) {
+    return 0;
+  }
+
   if (size > len) {
     size = len;
   }
 
-  if (offset > size) {
-    offset = size;
+  if (offset + size > len) {
+    size = len - offset;
   }
 
   memcpy(buffer, (char*)buf + offset, size);
   ((char*)buffer)[size] = '\0';
 
-  return size - offset;
+  return size;
 }
 
 uint64_t proc_stat(inode_t inode, stat_t* st)

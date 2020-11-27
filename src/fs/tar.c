@@ -93,12 +93,16 @@ uint64_t tar_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
     tar_header_t* header = headers[node->data];
     uint64_t header_size = get_size(header->size);
 
+    if (offset > header_size) {
+      return 0;
+    }
+
     if (size > header_size) {
       size = header_size;
     }
 
-    if (offset > size) {
-      offset = size;
+    if (offset + size > header_size) {
+      size = header_size - offset;
     }
 
     DEBUG("copying %ld bytes (offset=%lu header_size=%ld)",
@@ -109,7 +113,7 @@ uint64_t tar_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
     memcpy(buffer, (char*)header + 512 + offset, size);
     ((char*)buffer)[size] = '\0';
 
-    return size - offset;
+    return size;
   }
 
   // TODO: add support for other types like symlinks (at least)
