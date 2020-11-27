@@ -22,7 +22,7 @@ const char* commands[][NB_DOCUMENTED_COMMANDS] = {
 
 unsigned char get_char(uint8_t scancode, bool shift, bool caps_lock)
 {
-  unsigned char keymap[][128] = {
+  static unsigned char keymap[][128] = {
     { 0 },         { 27 },       { '1', '!' }, { '2', '@' }, { '3', '#' },
     { '4', '$' },  { '5', '%' }, { '6', '^' }, { '7', '&' }, { '8', '*' },
     { '9', '(' },  { '0', ')' }, { '-', '_' }, { '=', '+' }, { '\b' },
