@@ -2,6 +2,7 @@
 #include <core/register.h>
 #include <core/utils.h>
 #include <kernel/panic.h>
+#include <mmu/bitmap.h>
 #include <mmu/debug.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -37,6 +38,9 @@ static page_table_t* active_p4_table = (page_table_t*)P4_TABLE;
 static bool can_deallocate_frames = false;
 
 extern void load_p4(uint64_t addr);
+
+extern uint64_t frames_for_bitmap;
+extern bitmap_t* allocated_frames;
 
 void paging_init(multiboot_info_t* mbi)
 {
@@ -81,13 +85,18 @@ void remap_kernel(multiboot_info_t* mbi)
                    PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
   write_cr3(read_cr3());
 
+  // Allocated frames
+  DEBUG("mapping %d pages for frame allocator, starting at addr=%p",
+        frames_for_bitmap,
+        allocated_frames);
+  for (uint8_t i = 0; i < frames_for_bitmap; i++) {
+    identity_map((uint64_t)allocated_frames + (i * PAGE_SIZE),
+                 PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
+  }
+  DEBUG("%s", "pages for frame allocator mapped");
+
   // We shouldn't deallocate the `inactive_page_table_frame`.
   can_deallocate_frames = true;
-
-  // Map page for interrupts.
-  // TODO: investigate why this is needed.
-  identity_map(0x0, PAGING_FLAG_PRESENT);
-  DEBUG("%s", "mapped page=0 for interrupts");
 
   DEBUG("%s", "mapping elf sections");
   multiboot_tag_elf_sections_t* tag =
@@ -359,13 +368,13 @@ void map_page_to_frame(page_number_t page_number,
 {
   frame_number_t frame_number = frame_containing_address(frame);
 
-  DEBUG(
-    "mapping page=%u (start_addr=%p) to frame=%p (number=%d) with flags=%#x",
-    page_number,
-    page_start_address(page_number),
-    frame,
-    frame_number,
-    flags);
+  DEBUG("mapping page=%u (start_addr=%p) to frame=%u (start_addr=%p) with "
+        "flags=%#x",
+        page_number,
+        page_start_address(page_number),
+        frame_number,
+        frame,
+        flags);
 
   opt_uint64_t maybe_frame = translate_page(page_number);
   if (maybe_frame.has_value) {
@@ -404,10 +413,10 @@ void map_page_to_frame(page_number_t page_number,
   paging_set_entry(entry, frame, flags);
   p1->entries[p1_idx] = *entry;
 
-  DEBUG("mapped page=%u to frame=%p (number=%d)",
+  DEBUG("mapped page=%u to frame=%u (addr=%p)",
         page_number,
-        frame,
-        frame_containing_address(frame));
+        frame_containing_address(frame),
+        frame);
 }
 
 page_table_t* next_table_create(page_table_t* table, uint64_t index)

@@ -1,3 +1,4 @@
+#include <mmu/bitmap.h>
 #include <mmu/frame.h>
 #include <stdlib.h>
 #include <string.h>
@@ -29,8 +30,11 @@ int main()
   mmap->entry_size = sizeof(multiboot_mmap_entry_t);
   memcpy(mmap->entries, entries, sizeof(multiboot_mmap_entry_t) * NB_ENTRIES);
 
+  bitmap_t* bitmap = (bitmap_t*)malloc(PAGE_SIZE);
+
   describe("frame_init()");
-  _frame_init(reserved_areas, mmap);
+  _frame_init(&reserved_areas, mmap);
+  _frame_init_bitmap(bitmap);
   end_describe();
 
   describe("frame_deallocate()");
@@ -41,7 +45,7 @@ int main()
   end_describe();
 
   describe("frame_allocate()");
-  for (int i = 0; i < 5; i++) {
+  for (int i = 0; i < 6; i++) {
     opt_uint64_t frame = frame_allocate();
 
     assert(frame.value == (0x1000 * i), "allocates a frame");
@@ -63,6 +67,7 @@ int main()
   end_describe();
 
   free(mmap);
+  free(bitmap);
 
   return test_summary();
 }
