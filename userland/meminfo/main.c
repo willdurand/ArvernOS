@@ -11,18 +11,16 @@
 
 int main()
 {
-  int exit_code = 0;
+  int retval = 0;
   int fd = open("/proc/meminfo", 0); // O_RDONLY
 
-  char buf[256];
-  if (read(fd, buf, 256) > 0) {
+  char buf[20];
+  while (read(fd, buf, 20) > 0) {
     printf("%s", buf);
-  } else {
-    printf("failed to read /proc/meminfo\n");
-    exit_code = 1;
+    memset(buf, 0, 20);
   }
 
   close(fd);
 
-  return exit_code;
+  return retval;
 }
