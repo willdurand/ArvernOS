@@ -29,6 +29,7 @@ void syscall_open(registers_t* registers);
 void syscall_close(registers_t* registers);
 void syscall_reboot(registers_t* registers);
 void syscall_fstat(registers_t* registers);
+void syscall_lseek(registers_t* registers);
 
 void syscall_init()
 {
@@ -40,6 +41,7 @@ void syscall_init()
   syscall_register_handler(SYSCALL_CLOSE, syscall_close);
   syscall_register_handler(SYSCALL_REBOOT, syscall_reboot);
   syscall_register_handler(SYSCALL_FSTAT, syscall_fstat);
+  syscall_register_handler(SYSCALL_LSEEK, syscall_lseek);
 }
 
 void syscall_register_handler(uint8_t id, syscall_handler_t handler)
@@ -135,7 +137,9 @@ void syscall_read(registers_t* registers)
     return;
   }
 
-  registers->rdx = vfs_read(desc->inode, buf, count, desc->offset);
+  ssize_t bytes_read = vfs_read(desc->inode, buf, count, desc->offset);
+  desc->offset += bytes_read;
+  registers->rdx = bytes_read;
 }
 
 void syscall_gettimeofday(registers_t* registers)
@@ -235,6 +239,63 @@ void syscall_fstat(registers_t* registers)
   statbuf->st_size = stat.size;
 
   registers->rdx = 0;
+}
+
+void syscall_lseek(registers_t* registers)
+{
+  errno = 0;
+
+  int fd = (int)registers->rbx;
+  off_t offset = (off_t)registers->rcx;
+  int whence = (int)registers->rsi;
+
+  if (fd < 3) {
+    DEBUG("invalid file descriptor fd=%d", fd);
+    registers->rdx = -1;
+    errno = EPERM;
+    return;
+  }
+
+  file_descriptor_t* desc = get_file_descriptor(fd);
+
+  if (desc == 0) {
+    DEBUG("file descriptor fd=%d not found", fd);
+    registers->rdx = -1;
+    errno = EBADF;
+    return;
+  }
+
+  stat_t stat;
+  vfs_stat(desc->inode, &stat);
+
+  switch (whence) {
+    case SEEK_SET:
+      if (offset > stat.size) {
+        registers->rdx = -1;
+        errno = EINVAL;
+        return;
+      }
+
+      desc->offset = offset;
+      break;
+    case SEEK_CUR:
+      if (desc->offset + offset > stat.size) {
+        registers->rdx = -1;
+        errno = EINVAL;
+        return;
+      }
+
+      desc->offset += offset;
+      break;
+    case SEEK_END:
+      // TODO: implement me
+    default:
+      registers->rdx = -1;
+      errno = EINVAL;
+      return;
+  }
+
+  registers->rdx = desc->offset;
 }
 
 void syscall_print_registers(registers_t* registers)
