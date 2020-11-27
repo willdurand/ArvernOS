@@ -28,7 +28,24 @@ Use [Docker](https://docs.docker.com/) with the provided
 
 ```
 $ docker build -t willos/toolchain .
-$ docker run -it --rm -v $(pwd):/app willos/toolchain make
+[...]
+
+$ docker run -it --rm -v $(pwd):/app willos/toolchain make help
+clean                          remove build artifacts
+debug                          build the OS in debug mode
+docs                           build the docs
+fmt                            automatically format the code with clang-format
+gdb                            build, run the OS in debug mode and enable GDB
+initrd                         build the init ram disk
+iso                            build the image of the OS (.iso)
+kernel                         compile the kernel
+libc                           build the libc (for userland)
+run-debug                      run the OS in debug mode
+run-test                       run the OS in test mode
+run                            run the OS
+test                           run unit tests
+userland                       compile the userland programs (statically linked to libc)
+version                        print tool versions
 ```
 
 ### MacOS
@@ -64,26 +81,26 @@ config](https://github.com/willdurand/willOS/blob/master/.circleci/config.yml).
 To compile the kernel (ELF 64-bit), run:
 
 ```
-$ make kernel
+$ make clean kernel
 ```
 
 To build the ISO (this is the default target), run:
 
 ```
-$ make iso
+$ make clean iso
 ```
 
 To build the ISO in DEBUG mode, run:
 
 ```
-$ make debug
+$ make clean debug
 ```
 
 To compile the OS in DEBUG mode, build the ISO, and start `qemu` with the OS
 loaded, run:
 
 ```
-$ make run-debug
+$ make clean run-debug
 ```
 
 **Note:** in DEBUG mode, logging uses the serial port `COM1` to write various
@@ -94,7 +111,7 @@ To compile the OS in normal mode, build the ISO, and start `qemu` with the OS
 loaded, run:
 
 ```
-$ make run
+$ make clean un
 ```
 
 ## Early boot sequence
