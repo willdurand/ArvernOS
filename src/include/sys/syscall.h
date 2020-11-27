@@ -9,7 +9,7 @@
 #include <sys/types.h>
 
 #define INT_SYSCALL          "int $0x80"
-#define NB_SYSCALLS          8
+#define NB_SYSCALLS          9
 #define SYSCALL_TEST         1
 #define SYSCALL_WRITE        2
 #define SYSCALL_READ         3
@@ -18,6 +18,14 @@
 #define SYSCALL_CLOSE        6
 #define SYSCALL_REBOOT       7
 #define SYSCALL_FSTAT        8
+#define SYSCALL_LSEEK        9
+
+/// Set file descriptor offset to offset.
+#define SEEK_SET 0
+/// Set file descriptor offset to current plus offset.
+#define SEEK_CUR 1
+/// Set file descriptor offset to EOF plus offset.
+#define SEEK_END 2
 
 /**
  * Implements a syscall for testing purpose only. It takes a string as input
@@ -56,6 +64,16 @@ ssize_t read(int fd, void* buf, size_t count);
  * @return 0 on success or -1 in case of an error
  */
 int fstat(int fd, struct stat* statbuf);
+
+/**
+ * Implements the lseek syscall.
+ *
+ * @param fd a file descriptor ID
+ * @param offset the offset value
+ * @param whence a directive to reposition the offset
+ * @return the value of the offset on success or -1 in case of an error
+ */
+off_t lseek(int fd, off_t offset, int whence);
 
 /**
  * Implements the gettimeofday syscall.
