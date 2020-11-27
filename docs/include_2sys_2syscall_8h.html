@@ -82,6 +82,7 @@ $(document).ready(function(){initNavTree('include_2sys_2syscall_8h.html',''); in
 
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">syscall.h File Reference</div>  </div>
@@ -89,6 +90,7 @@ $(document).ready(function(){initNavTree('include_2sys_2syscall_8h.html',''); in
 <div class="contents">
 <div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
 <code>#include &lt;<a class="el" href="stdio_8h_source.html">stdio.h</a>&gt;</code><br />
+<code>#include &lt;sys/stat.h&gt;</code><br />
 <code>#include &lt;sys/time.h&gt;</code><br />
 <code>#include &lt;sys/types.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
@@ -96,18 +98,34 @@ Include dependency graph for syscall.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="include_2sys_2syscall_8h__incl.png" border="0" usemap="#src_2include_2sys_2syscall_8h" alt=""/></div>
 <map name="src_2include_2sys_2syscall_8h" id="src_2include_2sys_2syscall_8h">
-<area shape="rect" title=" " alt="" coords="29,5,196,32"/>
-<area shape="rect" title=" " alt="" coords="11,229,76,256"/>
-<area shape="rect" href="stdio_8h.html" title=" " alt="" coords="34,80,95,107"/>
-<area shape="rect" href="sys_2time_8h_source.html" title=" " alt="" coords="119,80,202,107"/>
-<area shape="rect" href="types_8h_source.html" title=" " alt="" coords="146,155,237,181"/>
-<area shape="rect" title=" " alt="" coords="27,155,121,181"/>
-<area shape="rect" title=" " alt="" coords="154,229,229,256"/>
+<area shape="rect" title=" " alt="" coords="74,5,241,32"/>
+<area shape="rect" title=" " alt="" coords="26,229,91,256"/>
+<area shape="rect" href="stdio_8h.html" title=" " alt="" coords="32,80,93,107"/>
+<area shape="rect" href="stat_8h_source.html" title=" " alt="" coords="117,80,197,107"/>
+<area shape="rect" href="types_8h_source.html" title=" " alt="" coords="171,155,261,181"/>
+<area shape="rect" href="sys_2time_8h_source.html" title=" " alt="" coords="272,80,355,107"/>
+<area shape="rect" title=" " alt="" coords="33,155,127,181"/>
+<area shape="rect" title=" " alt="" coords="179,229,253,256"/>
 </map>
 </div>
 </div>
 <p><a href="include_2sys_2syscall_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a0d112bae8fd35be772185b6ec6bcbe64"><td class="memItemLeft" align="right" valign="top"><a id="a0d112bae8fd35be772185b6ec6bcbe64"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2sys_2syscall_8h.html#a0d112bae8fd35be772185b6ec6bcbe64">SEEK_SET</a>&#160;&#160;&#160;0</td></tr>
+<tr class="memdesc:a0d112bae8fd35be772185b6ec6bcbe64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set file descriptor offset to offset. <br /></td></tr>
+<tr class="separator:a0d112bae8fd35be772185b6ec6bcbe64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c8d0b76b470ba65a43ca46a88320f39"><td class="memItemLeft" align="right" valign="top"><a id="a4c8d0b76b470ba65a43ca46a88320f39"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2sys_2syscall_8h.html#a4c8d0b76b470ba65a43ca46a88320f39">SEEK_CUR</a>&#160;&#160;&#160;1</td></tr>
+<tr class="memdesc:a4c8d0b76b470ba65a43ca46a88320f39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set file descriptor offset to current plus offset. <br /></td></tr>
+<tr class="separator:a4c8d0b76b470ba65a43ca46a88320f39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2a2e6c114780c3071efd24f16c7f7d8"><td class="memItemLeft" align="right" valign="top"><a id="ad2a2e6c114780c3071efd24f16c7f7d8"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2sys_2syscall_8h.html#ad2a2e6c114780c3071efd24f16c7f7d8">SEEK_END</a>&#160;&#160;&#160;2</td></tr>
+<tr class="memdesc:ad2a2e6c114780c3071efd24f16c7f7d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set file descriptor offset to EOF plus offset. <br /></td></tr>
+<tr class="separator:ad2a2e6c114780c3071efd24f16c7f7d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:afc62fdd40cdd010568045694291ee7d1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2sys_2syscall_8h.html#afc62fdd40cdd010568045694291ee7d1">test</a> (const char *s)</td></tr>
@@ -116,6 +134,10 @@ Functions</h2></td></tr>
 <tr class="separator:abb39b21888372e95ad3e5c59b166f5c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af32a16ad2dd9e48482f8f790db7dbbd2"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2sys_2syscall_8h.html#af32a16ad2dd9e48482f8f790db7dbbd2">read</a> (int fd, void *buf, size_t count)</td></tr>
 <tr class="separator:af32a16ad2dd9e48482f8f790db7dbbd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27628bfab8ccdd0fdeed6778b25cd734"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2sys_2syscall_8h.html#a27628bfab8ccdd0fdeed6778b25cd734">fstat</a> (int fd, struct <a class="el" href="structstat.html">stat</a> *statbuf)</td></tr>
+<tr class="separator:a27628bfab8ccdd0fdeed6778b25cd734"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8bd74caed008a66808d92d57fa74d9f6"><td class="memItemLeft" align="right" valign="top">off_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2sys_2syscall_8h.html#a8bd74caed008a66808d92d57fa74d9f6">lseek</a> (int fd, off_t offset, int whence)</td></tr>
+<tr class="separator:a8bd74caed008a66808d92d57fa74d9f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a08c6fa45afb77767891dc6fb73d1010f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2sys_2syscall_8h.html#a08c6fa45afb77767891dc6fb73d1010f">gettimeofday</a> (struct <a class="el" href="structtimeval.html">timeval</a> *p, void *z)</td></tr>
 <tr class="separator:a08c6fa45afb77767891dc6fb73d1010f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afde00d8ce144212f452c321166e56e9a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2sys_2syscall_8h.html#afde00d8ce144212f452c321166e56e9a">open</a> (const char *pathname, uint32_t flags,...)</td></tr>
@@ -152,6 +174,43 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a27628bfab8ccdd0fdeed6778b25cd734"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a27628bfab8ccdd0fdeed6778b25cd734">&#9670;&nbsp;</a></span>fstat()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int fstat </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>fd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">struct <a class="el" href="structstat.html">stat</a> *&#160;</td>
+          <td class="paramname"><em>statbuf</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Implements the fstat syscall.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fd</td><td>a file descriptor ID </td></tr>
+    <tr><td class="paramname">statbuf</td><td>a stat structure </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 on success or -1 in case of an error </dd></dl>
+
+</div>
+</div>
 <a id="a08c6fa45afb77767891dc6fb73d1010f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a08c6fa45afb77767891dc6fb73d1010f">&#9670;&nbsp;</a></span>gettimeofday()</h2>
 
@@ -178,6 +237,50 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Implements the gettimeofday syscall. </p>
+
+</div>
+</div>
+<a id="a8bd74caed008a66808d92d57fa74d9f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8bd74caed008a66808d92d57fa74d9f6">&#9670;&nbsp;</a></span>lseek()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">off_t lseek </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>fd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">off_t&#160;</td>
+          <td class="paramname"><em>offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>whence</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Implements the lseek syscall.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fd</td><td>a file descriptor ID </td></tr>
+    <tr><td class="paramname">offset</td><td>the offset value </td></tr>
+    <tr><td class="paramname">whence</td><td>a directive to reposition the offset </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the value of the offset on success or -1 in case of an error </dd></dl>
 
 </div>
 </div>

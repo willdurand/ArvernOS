@@ -1,7 +1,9 @@
 var searchData=
 [
-  ['serial_5finit_315',['serial_init',['../serial_8h.html#a086a2712ee8de77b7621d922d2b96857',1,'serial.c']]],
-  ['serial_5fprint_316',['serial_print',['../serial_8h.html#a1e9e38c6dbae13f53e8ed436fef0cd5b',1,'serial.c']]],
-  ['syscall_5fhandler_317',['syscall_handler',['../core_2syscall_8h.html#a362ef819e2d72c9411f40f5d87c5587a',1,'syscall.c']]],
-  ['syscall_5finit_318',['syscall_init',['../core_2syscall_8h.html#a581ed37968ead91b6d3a0b3b7a71da9d',1,'syscall.c']]]
+  ['read_319',['read',['../include_2sys_2syscall_8h.html#af32a16ad2dd9e48482f8f790db7dbbd2',1,'read.c']]],
+  ['read_5fcr0_320',['read_cr0',['../register_8h.html#a89763d209b83a61f0f2c9a01022f7f88',1,'register.c']]],
+  ['read_5fcr2_321',['read_cr2',['../register_8h.html#a7b2de5d97ae8b57fd726fa100087f2b9',1,'register.c']]],
+  ['read_5fcr3_322',['read_cr3',['../register_8h.html#a37758a1d9dd7aa158743e035016ea79b',1,'register.c']]],
+  ['read_5fmsr_323',['read_msr',['../register_8h.html#af21f5b42b403d57093c91fc8f27a3ddd',1,'register.c']]],
+  ['reboot_324',['reboot',['../include_2sys_2syscall_8h.html#a3e048601df87806f1bb72a84a6ff81e3',1,'reboot.c']]]
 ];

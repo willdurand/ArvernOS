@@ -103,18 +103,18 @@ Setting up a development environment</h1>
 Docker (recommended way)</h2>
 <p>Use <a href="https://docs.docker.com/">Docker</a> with the provided <a href="https://github.com/willdurand/willOS/blob/master/Dockerfile"><code>Dockerfile</code></a>:</p>
 <div class="fragment"><div class="line">$ docker build -t willos/toolchain .</div>
-<div class="line">$ docker run --rm -v $(pwd):/app willos/toolchain make</div>
+<div class="line">$ docker run -it --rm -v $(pwd):/app willos/toolchain make</div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md2"></a>
 MacOS</h2>
 <p>Install <a href="https://brew.sh/">Homebrew</a>, then run the following commands:</p>
 <div class="fragment"><div class="line">$ brew install nasm</div>
 <div class="line">$ brew install xorriso</div>
 <div class="line">$ brew install qemu</div>
-</div><!-- fragment --><p>You need to tap <code>hawkw/x86_64-pc-elf</code> to install the cross-compilation toolchain:</p>
+<div class="line">$ brew install x86_64-elf-gcc</div>
+</div><!-- fragment --><p>You need to tap <code>hawkw/x86_64-pc-elf</code> and <code>hawkw/grub</code> to be able to install the GRUB utility:</p>
 <div class="fragment"><div class="line">$ brew tap hawkw/x86_64-pc-elf</div>
+<div class="line">$ brew tap hawkw/grub</div>
 <div class="line">$ brew install x86_64-pc-elf-gcc</div>
-</div><!-- fragment --><p>You need to tap <code>hawkw/grub</code> to install the GRUB utility:</p>
-<div class="fragment"><div class="line">$ brew tap hawkw/grub</div>
 <div class="line">$ brew install grub --with-x86_64-pc-elf --HEAD</div>
 </div><!-- fragment --><p>Hat tip to <a href="http://github.com/hawkw">Eliza Weisman</a> for the taps!</p>
 <h2><a class="anchor" id="autotoc_md3"></a>
@@ -126,9 +126,11 @@ Building willOS</h1>
 <div class="fragment"><div class="line">$ make kernel</div>
 </div><!-- fragment --><p>To build the ISO (this is the default target), run:</p>
 <div class="fragment"><div class="line">$ make iso</div>
-</div><!-- fragment --><p>To compile the OS in DEBUG mode, build the ISO, and start <code>qemu</code> with the OS loaded, run:</p>
+</div><!-- fragment --><p>To build the ISO in DEBUG mode, run:</p>
 <div class="fragment"><div class="line">$ make debug</div>
-</div><!-- fragment --><p><b>Note:</b> in DEBUG mode, logging uses the serial port <code>COM1</code> to write various debugging information. <code>qemu</code> is configured to write the output of this serial port to <code>/tmp/serial.log</code>.</p>
+</div><!-- fragment --><p>To compile the OS in DEBUG mode, build the ISO, and start <code>qemu</code> with the OS loaded, run:</p>
+<div class="fragment"><div class="line">$ make run-debug</div>
+</div><!-- fragment --><p><b>Note:</b> in DEBUG mode, logging uses the serial port <code>COM1</code> to write various debugging information. <code>qemu</code> is configured to write the output of this serial port to <code>./logs/debug.log</code>.</p>
 <p>To compile the OS in normal mode, build the ISO, and start <code>qemu</code> with the OS loaded, run:</p>
 <div class="fragment"><div class="line">$ make run</div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md5"></a>

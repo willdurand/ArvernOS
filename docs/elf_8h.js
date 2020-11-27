@@ -12,6 +12,7 @@ var elf_8h =
     [ "ELF_SECTION_FLAG_WRITE", "elf_8h.html#a3a1972be53e555b161cdc088e3630d3f", null ],
     [ "ELF_SECTION_INDEX_UNDEFINED", "elf_8h.html#a1ac7576ab82427c66ba8da14152d6f7e", null ],
     [ "ELF_SECTION_TYPE_NOBITS", "elf_8h.html#a2a7fd8c2131e9096afda3d7c9552e9cc", null ],
+    [ "ELF_SECTION_TYPE_NOTE", "elf_8h.html#ad11b3f2db174cdab24c0c36a9eb4431e", null ],
     [ "ELF_SECTION_TYPE_NULL", "elf_8h.html#a84b27771d4d79a5dc8097d391230f4ec", null ],
     [ "ELF_SECTION_TYPE_PROGBITS", "elf_8h.html#ad809e88a9dfe4e461a4d1b0038852dde", null ],
     [ "ELF_TYPE_EXECUTABLE", "elf_8h.html#ad2f1035ee9df02bd3d7504cb7f6c97d8", null ]

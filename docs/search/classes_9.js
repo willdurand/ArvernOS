@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['stack_225',['stack',['../structstack.html',1,'']]],
-  ['stat_226',['stat',['../structstat.html',1,'']]]
+  ['registers_231',['registers',['../structregisters.html',1,'']]],
+  ['reserved_5fareas_232',['reserved_areas',['../structreserved__areas.html',1,'']]]
 ];

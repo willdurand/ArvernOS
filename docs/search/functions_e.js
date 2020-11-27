@@ -1,9 +1,7 @@
 var searchData=
 [
-  ['tar_5ffs_5finit_319',['tar_fs_init',['../tar_8h.html#a661af826d7d96126c71643d3c99371f7',1,'tar.c']]],
-  ['test_320',['test',['../include_2sys_2syscall_8h.html#afc62fdd40cdd010568045694291ee7d1',1,'test.c']]],
-  ['timer_5finit_321',['timer_init',['../timer_8h.html#a896a4c37c6ecf8868ef0dc758e5a598c',1,'timer.c']]],
-  ['timer_5ftick_322',['timer_tick',['../timer_8h.html#a0a6f7ad89e8719f445d3beeaf672ed9f',1,'timer.c']]],
-  ['timer_5fuptime_323',['timer_uptime',['../timer_8h.html#ad5df37e1f85cabd9c5d43aa1dfc0e37e',1,'timer.c']]],
-  ['translate_5fpage_324',['translate_page',['../paging_8h.html#a93e89a9ca57751d1b04f8d95ccbddb4b',1,'paging.c']]]
+  ['serial_5finit_325',['serial_init',['../serial_8h.html#a086a2712ee8de77b7621d922d2b96857',1,'serial.c']]],
+  ['serial_5fprint_326',['serial_print',['../serial_8h.html#a1e9e38c6dbae13f53e8ed436fef0cd5b',1,'serial.c']]],
+  ['syscall_5fhandler_327',['syscall_handler',['../core_2syscall_8h.html#a362ef819e2d72c9411f40f5d87c5587a',1,'syscall.c']]],
+  ['syscall_5finit_328',['syscall_init',['../core_2syscall_8h.html#a581ed37968ead91b6d3a0b3b7a71da9d',1,'syscall.c']]]
 ];

@@ -54,7 +54,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "alloc_8h.html",
-"timer_8h.html#a0a6f7ad89e8719f445d3beeaf672ed9f"
+"structvfs__driver.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

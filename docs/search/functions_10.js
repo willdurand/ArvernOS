@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['vga_5ftext_5fdisable_5fcursor_327',['vga_text_disable_cursor',['../vga__text_8h.html#ad1fc59685312d0c91988280ab70f1c01',1,'vga_text.c']]],
-  ['vga_5ftext_5finit_328',['vga_text_init',['../vga__text_8h.html#a2087a1fae709cd6218098eac37f610a3',1,'vga_text.c']]],
-  ['vga_5ftext_5fmove_5fcursor_329',['vga_text_move_cursor',['../vga__text_8h.html#af7e7957c30423a3a10d2843f7c10415e',1,'vga_text.c']]],
-  ['vga_5ftext_5fwrite_5fat_330',['vga_text_write_at',['../vga__text_8h.html#a1b47282282147d894d75584ed77cced0',1,'vga_text.c']]]
+  ['unmap_335',['unmap',['../paging_8h.html#a2556847794baa9bcb9be757f7f67f6b4',1,'paging.c']]],
+  ['unmap_5fmultiple_336',['unmap_multiple',['../paging_8h.html#aaf4d9db68debae8e51bab96105966d07',1,'paging.c']]]
 ];

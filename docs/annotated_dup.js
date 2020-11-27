@@ -1,5 +1,6 @@
 var annotated_dup =
 [
+    [ "_stat", "struct__stat.html", null ],
     [ "cmos_rtc", "structcmos__rtc.html", null ],
     [ "dirent", "structdirent.html", null ],
     [ "elf_header", "structelf__header.html", null ],

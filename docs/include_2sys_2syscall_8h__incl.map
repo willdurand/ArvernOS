@@ -1,9 +1,10 @@
 <map id="src/include/sys/syscall.h" name="src/include/sys/syscall.h">
-<area shape="rect" id="node1" title=" " alt="" coords="29,5,196,32"/>
-<area shape="rect" id="node2" title=" " alt="" coords="11,229,76,256"/>
-<area shape="rect" id="node3" href="$stdio_8h.html" title=" " alt="" coords="34,80,95,107"/>
-<area shape="rect" id="node5" href="$sys_2time_8h_source.html" title=" " alt="" coords="119,80,202,107"/>
-<area shape="rect" id="node6" href="$types_8h_source.html" title=" " alt="" coords="146,155,237,181"/>
-<area shape="rect" id="node4" title=" " alt="" coords="27,155,121,181"/>
-<area shape="rect" id="node7" title=" " alt="" coords="154,229,229,256"/>
+<area shape="rect" id="node1" title=" " alt="" coords="74,5,241,32"/>
+<area shape="rect" id="node2" title=" " alt="" coords="26,229,91,256"/>
+<area shape="rect" id="node3" href="$stdio_8h.html" title=" " alt="" coords="32,80,93,107"/>
+<area shape="rect" id="node5" href="$stat_8h_source.html" title=" " alt="" coords="117,80,197,107"/>
+<area shape="rect" id="node6" href="$types_8h_source.html" title=" " alt="" coords="171,155,261,181"/>
+<area shape="rect" id="node8" href="$sys_2time_8h_source.html" title=" " alt="" coords="272,80,355,107"/>
+<area shape="rect" id="node4" title=" " alt="" coords="33,155,127,181"/>
+<area shape="rect" id="node7" title=" " alt="" coords="179,229,253,256"/>
 </map>

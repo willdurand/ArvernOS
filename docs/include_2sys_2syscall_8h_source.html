@@ -91,42 +91,56 @@ $(document).ready(function(){initNavTree('include_2sys_2syscall_8h_source.html',
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="stdio_8h.html">stdio.h</a>&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;sys/time.h&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;sys/types.h&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#define INT_SYSCALL          &quot;int $0x80&quot;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#define NB_SYSCALLS          7</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#define SYSCALL_TEST         1</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#define SYSCALL_WRITE        2</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#define SYSCALL_READ         3</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#define SYSCALL_GETTIMEOFDAY 4</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#define SYSCALL_OPEN         5</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#define SYSCALL_CLOSE        6</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#define SYSCALL_REBOOT       7</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keywordtype">void</span> <a class="code" href="include_2sys_2syscall_8h.html#afc62fdd40cdd010568045694291ee7d1">test</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* s);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;ssize_t <a class="code" href="include_2sys_2syscall_8h.html#abb39b21888372e95ad3e5c59b166f5c8">write</a>(<span class="keywordtype">int</span> fd, <span class="keyword">const</span> <span class="keywordtype">void</span>* buf, <span class="keywordtype">size_t</span> count);</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;sys/stat.h&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;sys/time.h&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;sys/types.h&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#define INT_SYSCALL          &quot;int $0x80&quot;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#define NB_SYSCALLS          9</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#define SYSCALL_TEST         1</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#define SYSCALL_WRITE        2</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#define SYSCALL_READ         3</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#define SYSCALL_GETTIMEOFDAY 4</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#define SYSCALL_OPEN         5</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#define SYSCALL_CLOSE        6</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#define SYSCALL_REBOOT       7</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#define SYSCALL_FSTAT        8</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#define SYSCALL_LSEEK        9</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="include_2sys_2syscall_8h.html#a0d112bae8fd35be772185b6ec6bcbe64">   24</a></span>&#160;<span class="preprocessor">#define SEEK_SET 0</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#define SEEK_CUR 1</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#define SEEK_END 2</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keywordtype">void</span> <a class="code" href="include_2sys_2syscall_8h.html#afc62fdd40cdd010568045694291ee7d1">test</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* s);</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;ssize_t <a class="code" href="include_2sys_2syscall_8h.html#af32a16ad2dd9e48482f8f790db7dbbd2">read</a>(<span class="keywordtype">int</span> fd, <span class="keywordtype">void</span>* buf, <span class="keywordtype">size_t</span> count);</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keywordtype">int</span> <a class="code" href="include_2sys_2syscall_8h.html#a08c6fa45afb77767891dc6fb73d1010f">gettimeofday</a>(<span class="keyword">struct</span> <a class="code" href="structtimeval.html">timeval</a>* p, <span class="keywordtype">void</span>* z);</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="keywordtype">int</span> <a class="code" href="include_2sys_2syscall_8h.html#afde00d8ce144212f452c321166e56e9a">open</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* pathname, uint32_t flags, ...);</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="keywordtype">int</span> <a class="code" href="include_2sys_2syscall_8h.html#aafbcde67669a1b96577e735ddebd8634">close</a>(<span class="keywordtype">int</span> fd);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="keywordtype">int</span> <a class="code" href="include_2sys_2syscall_8h.html#a3e048601df87806f1bb72a84a6ff81e3">reboot</a>(<span class="keywordtype">int</span> command);</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;ssize_t <a class="code" href="include_2sys_2syscall_8h.html#abb39b21888372e95ad3e5c59b166f5c8">write</a>(<span class="keywordtype">int</span> fd, <span class="keyword">const</span> <span class="keywordtype">void</span>* buf, <span class="keywordtype">size_t</span> count);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;ssize_t <a class="code" href="include_2sys_2syscall_8h.html#af32a16ad2dd9e48482f8f790db7dbbd2">read</a>(<span class="keywordtype">int</span> fd, <span class="keywordtype">void</span>* buf, <span class="keywordtype">size_t</span> count);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="keywordtype">int</span> <a class="code" href="include_2sys_2syscall_8h.html#a27628bfab8ccdd0fdeed6778b25cd734">fstat</a>(<span class="keywordtype">int</span> fd, <span class="keyword">struct</span> <a class="code" href="structstat.html">stat</a>* statbuf);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;off_t <a class="code" href="include_2sys_2syscall_8h.html#a8bd74caed008a66808d92d57fa74d9f6">lseek</a>(<span class="keywordtype">int</span> fd, off_t offset, <span class="keywordtype">int</span> whence);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="keywordtype">int</span> <a class="code" href="include_2sys_2syscall_8h.html#a08c6fa45afb77767891dc6fb73d1010f">gettimeofday</a>(<span class="keyword">struct</span> <a class="code" href="structtimeval.html">timeval</a>* p, <span class="keywordtype">void</span>* z);</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="keywordtype">int</span> <a class="code" href="include_2sys_2syscall_8h.html#afde00d8ce144212f452c321166e56e9a">open</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* pathname, uint32_t flags, ...);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="keywordtype">int</span> <a class="code" href="include_2sys_2syscall_8h.html#aafbcde67669a1b96577e735ddebd8634">close</a>(<span class="keywordtype">int</span> fd);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="keywordtype">int</span> <a class="code" href="include_2sys_2syscall_8h.html#a3e048601df87806f1bb72a84a6ff81e3">reboot</a>(<span class="keywordtype">int</span> command);</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
+<div class="ttc" id="astructstat_html"><div class="ttname"><a href="structstat.html">stat</a></div><div class="ttdef"><b>Definition:</b> stat.h:6</div></div>
 <div class="ttc" id="ainclude_2sys_2syscall_8h_html_aafbcde67669a1b96577e735ddebd8634"><div class="ttname"><a href="include_2sys_2syscall_8h.html#aafbcde67669a1b96577e735ddebd8634">close</a></div><div class="ttdeci">int close(int fd)</div><div class="ttdef"><b>Definition:</b> close.c:3</div></div>
 <div class="ttc" id="ainclude_2sys_2syscall_8h_html_afde00d8ce144212f452c321166e56e9a"><div class="ttname"><a href="include_2sys_2syscall_8h.html#afde00d8ce144212f452c321166e56e9a">open</a></div><div class="ttdeci">int open(const char *pathname, uint32_t flags,...)</div><div class="ttdef"><b>Definition:</b> open.c:3</div></div>
 <div class="ttc" id="ainclude_2sys_2syscall_8h_html_afc62fdd40cdd010568045694291ee7d1"><div class="ttname"><a href="include_2sys_2syscall_8h.html#afc62fdd40cdd010568045694291ee7d1">test</a></div><div class="ttdeci">void test(const char *s)</div><div class="ttdef"><b>Definition:</b> test.c:3</div></div>
 <div class="ttc" id="ainclude_2sys_2syscall_8h_html_a08c6fa45afb77767891dc6fb73d1010f"><div class="ttname"><a href="include_2sys_2syscall_8h.html#a08c6fa45afb77767891dc6fb73d1010f">gettimeofday</a></div><div class="ttdeci">int gettimeofday(struct timeval *p, void *z)</div><div class="ttdef"><b>Definition:</b> gettimeofday.c:3</div></div>
 <div class="ttc" id="astdio_8h_html"><div class="ttname"><a href="stdio_8h.html">stdio.h</a></div></div>
+<div class="ttc" id="ainclude_2sys_2syscall_8h_html_a8bd74caed008a66808d92d57fa74d9f6"><div class="ttname"><a href="include_2sys_2syscall_8h.html#a8bd74caed008a66808d92d57fa74d9f6">lseek</a></div><div class="ttdeci">off_t lseek(int fd, off_t offset, int whence)</div><div class="ttdef"><b>Definition:</b> lseek.c:3</div></div>
 <div class="ttc" id="ainclude_2sys_2syscall_8h_html_abb39b21888372e95ad3e5c59b166f5c8"><div class="ttname"><a href="include_2sys_2syscall_8h.html#abb39b21888372e95ad3e5c59b166f5c8">write</a></div><div class="ttdeci">ssize_t write(int fd, const void *buf, size_t count)</div><div class="ttdef"><b>Definition:</b> write.c:3</div></div>
+<div class="ttc" id="ainclude_2sys_2syscall_8h_html_a27628bfab8ccdd0fdeed6778b25cd734"><div class="ttname"><a href="include_2sys_2syscall_8h.html#a27628bfab8ccdd0fdeed6778b25cd734">fstat</a></div><div class="ttdeci">int fstat(int fd, struct stat *statbuf)</div><div class="ttdef"><b>Definition:</b> fstat.c:3</div></div>
 <div class="ttc" id="astructtimeval_html"><div class="ttname"><a href="structtimeval.html">timeval</a></div><div class="ttdef"><b>Definition:</b> time.h:6</div></div>
 <div class="ttc" id="ainclude_2sys_2syscall_8h_html_af32a16ad2dd9e48482f8f790db7dbbd2"><div class="ttname"><a href="include_2sys_2syscall_8h.html#af32a16ad2dd9e48482f8f790db7dbbd2">read</a></div><div class="ttdeci">ssize_t read(int fd, void *buf, size_t count)</div><div class="ttdef"><b>Definition:</b> read.c:3</div></div>
 <div class="ttc" id="ainclude_2sys_2syscall_8h_html_a3e048601df87806f1bb72a84a6ff81e3"><div class="ttname"><a href="include_2sys_2syscall_8h.html#a3e048601df87806f1bb72a84a6ff81e3">reboot</a></div><div class="ttdeci">int reboot(int command)</div><div class="ttdef"><b>Definition:</b> reboot.c:3</div></div>

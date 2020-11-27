@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['cmos_5frtc_198',['cmos_rtc',['../structcmos__rtc.html',1,'']]]
+  ['_5fstat_205',['_stat',['../struct__stat.html',1,'']]]
 ];
