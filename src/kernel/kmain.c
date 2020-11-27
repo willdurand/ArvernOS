@@ -60,7 +60,7 @@ void check_interrupts()
 {
   print_step("checking interrupts");
 
-  uint32_t tick = timer_tick();
+  uint64_t tick = timer_tick();
 
   while (tick == timer_tick()) {
     ;
@@ -138,6 +138,12 @@ void kmain(uint64_t addr)
 
   if (cmdline && strcmp(cmdline->string, "boot-and-exit") == 0) {
     printf("\n\nboot sequence completed, exiting now...");
+    uint64_t uptime = timer_uptime();
+
+    while (timer_uptime() < uptime + 2) {
+      __asm__("hlt");
+    }
+
     irq_disable();
     // Power-off for QEMU, see: https://wiki.osdev.org/Shutdown
     port_word_out(0x604, 0x2000);
