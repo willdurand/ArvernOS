@@ -24,14 +24,14 @@ int main(int argc, char* argv[])
       printf("%s", buf);
     } else {
       printf("failed to read from %s (errno=%d)\n", HOSTNAME_FILE, errno);
-      retval = -1;
+      retval = 1;
     }
   } else {
     if (write(fd, argv[1], strlen(argv[1])) > 0) {
       printf("hostname updated\n");
     } else {
       printf("failed to write to %s (errno=%d)\n", HOSTNAME_FILE, errno);
-      retval = -1;
+      retval = 2;
     }
   }
 
