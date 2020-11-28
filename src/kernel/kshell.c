@@ -12,6 +12,14 @@
 
 #define NB_DOCUMENTED_COMMANDS 5
 
+static char readline[READLINE_SIZE] = { 0 };
+static char last_readline[READLINE_SIZE] = { 0 };
+static unsigned int readline_index = 0;
+
+static bool caps_lock_mode = false;
+static bool ctrl_mode = false;
+static bool shift_mode = false;
+
 static const char* commands[][NB_DOCUMENTED_COMMANDS] = {
   { "cat", "print on the standard output" },
   { "help", "display information about system shell commands" },
@@ -58,9 +66,9 @@ unsigned char get_char(uint8_t scancode, bool shift, bool caps_lock)
   return keymap[scancode][0];
 }
 
-void help(const char* command)
+void help(int argc, char* argv[])
 {
-  if (strlen(command) == 4) {
+  if (argc < 2) {
     for (uint8_t i = 0; i < NB_DOCUMENTED_COMMANDS; i++) {
       printf("%-10s %s\n", commands[i][0], commands[i][1]);
     }
@@ -68,11 +76,9 @@ void help(const char* command)
     return;
   }
 
-  const char* arg = command + 5;
-
   for (uint8_t i = 0; i < NB_DOCUMENTED_COMMANDS; i++) {
-    if (strncmp(arg, commands[i][0], strlen(commands[i][0])) == 0) {
-      printf("%s - %s\n", arg, commands[i][1]);
+    if (strncmp(argv[1], commands[i][0], strlen(commands[i][0])) == 0) {
+      printf("%s - %s\n", argv[1], commands[i][1]);
       return;
     }
   }
@@ -119,32 +125,36 @@ void selftest()
   printf("\ndone.\n");
 }
 
-void cat(const char* command)
+void cat(int argc, char* argv[])
 {
-  const char* arg = command + 4;
-  inode_t f = vfs_namei(arg);
-
-  if (!f) {
-    printf("no such file or directory\n");
-    return;
+  if (argc < 2) {
+    printf("%s requires an argument\n", argv[0]);
   }
 
-  if (f->type != FS_FILE) {
-    printf("'%s' is not a printable file\n", f->name);
+  for (int i = 1; i < argc; i++) {
+    inode_t f = vfs_namei(argv[i]);
+
+    if (!f) {
+      printf("no such file or directory\n");
+      continue;
+    }
+
+    if (f->type != FS_FILE) {
+      printf("'%s' is not a printable file\n", f->name);
+      vfs_free(f);
+      continue;
+    }
+
+    char buf[512];
+    vfs_read(f, buf, sizeof(buf), 0);
+    printf("%s", buf);
     vfs_free(f);
-    return;
   }
-
-  char buf[512];
-  vfs_read(f, buf, sizeof(buf), 0);
-  printf("%s", buf);
-  vfs_free(f);
 }
 
-void ls(const char* command)
+void ls(int argc, char* argv[])
 {
-  const char* arg = command + 3;
-  inode_t inode = strlen(arg) == 0 ? vfs_namei("/") : vfs_namei(arg);
+  inode_t inode = argc == 1 ? vfs_namei("/") : vfs_namei(argv[1]);
 
   if (!inode) {
     printf("no such file or directory\n");
@@ -177,13 +187,13 @@ void ls(const char* command)
   vfs_free(inode);
 }
 
-int try_exec(const char* command)
+int try_exec(int argc, char* argv[])
 {
-  inode_t inode = vfs_namei(command);
+  inode_t inode = vfs_namei(argv[0]);
 
   if (!inode) {
-    char* buf = malloc(strlen(command) + 5);
-    sprintf(buf, "/bin/%s", command);
+    char* buf = malloc(strlen(argv[0]) + 5);
+    sprintf(buf, "/bin/%s", argv[0]);
     inode = vfs_namei(buf);
     free(buf);
   }
@@ -211,9 +221,13 @@ int try_exec(const char* command)
     return -3;
   }
 
-  typedef int callable(void);
+  typedef int callable(int arvc, char* argv[]);
   callable* c = (callable*)(elf->entry);
-  c();
+  int retval = c(argc, argv);
+
+  if (retval != 0) {
+    printf("%s returned non-zero exit status %d.\n", argv[0], retval);
+  }
 
   elf_unload(elf);
 
@@ -229,45 +243,52 @@ void overflow()
   strcpy(c, "123456789012345678901234567890");
 }
 
-void run_command(const char* command)
+void run_command()
 {
-  DEBUG("command='%s'", command);
-
-  if (*command == 0) {
+  if (*readline == 0) {
     return;
   }
 
-  // TODO: implement and use `strtok()` to get the command and the arguments.
+  int argc = 1;
+  char* _readline = strdup(readline);
+  strtok(_readline, " ");
+  while (strtok(NULL, " ") != NULL) {
+    argc++;
+  }
+  free(_readline);
 
-  if (strncmp(command, "help", 4) == 0) {
-    help(command);
-  } else if (strncmp(command, "ls", 2) == 0) {
-    ls(command);
-  } else if (strncmp(command, "cat", 3) == 0) {
-    cat(command);
-  } else if (strncmp(command, "selftest", 8) == 0) {
+  char** argv = malloc(sizeof(char*) * argc);
+  argv[0] = strtok(readline, " ");
+  DEBUG("command='%s' argc=%d", argv[0], argc);
+
+  for (int i = 1; i < argc; i++) {
+    argv[i] = strtok(NULL, " ");
+    DEBUG("argv[%d]=%s", i, argv[i]);
+  }
+
+  if (strncmp(argv[0], "help", 4) == 0) {
+    help(argc, argv);
+  } else if (strncmp(argv[0], "ls", 2) == 0) {
+    ls(argc, argv);
+  } else if (strncmp(argv[0], "cat", 3) == 0) {
+    cat(argc, argv);
+  } else if (strncmp(argv[0], "selftest", 8) == 0) {
     selftest();
-  } else if (strncmp(command, "overflow", 8) == 0) {
+  } else if (strncmp(argv[0], "overflow", 8) == 0) {
     overflow();
   } else {
-    if (try_exec(command) != 0) {
+    if (try_exec(argc, argv) != 0) {
       printf("invalid kshell command\n");
     }
   }
+
+  free(argv);
 }
 
 void kshell_print_prompt()
 {
   printf("\033[0;36m%s\033[0m", PROMPT);
 }
-
-char readline[READLINE_SIZE] = { 0 };
-char last_readline[READLINE_SIZE] = { 0 };
-unsigned int readline_index = 0;
-
-bool caps_lock_mode = false;
-bool ctrl_mode = false;
-bool shift_mode = false;
 
 void reset_readline()
 {
@@ -342,7 +363,7 @@ void kshell_run(uint8_t scancode)
     case KB_ENTER:
       if (key_was_released) {
         printf("\n");
-        run_command((const char*)readline);
+        run_command();
         strncpy(last_readline, readline, READLINE_SIZE);
         reset_readline();
         kshell_print_prompt();
