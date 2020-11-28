@@ -13,7 +13,7 @@
 #define HOSTNAME_FILE "/proc/sys/kernel/hostname"
 #endif
 
-int hostname(int argc, char* argv[])
+int main(int argc, char* argv[])
 {
   int retval = 0;
   int fd = open(HOSTNAME_FILE, 02); // O_RDWR
