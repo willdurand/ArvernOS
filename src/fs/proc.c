@@ -1,6 +1,6 @@
 #include "proc.h"
 #include <core/debug.h>
-#include <core/timer.h>
+#include <drivers/timer.h>
 #include <kernel/kmain.h>
 #include <mmu/alloc.h>
 #include <mmu/frame.h>

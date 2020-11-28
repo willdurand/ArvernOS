@@ -5,10 +5,10 @@
 #include <core/multiboot.h>
 #include <core/port.h>
 #include <core/syscall.h>
-#include <core/timer.h>
 #include <drivers/cmos.h>
 #include <drivers/keyboard.h>
 #include <drivers/serial.h>
+#include <drivers/timer.h>
 #include <fs/debug.h>
 #include <fs/proc.h>
 #include <fs/tar.h>
