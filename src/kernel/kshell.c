@@ -333,8 +333,8 @@ void kshell_run(uint8_t scancode)
     case KB_ENTER:
       if (key_was_released) {
         printf("\n");
-        run_command();
         strncpy(last_readline, readline, READLINE_SIZE);
+        run_command();
         reset_readline();
         kshell_print_prompt();
       }
