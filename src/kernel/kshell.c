@@ -10,8 +10,6 @@
 #include <string.h>
 #include <sys/syscall.h>
 
-#define NB_DOCUMENTED_COMMANDS 5
-
 static char readline[READLINE_SIZE] = { 0 };
 static char last_readline[READLINE_SIZE] = { 0 };
 static unsigned int readline_index = 0;
@@ -20,8 +18,9 @@ static bool caps_lock_mode = false;
 static bool ctrl_mode = false;
 static bool shift_mode = false;
 
+#define NB_DOCUMENTED_COMMANDS 4
+
 static const char* commands[][NB_DOCUMENTED_COMMANDS] = {
-  { "cat", "print on the standard output" },
   { "help", "display information about system shell commands" },
   { "ls", "list files" },
   { "selftest", "run the system test suite" },
@@ -123,33 +122,6 @@ void selftest()
   vfs_free(debug);
 
   printf("\ndone.\n");
-}
-
-void cat(int argc, char* argv[])
-{
-  if (argc < 2) {
-    printf("%s requires an argument\n", argv[0]);
-  }
-
-  for (int i = 1; i < argc; i++) {
-    inode_t f = vfs_namei(argv[i]);
-
-    if (!f) {
-      printf("no such file or directory\n");
-      continue;
-    }
-
-    if (f->type != FS_FILE) {
-      printf("'%s' is not a printable file\n", f->name);
-      vfs_free(f);
-      continue;
-    }
-
-    char buf[512];
-    vfs_read(f, buf, sizeof(buf), 0);
-    printf("%s", buf);
-    vfs_free(f);
-  }
 }
 
 void ls(int argc, char* argv[])
@@ -270,8 +242,6 @@ void run_command()
     help(argc, argv);
   } else if (strncmp(argv[0], "ls", 2) == 0) {
     ls(argc, argv);
-  } else if (strncmp(argv[0], "cat", 3) == 0) {
-    cat(argc, argv);
   } else if (strncmp(argv[0], "selftest", 8) == 0) {
     selftest();
   } else if (strncmp(argv[0], "overflow", 8) == 0) {
