@@ -1,8 +1,8 @@
 #include "syscall.h"
 #include <core/reboot.h>
-#include <core/timer.h>
 #include <drivers/cmos.h>
 #include <drivers/keyboard.h>
+#include <drivers/timer.h>
 #include <errno.h>
 #include <fs/vfs.h>
 #include <kernel/console.h>

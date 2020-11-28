@@ -1,6 +1,6 @@
 /** @file */
-#ifndef CORE_TIMER_H
-#define CORE_TIMER_H
+#ifndef DRIVERS_TIMER_H
+#define DRIVERS_TIMER_H
 
 #include <stdint.h>
 
