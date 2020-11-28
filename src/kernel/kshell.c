@@ -136,7 +136,7 @@ void cat(const char* command)
   }
 
   char buf[512];
-  vfs_read(f, &buf, sizeof(buf), 0);
+  vfs_read(f, buf, sizeof(buf), 0);
   printf("%s", buf);
   vfs_free(f);
 }
