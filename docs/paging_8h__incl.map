@@ -1,8 +1,10 @@
 <map id="src/mmu/paging.h" name="src/mmu/paging.h">
-<area shape="rect" id="node1" title=" " alt="" coords="87,5,214,32"/>
-<area shape="rect" id="node2" href="$boot_8h.html" title=" " alt="" coords="121,155,207,181"/>
-<area shape="rect" id="node4" title=" " alt="" coords="131,229,197,256"/>
-<area shape="rect" id="node5" href="$frame_8h.html" title=" " alt="" coords="59,80,157,107"/>
-<area shape="rect" id="node6" href="$types_8h_source.html" title=" " alt="" coords="5,155,96,181"/>
-<area shape="rect" id="node3" title=" " alt="" coords="23,229,97,256"/>
+<area shape="rect" id="node1" title=" " alt="" coords="224,5,351,32"/>
+<area shape="rect" id="node2" href="$multiboot_8h.html" title=" " alt="" coords="250,155,365,181"/>
+<area shape="rect" id="node4" title=" " alt="" coords="259,229,324,256"/>
+<area shape="rect" id="node5" href="$frame_8h.html" title=" " alt="" coords="126,80,225,107"/>
+<area shape="rect" id="node8" href="$types_8h_source.html" title=" " alt="" coords="135,155,226,181"/>
+<area shape="rect" id="node3" title=" " alt="" coords="143,229,218,256"/>
+<area shape="rect" id="node6" href="$bitmap_8h.html" title=" " alt="" coords="5,155,111,181"/>
+<area shape="rect" id="node7" title=" " alt="" coords="26,229,90,256"/>
 </map>

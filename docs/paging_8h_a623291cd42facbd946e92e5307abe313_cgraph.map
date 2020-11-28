@@ -1,8 +1,4 @@
 <map id="map_multiple" name="map_multiple">
-<area shape="rect" id="node1" title=" " alt="" coords="5,56,104,83"/>
-<area shape="rect" id="node2" href="$paging_8h.html#af55681dc6c9ebb94b26ea497afe673f8" title=" " alt="" coords="152,56,199,83"/>
-<area shape="rect" id="node3" href="$paging_8h.html#a21d6881f3057672ad78c4334d8e0158f" title=" " alt="" coords="247,56,387,83"/>
-<area shape="rect" id="node4" href="$frame_8h.html#aed98bfe02b2da161f9bd02d8ff4a3be7" title=" " alt="" coords="435,5,609,32"/>
-<area shape="rect" id="node5" href="$paging_8h.html#a96f5f0b5adaea47eda3e10c93401b2bf" title=" " alt="" coords="454,56,590,83"/>
-<area shape="rect" id="node6" href="$paging_8h.html#a93e89a9ca57751d1b04f8d95ccbddb4b" title=" " alt="" coords="469,107,575,133"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,5,104,32"/>
+<area shape="rect" id="node2" href="$paging_8h.html#af55681dc6c9ebb94b26ea497afe673f8" title=" " alt="" coords="152,5,199,32"/>
 </map>

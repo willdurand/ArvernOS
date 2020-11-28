@@ -1,8 +1,6 @@
 var frame_8h =
 [
-    [ "MAX_FRAMES", "frame_8h.html#a5b4055201d2d8170e179b1ceaa438b9c", null ],
     [ "PAGE_SIZE", "frame_8h.html#a7d467c1d283fdfa1f2081ba1e0d01b6e", null ],
-    [ "_frame_init", "frame_8h.html#a7e8a8d882b8cdd99c868b42737d3e491", null ],
     [ "frame_allocate", "frame_8h.html#ae2a26cdfa5b475a46dc4e26a21025252", null ],
     [ "frame_containing_address", "frame_8h.html#aed98bfe02b2da161f9bd02d8ff4a3be7", null ],
     [ "frame_deallocate", "frame_8h.html#a7241c294c2cae373c0abaa7653faab87", null ],

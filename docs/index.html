@@ -103,7 +103,24 @@ Setting up a development environment</h1>
 Docker (recommended way)</h2>
 <p>Use <a href="https://docs.docker.com/">Docker</a> with the provided <a href="https://github.com/willdurand/willOS/blob/master/Dockerfile"><code>Dockerfile</code></a>:</p>
 <div class="fragment"><div class="line">$ docker build -t willos/toolchain .</div>
-<div class="line">$ docker run -it --rm -v $(pwd):/app willos/toolchain make</div>
+<div class="line">[...]</div>
+<div class="line"> </div>
+<div class="line">$ docker run -it --rm -v $(pwd):/app willos/toolchain make help</div>
+<div class="line">clean                          remove build artifacts</div>
+<div class="line">debug                          build the OS in debug mode</div>
+<div class="line">docs                           build the docs</div>
+<div class="line">fmt                            automatically format the code with clang-format</div>
+<div class="line">gdb                            build, run the OS in debug mode and enable GDB</div>
+<div class="line">initrd                         build the init ram disk</div>
+<div class="line">iso                            build the image of the OS (.iso)</div>
+<div class="line">kernel                         compile the kernel</div>
+<div class="line">libc                           build the libc (for userland)</div>
+<div class="line">run-debug                      run the OS in debug mode</div>
+<div class="line">run-test                       run the OS in test mode</div>
+<div class="line">run                            run the OS</div>
+<div class="line">test                           run unit tests</div>
+<div class="line">userland                       compile the userland programs (statically linked to libc)</div>
+<div class="line">version                        print tool versions</div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md2"></a>
 MacOS</h2>
 <p>Install <a href="https://brew.sh/">Homebrew</a>, then run the following commands:</p>
@@ -123,16 +140,16 @@ Linux</h2>
 <h1><a class="anchor" id="autotoc_md4"></a>
 Building willOS</h1>
 <p>To compile the kernel (ELF 64-bit), run:</p>
-<div class="fragment"><div class="line">$ make kernel</div>
+<div class="fragment"><div class="line">$ make clean kernel</div>
 </div><!-- fragment --><p>To build the ISO (this is the default target), run:</p>
-<div class="fragment"><div class="line">$ make iso</div>
+<div class="fragment"><div class="line">$ make clean iso</div>
 </div><!-- fragment --><p>To build the ISO in DEBUG mode, run:</p>
-<div class="fragment"><div class="line">$ make debug</div>
+<div class="fragment"><div class="line">$ make clean debug</div>
 </div><!-- fragment --><p>To compile the OS in DEBUG mode, build the ISO, and start <code>qemu</code> with the OS loaded, run:</p>
-<div class="fragment"><div class="line">$ make run-debug</div>
+<div class="fragment"><div class="line">$ make clean run-debug</div>
 </div><!-- fragment --><p><b>Note:</b> in DEBUG mode, logging uses the serial port <code>COM1</code> to write various debugging information. <code>qemu</code> is configured to write the output of this serial port to <code>./logs/debug.log</code>.</p>
 <p>To compile the OS in normal mode, build the ISO, and start <code>qemu</code> with the OS loaded, run:</p>
-<div class="fragment"><div class="line">$ make run</div>
+<div class="fragment"><div class="line">$ make clean un</div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md5"></a>
 Early boot sequence</h1>
 <ol type="1">

@@ -1,7 +1,9 @@
 <map id="src/mmu/frame.h" name="src/mmu/frame.h">
-<area shape="rect" id="node1" title=" " alt="" coords="44,5,165,32"/>
-<area shape="rect" id="node2" href="$boot_8h.html" title=" " alt="" coords="5,80,92,107"/>
-<area shape="rect" id="node5" href="$types_8h_source.html" title=" " alt="" coords="117,80,207,107"/>
-<area shape="rect" id="node3" title=" " alt="" coords="21,155,95,181"/>
-<area shape="rect" id="node4" title=" " alt="" coords="124,155,189,181"/>
+<area shape="rect" id="node1" title=" " alt="" coords="117,5,238,32"/>
+<area shape="rect" id="node2" href="$multiboot_8h.html" title=" " alt="" coords="120,80,235,107"/>
+<area shape="rect" id="node5" href="$bitmap_8h.html" title=" " alt="" coords="259,80,365,107"/>
+<area shape="rect" id="node7" href="$types_8h_source.html" title=" " alt="" coords="5,80,96,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="160,155,235,181"/>
+<area shape="rect" id="node4" title=" " alt="" coords="70,155,135,181"/>
+<area shape="rect" id="node6" title=" " alt="" coords="280,155,344,181"/>
 </map>

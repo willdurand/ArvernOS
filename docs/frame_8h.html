@@ -88,18 +88,21 @@ $(document).ready(function(){initNavTree('frame_8h.html',''); initResizable(); }
 <div class="title">frame.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="boot_8h_source.html">core/boot.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="multiboot_8h_source.html">core/multiboot.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="bitmap_8h_source.html">mmu/bitmap.h</a>&gt;</code><br />
 <code>#include &lt;sys/types.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for frame.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="frame_8h__incl.png" border="0" usemap="#src_2mmu_2frame_8h" alt=""/></div>
 <map name="src_2mmu_2frame_8h" id="src_2mmu_2frame_8h">
-<area shape="rect" title=" " alt="" coords="44,5,165,32"/>
-<area shape="rect" href="boot_8h.html" title=" " alt="" coords="5,80,92,107"/>
-<area shape="rect" href="types_8h_source.html" title=" " alt="" coords="117,80,207,107"/>
-<area shape="rect" title=" " alt="" coords="21,155,95,181"/>
-<area shape="rect" title=" " alt="" coords="124,155,189,181"/>
+<area shape="rect" title=" " alt="" coords="117,5,238,32"/>
+<area shape="rect" href="multiboot_8h.html" title=" " alt="" coords="120,80,235,107"/>
+<area shape="rect" href="bitmap_8h.html" title=" " alt="" coords="259,80,365,107"/>
+<area shape="rect" href="types_8h_source.html" title=" " alt="" coords="5,80,96,107"/>
+<area shape="rect" title=" " alt="" coords="160,155,235,181"/>
+<area shape="rect" title=" " alt="" coords="70,155,135,181"/>
+<area shape="rect" title=" " alt="" coords="280,155,344,181"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -121,10 +124,6 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frame_8h.html#a7d467c1d283fdfa1f2081ba1e0d01b6e">PAGE_SIZE</a>&#160;&#160;&#160;4096</td></tr>
 <tr class="memdesc:a7d467c1d283fdfa1f2081ba1e0d01b6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default page size. <br /></td></tr>
 <tr class="separator:a7d467c1d283fdfa1f2081ba1e0d01b6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b4055201d2d8170e179b1ceaa438b9c"><td class="memItemLeft" align="right" valign="top"><a id="a5b4055201d2d8170e179b1ceaa438b9c"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frame_8h.html#a5b4055201d2d8170e179b1ceaa438b9c">MAX_FRAMES</a>&#160;&#160;&#160;((500 * 1000000) / <a class="el" href="frame_8h.html#a7d467c1d283fdfa1f2081ba1e0d01b6e">PAGE_SIZE</a>)</td></tr>
-<tr class="memdesc:a5b4055201d2d8170e179b1ceaa438b9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of frames that we can allocate (we consider 500MB for now). <br /></td></tr>
-<tr class="separator:a5b4055201d2d8170e179b1ceaa438b9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -142,10 +141,6 @@ Functions</h2></td></tr>
 <tr class="separator:a5d09b4704202b05347bd92d99a5de64e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a66c86472c34ead88a5cad580925a3dac"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frame_8h.html#a66c86472c34ead88a5cad580925a3dac">frame_get_max_count</a> ()</td></tr>
 <tr class="separator:a66c86472c34ead88a5cad580925a3dac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e8a8d882b8cdd99c868b42737d3e491"><td class="memItemLeft" align="right" valign="top"><a id="a7e8a8d882b8cdd99c868b42737d3e491"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frame_8h.html#a7e8a8d882b8cdd99c868b42737d3e491">_frame_init</a> (reserved_areas_t reserved, multiboot_tag_mmap_t *mmap)</td></tr>
-<tr class="memdesc:a7e8a8d882b8cdd99c868b42737d3e491"><td class="mdescLeft">&#160;</td><td class="mdescRight">For testing purposes. <br /></td></tr>
-<tr class="separator:a7e8a8d882b8cdd99c868b42737d3e491"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="ae2a26cdfa5b475a46dc4e26a21025252"></a>
@@ -200,17 +195,6 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a frame number </dd></dl>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="frame_8h_aed98bfe02b2da161f9bd02d8ff4a3be7_icgraph.png" border="0" usemap="#frame_8h_aed98bfe02b2da161f9bd02d8ff4a3be7_icgraph" alt=""/></div>
-<map name="frame_8h_aed98bfe02b2da161f9bd02d8ff4a3be7_icgraph" id="frame_8h_aed98bfe02b2da161f9bd02d8ff4a3be7_icgraph">
-<area shape="rect" title=" " alt="" coords="435,5,609,32"/>
-<area shape="rect" href="paging_8h.html#a21d6881f3057672ad78c4334d8e0158f" title=" " alt="" coords="247,5,387,32"/>
-<area shape="rect" href="paging_8h.html#af55681dc6c9ebb94b26ea497afe673f8" title=" " alt="" coords="152,5,199,32"/>
-<area shape="rect" href="paging_8h.html#a623291cd42facbd946e92e5307abe313" title=" " alt="" coords="5,5,104,32"/>
-</map>
-</div>
 
 </div>
 </div>
@@ -317,8 +301,8 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="frame_8h_ada91ff5ef3ceb241baf359ac078bb2d7_cgraph.png" border="0" usemap="#frame_8h_ada91ff5ef3ceb241baf359ac078bb2d7_cgraph" alt=""/></div>
 <map name="frame_8h_ada91ff5ef3ceb241baf359ac078bb2d7_cgraph" id="frame_8h_ada91ff5ef3ceb241baf359ac078bb2d7_cgraph">
 <area shape="rect" title=" " alt="" coords="5,31,84,57"/>
-<area shape="rect" href="boot_8h.html#a62d6a6eaa877711b6b8308030f3f3dc0" title=" " alt="" coords="137,5,265,32"/>
-<area shape="rect" href="boot_8h.html#ae87c8fda1b62f7ace33b2e3ad24292c2" title=" " alt="" coords="132,56,271,83"/>
+<area shape="rect" href="multiboot_8h.html#a62d6a6eaa877711b6b8308030f3f3dc0" title=" " alt="" coords="137,5,265,32"/>
+<area shape="rect" href="multiboot_8h.html#ae87c8fda1b62f7ace33b2e3ad24292c2" title=" " alt="" coords="132,56,271,83"/>
 </map>
 </div>
 

@@ -1,8 +1,10 @@
 <map id="src/mmu/alloc.h" name="src/mmu/alloc.h">
-<area shape="rect" id="node1" title=" " alt="" coords="61,5,175,32"/>
-<area shape="rect" id="node2" href="$frame_8h.html" title=" " alt="" coords="26,80,125,107"/>
-<area shape="rect" id="node6" href="$types_8h_source.html" title=" " alt="" coords="117,155,207,181"/>
-<area shape="rect" id="node3" href="$boot_8h.html" title=" " alt="" coords="5,155,92,181"/>
-<area shape="rect" id="node4" title=" " alt="" coords="21,229,95,256"/>
-<area shape="rect" id="node5" title=" " alt="" coords="124,229,189,256"/>
+<area shape="rect" id="node1" title=" " alt="" coords="56,5,171,32"/>
+<area shape="rect" id="node2" href="$frame_8h.html" title=" " alt="" coords="117,80,216,107"/>
+<area shape="rect" id="node8" href="$types_8h_source.html" title=" " alt="" coords="5,155,96,181"/>
+<area shape="rect" id="node3" href="$multiboot_8h.html" title=" " alt="" coords="120,155,235,181"/>
+<area shape="rect" id="node6" href="$bitmap_8h.html" title=" " alt="" coords="259,155,365,181"/>
+<area shape="rect" id="node4" title=" " alt="" coords="68,229,143,256"/>
+<area shape="rect" id="node5" title=" " alt="" coords="167,229,233,256"/>
+<area shape="rect" id="node7" title=" " alt="" coords="280,229,344,256"/>
 </map>
