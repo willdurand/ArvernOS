@@ -1,11 +1,11 @@
 #include "kmain.h"
-#include <core/cmos.h>
 #include <core/debug.h>
 #include <core/elf.h>
 #include <core/isr.h>
 #include <core/port.h>
 #include <core/syscall.h>
 #include <core/timer.h>
+#include <drivers/cmos.h>
 #include <drivers/keyboard.h>
 #include <drivers/serial.h>
 #include <fs/debug.h>

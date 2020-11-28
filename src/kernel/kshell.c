@@ -1,7 +1,7 @@
 #include "kshell.h"
-#include <core/cmos.h>
 #include <core/debug.h>
 #include <core/elf.h>
+#include <drivers/cmos.h>
 #include <fs/debug.h>
 #include <fs/vfs.h>
 #include <stdbool.h>
