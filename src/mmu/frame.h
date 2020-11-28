@@ -2,7 +2,7 @@
 #ifndef MMU_FRAME_H
 #define MMU_FRAME_H
 
-#include <core/boot.h>
+#include <core/multiboot.h>
 #include <mmu/bitmap.h>
 #include <sys/types.h>
 

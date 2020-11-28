@@ -2,7 +2,7 @@
 #ifndef MMU_PAGING_H
 #define MMU_PAGING_H
 
-#include <core/boot.h>
+#include <core/multiboot.h>
 #include <mmu/frame.h>
 #include <stdint.h>
 #include <sys/types.h>

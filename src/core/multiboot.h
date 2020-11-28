@@ -2,8 +2,8 @@
  * @file
  * @see https://www.uclibc.org/docs/elf-64-gen.pdf
  */
-#ifndef CORE_BOOT_H
-#define CORE_BOOT_H
+#ifndef CORE_MULTIBOOT_H
+#define CORE_MULTIBOOT_H
 
 #include <stdbool.h>
 #include <stdint.h>

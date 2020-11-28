@@ -1,8 +1,7 @@
 /** @file */
-#ifndef KMAIN_H
-#define KMAIN_H
+#ifndef KERNEL_KMAIN_H
+#define KERNEL_KMAIN_H
 
-#include <core/boot.h>
 #include <stdint.h>
 
 #define KERNEL_ASCII                                                           \
