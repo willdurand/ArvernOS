@@ -144,12 +144,9 @@ gdb: debug run
 
 userland: ## compile the userland programs (statically linked to libc)
 userland: libc
-	$(MAKE) -C userland/cal/ OS_NAME="$(OS_NAME)"
-	$(MAKE) -C userland/clear/ OS_NAME="$(OS_NAME)"
-	$(MAKE) -C userland/date/ OS_NAME="$(OS_NAME)"
-	$(MAKE) -C userland/meminfo/ OS_NAME="$(OS_NAME)"
-	$(MAKE) -C userland/shell/ OS_NAME="$(OS_NAME)"
-	$(MAKE) -C userland/uptime/ OS_NAME="$(OS_NAME)"
+	@for userland_program in $(shell find userland/* -type d -not \( -path userland/bin -o -path userland/local-build \)); do \
+	    $(MAKE) -C $$userland_program OS_NAME="$(OS_NAME)" ; \
+	done
 .PHONY: userland
 
 test: ## run unit tests

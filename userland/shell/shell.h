@@ -3,6 +3,4 @@
 
 void _reboot();
 
-void hostname(char* arg);
-
 #endif
