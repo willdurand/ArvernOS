@@ -2,8 +2,8 @@
  * @file
  * @see https://wiki.osdev.org/PS/2_Keyboard
  */
-#ifndef KEYBOARD_H
-#define KEYBOARD_H
+#ifndef DRIVERS_KEYBOARD_H
+#define DRIVERS_KEYBOARD_H
 #include <stdint.h>
 
 #define KEYBOARD_DATA_PORT   0x60

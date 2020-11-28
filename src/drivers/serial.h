@@ -1,6 +1,6 @@
 /** @file */
-#ifndef SERIAL_H
-#define SERIAL_H
+#ifndef DRIVERS_SERIAL_H
+#define DRIVERS_SERIAL_H
 
 #include <stdint.h>
 
