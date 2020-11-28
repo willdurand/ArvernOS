@@ -175,13 +175,13 @@ test: libc
 	# fs/proc
 	gcc -g -DENABLE_DEBUG_FOR_TEST -I./test -I./test/proxies -I./src/ -o $(BUILD_DIR)/proc test/fs/proc.c src/fs/proc.c src/fs/vfs.c
 	# mmu/frame
-	gcc -Wformat=0 -g -DENABLE_DEBUG_FOR_TEST -I./test -I./test/proxies -I./src/ -o $(BUILD_DIR)/frame test/mmu/frame.c src/mmu/frame.c src/core/boot.c src/mmu/bitmap.c
+	gcc -Wformat=0 -g -DENABLE_DEBUG_FOR_TEST -I./test -I./test/proxies -I./src/ -o $(BUILD_DIR)/frame test/mmu/frame.c src/mmu/frame.c src/core/multiboot.c src/mmu/bitmap.c
 	valgrind --track-origins=yes --leak-check=yes ./$(BUILD_DIR)/frame
 	# mmu/bitmap
 	gcc -g -DENABLE_DEBUG_FOR_TEST -I./test -I./src/ -o $(BUILD_DIR)/bitmap test/mmu/bitmap.c src/mmu/bitmap.c
 	./$(BUILD_DIR)/bitmap
 	# mmu/paging
-	gcc -Wformat=0 -g -DENABLE_DEBUG_FOR_TEST -DTEST_ENV -I./test -I./test/proxies -I./src/ -o $(BUILD_DIR)/paging test/mmu/paging.c src/mmu/paging.c src/core/boot.c src/mmu/frame.c src/mmu/bitmap.c src/core/register.c
+	gcc -Wformat=0 -g -DENABLE_DEBUG_FOR_TEST -DTEST_ENV -I./test -I./test/proxies -I./src/ -o $(BUILD_DIR)/paging test/mmu/paging.c src/mmu/paging.c src/core/multiboot.c src/mmu/frame.c src/mmu/bitmap.c src/core/register.c
 	./$(BUILD_DIR)/paging
 .PHONY: test
 

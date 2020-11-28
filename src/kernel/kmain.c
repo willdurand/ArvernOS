@@ -2,6 +2,7 @@
 #include <core/debug.h>
 #include <core/elf.h>
 #include <core/isr.h>
+#include <core/multiboot.h>
 #include <core/port.h>
 #include <core/syscall.h>
 #include <core/timer.h>
