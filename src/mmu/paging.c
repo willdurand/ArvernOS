@@ -19,6 +19,9 @@
             (e).no_execute,                                                    \
             (e).huge_page)
 
+void map_page_to_frame(page_number_t page_number,
+                       uint64_t frame,
+                       uint64_t flags);
 void enable_nxe_bit();
 void enable_write_protection();
 void remap_kernel(multiboot_info_t* mbi);
@@ -365,6 +368,13 @@ opt_uint64_t pointed_frame(page_entry_t entry)
   return (opt_uint64_t){ .has_value = false, .value = 0 };
 }
 
+/**
+ * Maps a page (number) to a frame (physical address).
+ *
+ * @param page_number a page number (not an address)
+ * @param frame a physical address (frame)
+ * @param flags paging flags
+ */
 void map_page_to_frame(page_number_t page_number,
                        uint64_t frame,
                        uint64_t flags)
