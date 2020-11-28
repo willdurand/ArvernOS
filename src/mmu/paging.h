@@ -10,11 +10,13 @@
 #define PAGE_ENTRIES 512
 #define P4_TABLE     0xfffffffffffff000
 
-/// The page is currently in memory
+/// Specifies whether the mapped page is loaded in memory.
 #define PAGING_FLAG_PRESENT 0x01
-/// It is allowed to write to this page
+/// Controls whether writes to the mapped frames are allowed.
 #define PAGING_FLAG_WRITABLE 0x02
-/// Forbids executing code on this page
+/// Controls whether accesses from userspace (i.e. ring 3) are permitted.
+#define PAGING_FLAG_USER_ACCESSIBLE ((uint64_t)1) << 2
+/// Forbids executing code on this page.
 #define PAGING_FLAG_NO_EXECUTE ((uint64_t)1) << 63
 
 // cf.http://os.phil-opp.com/modifying-page-tables.html#page-table-entries

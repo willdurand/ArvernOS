@@ -88,7 +88,8 @@ void load_segment(uint8_t* data, elf_program_header_t* program_header)
   uint64_t offset = program_header->offset;        // Offset in file
 
   // We need WRITABLE because we copy data right after.
-  uint32_t flags = PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE;
+  uint32_t flags =
+    PAGING_FLAG_PRESENT | PAGING_FLAG_USER_ACCESSIBLE | PAGING_FLAG_WRITABLE;
 
   if (!(program_header->flags & ELF_PROGRAM_FLAG_EXECUTE)) {
     flags |= PAGING_FLAG_NO_EXECUTE;
@@ -107,6 +108,9 @@ void load_segment(uint8_t* data, elf_program_header_t* program_header)
 
   memcpy((void*)addr, data + offset, file_size);
   memset((void*)(addr + file_size), 0, mem_size - file_size);
+
+  // TODO: we probably need to drop the WRITABLE flag if the segment isn't
+  // supposed to be writable.
 }
 
 void elf_unload(elf_header_t* elf)
