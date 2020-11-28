@@ -122,6 +122,10 @@ void elf_unload(elf_header_t* elf)
       uint64_t start_page = page_containing_address(addr);
       uint32_t number_of_pages = paging_amount_for_byte_size(addr, mem_size);
 
+      if (mem_size == 0) {
+        continue;
+      }
+
       unmap_multiple(start_page, number_of_pages);
     }
   }

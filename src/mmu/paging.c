@@ -94,7 +94,7 @@ void remap_kernel(multiboot_info_t* mbi)
   identity_map(0xB8000, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
   DEBUG("%s", "mapped VGA!");
 
-  identity_map(0x0, PAGING_FLAG_PRESENT);
+  identity_map(0x0, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
   DEBUG("%s", "mapped interrupt vector table!");
 
   // Allocated frames
