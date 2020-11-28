@@ -9,7 +9,7 @@ bool rtc_values_are_not_equal(cmos_rtc_t c1, cmos_rtc_t c2);
 uint64_t secs_of_month(uint64_t months, uint64_t year);
 uint64_t secs_of_years(uint64_t years);
 
-uint64_t boot_time = 0;
+static uint64_t boot_time = 0;
 
 void cmos_init()
 {

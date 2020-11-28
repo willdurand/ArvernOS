@@ -1,6 +1,6 @@
 /** @file */
-#ifndef CORE_CMOS_H
-#define CORE_CMOS_H
+#ifndef DRIVER_CMOS_H
+#define DRIVER_CMOS_H
 
 #include <stdint.h>
 
