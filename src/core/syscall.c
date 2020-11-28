@@ -4,10 +4,10 @@
 #include <drivers/keyboard.h>
 #include <drivers/timer.h>
 #include <errno.h>
+#include <fs/fd.h>
 #include <fs/vfs.h>
 #include <kernel/console.h>
 #include <kernel/panic.h>
-#include <proc/fd.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>

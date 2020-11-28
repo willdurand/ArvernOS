@@ -1,5 +1,5 @@
-#ifndef PROC_FD_H
-#define PROC_FD_H
+#ifndef FS_FD_H
+#define FS_FD_H
 
 #include <fs/vfs.h>
 #include <stdint.h>

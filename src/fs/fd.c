@@ -2,7 +2,7 @@
 
 #define NB_FILE_DESCRIPTORS 10
 
-file_descriptor_t descriptors[NB_FILE_DESCRIPTORS] = { 0 };
+static file_descriptor_t descriptors[NB_FILE_DESCRIPTORS] = { 0 };
 
 int create_file_descriptor(inode_t inode, uint32_t flags)
 {
