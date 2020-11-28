@@ -4,7 +4,7 @@
 #include <core/isr.h>
 #include <core/multiboot.h>
 #include <core/port.h>
-#include <core/syscall.h>
+#include <core/sys/syscall.h>
 #include <drivers/cmos.h>
 #include <drivers/keyboard.h>
 #include <drivers/serial.h>

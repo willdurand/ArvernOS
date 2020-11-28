@@ -3,7 +3,7 @@
 #include <core/idt.h>
 #include <core/port.h>
 #include <core/register.h>
-#include <core/syscall.h>
+#include <core/sys/syscall.h>
 #include <kernel/panic.h>
 #include <stdio.h>
 #include <stdlib.h>
