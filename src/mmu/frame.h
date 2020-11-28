@@ -60,7 +60,7 @@ uint64_t frame_get_used_count();
  */
 uint64_t frame_get_max_count();
 
-/// For testing purposes.
+// The declarations below are for testing purposes.
 void _frame_init(reserved_areas_t* reserved, multiboot_tag_mmap_t* mmap);
 void _frame_init_bitmap(bitmap_t* addr);
 
