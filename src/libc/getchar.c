@@ -2,7 +2,7 @@
 
 #ifdef __is_libc
 
-#include <proc/fd.h>
+#include <fs/fd.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <sys/syscall.h>

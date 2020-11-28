@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 #ifdef __is_libc
-#include <proc/fd.h>
+#include <fs/fd.h>
 #include <sys/syscall.h>
 
 void putchar(char c)
