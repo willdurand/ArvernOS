@@ -10,7 +10,7 @@ uint64_t debug_write(inode_t node,
                      uint64_t offset);
 uint64_t debug_isatty(inode_t inode);
 
-vfs_driver_t debug_driver = {
+static vfs_driver_t debug_driver = {
   0,            // open
   0,            // close
   0,            // read

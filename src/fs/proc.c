@@ -15,7 +15,7 @@ uint64_t proc_read(inode_t node, void* buffer, uint64_t size, uint64_t offset);
 uint64_t proc_stat(inode_t inode, stat_t* st);
 uint64_t proc_write(inode_t inode, void* ptr, uint64_t length, uint64_t offset);
 
-vfs_driver_t proc_driver = {
+static vfs_driver_t proc_driver = {
   0,            // open
   0,            // close
   proc_read,    // read
@@ -28,7 +28,7 @@ vfs_driver_t proc_driver = {
 
 #define NB_PROC_FILES 6
 
-const char* proc_files[NB_PROC_FILES] = {
+static const char* proc_files[NB_PROC_FILES] = {
   ".", "..", "hostname", "meminfo", "uptime", "version",
 };
 
@@ -37,7 +37,7 @@ const char* proc_files[NB_PROC_FILES] = {
 
 // This is the variable containing the `hostname` value of the system.
 // TODO: move this variable somewhere else...
-char* hostname = 0;
+static char* hostname = 0;
 
 inode_t proc_fs_init()
 {

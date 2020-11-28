@@ -15,9 +15,9 @@ uint64_t tar_isatty(inode_t node);
 bool starts_with(const char* s, const char* prefix);
 int get_level(const char* path);
 
-tar_header_t* headers[32];
+static tar_header_t* headers[32];
 
-vfs_driver_t tar_driver = {
+static vfs_driver_t tar_driver = {
   0,           // open
   0,           // close
   tar_read,    // read
