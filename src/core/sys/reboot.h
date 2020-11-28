@@ -3,8 +3,8 @@
  * @see https://wiki.osdev.org/Reboot
  * @see http://man7.org/linux/man-pages/man2/reboot.2.html
  */
-#ifndef CORE_REBOOT_H
-#define CORE_REBOOT_H
+#ifndef CORE_SYS_REBOOT_H
+#define CORE_SYS_REBOOT_H
 
 /**
  * Reboots the system.

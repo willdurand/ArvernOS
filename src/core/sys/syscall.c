@@ -1,5 +1,5 @@
 #include "syscall.h"
-#include <core/reboot.h>
+#include <core/sys/reboot.h>
 #include <drivers/cmos.h>
 #include <drivers/keyboard.h>
 #include <drivers/timer.h>
@@ -16,7 +16,7 @@
 #include <sys/syscall.h>
 
 // `+ 1` because it is a 1-based index.
-syscall_handler_t syscall_handlers[NB_SYSCALLS + 1];
+static syscall_handler_t syscall_handlers[NB_SYSCALLS + 1] = { 0 };
 
 void syscall_register_handler(uint8_t id, syscall_handler_t handler);
 void syscall_print_registers(registers_t* registers);

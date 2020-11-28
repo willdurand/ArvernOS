@@ -1,6 +1,6 @@
 /** @file */
-#ifndef CORE_SYSCALL_H
-#define CORE_SYSCALL_H
+#ifndef CORE_SYS_SYSCALL_H
+#define CORE_SYS_SYSCALL_H
 
 #include <core/isr.h>
 
