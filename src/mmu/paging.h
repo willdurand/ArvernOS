@@ -111,17 +111,6 @@ uint64_t page_start_address(page_number_t page_number);
 opt_uint64_t translate_page(page_number_t page_number);
 
 /**
- * Maps a page (number) to a frame (physical address).
- *
- * @param page_number a page number (not an address)
- * @param frame a physical address (frame)
- * @param flags paging flags
- */
-void map_page_to_frame(page_number_t page_number,
-                       uint64_t frame,
-                       uint64_t flags);
-
-/**
  * Convenient function to map a pager (number) without providing a frame. The
  * frame is automatically allocated.
  *
