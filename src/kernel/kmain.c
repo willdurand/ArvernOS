@@ -9,6 +9,7 @@
 #include <drivers/keyboard.h>
 #include <drivers/serial.h>
 #include <drivers/timer.h>
+#include <drivers/video/grub-framebuffer/grub-framebuffer.h>
 #include <fs/debug.h>
 #include <fs/proc.h>
 #include <fs/tar.h>
@@ -75,6 +76,11 @@ void kmain(uint64_t addr)
   console_init();
 
   multiboot_info_t* mbi = (multiboot_info_t*)addr;
+
+  if(grub_init_framebuffer(mbi) == false)
+  {
+    PANIC("Failed to initialize framebuffer")
+  }
 
   print_welcome_messge();
 
