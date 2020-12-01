@@ -172,68 +172,72 @@ void grub_framebuffer_put_char(PSF1_font_t *font, uint32_t color, char character
     uint8_t *local_framebuffer = (uint8_t*)framebuffer_ptr;
     char *font_ptr = (char*)font->glyph_buffer + (character * font->psf1_header->charsize);
 
-    for(uint32_t y_pos = y, y_index = y * framebuffer_width; y_pos < y + 16; y_pos++, y_index += framebuffer_width)
+    for(uint32_t y_pos = 0, y_index = y * framebuffer_width; y_pos < 16; y_pos++, y_index += framebuffer_width)
     {
-        if(y_pos >= framebuffer_height)
+        if(y + y_pos >= framebuffer_height)
         {
             continue;
         }
 
-        for(uint32_t x_pos = x; x_pos < x + 8; x_pos++)
+        for(uint32_t x_pos = 0, x_index = y_index + x; x_pos < 8; x_pos++, x_index++)
         {
-            if((*font_ptr & (0b10000000 >> (x_pos - x))) > 0)
+            uint32_t plot_color = 0x00000000;
+
+            if((*font_ptr & (0b10000000 >> (x_pos))) > 0)
             {
-                if(x_pos >= framebuffer_width)
-                {
-                    continue;
-                }
+                plot_color = color;
+            }
 
-                switch(framebuffer_type)
-                {
-                    case MULTIBOOT_FRAMEBUFFER_TYPE_RGB:
+            if(x + x_pos >= framebuffer_width)
+            {
+                continue;
+            }
 
-                        switch(framebuffer_bpp)
-                        {
-                            case 8:
+            switch(framebuffer_type)
+            {
+                case MULTIBOOT_FRAMEBUFFER_TYPE_RGB:
 
-                                PLOT_8_BPP_PIXEL(color, y_index + x_pos);
+                    switch(framebuffer_bpp)
+                    {
+                        case 8:
 
-                            break;
-
-                            case 15:
-                            case 16:
-
-                                PLOT_16_BPP_PIXEL(color, y_index + x_pos);
-
-                            break;
-
-                            case 24:
-
-                                PLOT_24_BPP_PIXEL(color, y_index + x_pos);
-
-                            break;
-
-                            case 32:
-
-                                PLOT_32_BPP_PIXEL(color, y_index + x_pos);
-
-                            break;
-                        }
+                            PLOT_8_BPP_PIXEL(plot_color, x_index);
 
                         break;
 
-                    case MULTIBOOT_FRAMEBUFFER_TYPE_INDEXED:
+                        case 15:
+                        case 16:
 
-                        //TODO
+                            PLOT_16_BPP_PIXEL(plot_color, x_index);
+
+                        break;
+
+                        case 24:
+
+                            PLOT_24_BPP_PIXEL(plot_color, x_index);
 
                         break;
 
-                    case MULTIBOOT_FRAMEBUFFER_TYPE_EGA_TEXT:
+                        case 32:
 
-                        //Unused
+                            PLOT_32_BPP_PIXEL(plot_color, x_index);
 
                         break;
-                }
+                    }
+
+                    break;
+
+                case MULTIBOOT_FRAMEBUFFER_TYPE_INDEXED:
+
+                    //TODO
+
+                    break;
+
+                case MULTIBOOT_FRAMEBUFFER_TYPE_EGA_TEXT:
+
+                    //Unused
+
+                    break;
             }
         }
 
