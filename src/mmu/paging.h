@@ -160,12 +160,11 @@ uint32_t paging_amount_for_byte_size(uint64_t start_address,
 
 /**
  * Maps a physical address directly
- * 
+ *
  * @param physical_address the physical address to map
  * @param flags the paging flags
  */
 void identity_map(uint64_t physical_address, uint64_t flags);
-
 
 // The functions below are exposed for testing purposes.
 

@@ -189,7 +189,6 @@ typedef struct reserved_areas
   uint64_t multiboot_end;
 } reserved_areas_t;
 
-
 /**
  * Finds and returns a pointer to a specific "tag" in the multiboot
  * information.

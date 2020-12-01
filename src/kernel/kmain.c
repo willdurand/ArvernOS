@@ -29,7 +29,7 @@ void print_step(const char* msg);
 void print_ok();
 void check_interrupts();
 
-PSF1_font_t *kernel_console_font;
+PSF1_font_t* kernel_console_font;
 
 void print_welcome_messge()
 {
@@ -143,8 +143,7 @@ void kmain(uint64_t addr)
   kernel_console_font = psf1_load_font("/fonts/zap-light16.psf");
   kernel_console_font != NULL ? print_ok() : print_ko();
 
-  if(grub_init_framebuffer(mbi) == false)
-  {
+  if (grub_init_framebuffer(mbi) == false) {
     PANIC("Failed to initialize framebuffer")
   }
 
