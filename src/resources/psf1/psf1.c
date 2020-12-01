@@ -1,4 +1,3 @@
-#include "psf1.h"
 #include <core/debug.h>
 #include <fs/vfs.h>
 #include <stdio.h>
@@ -10,6 +9,8 @@
 #include <fcntl.h>
 #include <unistd.h>
 #endif
+
+#include "psf1.h"
 
 #define PSF1_MAGIC0 0x36
 #define PSF1_MAGIC1 0x04
