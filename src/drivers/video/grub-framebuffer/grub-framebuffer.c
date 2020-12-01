@@ -6,43 +6,15 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <vtconsole/vtconsole.h>
 
 #include "grub-framebuffer.h"
 
 uint32_t framebuffer_cursor_x = 0;
 uint32_t framebuffer_cursor_y = 0;
-
-#define PLOT_8_BPP_PIXEL(color, index)                                         \
-  {                                                                            \
-    uint8_t* pixel = (uint8_t*)framebuffer_ptr + (index);                      \
-                                                                               \
-    *pixel = (color);                                                          \
-  }
-
-#define PLOT_16_BPP_PIXEL(color, index)                                        \
-  {                                                                            \
-    uint16_t* pixel =                                                          \
-      (uint16_t*)((uint8_t*)framebuffer_ptr + (index) * sizeof(uint16_t));     \
-                                                                               \
-    *pixel = (color);                                                          \
-  }
-
-#define PLOT_24_BPP_PIXEL(color, index)                                        \
-  {                                                                            \
-    uint32_t* pixel =                                                          \
-      (uint32_t*)((uint8_t*)framebuffer_ptr + (index) * sizeof(uint8_t[3]));   \
-                                                                               \
-    *pixel = ((color)&0xffffff) | (*pixel & 0xff000000);                       \
-  }
-
-#define PLOT_32_BPP_PIXEL(color, index)                                        \
-  {                                                                            \
-    uint32_t* pixel =                                                          \
-      (uint32_t*)((uint8_t*)framebuffer_ptr + (index) * sizeof(uint32_t));     \
-                                                                               \
-    *pixel = (color);                                                          \
-  }
+uint32_t video_frames = 0;
+uint64_t video_frame_timer = 0;
 
 //  Kernel Externals
 
@@ -51,10 +23,11 @@ extern vtconsole_t vtc;
 
 //  Framebuffer Common
 
-volatile void* framebuffer_ptr = NULL;
+void* framebuffer_ptr = NULL;
+uint32_t* framebuffer_buffer = NULL;
+void* framebuffer_native_buffer =
+  NULL; // Used to prevent extra allocations when swapping
 uint8_t framebuffer_type = MULTIBOOT_FRAMEBUFFER_TYPE_INDEXED;
-uint32_t framebuffer_width = 0;
-uint32_t framebuffer_height = 0;
 uint8_t framebuffer_bpp = 0;
 uint32_t framebuffer_pitch = 0;
 
@@ -74,7 +47,10 @@ uint8_t framebuffer_blue_field_position = 0;
 
 //  Public
 
+uint32_t grub_framebuffer_width = 0;
+uint32_t grub_framebuffer_height = 0;
 uint8_t grub_framebuffer_bytes_per_pixel = 0;
+bool grub_framebuffer_is_console = false;
 
 bool grub_framebuffer_available()
 {
@@ -111,52 +87,12 @@ void grub_framebuffer_clear_region(uint32_t color,
                                    uint32_t width,
                                    uint32_t height)
 {
-  for (uint32_t y_pos = 0, y_index = y * framebuffer_width; y_pos < height;
-       y_pos++, y_index += framebuffer_width) {
+  for (uint32_t y_pos = 0, y_index = y * grub_framebuffer_width; y_pos < height;
+       y_pos++, y_index += grub_framebuffer_width) {
     for (uint32_t x_pos = 0, x_index = x + y_index; x_pos < width;
          x_pos++, x_index++) {
-      switch (framebuffer_type) {
-        case MULTIBOOT_FRAMEBUFFER_TYPE_RGB:
 
-          switch (framebuffer_bpp) {
-            case 8:
-
-              PLOT_8_BPP_PIXEL(color, x_index);
-
-              break;
-
-            case 15:
-            case 16:
-
-              PLOT_16_BPP_PIXEL(color, x_index);
-
-              break;
-
-            case 24:
-
-              PLOT_24_BPP_PIXEL(color, x_index);
-
-              break;
-
-            case 32:
-
-              PLOT_32_BPP_PIXEL(color, x_index);
-
-              break;
-          }
-
-        case MULTIBOOT_FRAMEBUFFER_TYPE_INDEXED:
-
-          // TODO
-
-          break;
-
-        case MULTIBOOT_FRAMEBUFFER_TYPE_EGA_TEXT:
-
-          // Unused
-
-          break;
-      }
+      framebuffer_buffer[x_index] = color;
     }
   }
 }
@@ -164,7 +100,7 @@ void grub_framebuffer_clear_region(uint32_t color,
 void grub_framebuffer_clear(uint32_t color)
 {
   grub_framebuffer_clear_region(
-    color, 0, 0, framebuffer_width, framebuffer_height);
+    color, 0, 0, grub_framebuffer_width, grub_framebuffer_height);
 }
 
 void grub_framebuffer_put_char(PSF1_font_t* font,
@@ -177,13 +113,12 @@ void grub_framebuffer_put_char(PSF1_font_t* font,
     return;
   }
 
-  uint8_t* local_framebuffer = (uint8_t*)framebuffer_ptr;
   char* font_ptr =
     (char*)font->glyph_buffer + (character * font->psf1_header->charsize);
 
-  for (uint32_t y_pos = 0, y_index = y * framebuffer_width; y_pos < 16;
-       y_pos++, y_index += framebuffer_width) {
-    if (y + y_pos >= framebuffer_height) {
+  for (uint32_t y_pos = 0, y_index = y * grub_framebuffer_width; y_pos < 16;
+       y_pos++, y_index += grub_framebuffer_width) {
+    if (y + y_pos >= grub_framebuffer_height) {
       continue;
     }
 
@@ -195,58 +130,86 @@ void grub_framebuffer_put_char(PSF1_font_t* font,
         plot_color = color;
       }
 
-      if (x + x_pos >= framebuffer_width) {
+      if (x + x_pos >= grub_framebuffer_width) {
         continue;
       }
 
-      switch (framebuffer_type) {
-        case MULTIBOOT_FRAMEBUFFER_TYPE_RGB:
-
-          switch (framebuffer_bpp) {
-            case 8:
-
-              PLOT_8_BPP_PIXEL(plot_color, x_index);
-
-              break;
-
-            case 15:
-            case 16:
-
-              PLOT_16_BPP_PIXEL(plot_color, x_index);
-
-              break;
-
-            case 24:
-
-              PLOT_24_BPP_PIXEL(plot_color, x_index);
-
-              break;
-
-            case 32:
-
-              PLOT_32_BPP_PIXEL(plot_color, x_index);
-
-              break;
-          }
-
-          break;
-
-        case MULTIBOOT_FRAMEBUFFER_TYPE_INDEXED:
-
-          // TODO
-
-          break;
-
-        case MULTIBOOT_FRAMEBUFFER_TYPE_EGA_TEXT:
-
-          // Unused
-
-          break;
-      }
+      framebuffer_buffer[x_index] = plot_color;
     }
 
     font_ptr++;
   }
+}
+
+void grub_framebuffer_console_print(PSF1_font_t* font,
+                                    uint32_t color,
+                                    char* str,
+                                    uint32_t start_x,
+                                    uint32_t start_y)
+{
+  char* chr = str;
+  uint32_t x = start_x;
+  uint32_t y = start_y;
+
+  while (*chr != 0) {
+    grub_framebuffer_put_char(font, color, *chr, x, y);
+
+    x += 8;
+
+    if (x + 8 > grub_framebuffer_width) {
+      x = start_x;
+      y += 16;
+    }
+
+    chr++;
+  }
+}
+
+void grub_framebuffer_console_measure(PSF1_font_t* font,
+                                      char* str,
+                                      uint32_t* in_x,
+                                      uint32_t* in_y,
+                                      uint32_t* out_width,
+                                      uint32_t* out_height)
+{
+  char* chr = str;
+  uint32_t start_x = in_x != NULL ? *in_x : 0;
+  uint32_t start_y = in_y != NULL ? *in_y : 0;
+  uint32_t x = start_x;
+  uint32_t y = start_y;
+  uint32_t max_x = 0;
+  uint32_t max_y = 0;
+
+  while (*chr != 0) {
+
+    x += 8;
+
+    if (x + 8 > grub_framebuffer_width) {
+      if (max_x < x) {
+        max_x = x;
+      }
+
+      x = start_x;
+      y += 16;
+
+      if (max_y < y) {
+        max_y = y;
+      }
+    }
+
+    chr++;
+  }
+
+  if (max_x < x) {
+    max_x = x;
+  }
+
+  if (max_y < y) {
+    max_y = y;
+  }
+
+  *out_width = max_x - start_x;
+  *out_height = max_y - start_y + 16;
 }
 
 void grub_framebuffer_console_on_paint_callback(vtconsole_t* vtc,
@@ -254,6 +217,10 @@ void grub_framebuffer_console_on_paint_callback(vtconsole_t* vtc,
                                                 int x,
                                                 int y)
 {
+  if (grub_framebuffer_is_console == false) {
+    return;
+  }
+
   uint32_t color;
 
   if (cell->attr.bright) {
@@ -295,8 +262,8 @@ bool grub_init_framebuffer(multiboot_info_t* mbi)
 
   framebuffer_ptr = (void*)entry->common.framebuffer_addr;
   framebuffer_type = entry->common.framebuffer_type;
-  framebuffer_width = entry->common.framebuffer_width;
-  framebuffer_height = entry->common.framebuffer_height;
+  grub_framebuffer_width = entry->common.framebuffer_width;
+  grub_framebuffer_height = entry->common.framebuffer_height;
   framebuffer_bpp = entry->common.framebuffer_bpp;
   framebuffer_pitch = entry->common.framebuffer_pitch;
 
@@ -327,6 +294,24 @@ bool grub_init_framebuffer(multiboot_info_t* mbi)
       break;
   }
 
+  uint32_t frames_for_vram =
+    framebuffer_pitch * grub_framebuffer_height / PAGE_SIZE;
+
+  for (uint32_t i = 0; i < frames_for_vram; i++) {
+    identity_map(framebuffer_ptr + (i * PAGE_SIZE),
+                 PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
+  }
+
+  uint32_t framebuffer_size =
+    sizeof(uint32_t[grub_framebuffer_width * grub_framebuffer_height]);
+
+  framebuffer_buffer = (uint32_t*)malloc(
+    sizeof(uint32_t[grub_framebuffer_width * grub_framebuffer_height]));
+  framebuffer_native_buffer =
+    malloc(sizeof(uint8_t[framebuffer_pitch * grub_framebuffer_height]));
+
+  // memset(framebuffer_buffer, 0, framebuffer_size);
+
   switch (framebuffer_type) {
     case MULTIBOOT_FRAMEBUFFER_TYPE_INDEXED:
 
@@ -356,19 +341,19 @@ bool grub_init_framebuffer(multiboot_info_t* mbi)
   }
 
   DEBUG("Got Framebuffer Info: %dx%dx%d (%s)",
-        framebuffer_width,
-        framebuffer_height,
+        grub_framebuffer_width,
+        grub_framebuffer_height,
         framebuffer_bpp,
         grub_framebuffer_type_string());
 
-  DEBUG("%s", "Attaching grub framebuffer to console");
+  return true;
+}
 
-  uint32_t frames_for_vram = framebuffer_pitch * framebuffer_height / PAGE_SIZE;
+void grub_framebuffer_set_console_mode()
+{
+  DEBUG("%s", "Changing grub framebuffer to console mode");
 
-  for (uint32_t i = 0; i < frames_for_vram; i++) {
-    identity_map(entry->common.framebuffer_addr + (i * PAGE_SIZE),
-                 PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
-  }
+  grub_framebuffer_is_console = true;
 
   vtc.on_move = grub_framebuffer_console_on_move_callback;
   vtc.on_paint = grub_framebuffer_console_on_paint_callback;
@@ -381,6 +366,128 @@ bool grub_init_framebuffer(multiboot_info_t* mbi)
       vtc.on_paint(&vtc, &vtc.buffer[x + y_index], x, y);
     }
   }
+}
 
-  return true;
+void grub_framebuffer_set_canvas_mode()
+{
+  DEBUG("%s", "Changing grub framebuffer to canvas mode");
+
+  grub_framebuffer_is_console = false;
+
+  grub_framebuffer_clear(0);
+}
+
+uint32_t* grub_framebuffer_buffer()
+{
+  return framebuffer_buffer;
+}
+
+void grub_framebuffer_swap_buffers()
+{
+  uint32_t framebuffer_pixel_size =
+    grub_framebuffer_width * grub_framebuffer_height;
+  uint32_t* source_ptr = framebuffer_buffer;
+
+  char buffer[1024];
+
+  video_frames++;
+
+  if (timer_uptime() != video_frame_timer) {
+    video_frame_timer = timer_uptime();
+    video_fps = video_frames;
+    video_frames = 0;
+  }
+
+  sprintf(buffer, "%d FPS", video_fps);
+
+  uint32_t string_width = 0;
+  uint32_t string_height = 0;
+
+  grub_framebuffer_console_measure(
+    kernel_console_font, buffer, NULL, NULL, &string_width, &string_height);
+
+  grub_framebuffer_console_print(kernel_console_font,
+                                 0xFFFFFF,
+                                 buffer,
+                                 grub_framebuffer_width - string_width,
+                                 grub_framebuffer_height - string_height);
+
+  switch (framebuffer_type) {
+    case MULTIBOOT_FRAMEBUFFER_TYPE_RGB:
+
+      switch (framebuffer_bpp) {
+        case 8:
+
+        {
+          uint8_t* ptr = (uint8_t*)framebuffer_native_buffer;
+
+          for (uint32_t i = 0; i < framebuffer_pixel_size; i++) {
+            *ptr++ = *source_ptr++;
+          }
+        }
+
+          memcpy(framebuffer_ptr,
+                 framebuffer_native_buffer,
+                 framebuffer_pitch * grub_framebuffer_height);
+
+          break;
+
+        case 15:
+        case 16:
+
+        {
+          uint16_t* ptr = (uint16_t*)framebuffer_native_buffer;
+
+          for (uint32_t i = 0; i < framebuffer_pixel_size; i++) {
+            *ptr++ = *source_ptr++;
+          }
+        }
+
+          memcpy(framebuffer_ptr,
+                 framebuffer_native_buffer,
+                 framebuffer_pitch * grub_framebuffer_height);
+
+          break;
+
+        case 24:
+
+        {
+          uint8_t* ptr = (uint8_t*)framebuffer_native_buffer;
+
+          for (uint32_t i = 0; i < framebuffer_pixel_size; i++, ptr += 3) {
+            uint32_t* pixel = (uint32_t*)ptr;
+
+            *pixel = ((*source_ptr++) & 0xffffff) | (*pixel & 0xff000000);
+          }
+        }
+
+          memcpy(framebuffer_ptr,
+                 framebuffer_native_buffer,
+                 framebuffer_pitch * grub_framebuffer_height);
+
+          break;
+
+        case 32:
+
+          memcpy(framebuffer_ptr,
+                 framebuffer_buffer,
+                 sizeof(uint32_t[framebuffer_pixel_size]));
+
+          break;
+      }
+
+      break;
+
+    case MULTIBOOT_FRAMEBUFFER_TYPE_INDEXED:
+
+      // TODO
+
+      break;
+
+    case MULTIBOOT_FRAMEBUFFER_TYPE_EGA_TEXT:
+
+      // Unused
+
+      break;
+  }
 }

@@ -128,6 +128,7 @@ void kmain(uint64_t addr)
   print_step("mounting all file systems");
   multiboot_tag_module_t* module =
     (multiboot_tag_module_t*)find_multiboot_tag(mbi, MULTIBOOT_TAG_TYPE_MODULE);
+
   inode_t initrd = vfs_mount("/", tar_fs_init((uint64_t)module->mod_start));
 
   if (initrd) {
@@ -146,6 +147,8 @@ void kmain(uint64_t addr)
   if (grub_init_framebuffer(mbi) == false) {
     PANIC("Failed to initialize framebuffer")
   }
+
+  grub_framebuffer_set_console_mode();
 
   multiboot_tag_string_t* cmdline = (multiboot_tag_string_t*)find_multiboot_tag(
     mbi, MULTIBOOT_TAG_TYPE_CMDLINE);
@@ -171,8 +174,7 @@ void kmain(uint64_t addr)
 
   while (1) {
     kshell_run(keyboard_get_scancode());
-    // This allows the CPU to enter a sleep state in which it consumes much
-    // less energy. See: https://en.wikipedia.org/wiki/HLT_(x86_instruction)
-    __asm__("hlt");
+
+    grub_framebuffer_swap_buffers();
   }
 }

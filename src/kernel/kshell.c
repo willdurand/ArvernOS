@@ -184,6 +184,7 @@ int try_exec(int argc, char* argv[])
 
   char* buf = malloc((stat.size + 1) * sizeof(char));
   vfs_read(inode, buf, stat.size, 0);
+  buf[stat.size] = '\0';
 
   elf_header_t* elf = elf_load((uint8_t*)buf);
 

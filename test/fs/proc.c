@@ -95,13 +95,16 @@ int main()
   describe("proc_read()");
   uptime = vfs_namei("/uptime");
   uint64_t bytes_read = vfs_read(uptime, buf, BUF_SIZE, 0);
+  buf[bytes_read] = '\0';
   assert(strcmp(buf, "123\n") == 0, "reads the content of the uptime file");
   assert(bytes_read == 4, "returns the number of bytes read");
   bytes_read = vfs_read(uptime, buf, BUF_SIZE, 1);
+  buf[bytes_read] = '\0';
   assert(strcmp(buf, "23\n") == 0,
          "reads the content of the uptime file with offset");
   assert(bytes_read == 3, "returns the number of bytes read with offset");
   bytes_read = vfs_read(uptime, buf, BUF_SIZE, 4);
+  buf[bytes_read] = '\0';
   assert(strcmp(buf, "") == 0, "handles big offsets");
   assert(bytes_read == 0, "returns no bytes read when offset is too big");
   free(uptime);
@@ -125,9 +128,9 @@ int main()
   uptime = vfs_namei("/uptime");
   uint64_t bytes_written =
     vfs_write(hostname, new_hostname, strlen(new_hostname), 0);
-  vfs_read(hostname, buf, BUF_SIZE, 0);
+  bytes_read = vfs_read(hostname, buf, BUF_SIZE, 0);
   // Remove the trailing newline.
-  buf[strlen(buf) - 1] = '\0';
+  buf[bytes_read - 1] = '\0';
   assert(strcmp(buf, new_hostname) == 0, "writes the new hostname value");
   assert(bytes_written == strlen(new_hostname),
          "returns the number of bytes written");

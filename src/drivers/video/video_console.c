@@ -5,6 +5,8 @@
 
 #include "video_console.h"
 
+uint32_t video_fps = 0;
+
 uint32_t video_console_colors[] = {
   [VTCOLOR_BLACK] = 0x00000000, [VTCOLOR_RED] = 0xFFFF0000,
   [VTCOLOR_GREEN] = 0xFF008000, [VTCOLOR_YELLOW] = 0xFFA52A2A,
