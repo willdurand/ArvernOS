@@ -158,6 +158,15 @@ void unmap_multiple(page_number_t start_page_number, uint32_t number_of_pages);
 uint32_t paging_amount_for_byte_size(uint64_t start_address,
                                      uint64_t byte_size);
 
+/**
+ * Maps a physical address directly
+ * 
+ * @param physical_address the physical address to map
+ * @param flags the paging flags
+ */
+void identity_map(uint64_t physical_address, uint64_t flags);
+
+
 // The functions below are exposed for testing purposes.
 
 void _set_p4(page_table_t* table);

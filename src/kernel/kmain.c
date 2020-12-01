@@ -20,6 +20,7 @@
 #include <mmu/alloc.h>
 #include <mmu/frame.h>
 #include <mmu/paging.h>
+#include <resources/psf1/psf1.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -27,6 +28,8 @@ void print_welcome_messge();
 void print_step(const char* msg);
 void print_ok();
 void check_interrupts();
+
+PSF1_font_t *kernel_console_font;
 
 void print_welcome_messge()
 {
@@ -73,14 +76,9 @@ void check_interrupts()
 
 void kmain(uint64_t addr)
 {
-  console_init();
-
   multiboot_info_t* mbi = (multiboot_info_t*)addr;
 
-  if(grub_init_framebuffer(mbi) == false)
-  {
-    PANIC("Failed to initialize framebuffer")
-  }
+  console_init();
 
   print_welcome_messge();
 
@@ -138,6 +136,16 @@ void kmain(uint64_t addr)
     print_ok();
   } else {
     print_ko();
+  }
+
+  print_step("loading kernel system font");
+
+  kernel_console_font = psf1_load_font("/fonts/zap-light16.psf");
+  kernel_console_font != NULL ? print_ok() : print_ko();
+
+  if(grub_init_framebuffer(mbi) == false)
+  {
+    PANIC("Failed to initialize framebuffer")
   }
 
   multiboot_tag_string_t* cmdline = (multiboot_tag_string_t*)find_multiboot_tag(
