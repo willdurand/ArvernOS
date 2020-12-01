@@ -103,11 +103,11 @@ const char *grub_framebuffer_type_string()
     return "(Unknown)";
 }
 
-void grub_framebuffer_clear(uint32_t color)
+void grub_framebuffer_clear_region(uint32_t color, uint32_t x, uint32_t y, uint32_t width, uint32_t height)
 {
-    for(uint32_t y = 0, y_index = 0; y < framebuffer_height; y++, y_index += framebuffer_width)
+    for(uint32_t y_pos = 0, y_index = y * framebuffer_width; y_pos < height; y_pos++, y_index += framebuffer_width)
     {
-        for(uint32_t x = 0; x < framebuffer_width; x++)
+        for(uint32_t x_pos = 0, x_index = x + y_index; x_pos < width; x_pos++, x_index++)
         {
             switch(framebuffer_type)
             {
@@ -117,26 +117,26 @@ void grub_framebuffer_clear(uint32_t color)
                 {
                     case 8:
 
-                        PLOT_8_BPP_PIXEL(color, x + y_index);
+                        PLOT_8_BPP_PIXEL(color, x_index);
 
                         break;
 
                     case 15:
                     case 16:
 
-                        PLOT_16_BPP_PIXEL(color, x + y_index);
+                        PLOT_16_BPP_PIXEL(color, x_index);
 
                         break;
 
                     case 24:
 
-                        PLOT_24_BPP_PIXEL(color, x + y_index);
+                        PLOT_24_BPP_PIXEL(color, x_index);
 
                         break;
 
                     case 32:
 
-                        PLOT_32_BPP_PIXEL(color, x + y_index);
+                        PLOT_32_BPP_PIXEL(color, x_index);
 
                         break;
 
@@ -155,6 +155,11 @@ void grub_framebuffer_clear(uint32_t color)
             }
         }
     }
+}
+
+void grub_framebuffer_clear(uint32_t color)
+{
+    grub_framebuffer_clear_region(color, 0, 0, framebuffer_width, framebuffer_height);
 }
 
 void grub_framebuffer_put_char(PSF1_font_t *font, uint32_t color, char character, uint32_t x, uint32_t y)
@@ -238,11 +243,24 @@ void grub_framebuffer_put_char(PSF1_font_t *font, uint32_t color, char character
 
 void grub_framebuffer_console_on_paint_callback(vtconsole_t* vtc, vtcell_t* cell, int x, int y)
 {
-  if (cell->attr.bright) {
-    grub_framebuffer_put_char(kernel_console_font, video_console_bright_colors[cell->attr.fg], cell->c, x * 8, y * 16);
-  } else {
-    grub_framebuffer_put_char(kernel_console_font, video_console_colors[cell->attr.fg], cell->c, x * 8, y * 16);
-  }
+    uint32_t color;
+
+    if (cell->attr.bright) {
+        color = video_console_bright_colors[cell->attr.fg];
+    } else {
+        color = video_console_colors[cell->attr.fg];
+    }
+
+    uint32_t x_pos = x * 8;
+    uint32_t y_pos = y * 16;
+
+    if(cell->c == ' ' || cell->c == '\b') {
+        grub_framebuffer_clear_region(0x00000000, x_pos, y_pos, 8, 16);
+
+        return;
+    }
+
+    grub_framebuffer_put_char(kernel_console_font, color, cell->c, x_pos, y_pos);
 }
 
 void grub_framebuffer_console_on_move_callback(vtconsole_t* vtc, vtcursor_t* cur)
