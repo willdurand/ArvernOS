@@ -141,7 +141,7 @@ void kmain(uint64_t addr)
 
   print_step("loading kernel system font");
 
-  kernel_console_font = psf1_load_font("/fonts/zap-light16.psf");
+  kernel_console_font = psf1_load_font(KERNEL_CONSOLE_FONT_FILENAME);
   kernel_console_font != NULL ? print_ok() : print_ko();
 
   if (grub_init_framebuffer(mbi) == false) {

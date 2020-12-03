@@ -11,4 +11,3 @@ logs/
 *.tar
 .gdb_history
 .DS_Store
-.vscode

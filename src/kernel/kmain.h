@@ -26,6 +26,8 @@
 #define GIT_HASH "dirty"
 #endif
 
+#define KERNEL_CONSOLE_FONT_FILENAME "/fonts/Inconsolata-Black.psf"
+
 /**
  * This is the entrypoint of the kernel (C code).
  *

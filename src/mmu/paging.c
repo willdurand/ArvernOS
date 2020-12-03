@@ -35,7 +35,6 @@ page_table_t* get_p4();
 void paging_set_entry(page_entry_t* entry, uint64_t addr, uint64_t flags);
 opt_uint64_t paging_frame_allocate();
 void paging_frame_deallocate(frame_number_t frame_number);
-void identity_map(uint64_t physical_address, uint64_t flags);
 
 static page_table_t* active_p4_table = (page_table_t*)P4_TABLE;
 static bool can_deallocate_frames = false;

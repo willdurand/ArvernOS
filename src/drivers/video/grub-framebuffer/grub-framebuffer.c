@@ -25,9 +25,7 @@ extern vtconsole_t vtc;
 
 void* framebuffer_ptr = NULL;
 uint32_t* framebuffer_buffer = NULL;
-void* framebuffer_native_buffer =
-  NULL; // Used to prevent extra allocations when swapping
-uint8_t framebuffer_type = MULTIBOOT_FRAMEBUFFER_TYPE_INDEXED;
+uint8_t framebuffer_type = 0;
 uint8_t framebuffer_bpp = 0;
 uint32_t framebuffer_pitch = 0;
 
@@ -55,7 +53,7 @@ bool grub_framebuffer_is_console = false;
 bool grub_framebuffer_available()
 {
   return framebuffer_ptr != NULL &&
-         framebuffer_type != MULTIBOOT_FRAMEBUFFER_TYPE_EGA_TEXT;
+         framebuffer_type == MULTIBOOT_FRAMEBUFFER_TYPE_RGB;
 }
 
 const char* grub_framebuffer_type_string()
@@ -64,21 +62,7 @@ const char* grub_framebuffer_type_string()
     return "(None)";
   }
 
-  switch (framebuffer_type) {
-    case MULTIBOOT_FRAMEBUFFER_TYPE_EGA_TEXT:
-
-      return "EGA Text";
-
-    case MULTIBOOT_FRAMEBUFFER_TYPE_INDEXED:
-
-      return "Indexed";
-
-    case MULTIBOOT_FRAMEBUFFER_TYPE_RGB:
-
-      return "RGB";
-  }
-
-  return "(Unknown)";
+  return "RGB";
 }
 
 void grub_framebuffer_clear_region(uint32_t color,
@@ -267,6 +251,10 @@ bool grub_init_framebuffer(multiboot_info_t* mbi)
   framebuffer_bpp = entry->common.framebuffer_bpp;
   framebuffer_pitch = entry->common.framebuffer_pitch;
 
+  if (framebuffer_type != MULTIBOOT_FRAMEBUFFER_TYPE_RGB) {
+    return false;
+  }
+
   switch (framebuffer_bpp) {
     case 8:
 
@@ -307,38 +295,16 @@ bool grub_init_framebuffer(multiboot_info_t* mbi)
 
   framebuffer_buffer = (uint32_t*)malloc(
     sizeof(uint32_t[grub_framebuffer_width * grub_framebuffer_height]));
-  framebuffer_native_buffer =
-    malloc(sizeof(uint8_t[framebuffer_pitch * grub_framebuffer_height]));
 
   // memset(framebuffer_buffer, 0, framebuffer_size);
 
-  switch (framebuffer_type) {
-    case MULTIBOOT_FRAMEBUFFER_TYPE_INDEXED:
+  framebuffer_red_mask_size = entry->framebuffer_red_mask_size;
+  framebuffer_green_mask_size = entry->framebuffer_green_mask_size;
+  framebuffer_blue_mask_size = entry->framebuffer_blue_mask_size;
 
-      framebuffer_palette = entry->framebuffer_palette;
-      framebuffer_palette_num_colors = entry->framebuffer_palette_num_colors;
-
-      break;
-
-    case MULTIBOOT_FRAMEBUFFER_TYPE_RGB:
-
-      framebuffer_red_mask_size = entry->framebuffer_red_mask_size;
-      framebuffer_green_mask_size = entry->framebuffer_green_mask_size;
-      framebuffer_blue_mask_size = entry->framebuffer_blue_mask_size;
-
-      framebuffer_red_field_position = entry->framebuffer_red_field_position;
-      framebuffer_green_field_position =
-        entry->framebuffer_green_field_position;
-      framebuffer_blue_field_position = entry->framebuffer_blue_field_position;
-
-      break;
-
-    case MULTIBOOT_FRAMEBUFFER_TYPE_EGA_TEXT:
-
-      DEBUG("%s", "EGA Text Framebuffer not supported as a framebuffer");
-
-      return false;
-  }
+  framebuffer_red_field_position = entry->framebuffer_red_field_position;
+  framebuffer_green_field_position = entry->framebuffer_green_field_position;
+  framebuffer_blue_field_position = entry->framebuffer_blue_field_position;
 
   DEBUG("Got Framebuffer Info: %dx%dx%d (%s)",
         grub_framebuffer_width,
@@ -412,82 +378,7 @@ void grub_framebuffer_swap_buffers()
                                  grub_framebuffer_width - string_width,
                                  grub_framebuffer_height - string_height);
 
-  switch (framebuffer_type) {
-    case MULTIBOOT_FRAMEBUFFER_TYPE_RGB:
-
-      switch (framebuffer_bpp) {
-        case 8:
-
-        {
-          uint8_t* ptr = (uint8_t*)framebuffer_native_buffer;
-
-          for (uint32_t i = 0; i < framebuffer_pixel_size; i++) {
-            *ptr++ = *source_ptr++;
-          }
-        }
-
-          memcpy(framebuffer_ptr,
-                 framebuffer_native_buffer,
-                 framebuffer_pitch * grub_framebuffer_height);
-
-          break;
-
-        case 15:
-        case 16:
-
-        {
-          uint16_t* ptr = (uint16_t*)framebuffer_native_buffer;
-
-          for (uint32_t i = 0; i < framebuffer_pixel_size; i++) {
-            *ptr++ = *source_ptr++;
-          }
-        }
-
-          memcpy(framebuffer_ptr,
-                 framebuffer_native_buffer,
-                 framebuffer_pitch * grub_framebuffer_height);
-
-          break;
-
-        case 24:
-
-        {
-          uint8_t* ptr = (uint8_t*)framebuffer_native_buffer;
-
-          for (uint32_t i = 0; i < framebuffer_pixel_size; i++, ptr += 3) {
-            uint32_t* pixel = (uint32_t*)ptr;
-
-            *pixel = ((*source_ptr++) & 0xffffff) | (*pixel & 0xff000000);
-          }
-        }
-
-          memcpy(framebuffer_ptr,
-                 framebuffer_native_buffer,
-                 framebuffer_pitch * grub_framebuffer_height);
-
-          break;
-
-        case 32:
-
-          memcpy(framebuffer_ptr,
-                 framebuffer_buffer,
-                 sizeof(uint32_t[framebuffer_pixel_size]));
-
-          break;
-      }
-
-      break;
-
-    case MULTIBOOT_FRAMEBUFFER_TYPE_INDEXED:
-
-      // TODO
-
-      break;
-
-    case MULTIBOOT_FRAMEBUFFER_TYPE_EGA_TEXT:
-
-      // Unused
-
-      break;
-  }
+  memcpy(framebuffer_ptr,
+         framebuffer_buffer,
+         sizeof(uint32_t[framebuffer_pixel_size]));
 }
