@@ -1,3 +1,6 @@
+#define MAKE_RGBA(r, g, b, a) ((a << 24) | (r << 16) | (g << 8) | (b))
+#define MAKE_RGB(r, g, b)     MAKE_RGBA(r, g, b, 0xFF)
+
 extern uint32_t grub_framebuffer_width;
 extern uint32_t grub_framebuffer_height;
 extern uint8_t grub_framebuffer_bytes_per_pixel;
