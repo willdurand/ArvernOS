@@ -5,6 +5,7 @@
 #include <core/port.h>
 #include <core/utils.h>
 #include <mmu/paging.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -17,9 +18,9 @@ static void rtl8139_callback(stack_t* stack);
 static pci_device_t device = { 0 };
 static uint32_t ioaddr = 0;
 
-static char* tx_buffer = NULL;
+static uint8_t* tx_buffer = NULL;
 static uint64_t tx_buffer_addr = 0;
-static char* rx_buffer = NULL;
+static uint8_t* rx_buffer = NULL;
 static uint32_t rx_index = 0;
 
 static uint8_t transmit_start_registers[4] = { 0x20, 0x24, 0x28, 0x2C };
