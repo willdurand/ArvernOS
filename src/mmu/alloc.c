@@ -45,7 +45,7 @@ void* liballoc_alloc(int number_of_pages)
 
       if (free_page_count == number_of_pages) {
         first_free_page.has_value = true;
-        first_free_page.value = i > number_of_pages ? i - number_of_pages : 0;
+        first_free_page.value = i - (number_of_pages - 1);
         break;
       }
     } else {

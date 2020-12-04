@@ -287,14 +287,14 @@ bool grub_init_framebuffer(multiboot_info_t* mbi)
 
   for (uint32_t i = 0; i < frames_for_vram; i++) {
     identity_map(framebuffer_ptr + (i * PAGE_SIZE),
-                 PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
+                 PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE,
+                 true);
   }
 
   uint32_t framebuffer_size =
     sizeof(uint32_t[grub_framebuffer_width * grub_framebuffer_height]);
 
-  framebuffer_buffer = (uint32_t*)malloc(
-    sizeof(uint32_t[grub_framebuffer_width * grub_framebuffer_height]));
+  framebuffer_buffer = (uint32_t*)malloc(framebuffer_size);
 
   // memset(framebuffer_buffer, 0, framebuffer_size);
 
@@ -306,11 +306,14 @@ bool grub_init_framebuffer(multiboot_info_t* mbi)
   framebuffer_green_field_position = entry->framebuffer_green_field_position;
   framebuffer_blue_field_position = entry->framebuffer_blue_field_position;
 
-  DEBUG("Got Framebuffer Info: %dx%dx%d (%s)",
+  DEBUG("Got Framebuffer Info: %dx%dx%d (%s) located at %p, with double-buffer "
+        "at %p",
         grub_framebuffer_width,
         grub_framebuffer_height,
         framebuffer_bpp,
-        grub_framebuffer_type_string());
+        grub_framebuffer_type_string(),
+        framebuffer_ptr,
+        framebuffer_buffer);
 
   return true;
 }

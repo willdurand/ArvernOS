@@ -163,8 +163,10 @@ uint32_t paging_amount_for_byte_size(uint64_t start_address,
  *
  * @param physical_address the physical address to map
  * @param flags the paging flags
+ * @param reserve whether to reserve this frame to prevent frame allocations on
+ * top of it
  */
-void identity_map(uint64_t physical_address, uint64_t flags);
+void identity_map(uint64_t physical_address, uint64_t flags, bool reserve);
 
 // The functions below are exposed for testing purposes.
 
