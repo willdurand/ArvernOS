@@ -28,6 +28,10 @@ struct sockaddr_in
   unsigned char sin_zero[8];
 };
 
+in_addr_t inet_addr(const char* s);
+
+in_addr_t inet_addr2(uint8_t ip[4]);
+
 uint16_t htons(uint16_t value);
 
 uint16_t ntohs(uint16_t value);

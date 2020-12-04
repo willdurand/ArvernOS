@@ -5,6 +5,7 @@
 #include <drivers/timer.h>
 #include <fs/debug.h>
 #include <fs/vfs.h>
+#include <net/dns.h>
 #include <net/ipv4.h>
 #include <net/net.h>
 #include <stdbool.h>
@@ -21,10 +22,11 @@ static bool caps_lock_mode = false;
 static bool ctrl_mode = false;
 static bool shift_mode = false;
 
-#define NB_DOCUMENTED_COMMANDS 6
+#define NB_DOCUMENTED_COMMANDS 7
 
 static const char* commands[][NB_DOCUMENTED_COMMANDS] = {
   { "help", "display information about system shell commands" },
+  { "host", "perform a DNS lookup" },
   { "ls", "list files" },
   { "net", "show configured network interfaces" },
   { "overflow", "test the stack buffer overflow protection" },
@@ -163,6 +165,21 @@ void busywait(uint32_t delay_in_seconds)
   while (timer_uptime() < (t + delay_in_seconds)) {
     ;
   }
+}
+
+void host(int argc, char* argv[])
+{
+  if (argc != 2) {
+    printf("usage: %s domain.tld\n", argv[0]);
+    return;
+  }
+
+  net_interface_t* in = net_get_interface(0);
+
+  printf("DNS lookup for: %s\n", argv[1]);
+  dns_request(in, argv[1]);
+
+  busywait(2);
 }
 
 void ping(int argc, char* argv[])
@@ -313,6 +330,8 @@ void run_command()
     net(argc, argv);
   } else if (strcmp(argv[0], "ping") == 0) {
     ping(argc, argv);
+  } else if (strcmp(argv[0], "host") == 0) {
+    host(argc, argv);
   } else {
     if (try_exec(argc, argv) != 0) {
       printf("invalid kshell command\n");
