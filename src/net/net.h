@@ -21,6 +21,8 @@
 
 #include <stdint.h>
 
+#define NET_MAX_INTERFACES 1
+
 typedef struct net_driver net_driver_t;
 typedef struct net_interface net_interface_t;
 
@@ -44,5 +46,22 @@ struct net_interface
   uint8_t dns_mac[6];
   uint8_t dns_ip[4];
 };
+
+/**
+ * Initializes a network interface.
+ */
+void net_interface_init(uint8_t interface_id,
+                        net_driver_t* driver,
+                        uint8_t ip[4],
+                        uint8_t gateway_ip[4],
+                        uint8_t dns_ip[4]);
+
+/**
+ * Returns the network interface for the given ID.
+ *
+ * @param interface_id an interface ID
+ * @return the network interface if it exists, `NULL` otherwise
+ */
+net_interface_t* net_get_interface(uint8_t interface_id);
 
 #endif
