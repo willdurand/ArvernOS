@@ -148,3 +148,11 @@ def_irq_handler 1
 def_irq_handler 2
 def_irq_handler 3
 def_irq_handler 4
+def_irq_handler 5
+def_irq_handler 6
+def_irq_handler 7
+def_irq_handler 8
+def_irq_handler 9
+def_irq_handler 10
+def_irq_handler 11
+def_irq_handler 12
