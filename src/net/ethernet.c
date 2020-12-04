@@ -1,5 +1,6 @@
 #include "ethernet.h"
 #include <core/debug.h>
+#include <net/arp.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -21,6 +22,11 @@ void ethernet_receive_frame(net_interface_t* interface,
         interface->id);
 
   switch (frame_header->ethertype) {
+    case ETHERTYPE_ARP:
+      arp_receive_packet(interface,
+                         &data[sizeof(ethernet_header_t)],
+                         len - sizeof(ethernet_header_t));
+      break;
     default:
       DEBUG("unsupported ethernet frame: type=%d", frame_header->ethertype);
   }

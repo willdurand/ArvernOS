@@ -9,6 +9,9 @@
 #include <net/net.h>
 #include <stdint.h>
 
+#define ETHERTYPE_ARP  0x0806
+#define ETHERTYPE_IPV4 0x0800
+
 // TODO: ideally, we'd check the endianness of the system but this project is
 // for x86_64 only (i.e. it's little endian and we have to use those macros).
 #define HTONS(n) ((((n)&0xFF) << 8) | (((n)&0xFF00) >> 8))
