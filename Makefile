@@ -42,7 +42,10 @@ CFLAGS = -DKERNEL_NAME=\"$(OS_NAME)\" \
 
 DEBUG_CFLAGS = -DENABLE_KERNEL_DEBUG -DDEBUG_WITH_COLORS -DDISABLE_MMU_DEBUG
 
-QEMU_OPTIONS =
+QEMU_OPTIONS = -m 500M \
+	       -netdev user,id=u1,ipv6=off \
+	       -device rtl8139,netdev=u1 \
+	       -object filter-dump,id=f1,netdev=u1,file=./logs/traffic.pcap
 
 GRUB_KERNEL_CMDLINE =
 
@@ -107,7 +110,7 @@ $(ISO): $(KERNEL) $(INITRD) $(GRUB_CFG)
 
 run: ## run the OS
 run: $(ISO)
-	$(QEMU) -cdrom $< -m 500M $(QEMU_OPTIONS)
+	$(QEMU) -cdrom $< $(QEMU_OPTIONS)
 .PHONY: run
 
 debug: ## build the OS in debug mode
