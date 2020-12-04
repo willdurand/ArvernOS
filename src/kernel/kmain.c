@@ -20,6 +20,7 @@
 #include <mmu/alloc.h>
 #include <mmu/frame.h>
 #include <mmu/paging.h>
+#include <net/net.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -124,6 +125,11 @@ void kmain(uint64_t addr)
 
   print_step("initializing network");
   if (rtl8139_init()) {
+    uint8_t ip[4] = { 10, 0, 2, 15 };
+    uint8_t gateway_ip[4] = { 10, 0, 2, 2 };
+    uint8_t dns_ip[4] = { 10, 0, 2, 3 };
+
+    net_interface_init(0, rtl8139_driver(), ip, gateway_ip, dns_ip);
     print_ok();
   } else {
     print_ko();
