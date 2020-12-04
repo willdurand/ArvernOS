@@ -125,6 +125,8 @@ void kmain(uint64_t addr)
 
   print_step("initializing network");
   if (rtl8139_init()) {
+    // TODO: move these values to a config file (ini or yaml maybe) stored in
+    // the init ramdisk until we support DHCP.
     uint8_t ip[4] = { 10, 0, 2, 15 };
     uint8_t gateway_ip[4] = { 10, 0, 2, 2 };
     uint8_t dns_ip[4] = { 10, 0, 2, 3 };

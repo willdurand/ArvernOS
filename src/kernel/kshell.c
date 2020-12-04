@@ -4,6 +4,7 @@
 #include <drivers/cmos.h>
 #include <fs/debug.h>
 #include <fs/vfs.h>
+#include <net/net.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,13 +19,14 @@ static bool caps_lock_mode = false;
 static bool ctrl_mode = false;
 static bool shift_mode = false;
 
-#define NB_DOCUMENTED_COMMANDS 4
+#define NB_DOCUMENTED_COMMANDS 5
 
 static const char* commands[][NB_DOCUMENTED_COMMANDS] = {
   { "help", "display information about system shell commands" },
   { "ls", "list files" },
-  { "selftest", "run the system test suite" },
+  { "net", "show configured network interfaces" },
   { "overflow", "test the stack buffer overflow protection" },
+  { "selftest", "run the system test suite" },
 };
 
 static unsigned char keymap[][128] = {
@@ -122,6 +124,34 @@ void selftest()
   vfs_free(debug);
 
   printf("\ndone.\n");
+}
+
+void net()
+{
+  uint8_t in_id = 0;
+  net_interface_t* in = net_get_interface(in_id);
+
+  printf("eth%d:\n", in_id);
+  printf("  driver : %s\n", in->driver->get_name());
+  printf(
+    "  ip     : %d.%d.%d.%d\n", in->ip[0], in->ip[1], in->ip[2], in->ip[3]);
+  printf("  mac    : %02x:%02x:%02x:%02x:%02x:%02x\n",
+         in->mac[0],
+         in->mac[1],
+         in->mac[2],
+         in->mac[3],
+         in->mac[4],
+         in->mac[5]);
+  printf("  gateway: %d.%d.%d.%d\n",
+         in->gateway_ip[0],
+         in->gateway_ip[1],
+         in->gateway_ip[2],
+         in->gateway_ip[3]);
+  printf("  dns    : %d.%d.%d.%d\n",
+         in->dns_ip[0],
+         in->dns_ip[1],
+         in->dns_ip[2],
+         in->dns_ip[3]);
 }
 
 void ls(int argc, char* argv[])
@@ -246,6 +276,8 @@ void run_command()
     selftest();
   } else if (strncmp(argv[0], "overflow", 8) == 0) {
     overflow();
+  } else if (strncmp(argv[0], "net", 3) == 0) {
+    net(argc, argv);
   } else {
     if (try_exec(argc, argv) != 0) {
       printf("invalid kshell command\n");
