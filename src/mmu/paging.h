@@ -113,6 +113,14 @@ uint64_t page_start_address(page_number_t page_number);
 opt_uint64_t translate_page(page_number_t page_number);
 
 /**
+ * Translates a virtual address to the corresponding physical address.
+ *
+ * @param virtual_address a virtual address
+ * @returns a physical address (optional)
+ */
+opt_uint64_t translate(uint64_t virtual_address);
+
+/**
  * Convenient function to map a pager (number) without providing a frame. The
  * frame is automatically allocated.
  *

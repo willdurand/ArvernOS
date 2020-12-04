@@ -7,6 +7,7 @@
 #include <core/sys/syscall.h>
 #include <drivers/cmos.h>
 #include <drivers/keyboard.h>
+#include <drivers/rtl8139.h>
 #include <drivers/serial.h>
 #include <drivers/timer.h>
 #include <drivers/video/grub-framebuffer/grub-framebuffer.h>
@@ -21,6 +22,7 @@
 #include <mmu/frame.h>
 #include <mmu/paging.h>
 #include <resources/psf1/psf1.h>
+#include <net/net.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -133,6 +135,21 @@ void kmain(uint64_t addr)
   print_step("initializing virtual file system");
   vfs_init();
   print_ok();
+
+  DEBUG("%s", "initializing network");
+  print_step("initializing network");
+  if (rtl8139_init()) {
+    // TODO: move these values to a config file (ini or yaml maybe) stored in
+    // the init ramdisk until we support DHCP.
+    uint8_t ip[4] = { 10, 0, 2, 15 };
+    uint8_t gateway_ip[4] = { 10, 0, 2, 2 };
+    uint8_t dns_ip[4] = { 10, 0, 2, 3 };
+
+    net_interface_init(0, rtl8139_driver(), ip, gateway_ip, dns_ip);
+    print_ok();
+  } else {
+    print_ko();
+  }
 
   DEBUG("%s", "mounting all file systems");
   print_step("mounting all file systems");

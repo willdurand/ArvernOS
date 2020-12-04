@@ -2,8 +2,8 @@
  * @file
  * @see https://en.wikipedia.org/wiki/VGA-compatible_text_mode
  */
-#ifndef VGA_TEXT_H
-#define VGA_TEXT_H
+#ifndef DRIVERS_VGA_TEXT_H
+#define DRIVERS_VGA_TEXT_H
 
 #include <sys/types.h>
 

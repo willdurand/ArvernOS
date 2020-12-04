@@ -6,7 +6,7 @@
 inode_t vfs_find_root(char** path);
 inode_t vfs_namei_mount(const char* path, inode_t root);
 
-vfs_node_t* vfs_root;
+static vfs_node_t* vfs_root;
 
 void vfs_init()
 {

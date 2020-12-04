@@ -27,7 +27,6 @@ void enable_write_protection();
 void remap_kernel(multiboot_info_t* mbi);
 void zero_table(page_table_t* table);
 page_table_t* next_table_address(page_table_t* table, uint64_t index);
-opt_uint64_t translate(uint64_t virtual_address);
 opt_uint64_t pointed_frame(page_entry_t entry);
 uint64_t p4_index(page_number_t page_number);
 page_table_t* next_table_create(page_table_t* table, uint64_t index);
@@ -243,7 +242,6 @@ page_table_t* next_table_address(page_table_t* table, uint64_t index)
   return next_table;
 }
 
-// Translates a virtual address to the corresponding physical address.
 opt_uint64_t translate(uint64_t virtual_address)
 {
   uint64_t offset = virtual_address % PAGE_SIZE;
