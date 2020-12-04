@@ -19,7 +19,7 @@
 #ifndef NET_NET_H
 #define NET_NET_H
 
-#include <sys/types.h>
+#include <stdint.h>
 
 typedef struct net_driver net_driver_t;
 typedef struct net_interface net_interface_t;
