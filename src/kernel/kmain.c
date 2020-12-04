@@ -7,6 +7,7 @@
 #include <core/sys/syscall.h>
 #include <drivers/cmos.h>
 #include <drivers/keyboard.h>
+#include <drivers/rtl8139.h>
 #include <drivers/serial.h>
 #include <drivers/timer.h>
 #include <fs/debug.h>
@@ -120,6 +121,13 @@ void kmain(uint64_t addr)
   print_step("initializing virtual file system");
   vfs_init();
   print_ok();
+
+  print_step("initializing network");
+  if (rtl8139_init()) {
+    print_ok();
+  } else {
+    print_ko();
+  }
 
   print_step("mounting all file systems");
   multiboot_tag_module_t* module =
