@@ -112,6 +112,14 @@ void isr_init()
   idt_register_interrupt(IRQ2, (uint64_t)irq2);
   idt_register_interrupt(IRQ3, (uint64_t)irq3);
   idt_register_interrupt(IRQ4, (uint64_t)irq4);
+  idt_register_interrupt(IRQ5, (uint64_t)irq5);
+  idt_register_interrupt(IRQ6, (uint64_t)irq6);
+  idt_register_interrupt(IRQ7, (uint64_t)irq7);
+  idt_register_interrupt(IRQ8, (uint64_t)irq8);
+  idt_register_interrupt(IRQ9, (uint64_t)irq9);
+  idt_register_interrupt(IRQ10, (uint64_t)irq10);
+  idt_register_interrupt(IRQ11, (uint64_t)irq11);
+  idt_register_interrupt(IRQ12, (uint64_t)irq12);
 
   // syscalls
   idt_register_interrupt(SYSCALL, (uint64_t)isr0x80);
@@ -169,16 +177,16 @@ void isr_handler(uint64_t id, uint64_t stack_addr)
 
 void irq_handler(uint64_t id, uint64_t stack_addr)
 {
+  if (interrupt_handlers[id] != 0) {
+    isr_t handler = interrupt_handlers[id];
+    handler(get_stack(id, stack_addr));
+  }
+
   if (id >= 40) {
     port_byte_out(PIC2, PIC_EOI);
   }
 
   port_byte_out(PIC1, PIC_EOI);
-
-  if (interrupt_handlers[id] != 0) {
-    isr_t handler = interrupt_handlers[id];
-    handler(get_stack(id, stack_addr));
-  }
 }
 
 void isr_register_handler(uint64_t id, isr_t handler)
