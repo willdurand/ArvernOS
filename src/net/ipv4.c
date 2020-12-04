@@ -6,7 +6,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-uint32_t ipv4_to_value(uint8_t ip[4]);
 void ipv4_from_value(uint32_t value, uint8_t ip[4]);
 void icmpv4_receive_packet(net_interface_t* interface,
                            uint8_t* packet,
@@ -67,12 +66,6 @@ uint16_t ipv4_checksum(void* addr, int count)
   return ~sum;
 }
 
-// This converts an array containing an IPv4 into a uint32_t value.
-uint32_t ipv4_to_value(uint8_t ip[4])
-{
-  return ip[3] | (ip[2] << 8) | (ip[1] << 16) | (ip[0] << 24);
-}
-
 // Retrieve src IP address from the uint32_t value. This might not work
 // correctly all the time because of endianness but it works for now...
 void ipv4_from_value(uint32_t value, uint8_t ip[4])
@@ -126,11 +119,8 @@ void ipv4_ping(net_interface_t* interface, uint8_t dst_ip[4])
   // Create IPv4 datagram, encapsulating the ICMPv4 packet.
   uint32_t datagram_len = sizeof(icmpv4_echo_t) + sizeof(ipv4_header_t);
 
-  ipv4_header_t ipv4_header = ipv4_create_header(interface->ip,
-                                                 htonl(ipv4_to_value(dst_ip)),
-                                                 IPV4_PROTO_ICMP,
-                                                 0,
-                                                 datagram_len);
+  ipv4_header_t ipv4_header = ipv4_create_header(
+    interface->ip, inet_addr2(dst_ip), IPV4_PROTO_ICMP, 0, datagram_len);
 
   uint8_t* datagram = malloc(datagram_len);
   memcpy(datagram, &ipv4_header, sizeof(ipv4_header_t));
@@ -148,7 +138,7 @@ ipv4_header_t ipv4_create_header(uint8_t src_ip[4],
                                  uint16_t flags,
                                  uint16_t len)
 {
-  uint32_t src_addr = ipv4_to_value(src_ip);
+  in_addr_t src_addr = inet_addr2(src_ip);
 
   ipv4_header_t ipv4_header = { .ihl = 5,
                                 .version = IPV4_VERSION,
@@ -158,7 +148,7 @@ ipv4_header_t ipv4_create_header(uint8_t src_ip[4],
                                 .flags = htons(flags),
                                 .ttl = IPV4_DEFAULT_TTL,
                                 .proto = protocol,
-                                .src_addr = htonl(src_addr),
+                                .src_addr = src_addr,
                                 .dst_addr = dst_addr };
   ipv4_header.checksum = ipv4_checksum(&ipv4_header, sizeof(ipv4_header_t));
 
