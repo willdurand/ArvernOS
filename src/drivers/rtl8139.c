@@ -104,7 +104,7 @@ bool rtl8139_init()
   mac_address[4] = mac_part2 >> 0;
   mac_address[5] = mac_part2 >> 8;
 
-  DEBUG("MAC address is: %02x:%02x:%02x:%02x:%02x:%02x\n",
+  DEBUG("MAC address is: %02x:%02x:%02x:%02x:%02x:%02x",
         mac_address[0],
         mac_address[1],
         mac_address[2],
