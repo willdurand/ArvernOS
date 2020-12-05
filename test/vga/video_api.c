@@ -6,6 +6,13 @@
 #include <string.h>
 #include <test.h>
 
+bool swapped_buffers = false;
+
+void swap_buffers()
+{
+  swapped_buffers = true;
+}
+
 int main()
 {
   video_driver.video_width = video_driver.video_height = 16;
@@ -75,7 +82,8 @@ int main()
 
   end_describe();
 
-  describe("blits a buffer with 4x4 pixels crossing the boundary of the screen properly");
+  describe("blits a buffer with 4x4 pixels crossing the boundary of the screen "
+           "properly");
 
   video_clear(0);
 
@@ -120,6 +128,18 @@ int main()
       }
     }
   }
+
+  end_describe();
+
+  describe("swaps buffers");
+
+  assert(swapped_buffers == false, "Didn't swap buffers yet");
+
+  video_driver.swap_buffers = swap_buffers;
+
+  video_swap_buffers();
+
+  assert(swapped_buffers, "Did swap buffers");
 
   end_describe();
 
