@@ -1,5 +1,10 @@
 #ifndef _VIDEO_API_H_
 #define _VIDEO_API_H_
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 #define MAKE_RGBA(r, g, b, a) ((a << 24) | (r << 16) | (g << 8) | (b))
 #define MAKE_RGB(r, g, b)     MAKE_RGBA(r, g, b, 0xFF)
 
