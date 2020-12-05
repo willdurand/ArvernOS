@@ -1,3 +1,5 @@
+#ifndef _PSF1_H
+#define _PSF1_H
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -16,3 +18,4 @@ typedef struct PSF1_font
 
 PSF1_font_t* psf1_load_font(const char* path);
 void psf1_unload(PSF1_font_t* font);
+#endif

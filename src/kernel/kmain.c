@@ -11,10 +11,12 @@
 #include <drivers/serial.h>
 #include <drivers/timer.h>
 #include <drivers/video/grub-framebuffer/grub-framebuffer.h>
+#include <drivers/video/video_api.h>
 #include <fs/debug.h>
 #include <fs/proc.h>
 #include <fs/tar.h>
 #include <fs/vfs.h>
+#include <img/png_loader.h>
 #include <kernel/console.h>
 #include <kernel/kshell.h>
 #include <kernel/panic.h>
@@ -22,6 +24,7 @@
 #include <mmu/frame.h>
 #include <mmu/paging.h>
 #include <net/net.h>
+#include <resources/embed/will_photo.png.h>
 #include <resources/psf1/psf1.h>
 #include <stdio.h>
 #include <string.h>
@@ -196,13 +199,37 @@ void kmain(uint64_t addr)
     return;
   }
 
-  // kshell
-  printf("\n");
-  kshell_print_prompt();
+  // TODO: Re-Add
+  /*
+    // kshell
+    printf("\n");
+    kshell_print_prompt();
+
+    while (1) {
+      kshell_run(keyboard_get_scancode());
+
+      grub_framebuffer_swap_buffers();
+    }
+    */
+
+  grub_framebuffer_set_canvas_mode();
+
+  video_clear(MAKE_RGBA(0x25, 0x25, 0x25, 0xFF));
+
+  uint32_t width = 0;
+  uint32_t height = 0;
+  uint32_t* pixels = NULL;
+
+  if (!png_load_buffer(will_photo_png, &width, &height, &pixels)) {
+    video_clear(MAKE_RGBA(0xFF, 0, 0, 0xFF));
+  }
+
+  if (pixels != NULL) {
+    video_blit(pixels, 0, 0, width, height, width, height, 0, 0);
+  }
 
   while (1) {
-    kshell_run(keyboard_get_scancode());
 
-    grub_framebuffer_swap_buffers();
+    video_swap_buffers();
   }
 }

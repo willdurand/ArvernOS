@@ -104,11 +104,11 @@ void grub_framebuffer_put_char(PSF1_font_t* font,
   }
 }
 
-void grub_framebuffer_console_print(PSF1_font_t* font,
-                                    uint32_t color,
-                                    char* str,
-                                    uint32_t start_x,
-                                    uint32_t start_y)
+void grub_framebuffer_print(PSF1_font_t* font,
+                            uint32_t color,
+                            char* str,
+                            uint32_t start_x,
+                            uint32_t start_y)
 {
   char* chr = str;
   uint32_t x = start_x;
@@ -128,12 +128,12 @@ void grub_framebuffer_console_print(PSF1_font_t* font,
   }
 }
 
-void grub_framebuffer_console_measure(PSF1_font_t* font,
-                                      char* str,
-                                      uint32_t* in_x,
-                                      uint32_t* in_y,
-                                      uint32_t* out_width,
-                                      uint32_t* out_height)
+void grub_framebuffer_measure(PSF1_font_t* font,
+                              char* str,
+                              uint32_t* in_x,
+                              uint32_t* in_y,
+                              uint32_t* out_width,
+                              uint32_t* out_height)
 {
   char* chr = str;
   uint32_t start_x = in_x != NULL ? *in_x : 0;
@@ -355,14 +355,14 @@ void grub_framebuffer_swap_buffers()
   uint32_t string_width = 0;
   uint32_t string_height = 0;
 
-  grub_framebuffer_console_measure(
+  grub_framebuffer_measure(
     kernel_console_font, buffer, NULL, NULL, &string_width, &string_height);
 
-  grub_framebuffer_console_print(kernel_console_font,
-                                 0xFFFFFF,
-                                 buffer,
-                                 grub_framebuffer_width - string_width,
-                                 grub_framebuffer_height - string_height);
+  grub_framebuffer_print(kernel_console_font,
+                         0xFFFFFF,
+                         buffer,
+                         grub_framebuffer_width - string_width,
+                         grub_framebuffer_height - string_height);
 
   memcpy(framebuffer_ptr,
          framebuffer_buffer,
