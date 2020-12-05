@@ -1,3 +1,5 @@
+#include <stdbool.h>
+#include <stdint.h>
 
 typedef struct PSF1_header
 {

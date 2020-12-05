@@ -183,9 +183,9 @@ test: libc
 	# mmu/paging
 	gcc -Wformat=0 -g -DENABLE_DEBUG_FOR_TEST -DTEST_ENV -I./test -I./test/proxies -I./src/ -o $(BUILD_DIR)/paging test/mmu/paging.c src/mmu/paging.c src/core/multiboot.c src/mmu/frame.c src/mmu/bitmap.c src/core/register.c
 	./$(BUILD_DIR)/paging
-	# vga/grub-framebuffer
-	gcc -DENABLE_DEBUG_FOR_TEST -I./test -I./src/ -o $(BUILD_DIR)/grub-framebuffer test/vga/grub-framebuffer.c
-	./$(BUILD_DIR)/grub-framebuffer
+	# vga/video_api
+	gcc -DENABLE_DEBUG_FOR_TEST -I./test -I./src/ -o $(BUILD_DIR)/video_api test/vga/video_api.c src/drivers/video/video_api.c
+	./$(BUILD_DIR)/video_api
 .PHONY: test
 
 version: ## print tool versions

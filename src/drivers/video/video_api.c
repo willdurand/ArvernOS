@@ -69,16 +69,6 @@ void video_clear_region(uint32_t color,
   }
 }
 
-uint32_t video_width()
-{
-  return video_driver.video_width;
-}
-
-uint32_t video_height()
-{
-  return video_driver.video_height;
-}
-
 void video_blit(uint32_t* src_buffer,
                 int32_t src_x,
                 int32_t src_y,

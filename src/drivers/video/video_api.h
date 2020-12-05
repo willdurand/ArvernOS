@@ -36,12 +36,18 @@ void video_clear_region(uint32_t color,
 /**
  * Gets the width of the video screen
  */
-uint32_t video_width();
+static inline uint32_t video_width()
+{
+  return video_driver.video_width;
+}
 
 /**
  * Gets the height of the video screen
  */
-uint32_t video_height();
+static inline uint32_t video_height()
+{
+  return video_driver.video_height;
+}
 
 /**
  * Blits a buffer into the video buffer
