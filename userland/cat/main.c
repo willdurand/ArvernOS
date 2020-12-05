@@ -24,8 +24,10 @@ int main(int argc, char* argv[])
       continue;
     }
 
-    char buf[1024];
-    if (read(fd, buf, 1024) > 0) {
+    char buf[1025];
+    int bytes_read = 0;
+    if ((bytes_read = read(fd, buf, sizeof(buf) - 1)) > 0) {
+      buf[bytes_read] = '\0';
       printf("%s", buf);
     } else {
       printf("could not read: %s\n", argv[i]);
