@@ -21,8 +21,8 @@
 #include <mmu/alloc.h>
 #include <mmu/frame.h>
 #include <mmu/paging.h>
-#include <resources/psf1/psf1.h>
 #include <net/net.h>
+#include <resources/psf1/psf1.h>
 #include <stdio.h>
 #include <string.h>
 
