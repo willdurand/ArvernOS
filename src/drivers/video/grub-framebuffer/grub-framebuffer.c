@@ -1,5 +1,6 @@
 #include <core/debug.h>
 #include <core/multiboot.h>
+#include <drivers/video/video_api.h>
 #include <drivers/video/video_console.h>
 #include <mmu/paging.h>
 #include <resources/psf1/psf1.h>
@@ -63,28 +64,6 @@ const char* grub_framebuffer_type_string()
   }
 
   return "RGB";
-}
-
-void grub_framebuffer_clear_region(uint32_t color,
-                                   uint32_t x,
-                                   uint32_t y,
-                                   uint32_t width,
-                                   uint32_t height)
-{
-  for (uint32_t y_pos = 0, y_index = y * grub_framebuffer_width; y_pos < height;
-       y_pos++, y_index += grub_framebuffer_width) {
-    for (uint32_t x_pos = 0, x_index = x + y_index; x_pos < width;
-         x_pos++, x_index++) {
-
-      framebuffer_buffer[x_index] = color;
-    }
-  }
-}
-
-void grub_framebuffer_clear(uint32_t color)
-{
-  grub_framebuffer_clear_region(
-    color, 0, 0, grub_framebuffer_width, grub_framebuffer_height);
 }
 
 void grub_framebuffer_put_char(PSF1_font_t* font,
@@ -217,7 +196,7 @@ void grub_framebuffer_console_on_paint_callback(vtconsole_t* vtc,
   uint32_t y_pos = y * 16;
 
   if (cell->c == ' ' || cell->c == '\b') {
-    grub_framebuffer_clear_region(0x00000000, x_pos, y_pos, 8, 16);
+    video_clear_region(0x00000000, x_pos, y_pos, 8, 16);
 
     return;
   }
@@ -315,6 +294,11 @@ bool grub_init_framebuffer(multiboot_info_t* mbi)
         framebuffer_ptr,
         framebuffer_buffer);
 
+  video_driver.video_buffer = framebuffer_buffer;
+  video_driver.video_width = grub_framebuffer_width;
+  video_driver.video_height = grub_framebuffer_height;
+  video_driver.swap_buffers = grub_framebuffer_swap_buffers;
+
   return true;
 }
 
@@ -343,7 +327,7 @@ void grub_framebuffer_set_canvas_mode()
 
   grub_framebuffer_is_console = false;
 
-  grub_framebuffer_clear(0);
+  video_clear(0);
 }
 
 uint32_t* grub_framebuffer_buffer()
@@ -355,7 +339,6 @@ void grub_framebuffer_swap_buffers()
 {
   uint32_t framebuffer_pixel_size =
     grub_framebuffer_width * grub_framebuffer_height;
-  uint32_t* source_ptr = framebuffer_buffer;
 
   char buffer[1024];
 
