@@ -198,22 +198,25 @@ uint64_t proc_write(inode_t inode, void* ptr, uint64_t length, uint64_t offset)
     return 0;
   }
 
-  if (length > strlen(DEFAULT_HOSTNAME)) {
-    if (length > MAX_HOSTNAME_LENGTH) {
-      length = MAX_HOSTNAME_LENGTH;
-    }
+  return proc_update_hostname((char*)ptr, length);
+}
 
-    char* tmp = realloc(hostname, sizeof(char) * (length + 1));
-
-    if (!tmp) {
-      DEBUG("%s", "failed to reallocate memory for hostname");
-      return 0;
-    }
-
-    hostname = tmp;
+uint64_t proc_update_hostname(char* new_hostname, uint64_t length)
+{
+  if (length > MAX_HOSTNAME_LENGTH) {
+    length = MAX_HOSTNAME_LENGTH;
   }
 
-  strncpy(hostname, ptr, length + 1);
+  char* tmp = realloc(hostname, sizeof(char) * (length + 1));
+
+  if (!tmp) {
+    DEBUG("%s", "failed to reallocate memory for hostname");
+    return 0;
+  }
+
+  hostname = tmp;
+
+  strncpy(hostname, new_hostname, length + 1);
 
   return strlen(hostname);
 }
