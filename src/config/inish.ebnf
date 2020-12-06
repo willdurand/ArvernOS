@@ -1,0 +1,33 @@
+(* This is the EBNF of the inish configuration format, inspired by the EBNF
+given in http://www.rioki.org/2016/04/18/recusive-descent-parser.html and
+written with instaparse. *)
+
+inish_configuration = { discard | section };
+
+section = section_header, { section_values | newline };
+section_header = open_brace, identifier, close_brace, (newline | file_end);
+section_values = identifier, [{ whitespace }], equals_sign, [{ whitespace }], array | value, (newline | file_end);
+value = identifier | number | string | multiline_string;
+discard = whitespace | comment;
+
+whitespace = " " | "\t";
+comment = "#", [{all_chars}], (newline | file_end);
+identifier = alpha, { alpha | digit | "_" | "-" };
+number = [ "+" | "-" ], digit, [{ digit | "_" | "." }];
+string = quotation_mark, { all_chars }, quotation_mark;
+multiline_string = quotation_mark, quotation_mark, quotation_mark, { all_chars | newline }, quotation_mark, quotation_mark, quotation_mark;
+array = open_brace, [{ whitespace }], [{ identifier | number | string | comma | whitespace }], [{ whitespace }], close_brace;
+(* all_chars should really be a special sequence describing "all visible
+characters but newline" but it does not work well with instaparse... *)
+all_chars = alpha | digit | whitespace | "." | "-" | "_";
+
+digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9";
+alpha = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z" | "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z";
+newline = "\n";
+open_brace = "[";
+close_brace = "]";
+equals_sign = "=";
+comma = ",";
+(* this represents the end of the file (EOF, which is 0) *)
+file_end = "";
+quotation_mark = '"';
