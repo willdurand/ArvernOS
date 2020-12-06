@@ -45,7 +45,7 @@ uint64_t debug_write(inode_t inode,
                      uint64_t offset)
 {
   if (offset < size) {
-    printf("%s", &buffer[offset]);
+    printf("%s", &((char*)buffer)[offset]);
     return size - offset;
   }
 

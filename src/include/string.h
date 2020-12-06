@@ -28,10 +28,16 @@ void* memset(void* str, int c, size_t bytes);
 
 void* memmove(void* dest, const void* src, size_t len);
 
+int memcmp(const void* aptr, const void* bptr, size_t length);
+
+void* memchr(const void* str, int c, size_t n);
+
 char* strtok(char* str, const char* delim);
 
 size_t strspn(const char* s1, const char* s2);
 
 char* strchr(const char* s, int c);
+
+char* strerror(int errnum);
 
 #endif

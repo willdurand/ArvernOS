@@ -33,7 +33,17 @@ void png_read_from_buffer(png_structp ptr,
   state->position += length;
 }
 
-bool png_load_buffer(uint8_t* buffer,
+void png_error_function(png_structp png_ptr, png_const_charp message)
+{
+  DEBUG("png_load error: %s", message);
+}
+
+void png_warning_function(png_structp png_ptr, png_const_charp message)
+{
+  DEBUG("png_load warning: %s", message);
+}
+
+bool png_load_buffer(const uint8_t* buffer,
                      uint32_t* width,
                      uint32_t* height,
                      uint32_t** pixels)
@@ -65,6 +75,7 @@ bool png_load_buffer(uint8_t* buffer,
   png_read_buffer_state_t state = { .buffer = buffer, .position = 0 };
 
   png_set_read_fn(png_ptr, (png_voidp)&state, png_read_from_buffer);
+  png_set_error_fn(png_ptr, (png_voidp)NULL, png_error_function, png_warning_function);
 
   uint8_t signature[4];
 
@@ -132,10 +143,9 @@ bool png_load_buffer(uint8_t* buffer,
     case PNG_COLOR_TYPE_RGBA:
 
     {
-      uint8_t* data_ptr = (uint8_t*)*pixels;
-      uint32_t step = *width * sizeof(uint32_t);
+      uint32_t* data_ptr = *pixels;
 
-      for (uint32_t i = 0; i < *height; i++, data_ptr += step) {
+      for (uint32_t i = 0; i < *height; i++, data_ptr += *width) {
         png_read_row(png_ptr, data_ptr, NULL);
       }
 

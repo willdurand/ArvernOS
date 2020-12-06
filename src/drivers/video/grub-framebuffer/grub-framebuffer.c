@@ -1,5 +1,6 @@
 #include <core/debug.h>
 #include <core/multiboot.h>
+#include <drivers/timer.h>
 #include <drivers/video/video_api.h>
 #include <drivers/video/video_console.h>
 #include <mmu/paging.h>
@@ -89,7 +90,7 @@ void grub_framebuffer_put_char(PSF1_font_t* font,
          x_pos++, x_index++) {
       uint32_t plot_color = 0x00000000;
 
-      if ((*font_ptr & (0b10000000 >> (x_pos))) > 0) {
+      if ((*font_ptr & (0x80 >> (x_pos))) > 0) {
         plot_color = color;
       }
 
@@ -265,7 +266,7 @@ bool grub_init_framebuffer(multiboot_info_t* mbi)
     framebuffer_pitch * grub_framebuffer_height / PAGE_SIZE;
 
   for (uint32_t i = 0; i < frames_for_vram; i++) {
-    identity_map(framebuffer_ptr + (i * PAGE_SIZE),
+    identity_map((uint64_t)framebuffer_ptr + (i * PAGE_SIZE),
                  PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE,
                  true);
   }

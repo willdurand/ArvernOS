@@ -199,8 +199,6 @@ void kmain(uint64_t addr)
     return;
   }
 
-  // TODO: Re-Add
-  /*
     // kshell
     printf("\n");
     kshell_print_prompt();
@@ -210,8 +208,8 @@ void kmain(uint64_t addr)
 
       grub_framebuffer_swap_buffers();
     }
-    */
 
+/*
   grub_framebuffer_set_canvas_mode();
 
   video_clear(MAKE_RGBA(0x25, 0x25, 0x25, 0xFF));
@@ -220,7 +218,8 @@ void kmain(uint64_t addr)
   uint32_t height = 0;
   uint32_t* pixels = NULL;
 
-  if (!png_load_buffer(will_photo_png, &width, &height, &pixels)) {
+  if (!png_load_buffer(
+        (const uint8_t*)will_photo_png, &width, &height, &pixels)) {
     video_clear(MAKE_RGBA(0xFF, 0, 0, 0xFF));
   }
 
@@ -232,4 +231,5 @@ void kmain(uint64_t addr)
 
     video_swap_buffers();
   }
+  */
 }

@@ -6,7 +6,7 @@ bool png_load_file(const char* path,
                    uint32_t* height,
                    uint32_t** pixels);
 
-bool png_load_buffer(uint8_t* buffer,
+bool png_load_buffer(const uint8_t* buffer,
                      uint32_t* width,
                      uint32_t* height,
                      uint32_t** pixels);

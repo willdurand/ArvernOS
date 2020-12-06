@@ -11,5 +11,8 @@
 #include <liballoc/liballoc.h>
 
 int atoi(char* s);
+int abs(int x);
+
+__attribute__((__noreturn__)) void abort(void);
 
 #endif
