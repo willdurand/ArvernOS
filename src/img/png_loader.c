@@ -75,7 +75,8 @@ bool png_load_buffer(const uint8_t* buffer,
   png_read_buffer_state_t state = { .buffer = buffer, .position = 0 };
 
   png_set_read_fn(png_ptr, (png_voidp)&state, png_read_from_buffer);
-  png_set_error_fn(png_ptr, (png_voidp)NULL, png_error_function, png_warning_function);
+  png_set_error_fn(
+    png_ptr, (png_voidp)NULL, png_error_function, png_warning_function);
 
   uint8_t signature[4];
 

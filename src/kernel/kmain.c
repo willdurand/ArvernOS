@@ -199,37 +199,37 @@ void kmain(uint64_t addr)
     return;
   }
 
-    // kshell
-    printf("\n");
-    kshell_print_prompt();
-
-    while (1) {
-      kshell_run(keyboard_get_scancode());
-
-      grub_framebuffer_swap_buffers();
-    }
-
-/*
-  grub_framebuffer_set_canvas_mode();
-
-  video_clear(MAKE_RGBA(0x25, 0x25, 0x25, 0xFF));
-
-  uint32_t width = 0;
-  uint32_t height = 0;
-  uint32_t* pixels = NULL;
-
-  if (!png_load_buffer(
-        (const uint8_t*)will_photo_png, &width, &height, &pixels)) {
-    video_clear(MAKE_RGBA(0xFF, 0, 0, 0xFF));
-  }
-
-  if (pixels != NULL) {
-    video_blit(pixels, 0, 0, width, height, width, height, 0, 0);
-  }
+  // kshell
+  printf("\n");
+  kshell_print_prompt();
 
   while (1) {
+    kshell_run(keyboard_get_scancode());
 
-    video_swap_buffers();
+    grub_framebuffer_swap_buffers();
   }
-  */
+
+  /*
+    grub_framebuffer_set_canvas_mode();
+
+    video_clear(MAKE_RGBA(0x25, 0x25, 0x25, 0xFF));
+
+    uint32_t width = 0;
+    uint32_t height = 0;
+    uint32_t* pixels = NULL;
+
+    if (!png_load_buffer(
+          (const uint8_t*)will_photo_png, &width, &height, &pixels)) {
+      video_clear(MAKE_RGBA(0xFF, 0, 0, 0xFF));
+    }
+
+    if (pixels != NULL) {
+      video_blit(pixels, 0, 0, width, height, width, height, 0, 0);
+    }
+
+    while (1) {
+
+      video_swap_buffers();
+    }
+    */
 }
