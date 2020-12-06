@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef __is_libc
+#ifdef __is_libk
 #include <sys/syscall.h>
 #else
 #include <fcntl.h>

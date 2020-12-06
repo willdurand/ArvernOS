@@ -29,7 +29,13 @@
 #ifndef _POSIX_SOURCE
 #  define _POSIX_SOURCE
 #endif
-#include <fcntl.h>
+//#include <fcntl.h>
+#define O_RDONLY            00000000
+#define O_TRUNC             00001000
+#define O_WRONLY            00000001
+#define O_APPEND            00002000
+#define O_CREAT             00000100        /* not fcntl */
+#include <sys/syscall.h>
 
 #ifdef _WIN32
 #  include <stddef.h>
