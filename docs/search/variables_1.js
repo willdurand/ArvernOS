@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['entsize_334',['entsize',['../structelf__section__header.html#a8b02731080db801fc77cc8ee4242cdb2',1,'elf_section_header']]]
+  ['bus_5fnumber_427',['bus_number',['../unionpci__device.html#a9756efb12a98ad22c424c71bb688e2fb',1,'pci_device']]]
 ];

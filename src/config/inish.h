@@ -70,7 +70,7 @@ void inish_free(inish_config_t* conf);
  *
  * @param conf a inish configuration
  * @param name the name of the section to return
- * @param the section if found, `NULL` otherwise
+ * @return the section if found, `NULL` otherwise
  */
 inish_section_t* inish_get_section(inish_config_t* conf, const char* name);
 

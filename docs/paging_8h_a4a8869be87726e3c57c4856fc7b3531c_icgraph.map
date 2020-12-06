@@ -1,5 +1,8 @@
 <map id="page_containing_address" name="page_containing_address">
-<area shape="rect" id="node1" title=" " alt="" coords="248,31,417,57"/>
-<area shape="rect" id="node2" href="$alloc_8h.html#a0de47e42c61353f53c07a4274b87f864" title=" " alt="" coords="66,5,139,32"/>
-<area shape="rect" id="node3" href="$paging_8h.html#acd78a6bfbdc7cbbe0e578e52eccad8bf" title=" " alt="" coords="5,56,200,83"/>
+<area shape="rect" id="node1" title=" " alt="" coords="519,56,688,83"/>
+<area shape="rect" id="node2" href="$alloc_8h.html#a0de47e42c61353f53c07a4274b87f864" title=" " alt="" coords="337,5,410,32"/>
+<area shape="rect" id="node3" href="$paging_8h.html#acd78a6bfbdc7cbbe0e578e52eccad8bf" title=" " alt="" coords="276,56,471,83"/>
+<area shape="rect" id="node4" href="$paging_8h.html#a1f069c46ac4245771221fc7f0bcfb2e0" title=" " alt="" coords="337,107,409,133"/>
+<area shape="rect" id="node5" href="$paging_8h.html#a2556847794baa9bcb9be757f7f67f6b4" title=" " alt="" coords="167,107,228,133"/>
+<area shape="rect" id="node6" href="$paging_8h.html#aaf4d9db68debae8e51bab96105966d07" title=" " alt="" coords="5,107,119,133"/>
 </map>

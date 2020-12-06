@@ -1,10 +1,21 @@
 var searchData=
 [
-  ['kernel_5fpanic_289',['kernel_panic',['../panic_8h.html#acd2b4a8b19af5b3201990bbdeb5cf5e6',1,'panic.c']]],
-  ['keyboard_5fget_5fscancode_290',['keyboard_get_scancode',['../keyboard_8h.html#a7f253db86f85d1a41dbbafa69b943f5f',1,'keyboard.c']]],
-  ['keyboard_5finit_291',['keyboard_init',['../keyboard_8h.html#aaeb4e4a3c4813ee1efc6b98bba9ec781',1,'keyboard.c']]],
-  ['kmain_292',['kmain',['../kmain_8h.html#a3a723148ea74ca575865f61d277c0657',1,'kmain.c']]],
-  ['kreboot_293',['kreboot',['../core_2sys_2reboot_8h.html#ab05a3718e8667efee772a5d5490c1a34',1,'reboot.c']]],
-  ['kshell_5fprint_5fprompt_294',['kshell_print_prompt',['../kshell_8h.html#af0dfb69566e1acd19453a42d8e973e90',1,'kshell.c']]],
-  ['kshell_5frun_295',['kshell_run',['../kshell_8h.html#a6c773ce937d0e97008441fd2b5909533',1,'kshell.c']]]
+  ['idt_5finit_350',['idt_init',['../idt_8h.html#a88d4205d069421eb4f8e7577285f1180',1,'idt.c']]],
+  ['idt_5fregister_5fgate_351',['idt_register_gate',['../idt_8h.html#a8af8af8cf5ecf069d893ba9a96d55c7e',1,'idt.c']]],
+  ['idt_5fregister_5finterrupt_352',['idt_register_interrupt',['../idt_8h.html#ae9b2767929a9d9b6851a7c60cb64e55c',1,'idt.c']]],
+  ['inish_5ffree_353',['inish_free',['../inish_8h.html#a2dd888c965cc5597c8534c529c203256',1,'inish.c']]],
+  ['inish_5fget_5farray_354',['inish_get_array',['../inish_8h.html#a6bdeab0345afbd491f0a56a2d4c1d547',1,'inish.c']]],
+  ['inish_5fget_5fbool_355',['inish_get_bool',['../inish_8h.html#a40db81930c9627ef29d70791e003a8cd',1,'inish.c']]],
+  ['inish_5fget_5fint_356',['inish_get_int',['../inish_8h.html#a48978dc4fe4de1765edba0031a2f1f47',1,'inish.c']]],
+  ['inish_5fget_5fipv4_357',['inish_get_ipv4',['../inish_8h.html#a7149712e2a187c4054c29d94b92470e5',1,'inish.c']]],
+  ['inish_5fget_5fkv_5fpair_358',['inish_get_kv_pair',['../inish_8h.html#ae46d605d07b15a79127e430748f24fd4',1,'inish.c']]],
+  ['inish_5fget_5fsection_359',['inish_get_section',['../inish_8h.html#a4f8dda3126e1754bd8a34ccb756ae39d',1,'inish.c']]],
+  ['inish_5fget_5fstring_360',['inish_get_string',['../inish_8h.html#ab706f97501694e6c47511c510a4953fe',1,'inish.c']]],
+  ['inish_5fload_361',['inish_load',['../inish_8h.html#a3bb9aa17f1cc46b6c5db617a9668b0e8',1,'inish.c']]],
+  ['irq_5fdisable_362',['irq_disable',['../isr_8h.html#ab925df19b13ecfb0441d5ea0b4adaf5c',1,'isr.c']]],
+  ['irq_5fhandler_363',['irq_handler',['../isr_8h.html#a775b2177e54c4af963376f822f53a243',1,'isr.c']]],
+  ['irq_5finit_364',['irq_init',['../isr_8h.html#a0eee1178db521b54c55074c2bdfebc73',1,'isr.c']]],
+  ['isr_5fhandler_365',['isr_handler',['../isr_8h.html#a7cb233bc15b15bdafb22a1b23de2dd2f',1,'isr.c']]],
+  ['isr_5finit_366',['isr_init',['../isr_8h.html#a2ea31f33125954459edbe7f4d7971ffa',1,'isr.c']]],
+  ['isr_5fregister_5fhandler_367',['isr_register_handler',['../isr_8h.html#a053905294332afc031508a03e6e10c86',1,'isr.c']]]
 ];

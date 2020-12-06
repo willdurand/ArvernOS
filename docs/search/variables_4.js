@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['link_337',['link',['../structelf__section__header.html#a23503ff4759753825d4e47afde489bd5',1,'elf_section_header']]]
+  ['flags_431',['flags',['../structelf__section__header.html#a4a2021e43cc873ee45d437b720ccd5c1',1,'elf_section_header']]],
+  ['function_5fnumber_432',['function_number',['../unionpci__device.html#a3752288a1cd4a82b0667bd39439c8cf4',1,'pci_device']]]
 ];

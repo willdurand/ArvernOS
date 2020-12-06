@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['info_336',['info',['../structelf__section__header.html#a054783e70fa4ec757c1f1f8f18a7a53a',1,'elf_section_header']]]
+  ['enable_429',['enable',['../unionpci__device.html#a7d682630d8362700f6eba62e7e302248',1,'pci_device']]],
+  ['entsize_430',['entsize',['../structelf__section__header.html#a8b02731080db801fc77cc8ee4242cdb2',1,'elf_section_header']]]
 ];

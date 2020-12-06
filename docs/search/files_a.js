@@ -1,5 +1,8 @@
 var searchData=
 [
-  ['reboot_2eh_247',['reboot.h',['../core_2sys_2reboot_8h.html',1,'(Global Namespace)'],['../include_2sys_2reboot_8h.html',1,'(Global Namespace)']]],
-  ['register_2eh_248',['register.h',['../register_8h.html',1,'']]]
+  ['paging_2eh_306',['paging.h',['../paging_8h.html',1,'']]],
+  ['panic_2eh_307',['panic.h',['../panic_8h.html',1,'']]],
+  ['pci_2eh_308',['pci.h',['../pci_8h.html',1,'']]],
+  ['port_2eh_309',['port.h',['../port_8h.html',1,'']]],
+  ['proc_2eh_310',['proc.h',['../proc_8h.html',1,'']]]
 ];
