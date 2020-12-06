@@ -143,6 +143,20 @@ void kmain(uint64_t addr)
   if (kernel_cfg == NULL) {
     print_ko();
   } else {
+    inish_section_t* system = inish_get_section(kernel_cfg, "system");
+    char* hostname = inish_get_string(system, "hostname");
+
+    if (hostname != NULL) {
+      if (strlen(hostname) > 0) {
+        DEBUG("updating hostname: %s", hostname);
+        proc_update_hostname(hostname, strlen(hostname));
+      } else {
+        DEBUG("%s", "not updating hostname because value is empty");
+      }
+    } else {
+      DEBUG("%s", "could not find system/hostname in kernel.inish");
+    }
+
     print_ok();
   }
 
