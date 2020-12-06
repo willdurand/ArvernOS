@@ -2,22 +2,22 @@
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
 /* Define to 1 if you have the <dlfcn.h> header file. */
-#define HAVE_DLFCN_H 1
+#define HAVE_DLFCN_H 0
 
 /* Define to 1 if you have the `feenableexcept' function. */
-#define HAVE_FEENABLEEXCEPT 1
+#define HAVE_FEENABLEEXCEPT 0
 
 /* Define to 1 if you have the <inttypes.h> header file. */
-#define HAVE_INTTYPES_H 1
+#define HAVE_INTTYPES_H 0
 
 /* Define to 1 if you have the `m' library (-lm). */
-#define HAVE_LIBM 1
+#define HAVE_LIBM 0
 
 /* Define to 1 if you have the `z' library (-lz). */
-#define HAVE_LIBZ 1
+#define HAVE_LIBZ 0
 
 /* Define to 1 if you have the <memory.h> header file. */
-#define HAVE_MEMORY_H 1
+#define HAVE_MEMORY_H 0
 
 /* Define to 1 if you have the `pow' function. */
 /* #undef HAVE_POW */
@@ -29,7 +29,7 @@
 #define HAVE_STDLIB_H 1
 
 /* Define to 1 if you have the <strings.h> header file. */
-#define HAVE_STRINGS_H 1
+#define HAVE_STRINGS_H 0
 
 /* Define to 1 if you have the <string.h> header file. */
 #define HAVE_STRING_H 1
