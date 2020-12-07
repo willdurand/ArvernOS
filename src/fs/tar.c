@@ -105,10 +105,11 @@ uint64_t tar_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
       size = header_size - offset;
     }
 
-    DEBUG("copying %ld bytes (offset=%lu header_size=%ld)",
+    DEBUG("copying %ld bytes (offset=%lu header_size=%ld) to buffer=%p",
           size,
           offset,
-          header_size);
+          header_size,
+          buffer);
 
     memcpy(buffer, (char*)header + 512 + offset, size);
 
