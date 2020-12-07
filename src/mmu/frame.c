@@ -173,3 +173,8 @@ uint64_t frame_get_max_count()
 {
   return max_frames;
 }
+
+void frame_mark_as_used(uint64_t physical_address)
+{
+  bitmap_set(allocated_frames, frame_containing_address(physical_address));
+}
