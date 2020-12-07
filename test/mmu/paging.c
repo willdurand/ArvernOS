@@ -39,6 +39,12 @@ void test_frame_deallocate(frame_number_t frame_number)
          "deallocates the expected frame");
 }
 
+void test_frame_mark_as_used(uint64_t address)
+{
+  assert(address == (uint64_t)&fake_frame[9],
+         "marks the identity mapped frame as used");
+}
+
 page_table_t* test_next_table()
 {
   switch (next_table_index--) {
@@ -123,6 +129,27 @@ int main()
   // reset fake next_table impl.
   next_table_index = 3;
   assert(!translate_page(page).has_value, "returns no frame when not mapped");
+  end_describe();
+
+  describe("identity_map()");
+  uint64_t addr_identity = (uint64_t)&fake_frame[9];
+  page_number_t page_identity = page_containing_address(addr_identity);
+
+  // reset fake next_table impl.
+  next_table_index = 3;
+  assert(!translate_page(page_identity).has_value,
+         "returns no frame when not mapped");
+
+  // reset fake next_table impl.
+  next_table_index = 3;
+  identity_map(addr_identity, PAGING_FLAG_PRESENT);
+
+  // reset fake next_table impl.
+  next_table_index = 3;
+  opt_uint64_t frame_identity = translate_page(page_identity);
+  assert(frame_identity.has_value, "returns a frame after identity_map()");
+  assert(frame_identity.value == frame_containing_address(addr_identity),
+         "returns the expected frame");
   end_describe();
 
   free(fake_p1);

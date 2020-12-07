@@ -121,7 +121,7 @@ opt_uint64_t translate_page(page_number_t page_number);
 opt_uint64_t translate(uint64_t virtual_address);
 
 /**
- * Convenient function to map a pager (number) without providing a frame. The
+ * Convenient function to map a page (number) without providing a frame. The
  * frame is automatically allocated.
  *
  * @param page_number a page number (not an address)
@@ -166,6 +166,14 @@ void unmap_multiple(page_number_t start_page_number, uint32_t number_of_pages);
 uint32_t paging_amount_for_byte_size(uint64_t start_address,
                                      uint64_t byte_size);
 
+/**
+ * Maps a page (virtual address) to the equivalent frame (physical address).
+ *
+ * @param address the address to map
+ * @param flags paging flags
+ */
+void identity_map(uint64_t address, uint64_t flags);
+
 // The functions below are exposed for testing purposes.
 
 void _set_p4(page_table_t* table);
@@ -177,6 +185,7 @@ uint64_t _p1_index(page_number_t page_number);
 opt_uint64_t test_frame_allocate();
 void test_frame_deallocate(frame_number_t frame_number);
 page_table_t* test_next_table();
+void test_frame_mark_as_used(uint64_t address);
 #endif
 
 #endif
