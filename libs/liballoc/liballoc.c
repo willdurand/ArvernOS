@@ -47,7 +47,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define FLUSH() fflush(stdout)
+#define FLUSH() //fflush(stdout)
 
 #endif
 
@@ -267,7 +267,7 @@ void* PREFIX(malloc)(size_t req_size)
 #ifdef DEBUG
     printf("liballoc: initialization of liballoc " VERSION "\n");
 #endif
-    atexit(liballoc_dump);
+    //atexit(liballoc_dump);
     FLUSH();
 #endif
 
@@ -286,6 +286,8 @@ void* PREFIX(malloc)(size_t req_size)
 #ifdef DEBUG
     printf("liballoc: set up first memory major %x\n", l_memRoot);
     FLUSH();
+
+    liballoc_dump();
 #endif
   }
 

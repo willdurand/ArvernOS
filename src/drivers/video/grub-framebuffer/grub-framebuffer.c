@@ -196,6 +196,8 @@ void grub_framebuffer_console_on_paint_callback(vtconsole_t* vtc,
   uint32_t x_pos = x * 8;
   uint32_t y_pos = y * 16;
 
+  video_console_put_char(cell->c);
+
   if (cell->c == ' ' || cell->c == '\b') {
     video_clear_region(0x00000000, x_pos, y_pos, 8, 16);
 
@@ -210,6 +212,8 @@ void grub_framebuffer_console_on_move_callback(vtconsole_t* vtc,
 {
   framebuffer_cursor_x = cur->x * 8;
   framebuffer_cursor_y = cur->y * 16;
+
+  video_console_move_cursor(cur->x, cur->y);
 }
 
 bool grub_init_framebuffer(multiboot_info_t* mbi)

@@ -40,7 +40,7 @@ CFLAGS = -DKERNEL_NAME=\"$(OS_NAME)\" \
 	 -fno-builtin -fstack-protector -mno-red-zone \
 	 -I src/include/ -I src/ -I libs/
 
-DEBUG_CFLAGS = -DENABLE_KERNEL_DEBUG -DDISABLE_MMU_DEBUG -DDEBUG_WITH_COLORS
+DEBUG_CFLAGS = -DENABLE_KERNEL_DEBUG -DDISABLE_MMU_DEBUG -DDEBUG_WITH_COLORS -DDEBUG
 
 QEMU_OPTIONS = -m 500M \
 	       -netdev user,id=u1,ipv6=off \

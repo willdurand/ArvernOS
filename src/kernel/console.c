@@ -1,5 +1,6 @@
 #include "console.h"
 #include <drivers/vga_text.h>
+#include <drivers/video/video_console.h>
 #include <string.h>
 #include <vtconsole/vtconsole.h>
 
@@ -40,6 +41,8 @@ void console_init()
 
 void on_paint_callback(vtconsole_t* vtc, vtcell_t* cell, int x, int y)
 {
+  video_console_put_char(cell->c);
+
   if (cell->attr.bright) {
     vga_text_write_at(
       cell->c, brightcolors[cell->attr.fg] | colors[cell->attr.bg] << 4, x, y);
@@ -51,6 +54,7 @@ void on_paint_callback(vtconsole_t* vtc, vtcell_t* cell, int x, int y)
 
 void on_move_callback(vtconsole_t* vtc, vtcursor_t* cur)
 {
+  video_console_move_cursor(cur->x, cur->y);
   vga_text_move_cursor(cur->x, cur->y);
 }
 

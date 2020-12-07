@@ -1,9 +1,17 @@
+#include <core/debug.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <vtconsole/vtconsole.h>
 
 #include "video_console.h"
+
+extern vtconsole_t vtc;
+
+int video_console_x_cursor = 0;
+int video_console_y_cursor = 0;
+char video_console_print_buffer[10240];
 
 uint32_t video_fps = 0;
 
@@ -20,3 +28,60 @@ uint32_t video_console_bright_colors[] = {
   [VTCOLOR_BLUE] = 0xFFADD8E6,  [VTCOLOR_MAGENTA] = 0xFFE78BE7,
   [VTCOLOR_CYAN] = 0xFFE0FFFF,  [VTCOLOR_GREY] = 0xFFFFFF,
 };
+
+void video_console_move_cursor(int x, int y)
+{
+  bool should_print = false;
+  int y_index = y;
+
+  if(y != video_console_y_cursor && y > 0)
+  {
+    y_index = y - 1;
+    should_print = true;
+  }
+  else if(x < video_console_x_cursor && y > 0)
+  {
+    y_index = y - 1;
+    should_print = true;
+  }
+
+  if(should_print)
+  {
+    vtcell_t *buffer = &vtc.buffer[y_index * vtc.width];
+
+    for(uint32_t i = 0; i < vtc.width; i++)
+    {
+      video_console_print_buffer[i] = buffer[i].c;
+    }
+
+    video_console_print_buffer[vtc.width] = '\0';
+
+    DEBUG("CONSOLE: %s", video_console_print_buffer);
+  }
+
+  video_console_y_cursor = y;
+  video_console_x_cursor = x;
+}
+
+void video_console_put_char(char c)
+{
+  /*
+  if (c == '\b') {
+    if (video_console_print_buffer_count > 0) {
+      video_console_print_buffer_count--;
+    }
+  } else {
+    if (video_console_print_buffer_count + 2 >=
+        sizeof(video_console_print_buffer) /
+          sizeof(video_console_print_buffer[0])) {
+      video_console_print_buffer[video_console_print_buffer_count] = '\0';
+
+      DEBUG("CONSOLE: %s", video_console_print_buffer);
+
+      video_console_print_buffer_count = 0;
+    }
+
+    video_console_print_buffer[video_console_print_buffer_count++] = c;
+  }
+  */
+}
