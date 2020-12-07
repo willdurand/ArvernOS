@@ -2,14 +2,11 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <string.h>
-
-#ifdef __is_libc
-#include <sys/syscall.h>
-
-#define HOSTNAME_FILE "/proc/hostname"
-#else
 #include <unistd.h>
 
+#ifdef __is_libc
+#define HOSTNAME_FILE "/proc/hostname"
+#else
 #define HOSTNAME_FILE "/proc/sys/kernel/hostname"
 #endif
 

@@ -14,10 +14,6 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#ifndef __is_libk
-#include <unistd.h>
-#endif
-
 typedef struct inish_kv_pair
 {
   char* key;
