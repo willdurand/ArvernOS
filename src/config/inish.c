@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/syscall.h>
+#include <unistd.h>
 
 #define SYNTAX_ERROR(message, line)                                            \
   DEBUG("SYNTAX ERROR: %s near line %ld", message, line);                      \

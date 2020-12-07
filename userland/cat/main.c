@@ -2,12 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#ifdef __is_libc
-#include <sys/syscall.h>
-#else
 #include <unistd.h>
-#endif
 
 int main(int argc, char* argv[])
 {
