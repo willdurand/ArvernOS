@@ -461,7 +461,7 @@ char inish_getchar(int fd)
 
 inish_config_t* inish_load(const char* filename)
 {
-  int fd = open(filename, 0);
+  int fd = open(filename, O_RDONLY);
 
   if (fd < -1) {
     return NULL;

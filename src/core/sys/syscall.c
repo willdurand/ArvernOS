@@ -98,6 +98,14 @@ void syscall_write(registers_t* registers)
     return;
   }
 
+  if ((desc->flags != O_WRONLY && desc->flags != O_RDWR) ||
+      desc->flags == O_RDONLY) {
+    DEBUG("invalid flags for file descriptor fd=%d", fd);
+    registers->rdx = -1;
+    errno = EBADF;
+    return;
+  }
+
   registers->rdx = vfs_write(desc->inode, buf, count, desc->offset);
 }
 
@@ -138,6 +146,14 @@ void syscall_read(registers_t* registers)
     return;
   }
 
+  if ((desc->flags != O_RDONLY && desc->flags != O_RDWR) ||
+      desc->flags == O_WRONLY) {
+    DEBUG("invalid flags for file descriptor fd=%d", fd);
+    registers->rdx = -1;
+    errno = EBADF;
+    return;
+  }
+
   ssize_t bytes_read = vfs_read(desc->inode, buf, count, desc->offset);
   desc->offset += bytes_read;
   registers->rdx = bytes_read;
@@ -165,12 +181,21 @@ void syscall_open(registers_t* registers)
   inode_t inode = vfs_namei(pathname);
 
   if (inode == 0) {
-    registers->rdx = -2;
+    registers->rdx = -1;
     errno = ENOENT;
     return;
   }
 
-  registers->rdx = create_file_descriptor(inode, flags);
+  int fd = create_file_descriptor(inode, flags);
+
+  if (fd == -1) {
+    DEBUG("%s", "too many files open");
+    registers->rdx = -1;
+    errno = EMFILE;
+    return;
+  }
+
+  registers->rdx = fd;
 
   DEBUG("open fd=%d inode=%p flags=%d", registers->rdx, inode, flags);
 }
