@@ -1,6 +1,8 @@
 #include "ethernet.h"
 #include <core/debug.h>
 #include <net/arp.h>
+#include <net/ipv4.h>
+#include <stdlib.h>
 #include <string.h>
 
 void ethernet_receive_frame(net_interface_t* interface,
@@ -26,8 +28,13 @@ void ethernet_receive_frame(net_interface_t* interface,
                          &data[sizeof(ethernet_header_t)],
                          len - sizeof(ethernet_header_t));
       break;
+    case ETHERTYPE_IPV4:
+      ipv4_receive_packet(interface,
+                          &data[sizeof(ethernet_header_t)],
+                          len - sizeof(ethernet_header_t));
+      break;
     default:
-      DEBUG("unsupported ethernet frame: type=%d", frame_header.ethertype);
+      DEBUG("unsupported ethernet frame: type=0x%04x", frame_header.ethertype);
   }
 
   // This is because `data` gets allocated in the driver code.
