@@ -6,7 +6,7 @@
 #include <sys/types.h>
 
 /// The virtual address to the start of the heap memory.
-#define HEAP_START 0x40000000
+#define HEAP_START 0x20000000
 /// The size of the heap (200 KiB).
 #define HEAP_SIZE (200 * 1024)
 /// The number of pages that we can allocate.
