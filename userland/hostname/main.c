@@ -1,4 +1,5 @@
 #include <errno.h>
+#include <fcntl.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -7,7 +8,6 @@
 
 #define HOSTNAME_FILE "/proc/hostname"
 #else
-#include <fcntl.h>
 #include <unistd.h>
 
 #define HOSTNAME_FILE "/proc/sys/kernel/hostname"
@@ -16,7 +16,7 @@
 int main(int argc, char* argv[])
 {
   int retval = 0;
-  int fd = open(HOSTNAME_FILE, 02); // O_RDWR
+  int fd = open(HOSTNAME_FILE, O_RDWR);
 
   if (argc == 1) {
     char buf[50];

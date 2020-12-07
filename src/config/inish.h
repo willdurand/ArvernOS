@@ -11,11 +11,10 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include <sys/stat.h>
 #include <sys/types.h>
 
 #ifndef __is_libk
-#include <fcntl.h>
-#include <sys/stat.h>
 #include <unistd.h>
 #endif
 

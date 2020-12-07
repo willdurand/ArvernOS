@@ -1,3 +1,4 @@
+#include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -5,7 +6,6 @@
 #ifdef __is_libc
 #include <sys/syscall.h>
 #else
-#include <fcntl.h>
 #include <unistd.h>
 #endif
 
@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
   }
 
   for (int i = 1; i < argc; i++) {
-    int fd = open(argv[i], 0);
+    int fd = open(argv[i], O_RDONLY);
 
     if (fd < 3) {
       printf("could not open: %s\n", argv[i]);
