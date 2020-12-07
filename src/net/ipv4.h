@@ -17,6 +17,7 @@
 
 #define IPV4_VERSION     4
 #define IPV4_DEFAULT_TTL 255
+#define IPV4_FLAG_DF     0x4000
 
 #define ICMPV4_TYPE_REPLY       0
 #define ICMPV4_TYPE_UNREACHABLE 3
@@ -78,5 +79,21 @@ void ipv4_receive_packet(net_interface_t* interface,
  * @return a checksum value
  */
 uint16_t ipv4_checksum(void* addr, int count);
+
+/**
+ * Creates an IPv4 header structure.
+ *
+ * @param src_ip the source IP
+ * @param dst_ip the destination IP
+ * @param protocol the protocol encapsulated in the IP packet
+ * @param flags IP flags
+ * @param len the length of the IP packet
+ * @return an IPv4 header structure
+ */
+ipv4_header_t ipv4_create_header(uint8_t src_ip[4],
+                                 uint8_t dst_ip[4],
+                                 uint8_t protocol,
+                                 uint16_t flags,
+                                 uint16_t len);
 
 #endif
