@@ -20,13 +20,6 @@
 #define SYSCALL_FSTAT        8
 #define SYSCALL_LSEEK        9
 
-/// Set file descriptor offset to offset.
-#define SEEK_SET 0
-/// Set file descriptor offset to current plus offset.
-#define SEEK_CUR 1
-/// Set file descriptor offset to EOF plus offset.
-#define SEEK_END 2
-
 /**
  * Implements a syscall for testing purpose only. It takes a string as input
  * and prints it to the screen.

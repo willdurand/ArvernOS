@@ -4,6 +4,7 @@
 #include <drivers/keyboard.h>
 #include <drivers/timer.h>
 #include <errno.h>
+#include <fcntl.h>
 #include <fs/fd.h>
 #include <fs/vfs.h>
 #include <kernel/console.h>

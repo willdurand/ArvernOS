@@ -1,3 +1,4 @@
+#include <fcntl.h>
 #include <fs/tar.h>
 #include <fs/vfs.h>
 #include <stdint.h>
