@@ -53,6 +53,10 @@ void ethernet_transmit_frame(net_interface_t* interface,
 
   uint32_t frame_len = sizeof(ethernet_header_t) + len;
 
+  if (frame_len < 64) {
+    frame_len = 64;
+  }
+
   uint8_t* frame = (uint8_t*)calloc(1, frame_len);
   memcpy(frame, &header, sizeof(ethernet_header_t));
   memcpy(frame + sizeof(ethernet_header_t), data, len);
