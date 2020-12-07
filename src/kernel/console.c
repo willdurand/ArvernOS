@@ -41,8 +41,6 @@ void console_init()
 
 void on_paint_callback(vtconsole_t* vtc, vtcell_t* cell, int x, int y)
 {
-  video_console_put_char(cell->c);
-
   if (cell->attr.bright) {
     vga_text_write_at(
       cell->c, brightcolors[cell->attr.fg] | colors[cell->attr.bg] << 4, x, y);

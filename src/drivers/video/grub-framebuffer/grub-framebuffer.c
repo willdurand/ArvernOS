@@ -196,8 +196,6 @@ void grub_framebuffer_console_on_paint_callback(vtconsole_t* vtc,
   uint32_t x_pos = x * 8;
   uint32_t y_pos = y * 16;
 
-  video_console_put_char(cell->c);
-
   if (cell->c == ' ' || cell->c == '\b') {
     video_clear_region(0x00000000, x_pos, y_pos, 8, 16);
 

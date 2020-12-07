@@ -62,26 +62,3 @@ void video_console_move_cursor(int x, int y)
   video_console_y_cursor = y;
   video_console_x_cursor = x;
 }
-
-void video_console_put_char(char c)
-{
-  /*
-  if (c == '\b') {
-    if (video_console_print_buffer_count > 0) {
-      video_console_print_buffer_count--;
-    }
-  } else {
-    if (video_console_print_buffer_count + 2 >=
-        sizeof(video_console_print_buffer) /
-          sizeof(video_console_print_buffer[0])) {
-      video_console_print_buffer[video_console_print_buffer_count] = '\0';
-
-      DEBUG("CONSOLE: %s", video_console_print_buffer);
-
-      video_console_print_buffer_count = 0;
-    }
-
-    video_console_print_buffer[video_console_print_buffer_count++] = c;
-  }
-  */
-}
