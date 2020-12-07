@@ -80,7 +80,6 @@ token_t* inish_lex_token(int fd)
   token_t* t = (token_t*)calloc(1, sizeof(token_t));
   t->value = (char*)calloc(1, DEFAULT_VALUE_LEN * sizeof(char));
 
-  int pos = lseek(fd, 0, SEEK_CUR);
   char c = inish_getchar(fd);
 
   switch (c) {
