@@ -54,7 +54,7 @@ static const uint16_t serial_com1 = SERIAL_COM1;
          __VA_ARGS__)
 #else
 
-#define DEBUG(format, ...)
+#define DEBUG_OUT(format, ...)
 
 #endif
 
