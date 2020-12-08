@@ -6,7 +6,7 @@
 #ifdef DISABLE_MMU_DEBUG
 #define MMU_DEBUG(format, ...)
 #else
-#define MMU_DEBUG(format, ...) DEBUG(format, __VA_ARGS__)
+#define MMU_DEBUG(format, ...) DEBUG_OUT(format, __VA_ARGS__)
 #endif
 
 #endif
