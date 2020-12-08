@@ -61,12 +61,11 @@ uint64_t frame_get_used_count();
 uint64_t frame_get_max_count();
 
 /**
- * Reserves a frame from identity mapping
- * Used to avoid multi allocations
+ * Marks a frame as used.
  *
- * @param physical_address the physical address
+ * @param physical_address a physical address (frame)
  */
-void reserve_identity_frame(uint64_t physical_address);
+void frame_mark_as_used(uint64_t physical_address);
 
 // The declarations below are for testing purposes.
 void _frame_init(reserved_areas_t* reserved, multiboot_tag_mmap_t* mmap);

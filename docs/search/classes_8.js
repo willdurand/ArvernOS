@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['page_5fentry_218',['page_entry',['../structpage__entry.html',1,'']]],
-  ['page_5ftable_219',['page_table',['../structpage__table.html',1,'']]]
+  ['net_5fdriver_269',['net_driver',['../structnet__driver.html',1,'']]],
+  ['net_5finterface_270',['net_interface',['../structnet__interface.html',1,'']]]
 ];

@@ -81,6 +81,8 @@ $(document).ready(function(){initNavTree('port_8h.html',''); initResizable(); })
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">port.h File Reference</div>  </div>
 </div><!--header-->
@@ -97,6 +99,236 @@ Include dependency graph for port.h:</div>
 </div>
 </div>
 <p><a href="port_8h_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:af8b1144eda5e36642ff26d504bf2b3b8"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="port_8h.html#af8b1144eda5e36642ff26d504bf2b3b8">port_byte_in</a> (uint16_t port)</td></tr>
+<tr class="separator:af8b1144eda5e36642ff26d504bf2b3b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3c72bfda8c7b1920ef91bcc06c97c7f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="port_8h.html#ac3c72bfda8c7b1920ef91bcc06c97c7f">port_byte_out</a> (uint16_t port, uint8_t value)</td></tr>
+<tr class="separator:ac3c72bfda8c7b1920ef91bcc06c97c7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8d1266775348d5a6428af04f500b8e3"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="port_8h.html#ad8d1266775348d5a6428af04f500b8e3">port_word_in</a> (uint16_t port)</td></tr>
+<tr class="separator:ad8d1266775348d5a6428af04f500b8e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08d9adffef857f1578d9086615626652"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="port_8h.html#a08d9adffef857f1578d9086615626652">port_word_out</a> (uint16_t port, uint16_t value)</td></tr>
+<tr class="separator:a08d9adffef857f1578d9086615626652"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef30b57e8c51c84ba95dc7bb9a3b1750"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="port_8h.html#aef30b57e8c51c84ba95dc7bb9a3b1750">port_dword_in</a> (uint16_t port)</td></tr>
+<tr class="separator:aef30b57e8c51c84ba95dc7bb9a3b1750"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4cd5b4635fe2ba28abafebbb1ac6861"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="port_8h.html#ab4cd5b4635fe2ba28abafebbb1ac6861">port_dword_out</a> (uint16_t port, uint32_t value)</td></tr>
+<tr class="separator:ab4cd5b4635fe2ba28abafebbb1ac6861"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><dl class="section see"><dt>See also</dt><dd><a href="https://wiki.osdev.org/I/O_Ports">https://wiki.osdev.org/I/O_Ports</a></dd></dl>
+<p>An I/O port is usually used as a technical term for a specific address on the x86's IO bus, which is used to communicate with devices without requiring memory access (alternative). This is the aim of this module. </p>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="af8b1144eda5e36642ff26d504bf2b3b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8b1144eda5e36642ff26d504bf2b3b8">&#9670;&nbsp;</a></span>port_byte_in()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t port_byte_in </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>port</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Reads a byte.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">port</td><td>a port number </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the value for the port number </dd></dl>
+
+</div>
+</div>
+<a id="ac3c72bfda8c7b1920ef91bcc06c97c7f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3c72bfda8c7b1920ef91bcc06c97c7f">&#9670;&nbsp;</a></span>port_byte_out()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void port_byte_out </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>port</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Writes a byte to a port.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">port</td><td>a port number </td></tr>
+    <tr><td class="paramname">value</td><td>the new value for the port </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="port_8h_ac3c72bfda8c7b1920ef91bcc06c97c7f_icgraph.png" border="0" usemap="#port_8h_ac3c72bfda8c7b1920ef91bcc06c97c7f_icgraph" alt=""/></div>
+<map name="port_8h_ac3c72bfda8c7b1920ef91bcc06c97c7f_icgraph" id="port_8h_ac3c72bfda8c7b1920ef91bcc06c97c7f_icgraph">
+<area shape="rect" title=" " alt="" coords="359,81,460,108"/>
+<area shape="rect" href="isr_8h.html#a775b2177e54c4af963376f822f53a243" title=" " alt="" coords="187,5,272,32"/>
+<area shape="rect" href="isr_8h.html#a2ea31f33125954459edbe7f4d7971ffa" title=" " alt="" coords="199,56,259,83"/>
+<area shape="rect" href="serial_8h.html#a086a2712ee8de77b7621d922d2b96857" title=" " alt="" coords="191,107,268,133"/>
+<area shape="rect" href="vga__text_8h.html#ad1fc59685312d0c91988280ab70f1c01" title=" " alt="" coords="148,157,311,184"/>
+<area shape="rect" href="kmain_8h.html#a3a723148ea74ca575865f61d277c0657" title=" " alt="" coords="24,107,81,133"/>
+<area shape="rect" href="panic_8h.html#acd2b4a8b19af5b3201990bbdeb5cf5e6" title=" " alt="" coords="5,157,100,184"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="aef30b57e8c51c84ba95dc7bb9a3b1750"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef30b57e8c51c84ba95dc7bb9a3b1750">&#9670;&nbsp;</a></span>port_dword_in()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t port_dword_in </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>port</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Reads a double word (4 bytes).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">port</td><td>a port number </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the value for the port number </dd></dl>
+
+</div>
+</div>
+<a id="ab4cd5b4635fe2ba28abafebbb1ac6861"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4cd5b4635fe2ba28abafebbb1ac6861">&#9670;&nbsp;</a></span>port_dword_out()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void port_dword_out </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>port</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Writes a double word to a port.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">port</td><td>a port number </td></tr>
+    <tr><td class="paramname">value</td><td>the new value for the port </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="port_8h_ab4cd5b4635fe2ba28abafebbb1ac6861_icgraph.png" border="0" usemap="#port_8h_ab4cd5b4635fe2ba28abafebbb1ac6861_icgraph" alt=""/></div>
+<map name="port_8h_ab4cd5b4635fe2ba28abafebbb1ac6861_icgraph" id="port_8h_ab4cd5b4635fe2ba28abafebbb1ac6861_icgraph">
+<area shape="rect" title=" " alt="" coords="128,31,239,57"/>
+<area shape="rect" href="pci_8h.html#abb0a8e6fa16437a49fe35b85a84feec2" title=" " alt="" coords="7,5,78,32"/>
+<area shape="rect" href="pci_8h.html#a531322fe5567da0a2705f6131c079f65" title=" " alt="" coords="5,56,80,83"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ad8d1266775348d5a6428af04f500b8e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8d1266775348d5a6428af04f500b8e3">&#9670;&nbsp;</a></span>port_word_in()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t port_word_in </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>port</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Reads a word (2 bytes).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">port</td><td>a port number </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the value for the port number </dd></dl>
+
+</div>
+</div>
+<a id="a08d9adffef857f1578d9086615626652"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08d9adffef857f1578d9086615626652">&#9670;&nbsp;</a></span>port_word_out()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void port_word_out </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>port</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Writes a word to a port.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">port</td><td>a port number </td></tr>
+    <tr><td class="paramname">value</td><td>the new value for the port </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

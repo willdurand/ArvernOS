@@ -2,8 +2,10 @@
 #include <core/debug.h>
 #include <core/elf.h>
 #include <drivers/cmos.h>
+#include <drivers/timer.h>
 #include <fs/debug.h>
 #include <fs/vfs.h>
+#include <net/ipv4.h>
 #include <net/net.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -19,13 +21,14 @@ static bool caps_lock_mode = false;
 static bool ctrl_mode = false;
 static bool shift_mode = false;
 
-#define NB_DOCUMENTED_COMMANDS 5
+#define NB_DOCUMENTED_COMMANDS 6
 
 static const char* commands[][NB_DOCUMENTED_COMMANDS] = {
   { "help", "display information about system shell commands" },
   { "ls", "list files" },
   { "net", "show configured network interfaces" },
   { "overflow", "test the stack buffer overflow protection" },
+  { "ping", "ping an IPv4 address" },
   { "selftest", "run the system test suite" },
 };
 
@@ -154,6 +157,36 @@ void net()
          in->dns_ip[3]);
 }
 
+void busywait(uint32_t delay_in_seconds)
+{
+  uint64_t t = timer_uptime();
+  while (timer_uptime() < (t + delay_in_seconds)) {
+    ;
+  }
+}
+
+void ping(int argc, char* argv[])
+{
+  if (argc != 5) {
+    printf("usage: %s w x y z\n", argv[0]);
+    return;
+  }
+
+  uint8_t ip[4] = {
+    (uint8_t)atoi(argv[1]),
+    (uint8_t)atoi(argv[2]),
+    (uint8_t)atoi(argv[3]),
+    (uint8_t)atoi(argv[4]),
+  };
+
+  net_interface_t* in = net_get_interface(0);
+
+  printf("PING %d.%d.%d.%d\n", ip[0], ip[1], ip[2], ip[3]);
+  ipv4_ping(in, ip);
+
+  busywait(2);
+}
+
 void ls(int argc, char* argv[])
 {
   inode_t inode = argc == 1 ? vfs_namei("/") : vfs_namei(argv[1]);
@@ -269,16 +302,18 @@ void run_command()
     DEBUG_OUT("argv[%d]=%s", i, argv[i]);
   }
 
-  if (strncmp(argv[0], "help", 4) == 0) {
+  if (strcmp(argv[0], "help") == 0) {
     help(argc, argv);
-  } else if (strncmp(argv[0], "ls", 2) == 0) {
+  } else if (strcmp(argv[0], "ls") == 0) {
     ls(argc, argv);
-  } else if (strncmp(argv[0], "selftest", 8) == 0) {
+  } else if (strcmp(argv[0], "selftest") == 0) {
     selftest();
-  } else if (strncmp(argv[0], "overflow", 8) == 0) {
+  } else if (strcmp(argv[0], "overflow") == 0) {
     overflow();
-  } else if (strncmp(argv[0], "net", 3) == 0) {
+  } else if (strcmp(argv[0], "net") == 0) {
     net(argc, argv);
+  } else if (strcmp(argv[0], "ping") == 0) {
+    ping(argc, argv);
   } else {
     if (try_exec(argc, argv) != 0) {
       printf("invalid kshell command\n");

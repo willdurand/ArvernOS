@@ -26,11 +26,8 @@ void arp_request(net_interface_t* interface, uint8_t ip[4])
   memcpy(arp_packet.dst_mac, dst_mac, 6);
   memcpy(arp_packet.dst_ip, ip, 4);
 
-  ethernet_transmit_frame(interface,
-                          &dst_mac[0],
-                          ETHERTYPE_ARP,
-                          (uint8_t*)&arp_packet,
-                          sizeof(arp_packet_t));
+  ethernet_transmit_frame(
+    interface, dst_mac, ETHERTYPE_ARP, &arp_packet, sizeof(arp_packet_t));
 }
 
 void arp_wait_reply(uint8_t* dst_mac)

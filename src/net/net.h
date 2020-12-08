@@ -32,7 +32,9 @@ struct net_driver
   const char* (*get_name)();
   uint8_t* (*get_mac_address)();
   void (*transmit_frame)(void* data, uint32_t len);
-  void (*receive_frame)(net_interface_t* interface, void* data, uint32_t len);
+  void (*receive_frame)(net_interface_t* interface,
+                        uint8_t* data,
+                        uint32_t len);
 };
 
 struct net_interface

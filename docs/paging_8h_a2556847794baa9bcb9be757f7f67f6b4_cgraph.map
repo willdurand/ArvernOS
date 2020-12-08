@@ -1,4 +1,7 @@
 <map id="unmap" name="unmap">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,67,32"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,31,67,57"/>
 <area shape="rect" id="node2" href="$paging_8h.html#a96f5f0b5adaea47eda3e10c93401b2bf" title=" " alt="" coords="115,5,251,32"/>
+<area shape="rect" id="node3" href="$paging_8h.html#a1f069c46ac4245771221fc7f0bcfb2e0" title=" " alt="" coords="147,56,219,83"/>
+<area shape="rect" id="node4" href="$paging_8h.html#a4a8869be87726e3c57c4856fc7b3531c" title=" " alt="" coords="299,31,468,57"/>
+<area shape="rect" id="node5" href="$paging_8h.html#a93e89a9ca57751d1b04f8d95ccbddb4b" title=" " alt="" coords="330,81,437,108"/>
 </map>

@@ -1,4 +1,5 @@
 #include "kmain.h"
+#include <config/inish.h>
 #include <core/debug.h>
 #include <core/elf.h>
 #include <core/isr.h>
@@ -140,22 +141,6 @@ void kmain(uint64_t addr)
   vfs_init();
   print_ok();
 
-  DEBUG_OUT("%s", "initializing network");
-  print_step("initializing network");
-  if (rtl8139_init()) {
-    // TODO: move these values to a config file (ini or yaml maybe) stored in
-    // the init ramdisk until we support DHCP.
-    uint8_t ip[4] = { 10, 0, 2, 15 };
-    uint8_t gateway_ip[4] = { 10, 0, 2, 2 };
-    uint8_t dns_ip[4] = { 10, 0, 2, 3 };
-
-    net_interface_init(0, rtl8139_driver(), ip, gateway_ip, dns_ip);
-    print_ok();
-  } else {
-    print_ko();
-  }
-
-  DEBUG_OUT("%s", "mounting all file systems");
   print_step("mounting all file systems");
   multiboot_tag_module_t* module =
     (multiboot_tag_module_t*)find_multiboot_tag(mbi, MULTIBOOT_TAG_TYPE_MODULE);
@@ -168,6 +153,50 @@ void kmain(uint64_t addr)
     print_ok();
   } else {
     print_ko();
+  }
+
+  print_step("loading kernel.inish configuration");
+  inish_config_t* kernel_cfg = inish_load("/etc/kernel.inish");
+
+  if (kernel_cfg == NULL) {
+    print_ko();
+  } else {
+    inish_section_t* system = inish_get_section(kernel_cfg, "system");
+    char* hostname = inish_get_string(system, "hostname");
+
+    if (hostname != NULL) {
+      if (strlen(hostname) > 0) {
+        DEBUG("updating hostname: %s", hostname);
+        proc_update_hostname(hostname, strlen(hostname));
+      } else {
+        DEBUG("%s", "not updating hostname because value is empty");
+      }
+    } else {
+      DEBUG("%s", "could not find system/hostname in kernel.inish");
+    }
+
+    print_ok();
+  }
+
+  print_step("initializing network");
+  if (rtl8139_init()) {
+    uint8_t ip[4];
+    uint8_t gateway_ip[4];
+    uint8_t dns_ip[4];
+
+    inish_section_t* network = inish_get_section(kernel_cfg, "network");
+    inish_get_ipv4(network, "ip", ip);
+    inish_get_ipv4(network, "gateway_ip", gateway_ip);
+    inish_get_ipv4(network, "dns_ip", dns_ip);
+
+    net_interface_init(0, rtl8139_driver(), ip, gateway_ip, dns_ip);
+    print_ok();
+  } else {
+    print_ko();
+  }
+
+  if (kernel_cfg != NULL) {
+    inish_free(kernel_cfg);
   }
 
   DEBUG_OUT("%s", "loading kernel system font");

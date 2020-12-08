@@ -156,6 +156,7 @@ void rtl8139_receive_frame()
     uint32_t offset = index % RX_BUFFER_SIZE;
     uint32_t len = (buffer[3 + index] << 8) + buffer[2 + index];
 
+    // Important: this `frame` should be free'd in the receiver code.
     uint8_t* frame = malloc(sizeof(uint8_t) * len);
     memcpy(frame, &buffer[offset + 4], len);
 
@@ -164,6 +165,7 @@ void rtl8139_receive_frame()
     } else {
       DEBUG_OUT("%s",
                 "dropping frame because driver isn't bound to an interface.");
+      free(frame);
     }
 
     index = (index + len + 4 + 3) & ~3;

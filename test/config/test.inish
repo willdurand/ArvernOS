@@ -1,0 +1,21 @@
+# vim: ft=toml
+#
+# This file is used in the test suite of the inish parser.
+
+[section]
+str-value = "value"
+enabled = true
+enabled_int = 1
+disabled = false
+disabled_int = 0
+plus_one = +1
+minus_one = -1
+million = 1_000_000
+zero = 0
+multiline_str = """this
+is
+a
+multiline string"""
+localhost = "127.0.0.1"
+array = [ 123, 456 ]
+long_str = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."""

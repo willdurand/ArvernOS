@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['flags_335',['flags',['../structelf__section__header.html#a4a2021e43cc873ee45d437b720ccd5c1',1,'elf_section_header']]]
+  ['device_5fnumber_428',['device_number',['../unionpci__device.html#aee8aa40f446189e5a8f9c67d90be5814',1,'pci_device']]]
 ];

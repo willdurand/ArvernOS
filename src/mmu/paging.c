@@ -546,6 +546,10 @@ void unmap(page_number_t page_number)
 
   // TODO: free p(1,2,3) table if empty
 
+#ifdef TEST_ENV
+  can_deallocate_frames = true;
+#endif
+
   if (can_deallocate_frames) {
     paging_frame_deallocate(frame_number);
   }
@@ -616,13 +620,14 @@ void paging_frame_deallocate(frame_number_t frame_number)
 #endif
 }
 
-void identity_map(uint64_t physical_address, uint64_t flags, bool reserve)
+void identity_map(uint64_t address, uint64_t flags)
 {
-  page_number_t page = page_containing_address(physical_address);
+  page_number_t page = page_containing_address(address);
+  map_page_to_frame(page, address, flags);
 
-  if (reserve) {
-    reserve_identity_frame(physical_address);
-  }
-
-  map_page_to_frame(page, physical_address, flags);
+#ifdef TEST_ENV
+  test_frame_mark_as_used(address);
+#else
+  frame_mark_as_used(address);
+#endif
 }

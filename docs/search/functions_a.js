@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['map_297',['map',['../paging_8h.html#af55681dc6c9ebb94b26ea497afe673f8',1,'paging.c']]],
-  ['map_5fmultiple_298',['map_multiple',['../paging_8h.html#a623291cd42facbd946e92e5307abe313',1,'paging.c']]]
+  ['lseek_375',['lseek',['../include_2sys_2syscall_8h.html#a8bd74caed008a66808d92d57fa74d9f6',1,'lseek.c']]]
 ];

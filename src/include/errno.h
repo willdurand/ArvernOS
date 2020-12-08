@@ -7,5 +7,6 @@ extern int errno;
 #define ENOENT 2
 #define EBADF  9
 #define EINVAL 22
+#define EMFILE 24
 
 #endif

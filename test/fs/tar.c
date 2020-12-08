@@ -1,3 +1,4 @@
+#include <fcntl.h>
 #include <fs/tar.h>
 #include <fs/vfs.h>
 #include <stdint.h>
@@ -35,17 +36,16 @@ int main()
   describe("tar_read()");
   char buf[20];
   uint64_t bytes_read = vfs_read(vfs_namei("/info"), buf, sizeof(buf), 0);
-  buf[bytes_read] = '\0';
-  assert(strcmp(buf, "info file\n") == 0, "reads the content of a file");
+  assert(strncmp(buf, "info file\n", bytes_read) == 0,
+         "reads the content of a file");
   assert(bytes_read == 10, "returns the number of bytes read");
   bytes_read = vfs_read(vfs_namei("/info"), buf, sizeof(buf), 5);
-  buf[bytes_read] = '\0';
-  assert(strcmp(buf, "file\n") == 0, "reads a file at a given offset");
+  assert(strncmp(buf, "file\n", bytes_read) == 0,
+         "reads a file at a given offset");
   assert(bytes_read == 5, "returns the number of bytes read with offset");
 
   bytes_read = vfs_read(vfs_namei("/home/will/file"), buf, sizeof(buf), 0);
-  buf[bytes_read] = '\0';
-  assert(strcmp(buf, "some content\n") == 0,
+  assert(strncmp(buf, "some content\n", bytes_read) == 0,
          "reads the content of a file in a sub-directory");
   assert(bytes_read == 13, "returns the number of bytes read");
   end_describe();

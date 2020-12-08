@@ -34,6 +34,12 @@ typedef struct opt_uint64
   bool has_value;
   uint64_t value;
 } opt_uint64_t;
+
+typedef struct opt_bool
+{
+  bool has_value;
+  bool value;
+} opt_bool_t;
 #endif
 
 #endif
