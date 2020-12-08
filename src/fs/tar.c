@@ -81,11 +81,11 @@ uint64_t get_size(const char* in)
 
 uint64_t tar_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
 {
-  DEBUG("name=%s type=%d size=%lu offset=%lu",
-        node->name,
-        vfs_inode_type(node),
-        size,
-        offset);
+  DEBUG_OUT("name=%s type=%d size=%lu offset=%lu",
+            node->name,
+            vfs_inode_type(node),
+            size,
+            offset);
   // Empty buffer.
   strcpy(buffer, "");
 
@@ -105,10 +105,10 @@ uint64_t tar_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
       size = header_size - offset;
     }
 
-    DEBUG("copying %ld bytes (offset=%lu header_size=%ld)",
-          size,
-          offset,
-          header_size);
+    DEBUG_OUT("copying %ld bytes (offset=%lu header_size=%ld)",
+              size,
+              offset,
+              header_size);
 
     memcpy(buffer, (char*)header + 512 + offset, size);
 
@@ -159,7 +159,7 @@ inode_t tar_finddir(inode_t inode, const char* name)
   free(fullpath);
 
   if (!header) {
-    DEBUG("did not find name=%s", name);
+    DEBUG_OUT("did not find name=%s", name);
     free(node);
     return 0;
   }
@@ -180,7 +180,7 @@ inode_t tar_finddir(inode_t inode, const char* name)
       break;
   }
 
-  DEBUG("found name=%s type=%ld", node->name, node->type);
+  DEBUG_OUT("found name=%s type=%ld", node->name, node->type);
 
   return node;
 }
@@ -263,7 +263,7 @@ dirent_t* tar_readdir(inode_t inode, uint64_t num)
   strcpy(dir->name, node->name);
   dir->inode = node;
 
-  DEBUG("returning directory entry=%s", dir->name);
+  DEBUG_OUT("returning directory entry=%s", dir->name);
 
   return dir;
 }

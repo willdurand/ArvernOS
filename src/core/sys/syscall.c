@@ -80,18 +80,18 @@ void syscall_write(registers_t* registers)
   }
 
   if (fd < 3) {
-    DEBUG("invalid file descriptor fd=%d", fd);
+    DEBUG_OUT("invalid file descriptor fd=%d", fd);
     registers->rdx = -1;
     errno = EPERM;
     return;
   }
 
-  DEBUG("fd=%d buf=%p count=%d", fd, buf, count);
+  DEBUG_OUT("fd=%d buf=%p count=%d", fd, buf, count);
 
   file_descriptor_t* desc = get_file_descriptor(fd);
 
   if (desc == 0) {
-    DEBUG("file descriptor fd=%d not found", fd);
+    DEBUG_OUT("file descriptor fd=%d not found", fd);
     registers->rdx = -1;
     errno = EBADF;
     return;
@@ -120,18 +120,18 @@ void syscall_read(registers_t* registers)
   }
 
   if (fd < 3) {
-    DEBUG("invalid file descriptor fd=%d", fd);
+    DEBUG_OUT("invalid file descriptor fd=%d", fd);
     registers->rdx = -1;
     errno = EPERM;
     return;
   }
 
-  DEBUG("fd=%d buf=%p count=%d", fd, buf, count);
+  DEBUG_OUT("fd=%d buf=%p count=%d", fd, buf, count);
 
   file_descriptor_t* desc = get_file_descriptor(fd);
 
   if (desc == 0) {
-    DEBUG("file descriptor fd=%d not found", fd);
+    DEBUG_OUT("file descriptor fd=%d not found", fd);
     registers->rdx = -1;
     errno = EBADF;
     return;
@@ -151,7 +151,7 @@ void syscall_gettimeofday(registers_t* registers)
   // https://www.gnu.org/software/libc/manual/html_node/Elapsed-Time.html
   t->tv_usec = 0;
 
-  DEBUG("gettimeofday=%u", t->tv_sec);
+  DEBUG_OUT("gettimeofday=%u", t->tv_sec);
 }
 
 void syscall_open(registers_t* registers)
@@ -171,7 +171,7 @@ void syscall_open(registers_t* registers)
 
   registers->rdx = create_file_descriptor(inode, flags);
 
-  DEBUG("open fd=%d inode=%p flags=%d", registers->rdx, inode, flags);
+  DEBUG_OUT("open fd=%d inode=%p flags=%d", registers->rdx, inode, flags);
 }
 
 void syscall_close(registers_t* registers)
@@ -181,7 +181,7 @@ void syscall_close(registers_t* registers)
   int fd = (int)registers->rbx;
 
   if (fd < 3) {
-    DEBUG("invalid file descriptor fd=%d", fd);
+    DEBUG_OUT("invalid file descriptor fd=%d", fd);
     registers->rdx = -1;
     errno = EPERM;
     return;
@@ -190,7 +190,7 @@ void syscall_close(registers_t* registers)
   file_descriptor_t* desc = get_file_descriptor(fd);
 
   if (desc == 0) {
-    DEBUG("file descriptor fd=%d not found", fd);
+    DEBUG_OUT("file descriptor fd=%d not found", fd);
     registers->rdx = -1;
     errno = EBADF;
     return;
@@ -199,14 +199,14 @@ void syscall_close(registers_t* registers)
   registers->rdx = vfs_close(desc->inode);
   delete_file_descriptor(fd);
 
-  DEBUG("close fd=%d", fd);
+  DEBUG_OUT("close fd=%d", fd);
 }
 
 void syscall_reboot(registers_t* registers)
 {
   int command = (int)registers->rbx;
 
-  DEBUG("reboot command=%d", command);
+  DEBUG_OUT("reboot command=%d", command);
 
   registers->rdx = kreboot(command);
 }
@@ -219,7 +219,7 @@ void syscall_fstat(registers_t* registers)
   struct stat* statbuf = (struct stat*)registers->rcx;
 
   if (fd < 3) {
-    DEBUG("invalid file descriptor fd=%d", fd);
+    DEBUG_OUT("invalid file descriptor fd=%d", fd);
     registers->rdx = -1;
     errno = EPERM;
     return;
@@ -228,7 +228,7 @@ void syscall_fstat(registers_t* registers)
   file_descriptor_t* desc = get_file_descriptor(fd);
 
   if (desc == 0) {
-    DEBUG("file descriptor fd=%d not found", fd);
+    DEBUG_OUT("file descriptor fd=%d not found", fd);
     registers->rdx = -1;
     errno = EBADF;
     return;
@@ -250,7 +250,7 @@ void syscall_lseek(registers_t* registers)
   int whence = (int)registers->rsi;
 
   if (fd < 3) {
-    DEBUG("invalid file descriptor fd=%d", fd);
+    DEBUG_OUT("invalid file descriptor fd=%d", fd);
     registers->rdx = -1;
     errno = EPERM;
     return;
@@ -259,7 +259,7 @@ void syscall_lseek(registers_t* registers)
   file_descriptor_t* desc = get_file_descriptor(fd);
 
   if (desc == 0) {
-    DEBUG("file descriptor fd=%d not found", fd);
+    DEBUG_OUT("file descriptor fd=%d not found", fd);
     registers->rdx = -1;
     errno = EBADF;
     return;

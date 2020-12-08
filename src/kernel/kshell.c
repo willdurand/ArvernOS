@@ -262,11 +262,11 @@ void run_command()
 
   char** argv = malloc(sizeof(char*) * argc);
   argv[0] = strtok(readline, " ");
-  DEBUG("command='%s' argc=%d", argv[0], argc);
+  DEBUG_OUT("command='%s' argc=%d", argv[0], argc);
 
   for (int i = 1; i < argc; i++) {
     argv[i] = strtok(NULL, " ");
-    DEBUG("argv[%d]=%s", i, argv[i]);
+    DEBUG_OUT("argv[%d]=%s", i, argv[i]);
   }
 
   if (strncmp(argv[0], "help", 4) == 0) {

@@ -15,13 +15,13 @@ void net_interface_init(uint8_t interface_id,
                         uint8_t dns_ip[4])
 {
   if (interface_id >= NET_MAX_INTERFACES) {
-    DEBUG("could not initialize interface with id=%d", interface_id);
+    DEBUG_OUT("could not initialize interface with id=%d", interface_id);
     return;
   }
 
-  DEBUG("initializing interface id=%d with driver='%s'",
-        interface_id,
-        driver->get_name());
+  DEBUG_OUT("initializing interface id=%d with driver='%s'",
+            interface_id,
+            driver->get_name());
 
   net_interface_t* in = malloc(sizeof(net_interface_t));
   in->id = interface_id;
@@ -36,38 +36,38 @@ void net_interface_init(uint8_t interface_id,
   arp_request(in, gateway_ip);
   arp_wait_reply(in->gateway_mac);
 
-  DEBUG("MAC address for %d.%d.%d.%d (gateway) is: "
-        "%02x:%02x:%02x:%02x:%02x:%02x",
-        in->gateway_ip[0],
-        in->gateway_ip[1],
-        in->gateway_ip[2],
-        in->gateway_ip[3],
-        in->gateway_mac[0],
-        in->gateway_mac[1],
-        in->gateway_mac[2],
-        in->gateway_mac[3],
-        in->gateway_mac[4],
-        in->gateway_mac[5]);
+  DEBUG_OUT("MAC address for %d.%d.%d.%d (gateway) is: "
+            "%02x:%02x:%02x:%02x:%02x:%02x",
+            in->gateway_ip[0],
+            in->gateway_ip[1],
+            in->gateway_ip[2],
+            in->gateway_ip[3],
+            in->gateway_mac[0],
+            in->gateway_mac[1],
+            in->gateway_mac[2],
+            in->gateway_mac[3],
+            in->gateway_mac[4],
+            in->gateway_mac[5]);
 
   arp_request(in, dns_ip);
   arp_wait_reply(in->dns_mac);
 
-  DEBUG("MAC address for %d.%d.%d.%d (dns) is: "
-        "%02x:%02x:%02x:%02x:%02x:%02x",
-        in->dns_ip[0],
-        in->dns_ip[1],
-        in->dns_ip[2],
-        in->dns_ip[3],
-        in->dns_mac[0],
-        in->dns_mac[1],
-        in->dns_mac[2],
-        in->dns_mac[3],
-        in->dns_mac[4],
-        in->dns_mac[5]);
+  DEBUG_OUT("MAC address for %d.%d.%d.%d (dns) is: "
+            "%02x:%02x:%02x:%02x:%02x:%02x",
+            in->dns_ip[0],
+            in->dns_ip[1],
+            in->dns_ip[2],
+            in->dns_ip[3],
+            in->dns_mac[0],
+            in->dns_mac[1],
+            in->dns_mac[2],
+            in->dns_mac[3],
+            in->dns_mac[4],
+            in->dns_mac[5]);
 
   interfaces[interface_id] = in;
 
-  DEBUG("interface id=%d successfully initialized", in->id);
+  DEBUG_OUT("interface id=%d successfully initialized", in->id);
 }
 
 net_interface_t* net_get_interface(uint8_t interface_id)

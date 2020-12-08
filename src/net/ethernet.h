@@ -39,7 +39,7 @@ typedef struct ethernet_header
  * @param len the length of the data
  */
 void ethernet_receive_frame(net_interface_t* interface,
-                            uint8_t* data,
+                            void* data,
                             uint32_t len);
 
 /**

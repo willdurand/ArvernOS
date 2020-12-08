@@ -90,57 +90,57 @@ void kmain(uint64_t addr)
   // enable serial ports, COM1 for debug logs, COM2 for console.
   serial_init(SERIAL_COM1, SERIAL_SPEED_115200);
   serial_init(SERIAL_COM2, SERIAL_SPEED_115200);
-  DEBUG("%s has started", KERNEL_NAME);
+  DEBUG_OUT("%s has started", KERNEL_NAME);
 
-  DEBUG("%s", "initializing interruptions");
+  DEBUG_OUT("%s", "initializing interruptions");
   print_step("initializing interruptions");
   isr_init();
   irq_init();
   print_ok();
 
-  DEBUG("%s", "initializing frame allocator");
+  DEBUG_OUT("%s", "initializing frame allocator");
   print_step("initializing frame allocator");
   frame_init(mbi);
   print_ok();
 
-  DEBUG("%s", "initializing paging");
+  DEBUG_OUT("%s", "initializing paging");
   print_step("initializing paging");
   paging_init(mbi);
   print_ok();
 
-  DEBUG("%s", "initializing heap allocator");
+  DEBUG_OUT("%s", "initializing heap allocator");
   print_step("initializing heap allocator");
   alloc_init();
   print_ok();
 
-  DEBUG("%s", "initializing syscalls");
+  DEBUG_OUT("%s", "initializing syscalls");
   print_step("initializing syscalls");
   syscall_init();
   print_ok();
 
-  DEBUG("%s", "initializing real time clock (cmos)");
+  DEBUG_OUT("%s", "initializing real time clock (cmos)");
   print_step("initializing real time clock (cmos)");
   cmos_init();
   print_ok();
 
-  DEBUG("%s", "initializing timer");
+  DEBUG_OUT("%s", "initializing timer");
   print_step("initializing timer");
   timer_init();
   print_ok();
 
   check_interrupts();
 
-  DEBUG("%s", "initializing keyboard");
+  DEBUG_OUT("%s", "initializing keyboard");
   print_step("initializing keyboard");
   keyboard_init();
   print_ok();
 
-  DEBUG("%s", "initializing virtual file system");
+  DEBUG_OUT("%s", "initializing virtual file system");
   print_step("initializing virtual file system");
   vfs_init();
   print_ok();
 
-  DEBUG("%s", "initializing network");
+  DEBUG_OUT("%s", "initializing network");
   print_step("initializing network");
   if (rtl8139_init()) {
     // TODO: move these values to a config file (ini or yaml maybe) stored in
@@ -155,7 +155,7 @@ void kmain(uint64_t addr)
     print_ko();
   }
 
-  DEBUG("%s", "mounting all file systems");
+  DEBUG_OUT("%s", "mounting all file systems");
   print_step("mounting all file systems");
   multiboot_tag_module_t* module =
     (multiboot_tag_module_t*)find_multiboot_tag(mbi, MULTIBOOT_TAG_TYPE_MODULE);
@@ -170,7 +170,7 @@ void kmain(uint64_t addr)
     print_ko();
   }
 
-  DEBUG("%s", "loading kernel system font");
+  DEBUG_OUT("%s", "loading kernel system font");
   print_step("loading kernel system font");
 
   kernel_console_font = psf1_load_font(KERNEL_CONSOLE_FONT_FILENAME);

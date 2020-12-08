@@ -20,13 +20,17 @@ void arp_request(net_interface_t* interface, uint8_t ip[4])
     .protocol_size = 4,
     .opcode = HTONS(ARP_REQUEST),
   };
+
   memcpy(arp_packet.src_mac, interface->mac, 6);
   memcpy(arp_packet.src_ip, interface->ip, 4);
   memcpy(arp_packet.dst_mac, dst_mac, 6);
   memcpy(arp_packet.dst_ip, ip, 4);
 
-  ethernet_transmit_frame(
-    interface, &dst_mac, ETHERTYPE_ARP, &arp_packet, sizeof(arp_packet_t));
+  ethernet_transmit_frame(interface,
+                          &dst_mac[0],
+                          ETHERTYPE_ARP,
+                          (uint8_t*)&arp_packet,
+                          sizeof(arp_packet_t));
 }
 
 void arp_wait_reply(uint8_t* dst_mac)
@@ -41,7 +45,7 @@ void arp_wait_reply(uint8_t* dst_mac)
     }
   }
 
-  DEBUG("%s", "no ARP reply");
+  DEBUG_OUT("%s", "no ARP reply");
 }
 
 void arp_receive_packet(net_interface_t* interface, uint8_t* data, uint32_t len)
@@ -52,27 +56,27 @@ void arp_receive_packet(net_interface_t* interface, uint8_t* data, uint32_t len)
   packet.protocol_type = NTOHS(packet.protocol_type);
   packet.opcode = NTOHS(packet.opcode);
 
-  DEBUG("received ARP packet from: %d.%d.%d.%d "
-        "(%02x:%02x:%02x:%02x:%02x:%02x) on interface=%d",
-        packet.src_ip[0],
-        packet.src_ip[1],
-        packet.src_ip[2],
-        packet.src_ip[3],
-        packet.src_mac[0],
-        packet.src_mac[1],
-        packet.src_mac[2],
-        packet.src_mac[3],
-        packet.src_mac[4],
-        packet.src_mac[5],
-        interface->id);
+  DEBUG_OUT("received ARP packet from: %d.%d.%d.%d "
+            "(%02x:%02x:%02x:%02x:%02x:%02x) on interface=%d",
+            packet.src_ip[0],
+            packet.src_ip[1],
+            packet.src_ip[2],
+            packet.src_ip[3],
+            packet.src_mac[0],
+            packet.src_mac[1],
+            packet.src_mac[2],
+            packet.src_mac[3],
+            packet.src_mac[4],
+            packet.src_mac[5],
+            interface->id);
 
   switch (packet.opcode) {
     case ARP_REQUEST:
-      DEBUG("%s", "packet is a request");
+      DEBUG_OUT("%s", "packet is a request");
       // TODO: add logic to reply to this request.
       break;
     case ARP_REPLY:
-      DEBUG("%s", "packet is a reply");
+      DEBUG_OUT("%s", "packet is a reply");
       memcpy(last_arp_mac_addr, packet.src_mac, 6);
       last_arp_mac_addr_set = true;
       break;

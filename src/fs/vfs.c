@@ -132,7 +132,7 @@ inode_t vfs_find_root(char** path)
   char* name = NULL;
 
   while ((name = strsep(path, "/")) != 0) {
-    DEBUG("current->name=%s name=%s", current->name, name);
+    DEBUG_OUT("current->name=%s name=%s", current->name, name);
     current = current->child;
 
     while (current) {
@@ -155,7 +155,7 @@ inode_t vfs_find_root(char** path)
     }
   }
 
-  DEBUG("found root=%s", mount->name);
+  DEBUG_OUT("found root=%s", mount->name);
 
   return mount;
 }
@@ -174,13 +174,13 @@ inode_t vfs_namei_mount(const char* path, inode_t root)
       inode_t next = vfs_finddir(current, name);
 
       if (!next) {
-        DEBUG("%s", "no next, returning 0");
+        DEBUG_OUT("%s", "no next, returning 0");
         vfs_free(current);
         free(npath);
         return 0;
       }
 
-      DEBUG("name=%s next_name=%s", name, next->name);
+      DEBUG_OUT("name=%s next_name=%s", name, next->name);
 
       if (root) {
         next->parent = current;
@@ -226,26 +226,26 @@ inode_t vfs_namei_mount(const char* path, inode_t root)
     current = root;
   }
 
-  DEBUG("returning current=%s", current->name);
+  DEBUG_OUT("returning current=%s", current->name);
 
   return current;
 }
 
 inode_t vfs_mount(const char* path, inode_t root)
 {
-  DEBUG("mounting path=%s root_fs=%s", path, root->name);
+  DEBUG_OUT("mounting path=%s root_fs=%s", path, root->name);
   return vfs_namei_mount(path, root);
 }
 
 inode_t vfs_namei(const char* path)
 {
-  DEBUG("finding path=%s", path);
+  DEBUG_OUT("finding path=%s", path);
   return vfs_namei_mount(path, 0);
 }
 
 inode_t vfs_umount(const char* path)
 {
-  DEBUG("umounting path=%s", path);
+  DEBUG_OUT("umounting path=%s", path);
   // TODO: implement me
   return 0;
 }

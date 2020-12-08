@@ -39,12 +39,12 @@ static net_driver_t driver = {
 
 bool rtl8139_init()
 {
-  DEBUG("initializing %s", driver_name);
+  DEBUG_OUT("initializing %s", driver_name);
 
   device = pci_get_device(RTL8139_VENDOR_ID, RTL8139_DEVICE_ID);
 
   if (device.packed == 0) {
-    DEBUG("%s", "PCI device not found");
+    DEBUG_OUT("%s", "PCI device not found");
     return false;
   }
 
@@ -91,7 +91,7 @@ bool rtl8139_init()
   // Register an interrupt handler.
   uint8_t irq_num = pci_read(device, PCI_INTERRUPT_LINE, 1);
   isr_register_handler(32 + irq_num, rtl8139_callback);
-  DEBUG("registered interrupt handler: %d", 32 + irq_num);
+  DEBUG_OUT("registered interrupt handler: %d", 32 + irq_num);
 
   // Read MAC address.
   uint32_t mac_part1 = port_dword_in(ioaddr + RTL8139_REGISTER_MAC1);
@@ -104,13 +104,13 @@ bool rtl8139_init()
   mac_address[4] = mac_part2 >> 0;
   mac_address[5] = mac_part2 >> 8;
 
-  DEBUG("MAC address is: %02x:%02x:%02x:%02x:%02x:%02x\n",
-        mac_address[0],
-        mac_address[1],
-        mac_address[2],
-        mac_address[3],
-        mac_address[4],
-        mac_address[5]);
+  DEBUG_OUT("MAC address is: %02x:%02x:%02x:%02x:%02x:%02x\n",
+            mac_address[0],
+            mac_address[1],
+            mac_address[2],
+            mac_address[3],
+            mac_address[4],
+            mac_address[5]);
 
   return true;
 }
@@ -129,10 +129,10 @@ void rtl8139_transmit_frame(void* data, uint32_t len)
 {
   memcpy(tx_buffer, data, len);
 
-  DEBUG("current_transmit_pair=%d tx_buffer_addr=%p len=%d",
-        current_transmit_pair,
-        tx_buffer_addr,
-        len);
+  DEBUG_OUT("current_transmit_pair=%d tx_buffer_addr=%p len=%d",
+            current_transmit_pair,
+            tx_buffer_addr,
+            len);
 
   port_dword_out(ioaddr + transmit_start_registers[current_transmit_pair],
                  tx_buffer_addr);
@@ -162,7 +162,8 @@ void rtl8139_receive_frame()
     if (driver.receive_frame != NULL && driver.interface != NULL) {
       driver.receive_frame(driver.interface, frame, len);
     } else {
-      DEBUG("%s", "dropping frame because driver isn't bound to an interface.");
+      DEBUG_OUT("%s",
+                "dropping frame because driver isn't bound to an interface.");
     }
 
     index = (index + len + 4 + 3) & ~3;
@@ -175,13 +176,13 @@ void rtl8139_receive_frame()
 
 static void rtl8139_callback(stack_t* stack)
 {
-  DEBUG("%s", "interrupt received");
+  DEBUG_OUT("%s", "interrupt received");
 
   // The loop is there in case we have more than one "thing" to handle when the
   // interrupt is triggered.
   while (1) {
     uint16_t status = port_word_in(ioaddr + RTL8139_REGISTER_ISR);
-    DEBUG("status=%u", status);
+    DEBUG_OUT("status=%u", status);
 
     // clear interrupt.
     port_word_out(ioaddr + RTL8139_REGISTER_ISR, status);
@@ -191,11 +192,11 @@ static void rtl8139_callback(stack_t* stack)
     }
 
     if (status & RTL8139_ISR_TOK) {
-      DEBUG("%s", "frame transmitted");
+      DEBUG_OUT("%s", "frame transmitted");
     }
 
     if (status & RTL8139_ISR_ROK) {
-      DEBUG("%s", "frame received");
+      DEBUG_OUT("%s", "frame received");
       rtl8139_receive_frame();
     }
   }

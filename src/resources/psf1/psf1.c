@@ -20,7 +20,7 @@ PSF1_font_t* psf1_load_font(const char* path)
   int fd = open(path, 0);
 
   if (fd < 3) {
-    DEBUG("Failed to load PSF1 Font at '%s'", path);
+    DEBUG_OUT("Failed to load PSF1 Font at '%s'", path);
 
     return NULL;
   }
@@ -30,7 +30,7 @@ PSF1_font_t* psf1_load_font(const char* path)
   if (read(fd, font_header, sizeof(PSF1_header_t)) < 0 ||
       font_header->magic[0] != PSF1_MAGIC0 ||
       font_header->magic[1] != PSF1_MAGIC1) {
-    DEBUG("PSF1 Font at '%s' is not a valid file", path);
+    DEBUG_OUT("PSF1 Font at '%s' is not a valid file", path);
 
     close(fd);
 
@@ -48,7 +48,7 @@ PSF1_font_t* psf1_load_font(const char* path)
   void* glyph_buffer = malloc(glyph_buffer_size);
 
   if (read(fd, glyph_buffer, glyph_buffer_size) < 0) {
-    DEBUG("PSF1 Font at '%s' is not a valid file", path);
+    DEBUG_OUT("PSF1 Font at '%s' is not a valid file", path);
 
     close(fd);
 
@@ -65,7 +65,7 @@ PSF1_font_t* psf1_load_font(const char* path)
   font->psf1_header = font_header;
   font->glyph_buffer = glyph_buffer;
 
-  DEBUG("Loaded PSF1 Font at '%s'", path);
+  DEBUG_OUT("Loaded PSF1 Font at '%s'", path);
 
   return font;
 }

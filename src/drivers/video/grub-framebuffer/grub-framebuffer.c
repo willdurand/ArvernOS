@@ -221,7 +221,7 @@ bool grub_init_framebuffer(multiboot_info_t* mbi)
       mbi, MULTIBOOT_TAG_TYPE_FRAMEBUFFER);
 
   if (entry == NULL) {
-    DEBUG("%s", "Failed to find framebuffer tag in multiboot");
+    DEBUG_OUT("%s", "Failed to find framebuffer tag in multiboot");
 
     return false;
   }
@@ -288,14 +288,15 @@ bool grub_init_framebuffer(multiboot_info_t* mbi)
   framebuffer_green_field_position = entry->framebuffer_green_field_position;
   framebuffer_blue_field_position = entry->framebuffer_blue_field_position;
 
-  DEBUG("Got Framebuffer Info: %dx%dx%d (%s) located at %p, with double-buffer "
-        "at %p",
-        grub_framebuffer_width,
-        grub_framebuffer_height,
-        framebuffer_bpp,
-        grub_framebuffer_type_string(),
-        framebuffer_ptr,
-        framebuffer_buffer);
+  DEBUG_OUT(
+    "Got Framebuffer Info: %dx%dx%d (%s) located at %p, with double-buffer "
+    "at %p",
+    grub_framebuffer_width,
+    grub_framebuffer_height,
+    framebuffer_bpp,
+    grub_framebuffer_type_string(),
+    framebuffer_ptr,
+    framebuffer_buffer);
 
   video_driver.video_buffer = framebuffer_buffer;
   video_driver.video_width = grub_framebuffer_width;
@@ -307,7 +308,7 @@ bool grub_init_framebuffer(multiboot_info_t* mbi)
 
 void grub_framebuffer_set_console_mode()
 {
-  DEBUG("%s", "Changing grub framebuffer to console mode");
+  DEBUG_OUT("%s", "Changing grub framebuffer to console mode");
 
   grub_framebuffer_is_console = true;
 
@@ -326,7 +327,7 @@ void grub_framebuffer_set_console_mode()
 
 void grub_framebuffer_set_canvas_mode()
 {
-  DEBUG("%s", "Changing grub framebuffer to canvas mode");
+  DEBUG_OUT("%s", "Changing grub framebuffer to canvas mode");
 
   grub_framebuffer_is_console = false;
 

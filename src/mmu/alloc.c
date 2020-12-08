@@ -15,11 +15,12 @@ void alloc_init()
   heap_end_page = page_containing_address(HEAP_START + HEAP_SIZE - 1);
   heap_start_page = page_containing_address(HEAP_START);
 
-  DEBUG("initialized heap allocator with heap_start_page=%u heap_end_page=%u "
-        "used_count=%d",
-        heap_start_page,
-        heap_end_page,
-        alloc_get_used_count());
+  DEBUG_OUT(
+    "initialized heap allocator with heap_start_page=%u heap_end_page=%u "
+    "used_count=%d",
+    heap_start_page,
+    heap_end_page,
+    alloc_get_used_count());
 }
 
 int liballoc_lock()
@@ -67,7 +68,7 @@ void* liballoc_alloc(int number_of_pages)
                number_of_pages,
                PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
 
-  DEBUG("allocated %d pages at addr=%p", number_of_pages, addr);
+  DEBUG_OUT("allocated %d pages at addr=%p", number_of_pages, addr);
 
   return (void*)addr;
 }
@@ -85,7 +86,8 @@ int liballoc_free(void* ptr, int number_of_pages)
     bitmap_clear(allocated_pages, first_free_page + i);
   }
 
-  DEBUG("free'd ptr=%p page=%u number_of_pages=%d", ptr, page, number_of_pages);
+  DEBUG_OUT(
+    "free'd ptr=%p page=%u number_of_pages=%d", ptr, page, number_of_pages);
 
   return 0;
 }

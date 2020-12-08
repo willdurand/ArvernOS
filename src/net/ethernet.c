@@ -1,33 +1,35 @@
 #include "ethernet.h"
 #include <core/debug.h>
 #include <net/arp.h>
+#include <stdlib.h>
 #include <string.h>
 
 void ethernet_receive_frame(net_interface_t* interface,
-                            uint8_t* data,
+                            void* data,
                             uint32_t len)
 {
   ethernet_header_t frame_header = { 0 };
   memcpy(&frame_header, data, sizeof(ethernet_header_t));
   frame_header.ethertype = NTOHS(frame_header.ethertype);
 
-  DEBUG("received frame from: %02x:%02x:%02x:%02x:%02x:%02x on interface=%d",
-        frame_header.src_mac[0],
-        frame_header.src_mac[1],
-        frame_header.src_mac[2],
-        frame_header.src_mac[3],
-        frame_header.src_mac[4],
-        frame_header.src_mac[5],
-        interface->id);
+  DEBUG_OUT(
+    "received frame from: %02x:%02x:%02x:%02x:%02x:%02x on interface=%d",
+    frame_header.src_mac[0],
+    frame_header.src_mac[1],
+    frame_header.src_mac[2],
+    frame_header.src_mac[3],
+    frame_header.src_mac[4],
+    frame_header.src_mac[5],
+    interface->id);
 
   switch (frame_header.ethertype) {
     case ETHERTYPE_ARP:
       arp_receive_packet(interface,
-                         &data[sizeof(ethernet_header_t)],
+                         &((uint8_t*)data)[sizeof(ethernet_header_t)],
                          len - sizeof(ethernet_header_t));
       break;
     default:
-      DEBUG("unsupported ethernet frame: type=%d", frame_header.ethertype);
+      DEBUG_OUT("unsupported ethernet frame: type=%d", frame_header.ethertype);
   }
 
   // This is because `data` gets allocated in the driver code.

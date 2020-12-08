@@ -35,12 +35,12 @@ void png_read_from_buffer(png_structp ptr,
 
 void png_error_function(png_structp png_ptr, png_const_charp message)
 {
-  DEBUG("png_load error: %s", message);
+  DEBUG_OUT("png_load error: %s", message);
 }
 
 void png_warning_function(png_structp png_ptr, png_const_charp message)
 {
-  DEBUG("png_load warning: %s", message);
+  DEBUG_OUT("png_load warning: %s", message);
 }
 
 bool png_load_buffer(const uint8_t* buffer,
@@ -49,7 +49,7 @@ bool png_load_buffer(const uint8_t* buffer,
                      uint32_t** pixels)
 {
   if (buffer == NULL) {
-    DEBUG("%s", "png_load_buffer: Invalid buffer");
+    DEBUG_OUT("%s", "png_load_buffer: Invalid buffer");
 
     return false;
   }
@@ -58,7 +58,7 @@ bool png_load_buffer(const uint8_t* buffer,
     png_create_read_struct(PNG_LIBPNG_VER_STRING, (png_voidp)NULL, NULL, NULL);
 
   if (!png_ptr) {
-    DEBUG("%s", "png_load_buffer: Unable to make PNG ptr");
+    DEBUG_OUT("%s", "png_load_buffer: Unable to make PNG ptr");
 
     return false;
   }
@@ -66,7 +66,7 @@ bool png_load_buffer(const uint8_t* buffer,
   png_infop info_ptr = png_create_info_struct(png_ptr);
 
   if (!info_ptr) {
-    DEBUG("%s", "png_load_buffer: Unable to make PNG ptr");
+    DEBUG_OUT("%s", "png_load_buffer: Unable to make PNG ptr");
     png_destroy_read_struct(&png_ptr, (png_infopp)NULL, (png_infopp)NULL);
 
     return false;
@@ -83,7 +83,7 @@ bool png_load_buffer(const uint8_t* buffer,
   memcpy(signature, buffer, sizeof(uint8_t[4]));
 
   if (!png_check_sig(signature, 4)) {
-    DEBUG("%s", "png_load_buffer: Not a valid PNG");
+    DEBUG_OUT("%s", "png_load_buffer: Not a valid PNG");
     png_destroy_read_struct(&png_ptr, &info_ptr, NULL);
     png_destroy_info_struct(png_ptr, &info_ptr);
 
@@ -112,13 +112,14 @@ bool png_load_buffer(const uint8_t* buffer,
     png_set_strip_16(png_ptr);
   }
 
-  DEBUG("png_load: color_type: %d, bit_depth: %d, interlace: %d, compression: "
-        "%d, filter: %d",
-        color_type,
-        bit_depth,
-        interlace,
-        compression,
-        filter);
+  DEBUG_OUT(
+    "png_load: color_type: %d, bit_depth: %d, interlace: %d, compression: "
+    "%d, filter: %d",
+    color_type,
+    bit_depth,
+    interlace,
+    compression,
+    filter);
 
   if (color_type == PNG_COLOR_TYPE_PALETTE) {
     png_set_palette_to_rgb(png_ptr);
@@ -147,7 +148,7 @@ bool png_load_buffer(const uint8_t* buffer,
       uint32_t* data_ptr = *pixels;
 
       for (uint32_t i = 0; i < *height; i++, data_ptr += *width) {
-        png_read_row(png_ptr, data_ptr, NULL);
+        png_read_row(png_ptr, (png_bytep)data_ptr, NULL);
       }
 
       png_destroy_read_struct(&png_ptr, &info_ptr, NULL);
@@ -163,7 +164,7 @@ bool png_load_buffer(const uint8_t* buffer,
       uint32_t* data_ptr = *pixels;
 
       for (uint32_t i = 0; i < *height; i++, data_ptr += *width) {
-        png_read_row(png_ptr, row, NULL);
+        png_read_row(png_ptr, (png_bytep)row, NULL);
 
         for (uint32_t j = 0, index = 0; j < sizeof(row) / sizeof(row[0]);
              j += 3, index++) {

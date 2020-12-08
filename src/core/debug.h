@@ -1,7 +1,7 @@
 #ifndef CORE_DEBUG_H
 #define CORE_DEBUG_H
 
-#ifdef ENABLE_KERNEL_DEBUG
+#if ENABLE_KERNEL_DEBUG
 #include <drivers/serial.h>
 #include <stdio.h>
 
@@ -16,7 +16,7 @@ static const uint16_t serial_com1 = SERIAL_COM1;
 
 // We use colors because the serial port is bound to a file in debug mode (see
 // qemu config in `Makefile`). That would not work otherwise, I think.
-#define DEBUG(format, ...)                                                     \
+#define DEBUG_OUT(format, ...)                                                 \
   fctprintf(&serial_stream_output,                                             \
             (void*)&serial_com1,                                               \
             "%sDEBUG%s %s%s:%ld:%s():%s " format "\n",                         \
@@ -30,7 +30,7 @@ static const uint16_t serial_com1 = SERIAL_COM1;
             __VA_ARGS__)
 #else
 
-#define DEBUG(format, ...)                                                     \
+#define DEBUG_OUT(format, ...)                                                 \
   fctprintf(&serial_stream_output,                                             \
             (void*)&serial_com1,                                               \
             "DEBUG %s:%ld:%s(): " format "\n",                                 \
@@ -46,7 +46,7 @@ static const uint16_t serial_com1 = SERIAL_COM1;
 #ifdef ENABLE_DEBUG_FOR_TEST
 #include <stdio.h>
 
-#define DEBUG(format, ...)                                                     \
+#define DEBUG_OUT(format, ...)                                                 \
   printf("DEBUG %s:%d:%s(): " format "\n",                                     \
          __FILE__,                                                             \
          __LINE__,                                                             \

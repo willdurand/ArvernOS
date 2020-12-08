@@ -38,16 +38,16 @@ void frame_init(multiboot_info_t* mbi)
 
   _frame_init_bitmap((bitmap_t*)frame.value);
 
-  DEBUG("initialized frame allocator with multiboot_start = %p "
-        "multiboot_end=%p kernel_start=%p kernel_end=%p max_frames=%u "
-        "allocated_frames=%p used_count=%d",
-        multiboot_start,
-        multiboot_end,
-        kernel_start,
-        kernel_end,
-        max_frames,
-        allocated_frames,
-        frame_get_used_count());
+  DEBUG_OUT("initialized frame allocator with multiboot_start = %p "
+            "multiboot_end=%p kernel_start=%p kernel_end=%p max_frames=%u "
+            "allocated_frames=%p used_count=%d",
+            multiboot_start,
+            multiboot_end,
+            kernel_start,
+            kernel_end,
+            max_frames,
+            allocated_frames,
+            frame_get_used_count());
 }
 
 void _frame_init(reserved_areas_t* reserved, multiboot_tag_mmap_t* mmap)
@@ -118,7 +118,7 @@ opt_uint64_t frame_allocate()
 
 void frame_deallocate(frame_number_t frame_number)
 {
-  DEBUG("deallocating frame=%u", frame_number);
+  DEBUG_OUT("deallocating frame=%u", frame_number);
   bitmap_clear(allocated_frames, frame_number);
 }
 
@@ -205,9 +205,10 @@ void reserve_identity_frame(uint64_t physical_address)
 
   if (reserved_frames_count >=
       sizeof(reserved_frames) / sizeof(reserved_frames[0])) {
-    DEBUG("Unable to reserve an identity frame: Exceeded limit of %u reserved "
-          "identity frames",
-          reserved_frames_count);
+    DEBUG_OUT(
+      "Unable to reserve an identity frame: Exceeded limit of %u reserved "
+      "identity frames",
+      reserved_frames_count);
 
     return;
   }
