@@ -69,7 +69,29 @@ void arp_receive_packet(net_interface_t* interface, uint8_t* data, uint32_t len)
   switch (packet.opcode) {
     case ARP_REQUEST:
       DEBUG("%s", "packet is a request");
-      // TODO: add logic to reply to this request.
+
+      if (packet.dst_ip[0] == interface->ip[0] &&
+          packet.dst_ip[1] == interface->ip[1] &&
+          packet.dst_ip[2] == interface->ip[2] &&
+          packet.dst_ip[3] == interface->ip[3]) {
+        arp_packet_t reply = {
+          .hardware_type = HTONS(packet.hardware_type),
+          .hardware_size = 6,
+          .protocol_type = HTONS(packet.protocol_type),
+          .protocol_size = 4,
+          .opcode = HTONS(ARP_REPLY),
+          .src_mac = interface->mac,
+          .src_ip = interface->ip,
+          .dst_mac = packet.src_mac,
+          .dst_ip = packet.src_ip,
+        };
+
+        ethernet_transmit_frame(interface,
+                                packet.src_mac,
+                                ETHERTYPE_ARP,
+                                &reply,
+                                sizeof(arp_packet_t));
+      }
       break;
     case ARP_REPLY:
       DEBUG("%s", "packet is a reply");
