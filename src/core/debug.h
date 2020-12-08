@@ -1,7 +1,7 @@
 #ifndef CORE_DEBUG_H
 #define CORE_DEBUG_H
 
-#if ENABLE_KERNEL_DEBUG
+#ifdef ENABLE_KERNEL_DEBUG
 #include <drivers/serial.h>
 #include <stdio.h>
 
