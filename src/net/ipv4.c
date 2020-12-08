@@ -24,19 +24,19 @@ void ipv4_receive_packet(net_interface_t* interface,
 
   uint8_t src_ip[4] = { 0 };
   ipv4_from_value(header.src_addr, src_ip);
-  DEBUG("received IPv4 packet from: %d.%d.%d.%d on interface=%d",
-        src_ip[0],
-        src_ip[1],
-        src_ip[2],
-        src_ip[3],
-        interface->id);
+  DEBUG_OUT("received IPv4 packet from: %d.%d.%d.%d on interface=%d",
+            src_ip[0],
+            src_ip[1],
+            src_ip[2],
+            src_ip[3],
+            interface->id);
 
   switch (header.proto) {
     case IPV4_PROTO_ICMP:
       icmpv4_receive_packet(interface, data, &header);
       break;
     default:
-      DEBUG("unsupported IP protocol=%02x, dropping packet", header.proto);
+      DEBUG_OUT("unsupported IP protocol=%02x, dropping packet", header.proto);
   }
 }
 
@@ -86,11 +86,12 @@ void icmpv4_receive_packet(net_interface_t* interface,
   icmpv4_echo_t icmpv4_echo = { 0 };
   memcpy(&icmpv4_echo, data + (4 * header->ihl), sizeof(icmpv4_echo_t));
 
-  DEBUG("received ICMPv4 packet on interface=%d type=%d code=%d checksum=%x",
-        interface->id,
-        icmpv4_echo.type,
-        icmpv4_echo.code,
-        icmpv4_echo.checksum);
+  DEBUG_OUT(
+    "received ICMPv4 packet on interface=%d type=%d code=%d checksum=%x",
+    interface->id,
+    icmpv4_echo.type,
+    icmpv4_echo.code,
+    icmpv4_echo.checksum);
 
   uint8_t src_ip[4] = { 0 };
   ipv4_from_value(header->src_addr, src_ip);

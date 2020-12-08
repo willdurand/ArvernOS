@@ -7,7 +7,7 @@
 #include <unistd.h>
 
 #define SYNTAX_ERROR(message, line)                                            \
-  DEBUG("SYNTAX ERROR: %s near line %ld", message, line);                      \
+  DEBUG_OUT("SYNTAX ERROR: %s near line %ld", message, line);                  \
   goto end;
 
 #define DEFAULT_VALUE_LEN 50

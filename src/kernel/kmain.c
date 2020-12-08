@@ -166,13 +166,13 @@ void kmain(uint64_t addr)
 
     if (hostname != NULL) {
       if (strlen(hostname) > 0) {
-        DEBUG("updating hostname: %s", hostname);
+        DEBUG_OUT("updating hostname: %s", hostname);
         proc_update_hostname(hostname, strlen(hostname));
       } else {
-        DEBUG("%s", "not updating hostname because value is empty");
+        DEBUG_OUT("%s", "not updating hostname because value is empty");
       }
     } else {
-      DEBUG("%s", "could not find system/hostname in kernel.inish");
+      DEBUG_OUT("%s", "could not find system/hostname in kernel.inish");
     }
 
     print_ok();

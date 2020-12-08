@@ -100,7 +100,7 @@ void syscall_write(registers_t* registers)
 
   if ((desc->flags != O_WRONLY && desc->flags != O_RDWR) ||
       desc->flags == O_RDONLY) {
-    DEBUG("invalid flags for file descriptor fd=%d", fd);
+    DEBUG_OUT("invalid flags for file descriptor fd=%d", fd);
     registers->rdx = -1;
     errno = EBADF;
     return;
@@ -148,7 +148,7 @@ void syscall_read(registers_t* registers)
 
   if ((desc->flags != O_RDONLY && desc->flags != O_RDWR) ||
       desc->flags == O_WRONLY) {
-    DEBUG("invalid flags for file descriptor fd=%d", fd);
+    DEBUG_OUT("invalid flags for file descriptor fd=%d", fd);
     registers->rdx = -1;
     errno = EBADF;
     return;
@@ -189,7 +189,7 @@ void syscall_open(registers_t* registers)
   int fd = create_file_descriptor(inode, flags);
 
   if (fd == -1) {
-    DEBUG("%s", "too many files open");
+    DEBUG_OUT("%s", "too many files open");
     registers->rdx = -1;
     errno = EMFILE;
     return;

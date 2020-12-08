@@ -89,10 +89,10 @@ void remap_kernel(multiboot_info_t* mbi)
   // We shouldn't deallocate the `inactive_page_table_frame`.
   can_deallocate_frames = true;
 
-  identity_map(0xB8000, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE, true);
+  identity_map(0xB8000, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
   DEBUG_OUT("%s", "mapped VGA!");
 
-  identity_map(0x0, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE, true);
+  identity_map(0x0, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
   DEBUG_OUT("%s", "mapped interrupt vector table!");
 
   // Allocated frames
@@ -101,8 +101,7 @@ void remap_kernel(multiboot_info_t* mbi)
             allocated_frames);
   for (uint8_t i = 0; i < (uint8_t)frames_for_bitmap; i++) {
     identity_map((uint64_t)allocated_frames + (i * PAGE_SIZE),
-                 PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE,
-                 false);
+                 PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
   }
   DEBUG_OUT("%s", "pages for frame allocator mapped");
 
@@ -138,7 +137,7 @@ void remap_kernel(multiboot_info_t* mbi)
     }
 
     for (uint64_t i = start_frame_number; i <= end_frame_number; i++) {
-      identity_map(frame_start_address(i), flags, true);
+      identity_map(frame_start_address(i), flags);
     }
   }
   DEBUG_OUT("%s", "elf sections mapped!");
@@ -154,7 +153,7 @@ void remap_kernel(multiboot_info_t* mbi)
             multiboot_end_frame);
 
   for (uint64_t i = multiboot_start_frame; i <= multiboot_end_frame; i++) {
-    identity_map(frame_start_address(i), PAGING_FLAG_PRESENT, true);
+    identity_map(frame_start_address(i), PAGING_FLAG_PRESENT);
   }
   DEBUG_OUT("%s", "multiboot info mapped!");
 
@@ -170,7 +169,7 @@ void remap_kernel(multiboot_info_t* mbi)
             initrd_end_frame);
 
   for (uint64_t i = initrd_start_frame; i <= initrd_end_frame; i++) {
-    identity_map(frame_start_address(i), PAGING_FLAG_PRESENT, true);
+    identity_map(frame_start_address(i), PAGING_FLAG_PRESENT);
   }
   DEBUG_OUT("%s", "mapped multiboot module!");
 

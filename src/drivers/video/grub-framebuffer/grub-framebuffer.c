@@ -269,8 +269,7 @@ bool grub_init_framebuffer(multiboot_info_t* mbi)
 
   for (uint32_t i = 0; i < frames_for_vram; i++) {
     identity_map((uint64_t)framebuffer_ptr + (i * PAGE_SIZE),
-                 PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE,
-                 true);
+                 PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
   }
 
   uint32_t framebuffer_size =

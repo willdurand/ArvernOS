@@ -210,7 +210,7 @@ uint64_t proc_update_hostname(char* new_hostname, uint64_t length)
   char* tmp = realloc(hostname, sizeof(char) * (length + 1));
 
   if (!tmp) {
-    DEBUG("%s", "failed to reallocate memory for hostname");
+    DEBUG_OUT("%s", "failed to reallocate memory for hostname");
     return 0;
   }
 

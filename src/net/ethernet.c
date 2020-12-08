@@ -35,7 +35,8 @@ void ethernet_receive_frame(net_interface_t* interface,
                           len - sizeof(ethernet_header_t));
       break;
     default:
-      DEBUG_OUT("unsupported ethernet frame: type=0x%04x", frame_header.ethertype);
+      DEBUG_OUT("unsupported ethernet frame: type=0x%04x",
+                frame_header.ethertype);
   }
 
   // This is because `data` gets allocated in the driver code.
