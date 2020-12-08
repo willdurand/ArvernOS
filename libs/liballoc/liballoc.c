@@ -381,7 +381,7 @@ void* PREFIX(malloc)(size_t req_size)
       ALIGN(p);
 
 #ifdef DEBUG
-      printf("CASE 2: returning %x\n", p);
+      printf("CASE 2: returning %x (It's a brand new block.)\n", p);
       FLUSH();
 #endif
       liballoc_unlock(); // release the lock
@@ -418,7 +418,7 @@ void* PREFIX(malloc)(size_t req_size)
       ALIGN(p);
 
 #ifdef DEBUG
-      printf("CASE 3: returning %x\n", p);
+      printf("CASE 3: returning %x (Block in use and enough space at the start of the block.)\n", p);
       FLUSH();
 #endif
       liballoc_unlock(); // release the lock
@@ -463,7 +463,7 @@ void* PREFIX(malloc)(size_t req_size)
           ALIGN(p);
 
 #ifdef DEBUG
-          printf("CASE 4.1: returning %x\n", p);
+          printf("CASE 4.1: returning %x (There is enough space in this block. But is it contiguous? [End of minors in a block. space from last and end?])\n", p);
           FLUSH();
 #endif
           liballoc_unlock(); // release the lock
@@ -502,7 +502,7 @@ void* PREFIX(malloc)(size_t req_size)
           ALIGN(p);
 
 #ifdef DEBUG
-          printf("CASE 4.2: returning %x\n", p);
+          printf("CASE 4.2: returning %x (There is enough space in this block. But is it contiguous? [Is there space between two minors?])\n", p);
           FLUSH();
 #endif
 

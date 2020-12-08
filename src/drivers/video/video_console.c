@@ -1,4 +1,4 @@
-#include <core/debug.h>
+#include <drivers/serial.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,6 +8,8 @@
 #include "video_console.h"
 
 extern vtconsole_t vtc;
+
+static const uint16_t serial_com2 = SERIAL_COM2;
 
 int video_console_x_cursor = 0;
 int video_console_y_cursor = 0;
@@ -31,34 +33,34 @@ uint32_t video_console_bright_colors[] = {
 
 void video_console_move_cursor(int x, int y)
 {
+#if ENABLE_KERNEL_DEBUG
   bool should_print = false;
   int y_index = y;
 
-  if(y != video_console_y_cursor && y > 0)
-  {
+  if (y != video_console_y_cursor && y > 0) {
     y_index = y - 1;
     should_print = true;
-  }
-  else if(x < video_console_x_cursor && y > 0)
-  {
+  } else if (x < video_console_x_cursor && y > 0) {
     y_index = y - 1;
     should_print = true;
   }
 
-  if(should_print)
-  {
-    vtcell_t *buffer = &vtc.buffer[y_index * vtc.width];
+  if (should_print) {
+    vtcell_t* buffer = &vtc.buffer[y_index * vtc.width];
 
-    for(uint32_t i = 0; i < vtc.width; i++)
-    {
+    for (uint32_t i = 0; i < vtc.width; i++) {
       video_console_print_buffer[i] = buffer[i].c;
     }
 
     video_console_print_buffer[vtc.width] = '\0';
 
-    DEBUG("CONSOLE: %s", video_console_print_buffer);
+    fctprintf(&serial_stream_output,
+              (void*)&serial_com2,
+              "%s\n",
+              video_console_print_buffer);
   }
 
   video_console_y_cursor = y;
   video_console_x_cursor = x;
+#endif
 }

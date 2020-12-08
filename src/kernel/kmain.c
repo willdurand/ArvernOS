@@ -87,8 +87,9 @@ void kmain(uint64_t addr)
 
   print_welcome_messge();
 
-  // enable serial port
+  // enable serial ports, COM1 for debug logs, COM2 for console.
   serial_init(SERIAL_COM1, SERIAL_SPEED_115200);
+  serial_init(SERIAL_COM2, SERIAL_SPEED_115200);
   DEBUG("%s has started", KERNEL_NAME);
 
   DEBUG("%s", "initializing interruptions");
