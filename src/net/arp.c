@@ -2,7 +2,10 @@
 #include <core/debug.h>
 #include <net/ethernet.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include <string.h>
+
+void arp_reply(net_interface_t* interface, arp_packet_t* request);
 
 static uint8_t last_arp_mac_addr[6] = { 0 };
 static bool last_arp_mac_addr_set = false;
@@ -25,8 +28,14 @@ void arp_request(net_interface_t* interface, uint8_t ip[4])
   memcpy(arp_packet.dst_mac, dst_mac, 6);
   memcpy(arp_packet.dst_ip, ip, 4);
 
+  uint8_t packet_len = sizeof(arp_packet_t);
+  uint8_t* packet = malloc(packet_len);
+  memcpy(packet, &arp_packet, sizeof(arp_packet_t));
+
   ethernet_transmit_frame(
-    interface, dst_mac, ETHERTYPE_ARP, &arp_packet, sizeof(arp_packet_t));
+    interface, dst_mac, ETHERTYPE_ARP, packet, packet_len);
+
+  free(packet);
 }
 
 void arp_wait_reply(uint8_t* dst_mac)
@@ -74,23 +83,7 @@ void arp_receive_packet(net_interface_t* interface, uint8_t* data, uint32_t len)
           packet.dst_ip[1] == interface->ip[1] &&
           packet.dst_ip[2] == interface->ip[2] &&
           packet.dst_ip[3] == interface->ip[3]) {
-        arp_packet_t reply = {
-          .hardware_type = HTONS(packet.hardware_type),
-          .hardware_size = 6,
-          .protocol_type = HTONS(packet.protocol_type),
-          .protocol_size = 4,
-          .opcode = HTONS(ARP_REPLY),
-          .src_mac = interface->mac,
-          .src_ip = interface->ip,
-          .dst_mac = packet.src_mac,
-          .dst_ip = packet.src_ip,
-        };
-
-        ethernet_transmit_frame(interface,
-                                packet.src_mac,
-                                ETHERTYPE_ARP,
-                                &reply,
-                                sizeof(arp_packet_t));
+        arp_reply(interface, &packet);
       }
       break;
     case ARP_REPLY:
@@ -99,4 +92,28 @@ void arp_receive_packet(net_interface_t* interface, uint8_t* data, uint32_t len)
       last_arp_mac_addr_set = true;
       break;
   }
+}
+
+void arp_reply(net_interface_t* interface, arp_packet_t* request)
+{
+  arp_packet_t reply = {
+    .hardware_type = HTONS(request->hardware_type),
+    .hardware_size = 6,
+    .protocol_type = HTONS(request->protocol_type),
+    .protocol_size = 4,
+    .opcode = HTONS(ARP_REPLY),
+  };
+  memcpy(reply.src_mac, interface->mac, 6);
+  memcpy(reply.src_ip, interface->mac, 4);
+  memcpy(reply.dst_mac, request->src_mac, 6);
+  memcpy(reply.dst_ip, request->src_ip, 4);
+
+  uint8_t packet_len = sizeof(arp_packet_t);
+  uint8_t* packet = malloc(packet_len);
+  memcpy(packet, &reply, sizeof(arp_packet_t));
+
+  ethernet_transmit_frame(
+    interface, request->src_mac, ETHERTYPE_ARP, packet, packet_len);
+
+  free(packet);
 }
