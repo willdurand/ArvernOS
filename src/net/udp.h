@@ -39,7 +39,7 @@ void udp_receive_packet(net_interface_t* interface,
  * @param dst_ip the destination IP address
  * @param dst_port the destination port
  * @param data the UDP data
- * @param len the len of the UDP data
+ * @param len the length of the UDP data
  */
 void udp_send_packet(net_interface_t* interface,
                      uint16_t src_port,
