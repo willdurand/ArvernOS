@@ -2,7 +2,6 @@
 #include <core/debug.h>
 #include <core/elf.h>
 #include <drivers/cmos.h>
-#include <drivers/timer.h>
 #include <fs/debug.h>
 #include <fs/vfs.h>
 #include <net/dns.h>
@@ -159,14 +158,6 @@ void net()
          in->dns_ip[3]);
 }
 
-void busywait(uint32_t delay_in_seconds)
-{
-  uint64_t t = timer_uptime();
-  while (timer_uptime() < (t + delay_in_seconds)) {
-    ;
-  }
-}
-
 void host(int argc, char* argv[])
 {
   if (argc != 2) {
@@ -176,10 +167,20 @@ void host(int argc, char* argv[])
 
   net_interface_t* in = net_get_interface(0);
 
-  printf("DNS lookup for: %s\n", argv[1]);
-  dns_request(in, argv[1]);
+  uint8_t ip[4];
+  int retval = dns_lookup(in, argv[1], ip);
 
-  busywait(2);
+  switch (retval) {
+    case 0:
+      printf(
+        "%s has address %d.%d.%d.%d\n", argv[1], ip[0], ip[1], ip[2], ip[3]);
+      break;
+    case DNS_ERR_NO_ANSWER:
+      printf("Host %s not found\n", argv[1]);
+      break;
+    default:
+      printf("DNS lookup failed (%d)\n", retval);
+  }
 }
 
 void ping(int argc, char* argv[])
@@ -199,9 +200,22 @@ void ping(int argc, char* argv[])
   net_interface_t* in = net_get_interface(0);
 
   printf("PING %d.%d.%d.%d\n", ip[0], ip[1], ip[2], ip[3]);
-  ipv4_ping(in, ip);
+  icmpv4_reply_t reply = { 0 };
+  int retval = ipv4_ping(in, ip, &reply);
 
-  busywait(2);
+  switch (retval) {
+    case 0:
+      printf("PONG from %d.%d.%d.%d (ttl=%d sequence=%ld)\n",
+             reply.src_ip[0],
+             reply.src_ip[1],
+             reply.src_ip[2],
+             reply.src_ip[3],
+             reply.ttl,
+             reply.sequence);
+      break;
+    default:
+      printf("Ping failed (%d)\n", retval);
+  }
 }
 
 void ls(int argc, char* argv[])

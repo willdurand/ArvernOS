@@ -3,7 +3,8 @@
 #include <core/debug.h>
 #include <net/dhcp.h>
 #include <net/dns.h>
-#include <net/ethernet.h>
+#include <net/socket.h>
+#include <proc/descriptor.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -28,10 +29,15 @@ void udp_receive_packet(net_interface_t* interface,
 
   uint8_t* udp_data = ip_data + sizeof(udp_header_t);
 
+  int sockfd = get_socket_descriptor_for_port(udp_header.dst_port);
+  DEBUG("got sockfd=%d for dst_port=%d", sockfd, udp_header.dst_port);
+
+  if (sockfd > 0) {
+    socket_bufferize(sockfd, udp_data, udp_header.len - sizeof(udp_header_t));
+    return;
+  }
+
   switch (udp_header.dst_port) {
-    case PORT_DNS_CLIENT:
-      dns_receive_packet(interface, udp_data, &udp_header);
-      break;
     case PORT_DHCP_CLIENT:
       dhcp_receive_packet(interface, udp_data, &udp_header);
       break;
@@ -93,22 +99,16 @@ void udp_send_packet(net_interface_t* interface,
 
   free(pseudo_header);
 
-  // Create IPv4 datagram, encapsulating the UDP packet and data.
-  uint32_t datagram_len = sizeof(udp_header_t) + sizeof(ipv4_header_t) + len;
-
-  ipv4_header_t ipv4_header = ipv4_create_header(interface->ip,
-                                                 dst_addr->sin_addr.s_addr,
-                                                 IPV4_PROTO_UDP,
-                                                 IPV4_FLAG_DF,
-                                                 datagram_len);
+  uint32_t datagram_len = sizeof(udp_header_t) + len;
 
   uint8_t* datagram = malloc(datagram_len);
-  memcpy(datagram, &ipv4_header, sizeof(ipv4_header_t));
-  memcpy(datagram + sizeof(ipv4_header_t), &udp_header, sizeof(udp_header_t));
-  memcpy(datagram + sizeof(ipv4_header_t) + sizeof(udp_header_t), data, len);
+  memcpy(datagram, &udp_header, sizeof(udp_header_t));
+  memcpy(datagram + sizeof(udp_header_t), data, len);
 
-  ethernet_transmit_frame(
-    interface, dst_mac, ETHERTYPE_IPV4, datagram, datagram_len);
+  DEBUG("sending packet to dst_port=%d", ntohs(dst_addr->sin_port));
+
+  ipv4_send_packet(
+    interface, dst_addr, IPV4_PROTO_UDP, IPV4_FLAG_DF, datagram, datagram_len);
 
   free(datagram);
 }

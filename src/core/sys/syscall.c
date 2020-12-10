@@ -8,6 +8,7 @@
 #include <fs/vfs.h>
 #include <kernel/console.h>
 #include <kernel/panic.h>
+#include <net/socket.h>
 #include <proc/descriptor.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -21,16 +22,6 @@ static syscall_handler_t syscall_handlers[NB_SYSCALLS + 1] = { 0 };
 
 void syscall_register_handler(uint8_t id, syscall_handler_t handler);
 
-void syscall_test(registers_t* registers);
-void syscall_write(registers_t* registers);
-void syscall_read(registers_t* registers);
-void syscall_gettimeofday(registers_t* registers);
-void syscall_open(registers_t* registers);
-void syscall_close(registers_t* registers);
-void syscall_reboot(registers_t* registers);
-void syscall_fstat(registers_t* registers);
-void syscall_lseek(registers_t* registers);
-
 void syscall_init()
 {
   syscall_register_handler(SYSCALL_TEST, syscall_test);
@@ -42,6 +33,9 @@ void syscall_init()
   syscall_register_handler(SYSCALL_REBOOT, syscall_reboot);
   syscall_register_handler(SYSCALL_FSTAT, syscall_fstat);
   syscall_register_handler(SYSCALL_LSEEK, syscall_lseek);
+  syscall_register_handler(SYSCALL_SOCKET, syscall_socket);
+  syscall_register_handler(SYSCALL_SENDTO, syscall_sendto);
+  syscall_register_handler(SYSCALL_RECVFROM, syscall_recvfrom);
 }
 
 void syscall_register_handler(uint8_t id, syscall_handler_t handler)
@@ -190,7 +184,7 @@ void syscall_open(registers_t* registers)
   if (fd == -1) {
     DEBUG("%s", "too many files open");
     registers->rdx = -1;
-    errno = EMFILE;
+    errno = ENFILE;
     return;
   }
 
@@ -221,7 +215,14 @@ void syscall_close(registers_t* registers)
     return;
   }
 
-  registers->rdx = vfs_close(desc->inode);
+  if (desc->inode != NULL) {
+    registers->rdx = vfs_close(desc->inode);
+  }
+
+  if (desc->port != 0) {
+    registers->rdx = socket_delete_buffer(fd);
+  }
+
   delete_descriptor(fd);
 
   DEBUG("close fd=%d", fd);

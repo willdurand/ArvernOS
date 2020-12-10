@@ -1,6 +1,6 @@
 #include <sys/syscall.h>
 
-int open(const char* pathname, uint32_t flags, ...)
+int open(const char* pathname, uint32_t flags)
 {
   int fd = 0;
 
