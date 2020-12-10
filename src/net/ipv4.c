@@ -1,4 +1,5 @@
 #include "ipv4.h"
+#include <arpa/inet.h>
 #include <core/debug.h>
 #include <net/ethernet.h>
 #include <net/udp.h>
@@ -117,7 +118,7 @@ void ipv4_ping(net_interface_t* interface, uint8_t dst_ip[4])
   icmpv4_echo_t icmpv4_echo = { .type = ICMPV4_TYPE_REQUEST,
                                 .code = 0,
                                 .checksum = 0,
-                                .id = HTONS(icmpv4_id),
+                                .id = htons(icmpv4_id),
                                 .sequence = 0,
                                 .data = 0 };
   icmpv4_echo.checksum = ipv4_checksum(&icmpv4_echo, sizeof(icmpv4_echo_t));
@@ -151,13 +152,13 @@ ipv4_header_t ipv4_create_header(uint8_t src_ip[4],
   ipv4_header_t ipv4_header = { .ihl = 5,
                                 .version = IPV4_VERSION,
                                 .service = 0,
-                                .len = HTONS(len),
-                                .id = HTONS(ipv4_id),
-                                .flags = HTONS(flags),
+                                .len = htons(len),
+                                .id = htons(ipv4_id),
+                                .flags = htons(flags),
                                 .ttl = IPV4_DEFAULT_TTL,
                                 .proto = protocol,
-                                .src_addr = HTONL(src_addr),
-                                .dst_addr = HTONL(dst_addr) };
+                                .src_addr = htonl(src_addr),
+                                .dst_addr = htonl(dst_addr) };
   ipv4_header.checksum = ipv4_checksum(&ipv4_header, sizeof(ipv4_header_t));
 
   ipv4_id++;

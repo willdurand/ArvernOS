@@ -12,15 +12,6 @@
 #define ETHERTYPE_ARP  0x0806
 #define ETHERTYPE_IPV4 0x0800
 
-// TODO: ideally, we'd check the endianness of the system but this project is
-// for x86_64 only (i.e. it's little endian and we have to use those macros).
-#define HTONS(n) ((((n)&0xFF) << 8) | (((n)&0xFF00) >> 8))
-#define NTOHS(n) HTONS(n)
-#define HTONL(n)                                                               \
-  ((((n)&0x000000FF) << 24) | (((n)&0x0000FF00) << 8) |                        \
-   (((n)&0x00FF0000) >> 8) | (((n)&0xFF000000) >> 24))
-#define NTOHL(n) HTONL(n)
-
 typedef struct ethernet_header
 {
   uint8_t dst_mac[6];

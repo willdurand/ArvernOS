@@ -1,4 +1,5 @@
 #include "udp.h"
+#include <arpa/inet.h>
 #include <core/debug.h>
 #include <net/ethernet.h>
 #include <stdlib.h>
@@ -12,12 +13,12 @@ void udp_receive_packet(net_interface_t* interface,
 
   udp_header_t udp_header = { 0 };
   memcpy(&udp_header, ip_data, sizeof(udp_header_t));
-  udp_header.src_port = NTOHS(udp_header.src_port);
-  udp_header.dst_port = NTOHS(udp_header.dst_port);
-  udp_header.len = NTOHS(udp_header.len);
-  udp_header.checksum = NTOHS(udp_header.checksum);
+  udp_header.src_port = ntohs(udp_header.src_port);
+  udp_header.dst_port = ntohs(udp_header.dst_port);
+  udp_header.len = ntohs(udp_header.len);
+  udp_header.checksum = ntohs(udp_header.checksum);
 
-  DEBUG("udp packet received: src_port=%d dest_port=%d len=%d checksum=%x",
+  DEBUG("udp packet received: src_port=%d dst_port=%d len=%d checksum=%x",
         udp_header.src_port,
         udp_header.dst_port,
         udp_header.len,
@@ -41,9 +42,9 @@ void udp_send_packet(net_interface_t* interface,
                      uint32_t len)
 {
   uint16_t udp_len = sizeof(udp_header_t) + len;
-  udp_header_t udp_header = { .src_port = HTONS(src_port),
-                              .dst_port = HTONS(dst_port),
-                              .len = HTONS(udp_len),
+  udp_header_t udp_header = { .src_port = htons(src_port),
+                              .dst_port = htons(dst_port),
+                              .len = htons(udp_len),
                               .checksum = 0 };
 
   // Compute a checksum. Not very efficient but it seems to work. It is heavily
