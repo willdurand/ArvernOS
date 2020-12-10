@@ -1,4 +1,5 @@
 #include "arp.h"
+#include <arpa/inet.h>
 #include <core/debug.h>
 #include <net/ethernet.h>
 #include <stdbool.h>
@@ -17,11 +18,11 @@ void arp_request(net_interface_t* interface, uint8_t ip[4])
 
   // Create ARP packet.
   arp_packet_t arp_packet = {
-    .hardware_type = HTONS(ARP_HTYPE_ETHERNET),
-    .protocol_type = HTONS(ETHERTYPE_IPV4),
+    .hardware_type = htons(ARP_HTYPE_ETHERNET),
+    .protocol_type = htons(ETHERTYPE_IPV4),
     .hardware_size = 6,
     .protocol_size = 4,
-    .opcode = HTONS(ARP_REQUEST),
+    .opcode = htons(ARP_REQUEST),
   };
   memcpy(arp_packet.src_mac, interface->mac, 6);
   memcpy(arp_packet.src_ip, interface->ip, 4);
@@ -57,9 +58,9 @@ void arp_receive_packet(net_interface_t* interface, uint8_t* data, uint32_t len)
 {
   arp_packet_t packet = { 0 };
   memcpy(&packet, data, sizeof(arp_packet_t));
-  packet.hardware_type = NTOHS(packet.hardware_type);
-  packet.protocol_type = NTOHS(packet.protocol_type);
-  packet.opcode = NTOHS(packet.opcode);
+  packet.hardware_type = ntohs(packet.hardware_type);
+  packet.protocol_type = ntohs(packet.protocol_type);
+  packet.opcode = ntohs(packet.opcode);
 
   DEBUG("received ARP packet from: %d.%d.%d.%d "
         "(%02x:%02x:%02x:%02x:%02x:%02x) on interface=%d",
@@ -97,11 +98,11 @@ void arp_receive_packet(net_interface_t* interface, uint8_t* data, uint32_t len)
 void arp_reply(net_interface_t* interface, arp_packet_t* request)
 {
   arp_packet_t reply = {
-    .hardware_type = HTONS(request->hardware_type),
+    .hardware_type = htons(request->hardware_type),
     .hardware_size = 6,
-    .protocol_type = HTONS(request->protocol_type),
+    .protocol_type = htons(request->protocol_type),
     .protocol_size = 4,
-    .opcode = HTONS(ARP_REPLY),
+    .opcode = htons(ARP_REPLY),
   };
   memcpy(reply.src_mac, interface->mac, 6);
   memcpy(reply.src_ip, interface->mac, 4);
