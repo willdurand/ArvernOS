@@ -6,6 +6,7 @@
 #ifndef NET_IPV4_H
 #define NET_IPV4_H
 
+#include <arpa/inet.h>
 #include <net/net.h>
 #include <sys/types.h>
 
@@ -84,14 +85,14 @@ uint16_t ipv4_checksum(void* addr, int count);
  * Creates an IPv4 header structure.
  *
  * @param src_ip the source IP
- * @param dst_ip the destination IP
+ * @param dst_addr the destination socket address
  * @param protocol the protocol encapsulated in the IP packet
  * @param flags IP flags
  * @param len the length of the IP packet
  * @return an IPv4 header structure
  */
 ipv4_header_t ipv4_create_header(uint8_t src_ip[4],
-                                 uint8_t dst_ip[4],
+                                 in_addr_t dst_addr,
                                  uint8_t protocol,
                                  uint16_t flags,
                                  uint16_t len);

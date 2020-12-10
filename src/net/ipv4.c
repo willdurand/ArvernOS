@@ -1,5 +1,4 @@
 #include "ipv4.h"
-#include <arpa/inet.h>
 #include <core/debug.h>
 #include <net/ethernet.h>
 #include <net/udp.h>
@@ -127,8 +126,11 @@ void ipv4_ping(net_interface_t* interface, uint8_t dst_ip[4])
   // Create IPv4 datagram, encapsulating the ICMPv4 packet.
   uint32_t datagram_len = sizeof(icmpv4_echo_t) + sizeof(ipv4_header_t);
 
-  ipv4_header_t ipv4_header =
-    ipv4_create_header(interface->ip, dst_ip, IPV4_PROTO_ICMP, 0, datagram_len);
+  ipv4_header_t ipv4_header = ipv4_create_header(interface->ip,
+                                                 htonl(ipv4_to_value(dst_ip)),
+                                                 IPV4_PROTO_ICMP,
+                                                 0,
+                                                 datagram_len);
 
   uint8_t* datagram = malloc(datagram_len);
   memcpy(datagram, &ipv4_header, sizeof(ipv4_header_t));
@@ -141,13 +143,12 @@ void ipv4_ping(net_interface_t* interface, uint8_t dst_ip[4])
 }
 
 ipv4_header_t ipv4_create_header(uint8_t src_ip[4],
-                                 uint8_t dst_ip[4],
+                                 in_addr_t dst_addr,
                                  uint8_t protocol,
                                  uint16_t flags,
                                  uint16_t len)
 {
   uint32_t src_addr = ipv4_to_value(src_ip);
-  uint32_t dst_addr = ipv4_to_value(dst_ip);
 
   ipv4_header_t ipv4_header = { .ihl = 5,
                                 .version = IPV4_VERSION,
@@ -158,7 +159,7 @@ ipv4_header_t ipv4_create_header(uint8_t src_ip[4],
                                 .ttl = IPV4_DEFAULT_TTL,
                                 .proto = protocol,
                                 .src_addr = htonl(src_addr),
-                                .dst_addr = htonl(dst_addr) };
+                                .dst_addr = dst_addr };
   ipv4_header.checksum = ipv4_checksum(&ipv4_header, sizeof(ipv4_header_t));
 
   ipv4_id++;
