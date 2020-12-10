@@ -21,4 +21,18 @@ void syscall_init();
  */
 void syscall_handler(registers_t* registers);
 
+// Below are the different syscall handlers.
+void syscall_test(registers_t* registers);
+void syscall_write(registers_t* registers);
+void syscall_read(registers_t* registers);
+void syscall_gettimeofday(registers_t* registers);
+void syscall_open(registers_t* registers);
+void syscall_close(registers_t* registers);
+void syscall_reboot(registers_t* registers);
+void syscall_fstat(registers_t* registers);
+void syscall_lseek(registers_t* registers);
+void syscall_socket(registers_t* registers);
+void syscall_sendto(registers_t* registers);
+void syscall_recvfrom(registers_t* registers);
+
 #endif

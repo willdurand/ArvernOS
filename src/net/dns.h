@@ -12,6 +12,12 @@
 #define DNS_TYPE_A   0x0001
 #define DNS_CLASS_IN 0x0001
 
+#define DNS_ERR_SOCK      1
+#define DNS_ERR_SEND      2
+#define DNS_ERR_RECV      3
+#define DNS_ERR_CLASS     4
+#define DNS_ERR_NO_ANSWER 5
+
 typedef struct dns_header
 {
   uint16_t id;
@@ -36,18 +42,9 @@ typedef struct dns_answer_header
  *
  * @param interface the interface that should be used to send the DNS packet
  * @param domain the domain name that is to be looked up
+ * @param ip the receiving array for the IPv4 address
+ * @return `0` on success, something else on error
  */
-void dns_request(net_interface_t* interface, char* domain);
-
-/**
- * Receives a DNS packet.
- *
- * @param interface the interface on which the DNS packet has been received
- * @param packet the DNS packet
- * @param udp_header the UDP header
- */
-void dns_receive_packet(net_interface_t* interface,
-                        uint8_t* packet,
-                        udp_header_t* udp_header);
+int dns_lookup(net_interface_t* interface, char* domain, uint8_t ip[4]);
 
 #endif

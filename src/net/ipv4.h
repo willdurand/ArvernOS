@@ -51,13 +51,23 @@ typedef struct icmpv4_echo
   uint8_t* data;
 } __attribute__((packed)) icmpv4_echo_t;
 
+typedef struct icmpv4_reply
+{
+  uint8_t src_ip[4];
+  uint16_t sequence;
+  uint8_t ttl;
+} icmpv4_reply_t;
+
 /**
- * "Pings" an IPv4 address, i.e. sends an ICMPv4 packet to it.
+ * "Pings" an IPv4 address, i.e. sends an ICMPv4 packet to it and waits for an
+ * ICMPv4 reply.
  *
  * @param interface the interface to use to send the ICMPv4 request
  * @param dst_ip the IPv4 address to ping
+ * @param reply the ICMPv4 reply
+ * @return `0` on success, something else otherwise
  */
-void ipv4_ping(net_interface_t* interface, uint8_t dst_ip[4]);
+int ipv4_ping(net_interface_t* interface, uint8_t ip[4], icmpv4_reply_t* reply);
 
 /**
  * Handles IPv4 packets.
@@ -82,19 +92,20 @@ void ipv4_receive_packet(net_interface_t* interface,
 uint16_t ipv4_checksum(void* addr, int count);
 
 /**
- * Creates an IPv4 header structure.
+ * Sends an IPv4 packet.
  *
- * @param src_ip the source IP
+ * @param interface the interface to use to send the IPv4 request
  * @param dst_addr the destination socket address
  * @param protocol the protocol encapsulated in the IP packet
  * @param flags IP flags
- * @param len the length of the IP packet
- * @return an IPv4 header structure
+ * @param data the data to send over IP
+ * @param len the size of the data to send
  */
-ipv4_header_t ipv4_create_header(uint8_t src_ip[4],
-                                 in_addr_t dst_addr,
-                                 uint8_t protocol,
-                                 uint16_t flags,
-                                 uint16_t len);
+void ipv4_send_packet(net_interface_t* interface,
+                      struct sockaddr_in* dst_addr,
+                      uint8_t protocol,
+                      uint16_t flags,
+                      uint8_t* data,
+                      uint32_t len);
 
 #endif
