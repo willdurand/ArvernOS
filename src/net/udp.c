@@ -36,14 +36,13 @@ void udp_receive_packet(net_interface_t* interface,
 void udp_send_packet(net_interface_t* interface,
                      uint16_t src_port,
                      uint8_t dst_mac[6],
-                     uint8_t dst_ip[4],
-                     uint16_t dst_port,
+                     struct sockaddr_in* dst_addr,
                      uint8_t* data,
                      uint32_t len)
 {
   uint16_t udp_len = sizeof(udp_header_t) + len;
   udp_header_t udp_header = { .src_port = htons(src_port),
-                              .dst_port = htons(dst_port),
+                              .dst_port = dst_addr->sin_port,
                               .len = htons(udp_len),
                               .checksum = 0 };
 
@@ -63,13 +62,13 @@ void udp_send_packet(net_interface_t* interface,
 
   pseudo_header[0] = interface->ip[0] | (interface->ip[1] << 8);
   pseudo_header[1] = interface->ip[2] | (interface->ip[3] << 8);
-  pseudo_header[2] = dst_ip[0] | (dst_ip[1] << 8);
-  pseudo_header[3] = dst_ip[2] | (dst_ip[3] << 8);
-  pseudo_header[4] = HTONS(IPV4_PROTO_UDP);
-  pseudo_header[5] = HTONS(len + sizeof(udp_header_t));
-  pseudo_header[6] = HTONS(src_port);
-  pseudo_header[7] = HTONS(dst_port);
-  pseudo_header[8] = HTONS(len + sizeof(udp_header_t));
+  pseudo_header[2] = (uint16_t)(dst_addr->sin_addr.s_addr >> 16);
+  pseudo_header[3] = (uint16_t)(dst_addr->sin_addr.s_addr);
+  pseudo_header[4] = htons(IPV4_PROTO_UDP);
+  pseudo_header[5] = htons(len + sizeof(udp_header_t));
+  pseudo_header[6] = htons(src_port);
+  pseudo_header[7] = dst_addr->sin_port;
+  pseudo_header[8] = htons(len + sizeof(udp_header_t));
 
   uint32_t idx = 9;
   for (uint32_t i = 0; i < len; i += 2) {
@@ -87,8 +86,11 @@ void udp_send_packet(net_interface_t* interface,
   // Create IPv4 datagram, encapsulating the UDP packet and data.
   uint32_t datagram_len = sizeof(udp_header_t) + sizeof(ipv4_header_t) + len;
 
-  ipv4_header_t ipv4_header = ipv4_create_header(
-    interface->ip, dst_ip, IPV4_PROTO_UDP, IPV4_FLAG_DF, datagram_len);
+  ipv4_header_t ipv4_header = ipv4_create_header(interface->ip,
+                                                 dst_addr->sin_addr.s_addr,
+                                                 IPV4_PROTO_UDP,
+                                                 IPV4_FLAG_DF,
+                                                 datagram_len);
 
   uint8_t* datagram = malloc(datagram_len);
   memcpy(datagram, &ipv4_header, sizeof(ipv4_header_t));
