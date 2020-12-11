@@ -12,16 +12,10 @@ static uint64_t multiboot_start;
 static uint64_t multiboot_end;
 static uint64_t max_frames;
 
-// List of reserved frames from identity mapping
-frame_number_t reserved_frames[102400];
-uint32_t reserved_frames_count = 0;
-
 // These variables can be accessed by other parts of the kernel and we do that
 // in `paging_init()` to identity map the bitmap for allocated frames.
 uint8_t frames_for_bitmap = 0;
 bitmap_t* allocated_frames = NULL;
-
-bool is_reserved_frame(frame_number_t frame_number);
 
 void frame_init(multiboot_info_t* mbi)
 {
@@ -38,16 +32,16 @@ void frame_init(multiboot_info_t* mbi)
 
   _frame_init_bitmap((bitmap_t*)frame.value);
 
-  DEBUG_OUT("initialized frame allocator with multiboot_start = %p "
-            "multiboot_end=%p kernel_start=%p kernel_end=%p max_frames=%u "
-            "allocated_frames=%p used_count=%d",
-            multiboot_start,
-            multiboot_end,
-            kernel_start,
-            kernel_end,
-            max_frames,
-            allocated_frames,
-            frame_get_used_count());
+  DEBUG("initialized frame allocator with multiboot_start = %p "
+        "multiboot_end=%p kernel_start=%p kernel_end=%p max_frames=%lld "
+        "allocated_frames=%p used_count=%lld",
+        multiboot_start,
+        multiboot_end,
+        kernel_start,
+        kernel_end,
+        max_frames,
+        allocated_frames,
+        frame_get_used_count());
 }
 
 void _frame_init(reserved_areas_t* reserved, multiboot_tag_mmap_t* mmap)
@@ -98,9 +92,7 @@ opt_uint64_t frame_allocate()
   uint64_t frame_number = 0;
 
   for (uint64_t i = 0; i < max_frames; i++) {
-    if (bitmap_get(allocated_frames, i) == false &&
-        is_reserved_frame(i) == false) {
-
+    if (bitmap_get(allocated_frames, i) == false) {
       frame_number = i;
       break;
     }
@@ -109,7 +101,7 @@ opt_uint64_t frame_allocate()
   opt_uint64_t frame = read_mmap(frame_number);
 
   if (frame.has_value) {
-    MMU_DEBUG("allocated frame=%u addr=%p", frame_number, frame.value);
+    MMU_DEBUG("allocated frame=%lld addr=%p", frame_number, frame.value);
     bitmap_set(allocated_frames, frame_number);
   }
 
@@ -118,7 +110,7 @@ opt_uint64_t frame_allocate()
 
 void frame_deallocate(frame_number_t frame_number)
 {
-  DEBUG_OUT("deallocating frame=%u", frame_number);
+  DEBUG("deallocating frame=%lld", frame_number);
   bitmap_clear(allocated_frames, frame_number);
 }
 
@@ -182,36 +174,9 @@ uint64_t frame_get_max_count()
   return max_frames;
 }
 
-bool is_reserved_frame(frame_number_t frame_number)
-{
-  for (uint32_t i = 0; i < reserved_frames_count; i++) {
-    if (reserved_frames[i] == frame_number) {
-      return true;
-    }
-  }
-
-  return false;
-}
-
 void frame_mark_as_used(uint64_t physical_address)
 {
-  frame_number_t frame_number = frame_containing_address(physical_address);
-
-  for (uint32_t i = 0; i < reserved_frames_count; i++) {
-    if (reserved_frames[i] == frame_number) {
-      return;
-    }
-  }
-
-  if (reserved_frames_count >=
-      sizeof(reserved_frames) / sizeof(reserved_frames[0])) {
-    DEBUG_OUT(
-      "Unable to reserve an identity frame: Exceeded limit of %u reserved "
-      "identity frames",
-      reserved_frames_count);
-
-    return;
-  }
-
-  reserved_frames[reserved_frames_count++] = frame_number;
+  frame_number_t frame = frame_containing_address(physical_address);
+  DEBUG("marking frame=%lld (addr=%p) as used", frame, physical_address);
+  bitmap_set(allocated_frames, frame);
 }

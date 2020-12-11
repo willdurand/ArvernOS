@@ -5,10 +5,10 @@
 #include <drivers/timer.h>
 #include <errno.h>
 #include <fcntl.h>
-#include <fs/fd.h>
 #include <fs/vfs.h>
 #include <kernel/console.h>
 #include <kernel/panic.h>
+#include <proc/descriptor.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -75,7 +75,7 @@ void syscall_write(registers_t* registers)
   char* buf = (char*)registers->rcx;
   size_t count = (size_t)registers->rsi;
 
-  if (fd == FD_STDOUT || fd == FD_STDERR) {
+  if (fd == STDOUT || fd == STDERR) {
     registers->rdx = console_write(buf, count);
     return;
   }
@@ -89,7 +89,7 @@ void syscall_write(registers_t* registers)
 
   DEBUG_OUT("fd=%d buf=%p count=%d", fd, buf, count);
 
-  file_descriptor_t* desc = get_file_descriptor(fd);
+  descriptor_t* desc = get_descriptor(fd);
 
   if (desc == 0) {
     DEBUG_OUT("file descriptor fd=%d not found", fd);
@@ -117,7 +117,7 @@ void syscall_read(registers_t* registers)
   char* buf = (char*)registers->rcx;
   size_t count = (size_t)registers->rsi;
 
-  if (fd == FD_STDIN) {
+  if (fd == STDIN) {
     uint8_t scancode = keyboard_get_scancode();
 
     if (scancode) {
@@ -137,7 +137,7 @@ void syscall_read(registers_t* registers)
 
   DEBUG_OUT("fd=%d buf=%p count=%d", fd, buf, count);
 
-  file_descriptor_t* desc = get_file_descriptor(fd);
+  descriptor_t* desc = get_descriptor(fd);
 
   if (desc == 0) {
     DEBUG_OUT("file descriptor fd=%d not found", fd);
@@ -213,7 +213,7 @@ void syscall_close(registers_t* registers)
     return;
   }
 
-  file_descriptor_t* desc = get_file_descriptor(fd);
+  descriptor_t* desc = get_descriptor(fd);
 
   if (desc == 0) {
     DEBUG_OUT("file descriptor fd=%d not found", fd);
@@ -223,7 +223,7 @@ void syscall_close(registers_t* registers)
   }
 
   registers->rdx = vfs_close(desc->inode);
-  delete_file_descriptor(fd);
+  delete_descriptor(fd);
 
   DEBUG_OUT("close fd=%d", fd);
 }
@@ -251,7 +251,7 @@ void syscall_fstat(registers_t* registers)
     return;
   }
 
-  file_descriptor_t* desc = get_file_descriptor(fd);
+  descriptor_t* desc = get_descriptor(fd);
 
   if (desc == 0) {
     DEBUG_OUT("file descriptor fd=%d not found", fd);
@@ -282,7 +282,7 @@ void syscall_lseek(registers_t* registers)
     return;
   }
 
-  file_descriptor_t* desc = get_file_descriptor(fd);
+  descriptor_t* desc = get_descriptor(fd);
 
   if (desc == 0) {
     DEBUG_OUT("file descriptor fd=%d not found", fd);
