@@ -89,23 +89,28 @@ void _frame_init_bitmap(bitmap_t* addr)
 
 opt_uint64_t frame_allocate()
 {
-  uint64_t frame_number = 0;
+  opt_uint64_t frame_number = (opt_uint64_t){ .has_value = false, .value = 0 };
 
   for (uint64_t i = 0; i < max_frames; i++) {
     if (bitmap_get(allocated_frames, i) == false) {
-      frame_number = i;
+      frame_number = (opt_uint64_t){ .has_value = true, .value = i };
       break;
     }
   }
 
-  opt_uint64_t frame = read_mmap(frame_number);
+  if (frame_number.has_value) {
+    opt_uint64_t frame = read_mmap(frame_number.value);
 
-  if (frame.has_value) {
-    MMU_DEBUG("allocated frame=%lld addr=%p", frame_number, frame.value);
-    bitmap_set(allocated_frames, frame_number);
+    if (frame.has_value) {
+      MMU_DEBUG(
+        "allocated frame=%lld addr=%p", frame_number.value, frame.value);
+      bitmap_set(allocated_frames, frame_number.value);
+    }
+
+    return frame;
   }
 
-  return frame;
+  return (opt_uint64_t){ .has_value = false, .value = 0 };
 }
 
 void frame_deallocate(frame_number_t frame_number)
@@ -177,6 +182,15 @@ uint64_t frame_get_max_count()
 void frame_mark_as_used(uint64_t physical_address)
 {
   frame_number_t frame = frame_containing_address(physical_address);
-  DEBUG_OUT("marking frame=%lld (addr=%p) as used", frame, physical_address);
-  bitmap_set(allocated_frames, frame);
+
+  if (frame >= max_frames) {
+    DEBUG_OUT("not marking frame=%lld (addr=%p) as used as it is outside our "
+              "frame limits",
+              frame,
+              physical_address);
+  } else {
+
+    DEBUG_OUT("marking frame=%lld (addr=%p) as used", frame, physical_address);
+    bitmap_set(allocated_frames, frame);
+  }
 }
