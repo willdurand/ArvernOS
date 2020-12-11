@@ -32,16 +32,16 @@ void frame_init(multiboot_info_t* mbi)
 
   _frame_init_bitmap((bitmap_t*)frame.value);
 
-  DEBUG("initialized frame allocator with multiboot_start = %p "
-        "multiboot_end=%p kernel_start=%p kernel_end=%p max_frames=%lld "
-        "allocated_frames=%p used_count=%lld",
-        multiboot_start,
-        multiboot_end,
-        kernel_start,
-        kernel_end,
-        max_frames,
-        allocated_frames,
-        frame_get_used_count());
+  DEBUG_OUT("initialized frame allocator with multiboot_start = %p "
+            "multiboot_end=%p kernel_start=%p kernel_end=%p max_frames=%lld "
+            "allocated_frames=%p used_count=%lld",
+            multiboot_start,
+            multiboot_end,
+            kernel_start,
+            kernel_end,
+            max_frames,
+            allocated_frames,
+            frame_get_used_count());
 }
 
 void _frame_init(reserved_areas_t* reserved, multiboot_tag_mmap_t* mmap)
@@ -110,7 +110,7 @@ opt_uint64_t frame_allocate()
 
 void frame_deallocate(frame_number_t frame_number)
 {
-  DEBUG("deallocating frame=%lld", frame_number);
+  DEBUG_OUT("deallocating frame=%lld", frame_number);
   bitmap_clear(allocated_frames, frame_number);
 }
 
@@ -177,6 +177,6 @@ uint64_t frame_get_max_count()
 void frame_mark_as_used(uint64_t physical_address)
 {
   frame_number_t frame = frame_containing_address(physical_address);
-  DEBUG("marking frame=%lld (addr=%p) as used", frame, physical_address);
+  DEBUG_OUT("marking frame=%lld (addr=%p) as used", frame, physical_address);
   bitmap_set(allocated_frames, frame);
 }

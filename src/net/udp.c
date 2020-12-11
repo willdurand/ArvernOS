@@ -19,11 +19,11 @@ void udp_receive_packet(net_interface_t* interface,
   udp_header.len = ntohs(udp_header.len);
   udp_header.checksum = ntohs(udp_header.checksum);
 
-  DEBUG("udp packet received: src_port=%d dst_port=%d len=%d checksum=%x",
-        udp_header.src_port,
-        udp_header.dst_port,
-        udp_header.len,
-        udp_header.checksum);
+  DEBUG_OUT("udp packet received: src_port=%d dst_port=%d len=%d checksum=%x",
+            udp_header.src_port,
+            udp_header.dst_port,
+            udp_header.len,
+            udp_header.checksum);
 
   uint8_t* udp_data = ip_data + sizeof(udp_header_t);
 
@@ -32,8 +32,9 @@ void udp_receive_packet(net_interface_t* interface,
       dns_receive_packet(interface, udp_data, &udp_header);
       break;
     default:
-      DEBUG("dropping udp packet (port=%d) because it cannot be handled yet",
-            udp_header.src_port);
+      DEBUG_OUT(
+        "dropping udp packet (port=%d) because it cannot be handled yet",
+        udp_header.src_port);
   }
 }
 

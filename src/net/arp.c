@@ -51,7 +51,7 @@ void arp_wait_reply(uint8_t* dst_mac)
     }
   }
 
-  DEBUG("%s", "no ARP reply");
+  DEBUG_OUT("%s", "no ARP reply");
 }
 
 void arp_receive_packet(net_interface_t* interface, uint8_t* data, uint32_t len)
@@ -62,23 +62,23 @@ void arp_receive_packet(net_interface_t* interface, uint8_t* data, uint32_t len)
   packet.protocol_type = ntohs(packet.protocol_type);
   packet.opcode = ntohs(packet.opcode);
 
-  DEBUG("received ARP packet from: %d.%d.%d.%d "
-        "(%02x:%02x:%02x:%02x:%02x:%02x) on interface=%d",
-        packet.src_ip[0],
-        packet.src_ip[1],
-        packet.src_ip[2],
-        packet.src_ip[3],
-        packet.src_mac[0],
-        packet.src_mac[1],
-        packet.src_mac[2],
-        packet.src_mac[3],
-        packet.src_mac[4],
-        packet.src_mac[5],
-        interface->id);
+  DEBUG_OUT("received ARP packet from: %d.%d.%d.%d "
+            "(%02x:%02x:%02x:%02x:%02x:%02x) on interface=%d",
+            packet.src_ip[0],
+            packet.src_ip[1],
+            packet.src_ip[2],
+            packet.src_ip[3],
+            packet.src_mac[0],
+            packet.src_mac[1],
+            packet.src_mac[2],
+            packet.src_mac[3],
+            packet.src_mac[4],
+            packet.src_mac[5],
+            interface->id);
 
   switch (packet.opcode) {
     case ARP_REQUEST:
-      DEBUG("%s", "packet is a request");
+      DEBUG_OUT("%s", "packet is a request");
 
       if (packet.dst_ip[0] == interface->ip[0] &&
           packet.dst_ip[1] == interface->ip[1] &&
@@ -88,7 +88,7 @@ void arp_receive_packet(net_interface_t* interface, uint8_t* data, uint32_t len)
       }
       break;
     case ARP_REPLY:
-      DEBUG("%s", "packet is a reply");
+      DEBUG_OUT("%s", "packet is a reply");
       memcpy(last_arp_mac_addr, packet.src_mac, 6);
       last_arp_mac_addr_set = true;
       break;

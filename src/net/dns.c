@@ -66,9 +66,9 @@ void dns_request(net_interface_t* interface, char* domain)
 
   free(data);
 
-  DEBUG("sending dns packet: id=0x%04x flags=0x%04x",
-        ntohs(dns_header.id),
-        ntohs(dns_header.flags));
+  DEBUG_OUT("sending dns packet: id=0x%04x flags=0x%04x",
+            ntohs(dns_header.id),
+            ntohs(dns_header.flags));
 
   struct sockaddr_in addr = {
     .sin_family = AF_INET,
@@ -97,10 +97,10 @@ void dns_receive_packet(net_interface_t* interface,
   dns_header.nscount = ntohs(dns_header.nscount);
   dns_header.arcount = ntohs(dns_header.arcount);
 
-  DEBUG("dns packet received: id=0x%04x qdcount=%d ancount=%d",
-        dns_header.id,
-        dns_header.qdcount,
-        dns_header.ancount);
+  DEBUG_OUT("dns packet received: id=0x%04x qdcount=%d ancount=%d",
+            dns_header.id,
+            dns_header.qdcount,
+            dns_header.ancount);
 
   uint8_t* dns_data = packet + sizeof(dns_header_t);
 
