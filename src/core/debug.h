@@ -41,6 +41,17 @@ static const uint16_t serial_com1 = SERIAL_COM1;
 
 #endif
 
+#define HEX_DEBUG(data, len)                                                   \
+  DEBUG("%s", "(hexdump)");                                                    \
+  for (uint64_t i = 0; i < len; i++) {                                         \
+    if (i > 0 && i % 8 == 0) {                                                 \
+      fctprintf(&serial_stream_output, (void*)&serial_com1, "\n");             \
+    }                                                                          \
+    fctprintf(                                                                 \
+      &serial_stream_output, (void*)&serial_com1, "%02x ", (uint8_t)data[i]);  \
+  }                                                                            \
+  fctprintf(&serial_stream_output, (void*)&serial_com1, "\n");
+
 #else
 
 #ifdef ENABLE_DEBUG_FOR_TEST
@@ -55,6 +66,8 @@ static const uint16_t serial_com1 = SERIAL_COM1;
 #else
 
 #define DEBUG(format, ...)
+
+#define HEX_DEBUG(data, len)
 
 #endif
 
