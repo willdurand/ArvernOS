@@ -38,7 +38,7 @@ CFLAGS = -DKERNEL_NAME=\"$(OS_NAME)\" \
 	 -DGIT_HASH=\"$(GIT_HASH)\" \
 	 -Wall -pedantic -std=c11 -O0 -ffreestanding -nostdlib \
 	 -fno-builtin -fstack-protector -mno-red-zone \
-	 -I src/include/ -I src/ -I libs/
+	 -I src/ -I src/include/ -I libs/
 
 DEBUG_CFLAGS = -DENABLE_KERNEL_DEBUG -DDEBUG_WITH_COLORS -DDISABLE_MMU_DEBUG
 
