@@ -73,7 +73,7 @@ void dns_request(net_interface_t* interface, char* domain)
   struct sockaddr_in addr = {
     .sin_family = AF_INET,
     .sin_port = htons(PORT_DNS),
-    .sin_addr = inet_addr2(interface->dns_ip),
+    .sin_addr = { .s_addr = inet_addr2(interface->dns_ip) },
   };
 
   udp_send_packet(
