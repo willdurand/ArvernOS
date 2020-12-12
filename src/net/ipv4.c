@@ -6,7 +6,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-void ipv4_from_value(uint32_t value, uint8_t ip[4]);
 void icmpv4_receive_packet(net_interface_t* interface,
                            uint8_t* packet,
                            ipv4_header_t* header);
@@ -23,7 +22,7 @@ void ipv4_receive_packet(net_interface_t* interface,
   memcpy(&header, data, sizeof(ipv4_header_t));
 
   uint8_t src_ip[4] = { 0 };
-  ipv4_from_value(header.src_addr, src_ip);
+  inet_ntoa2(header.src_addr, src_ip);
   DEBUG("received IPv4 packet from: %d.%d.%d.%d on interface=%d",
         src_ip[0],
         src_ip[1],
@@ -66,16 +65,6 @@ uint16_t ipv4_checksum(void* addr, int count)
   return ~sum;
 }
 
-// Retrieve src IP address from the uint32_t value. This might not work
-// correctly all the time because of endianness but it works for now...
-void ipv4_from_value(uint32_t value, uint8_t ip[4])
-{
-  memset(ip, 0, 4);
-  for (uint8_t i = 0; i < 4; i++) {
-    ip[i] = ((uint8_t*)&value)[i];
-  }
-}
-
 void icmpv4_receive_packet(net_interface_t* interface,
                            uint8_t* data,
                            ipv4_header_t* header)
@@ -90,7 +79,7 @@ void icmpv4_receive_packet(net_interface_t* interface,
         icmpv4_echo.checksum);
 
   uint8_t src_ip[4] = { 0 };
-  ipv4_from_value(header->src_addr, src_ip);
+  inet_ntoa2(header->src_addr, src_ip);
 
   if (icmpv4_echo.type == ICMPV4_TYPE_REPLY) {
     // TODO: fixme

@@ -1,6 +1,7 @@
 #include "udp.h"
 #include <arpa/inet.h>
 #include <core/debug.h>
+#include <net/dhcp.h>
 #include <net/dns.h>
 #include <net/ethernet.h>
 #include <stdlib.h>
@@ -27,9 +28,12 @@ void udp_receive_packet(net_interface_t* interface,
 
   uint8_t* udp_data = ip_data + sizeof(udp_header_t);
 
-  switch (udp_header.src_port) {
-    case PORT_DNS:
+  switch (udp_header.dst_port) {
+    case 42796:
       dns_receive_packet(interface, udp_data, &udp_header);
+      break;
+    case PORT_DHCP_CLIENT:
+      dhcp_receive_packet(interface, udp_data, &udp_header);
       break;
     default:
       DEBUG("dropping udp packet (port=%d) because it cannot be handled yet",

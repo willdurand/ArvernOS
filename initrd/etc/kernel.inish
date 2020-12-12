@@ -4,6 +4,7 @@
 hostname = "babar"
 
 [network]
+prefer-dhcp = true
 ip = "10.0.2.15"
 gateway_ip = "10.0.2.2"
 dns_ip = "10.0.2.3"

@@ -1,6 +1,7 @@
 #include "net.h"
 #include <core/debug.h>
 #include <net/arp.h>
+#include <net/dhcp.h>
 #include <net/ethernet.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,6 +11,7 @@ static net_interface_t* interfaces[NET_MAX_INTERFACES];
 
 void net_interface_init(uint8_t interface_id,
                         net_driver_t* driver,
+                        bool prefer_dhcp,
                         uint8_t ip[4],
                         uint8_t gateway_ip[4],
                         uint8_t dns_ip[4])
@@ -23,15 +25,25 @@ void net_interface_init(uint8_t interface_id,
         interface_id,
         driver->get_name());
 
-  net_interface_t* in = malloc(sizeof(net_interface_t));
+  net_interface_t* in = calloc(1, sizeof(net_interface_t));
   in->id = interface_id;
   in->driver = driver;
   in->driver->receive_frame = ethernet_receive_frame;
   in->driver->interface = in;
   memcpy(in->mac, in->driver->get_mac_address(), 6);
-  memcpy(in->ip, ip, 6);
-  memcpy(in->gateway_ip, gateway_ip, 6);
-  memcpy(in->dns_ip, dns_ip, 6);
+
+  bool network_configured = false;
+
+  if (prefer_dhcp) {
+    network_configured = dhcp_negotiate(in);
+  }
+
+  // Use static configuration when DHCP has failed.
+  if (!network_configured) {
+    memcpy(in->ip, ip, 6);
+    memcpy(in->gateway_ip, gateway_ip, 6);
+    memcpy(in->dns_ip, dns_ip, 6);
+  }
 
   arp_request(in, gateway_ip);
   arp_wait_reply(in->gateway_mac);
@@ -66,7 +78,6 @@ void net_interface_init(uint8_t interface_id,
         in->dns_mac[5]);
 
   interfaces[interface_id] = in;
-
   DEBUG("interface id=%d successfully initialized", in->id);
 }
 

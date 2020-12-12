@@ -167,11 +167,17 @@ void kmain(uint64_t addr)
     uint8_t dns_ip[4];
 
     inish_section_t* network = inish_get_section(kernel_cfg, "network");
+    opt_bool_t prefer_dhcp = inish_get_bool(network, "prefer-dhcp");
     inish_get_ipv4(network, "ip", ip);
     inish_get_ipv4(network, "gateway_ip", gateway_ip);
     inish_get_ipv4(network, "dns_ip", dns_ip);
 
-    net_interface_init(0, rtl8139_driver(), ip, gateway_ip, dns_ip);
+    net_interface_init(0,
+                       rtl8139_driver(),
+                       prefer_dhcp.has_value && prefer_dhcp.value,
+                       ip,
+                       gateway_ip,
+                       dns_ip);
     print_ok();
   } else {
     print_ko();
