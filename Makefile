@@ -43,7 +43,7 @@ CFLAGS = -DKERNEL_NAME=\"$(OS_NAME)\" \
 DEBUG_CFLAGS = -DENABLE_KERNEL_DEBUG -DDEBUG_WITH_COLORS -DDISABLE_MMU_DEBUG
 
 QEMU_OPTIONS = -m 500M \
-	       -netdev user,id=u1,ipv6=off \
+	       -netdev user,id=u1,ipv6=off,dhcpstart=10.0.2.20 \
 	       -device rtl8139,netdev=u1 \
 	       -object filter-dump,id=f1,netdev=u1,file=./logs/traffic.pcap
 

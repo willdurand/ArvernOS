@@ -19,6 +19,7 @@
 #ifndef NET_NET_H
 #define NET_NET_H
 
+#include <stdbool.h>
 #include <stdint.h>
 
 #define NET_MAX_INTERFACES 1
@@ -51,9 +52,20 @@ struct net_interface
 
 /**
  * Initializes a network interface.
+ *
+ * When `prefer_dhcp` is set to `true`, DHCP is used. If it fails, the static
+ * configuration will be used instead.
+ *
+ * @param interface_id an interface ID
+ * @param driver a network driver
+ * @param prefer_dhcp whether to use DHCP
+ * @param ip a static IPv4 address for the host
+ * @param gateway_ip a static IPv4 address for the gateway
+ * @param dns_ip a static IPv4 address for the primary DNS server
  */
 void net_interface_init(uint8_t interface_id,
                         net_driver_t* driver,
+                        bool prefer_dhcp,
                         uint8_t ip[4],
                         uint8_t gateway_ip[4],
                         uint8_t dns_ip[4]);
