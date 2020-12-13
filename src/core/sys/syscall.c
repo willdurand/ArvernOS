@@ -1,8 +1,6 @@
 #include "syscall.h"
 #include "logging.h"
-#include <drivers/cmos.h>
 #include <drivers/keyboard.h>
-#include <drivers/timer.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <fs/vfs.h>
@@ -145,18 +143,6 @@ void syscall_read(registers_t* registers)
   ssize_t bytes_read = vfs_read(desc->inode, buf, count, desc->offset);
   desc->offset += bytes_read;
   registers->rdx = bytes_read;
-}
-
-void syscall_gettimeofday(registers_t* registers)
-{
-  struct timeval* t = (struct timeval*)registers->rbx;
-
-  t->tv_sec = cmos_boot_time() + timer_uptime();
-  // TODO: set a correct value, see:
-  // https://www.gnu.org/software/libc/manual/html_node/Elapsed-Time.html
-  t->tv_usec = 0;
-
-  CORE_SYS_DEBUG("gettimeofday=%u", t->tv_sec);
 }
 
 void syscall_open(registers_t* registers)
