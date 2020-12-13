@@ -111,10 +111,10 @@ void dhcp_receive_packet(net_interface_t* interface,
 void dhcp_handle_offer(net_interface_t* interface)
 {
   uint8_t yiaddr[4] = { 0 };
-  inet_ntoa2(dhcp_offer->yiaddr, yiaddr);
+  inet_ntoi(dhcp_offer->yiaddr, yiaddr, 4);
 
   uint8_t siaddr[4] = { 0 };
-  inet_ntoa2(dhcp_offer->siaddr, siaddr);
+  inet_ntoi(dhcp_offer->siaddr, siaddr, 4);
 
   uint8_t type[1] = { 0 };
   dhcp_read_option(dhcp_offer->options, DHCP_MESSAGE_TYPE, type, 1);

@@ -29,7 +29,7 @@ void ipv4_receive_packet(net_interface_t* interface,
   memcpy(&header, data, sizeof(ipv4_header_t));
 
   uint8_t src_ip[4] = { 0 };
-  inet_ntoa2(header.src_addr, src_ip);
+  inet_ntoi(header.src_addr, src_ip, 4);
   DEBUG("received IPv4 packet from: %d.%d.%d.%d on interface=%d",
         src_ip[0],
         src_ip[1],
@@ -90,7 +90,7 @@ void icmpv4_receive_packet(net_interface_t* interface,
 
     icmpv4_reply->sequence = icmpv4_echo.sequence;
     icmpv4_reply->ttl = header->ttl;
-    inet_ntoa2(header->src_addr, icmpv4_reply->src_ip);
+    inet_ntoi(header->src_addr, icmpv4_reply->src_ip, 4);
   }
 }
 
