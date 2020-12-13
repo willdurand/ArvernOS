@@ -32,7 +32,7 @@ in_addr_t inet_addr(const char* s);
 
 in_addr_t inet_addr2(uint8_t ip[4]);
 
-void inet_ntoa2(uint32_t value, uint8_t ip[4]);
+void inet_ntoi(uint32_t value, uint8_t* buf, size_t len);
 
 uint16_t htons(uint16_t value);
 
