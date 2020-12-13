@@ -29,15 +29,17 @@ void udp_receive_packet(net_interface_t* interface,
   uint8_t* udp_data = ip_data + sizeof(udp_header_t);
 
   switch (udp_header.dst_port) {
-    case 42796:
+    case PORT_DNS_CLIENT:
       dns_receive_packet(interface, udp_data, &udp_header);
       break;
     case PORT_DHCP_CLIENT:
       dhcp_receive_packet(interface, udp_data, &udp_header);
       break;
     default:
-      DEBUG("dropping udp packet (port=%d) because it cannot be handled yet",
-            udp_header.src_port);
+      DEBUG("dropping udp packet (src_port=%d, dst_port=%d) because it cannot "
+            "be handled yet",
+            udp_header.src_port,
+            udp_header.dst_port);
   }
 }
 

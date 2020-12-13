@@ -10,7 +10,7 @@ static uint16_t dns_id = 1;
 void dns_request(net_interface_t* interface, char* domain)
 {
   // TODO: fixme, we don't have the concept of port/socket yet.
-  uint16_t src_port = 42796;
+  uint16_t src_port = PORT_DNS_CLIENT;
 
   dns_header_t dns_header = {
     .id = htons(dns_id),
