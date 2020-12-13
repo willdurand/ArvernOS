@@ -227,33 +227,3 @@ void syscall_close(registers_t* registers)
 
   CORE_SYS_DEBUG("close fd=%d", fd);
 }
-
-void syscall_fstat(registers_t* registers)
-{
-  errno = 0;
-
-  int fd = (int)registers->rbx;
-  struct stat* statbuf = (struct stat*)registers->rcx;
-
-  if (fd < 3) {
-    CORE_SYS_DEBUG("invalid file descriptor fd=%d", fd);
-    registers->rdx = -1;
-    errno = EPERM;
-    return;
-  }
-
-  descriptor_t* desc = get_descriptor(fd);
-
-  if (desc == NULL) {
-    CORE_SYS_DEBUG("file descriptor fd=%d not found", fd);
-    registers->rdx = -1;
-    errno = EBADF;
-    return;
-  }
-
-  stat_t stat;
-  vfs_stat(desc->inode, &stat);
-  statbuf->st_size = stat.size;
-
-  registers->rdx = 0;
-}
