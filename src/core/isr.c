@@ -296,3 +296,22 @@ void page_fault_handler(stack_t* stack)
         stack->stack_pointer,
         stack->stack_segment);
 }
+
+void isr_debug_registers(registers_t* registers)
+{
+  DEBUG("rax=%#x", registers->rax);
+  DEBUG("rbx=%#x", registers->rbx);
+  DEBUG("rcx=%#x", registers->rcx);
+  DEBUG("rdx=%#x", registers->rdx);
+  DEBUG("rsi=%#x", registers->rsi);
+  DEBUG("rdi=%#x", registers->rdi);
+  DEBUG("rbp=%#x", registers->rbp);
+  DEBUG(" r8=%#x", registers->r8);
+  DEBUG(" r9=%#x", registers->r9);
+  DEBUG("r10=%#x", registers->r10);
+  DEBUG("r11=%#x", registers->r11);
+  DEBUG("r12=%#x", registers->r12);
+  DEBUG("r13=%#x", registers->r13);
+  DEBUG("r14=%#x", registers->r14);
+  DEBUG("r15=%#x", registers->r15);
+}

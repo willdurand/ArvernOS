@@ -187,4 +187,11 @@ void irq_handler(uint64_t id, uint64_t stack) __asm__("irq_handler");
  */
 void isr_register_handler(uint64_t id, isr_t handler);
 
+/**
+ * This function dumps a given set of registers to the debug output.
+ *
+ * @param registers registers to dump to the debug output
+ */
+void isr_debug_registers(registers_t* registers);
+
 #endif
