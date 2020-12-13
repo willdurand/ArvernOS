@@ -20,7 +20,6 @@
 static syscall_handler_t syscall_handlers[NB_SYSCALLS + 1] = { 0 };
 
 void syscall_register_handler(uint8_t id, syscall_handler_t handler);
-void syscall_print_registers(registers_t* registers);
 
 void syscall_test(registers_t* registers);
 void syscall_write(registers_t* registers);
@@ -322,24 +321,4 @@ void syscall_lseek(registers_t* registers)
   }
 
   registers->rdx = desc->offset;
-}
-
-void syscall_print_registers(registers_t* registers)
-{
-  printf("registers:\n");
-  printf("  rax=%#x\n", registers->rax);
-  printf("  rbx=%#x\n", registers->rbx);
-  printf("  rcx=%#x\n", registers->rcx);
-  printf("  rdx=%#x\n", registers->rdx);
-  printf("  rsi=%#x\n", registers->rsi);
-  printf("  rdi=%#x\n", registers->rdi);
-  printf("  rbp=%#x\n", registers->rbp);
-  printf("   r8=%#x\n", registers->r8);
-  printf("   r9=%#x\n", registers->r9);
-  printf("  r10=%#x\n", registers->r10);
-  printf("  r11=%#x\n", registers->r11);
-  printf("  r12=%#x\n", registers->r12);
-  printf("  r13=%#x\n", registers->r13);
-  printf("  r14=%#x\n", registers->r14);
-  printf("  r15=%#x\n", registers->r15);
 }
