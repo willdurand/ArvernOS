@@ -90,7 +90,7 @@ void syscall_write(registers_t* registers)
 
   descriptor_t* desc = get_descriptor(fd);
 
-  if (desc == 0) {
+  if (desc == NULL) {
     DEBUG("file descriptor fd=%d not found", fd);
     registers->rdx = -1;
     errno = EBADF;
@@ -138,7 +138,7 @@ void syscall_read(registers_t* registers)
 
   descriptor_t* desc = get_descriptor(fd);
 
-  if (desc == 0) {
+  if (desc == NULL) {
     DEBUG("file descriptor fd=%d not found", fd);
     registers->rdx = -1;
     errno = EBADF;
@@ -214,7 +214,7 @@ void syscall_close(registers_t* registers)
 
   descriptor_t* desc = get_descriptor(fd);
 
-  if (desc == 0) {
+  if (desc == NULL) {
     DEBUG("file descriptor fd=%d not found", fd);
     registers->rdx = -1;
     errno = EBADF;
@@ -252,7 +252,7 @@ void syscall_fstat(registers_t* registers)
 
   descriptor_t* desc = get_descriptor(fd);
 
-  if (desc == 0) {
+  if (desc == NULL) {
     DEBUG("file descriptor fd=%d not found", fd);
     registers->rdx = -1;
     errno = EBADF;
@@ -283,7 +283,7 @@ void syscall_lseek(registers_t* registers)
 
   descriptor_t* desc = get_descriptor(fd);
 
-  if (desc == 0) {
+  if (desc == NULL) {
     DEBUG("file descriptor fd=%d not found", fd);
     registers->rdx = -1;
     errno = EBADF;

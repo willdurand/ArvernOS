@@ -3,6 +3,7 @@
 #define PROC_DESCRIPTOR_H
 
 #include <fs/vfs.h>
+#include <stdbool.h>
 #include <stdint.h>
 
 #define STDIN  0
@@ -11,6 +12,7 @@
 
 typedef struct descriptor
 {
+  bool used;
   inode_t inode;
   uint32_t offset;
   uint32_t flags;
