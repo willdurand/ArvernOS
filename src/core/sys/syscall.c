@@ -55,11 +55,6 @@ void syscall_handler(registers_t* registers)
   PANIC("Received unimplemented syscall: %d\n", registers->rax);
 }
 
-void syscall_test(registers_t* registers)
-{
-  printf("  (syscall_test) hello, %s!\n", registers->rbx);
-}
-
 void syscall_write(registers_t* registers)
 {
   errno = 0;
