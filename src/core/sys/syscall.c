@@ -1,6 +1,5 @@
 #include "syscall.h"
 #include "logging.h"
-#include <core/sys/reboot.h>
 #include <drivers/cmos.h>
 #include <drivers/keyboard.h>
 #include <drivers/timer.h>
@@ -227,15 +226,6 @@ void syscall_close(registers_t* registers)
   delete_descriptor(fd);
 
   CORE_SYS_DEBUG("close fd=%d", fd);
-}
-
-void syscall_reboot(registers_t* registers)
-{
-  int command = (int)registers->rbx;
-
-  CORE_SYS_DEBUG("reboot command=%d", command);
-
-  registers->rdx = kreboot(command);
 }
 
 void syscall_fstat(registers_t* registers)
