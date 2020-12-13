@@ -1,4 +1,5 @@
 #include "kshell.h"
+#include <arpa/inet.h>
 #include <core/debug.h>
 #include <core/elf.h>
 #include <drivers/cmos.h>
@@ -135,10 +136,12 @@ void net()
   uint8_t in_id = 0;
   net_interface_t* in = net_get_interface(in_id);
 
+  char buf[16];
+
   printf("eth%d:\n", in_id);
   printf("  driver : %s\n", in->driver->get_name());
-  printf(
-    "  ip     : %d.%d.%d.%d\n", in->ip[0], in->ip[1], in->ip[2], in->ip[3]);
+  inet_itoa(in->ip, buf, 16);
+  printf("  ip     : %s\n", buf);
   printf("  mac    : %02x:%02x:%02x:%02x:%02x:%02x\n",
          in->mac[0],
          in->mac[1],
@@ -146,16 +149,10 @@ void net()
          in->mac[3],
          in->mac[4],
          in->mac[5]);
-  printf("  gateway: %d.%d.%d.%d\n",
-         in->gateway_ip[0],
-         in->gateway_ip[1],
-         in->gateway_ip[2],
-         in->gateway_ip[3]);
-  printf("  dns    : %d.%d.%d.%d\n",
-         in->dns_ip[0],
-         in->dns_ip[1],
-         in->dns_ip[2],
-         in->dns_ip[3]);
+  inet_itoa(in->gateway_ip, buf, 16);
+  printf("  gateway: %s\n", buf);
+  inet_itoa(in->dns_ip, buf, 16);
+  printf("  dns    : %s\n", buf);
 }
 
 void host(int argc, char* argv[])
@@ -171,10 +168,12 @@ void host(int argc, char* argv[])
   int retval = dns_lookup(in, argv[1], ip);
 
   switch (retval) {
-    case 0:
-      printf(
-        "%s has address %d.%d.%d.%d\n", argv[1], ip[0], ip[1], ip[2], ip[3]);
+    case 0: {
+      char buf[16];
+      inet_itoa(ip, buf, 16);
+      printf("%s has address %s\n", argv[1], buf);
       break;
+    }
     case DNS_ERR_NO_ANSWER:
       printf("Host %s not found\n", argv[1]);
       break;
@@ -199,19 +198,18 @@ void ping(int argc, char* argv[])
 
   net_interface_t* in = net_get_interface(0);
 
-  printf("PING %d.%d.%d.%d\n", ip[0], ip[1], ip[2], ip[3]);
+  char buf[16];
+  inet_itoa(ip, buf, 16);
+
+  printf("PING %s\n", buf);
   icmpv4_reply_t reply = { 0 };
   int retval = ipv4_ping(in, ip, &reply);
 
   switch (retval) {
     case 0:
-      printf("PONG from %d.%d.%d.%d (ttl=%d sequence=%ld)\n",
-             reply.src_ip[0],
-             reply.src_ip[1],
-             reply.src_ip[2],
-             reply.src_ip[3],
-             reply.ttl,
-             reply.sequence);
+      inet_itoa(reply.src_ip, buf, 16);
+      printf(
+        "PONG from %s (ttl=%d sequence=%ld)\n", buf, reply.ttl, reply.sequence);
       break;
     default:
       printf("Ping failed (%d)\n", retval);
