@@ -27,6 +27,7 @@
 
 void print_welcome_messge();
 void print_step(const char* msg);
+void print_sub_step(const char* msg);
 void print_ok();
 void check_interrupts();
 
@@ -46,6 +47,11 @@ void print_step(const char* msg)
   printf("%-74s", msg);
 }
 
+void print_sub_step(const char* msg)
+{
+  printf("  %-72s", msg);
+}
+
 void print_ok()
 {
   printf("  [");
@@ -62,15 +68,11 @@ void print_ko()
 
 void check_interrupts()
 {
-  print_step("checking interrupts");
-
   uint64_t tick = timer_tick();
 
   while (tick == timer_tick()) {
     ;
   }
-
-  print_ok();
 }
 
 void kmain(uint64_t addr)
@@ -106,7 +108,7 @@ void kmain(uint64_t addr)
   syscall_init();
   print_ok();
 
-  print_step("initializing real time clock (cmos)");
+  print_step("initializing cmos (real time clock)");
   cmos_init();
   print_ok();
 
@@ -114,25 +116,35 @@ void kmain(uint64_t addr)
   timer_init();
   print_ok();
 
+  print_sub_step("checking interrupts");
   check_interrupts();
-
-  print_step("initializing keyboard");
-  keyboard_init();
   print_ok();
 
   print_step("initializing virtual file system");
   vfs_init();
   print_ok();
 
-  print_step("mounting all file systems");
+  print_sub_step("mounting tarfs (init ramdisk)");
   multiboot_tag_module_t* module =
     (multiboot_tag_module_t*)find_multiboot_tag(mbi, MULTIBOOT_TAG_TYPE_MODULE);
   inode_t initrd = vfs_mount("/", tar_fs_init((uint64_t)module->mod_start));
 
   if (initrd) {
-    vfs_mount(FS_DEBUG_MOUNTPOINT, debug_fs_init());
-    vfs_mount(FS_PROC_MOUNTPOINT, proc_fs_init());
     print_ok();
+
+    print_sub_step("mounting debugfs");
+    if (vfs_mount(FS_DEBUG_MOUNTPOINT, debug_fs_init())) {
+      print_ok();
+    } else {
+      print_ko();
+    }
+
+    print_sub_step("mounting procfs");
+    if (vfs_mount(FS_PROC_MOUNTPOINT, proc_fs_init())) {
+      print_ok();
+    } else {
+      print_ko();
+    }
   } else {
     print_ko();
   }
@@ -143,28 +155,31 @@ void kmain(uint64_t addr)
   if (kernel_cfg == NULL) {
     print_ko();
   } else {
+    print_ok();
+
     inish_section_t* system = inish_get_section(kernel_cfg, "system");
     char* hostname = inish_get_string(system, "hostname");
 
     if (hostname != NULL) {
       if (strlen(hostname) > 0) {
         DEBUG("updating hostname: %s", hostname);
+
+        print_sub_step("setting hostname from config");
         proc_update_hostname(hostname, strlen(hostname));
+        print_ok();
       } else {
         DEBUG("%s", "not updating hostname because value is empty");
       }
     } else {
       DEBUG("%s", "could not find system/hostname in kernel.inish");
     }
-
-    print_ok();
   }
 
   print_step("initializing network");
   if (rtl8139_init()) {
-    uint8_t ip[4];
-    uint8_t gateway_ip[4];
-    uint8_t dns_ip[4];
+    uint8_t ip[4] = { 0 };
+    uint8_t gateway_ip[4] = { 0 };
+    uint8_t dns_ip[4] = { 0 };
 
     inish_section_t* network = inish_get_section(kernel_cfg, "network");
     opt_bool_t prefer_dhcp = inish_get_bool(network, "prefer-dhcp");
@@ -186,6 +201,11 @@ void kmain(uint64_t addr)
   if (kernel_cfg != NULL) {
     inish_free(kernel_cfg);
   }
+
+  // Not needed before so let's initialize it at the end.
+  print_step("initializing keyboard");
+  keyboard_init();
+  print_ok();
 
   multiboot_tag_string_t* cmdline = (multiboot_tag_string_t*)find_multiboot_tag(
     mbi, MULTIBOOT_TAG_TYPE_CMDLINE);
