@@ -70,9 +70,9 @@ void remap_kernel(multiboot_info_t* mbi)
   unmap(temporary_page);
 
   uint64_t backup_addr = read_cr3();
-  DEBUG("backup_addr=%p backup_frame=%d",
-        backup_addr,
-        frame_containing_address(backup_addr));
+  MMU_DEBUG("backup_addr=%p backup_frame=%d",
+            backup_addr,
+            frame_containing_address(backup_addr));
 
   // map temporary_page to current p4 table
   map_page_to_frame(
@@ -90,22 +90,22 @@ void remap_kernel(multiboot_info_t* mbi)
   can_deallocate_frames = true;
 
   identity_map(0xB8000, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
-  DEBUG("%s", "mapped VGA!");
+  MMU_DEBUG("%s", "mapped VGA!");
 
   identity_map(0x0, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
-  DEBUG("%s", "mapped interrupt vector table!");
+  MMU_DEBUG("%s", "mapped interrupt vector table!");
 
   // Allocated frames
-  DEBUG("mapping %d pages for frame allocator, starting at addr=%p",
-        frames_for_bitmap,
-        allocated_frames);
+  MMU_DEBUG("mapping %d pages for frame allocator, starting at addr=%p",
+            frames_for_bitmap,
+            allocated_frames);
   for (uint8_t i = 0; i < frames_for_bitmap; i++) {
     identity_map((uint64_t)allocated_frames + (i * PAGE_SIZE),
                  PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
   }
-  DEBUG("%s", "pages for frame allocator mapped");
+  MMU_DEBUG("%s", "pages for frame allocator mapped");
 
-  DEBUG("%s", "mapping elf sections");
+  MMU_DEBUG("%s", "mapping elf sections");
   multiboot_tag_elf_sections_t* tag =
     (multiboot_tag_elf_sections_t*)find_multiboot_tag(
       mbi, MULTIBOOT_TAG_TYPE_ELF_SECTIONS);
@@ -140,7 +140,7 @@ void remap_kernel(multiboot_info_t* mbi)
       identity_map(frame_start_address(i), flags);
     }
   }
-  DEBUG("%s", "elf sections mapped!");
+  MMU_DEBUG("%s", "elf sections mapped!");
 
   reserved_areas_t reserved = find_reserved_areas(mbi);
   frame_number_t multiboot_start_frame =
@@ -148,14 +148,14 @@ void remap_kernel(multiboot_info_t* mbi)
   frame_number_t multiboot_end_frame =
     frame_containing_address(reserved.multiboot_end - 1);
 
-  DEBUG("mapping multiboot info: start_frame=%d end_frame=%d",
-        multiboot_start_frame,
-        multiboot_end_frame);
+  MMU_DEBUG("mapping multiboot info: start_frame=%d end_frame=%d",
+            multiboot_start_frame,
+            multiboot_end_frame);
 
   for (uint64_t i = multiboot_start_frame; i <= multiboot_end_frame; i++) {
     identity_map(frame_start_address(i), PAGING_FLAG_PRESENT);
   }
-  DEBUG("%s", "multiboot info mapped!");
+  MMU_DEBUG("%s", "multiboot info mapped!");
 
   multiboot_tag_module_t* module =
     (multiboot_tag_module_t*)find_multiboot_tag(mbi, MULTIBOOT_TAG_TYPE_MODULE);
@@ -164,45 +164,46 @@ void remap_kernel(multiboot_info_t* mbi)
   frame_number_t initrd_end_frame =
     frame_containing_address((uint64_t)module->mod_end - 1);
 
-  DEBUG("mapping multiboot module: start_frame=%d end_frame=%d",
-        initrd_start_frame,
-        initrd_end_frame);
+  MMU_DEBUG("mapping multiboot module: start_frame=%d end_frame=%d",
+            initrd_start_frame,
+            initrd_end_frame);
 
   for (uint64_t i = initrd_start_frame; i <= initrd_end_frame; i++) {
     identity_map(frame_start_address(i), PAGING_FLAG_PRESENT);
   }
-  DEBUG("%s", "mapped multiboot module!");
+  MMU_DEBUG("%s", "mapped multiboot module!");
 
   // restore recursive mapping to original p4 table
   paging_set_entry(&p4_table->entries[511],
                    backup_addr,
                    PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
   write_cr3(read_cr3());
-  DEBUG("%s", "restored recursive mapping");
+  MMU_DEBUG("%s", "restored recursive mapping");
 
   unmap(temporary_page);
 
   write_cr3(inactive_page_table_frame);
-  DEBUG("%s", "switched to new table");
+  MMU_DEBUG("%s", "switched to new table");
 
   uint64_t old_page_table_frame =
     frame_start_address(frame_containing_address(backup_addr));
   page_number_t old_page_table = page_containing_address(old_page_table_frame);
   unmap(old_page_table);
-  DEBUG("guard page at %p", page_start_address(old_page_table));
+  MMU_DEBUG("guard page at %p", page_start_address(old_page_table));
 }
 
 void enable_nxe_bit()
 {
   uint64_t efer = read_msr(IA32_EFER);
   write_msr(IA32_EFER, efer | (1 << 11));
-  DEBUG("enabled NXE bit old_efer=%p new_efer=%p", efer, read_msr(IA32_EFER));
+  MMU_DEBUG(
+    "enabled NXE bit old_efer=%p new_efer=%p", efer, read_msr(IA32_EFER));
 }
 
 void enable_write_protection()
 {
   write_cr0(read_cr0() | (1 << 16));
-  DEBUG("%s", "enabled write protection (cr0)");
+  MMU_DEBUG("%s", "enabled write protection (cr0)");
 }
 
 void zero_table(page_table_t* table)
@@ -325,7 +326,7 @@ opt_uint64_t translate_page(page_number_t page_number)
   page_table_t* p1 = next_table_address(p2, _p2_index(page_number));
 
   if (p1 == 0) {
-    DEBUG("did not find p1 (%p), returning no value", p1);
+    MMU_DEBUG("did not find p1 (%p), returning no value", p1);
     return (opt_uint64_t){ .has_value = false, .value = 0 };
   }
 
@@ -376,17 +377,18 @@ void map_page_to_frame(page_number_t page_number,
                        uint64_t frame,
                        uint64_t flags)
 {
-  DEBUG("mapping page=%u (start_addr=%p) to frame=%u (start_addr=%p) with "
-        "flags=%#x",
-        page_number,
-        page_start_address(page_number),
-        frame_containing_address(frame),
-        frame,
-        flags);
+  MMU_DEBUG("mapping page=%u (start_addr=%p) to frame=%u (start_addr=%p) with "
+            "flags=%#x",
+            page_number,
+            page_start_address(page_number),
+            frame_containing_address(frame),
+            frame,
+            flags);
 
   opt_uint64_t maybe_frame = translate_page(page_number);
   if (maybe_frame.has_value) {
-    DEBUG("page=%u already mapped to frame=%u", page_number, maybe_frame.value);
+    MMU_DEBUG(
+      "page=%u already mapped to frame=%u", page_number, maybe_frame.value);
     return;
   }
 
@@ -421,10 +423,10 @@ void map_page_to_frame(page_number_t page_number,
   paging_set_entry(entry, frame, flags);
   p1->entries[p1_idx] = *entry;
 
-  DEBUG("mapped page=%u to frame=%u (addr=%p)",
-        page_number,
-        frame_containing_address(frame),
-        frame);
+  MMU_DEBUG("mapped page=%u to frame=%u (addr=%p)",
+            page_number,
+            frame_containing_address(frame),
+            frame);
 }
 
 page_table_t* next_table_create(page_table_t* table, uint64_t index)
@@ -504,16 +506,16 @@ void unmap(page_number_t page_number)
 {
   uint64_t addr = page_start_address(page_number);
 
-  DEBUG("unmapping page_number=%d addr=%p", page_number, addr);
+  MMU_DEBUG("unmapping page_number=%d addr=%p", page_number, addr);
 
 #ifndef TEST_ENV
   // Do not call `translate()` here, otherwise our test suite wouldn't be able
   // to fake the calls to `next_table_address()` right after.
   if (!translate(addr).has_value) {
-    DEBUG("cannot unmap page=%u (start_address=%p) because it is "
-          "not mapped",
-          page_number,
-          addr);
+    MMU_DEBUG("cannot unmap page=%u (start_address=%p) because it is "
+              "not mapped",
+              page_number,
+              addr);
     return;
   }
 #endif
@@ -551,7 +553,7 @@ void unmap(page_number_t page_number)
     paging_frame_deallocate(frame_number);
   }
 
-  DEBUG("unmapped page=%u addr=%p", page_number, addr);
+  MMU_DEBUG("unmapped page=%u addr=%p", page_number, addr);
 }
 
 void map(page_number_t page_number, uint64_t flags)

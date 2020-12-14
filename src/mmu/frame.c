@@ -110,7 +110,7 @@ opt_uint64_t frame_allocate()
 
 void frame_deallocate(frame_number_t frame_number)
 {
-  DEBUG("deallocating frame=%lld", frame_number);
+  MMU_DEBUG("deallocating frame=%lld", frame_number);
   bitmap_clear(allocated_frames, frame_number);
 }
 
@@ -177,6 +177,6 @@ uint64_t frame_get_max_count()
 void frame_mark_as_used(uint64_t physical_address)
 {
   frame_number_t frame = frame_containing_address(physical_address);
-  DEBUG("marking frame=%lld (addr=%p) as used", frame, physical_address);
+  MMU_DEBUG("marking frame=%lld (addr=%p) as used", frame, physical_address);
   bitmap_set(allocated_frames, frame);
 }
