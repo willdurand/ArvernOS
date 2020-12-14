@@ -21,12 +21,13 @@ void syscall_init();
  */
 void syscall_handler(registers_t* registers);
 
+int k_open(const char* pathname, uint32_t flags);
+
 // Below are the different syscall handlers.
 void syscall_test(registers_t* registers);
 void syscall_write(registers_t* registers);
 void syscall_read(registers_t* registers);
 void syscall_gettimeofday(registers_t* registers);
-void syscall_open(registers_t* registers);
 void syscall_close(registers_t* registers);
 void syscall_reboot(registers_t* registers);
 void syscall_fstat(registers_t* registers);

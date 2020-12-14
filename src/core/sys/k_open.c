@@ -5,31 +5,26 @@
 #include <proc/descriptor.h>
 #include <stddef.h>
 
-void syscall_open(registers_t* registers)
+int k_open(const char* pathname, uint32_t flags)
 {
   errno = 0;
-
-  const char* pathname = (const char*)registers->rbx;
-  uint32_t flags = registers->rcx;
 
   inode_t inode = vfs_namei(pathname);
 
   if (inode == 0) {
-    registers->rdx = -1;
     errno = ENOENT;
-    return;
+    return -1;
   }
 
   int fd = create_file_descriptor(inode, flags);
 
   if (fd == -1) {
     CORE_SYS_DEBUG("%s", "too many files open");
-    registers->rdx = -1;
     errno = ENFILE;
-    return;
+    return -1;
   }
 
-  registers->rdx = fd;
-
   CORE_SYS_DEBUG("open fd=%d inode=%p flags=%d", registers->rdx, inode, flags);
+
+  return fd;
 }
