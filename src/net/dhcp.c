@@ -1,6 +1,6 @@
 #include "dhcp.h"
+#include "logging.h"
 #include <arpa/inet.h>
-#include <logging.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -89,12 +89,12 @@ void dhcp_receive_packet(net_interface_t* interface,
   memcpy(&dhcp_header, packet, sizeof(dhcp_header_t));
   dhcp_header.xid = ntohl(dhcp_header.xid);
 
-  DEBUG("dhcp packet received: opcode=0x%02x xid=0x%08x",
-        dhcp_header.opcode,
-        dhcp_header.xid);
+  NET_DEBUG("dhcp packet received: opcode=0x%02x xid=0x%08x",
+            dhcp_header.opcode,
+            dhcp_header.xid);
 
   if (dhcp_header.xid != xid) {
-    DEBUG("%s", "xid mismatch, dropping dhcp packet");
+    NET_DEBUG("%s", "xid mismatch, dropping dhcp packet");
     return;
   }
 
@@ -104,7 +104,7 @@ void dhcp_receive_packet(net_interface_t* interface,
       memcpy(dhcp_offer, &dhcp_header, sizeof(dhcp_header_t));
       break;
     default:
-      DEBUG("unsupported DHCP opcode=0x%02x", dhcp_header.opcode);
+      NET_DEBUG("unsupported DHCP opcode=0x%02x", dhcp_header.opcode);
   }
 }
 
@@ -119,7 +119,7 @@ void dhcp_handle_offer(net_interface_t* interface)
   uint8_t type[1] = { 0 };
   dhcp_read_option(dhcp_offer->options, DHCP_MESSAGE_TYPE, type, 1);
 
-  DEBUG(
+  NET_DEBUG(
     "received DHCP offer: type=0x%02x yiaddr=%d.%d.%d.%d siaddr=%d.%d.%d.%d",
     type[0],
     yiaddr[0],
@@ -185,7 +185,7 @@ void dhcp_handle_offer(net_interface_t* interface)
     dhcp_read_option(dhcp_offer->options, DHCP_DNS, dns_ip, 4);
     memcpy(interface->dns_ip, dns_ip, 4);
   } else {
-    DEBUG("%s", "unsupported DHCP message type");
+    NET_DEBUG("%s", "unsupported DHCP message type");
   }
 }
 
@@ -196,7 +196,7 @@ void dhcp_read_option(uint8_t* options,
 {
   for (uint16_t i = 0; i < 1024; i++) {
     if (options[i] == code && options[i + 1] == len) {
-      DEBUG("found option with code=0x%02x", code);
+      NET_DEBUG("found option with code=0x%02x", code);
       memcpy(buf, options + i + 2, len);
       break;
     }

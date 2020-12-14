@@ -1,6 +1,6 @@
 #include "dns.h"
+#include "logging.h"
 #include <arpa/inet.h>
-#include <logging.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -69,7 +69,7 @@ int dns_lookup(net_interface_t* interface, char* domain, uint8_t ip[4])
   int sockfd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 
   if (sockfd < 0) {
-    DEBUG("failed to create a socket (sockfd=%d)", sockfd);
+    NET_DEBUG("failed to create a socket (sockfd=%d)", sockfd);
     return DNS_ERR_SOCK;
   }
 
@@ -80,9 +80,9 @@ int dns_lookup(net_interface_t* interface, char* domain, uint8_t ip[4])
 
   socklen_t server_addr_len = sizeof(struct sockaddr_in);
 
-  DEBUG("sending dns packet: id=0x%04x flags=0x%04x",
-        ntohs(dns_lookup_header.id),
-        ntohs(dns_lookup_header.flags));
+  NET_DEBUG("sending dns packet: id=0x%04x flags=0x%04x",
+            ntohs(dns_lookup_header.id),
+            ntohs(dns_lookup_header.flags));
 
   if (sendto(sockfd,
              packet,
@@ -96,7 +96,7 @@ int dns_lookup(net_interface_t* interface, char* domain, uint8_t ip[4])
   free(packet);
   dns_id++;
 
-  DEBUG("%s", "waiting for a response now");
+  NET_DEBUG("%s", "waiting for a response now");
 
   uint8_t buf[128];
   ssize_t bytes_received = recvfrom(sockfd,
@@ -109,7 +109,7 @@ int dns_lookup(net_interface_t* interface, char* domain, uint8_t ip[4])
   close(sockfd);
 
   if (bytes_received < 40) {
-    DEBUG("bytes_received=%lld", bytes_received);
+    NET_DEBUG("bytes_received=%lld", bytes_received);
     return DNS_ERR_RECV;
   }
 
@@ -122,7 +122,7 @@ int dns_lookup(net_interface_t* interface, char* domain, uint8_t ip[4])
   dns_header.nscount = ntohs(dns_header.nscount);
   dns_header.arcount = ntohs(dns_header.arcount);
 
-  DEBUG(
+  NET_DEBUG(
     "dns packet received: id=0x%04x qdcount=%d ancount=%d bytes_received=%lld",
     dns_header.id,
     dns_header.qdcount,

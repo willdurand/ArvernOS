@@ -1,6 +1,6 @@
 #include "ethernet.h"
+#include "logging.h"
 #include <arpa/inet.h>
-#include <logging.h>
 #include <net/arp.h>
 #include <net/ipv4.h>
 #include <stdlib.h>
@@ -14,14 +14,15 @@ void ethernet_receive_frame(net_interface_t* interface,
   memcpy(&frame_header, data, sizeof(ethernet_header_t));
   frame_header.ethertype = ntohs(frame_header.ethertype);
 
-  DEBUG("received frame from: %02x:%02x:%02x:%02x:%02x:%02x on interface=%d",
-        frame_header.src_mac[0],
-        frame_header.src_mac[1],
-        frame_header.src_mac[2],
-        frame_header.src_mac[3],
-        frame_header.src_mac[4],
-        frame_header.src_mac[5],
-        interface->id);
+  NET_DEBUG(
+    "received frame from: %02x:%02x:%02x:%02x:%02x:%02x on interface=%d",
+    frame_header.src_mac[0],
+    frame_header.src_mac[1],
+    frame_header.src_mac[2],
+    frame_header.src_mac[3],
+    frame_header.src_mac[4],
+    frame_header.src_mac[5],
+    interface->id);
 
   switch (frame_header.ethertype) {
     case ETHERTYPE_ARP:
@@ -35,7 +36,8 @@ void ethernet_receive_frame(net_interface_t* interface,
                           len - sizeof(ethernet_header_t));
       break;
     default:
-      DEBUG("unsupported ethernet frame: type=0x%04x", frame_header.ethertype);
+      NET_DEBUG("unsupported ethernet frame: type=0x%04x",
+                frame_header.ethertype);
   }
 
   // This is because `data` gets allocated in the driver code.
