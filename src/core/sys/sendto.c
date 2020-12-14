@@ -1,7 +1,7 @@
+#include "logging.h"
 #include "syscall.h"
 #include <core/utils.h>
 #include <errno.h>
-#include <logging.h>
 #include <net/net.h>
 #include <net/socket.h>
 #include <net/udp.h>
@@ -22,7 +22,7 @@ void syscall_sendto(registers_t* registers)
   UNUSED(flags);
 
   if (sockfd < 3) {
-    DEBUG("invalid socket descriptor sd=%d", sockfd);
+    CORE_SYS_DEBUG("invalid socket descriptor sd=%d", sockfd);
     registers->rdx = -1;
     errno = ENOTSOCK;
     return;
@@ -31,14 +31,14 @@ void syscall_sendto(registers_t* registers)
   descriptor_t* desc = get_descriptor(sockfd);
 
   if (desc == NULL) {
-    DEBUG("socket descriptor sockfd=%d not found", sockfd);
+    CORE_SYS_DEBUG("socket descriptor sockfd=%d not found", sockfd);
     registers->rdx = -1;
     errno = EBADF;
     return;
   }
 
   if (desc->inode != NULL) {
-    DEBUG("sockfd=%d is not a socket descriptor", sockfd);
+    CORE_SYS_DEBUG("sockfd=%d is not a socket descriptor", sockfd);
     registers->rdx = -1;
     errno = ENOTSOCK;
     return;
@@ -46,7 +46,7 @@ void syscall_sendto(registers_t* registers)
 
   if (desc->domain != AF_INET || desc->type != SOCK_DGRAM ||
       !is_protocol_supported(desc->type, desc->protocol)) {
-    DEBUG("invalid sockfd=%d", sockfd);
+    CORE_SYS_DEBUG("invalid sockfd=%d", sockfd);
     registers->rdx = -1;
     errno = EINVAL;
     return;

@@ -1,6 +1,6 @@
+#include "logging.h"
 #include "syscall.h"
 #include <errno.h>
-#include <logging.h>
 #include <net/socket.h>
 #include <proc/descriptor.h>
 #include <sys/socket.h>
@@ -34,7 +34,7 @@ void syscall_socket(registers_t* registers)
   int sd = create_socket_descriptor(domain, type, protocol);
 
   if (sd == -1) {
-    DEBUG("%s", "too many files open");
+    CORE_SYS_DEBUG("%s", "too many files open");
     registers->rdx = -1;
     errno = ENFILE;
     return;
@@ -42,5 +42,5 @@ void syscall_socket(registers_t* registers)
 
   registers->rdx = sd;
 
-  DEBUG("open sd=%d", registers->rdx);
+  CORE_SYS_DEBUG("open sd=%d", registers->rdx);
 }
