@@ -40,7 +40,7 @@ CFLAGS = -DKERNEL_NAME=\"$(OS_NAME)\" \
 	 -fno-builtin -fstack-protector -mno-red-zone \
 	 -I src/ -I src/include/ -I libs/
 
-DEBUG_CFLAGS = -DENABLE_KERNEL_DEBUG -DDEBUG_WITH_COLORS -DDISABLE_MMU_DEBUG
+DEBUG_CFLAGS = -DENABLE_KERNEL_DEBUG -DLOGS_WITH_COLORS -DDISABLE_MMU_DEBUG
 
 QEMU_OPTIONS = -m 500M \
 	       -netdev user,id=u1,ipv6=off,dhcpstart=10.0.2.20 \
@@ -167,24 +167,24 @@ test: libc
 		LD_PRELOAD=./build/$$file.so ./build/$$file || exit 1 ; \
 	done
 	# fs/tar
-	gcc -DENABLE_DEBUG_FOR_TEST -I./test/ -I./src/ -o $(BUILD_DIR)/tar test/fs/tar.c src/fs/tar.c src/fs/vfs.c
+	gcc -DENABLE_LOGS_FOR_TESTS -I./test/ -I./src/ -o $(BUILD_DIR)/tar test/fs/tar.c src/fs/tar.c src/fs/vfs.c
 	./$(BUILD_DIR)/tar
 	# fs/vfs
-	gcc -DENABLE_DEBUG_FOR_TEST -I./test/ -I./src/ -o $(BUILD_DIR)/vfs test/fs/vfs.c src/fs/vfs.c
+	gcc -DENABLE_LOGS_FOR_TESTS -I./test/ -I./src/ -o $(BUILD_DIR)/vfs test/fs/vfs.c src/fs/vfs.c
 	./$(BUILD_DIR)/vfs
 	# fs/proc
-	gcc -g -DENABLE_DEBUG_FOR_TEST -I./test/ -I./test/proxies/ -I./src/ -o $(BUILD_DIR)/proc test/fs/proc.c src/fs/proc.c src/fs/vfs.c
+	gcc -g -DENABLE_LOGS_FOR_TESTS -I./test/ -I./test/proxies/ -I./src/ -o $(BUILD_DIR)/proc test/fs/proc.c src/fs/proc.c src/fs/vfs.c
 	# mmu/frame
-	gcc -Wformat=0 -g -DENABLE_DEBUG_FOR_TEST -I./test/ -I./test/proxies/ -I./src/ -o $(BUILD_DIR)/frame test/mmu/frame.c src/mmu/frame.c src/core/multiboot.c src/mmu/bitmap.c
+	gcc -Wformat=0 -g -DENABLE_LOGS_FOR_TESTS -I./test/ -I./test/proxies/ -I./src/ -o $(BUILD_DIR)/frame test/mmu/frame.c src/mmu/frame.c src/core/multiboot.c src/mmu/bitmap.c
 	valgrind --track-origins=yes --leak-check=yes ./$(BUILD_DIR)/frame
 	# mmu/bitmap
-	gcc -g -DENABLE_DEBUG_FOR_TEST -I./test/ -I./src/ -o $(BUILD_DIR)/bitmap test/mmu/bitmap.c src/mmu/bitmap.c
+	gcc -g -DENABLE_LOGS_FOR_TESTS -I./test/ -I./src/ -o $(BUILD_DIR)/bitmap test/mmu/bitmap.c src/mmu/bitmap.c
 	./$(BUILD_DIR)/bitmap
 	# mmu/paging
-	gcc -Wformat=0 -g -DENABLE_DEBUG_FOR_TEST -DTEST_ENV -I./test/ -I./test/proxies/ -I./src/ -o $(BUILD_DIR)/paging test/mmu/paging.c src/mmu/paging.c src/core/multiboot.c src/mmu/frame.c src/mmu/bitmap.c src/core/register.c
+	gcc -Wformat=0 -g -DENABLE_LOGS_FOR_TESTS -DTEST_ENV -I./test/ -I./test/proxies/ -I./src/ -o $(BUILD_DIR)/paging test/mmu/paging.c src/mmu/paging.c src/core/multiboot.c src/mmu/frame.c src/mmu/bitmap.c src/core/register.c
 	./$(BUILD_DIR)/paging
 	# config/inish
-	gcc -DENABLE_DEBUG_FOR_TEST -I./test/ -I./test/proxies/ -I./src/ -o $(BUILD_DIR)/inish test/config/inish.c src/config/inish.c
+	gcc -DENABLE_LOGS_FOR_TESTS -I./test/ -I./test/proxies/ -I./src/ -o $(BUILD_DIR)/inish test/config/inish.c src/config/inish.c
 	valgrind --track-origins=yes --leak-check=yes ./$(BUILD_DIR)/inish
 .PHONY: test
 
