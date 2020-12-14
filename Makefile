@@ -40,7 +40,7 @@ CFLAGS = -DKERNEL_NAME=\"$(OS_NAME)\" \
 	 -fno-builtin -fstack-protector -mno-red-zone \
 	 -I src/ -I src/include/ -I libs/
 
-DEBUG_CFLAGS = -DENABLE_KERNEL_DEBUG -DLOGS_WITH_COLORS -DDISABLE_MMU_DEBUG
+DEBUG_CFLAGS = -DENABLE_KERNEL_DEBUG -DLOGS_WITH_COLORS
 
 QEMU_OPTIONS = -m 500M \
 	       -netdev user,id=u1,ipv6=off,dhcpstart=10.0.2.20 \

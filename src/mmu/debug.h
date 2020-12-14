@@ -3,10 +3,10 @@
 
 #include <logging.h>
 
-#ifdef DISABLE_MMU_DEBUG
-#define MMU_DEBUG(format, ...)
-#else
+#ifdef ENABLE_MMU_DEBUG
 #define MMU_DEBUG(format, ...) DEBUG(format, __VA_ARGS__)
+#else
+#define MMU_DEBUG(format, ...)
 #endif
 
 #endif
