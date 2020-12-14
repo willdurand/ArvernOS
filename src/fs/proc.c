@@ -1,7 +1,7 @@
 #include "proc.h"
+#include "logging.h"
 #include <drivers/timer.h>
 #include <kernel/kmain.h>
-#include <logging.h>
 #include <mmu/alloc.h>
 #include <mmu/frame.h>
 #include <stdio.h>
@@ -82,7 +82,7 @@ dirent_t* proc_readdir(inode_t inode, uint64_t num)
   strcpy(dir->name, node->name);
   dir->inode = node;
 
-  DEBUG("returning directory entry=%s", dir->name);
+  FS_DEBUG("returning directory entry=%s", dir->name);
 
   return dir;
 }
@@ -98,7 +98,7 @@ inode_t proc_finddir(inode_t inode, const char* name)
       node->parent = inode;
       node->type = FS_FILE;
 
-      DEBUG("found name=%s type=%ld", node->name, node->type);
+      FS_DEBUG("found name=%s type=%ld", node->name, node->type);
 
       return node;
     }
@@ -114,11 +114,11 @@ uint64_t proc_isatty(inode_t node)
 
 uint64_t proc_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
 {
-  DEBUG("name=%s type=%d size=%lu offset=%lu",
-        node->name,
-        vfs_inode_type(node),
-        size,
-        offset);
+  FS_DEBUG("name=%s type=%d size=%lu offset=%lu",
+           node->name,
+           vfs_inode_type(node),
+           size,
+           offset);
   // Empty buffer.
   strcpy(buffer, "");
 
@@ -210,7 +210,7 @@ uint64_t proc_update_hostname(char* new_hostname, uint64_t length)
   char* tmp = realloc(hostname, sizeof(char) * (length + 1));
 
   if (!tmp) {
-    DEBUG("%s", "failed to reallocate memory for hostname");
+    FS_DEBUG("%s", "failed to reallocate memory for hostname");
     return 0;
   }
 
