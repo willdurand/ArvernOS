@@ -10,6 +10,7 @@ void syscall_register_handler(uint8_t id, syscall_handler_t handler);
 void syscall_open(registers_t* registers);
 void syscall_close(registers_t* registers);
 void syscall_read(registers_t* registers);
+void syscall_lseek(registers_t* registers);
 
 void syscall_init()
 {
@@ -66,4 +67,13 @@ void syscall_read(registers_t* registers)
   size_t count = (size_t)registers->rsi;
 
   registers->rdx = k_read(fd, buf, count);
+}
+
+void syscall_lseek(registers_t* registers)
+{
+  int fd = (int)registers->rbx;
+  off_t offset = (off_t)registers->rcx;
+  int whence = (int)registers->rsi;
+
+  registers->rdx = k_lseek(fd, offset, whence);
 }
