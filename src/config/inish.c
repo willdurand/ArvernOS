@@ -1,13 +1,13 @@
 #include "inish.h"
+#include "logging.h"
 #include <fcntl.h>
-#include <logging.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
 #define SYNTAX_ERROR(message, line)                                            \
-  DEBUG("SYNTAX ERROR: %s near line %ld", message, line);                      \
+  CONFIG_DEBUG("SYNTAX ERROR: %s near line %ld", message, line);               \
   goto end;
 
 #define DEFAULT_VALUE_LEN 50
