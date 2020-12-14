@@ -1,4 +1,5 @@
 #include "syscall.h"
+#include "logging.h"
 #include <core/sys/reboot.h>
 #include <drivers/cmos.h>
 #include <drivers/keyboard.h>
@@ -74,18 +75,18 @@ void syscall_write(registers_t* registers)
   }
 
   if (fd < 3) {
-    DEBUG("invalid file descriptor fd=%d", fd);
+    CORE_SYS_DEBUG("invalid file descriptor fd=%d", fd);
     registers->rdx = -1;
     errno = EPERM;
     return;
   }
 
-  DEBUG("fd=%d buf=%p count=%d", fd, buf, count);
+  CORE_SYS_DEBUG("fd=%d buf=%p count=%d", fd, buf, count);
 
   descriptor_t* desc = get_descriptor(fd);
 
   if (desc == NULL) {
-    DEBUG("file descriptor fd=%d not found", fd);
+    CORE_SYS_DEBUG("file descriptor fd=%d not found", fd);
     registers->rdx = -1;
     errno = EBADF;
     return;
@@ -93,7 +94,7 @@ void syscall_write(registers_t* registers)
 
   if ((desc->flags != O_WRONLY && desc->flags != O_RDWR) ||
       desc->flags == O_RDONLY) {
-    DEBUG("invalid flags for file descriptor fd=%d", fd);
+    CORE_SYS_DEBUG("invalid flags for file descriptor fd=%d", fd);
     registers->rdx = -1;
     errno = EBADF;
     return;
@@ -122,18 +123,18 @@ void syscall_read(registers_t* registers)
   }
 
   if (fd < 3) {
-    DEBUG("invalid file descriptor fd=%d", fd);
+    CORE_SYS_DEBUG("invalid file descriptor fd=%d", fd);
     registers->rdx = -1;
     errno = EPERM;
     return;
   }
 
-  DEBUG("fd=%d buf=%p count=%d", fd, buf, count);
+  CORE_SYS_DEBUG("fd=%d buf=%p count=%d", fd, buf, count);
 
   descriptor_t* desc = get_descriptor(fd);
 
   if (desc == NULL) {
-    DEBUG("file descriptor fd=%d not found", fd);
+    CORE_SYS_DEBUG("file descriptor fd=%d not found", fd);
     registers->rdx = -1;
     errno = EBADF;
     return;
@@ -141,7 +142,7 @@ void syscall_read(registers_t* registers)
 
   if ((desc->flags != O_RDONLY && desc->flags != O_RDWR) ||
       desc->flags == O_WRONLY) {
-    DEBUG("invalid flags for file descriptor fd=%d", fd);
+    CORE_SYS_DEBUG("invalid flags for file descriptor fd=%d", fd);
     registers->rdx = -1;
     errno = EBADF;
     return;
@@ -161,7 +162,7 @@ void syscall_gettimeofday(registers_t* registers)
   // https://www.gnu.org/software/libc/manual/html_node/Elapsed-Time.html
   t->tv_usec = 0;
 
-  DEBUG("gettimeofday=%u", t->tv_sec);
+  CORE_SYS_DEBUG("gettimeofday=%u", t->tv_sec);
 }
 
 void syscall_open(registers_t* registers)
@@ -182,7 +183,7 @@ void syscall_open(registers_t* registers)
   int fd = create_file_descriptor(inode, flags);
 
   if (fd == -1) {
-    DEBUG("%s", "too many files open");
+    CORE_SYS_DEBUG("%s", "too many files open");
     registers->rdx = -1;
     errno = ENFILE;
     return;
@@ -190,7 +191,7 @@ void syscall_open(registers_t* registers)
 
   registers->rdx = fd;
 
-  DEBUG("open fd=%d inode=%p flags=%d", registers->rdx, inode, flags);
+  CORE_SYS_DEBUG("open fd=%d inode=%p flags=%d", registers->rdx, inode, flags);
 }
 
 void syscall_close(registers_t* registers)
@@ -200,7 +201,7 @@ void syscall_close(registers_t* registers)
   int fd = (int)registers->rbx;
 
   if (fd < 3) {
-    DEBUG("invalid file descriptor fd=%d", fd);
+    CORE_SYS_DEBUG("invalid file descriptor fd=%d", fd);
     registers->rdx = -1;
     errno = EPERM;
     return;
@@ -209,7 +210,7 @@ void syscall_close(registers_t* registers)
   descriptor_t* desc = get_descriptor(fd);
 
   if (desc == NULL) {
-    DEBUG("file descriptor fd=%d not found", fd);
+    CORE_SYS_DEBUG("file descriptor fd=%d not found", fd);
     registers->rdx = -1;
     errno = EBADF;
     return;
@@ -225,14 +226,14 @@ void syscall_close(registers_t* registers)
 
   delete_descriptor(fd);
 
-  DEBUG("close fd=%d", fd);
+  CORE_SYS_DEBUG("close fd=%d", fd);
 }
 
 void syscall_reboot(registers_t* registers)
 {
   int command = (int)registers->rbx;
 
-  DEBUG("reboot command=%d", command);
+  CORE_SYS_DEBUG("reboot command=%d", command);
 
   registers->rdx = kreboot(command);
 }
@@ -245,7 +246,7 @@ void syscall_fstat(registers_t* registers)
   struct stat* statbuf = (struct stat*)registers->rcx;
 
   if (fd < 3) {
-    DEBUG("invalid file descriptor fd=%d", fd);
+    CORE_SYS_DEBUG("invalid file descriptor fd=%d", fd);
     registers->rdx = -1;
     errno = EPERM;
     return;
@@ -254,7 +255,7 @@ void syscall_fstat(registers_t* registers)
   descriptor_t* desc = get_descriptor(fd);
 
   if (desc == NULL) {
-    DEBUG("file descriptor fd=%d not found", fd);
+    CORE_SYS_DEBUG("file descriptor fd=%d not found", fd);
     registers->rdx = -1;
     errno = EBADF;
     return;
@@ -276,7 +277,7 @@ void syscall_lseek(registers_t* registers)
   int whence = (int)registers->rsi;
 
   if (fd < 3) {
-    DEBUG("invalid file descriptor fd=%d", fd);
+    CORE_SYS_DEBUG("invalid file descriptor fd=%d", fd);
     registers->rdx = -1;
     errno = EPERM;
     return;
@@ -285,7 +286,7 @@ void syscall_lseek(registers_t* registers)
   descriptor_t* desc = get_descriptor(fd);
 
   if (desc == NULL) {
-    DEBUG("file descriptor fd=%d not found", fd);
+    CORE_SYS_DEBUG("file descriptor fd=%d not found", fd);
     registers->rdx = -1;
     errno = EBADF;
     return;
