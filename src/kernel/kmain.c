@@ -45,11 +45,13 @@ void print_welcome_messge()
 void print_step(const char* msg)
 {
   printf("%-74s", msg);
+  INFO("%s", msg);
 }
 
 void print_sub_step(const char* msg)
 {
   printf("  %-72s", msg);
+  INFO("%s", msg);
 }
 
 void print_ok()
@@ -85,7 +87,12 @@ void kmain(uint64_t addr)
 
   // enable serial port
   serial_init(SERIAL_COM1, SERIAL_SPEED_115200);
-  DEBUG("%s has started", KERNEL_NAME);
+  INFO("%s %s (%s) / Built on: %s at %s has started",
+       KERNEL_NAME,
+       KERNEL_VERSION,
+       GIT_HASH,
+       KERNEL_DATE,
+       KERNEL_TIME);
 
   print_step("initializing interruptions");
   isr_init();
@@ -162,9 +169,8 @@ void kmain(uint64_t addr)
 
     if (hostname != NULL) {
       if (strlen(hostname) > 0) {
-        DEBUG("updating hostname: %s", hostname);
-
         print_sub_step("setting hostname from config");
+        DEBUG("updating hostname: %s", hostname);
         proc_update_hostname(hostname, strlen(hostname));
         print_ok();
       } else {
@@ -212,8 +218,9 @@ void kmain(uint64_t addr)
 
   if (cmdline && strcmp(cmdline->string, "boot-and-exit") == 0) {
     printf("\n\nboot sequence completed, exiting now...");
-    uint64_t uptime = timer_uptime();
+    INFO("%s", "boot sequence completed, exiting now...");
 
+    uint64_t uptime = timer_uptime();
     while (timer_uptime() < uptime + 2) {
       __asm__("hlt");
     }
