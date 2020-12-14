@@ -1,6 +1,6 @@
 #include "pci.h"
+#include "logging.h"
 #include <core/port.h>
-#include <logging.h>
 
 pci_device_t pci_get_device(uint16_t vendor_id, uint16_t device_id)
 {
@@ -21,9 +21,9 @@ pci_device_t pci_get_device(uint16_t vendor_id, uint16_t device_id)
     uint32_t v_id = pci_read(device, PCI_VENDOR_ID, 2);
 
     if (device_id == d_id && vendor_id == v_id) {
-      DEBUG("found PCI device with device_id=%#x and vendor_id=%#x",
-            device_id,
-            vendor_id);
+      CORE_DEBUG("found PCI device with device_id=%#x and vendor_id=%#x",
+                 device_id,
+                 vendor_id);
       return device;
     }
   }
