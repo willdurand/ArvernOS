@@ -1,6 +1,6 @@
 #include "vga_text.h"
-#include <core/debug.h>
 #include <core/port.h>
+#include <logging.h>
 #include <string.h>
 
 #define FB_COMMAND_PORT      0x3D4

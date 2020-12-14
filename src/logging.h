@@ -1,5 +1,5 @@
-#ifndef CORE_DEBUG_H
-#define CORE_DEBUG_H
+#ifndef LOGGING_H
+#define LOGGING_H
 
 #ifdef ENABLE_KERNEL_DEBUG
 #include <drivers/serial.h>

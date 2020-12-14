@@ -1,6 +1,6 @@
 #include "udp.h"
 #include <arpa/inet.h>
-#include <core/debug.h>
+#include <logging.h>
 #include <net/dhcp.h>
 #include <net/dns.h>
 #include <net/socket.h>

@@ -1,9 +1,9 @@
 #include "rtl8139.h"
-#include <core/debug.h>
 #include <core/isr.h>
 #include <core/pci.h>
 #include <core/port.h>
 #include <core/utils.h>
+#include <logging.h>
 #include <mmu/paging.h>
 #include <stdint.h>
 #include <stdlib.h>

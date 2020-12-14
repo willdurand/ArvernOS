@@ -1,8 +1,8 @@
 #include "syscall.h"
 #include <arpa/inet.h>
-#include <core/debug.h>
 #include <core/utils.h>
 #include <errno.h>
+#include <logging.h>
 #include <net/socket.h>
 #include <proc/descriptor.h>
 #include <stddef.h>

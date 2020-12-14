@@ -1,6 +1,6 @@
 #include "dns.h"
 #include <arpa/inet.h>
-#include <core/debug.h>
+#include <logging.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

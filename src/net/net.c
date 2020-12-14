@@ -1,5 +1,5 @@
 #include "net.h"
-#include <core/debug.h>
+#include <logging.h>
 #include <net/arp.h>
 #include <net/dhcp.h>
 #include <net/ethernet.h>

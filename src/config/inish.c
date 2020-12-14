@@ -1,6 +1,6 @@
 #include "inish.h"
-#include <core/debug.h>
 #include <fcntl.h>
+#include <logging.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
