@@ -1,6 +1,6 @@
 #include "udp.h"
+#include "logging.h"
 #include <arpa/inet.h>
-#include <logging.h>
 #include <net/dhcp.h>
 #include <net/dns.h>
 #include <net/socket.h>
@@ -21,16 +21,16 @@ void udp_receive_packet(net_interface_t* interface,
   udp_header.len = ntohs(udp_header.len);
   udp_header.checksum = ntohs(udp_header.checksum);
 
-  DEBUG("udp packet received: src_port=%d dst_port=%d len=%d checksum=%x",
-        udp_header.src_port,
-        udp_header.dst_port,
-        udp_header.len,
-        udp_header.checksum);
+  NET_DEBUG("udp packet received: src_port=%d dst_port=%d len=%d checksum=%x",
+            udp_header.src_port,
+            udp_header.dst_port,
+            udp_header.len,
+            udp_header.checksum);
 
   uint8_t* udp_data = ip_data + sizeof(udp_header_t);
 
   int sockfd = get_socket_descriptor_for_port(udp_header.dst_port);
-  DEBUG("got sockfd=%d for dst_port=%d", sockfd, udp_header.dst_port);
+  NET_DEBUG("got sockfd=%d for dst_port=%d", sockfd, udp_header.dst_port);
 
   if (sockfd > 0) {
     socket_bufferize(sockfd, udp_data, udp_header.len - sizeof(udp_header_t));
@@ -42,10 +42,11 @@ void udp_receive_packet(net_interface_t* interface,
       dhcp_receive_packet(interface, udp_data, &udp_header);
       break;
     default:
-      DEBUG("dropping udp packet (src_port=%d, dst_port=%d) because it cannot "
-            "be handled yet",
-            udp_header.src_port,
-            udp_header.dst_port);
+      NET_DEBUG(
+        "dropping udp packet (src_port=%d, dst_port=%d) because it cannot "
+        "be handled yet",
+        udp_header.src_port,
+        udp_header.dst_port);
   }
 }
 
@@ -105,7 +106,7 @@ void udp_send_packet(net_interface_t* interface,
   memcpy(datagram, &udp_header, sizeof(udp_header_t));
   memcpy(datagram + sizeof(udp_header_t), data, len);
 
-  DEBUG("sending packet to dst_port=%d", ntohs(dst_addr->sin_port));
+  NET_DEBUG("sending packet to dst_port=%d", ntohs(dst_addr->sin_port));
 
   ipv4_send_packet(
     interface, dst_addr, IPV4_PROTO_UDP, IPV4_FLAG_DF, datagram, datagram_len);

@@ -1,5 +1,5 @@
 #include "ipv4.h"
-#include <logging.h>
+#include "logging.h"
 #include <net/ethernet.h>
 #include <net/udp.h>
 #include <stdio.h>
@@ -30,12 +30,12 @@ void ipv4_receive_packet(net_interface_t* interface,
 
   uint8_t src_ip[4] = { 0 };
   inet_ntoi(header.src_addr, src_ip, 4);
-  DEBUG("received IPv4 packet from: %d.%d.%d.%d on interface=%d",
-        src_ip[0],
-        src_ip[1],
-        src_ip[2],
-        src_ip[3],
-        interface->id);
+  NET_DEBUG("received IPv4 packet from: %d.%d.%d.%d on interface=%d",
+            src_ip[0],
+            src_ip[1],
+            src_ip[2],
+            src_ip[3],
+            interface->id);
 
   switch (header.proto) {
     case IPV4_PROTO_ICMP:
@@ -45,7 +45,7 @@ void ipv4_receive_packet(net_interface_t* interface,
       udp_receive_packet(interface, data, &header);
       break;
     default:
-      DEBUG("unsupported IP protocol=%02x, dropping packet", header.proto);
+      NET_DEBUG("unsupported IP protocol=%02x, dropping packet", header.proto);
   }
 }
 
@@ -79,11 +79,12 @@ void icmpv4_receive_packet(net_interface_t* interface,
   icmpv4_echo_t icmpv4_echo = { 0 };
   memcpy(&icmpv4_echo, data + (4 * header->ihl), sizeof(icmpv4_echo_t));
 
-  DEBUG("received ICMPv4 packet on interface=%d type=%d code=%d checksum=%x",
-        interface->id,
-        icmpv4_echo.type,
-        icmpv4_echo.code,
-        icmpv4_echo.checksum);
+  NET_DEBUG(
+    "received ICMPv4 packet on interface=%d type=%d code=%d checksum=%x",
+    interface->id,
+    icmpv4_echo.type,
+    icmpv4_echo.code,
+    icmpv4_echo.checksum);
 
   if (icmpv4_echo.type == ICMPV4_TYPE_REPLY) {
     icmpv4_reply = malloc(sizeof(icmpv4_reply_t));
@@ -105,7 +106,7 @@ int ipv4_ping(net_interface_t* interface, uint8_t ip[4], icmpv4_reply_t* reply)
                                 .data = 0 };
   icmpv4_echo.checksum = ipv4_checksum(&icmpv4_echo, sizeof(icmpv4_echo_t));
 
-  DEBUG("sending ICMP packet: id=0x%04x", ntohs(icmpv4_echo.id));
+  NET_DEBUG("sending ICMP packet: id=0x%04x", ntohs(icmpv4_echo.id));
 
   struct sockaddr_in dst_addr = { .sin_addr = { .s_addr = inet_addr2(ip) } };
 

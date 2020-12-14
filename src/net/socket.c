@@ -1,5 +1,5 @@
 #include "socket.h"
-#include <logging.h>
+#include "logging.h"
 #include <stdlib.h>
 #include <string.h>
 #include <sys/socket.h>
@@ -24,17 +24,17 @@ void socket_bufferize(int sockfd, uint8_t* data, uint16_t len)
     buf = &buffers[next_available_buffer++];
     memset(buf, 0, sizeof(socket_buf_t));
     buf->sockfd = sockfd;
-    DEBUG("created socket buffer for sockfd=%d", sockfd);
+    NET_DEBUG("created socket buffer for sockfd=%d", sockfd);
   }
 
   if (buf == NULL) {
-    DEBUG("could not create a socket buffer for sockfd=%d", sockfd);
+    NET_DEBUG("could not create a socket buffer for sockfd=%d", sockfd);
     return;
   }
 
   for (uint16_t i = 0; i < len; i++) {
     if (buf->len == BUFFER_LEN) {
-      DEBUG("socket buffer for sockfd=%d is full", sockfd);
+      NET_DEBUG("socket buffer for sockfd=%d is full", sockfd);
       break;
     }
 
@@ -46,12 +46,13 @@ void socket_bufferize(int sockfd, uint8_t* data, uint16_t len)
     }
   }
 
-  DEBUG("added data to socket buffer for sockfd=%d: len=%d read=%d write=%d",
-        len,
-        sockfd,
-        buf->len,
-        buf->read,
-        buf->write);
+  NET_DEBUG(
+    "added data to socket buffer for sockfd=%d: len=%d read=%d write=%d",
+    len,
+    sockfd,
+    buf->len,
+    buf->read,
+    buf->write);
 }
 
 ssize_t socket_unbufferize(int sockfd, uint8_t* buf, size_t len)
@@ -62,15 +63,15 @@ ssize_t socket_unbufferize(int sockfd, uint8_t* buf, size_t len)
         ;
       }
 
-      DEBUG("found socket buffer for sockfd=%d: len=%d read=%d write=%d",
-            sockfd,
-            buffers[i].len,
-            buffers[i].read,
-            buffers[i].write);
+      NET_DEBUG("found socket buffer for sockfd=%d: len=%d read=%d write=%d",
+                sockfd,
+                buffers[i].len,
+                buffers[i].read,
+                buffers[i].write);
 
       for (size_t j = 0; j < len; j++) {
         if (buffers[i].len == 0) {
-          DEBUG("buffer for sockfd=%d is empty", sockfd);
+          NET_DEBUG("buffer for sockfd=%d is empty", sockfd);
           return j;
         }
 
@@ -82,13 +83,13 @@ ssize_t socket_unbufferize(int sockfd, uint8_t* buf, size_t len)
         }
       }
 
-      DEBUG("unbufferized %lld bytes", len);
+      NET_DEBUG("unbufferized %lld bytes", len);
 
       return len;
     }
   }
 
-  DEBUG("socket buffer for sockfd=%d not found", sockfd);
+  NET_DEBUG("socket buffer for sockfd=%d not found", sockfd);
 
   return -1;
 }
