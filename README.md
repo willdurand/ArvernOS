@@ -90,13 +90,13 @@ To build the ISO (this is the default target), run:
 $ make clean iso
 ```
 
-To build the ISO in DEBUG mode, run:
+To build the ISO in debug mode, run:
 
 ```
 $ make clean debug
 ```
 
-To compile the OS in DEBUG mode, build the ISO, and start `qemu` with the OS
+To compile the OS in debug mode, build the ISO, and start `qemu` with the OS
 loaded, run:
 
 ```
@@ -105,13 +105,20 @@ $ make clean run-debug
 
 **Note:** in DEBUG mode, logging uses the serial port `COM1` to write various
 debugging information. `qemu` is configured to write the output of this serial
-port to `./logs/debug.log`.
+port to `./logs/debug.log`. `DEBUG` level logs are not necessarily written by
+default, though, and it is possible to enable `DEBUG` logs for specific modules
+like this:
 
-To compile the OS in normal mode, build the ISO, and start `qemu` with the OS
+```
+# Enable the debug logs for the "net" and "fs" modules
+$ make ENABLE_NET_DEBUG=1 ENABLE_FS_DEBUG=1 clean run-debug
+```
+
+To compile the OS in release mode, build the ISO, and start `qemu` with the OS
 loaded, run:
 
 ```
-$ make clean un
+$ make clean run
 ```
 
 ## Early boot sequence
