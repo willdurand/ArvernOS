@@ -7,6 +7,7 @@
 static syscall_handler_t syscall_handlers[NB_SYSCALLS + 1] = { 0 };
 
 void syscall_register_handler(uint8_t id, syscall_handler_t handler);
+void syscall_open(registers_t* registers);
 
 void syscall_init()
 {
@@ -39,4 +40,12 @@ void syscall_handler(registers_t* registers)
   }
 
   PANIC("Received unimplemented syscall: %d\n", registers->rax);
+}
+
+void syscall_open(registers_t* registers)
+{
+  const char* pathname = (const char*)registers->rbx;
+  uint32_t flags = registers->rcx;
+
+  registers->rdx = k_open(pathname, flags);
 }

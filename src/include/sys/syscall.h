@@ -24,6 +24,11 @@
 #define SYSCALL_SENDTO       11
 #define SYSCALL_RECVFROM     12
 
+// This is needed to export the kernel syscall implementations.
+#ifdef __is_libk
+#include <core/sys/syscall.h>
+#endif
+
 /**
  * Implements a syscall for testing purpose only. It takes a string as input
  * and prints it to the screen.
