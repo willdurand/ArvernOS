@@ -1,17 +1,6 @@
 #include "syscall.h"
 #include "logging.h"
-#include <drivers/keyboard.h>
-#include <errno.h>
-#include <fcntl.h>
-#include <fs/vfs.h>
 #include <kernel/panic.h>
-#include <net/socket.h>
-#include <proc/descriptor.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/stat.h>
 #include <sys/syscall.h>
 
 // `+ 1` because it is a 1-based index.
