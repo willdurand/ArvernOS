@@ -1,6 +1,6 @@
 #include "pci.h"
-#include <core/debug.h>
 #include <core/port.h>
+#include <logging.h>
 
 pci_device_t pci_get_device(uint16_t vendor_id, uint16_t device_id)
 {

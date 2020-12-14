@@ -1,7 +1,7 @@
 #ifndef MMU_DEBUG_H
 #define MMU_DEBUG_H
 
-#include <core/debug.h>
+#include <logging.h>
 
 #ifdef DISABLE_MMU_DEBUG
 #define MMU_DEBUG(format, ...)

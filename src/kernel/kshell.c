@@ -1,10 +1,10 @@
 #include "kshell.h"
 #include <arpa/inet.h>
-#include <core/debug.h>
 #include <core/elf.h>
 #include <drivers/cmos.h>
 #include <fs/debug.h>
 #include <fs/vfs.h>
+#include <logging.h>
 #include <net/dns.h>
 #include <net/ipv4.h>
 #include <net/net.h>

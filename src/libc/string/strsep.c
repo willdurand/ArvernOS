@@ -1,4 +1,4 @@
-#include <core/debug.h>
+#include <logging.h>
 #include <string.h>
 
 char* strsep(char** str, const char* sep)

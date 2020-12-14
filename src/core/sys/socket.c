@@ -1,6 +1,6 @@
 #include "syscall.h"
-#include <core/debug.h>
 #include <errno.h>
+#include <logging.h>
 #include <net/socket.h>
 #include <proc/descriptor.h>
 #include <sys/socket.h>

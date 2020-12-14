@@ -1,7 +1,7 @@
 #include "syscall.h"
-#include <core/debug.h>
 #include <core/utils.h>
 #include <errno.h>
+#include <logging.h>
 #include <net/net.h>
 #include <net/socket.h>
 #include <net/udp.h>

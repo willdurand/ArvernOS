@@ -1,5 +1,5 @@
 #include "ipv4.h"
-#include <core/debug.h>
+#include <logging.h>
 #include <net/ethernet.h>
 #include <net/udp.h>
 #include <stdio.h>

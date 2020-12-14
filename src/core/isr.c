@@ -1,10 +1,10 @@
 #include "isr.h"
-#include <core/debug.h>
 #include <core/idt.h>
 #include <core/port.h>
 #include <core/register.h>
 #include <core/sys/syscall.h>
 #include <kernel/panic.h>
+#include <logging.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

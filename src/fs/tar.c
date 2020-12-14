@@ -1,5 +1,5 @@
 #include "tar.h"
-#include <core/debug.h>
+#include <logging.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>

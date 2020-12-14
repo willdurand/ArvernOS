@@ -1,6 +1,6 @@
 #include "ethernet.h"
 #include <arpa/inet.h>
-#include <core/debug.h>
+#include <logging.h>
 #include <net/arp.h>
 #include <net/ipv4.h>
 #include <stdlib.h>

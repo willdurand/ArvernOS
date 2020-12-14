@@ -1,6 +1,5 @@
 #include "kmain.h"
 #include <config/inish.h>
-#include <core/debug.h>
 #include <core/elf.h>
 #include <core/isr.h>
 #include <core/multiboot.h>
@@ -18,6 +17,7 @@
 #include <kernel/console.h>
 #include <kernel/kshell.h>
 #include <kernel/panic.h>
+#include <logging.h>
 #include <mmu/alloc.h>
 #include <mmu/frame.h>
 #include <mmu/paging.h>

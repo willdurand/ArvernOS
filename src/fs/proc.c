@@ -1,7 +1,7 @@
 #include "proc.h"
-#include <core/debug.h>
 #include <drivers/timer.h>
 #include <kernel/kmain.h>
+#include <logging.h>
 #include <mmu/alloc.h>
 #include <mmu/frame.h>
 #include <stdio.h>

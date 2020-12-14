@@ -1,5 +1,5 @@
 #include "socket.h"
-#include <core/debug.h>
+#include <logging.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/socket.h>
