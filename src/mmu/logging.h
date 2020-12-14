@@ -1,5 +1,5 @@
-#ifndef MMU_DEBUG_H
-#define MMU_DEBUG_H
+#ifndef MMU_LOGGING_H
+#define MMU_LOGGING_H
 
 #include <logging.h>
 
