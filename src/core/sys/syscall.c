@@ -8,6 +8,8 @@ static syscall_handler_t syscall_handlers[NB_SYSCALLS + 1] = { 0 };
 
 void syscall_register_handler(uint8_t id, syscall_handler_t handler);
 void syscall_open(registers_t* registers);
+void syscall_close(registers_t* registers);
+void syscall_read(registers_t* registers);
 
 void syscall_init()
 {
@@ -48,4 +50,20 @@ void syscall_open(registers_t* registers)
   uint32_t flags = registers->rcx;
 
   registers->rdx = k_open(pathname, flags);
+}
+
+void syscall_close(registers_t* registers)
+{
+  int fd = (int)registers->rbx;
+
+  registers->rdx = k_close(fd);
+}
+
+void syscall_read(registers_t* registers)
+{
+  int fd = (int)registers->rbx;
+  void* buf = (char*)registers->rcx;
+  size_t count = (size_t)registers->rsi;
+
+  registers->rdx = k_read(fd, buf, count);
 }
