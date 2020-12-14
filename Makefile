@@ -36,11 +36,28 @@ GIT_HASH := $(shell git rev-parse --short HEAD)
 
 CFLAGS = -DKERNEL_NAME=\"$(OS_NAME)\" \
 	 -DGIT_HASH=\"$(GIT_HASH)\" \
+	 -DLOGS_WITH_COLORS \
 	 -Wall -pedantic -std=c11 -O0 -ffreestanding -nostdlib \
 	 -fno-builtin -fstack-protector -mno-red-zone \
 	 -I src/ -I src/include/ -I libs/
 
-DEBUG_CFLAGS = -DENABLE_KERNEL_DEBUG -DLOGS_WITH_COLORS
+DEBUG_CFLAGS = -DENABLE_KERNEL_DEBUG
+
+ifeq ($(ENABLE_CONFIG_DEBUG), 1)
+	DEBUG_CFLAGS += -DENABLE_CONFIG_DEBUG
+endif
+
+ifeq ($(ENABLE_FS_DEBUG), 1)
+	DEBUG_CFLAGS += -DENABLE_FS_DEBUG
+endif
+
+ifeq ($(ENABLE_MMU_DEBUG), 1)
+	DEBUG_CFLAGS += -DENABLE_MMU_DEBUG
+endif
+
+ifeq ($(ENABLE_NET_DEBUG), 1)
+	DEBUG_CFLAGS += -DENABLE_NET_DEBUG
+endif
 
 QEMU_OPTIONS = -m 500M \
 	       -netdev user,id=u1,ipv6=off,dhcpstart=10.0.2.20 \
@@ -109,6 +126,7 @@ $(ISO): $(KERNEL) $(INITRD) $(GRUB_CFG)
 	grub-mkrescue -o $@ $(ISO_DIR)
 
 run: ## run the OS
+run: QEMU_OPTIONS += -serial file:./logs/release.log
 run: $(ISO)
 	$(QEMU) -cdrom $< $(QEMU_OPTIONS)
 .PHONY: run
@@ -124,7 +142,7 @@ run-debug: debug run
 .PHONY: run-debug
 
 run-test: ## run the OS in test mode
-run-test: QEMU_OPTIONS += -curses
+run-test: QEMU_OPTIONS += -curses -serial file:./logs/test.log
 run-test: GRUB_KERNEL_CMDLINE = "boot-and-exit"
 run-test: run
 .PHONY: run-test
