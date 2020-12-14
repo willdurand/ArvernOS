@@ -1,6 +1,6 @@
 #include "frame.h"
+#include "logging.h"
 #include <kernel/panic.h>
-#include <mmu/debug.h>
 #include <string.h>
 
 opt_uint64_t read_mmap(uint64_t request);
@@ -32,16 +32,16 @@ void frame_init(multiboot_info_t* mbi)
 
   _frame_init_bitmap((bitmap_t*)frame.value);
 
-  DEBUG("initialized frame allocator with multiboot_start = %p "
-        "multiboot_end=%p kernel_start=%p kernel_end=%p max_frames=%lld "
-        "allocated_frames=%p used_count=%lld",
-        multiboot_start,
-        multiboot_end,
-        kernel_start,
-        kernel_end,
-        max_frames,
-        allocated_frames,
-        frame_get_used_count());
+  INFO("initialized frame allocator with multiboot_start = %p "
+       "multiboot_end=%p kernel_start=%p kernel_end=%p max_frames=%lld "
+       "allocated_frames=%p used_count=%lld",
+       multiboot_start,
+       multiboot_end,
+       kernel_start,
+       kernel_end,
+       max_frames,
+       allocated_frames,
+       frame_get_used_count());
 }
 
 void _frame_init(reserved_areas_t* reserved, multiboot_tag_mmap_t* mmap)

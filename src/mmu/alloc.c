@@ -1,7 +1,7 @@
 #include "alloc.h"
+#include "logging.h"
 #include <kernel/panic.h>
 #include <mmu/bitmap.h>
-#include <mmu/debug.h>
 #include <mmu/paging.h>
 #include <string.h>
 #include <sys/types.h>
@@ -15,11 +15,11 @@ void alloc_init()
   heap_end_page = page_containing_address(HEAP_START + HEAP_SIZE - 1);
   heap_start_page = page_containing_address(HEAP_START);
 
-  DEBUG("initialized heap allocator with heap_start_page=%u heap_end_page=%u "
-        "used_count=%d",
-        heap_start_page,
-        heap_end_page,
-        alloc_get_used_count());
+  INFO("initialized heap allocator with heap_start_page=%u heap_end_page=%u "
+       "used_count=%d",
+       heap_start_page,
+       heap_end_page,
+       alloc_get_used_count());
 }
 
 int liballoc_lock()
