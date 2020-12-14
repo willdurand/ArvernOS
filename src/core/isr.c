@@ -1,10 +1,10 @@
 #include "isr.h"
+#include "logging.h"
 #include <core/idt.h>
 #include <core/port.h>
 #include <core/register.h>
 #include <core/sys/syscall.h>
 #include <kernel/panic.h>
-#include <logging.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -299,6 +299,8 @@ void page_fault_handler(stack_t* stack)
 
 void isr_debug_registers(registers_t* registers)
 {
+  // We use `DEBUG()` because we want to print these messages even if the
+  // module logger is disabled.
   DEBUG("rax=%#x", registers->rax);
   DEBUG("rbx=%#x", registers->rbx);
   DEBUG("rcx=%#x", registers->rcx);
