@@ -6,8 +6,9 @@
 #include <string.h>
 #include <unistd.h>
 
+// We use `DEBUG()` to always output this message.
 #define SYNTAX_ERROR(message, line)                                            \
-  CONFIG_DEBUG("SYNTAX ERROR: %s near line %ld", message, line);               \
+  DEBUG("SYNTAX ERROR: %s near line %ld", message, line);                      \
   goto end;
 
 #define DEFAULT_VALUE_LEN 50
