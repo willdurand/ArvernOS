@@ -17,11 +17,11 @@
 #include <stdlib.h>
 
 // If we are told to not define our own size_t, then we skip the define.
-//#define _HAVE_UINTPTR_T
+// #define _HAVE_UINTPTR_T
 // typedef   unsigned long   uintptr_t;
 
 // This lets you prefix malloc and friends
-#define PREFIX(func) func
+#define PREFIX(func) k_##func
 
 #ifdef __cplusplus
 extern "C"

@@ -74,7 +74,7 @@ void udp_send_packet(net_interface_t* interface,
   }
   pseudo_header_len *= sizeof(uint16_t);
 
-  uint16_t* pseudo_header = malloc(pseudo_header_len);
+  uint16_t* pseudo_header = k_malloc(pseudo_header_len);
   memset(pseudo_header, 0, pseudo_header_len);
 
   pseudo_header[0] = interface->ip[0] | (interface->ip[1] << 8);
@@ -98,11 +98,11 @@ void udp_send_packet(net_interface_t* interface,
 
   udp_header.checksum = ipv4_checksum(pseudo_header, pseudo_header_len);
 
-  free(pseudo_header);
+  k_free(pseudo_header);
 
   uint32_t datagram_len = sizeof(udp_header_t) + len;
 
-  uint8_t* datagram = malloc(datagram_len);
+  uint8_t* datagram = k_malloc(datagram_len);
   memcpy(datagram, &udp_header, sizeof(udp_header_t));
   memcpy(datagram + sizeof(udp_header_t), data, len);
 
@@ -111,5 +111,5 @@ void udp_send_packet(net_interface_t* interface,
   ipv4_send_packet(
     interface, dst_addr, IPV4_PROTO_UDP, IPV4_FLAG_DF, datagram, datagram_len);
 
-  free(datagram);
+  k_free(datagram);
 }

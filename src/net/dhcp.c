@@ -33,7 +33,7 @@ bool dhcp_negotiate(net_interface_t* interface)
   }
 
   dhcp_handle_offer(interface);
-  free(dhcp_offer);
+  k_free(dhcp_offer);
 
   elapsed = 0;
   while (dhcp_offer == NULL && elapsed++ < 10000) {
@@ -45,7 +45,7 @@ bool dhcp_negotiate(net_interface_t* interface)
   }
 
   dhcp_handle_offer(interface);
-  free(dhcp_offer);
+  k_free(dhcp_offer);
 
   return true;
 }
@@ -72,13 +72,13 @@ void dhcp_discover(net_interface_t* interface)
   };
 
   uint16_t packet_len = sizeof(dhcp_header_t);
-  uint8_t* packet = malloc(packet_len);
+  uint8_t* packet = k_malloc(packet_len);
   memcpy(packet, &dhcp_header, sizeof(dhcp_header_t));
 
   udp_send_packet(
     interface, PORT_DHCP_CLIENT, broadcast_mac, &addr, packet, packet_len);
 
-  free(packet);
+  k_free(packet);
 }
 
 void dhcp_receive_packet(net_interface_t* interface,
@@ -100,7 +100,7 @@ void dhcp_receive_packet(net_interface_t* interface,
 
   switch (dhcp_header.opcode) {
     case DHCP_OFFER:
-      dhcp_offer = malloc(sizeof(dhcp_header_t));
+      dhcp_offer = k_malloc(sizeof(dhcp_header_t));
       memcpy(dhcp_offer, &dhcp_header, sizeof(dhcp_header_t));
       break;
     default:
@@ -167,13 +167,13 @@ void dhcp_handle_offer(net_interface_t* interface)
     };
 
     uint16_t packet_len = sizeof(dhcp_header_t);
-    uint8_t* packet = malloc(packet_len);
+    uint8_t* packet = k_malloc(packet_len);
     memcpy(packet, &dhcp_request, sizeof(dhcp_header_t));
 
     udp_send_packet(
       interface, PORT_DHCP_CLIENT, broadcast_mac, &addr, packet, packet_len);
 
-    free(packet);
+    k_free(packet);
   } else if (type[0] == DHCP_ACK) {
     memcpy(interface->ip, yiaddr, 4);
 

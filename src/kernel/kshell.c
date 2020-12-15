@@ -109,9 +109,9 @@ void selftest()
 
   print_selftest_header("memory");
   char* str = (void*)0x42;
-  printf("  pointer before malloc(): p=%p\n", str);
+  printf("  pointer before k_malloc(): p=%p\n", str);
   int str_len = 9;
-  str = (char*)malloc(str_len * sizeof(char));
+  str = (char*)k_malloc(str_len * sizeof(char));
 
   if (str == 0) {
     printf("  failed\n");
@@ -119,7 +119,7 @@ void selftest()
     printf("  success! p=%p", str);
     strncpy(str, "it works", str_len);
     printf(" and value is: %s\n", str);
-    free(str);
+    k_free(str);
   }
 
   print_selftest_header("filesystem");
@@ -245,7 +245,7 @@ void ls(int argc, char* argv[])
     printf("%6llu %s\n", stat.size, de->name);
 
     vfs_free(de->inode);
-    free(de);
+    k_free(de);
   }
 
   vfs_free(inode);
@@ -256,10 +256,10 @@ int try_exec(int argc, char* argv[])
   inode_t inode = vfs_namei(argv[0]);
 
   if (!inode) {
-    char* buf = malloc(strlen(argv[0]) + 5);
+    char* buf = k_malloc(strlen(argv[0]) + 5);
     sprintf(buf, "/bin/%s", argv[0]);
     inode = vfs_namei(buf);
-    free(buf);
+    k_free(buf);
   }
 
   if (!inode) {
@@ -274,14 +274,14 @@ int try_exec(int argc, char* argv[])
   stat_t stat;
   vfs_stat(inode, &stat);
 
-  char* buf = malloc((stat.size + 1) * sizeof(char));
+  char* buf = k_malloc((stat.size + 1) * sizeof(char));
   vfs_read(inode, buf, stat.size, 0);
 
   elf_header_t* elf = elf_load((uint8_t*)buf);
 
   if (!elf) {
     vfs_free(inode);
-    free(buf);
+    k_free(buf);
     return -3;
   }
 
@@ -296,7 +296,7 @@ int try_exec(int argc, char* argv[])
   elf_unload(elf);
 
   vfs_free(inode);
-  free(buf);
+  k_free(buf);
 
   return 0;
 }
@@ -319,9 +319,9 @@ void run_command()
   while (strtok(NULL, " ") != NULL) {
     argc++;
   }
-  free(_readline);
+  k_free(_readline);
 
-  char** argv = malloc(sizeof(char*) * argc);
+  char** argv = k_malloc(sizeof(char*) * argc);
   argv[0] = strtok(readline, " ");
   DEBUG("command='%s' argc=%d", argv[0], argc);
 
@@ -350,7 +350,7 @@ void run_command()
     }
   }
 
-  free(argv);
+  k_free(argv);
 }
 
 void kshell_print_prompt()

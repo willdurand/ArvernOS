@@ -25,7 +25,7 @@ void net_interface_init(uint8_t interface_id,
             interface_id,
             driver->get_name());
 
-  net_interface_t* in = calloc(1, sizeof(net_interface_t));
+  net_interface_t* in = k_calloc(1, sizeof(net_interface_t));
   in->id = interface_id;
   in->driver = driver;
   in->driver->receive_frame = ethernet_receive_frame;

@@ -70,11 +70,11 @@ bool rtl8139_init()
   }
 
   // Initialize transmit buffer.
-  tx_buffer = calloc(1, TX_BUFFER_SIZE);
+  tx_buffer = k_calloc(1, TX_BUFFER_SIZE);
   tx_buffer_addr = translate((uint64_t)tx_buffer).value;
 
   // Initialize receive buffer.
-  rx_buffer = calloc(1, RX_BUFFER_SIZE);
+  rx_buffer = k_calloc(1, RX_BUFFER_SIZE);
   port_dword_out(ioaddr + RTL8139_REGISTER_RBSTART,
                  translate((uint64_t)rx_buffer).value);
 
@@ -157,8 +157,8 @@ void rtl8139_receive_frame()
     uint32_t offset = index % RX_BUFFER_SIZE;
     uint32_t len = (buffer[3 + index] << 8) + buffer[2 + index];
 
-    // Important: this `frame` should be free'd in the receiver code.
-    uint8_t* frame = malloc(sizeof(uint8_t) * len);
+    // Important: this `frame` should bek_free'd in the receiver code.
+    uint8_t* frame = k_malloc(sizeof(uint8_t) * len);
     memcpy(frame, &buffer[offset + 4], len);
 
     if (driver.receive_frame != NULL && driver.interface != NULL) {
@@ -166,7 +166,7 @@ void rtl8139_receive_frame()
     } else {
       NET_DEBUG("%s",
                 "dropping frame because driver isn't bound to an interface.");
-      free(frame);
+      k_free(frame);
     }
 
     index = (index + len + 4 + 3) & ~3;

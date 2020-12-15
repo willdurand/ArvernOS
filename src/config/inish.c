@@ -55,7 +55,7 @@ void inish_add_char_to_token_value(token_t* t, char c)
 {
   if (t->len >= DEFAULT_VALUE_LEN) {
     t->value =
-      (char*)realloc(t->value, (t->len + DEFAULT_VALUE_LEN) * sizeof(char));
+      (char*)k_realloc(t->value, (t->len + DEFAULT_VALUE_LEN) * sizeof(char));
   }
 
   t->value[t->len++] = c;
@@ -68,8 +68,8 @@ token_t* inish_get_next_token(int fd)
 
   // discard rule
   while (next_token->type == WHITESPACE || next_token->type == COMMENT) {
-    free(next_token->value);
-    free(next_token);
+    k_free(next_token->value);
+    k_free(next_token);
     next_token = inish_lex_token(fd);
   }
 
@@ -78,8 +78,8 @@ token_t* inish_get_next_token(int fd)
 
 token_t* inish_lex_token(int fd)
 {
-  token_t* t = (token_t*)calloc(1, sizeof(token_t));
-  t->value = (char*)calloc(1, DEFAULT_VALUE_LEN * sizeof(char));
+  token_t* t = (token_t*)k_calloc(1, sizeof(token_t));
+  t->value = (char*)k_calloc(1, DEFAULT_VALUE_LEN * sizeof(char));
 
   char c = inish_getchar(fd);
 
@@ -421,31 +421,31 @@ void inish_free(inish_config_t* conf)
     for (int j = 0; j < s->n_kv_pairs; j++) {
       inish_kv_pair_t* kv = s->kv_pairs[j];
 
-      free(kv->key);
-      free(kv->value);
-      free(kv);
+      k_free(kv->key);
+      k_free(kv->value);
+      k_free(kv);
     }
 
     for (int j = 0; j < s->n_arrays; j++) {
       inish_array_t* array = s->arrays[j];
 
       for (int k = 0; k < array->n_values; k++) {
-        free(array->values[k]);
+        k_free(array->values[k]);
       }
 
-      free(array->key);
-      free(array->values);
-      free(array);
+      k_free(array->key);
+      k_free(array->values);
+      k_free(array);
     }
 
-    free(s->name);
-    free(s->kv_pairs);
-    free(s->arrays);
-    free(s);
+    k_free(s->name);
+    k_free(s->kv_pairs);
+    k_free(s->arrays);
+    k_free(s);
   }
 
-  free(conf->sections);
-  free(conf);
+  k_free(conf->sections);
+  k_free(conf);
 }
 
 char inish_getchar(int fd)
@@ -467,13 +467,13 @@ inish_config_t* inish_load(const char* filename)
     return NULL;
   }
 
-  next_token = (token_t*)calloc(1, sizeof(token_t));
+  next_token = (token_t*)k_calloc(1, sizeof(token_t));
   next_token->type = NO_TOKEN;
 
   line = 1;
 
-  inish_config_t* conf = (inish_config_t*)calloc(1, sizeof(inish_config_t));
-  conf->sections = (inish_section_t**)calloc(0, sizeof(inish_section_t*));
+  inish_config_t* conf = (inish_config_t*)k_calloc(1, sizeof(inish_config_t));
+  conf->sections = (inish_section_t**)k_calloc(0, sizeof(inish_section_t*));
 
   // look ahead
   token_t* no_token = inish_get_next_token(fd);
@@ -488,179 +488,179 @@ inish_config_t* inish_load(const char* filename)
       t = inish_get_next_token(fd);
 
       if (t->type != OPEN_BRACE) {
-        free(t->value);
-        free(t);
+        k_free(t->value);
+        k_free(t);
         SYNTAX_ERROR("expected open brace", line);
       }
 
-      free(t->value);
-      free(t);
+      k_free(t->value);
+      k_free(t);
       t = inish_get_next_token(fd);
 
       if (t->type != IDENTIFIER) {
-        free(t->value);
-        free(t);
+        k_free(t->value);
+        k_free(t);
         SYNTAX_ERROR("expected identifier", line);
       }
 
       inish_section_t* section =
-        (inish_section_t*)calloc(1, sizeof(inish_section_t));
-      section->name = (char*)calloc(1, sizeof(char) * (t->len + 1));
+        (inish_section_t*)k_calloc(1, sizeof(inish_section_t));
+      section->name = (char*)k_calloc(1, sizeof(char) * (t->len + 1));
       memcpy(section->name, t->value, t->len);
 
       section->kv_pairs =
-        (inish_kv_pair_t**)calloc(0, sizeof(inish_kv_pair_t*));
-      section->arrays = (inish_array_t**)calloc(0, sizeof(inish_array_t*));
+        (inish_kv_pair_t**)k_calloc(0, sizeof(inish_kv_pair_t*));
+      section->arrays = (inish_array_t**)k_calloc(0, sizeof(inish_array_t*));
 
-      conf->sections = (inish_section_t**)realloc(
+      conf->sections = (inish_section_t**)k_realloc(
         conf->sections, (conf->n_sections + 1) * sizeof(inish_section_t*));
       conf->sections[conf->n_sections++] = section;
 
-      free(t->value);
-      free(t);
+      k_free(t->value);
+      k_free(t);
       t = inish_get_next_token(fd);
 
       if (t->type != CLOSE_BRACE) {
-        free(t->value);
-        free(t);
+        k_free(t->value);
+        k_free(t);
         SYNTAX_ERROR("expected close brace", line);
       }
 
-      free(t->value);
-      free(t);
+      k_free(t->value);
+      k_free(t);
       t = inish_get_next_token(fd);
 
       if (t->type != NEWLINE && t->type != FILE_END) {
-        free(t->value);
-        free(t);
+        k_free(t->value);
+        k_free(t);
         SYNTAX_ERROR("expected newline", line);
       }
 
       // Parse section values.
       while (next_token->type == IDENTIFIER || next_token->type == NEWLINE) {
-        free(t->value);
-        free(t);
+        k_free(t->value);
+        k_free(t);
         t = inish_get_next_token(fd);
 
         if (t->type == NEWLINE) {
-          free(t->value);
-          free(t);
+          k_free(t->value);
+          k_free(t);
           continue;
         }
 
         if (t->type != IDENTIFIER) {
-          free(t->value);
-          free(t);
+          k_free(t->value);
+          k_free(t);
           SYNTAX_ERROR("expected identifier", line);
         }
 
-        char* key = (char*)calloc(1, sizeof(char) * (t->len + 1));
+        char* key = (char*)k_calloc(1, sizeof(char) * (t->len + 1));
         memcpy(key, t->value, t->len);
 
-        free(t->value);
-        free(t);
+        k_free(t->value);
+        k_free(t);
         t = inish_get_next_token(fd);
 
         if (t->type != EQUALS_SIGN) {
-          free(t->value);
-          free(t);
+          k_free(t->value);
+          k_free(t);
           SYNTAX_ERROR("expected equals sign", line);
         }
 
-        free(t->value);
-        free(t);
+        k_free(t->value);
+        k_free(t);
         t = inish_get_next_token(fd);
 
         if (t->type == OPEN_BRACE) {
           // Parse array.
           inish_array_t* array =
-            (inish_array_t*)calloc(1, sizeof(inish_array_t));
-          array->key = (char*)calloc(1, sizeof(char) * (strlen(key) + 1));
+            (inish_array_t*)k_calloc(1, sizeof(inish_array_t));
+          array->key = (char*)k_calloc(1, sizeof(char) * (strlen(key) + 1));
           memcpy(array->key, key, strlen(key));
 
-          array->values = (char**)calloc(0, sizeof(char*));
+          array->values = (char**)k_calloc(0, sizeof(char*));
 
           while (next_token->type == IDENTIFIER || next_token->type == STRING ||
                  next_token->type == NUMBER) {
-            free(t->value);
-            free(t);
+            k_free(t->value);
+            k_free(t);
             t = inish_get_next_token(fd);
 
             if (t->type != IDENTIFIER && t->type != STRING &&
                 t->type != NUMBER) {
-              free(t->value);
-              free(t);
+              k_free(t->value);
+              k_free(t);
               SYNTAX_ERROR("expected identifier, string or number", line);
             }
 
-            char* value = (char*)calloc(1, sizeof(char) * (t->len + 1));
+            char* value = (char*)k_calloc(1, sizeof(char) * (t->len + 1));
             memcpy(value, t->value, t->len);
 
-            array->values = (char**)realloc(
+            array->values = (char**)k_realloc(
               array->values, (array->n_values + 1) * sizeof(char*));
             array->values[array->n_values++] = value;
 
-            free(t->value);
-            free(t);
+            k_free(t->value);
+            k_free(t);
             t = inish_get_next_token(fd);
 
             if (t->type != COMMA && t->type != CLOSE_BRACE) {
-              free(t->value);
-              free(t);
+              k_free(t->value);
+              k_free(t);
               SYNTAX_ERROR("expected comma or close brace", line);
             }
           }
 
-          section->arrays = (inish_array_t**)realloc(
+          section->arrays = (inish_array_t**)k_realloc(
             section->arrays, (section->n_arrays + 1) * sizeof(inish_array_t*));
           section->arrays[section->n_arrays++] = array;
         } else {
           // Parse value.
           if (t->type != IDENTIFIER && t->type != STRING && t->type != NUMBER) {
-            free(t->value);
-            free(t);
+            k_free(t->value);
+            k_free(t);
             SYNTAX_ERROR("expected identifier, string or number", line);
           }
 
           inish_kv_pair_t* kv_pair =
-            (inish_kv_pair_t*)calloc(1, sizeof(inish_kv_pair_t));
+            (inish_kv_pair_t*)k_calloc(1, sizeof(inish_kv_pair_t));
 
-          kv_pair->key = (char*)calloc(1, sizeof(char) * (strlen(key) + 1));
+          kv_pair->key = (char*)k_calloc(1, sizeof(char) * (strlen(key) + 1));
           memcpy(kv_pair->key, key, strlen(key));
-          kv_pair->value = (char*)calloc(1, sizeof(char) * (t->len + 1));
+          kv_pair->value = (char*)k_calloc(1, sizeof(char) * (t->len + 1));
           memcpy(kv_pair->value, t->value, t->len);
 
-          section->kv_pairs = (inish_kv_pair_t**)realloc(
+          section->kv_pairs = (inish_kv_pair_t**)k_realloc(
             section->kv_pairs,
             (section->n_kv_pairs + 1) * sizeof(inish_kv_pair_t*));
           section->kv_pairs[section->n_kv_pairs++] = kv_pair;
         }
 
-        free(key);
+        k_free(key);
 
-        free(t->value);
-        free(t);
+        k_free(t->value);
+        k_free(t);
         t = inish_get_next_token(fd);
 
         if (t->type != NEWLINE && t->type != FILE_END) {
-          free(t->value);
-          free(t);
+          k_free(t->value);
+          k_free(t);
           SYNTAX_ERROR("expected newline", line);
         }
       }
     }
 
     if (t) {
-      free(t->value);
-      free(t);
+      k_free(t->value);
+      k_free(t);
     }
   }
 
 end:
-  free(no_token->value);
-  free(no_token);
-  free(next_token->value);
-  free(next_token);
+  k_free(no_token->value);
+  k_free(no_token);
+  k_free(next_token->value);
+  k_free(next_token);
 
   close(fd);
 

@@ -41,7 +41,7 @@ void ethernet_receive_frame(net_interface_t* interface,
   }
 
   // This is because `data` gets allocated in the driver code.
-  free(data);
+  k_free(data);
 }
 
 void ethernet_transmit_frame(net_interface_t* interface,
@@ -60,11 +60,11 @@ void ethernet_transmit_frame(net_interface_t* interface,
     frame_len = 64;
   }
 
-  uint8_t* frame = (uint8_t*)calloc(1, frame_len);
+  uint8_t* frame = (uint8_t*)k_calloc(1, frame_len);
   memcpy(frame, &header, sizeof(ethernet_header_t));
   memcpy(frame + sizeof(ethernet_header_t), data, len);
 
   interface->driver->transmit_frame(frame, frame_len);
 
-  free(frame);
+  k_free(frame);
 }

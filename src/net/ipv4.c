@@ -87,7 +87,7 @@ void icmpv4_receive_packet(net_interface_t* interface,
     icmpv4_echo.checksum);
 
   if (icmpv4_echo.type == ICMPV4_TYPE_REPLY) {
-    icmpv4_reply = malloc(sizeof(icmpv4_reply_t));
+    icmpv4_reply = k_malloc(sizeof(icmpv4_reply_t));
 
     icmpv4_reply->sequence = icmpv4_echo.sequence;
     icmpv4_reply->ttl = header->ttl;
@@ -127,7 +127,7 @@ int ipv4_ping(net_interface_t* interface, uint8_t ip[4], icmpv4_reply_t* reply)
   }
 
   memcpy(reply, icmpv4_reply, sizeof(icmpv4_reply_t));
-  free(icmpv4_reply);
+  k_free(icmpv4_reply);
 
   return 0;
 }
@@ -169,12 +169,12 @@ void ipv4_send_packet(net_interface_t* interface,
   ipv4_header_t ipv4_header = ipv4_create_header(
     interface->ip, dst_addr->sin_addr.s_addr, protocol, flags, packet_len);
 
-  uint8_t* packet = malloc(packet_len);
+  uint8_t* packet = k_malloc(packet_len);
   memcpy(packet, &ipv4_header, sizeof(ipv4_header_t));
   memcpy(packet + sizeof(ipv4_header_t), data, len);
 
   ethernet_transmit_frame(
     interface, interface->gateway_mac, ETHERTYPE_IPV4, packet, packet_len);
 
-  free(packet);
+  k_free(packet);
 }

@@ -28,9 +28,9 @@ int dns_lookup(net_interface_t* interface, char* domain, uint8_t ip[4])
                        + 2          // Class
                        ) *
                       sizeof(uint8_t);
-  uint8_t* data = malloc(data_len);
+  uint8_t* data = k_malloc(data_len);
 
-  char* _domain = calloc(1, (domain_len + 1) * sizeof(char));
+  char* _domain = k_calloc(1, (domain_len + 1) * sizeof(char));
   strcat(_domain, domain);
   strcat(_domain, ".");
 
@@ -57,14 +57,14 @@ int dns_lookup(net_interface_t* interface, char* domain, uint8_t ip[4])
   data[j++] = (uint8_t)(DNS_CLASS_IN << 8);
   data[j++] = (uint8_t)(DNS_CLASS_IN);
 
-  free(_domain);
+  k_free(_domain);
 
   uint16_t packet_len = sizeof(dns_header_t) + data_len;
-  uint8_t* packet = malloc(packet_len);
+  uint8_t* packet = k_malloc(packet_len);
   memcpy(packet, &dns_lookup_header, sizeof(dns_header_t));
   memcpy(packet + sizeof(dns_header_t), data, data_len);
 
-  free(data);
+  k_free(data);
 
   int sockfd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 
@@ -93,7 +93,7 @@ int dns_lookup(net_interface_t* interface, char* domain, uint8_t ip[4])
     return DNS_ERR_SEND;
   }
 
-  free(packet);
+  k_free(packet);
   dns_id++;
 
   NET_DEBUG("%s", "waiting for a response now");

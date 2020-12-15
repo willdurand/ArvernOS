@@ -30,13 +30,13 @@ void arp_request(net_interface_t* interface, uint8_t ip[4])
   memcpy(arp_packet.dst_ip, ip, 4);
 
   uint8_t packet_len = sizeof(arp_packet_t);
-  uint8_t* packet = malloc(packet_len);
+  uint8_t* packet = k_malloc(packet_len);
   memcpy(packet, &arp_packet, sizeof(arp_packet_t));
 
   ethernet_transmit_frame(
     interface, dst_mac, ETHERTYPE_ARP, packet, packet_len);
 
-  free(packet);
+  k_free(packet);
 }
 
 void arp_wait_reply(uint8_t* dst_mac)
@@ -110,11 +110,11 @@ void arp_reply(net_interface_t* interface, arp_packet_t* request)
   memcpy(reply.dst_ip, request->src_ip, 4);
 
   uint8_t packet_len = sizeof(arp_packet_t);
-  uint8_t* packet = malloc(packet_len);
+  uint8_t* packet = k_malloc(packet_len);
   memcpy(packet, &reply, sizeof(arp_packet_t));
 
   ethernet_transmit_frame(
     interface, request->src_mac, ETHERTYPE_ARP, packet, packet_len);
 
-  free(packet);
+  k_free(packet);
 }

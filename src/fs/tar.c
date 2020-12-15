@@ -30,7 +30,7 @@ static vfs_driver_t tar_driver = {
 
 inode_t tar_fs_init(uint64_t address)
 {
-  inode_t node = calloc(1, sizeof(vfs_node_t));
+  inode_t node = k_calloc(1, sizeof(vfs_node_t));
 
   strcpy(node->name, "tar");
   node->driver = &tar_driver;
@@ -123,17 +123,17 @@ uint64_t tar_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
 
 inode_t tar_finddir(inode_t inode, const char* name)
 {
-  inode_t node = calloc(1, sizeof(vfs_node_t));
+  inode_t node = k_calloc(1, sizeof(vfs_node_t));
 
   char* fullpath = NULL;
 
   if (inode->data >= 0) {
-    fullpath = malloc((strlen(headers[inode->data]->name) + strlen(name) + 1) *
-                      sizeof(char));
+    fullpath = k_malloc(
+      (strlen(headers[inode->data]->name) + strlen(name) + 1) * sizeof(char));
     strcpy(fullpath, headers[inode->data]->name);
     strcat(fullpath, name);
   } else {
-    fullpath = malloc((strlen(name) + 1) * sizeof(char));
+    fullpath = k_malloc((strlen(name) + 1) * sizeof(char));
     strcpy(fullpath, name);
   }
 
@@ -150,18 +150,18 @@ inode_t tar_finddir(inode_t inode, const char* name)
     if (strcmp(fullpath, header_name) == 0) {
       header = headers[i];
       node->data = i;
-      free(header_name);
+      k_free(header_name);
       break;
     }
 
-    free(header_name);
+    k_free(header_name);
   }
 
-  free(fullpath);
+  k_free(fullpath);
 
   if (!header) {
     FS_DEBUG("did not find name=%s", name);
-    free(node);
+    k_free(node);
     return 0;
   }
 
@@ -195,7 +195,7 @@ dirent_t* tar_readdir(inode_t inode, uint64_t num)
     return 0;
   }
 
-  char* name = malloc((strlen(inode->name) + 2) * sizeof(char));
+  char* name = k_malloc((strlen(inode->name) + 2) * sizeof(char));
 
   if (inode->data >= 0) {
     strcpy(name, inode->name);
@@ -208,8 +208,8 @@ dirent_t* tar_readdir(inode_t inode, uint64_t num)
 
   int level = get_level(name);
 
-  dirent_t* dir = calloc(1, sizeof(dirent_t));
-  inode_t node = calloc(1, sizeof(vfs_node_t));
+  dirent_t* dir = k_calloc(1, sizeof(dirent_t));
+  inode_t node = k_calloc(1, sizeof(vfs_node_t));
 
   uint64_t i = 0;
   uint64_t j = -1;
@@ -249,11 +249,11 @@ dirent_t* tar_readdir(inode_t inode, uint64_t num)
     i++;
   }
 
-  free(name);
+  k_free(name);
 
   if (!found) {
-    free(dir);
-    free(node);
+    k_free(dir);
+    k_free(node);
 
     return 0;
   }

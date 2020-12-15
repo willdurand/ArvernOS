@@ -41,13 +41,13 @@ static char* hostname = 0;
 
 inode_t proc_fs_init()
 {
-  inode_t node = calloc(1, sizeof(vfs_node_t));
+  inode_t node = k_calloc(1, sizeof(vfs_node_t));
 
   strcpy(node->name, "proc");
   node->driver = &proc_driver;
   node->type = FS_DIRECTORY;
 
-  hostname = malloc(sizeof(char) * (strlen(DEFAULT_HOSTNAME) + 1));
+  hostname = k_malloc(sizeof(char) * (strlen(DEFAULT_HOSTNAME) + 1));
   strcpy(hostname, DEFAULT_HOSTNAME);
 
   return node;
@@ -55,7 +55,7 @@ inode_t proc_fs_init()
 
 void proc_fs_deinit()
 {
-  free(hostname);
+  k_free(hostname);
 }
 
 // If the current node is a directory, we need a way of enumerating its
@@ -71,8 +71,8 @@ dirent_t* proc_readdir(inode_t inode, uint64_t num)
     return 0;
   }
 
-  dirent_t* dir = calloc(1, sizeof(dirent_t));
-  inode_t node = calloc(1, sizeof(vfs_node_t));
+  dirent_t* dir = k_calloc(1, sizeof(dirent_t));
+  inode_t node = k_calloc(1, sizeof(vfs_node_t));
 
   strcpy(node->name, proc_files[num]);
   node->driver = inode->driver;
@@ -91,7 +91,7 @@ inode_t proc_finddir(inode_t inode, const char* name)
 {
   for (int idx = 2; idx < NB_PROC_FILES; idx++) {
     if (strcmp(name, proc_files[idx]) == 0) {
-      inode_t node = calloc(1, sizeof(vfs_node_t));
+      inode_t node = k_calloc(1, sizeof(vfs_node_t));
 
       strcpy(node->name, proc_files[idx]);
       node->driver = &proc_driver;
@@ -207,10 +207,10 @@ uint64_t proc_update_hostname(char* new_hostname, uint64_t length)
     length = MAX_HOSTNAME_LENGTH;
   }
 
-  char* tmp = realloc(hostname, sizeof(char) * (length + 1));
+  char* tmp = k_realloc(hostname, sizeof(char) * (length + 1));
 
   if (!tmp) {
-    FS_DEBUG("%s", "failed to reallocate memory for hostname");
+    FS_DEBUG("%s", "failed to k_reallocate memory for hostname");
     return 0;
   }
 

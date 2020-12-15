@@ -10,7 +10,7 @@ static vfs_node_t* vfs_root;
 
 void vfs_init()
 {
-  vfs_root = calloc(1, sizeof(vfs_node_t));
+  vfs_root = k_calloc(1, sizeof(vfs_node_t));
   vfs_root->parent = vfs_root;
   strcpy(vfs_root->name, "/");
 }
@@ -74,14 +74,14 @@ dirent_t* vfs_readdir(inode_t inode, uint64_t num)
   // Support '.' and '..' special files in directories.
   if (vfs_inode_type(inode) == FS_DIRECTORY) {
     if (num == 0) {
-      dirent_t* ret = calloc(1, sizeof(dirent_t));
+      dirent_t* ret = k_calloc(1, sizeof(dirent_t));
       ret->inode = inode;
       strcpy(ret->name, ".");
       return ret;
     }
 
     if (num == 1) {
-      dirent_t* ret = calloc(1, sizeof(dirent_t));
+      dirent_t* ret = k_calloc(1, sizeof(dirent_t));
       ret->inode = inode->parent;
       strcpy(ret->name, "..");
       return ret;
@@ -176,7 +176,7 @@ inode_t vfs_namei_mount(const char* path, inode_t root)
       if (!next) {
         FS_DEBUG("%s", "no next, returning 0");
         vfs_free(current);
-        free(npath);
+        k_free(npath);
         return 0;
       }
 
@@ -193,7 +193,7 @@ inode_t vfs_namei_mount(const char* path, inode_t root)
     }
   }
 
-  free(npath);
+  k_free(npath);
 
   if (root != 0) {
     root->parent = current->parent;
@@ -256,7 +256,7 @@ void vfs_free(inode_t inode)
     return;
   }
 
-  free(inode);
+  k_free(inode);
 }
 
 int vfs_inode_type(inode_t inode)
