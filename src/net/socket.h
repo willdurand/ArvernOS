@@ -30,11 +30,12 @@ void socket_bufferize(int sockfd, uint8_t* data, uint16_t len);
 /**
  * Reads data from a socket buffer.
  *
+ * Note: this function will return `0` when the socket buffer is missing.
+ *
  * @param sockfd a socket descriptor ID
  * @param buf the buffer that should receive data
  * @param len the size of data to unbufferize
- * @return the size of data actually unbufferized or `0` when socket buffer is
- * not found
+ * @return the size of data actually unbufferized
  */
 size_t socket_unbufferize(int sockfd, uint8_t* buf, size_t len);
 
