@@ -2,11 +2,18 @@
 
 int socket(int domain, int type, int protocol)
 {
-  int fd = 0;
+#ifdef __is_libk
+  return k_socket(domain, type, protocol);
+#else
+  errno = 0;
+  int retval;
 
   __asm__(INT_SYSCALL
-          : "=d"(fd)
+          : "=d"(retval)
           : "a"(SYSCALL_SOCKET), "b"(domain), "c"(type), "S"(protocol));
 
-  return fd;
+  SYSCALL_SET_ERRNO();
+
+  return retval;
+#endif
 }
