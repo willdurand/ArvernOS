@@ -105,6 +105,8 @@ void selftest()
 
   print_selftest_header("syscalls");
   printf("  syscalling\n");
+  // This does not call the syscall with an interrupt anymore, it directly uses
+  // `k_test()` under the hood.
   test("kshell");
 
   print_selftest_header("memory");
