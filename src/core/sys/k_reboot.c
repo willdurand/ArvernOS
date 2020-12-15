@@ -2,8 +2,8 @@
  * @see https://wiki.osdev.org/Reboot
  * @see http://man7.org/linux/man-pages/man2/reboot.2.html
  */
+#include "k_syscall.h"
 #include "logging.h"
-#include "syscall.h"
 #include <core/port.h>
 #include <errno.h>
 #include <sys/reboot.h>

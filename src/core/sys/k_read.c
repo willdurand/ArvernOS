@@ -1,5 +1,5 @@
+#include "k_syscall.h"
 #include "logging.h"
-#include "syscall.h"
 #include <drivers/keyboard.h>
 #include <errno.h>
 #include <fcntl.h>

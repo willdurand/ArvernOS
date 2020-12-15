@@ -1,5 +1,5 @@
+#include "k_syscall.h"
 #include "logging.h"
-#include "syscall.h"
 #include <drivers/cmos.h>
 #include <drivers/timer.h>
 

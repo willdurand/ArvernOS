@@ -1,4 +1,4 @@
-#include "syscall.h"
+#include "k_syscall.h"
 #include <stdio.h>
 
 void k_test(const char* s)
