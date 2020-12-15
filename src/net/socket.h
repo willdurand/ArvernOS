@@ -33,9 +33,10 @@ void socket_bufferize(int sockfd, uint8_t* data, uint16_t len);
  * @param sockfd a socket descriptor ID
  * @param buf the buffer that should receive data
  * @param len the size of data to unbufferize
- * @return the size of data actually unbufferized or `-1`
+ * @return the size of data actually unbufferized or `0` when socket buffer is
+ * not found
  */
-ssize_t socket_unbufferize(int sockfd, uint8_t* buf, size_t len);
+size_t socket_unbufferize(int sockfd, uint8_t* buf, size_t len);
 
 /**
  * Deletes a socket buffer.
