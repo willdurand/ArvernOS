@@ -11,6 +11,23 @@
 #define KEYBOARD_STATUS_PORT 0x64
 #define RESET_CPU_COMMAND    0xFE
 
+void restart();
+
+int k_reboot(int command)
+{
+  CORE_SYS_DEBUG("reboot command=%d", command);
+
+  switch (command) {
+    case REBOOT_CMD_RESTART:
+      restart();
+      break;
+    default:
+      return -EINVAL;
+  }
+
+  return 0;
+}
+
 void restart()
 {
   irq_disable();
@@ -25,25 +42,4 @@ void restart()
   while (1) {
     __asm__("hlt");
   }
-}
-
-void syscall_reboot(registers_t* registers)
-{
-  errno = 0;
-
-  int command = (int)registers->rbx;
-
-  CORE_SYS_DEBUG("reboot command=%d", command);
-
-  switch (command) {
-    case REBOOT_CMD_RESTART:
-      restart();
-      break;
-    default:
-      errno = EINVAL;
-      registers->rdx = -1;
-      return;
-  }
-
-  registers->rdx = 0;
 }
