@@ -12,6 +12,7 @@ void syscall_close(registers_t* registers);
 void syscall_read(registers_t* registers);
 void syscall_lseek(registers_t* registers);
 void syscall_fstat(registers_t* registers);
+void syscall_gettimeofday(registers_t* registers);
 
 void syscall_init()
 {
@@ -85,4 +86,12 @@ void syscall_fstat(registers_t* registers)
   struct stat* statbuf = (struct stat*)registers->rcx;
 
   registers->rdx = k_fstat(fd, statbuf);
+}
+
+void syscall_gettimeofday(registers_t* registers)
+{
+  struct timeval* t = (struct timeval*)registers->rbx;
+  void* z = (void*)registers->rcx;
+
+  registers->rdx = k_gettimeofday(t, z);
 }
