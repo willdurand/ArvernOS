@@ -18,6 +18,7 @@ void syscall_sendto(registers_t* registers);
 void syscall_socket(registers_t* registers);
 void syscall_write(registers_t* registers);
 void syscall_test(registers_t* registers);
+void syscall_recvfrom(registers_t* registers);
 
 void syscall_init()
 {
@@ -143,4 +144,16 @@ void syscall_test(registers_t* registers)
   const char* s = registers->rbx;
 
   k_test(s);
+}
+
+void syscall_recvfrom(registers_t* registers)
+{
+  int sockfd = (int)registers->rsi;
+  void* buf = (void*)registers->rdx;
+  size_t len = (size_t)registers->rcx;
+  int flags = (int)registers->r10;
+  struct sockaddr* src_addr = (struct sockaddr*)registers->r8;
+  socklen_t* addrlen = (socklen_t*)registers->r9;
+
+  registers->rdx = k_recvfrom(sockfd, buf, len, flags, src_addr, addrlen);
 }

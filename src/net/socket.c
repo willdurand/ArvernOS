@@ -55,7 +55,7 @@ void socket_bufferize(int sockfd, uint8_t* data, uint16_t len)
     buf->write);
 }
 
-ssize_t socket_unbufferize(int sockfd, uint8_t* buf, size_t len)
+size_t socket_unbufferize(int sockfd, uint8_t* buf, size_t len)
 {
   for (uint8_t i = 0; i < NB_AVAILABLE_BUFFERS; i++) {
     if (buffers[i].sockfd == sockfd) {
@@ -91,7 +91,7 @@ ssize_t socket_unbufferize(int sockfd, uint8_t* buf, size_t len)
 
   NET_DEBUG("socket buffer for sockfd=%d not found", sockfd);
 
-  return -1;
+  return 0;
 }
 
 int socket_delete_buffer(int sockfd)

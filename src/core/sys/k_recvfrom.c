@@ -7,51 +7,39 @@
 #include <proc/descriptor.h>
 #include <stddef.h>
 
-void syscall_recvfrom(registers_t* registers)
+ssize_t k_recvfrom(int sockfd,
+                   void* buf,
+                   size_t len,
+                   int flags,
+                   struct sockaddr* src_addr,
+                   socklen_t* addrlen)
 {
-  errno = 0;
-
-  int sockfd = (int)registers->rsi;
-  void* buf = (void*)registers->rdx;
-  size_t len = (size_t)registers->rcx;
-  int flags = (int)registers->r10;
-  struct sockaddr* src_addr = (struct sockaddr*)registers->r8;
-  socklen_t* addrlen = (socklen_t*)registers->r9;
-
   UNUSED(addrlen);
   UNUSED(src_addr);
   UNUSED(flags);
 
   if (sockfd < 3) {
     CORE_SYS_DEBUG("invalid socket descriptor sd=%d", sockfd);
-    registers->rdx = -1;
-    errno = ENOTSOCK;
-    return;
+    return -ENOTSOCK;
   }
 
   descriptor_t* desc = get_descriptor(sockfd);
 
   if (desc == NULL) {
     CORE_SYS_DEBUG("socket descriptor sockfd=%d not found", sockfd);
-    registers->rdx = -1;
-    errno = EBADF;
-    return;
+    return -EBADF;
   }
 
   if (desc->inode != NULL) {
     CORE_SYS_DEBUG("sockfd=%d is not a socket descriptor", sockfd);
-    registers->rdx = -1;
-    errno = ENOTSOCK;
-    return;
+    return -ENOTSOCK;
   }
 
   if (desc->domain != AF_INET || desc->type != SOCK_DGRAM ||
       !is_protocol_supported(desc->type, desc->protocol)) {
     CORE_SYS_DEBUG("invalid sockfd=%d", sockfd);
-    registers->rdx = -1;
-    errno = EINVAL;
-    return;
+    return -EINVAL;
   }
 
-  registers->rdx = socket_unbufferize(sockfd, (uint8_t*)buf, len);
+  return socket_unbufferize(sockfd, (uint8_t*)buf, len);
 }
