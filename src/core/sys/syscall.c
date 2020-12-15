@@ -16,6 +16,7 @@ void syscall_gettimeofday(registers_t* registers);
 void syscall_reboot(registers_t* registers);
 void syscall_sendto(registers_t* registers);
 void syscall_socket(registers_t* registers);
+void syscall_write(registers_t* registers);
 
 void syscall_init()
 {
@@ -125,4 +126,13 @@ void syscall_socket(registers_t* registers)
   int protocol = (int)registers->rsi;
 
   registers->rdx = k_socket(domain, type, protocol);
+}
+
+void syscall_write(registers_t* registers)
+{
+  int fd = (int)registers->rbx;
+  const char* buf = (char*)registers->rcx;
+  size_t count = (size_t)registers->rsi;
+
+  registers->rdx = k_write(fd, buf, count);
 }
