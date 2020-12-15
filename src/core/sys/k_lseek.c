@@ -9,20 +9,16 @@
 
 off_t k_lseek(int fd, off_t offset, int whence)
 {
-  errno = 0;
-
   if (fd < 3) {
     CORE_SYS_DEBUG("invalid file descriptor fd=%d", fd);
-    errno = EPERM;
-    return -1;
+    return -EPERM;
   }
 
   descriptor_t* desc = get_descriptor(fd);
 
   if (desc == NULL) {
     CORE_SYS_DEBUG("file descriptor fd=%d not found", fd);
-    errno = EBADF;
-    return -1;
+    return -EBADF;
   }
 
   stat_t stat;
@@ -31,16 +27,14 @@ off_t k_lseek(int fd, off_t offset, int whence)
   switch (whence) {
     case SEEK_SET:
       if (offset > stat.size) {
-        errno = EINVAL;
-        return -1;
+        return -EINVAL;
       }
 
       desc->offset = offset;
       break;
     case SEEK_CUR:
       if (desc->offset + offset > stat.size) {
-        errno = EINVAL;
-        return -1;
+        return -EINVAL;
       }
 
       desc->offset += offset;
@@ -48,8 +42,7 @@ off_t k_lseek(int fd, off_t offset, int whence)
     case SEEK_END:
       // TODO: implement me
     default:
-      errno = EINVAL;
-      return -1;
+      return -EINVAL;
   }
 
   return desc->offset;

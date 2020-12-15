@@ -12,16 +12,14 @@ int k_open(const char* pathname, uint32_t flags)
   inode_t inode = vfs_namei(pathname);
 
   if (inode == 0) {
-    errno = ENOENT;
-    return -1;
+    return -ENOENT;
   }
 
   int fd = create_file_descriptor(inode, flags);
 
   if (fd == -1) {
     CORE_SYS_DEBUG("%s", "too many files open");
-    errno = ENFILE;
-    return -1;
+    return -ENFILE;
   }
 
   CORE_SYS_DEBUG("open fd=%d inode=%p flags=%d", registers->rdx, inode, flags);

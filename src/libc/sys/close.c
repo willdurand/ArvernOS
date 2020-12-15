@@ -5,10 +5,13 @@ int close(int fd)
 #ifdef __is_libk
   return k_close(fd);
 #else
-  int ret = 0;
+  errno = 0;
+  int retval;
 
-  __asm__(INT_SYSCALL : "=d"(ret) : "a"(SYSCALL_CLOSE), "b"(fd));
+  __asm__(INT_SYSCALL : "=d"(retval) : "a"(SYSCALL_CLOSE), "b"(fd));
 
-  return ret;
+  SYSCALL_SET_ERRNO(retval);
+
+  return retval;
 #endif
 }

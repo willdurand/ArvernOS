@@ -2,6 +2,7 @@
 #ifndef SYS_SYSCALL_H
 #define SYS_SYSCALL_H
 
+#include <errno.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <sys/socket.h>
@@ -23,6 +24,12 @@
 #define SYSCALL_SOCKET       10
 #define SYSCALL_SENDTO       11
 #define SYSCALL_RECVFROM     12
+
+#define SYSCALL_SET_ERRNO(retval)                                              \
+  if (retval < 0) {                                                            \
+    errno = -retval;                                                           \
+    retval = -1;                                                               \
+  }
 
 // This is needed to export the kernel syscall implementations.
 #ifdef __is_libk
