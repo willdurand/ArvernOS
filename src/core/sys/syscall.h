@@ -3,6 +3,7 @@
 #define CORE_SYS_SYSCALL_H
 
 #include <core/isr.h>
+#include <sys/socket.h>
 #include <sys/stat.h>
 #include <sys/time.h>
 #include <sys/types.h>
@@ -31,12 +32,17 @@ off_t k_lseek(int fd, off_t offset, int whence);
 int k_fstat(int fd, struct stat* statbuf);
 int k_gettimeofday(struct timeval* p, void* z);
 int k_reboot(int command);
+ssize_t k_sendto(int sockfd,
+                 const void* buf,
+                 size_t len,
+                 int flags,
+                 const struct sockaddr* dst_addr,
+                 socklen_t addrlen);
 
 // Below are the different syscall handlers.
 void syscall_test(registers_t* registers);
 void syscall_write(registers_t* registers);
 void syscall_socket(registers_t* registers);
-void syscall_sendto(registers_t* registers);
 void syscall_recvfrom(registers_t* registers);
 
 #endif

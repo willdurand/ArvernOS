@@ -14,6 +14,7 @@ void syscall_lseek(registers_t* registers);
 void syscall_fstat(registers_t* registers);
 void syscall_gettimeofday(registers_t* registers);
 void syscall_reboot(registers_t* registers);
+void syscall_sendto(registers_t* registers);
 
 void syscall_init()
 {
@@ -102,4 +103,16 @@ void syscall_reboot(registers_t* registers)
   int command = (int)registers->rbx;
 
   registers->rdx = k_reboot(command);
+}
+
+void syscall_sendto(registers_t* registers)
+{
+  int sockfd = (int)registers->rsi;
+  const void* buf = (const void*)registers->rdx;
+  size_t len = (size_t)registers->rcx;
+  int flags = (int)registers->r10;
+  const struct sockaddr* dst_addr = (const struct sockaddr*)registers->r8;
+  socklen_t addrlen = (socklen_t)registers->r9;
+
+  registers->rdx = k_sendto(sockfd, buf, len, flags, dst_addr, addrlen);
 }
