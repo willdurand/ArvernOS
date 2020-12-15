@@ -141,7 +141,7 @@ void syscall_write(registers_t* registers)
 
 void syscall_test(registers_t* registers)
 {
-  const char* s = registers->rbx;
+  const char* s = (const char*)registers->rbx;
 
   k_test(s);
 }

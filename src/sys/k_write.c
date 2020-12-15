@@ -33,5 +33,5 @@ ssize_t k_write(int fd, const void* buf, size_t count)
     return -EBADF;
   }
 
-  return vfs_write(desc->inode, buf, count, desc->offset);
+  return vfs_write(desc->inode, (void*)buf, count, desc->offset);
 }
