@@ -3,6 +3,7 @@
 #define CORE_SYS_SYSCALL_H
 
 #include <core/isr.h>
+#include <sys/stat.h>
 #include <sys/types.h>
 
 /// This type represents a syscall handler.
@@ -26,13 +27,13 @@ int k_open(const char* pathname, uint32_t flags);
 int k_close(int fd);
 ssize_t k_read(int fd, void* buf, size_t count);
 off_t k_lseek(int fd, off_t offset, int whence);
+int k_fstat(int fd, struct stat* statbuf);
 
 // Below are the different syscall handlers.
 void syscall_test(registers_t* registers);
 void syscall_write(registers_t* registers);
 void syscall_gettimeofday(registers_t* registers);
 void syscall_reboot(registers_t* registers);
-void syscall_fstat(registers_t* registers);
 void syscall_socket(registers_t* registers);
 void syscall_sendto(registers_t* registers);
 void syscall_recvfrom(registers_t* registers);
