@@ -17,6 +17,7 @@ void syscall_reboot(registers_t* registers);
 void syscall_sendto(registers_t* registers);
 void syscall_socket(registers_t* registers);
 void syscall_write(registers_t* registers);
+void syscall_test(registers_t* registers);
 
 void syscall_init()
 {
@@ -135,4 +136,11 @@ void syscall_write(registers_t* registers)
   size_t count = (size_t)registers->rsi;
 
   registers->rdx = k_write(fd, buf, count);
+}
+
+void syscall_test(registers_t* registers)
+{
+  const char* s = registers->rbx;
+
+  k_test(s);
 }

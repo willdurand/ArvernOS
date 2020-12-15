@@ -40,9 +40,9 @@ ssize_t k_sendto(int sockfd,
                  socklen_t addrlen);
 int k_socket(int domain, int type, int protocol);
 ssize_t k_write(int fd, const void* buf, size_t count);
+void k_test(const char* s);
 
 // Below are the different syscall handlers.
-void syscall_test(registers_t* registers);
 void syscall_recvfrom(registers_t* registers);
 
 #endif
