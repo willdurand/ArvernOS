@@ -25,7 +25,7 @@
 #define SYSCALL_SENDTO       11
 #define SYSCALL_RECVFROM     12
 
-#define SYSCALL_SET_ERRNO(retval)                                              \
+#define SYSCALL_SET_ERRNO()                                                    \
   if (retval < 0) {                                                            \
     errno = -retval;                                                           \
     retval = -1;                                                               \

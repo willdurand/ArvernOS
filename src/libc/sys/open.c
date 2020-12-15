@@ -12,7 +12,7 @@ int open(const char* pathname, uint32_t flags)
           : "=d"(retval)
           : "a"(SYSCALL_OPEN), "b"(pathname), "c"(flags));
 
-  SYSCALL_SET_ERRNO(retval);
+  SYSCALL_SET_ERRNO();
 
   return retval;
 #endif

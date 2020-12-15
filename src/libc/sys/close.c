@@ -10,7 +10,7 @@ int close(int fd)
 
   __asm__(INT_SYSCALL : "=d"(retval) : "a"(SYSCALL_CLOSE), "b"(fd));
 
-  SYSCALL_SET_ERRNO(retval);
+  SYSCALL_SET_ERRNO();
 
   return retval;
 #endif

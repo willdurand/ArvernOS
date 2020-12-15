@@ -12,7 +12,7 @@ off_t lseek(int fd, off_t offset, int whence)
           : "=d"(retval)
           : "a"(SYSCALL_LSEEK), "b"(fd), "c"(offset), "S"(whence));
 
-  SYSCALL_SET_ERRNO(retval);
+  SYSCALL_SET_ERRNO();
 
   return retval;
 #endif
