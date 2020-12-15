@@ -9,9 +9,11 @@ ssize_t recvfrom(int sockfd,
 {
   ssize_t retval;
 
+#ifndef __is_libk
   register int r10 __asm__("r10") = flags;
   register struct sockaddr* r8 __asm__("r8") = src_addr;
   register socklen_t* r9 __asm__("r9") = addrlen;
+#endif
 
   // We implement blocking here because the kernel does not run mulitple
   // processes/threads. It cannot be done in the syscall handler either because

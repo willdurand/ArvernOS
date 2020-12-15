@@ -3,6 +3,7 @@
 #include <core/utils.h>
 #include <errno.h>
 #include <net/net.h>
+#include <net/socket.h>
 #include <net/udp.h>
 #include <proc/descriptor.h>
 #include <string.h>
