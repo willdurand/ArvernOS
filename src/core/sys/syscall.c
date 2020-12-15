@@ -13,6 +13,7 @@ void syscall_read(registers_t* registers);
 void syscall_lseek(registers_t* registers);
 void syscall_fstat(registers_t* registers);
 void syscall_gettimeofday(registers_t* registers);
+void syscall_reboot(registers_t* registers);
 
 void syscall_init()
 {
@@ -94,4 +95,11 @@ void syscall_gettimeofday(registers_t* registers)
   void* z = (void*)registers->rcx;
 
   registers->rdx = k_gettimeofday(t, z);
+}
+
+void syscall_reboot(registers_t* registers)
+{
+  int command = (int)registers->rbx;
+
+  registers->rdx = k_reboot(command);
 }
