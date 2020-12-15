@@ -15,6 +15,7 @@ void syscall_fstat(registers_t* registers);
 void syscall_gettimeofday(registers_t* registers);
 void syscall_reboot(registers_t* registers);
 void syscall_sendto(registers_t* registers);
+void syscall_socket(registers_t* registers);
 
 void syscall_init()
 {
@@ -115,4 +116,13 @@ void syscall_sendto(registers_t* registers)
   socklen_t addrlen = (socklen_t)registers->r9;
 
   registers->rdx = k_sendto(sockfd, buf, len, flags, dst_addr, addrlen);
+}
+
+void syscall_socket(registers_t* registers)
+{
+  int domain = (int)registers->rbx;
+  int type = (int)registers->rcx;
+  int protocol = (int)registers->rsi;
+
+  registers->rdx = k_socket(domain, type, protocol);
 }

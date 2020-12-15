@@ -38,11 +38,11 @@ ssize_t k_sendto(int sockfd,
                  int flags,
                  const struct sockaddr* dst_addr,
                  socklen_t addrlen);
+int k_socket(int domain, int type, int protocol);
 
 // Below are the different syscall handlers.
 void syscall_test(registers_t* registers);
 void syscall_write(registers_t* registers);
-void syscall_socket(registers_t* registers);
 void syscall_recvfrom(registers_t* registers);
 
 #endif
