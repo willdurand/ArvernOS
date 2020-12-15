@@ -11,6 +11,7 @@ void syscall_open(registers_t* registers);
 void syscall_close(registers_t* registers);
 void syscall_read(registers_t* registers);
 void syscall_lseek(registers_t* registers);
+void syscall_fstat(registers_t* registers);
 
 void syscall_init()
 {
@@ -76,4 +77,12 @@ void syscall_lseek(registers_t* registers)
   int whence = (int)registers->rsi;
 
   registers->rdx = k_lseek(fd, offset, whence);
+}
+
+void syscall_fstat(registers_t* registers)
+{
+  int fd = (int)registers->rbx;
+  struct stat* statbuf = (struct stat*)registers->rcx;
+
+  registers->rdx = k_fstat(fd, statbuf);
 }

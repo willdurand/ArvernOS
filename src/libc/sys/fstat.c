@@ -2,9 +2,18 @@
 
 int fstat(int fd, struct stat* statbuf)
 {
-  int ret;
+#ifdef __is_libk
+  return k_fstat(fd, statbuf);
+#else
+  errno = 0;
+  int retval;
 
-  __asm__(INT_SYSCALL : "=d"(ret) : "a"(SYSCALL_FSTAT), "b"(fd), "c"(statbuf));
+  __asm__(INT_SYSCALL
+          : "=d"(retval)
+          : "a"(SYSCALL_FSTAT), "b"(fd), "c"(statbuf));
 
-  return ret;
+  SYSCALL_SET_ERRNO(retval);
+
+  return retval;
+#endif
 }
