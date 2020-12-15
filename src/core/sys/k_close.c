@@ -8,20 +8,16 @@
 
 int k_close(int fd)
 {
-  errno = 0;
-
   if (fd < 3) {
     CORE_SYS_DEBUG("invalid file descriptor fd=%d", fd);
-    errno = EPERM;
-    return -1;
+    return -EPERM;
   }
 
   descriptor_t* desc = get_descriptor(fd);
 
   if (desc == NULL) {
     CORE_SYS_DEBUG("file descriptor fd=%d not found", fd);
-    errno = EBADF;
-    return -1;
+    return -EBADF;
   }
 
   int ret = 0;

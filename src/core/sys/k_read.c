@@ -9,8 +9,6 @@
 
 ssize_t k_read(int fd, void* buf, size_t count)
 {
-  errno = 0;
-
   if (fd == STDIN) {
     uint8_t scancode = keyboard_get_scancode();
 
@@ -24,8 +22,7 @@ ssize_t k_read(int fd, void* buf, size_t count)
 
   if (fd < 3) {
     CORE_SYS_DEBUG("invalid file descriptor fd=%d", fd);
-    errno = EPERM;
-    return -1;
+    return -EPERM;
   }
 
   CORE_SYS_DEBUG("fd=%d buf=%p count=%d", fd, buf, count);
@@ -34,15 +31,13 @@ ssize_t k_read(int fd, void* buf, size_t count)
 
   if (desc == NULL) {
     CORE_SYS_DEBUG("file descriptor fd=%d not found", fd);
-    errno = EBADF;
-    return -1;
+    return -EBADF;
   }
 
   if ((desc->flags != O_RDONLY && desc->flags != O_RDWR) ||
       desc->flags == O_WRONLY) {
     CORE_SYS_DEBUG("invalid flags for file descriptor fd=%d", fd);
-    errno = EBADF;
-    return -1;
+    return -EBADF;
   }
 
   ssize_t bytes_read = vfs_read(desc->inode, buf, count, desc->offset);
