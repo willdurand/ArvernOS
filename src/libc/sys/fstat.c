@@ -12,7 +12,7 @@ int fstat(int fd, struct stat* statbuf)
           : "=d"(retval)
           : "a"(SYSCALL_FSTAT), "b"(fd), "c"(statbuf));
 
-  SYSCALL_SET_ERRNO(retval);
+  SYSCALL_SET_ERRNO();
 
   return retval;
 #endif

@@ -10,7 +10,7 @@ int reboot(int command)
 
   __asm__(INT_SYSCALL : "=d"(retval) : "a"(SYSCALL_REBOOT), "b"(command));
 
-  SYSCALL_SET_ERRNO(retval);
+  SYSCALL_SET_ERRNO();
 
   return retval;
 #endif
