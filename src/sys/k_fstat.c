@@ -9,14 +9,14 @@
 int k_fstat(int fd, struct stat* statbuf)
 {
   if (fd < 3) {
-    CORE_SYS_DEBUG("invalid file descriptor fd=%d", fd);
+    SYS_DEBUG("invalid file descriptor fd=%d", fd);
     return -EPERM;
   }
 
   descriptor_t* desc = get_descriptor(fd);
 
   if (desc == NULL) {
-    CORE_SYS_DEBUG("file descriptor fd=%d not found", fd);
+    SYS_DEBUG("file descriptor fd=%d not found", fd);
     return -EBADF;
   }
 

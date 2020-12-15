@@ -17,25 +17,25 @@ ssize_t k_sendto(int sockfd,
   UNUSED(flags);
 
   if (sockfd < 3) {
-    CORE_SYS_DEBUG("invalid socket descriptor sd=%d", sockfd);
+    SYS_DEBUG("invalid socket descriptor sd=%d", sockfd);
     return -ENOTSOCK;
   }
 
   descriptor_t* desc = get_descriptor(sockfd);
 
   if (desc == NULL) {
-    CORE_SYS_DEBUG("socket descriptor sockfd=%d not found", sockfd);
+    SYS_DEBUG("socket descriptor sockfd=%d not found", sockfd);
     return -EBADF;
   }
 
   if (desc->inode != NULL) {
-    CORE_SYS_DEBUG("sockfd=%d is not a socket descriptor", sockfd);
+    SYS_DEBUG("sockfd=%d is not a socket descriptor", sockfd);
     return -ENOTSOCK;
   }
 
   if (desc->domain != AF_INET || desc->type != SOCK_DGRAM ||
       !is_protocol_supported(desc->type, desc->protocol)) {
-    CORE_SYS_DEBUG("invalid sockfd=%d", sockfd);
+    SYS_DEBUG("invalid sockfd=%d", sockfd);
     return -EINVAL;
   }
 

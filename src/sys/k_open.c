@@ -18,11 +18,11 @@ int k_open(const char* pathname, uint32_t flags)
   int fd = create_file_descriptor(inode, flags);
 
   if (fd == -1) {
-    CORE_SYS_DEBUG("%s", "too many files open");
+    SYS_DEBUG("%s", "too many files open");
     return -ENFILE;
   }
 
-  CORE_SYS_DEBUG("open fd=%d inode=%p flags=%d", registers->rdx, inode, flags);
+  SYS_DEBUG("open fd=%d inode=%p flags=%d", registers->rdx, inode, flags);
 
   return fd;
 }

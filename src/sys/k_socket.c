@@ -21,10 +21,10 @@ int k_socket(int domain, int type, int protocol)
   int sd = create_socket_descriptor(domain, type, protocol);
 
   if (sd == -1) {
-    CORE_SYS_DEBUG("%s", "too many files open");
+    SYS_DEBUG("%s", "too many files open");
     return -ENFILE;
   }
 
-  CORE_SYS_DEBUG("open sd=%d", sd);
+  SYS_DEBUG("open sd=%d", sd);
   return sd;
 }

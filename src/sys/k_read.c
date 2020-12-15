@@ -21,22 +21,22 @@ ssize_t k_read(int fd, void* buf, size_t count)
   }
 
   if (fd < 3) {
-    CORE_SYS_DEBUG("invalid file descriptor fd=%d", fd);
+    SYS_DEBUG("invalid file descriptor fd=%d", fd);
     return -EPERM;
   }
 
-  CORE_SYS_DEBUG("fd=%d buf=%p count=%d", fd, buf, count);
+  SYS_DEBUG("fd=%d buf=%p count=%d", fd, buf, count);
 
   descriptor_t* desc = get_descriptor(fd);
 
   if (desc == NULL) {
-    CORE_SYS_DEBUG("file descriptor fd=%d not found", fd);
+    SYS_DEBUG("file descriptor fd=%d not found", fd);
     return -EBADF;
   }
 
   if ((desc->flags != O_RDONLY && desc->flags != O_RDWR) ||
       desc->flags == O_WRONLY) {
-    CORE_SYS_DEBUG("invalid flags for file descriptor fd=%d", fd);
+    SYS_DEBUG("invalid flags for file descriptor fd=%d", fd);
     return -EBADF;
   }
 

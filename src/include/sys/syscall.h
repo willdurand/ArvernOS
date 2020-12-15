@@ -33,7 +33,7 @@
 
 // This is needed to export the kernel syscall implementations.
 #ifdef __is_libk
-#include <core/sys/syscall.h>
+#include <sys/k_syscall.h>
 #endif
 
 /**
