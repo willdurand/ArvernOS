@@ -10,7 +10,7 @@ int k_gettimeofday(struct timeval* p, void* z)
   // https://www.gnu.org/software/libc/manual/html_node/Elapsed-Time.html
   p->tv_usec = 0;
 
-  CORE_SYS_DEBUG("gettimeofday=%u", p->tv_sec);
+  SYS_DEBUG("gettimeofday=%u", p->tv_sec);
 
   return 0;
 }

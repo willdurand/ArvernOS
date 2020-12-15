@@ -3,11 +3,11 @@
 #include <core/idt.h>
 #include <core/port.h>
 #include <core/register.h>
-#include <core/sys/syscall.h>
 #include <kernel/panic.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/k_syscall.h>
 
 stack_t* get_stack(uint64_t id, uint64_t stack);
 void breakpoint_handler(stack_t* stack);

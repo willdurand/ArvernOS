@@ -15,7 +15,7 @@ void restart();
 
 int k_reboot(int command)
 {
-  CORE_SYS_DEBUG("reboot command=%d", command);
+  SYS_DEBUG("reboot command=%d", command);
 
   switch (command) {
     case REBOOT_CMD_RESTART:

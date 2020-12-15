@@ -4,7 +4,6 @@
 #include <core/isr.h>
 #include <core/multiboot.h>
 #include <core/port.h>
-#include <core/sys/syscall.h>
 #include <drivers/cmos.h>
 #include <drivers/keyboard.h>
 #include <drivers/rtl8139.h>
@@ -24,6 +23,7 @@
 #include <net/net.h>
 #include <stdio.h>
 #include <string.h>
+#include <sys/k_syscall.h>
 
 void print_welcome_messge();
 void print_step(const char* msg);
