@@ -1,5 +1,5 @@
+#include "k_syscall.h"
 #include "logging.h"
-#include "syscall.h"
 #include <errno.h>
 #include <net/socket.h>
 #include <proc/descriptor.h>

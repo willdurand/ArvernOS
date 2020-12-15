@@ -1,5 +1,5 @@
+#include "k_syscall.h"
 #include "logging.h"
-#include "syscall.h"
 #include <arpa/inet.h>
 #include <core/utils.h>
 #include <errno.h>
