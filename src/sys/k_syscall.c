@@ -19,6 +19,7 @@ void syscall_socket(registers_t* registers);
 void syscall_write(registers_t* registers);
 void syscall_test(registers_t* registers);
 void syscall_recvfrom(registers_t* registers);
+void syscall_gethostbyname2(registers_t* registers);
 
 void syscall_init()
 {
@@ -34,6 +35,7 @@ void syscall_init()
   syscall_register_handler(SYSCALL_SOCKET, syscall_socket);
   syscall_register_handler(SYSCALL_SENDTO, syscall_sendto);
   syscall_register_handler(SYSCALL_RECVFROM, syscall_recvfrom);
+  syscall_register_handler(SYSCALL_GETHOSTBYNAME2, syscall_gethostbyname2);
 }
 
 void syscall_register_handler(uint8_t id, syscall_handler_t handler)
@@ -156,4 +158,12 @@ void syscall_recvfrom(registers_t* registers)
   socklen_t* addrlen = (socklen_t*)registers->r9;
 
   registers->rdx = k_recvfrom(sockfd, buf, len, flags, src_addr, addrlen);
+}
+
+void syscall_gethostbyname2(registers_t* registers)
+{
+  const char* name = (const char*)registers->rsi;
+  struct in_addr* in = (struct in_addr*)registers->rdx;
+
+  registers->rdx = k_gethostbyname2(name, in);
 }
