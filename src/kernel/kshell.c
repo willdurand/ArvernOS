@@ -8,11 +8,13 @@
 #include <net/dns.h>
 #include <net/ipv4.h>
 #include <net/net.h>
+#include <net/ntp.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/syscall.h>
+#include <time.h>
 
 static char readline[READLINE_SIZE] = { 0 };
 static char last_readline[READLINE_SIZE] = { 0 };
@@ -160,19 +162,17 @@ void net()
 void host(int argc, char* argv[])
 {
   if (argc != 2) {
-    printf("usage: %s domain.tld\n", argv[0]);
+    printf("usage: %s <hostname>\n", argv[0]);
     return;
   }
 
-  net_interface_t* in = net_get_interface(0);
-
-  uint8_t ip[4];
-  int retval = dns_lookup(in, argv[1], ip);
+  struct in_addr in;
+  int retval = gethostbyname2(argv[1], &in);
 
   switch (retval) {
     case 0: {
       char buf[16];
-      inet_itoa(ip, buf, 16);
+      inet_ntoa2(in, buf, 16);
       printf("%s has address %s\n", argv[1], buf);
       break;
     }
@@ -215,6 +215,28 @@ void ping(int argc, char* argv[])
       break;
     default:
       printf("Ping failed (%d)\n", retval);
+  }
+}
+
+void ntp(int argc, char* argv[])
+{
+  if (argc != 2) {
+    printf("usage: %s <time server>\n", argv[0]);
+    return;
+  }
+
+  time_t server_time;
+  int retval = ntp_request(net_get_interface(0), argv[1], &server_time);
+
+  switch (retval) {
+    case 0: {
+      char buf[40];
+      strftime(buf, 40, "%c", localtime(&server_time));
+      printf("server time is: %s\n", buf);
+      break;
+    }
+    default:
+      printf("Nope. (%d)\n", retval);
   }
 }
 
@@ -346,6 +368,8 @@ void run_command()
     ping(argc, argv);
   } else if (strcmp(argv[0], "host") == 0) {
     host(argc, argv);
+  } else if (strcmp(argv[0], "ntp") == 0) {
+    ntp(argc, argv);
   } else {
     if (try_exec(argc, argv) != 0) {
       printf("invalid kshell command\n");

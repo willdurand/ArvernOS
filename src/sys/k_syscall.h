@@ -2,6 +2,7 @@
 #ifndef SYS_K_SYSCALL_H
 #define SYS_K_SYSCALL_H
 
+#include <arpa/inet.h>
 #include <core/isr.h>
 #include <sys/socket.h>
 #include <sys/stat.h>
@@ -47,5 +48,6 @@ ssize_t k_recvfrom(int sockfd,
                    int flags,
                    struct sockaddr* src_addr,
                    socklen_t* addrlen);
+int k_gethostbyname2(const char* name, struct in_addr* in);
 
 #endif

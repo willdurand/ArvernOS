@@ -45,6 +45,6 @@ typedef struct dns_answer_header
  * @param ip the receiving array for the IPv4 address
  * @return `0` on success, something else on error
  */
-int dns_lookup(net_interface_t* interface, char* domain, uint8_t ip[4]);
+int dns_lookup(net_interface_t* interface, const char* domain, uint8_t ip[4]);
 
 #endif

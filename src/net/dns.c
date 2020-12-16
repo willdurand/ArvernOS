@@ -8,7 +8,7 @@
 
 static uint16_t dns_id = 1;
 
-int dns_lookup(net_interface_t* interface, char* domain, uint8_t ip[4])
+int dns_lookup(net_interface_t* interface, const char* domain, uint8_t ip[4])
 {
   memset(ip, 0, 4);
 
@@ -108,8 +108,8 @@ int dns_lookup(net_interface_t* interface, char* domain, uint8_t ip[4])
 
   close(sockfd);
 
-  if (bytes_received < 40) {
-    NET_DEBUG("bytes_received=%lld", bytes_received);
+  if (bytes_received < sizeof(dns_header_t)) {
+    NET_DEBUG("not received enough data: bytes_received=%lld", bytes_received);
     return DNS_ERR_RECV;
   }
 
@@ -157,9 +157,11 @@ int dns_lookup(net_interface_t* interface, char* domain, uint8_t ip[4])
              dns_data + query_len + sizeof(dns_answer_header_t),
              answer_header.data_len);
     } else {
+      DEBUG("%s", "wrong DNS class");
       return DNS_ERR_CLASS;
     }
   } else {
+    DEBUG("%s", "no answer");
     return DNS_ERR_NO_ANSWER;
   }
 
