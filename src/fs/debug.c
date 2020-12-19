@@ -35,8 +35,6 @@ inode_t debug_fs_init()
 
 uint64_t debug_stat(inode_t inode, stat_t* st)
 {
-  memset(st, 0, sizeof(stat_t));
-
   return 0;
 }
 

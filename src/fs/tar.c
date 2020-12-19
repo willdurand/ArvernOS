@@ -265,9 +265,7 @@ dirent_t* tar_readdir(inode_t inode, uint64_t num)
 
 uint64_t tar_stat(inode_t inode, stat_t* st)
 {
-  memset(st, 0, sizeof(stat_t));
-
-  st->size = 0;
+  // TODO: add support for directories
 
   if (vfs_inode_type(inode) == FS_FILE) {
     st->size = oct_to_int(headers[inode->data]->size);
