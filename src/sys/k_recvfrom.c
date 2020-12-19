@@ -3,7 +3,6 @@
 #include <arpa/inet.h>
 #include <core/utils.h>
 #include <errno.h>
-#include <net/socket.h>
 #include <proc/descriptor.h>
 #include <stddef.h>
 

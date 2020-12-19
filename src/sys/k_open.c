@@ -7,7 +7,7 @@
 
 int k_open(const char* pathname, uint32_t flags)
 {
-  errno = 0;
+  // TODO: check flags
 
   inode_t inode = vfs_namei(pathname);
 
@@ -22,7 +22,7 @@ int k_open(const char* pathname, uint32_t flags)
     return -ENFILE;
   }
 
-  SYS_DEBUG("open fd=%d inode=%p flags=%d", registers->rdx, inode, flags);
+  SYS_DEBUG("open fd=%d inode=%p flags=%d", fd, inode, flags);
 
   return fd;
 }
