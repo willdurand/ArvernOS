@@ -11,6 +11,7 @@
 #include <drivers/timer.h>
 #include <fs/debug.h>
 #include <fs/proc.h>
+#include <fs/sock.h>
 #include <fs/tar.h>
 #include <fs/vfs.h>
 #include <kernel/console.h>
@@ -148,6 +149,13 @@ void kmain(uint64_t addr)
 
     print_sub_step("mounting procfs");
     if (vfs_mount(FS_PROC_MOUNTPOINT, proc_fs_init())) {
+      print_ok();
+    } else {
+      print_ko();
+    }
+
+    print_sub_step("mounting sockfs");
+    if (vfs_mount(FS_SOCK_MOUNTPOINT, sock_fs_init())) {
       print_ok();
     } else {
       print_ko();

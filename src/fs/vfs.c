@@ -57,8 +57,13 @@ uint64_t vfs_write(inode_t inode, void* ptr, uint64_t length, uint64_t offset)
 
 uint64_t vfs_stat(inode_t inode, stat_t* stat)
 {
+  memset(stat, 0, sizeof(stat_t));
+
   if (inode->driver && inode->driver->stat) {
-    return inode->driver->stat(inode, stat);
+    uint64_t ret = inode->driver->stat(inode, stat);
+    stat->size += inode->n_children;
+
+    return ret;
   }
 
   return 0;
