@@ -2,7 +2,6 @@
 #include "logging.h"
 #include <errno.h>
 #include <fs/vfs.h>
-#include <net/socket.h>
 #include <proc/descriptor.h>
 #include <stddef.h>
 
@@ -22,15 +21,15 @@ int k_close(int fd)
 
   int ret = 0;
   if (desc->inode != NULL) {
-    ret = vfs_close(desc->inode);
+    ret += vfs_close(desc->inode);
   }
 
   if (desc->port != 0) {
-    ret = socket_delete_buffer(fd);
+    ret += socket_delete_buffer(fd);
   }
 
   delete_descriptor(fd);
 
-  SYS_DEBUG("close fd=%d", fd);
+  SYS_DEBUG("close fd=%d ret=%d", fd, ret);
   return ret;
 }
