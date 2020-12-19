@@ -46,7 +46,7 @@ void _end_describe()
 
 int _test_summary(const char* name)
 {
-  printf(CYAN);
+  printf(failures == 0 ? CYAN : RED);
   printf("\n=> %-48s failures: %2d / total: %2d\n", name, failures, assertions);
   printf(RESET);
 

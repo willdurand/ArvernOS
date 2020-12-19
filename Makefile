@@ -183,6 +183,8 @@ test: CC=gcc
 test: LD=ld
 test: AR=ar
 test: CFLAGS += -fPIC
+test: CFLAGS_FOR_TESTS = -g -DENABLE_LOGS_FOR_TESTS -DTEST_ENV -I./test/ -I./src/
+test: VALGRIND_OPTS = --track-origins=yes --leak-check=yes
 test: libc
 	# libc
 	mkdir -p $(BUILD_DIR)/libc/string
@@ -192,26 +194,27 @@ test: libc
 		gcc -I./test/ -O0 test/$$file.c -o build/$$file ; \
 		LD_PRELOAD=./build/$$file.so ./build/$$file || exit 1 ; \
 	done
-	# fs/tar
-	gcc -DENABLE_LOGS_FOR_TESTS -I./test/ -I./src/ -o $(BUILD_DIR)/tar test/fs/tar.c src/fs/tar.c src/fs/vfs.c
-	./$(BUILD_DIR)/tar
 	# fs/vfs
-	gcc -DENABLE_LOGS_FOR_TESTS -I./test/ -I./src/ -o $(BUILD_DIR)/vfs test/fs/vfs.c src/fs/vfs.c
-	./$(BUILD_DIR)/vfs
+	gcc $(CFLAGS_FOR_TESTS) -o $(BUILD_DIR)/vfs test/fs/vfs.c src/fs/vfs.c
+	valgrind --track-origins=yes --leak-check=yes ./$(BUILD_DIR)/vfs
+	# fs/tar
+	gcc $(CFLAGS_FOR_TESTS) -o $(BUILD_DIR)/tar test/fs/tar.c src/fs/tar.c src/fs/vfs.c
+	valgrind $(VALGRIND_OPTS) ./$(BUILD_DIR)/tar
 	# fs/proc
-	gcc -g -DENABLE_LOGS_FOR_TESTS -I./test/ -I./test/proxies/ -I./src/ -o $(BUILD_DIR)/proc test/fs/proc.c src/fs/proc.c src/fs/vfs.c
+	gcc $(CFLAGS_FOR_TESTS) -I./test/proxies/ -o $(BUILD_DIR)/proc test/fs/proc.c src/fs/proc.c src/fs/vfs.c
+	valgrind $(VALGRIND_OPTS) ./$(BUILD_DIR)/proc
 	# mmu/frame
-	gcc -Wformat=0 -g -DENABLE_LOGS_FOR_TESTS -I./test/ -I./test/proxies/ -I./src/ -o $(BUILD_DIR)/frame test/mmu/frame.c src/mmu/frame.c src/core/multiboot.c src/mmu/bitmap.c
-	valgrind --track-origins=yes --leak-check=yes ./$(BUILD_DIR)/frame
+	gcc $(CFLAGS_FOR_TESTS) -Wformat=0 -I./test/proxies/ -o $(BUILD_DIR)/frame test/mmu/frame.c src/mmu/frame.c src/core/multiboot.c src/mmu/bitmap.c
+	valgrind $(VALGRIND_OPTS) ./$(BUILD_DIR)/frame
 	# mmu/bitmap
-	gcc -g -DENABLE_LOGS_FOR_TESTS -I./test/ -I./src/ -o $(BUILD_DIR)/bitmap test/mmu/bitmap.c src/mmu/bitmap.c
+	gcc $(CFLAGS_FOR_TESTS) -o $(BUILD_DIR)/bitmap test/mmu/bitmap.c src/mmu/bitmap.c
 	./$(BUILD_DIR)/bitmap
 	# mmu/paging
-	gcc -Wformat=0 -g -DENABLE_LOGS_FOR_TESTS -DTEST_ENV -I./test/ -I./test/proxies/ -I./src/ -o $(BUILD_DIR)/paging test/mmu/paging.c src/mmu/paging.c src/core/multiboot.c src/mmu/frame.c src/mmu/bitmap.c src/core/register.c
+	gcc $(CFLAGS_FOR_TESTS) -Wformat=0 -I./test/proxies/ -o $(BUILD_DIR)/paging test/mmu/paging.c src/mmu/paging.c src/core/multiboot.c src/mmu/frame.c src/mmu/bitmap.c src/core/register.c
 	./$(BUILD_DIR)/paging
 	# config/inish
-	gcc -DENABLE_LOGS_FOR_TESTS -I./test/ -I./test/proxies/ -I./src/ -o $(BUILD_DIR)/inish test/config/inish.c src/config/inish.c
-	valgrind --track-origins=yes --leak-check=yes ./$(BUILD_DIR)/inish
+	gcc $(CFLAGS_FOR_TESTS) -I./test/proxies/ -o $(BUILD_DIR)/inish test/config/inish.c src/config/inish.c
+	valgrind $(VALGRIND_OPTS) ./$(BUILD_DIR)/inish
 .PHONY: test
 
 version: ## print tool versions
@@ -223,7 +226,6 @@ version: ## print tool versions
 $(INITRD): userland
 	cp -R userland/bin $(INITRD_DIR)
 	echo "$(OS_NAME) build info\n\nhash: $(GIT_HASH)\ndate: $(shell date)" > $(INITRD_DIR)/info
-	mkdir -p $(INITRD_DIR)/proc
 	cd $(INITRD_DIR) && tar -cvf ../$(INITRD) *
 
 initrd: ## build the init ram disk

@@ -11,14 +11,15 @@ uint64_t debug_write(inode_t node,
 uint64_t debug_isatty(inode_t inode);
 
 static vfs_driver_t debug_driver = {
-  0,            // open
-  0,            // close
-  0,            // read
+  NULL,         // open
+  NULL,         // close
+  NULL,         // read
   debug_write,  // write
   debug_stat,   // stat
   debug_isatty, // isatty
-  0,            // readdir
-  0             // finddir
+  NULL,         // readdir
+  NULL,         // finddir
+  NULL          // cleanup
 };
 
 inode_t debug_fs_init()
@@ -35,7 +36,7 @@ inode_t debug_fs_init()
 uint64_t debug_stat(inode_t inode, stat_t* st)
 {
   memset(st, 0, sizeof(stat_t));
-  st->size = 0;
+
   return 0;
 }
 

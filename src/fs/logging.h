@@ -3,7 +3,7 @@
 
 #include <logging.h>
 
-#ifdef ENABLE_FS_DEBUG
+#if defined(ENABLE_FS_DEBUG) || defined(ENABLE_LOGS_FOR_TESTS)
 #define FS_DEBUG(format, ...) DEBUG(format, __VA_ARGS__)
 #else
 #define FS_DEBUG(format, ...)
