@@ -186,6 +186,7 @@ inode_t vfs_namei_mount(const char* path, inode_t root)
       inode_t next = vfs_finddir(current, name);
 
       if (next == NULL) {
+        // Try to find a mounted FS, if any.
         for (uint64_t i = 0; i < current->n_children; i++) {
           if (strcmp(current->children[i]->name, name) == 0) {
             next = current->children[i];
@@ -243,7 +244,7 @@ inode_t vfs_namei_mount(const char* path, inode_t root)
     current->driver = root->driver;
     current->data = root->data;
 
-    vfs_free(root);
+    free(root);
   }
 
   FS_DEBUG("returning current node: %s", current->name);
@@ -316,6 +317,10 @@ int vfs_umount(const char* path)
 
 int vfs_free(inode_t inode)
 {
+  if ((inode->type & FS_MOUNTPOINT) == FS_MOUNTPOINT) {
+    inode->parent = NULL;
+  }
+
   if (inode->parent != NULL) {
     DEBUG("%s", "cannot free a node with a parent");
     return FS_ERR_HASPARENT;
@@ -329,6 +334,11 @@ int vfs_free(inode_t inode)
   }
 
   free(inode->children);
+
+  if (inode->driver && inode->driver->cleanup) {
+    inode->driver->cleanup(inode);
+  }
+
   free(inode);
 
   return 0;
@@ -336,6 +346,10 @@ int vfs_free(inode_t inode)
 
 int vfs_inode_type(inode_t inode)
 {
+  if (inode == NULL) {
+    return 0;
+  }
+
   return inode->type & FS_MASK;
 }
 

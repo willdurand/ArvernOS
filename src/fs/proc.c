@@ -14,30 +14,36 @@ uint64_t proc_isatty(inode_t node);
 uint64_t proc_read(inode_t node, void* buffer, uint64_t size, uint64_t offset);
 uint64_t proc_stat(inode_t inode, stat_t* st);
 uint64_t proc_write(inode_t inode, void* ptr, uint64_t length, uint64_t offset);
+void proc_cleanup(inode_t inode);
 
 static vfs_driver_t proc_driver = {
-  0,            // open
-  0,            // close
+  NULL,         // open
+  NULL,         // close
   proc_read,    // read
   proc_write,   // write
   proc_stat,    // stat
   proc_isatty,  // isatty
   proc_readdir, // readdir
   proc_finddir, // finddir
+  proc_cleanup  // cleanup
 };
 
-#define NB_PROC_FILES 6
+#define NB_PROC_FILES 4
 
 static const char* proc_files[NB_PROC_FILES] = {
-  ".", "..", "hostname", "meminfo", "uptime", "version",
+  "hostname",
+  "meminfo",
+  "uptime",
+  "version",
 };
+static inode_t nodes[NB_PROC_FILES];
 
 #define DEFAULT_HOSTNAME    "machine"
 #define MAX_HOSTNAME_LENGTH 50
 
 // This is the variable containing the `hostname` value of the system.
 // TODO: move this variable somewhere else...
-static char* hostname = 0;
+static char* hostname = NULL;
 
 inode_t proc_fs_init()
 {
@@ -53,34 +59,36 @@ inode_t proc_fs_init()
   return node;
 }
 
-void proc_fs_deinit()
-{
-  free(hostname);
-}
-
 // If the current node is a directory, we need a way of enumerating its
 // contents. Readdir should return the n'th child node of a directory or 0
 // otherwise. It returns a `dirent_t*`.
 dirent_t* proc_readdir(inode_t inode, uint64_t num)
 {
   if (vfs_inode_type(inode) != FS_DIRECTORY) {
-    return 0;
+    return NULL;
   }
 
-  if (num < 2 || num >= NB_PROC_FILES) {
-    return 0;
+  num -= 2;
+
+  if (num >= NB_PROC_FILES) {
+    return NULL;
   }
 
   dirent_t* dir = calloc(1, sizeof(dirent_t));
-  inode_t node = calloc(1, sizeof(vfs_node_t));
 
-  strcpy(node->name, proc_files[num]);
-  node->driver = inode->driver;
-  node->parent = inode;
-  node->type = FS_FILE;
+  if (nodes[num] == NULL) {
+    inode_t node = calloc(1, sizeof(vfs_node_t));
 
-  strcpy(dir->name, node->name);
-  dir->inode = node;
+    strcpy(node->name, proc_files[num]);
+    node->driver = inode->driver;
+    node->parent = inode;
+    node->type = FS_FILE;
+
+    nodes[num] = node;
+  }
+
+  strcpy(dir->name, nodes[num]->name);
+  dir->inode = nodes[num];
 
   FS_DEBUG("returning directory entry=%s", dir->name);
 
@@ -89,22 +97,26 @@ dirent_t* proc_readdir(inode_t inode, uint64_t num)
 
 inode_t proc_finddir(inode_t inode, const char* name)
 {
-  for (int idx = 2; idx < NB_PROC_FILES; idx++) {
+  for (int idx = 0; idx < NB_PROC_FILES; idx++) {
     if (strcmp(name, proc_files[idx]) == 0) {
-      inode_t node = calloc(1, sizeof(vfs_node_t));
+      if (nodes[idx] == NULL) {
+        inode_t node = calloc(1, sizeof(vfs_node_t));
 
-      strcpy(node->name, proc_files[idx]);
-      node->driver = &proc_driver;
-      node->parent = inode;
-      node->type = FS_FILE;
+        strcpy(node->name, proc_files[idx]);
+        node->driver = &proc_driver;
+        node->parent = inode;
+        node->type = FS_FILE;
 
-      FS_DEBUG("found name=%s type=%ld", node->name, node->type);
+        nodes[idx] = node;
+      }
 
-      return node;
+      FS_DEBUG("found name=%s type=%ld", nodes[idx]->name, nodes[idx]->type);
+
+      return nodes[idx];
     }
   }
 
-  return 0;
+  return NULL;
 }
 
 uint64_t proc_isatty(inode_t node)
@@ -219,4 +231,18 @@ uint64_t proc_update_hostname(char* new_hostname, uint64_t length)
   strncpy(hostname, new_hostname, length + 1);
 
   return strlen(hostname);
+}
+
+void proc_cleanup(inode_t inode)
+{
+  FS_DEBUG("cleaning up %s", inode->name);
+
+  for (uint64_t i = 0; i < NB_PROC_FILES; i++) {
+    if (nodes[i] != NULL) {
+      nodes[i]->parent = NULL;
+      free(nodes[i]);
+    }
+  }
+
+  free(hostname);
 }

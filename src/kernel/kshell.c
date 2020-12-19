@@ -130,7 +130,6 @@ void selftest()
   inode_t debug = vfs_namei(FS_DEBUG_MOUNTPOINT);
   const char* message = "  this message should be written to the console\n";
   vfs_write(debug, (void*)message, strlen(message), 0);
-  vfs_free(debug);
 
   printf("\ndone.\n");
 }
@@ -251,7 +250,6 @@ void ls(int argc, char* argv[])
 
   if (vfs_inode_type(inode) != FS_DIRECTORY) {
     printf("'%s' is not a directory\n", inode->name);
-    vfs_free(inode);
     return;
   }
 
@@ -266,13 +264,13 @@ void ls(int argc, char* argv[])
 
     stat_t stat;
     vfs_stat(de->inode, &stat);
-    printf("%6llu %s\n", stat.size, de->name);
+    printf("%6llu %s%c\n",
+           stat.size,
+           de->name,
+           vfs_inode_type(de->inode) == FS_DIRECTORY ? '/' : ' ');
 
-    vfs_free(de->inode);
     free(de);
   }
-
-  vfs_free(inode);
 }
 
 int try_exec(int argc, char* argv[])
@@ -291,7 +289,6 @@ int try_exec(int argc, char* argv[])
   }
 
   if (vfs_inode_type(inode) != FS_FILE) {
-    vfs_free(inode);
     return -2;
   }
 
@@ -304,7 +301,6 @@ int try_exec(int argc, char* argv[])
   elf_header_t* elf = elf_load((uint8_t*)buf);
 
   if (!elf) {
-    vfs_free(inode);
     free(buf);
     return -3;
   }
@@ -319,7 +315,6 @@ int try_exec(int argc, char* argv[])
 
   elf_unload(elf);
 
-  vfs_free(inode);
   free(buf);
 
   return 0;

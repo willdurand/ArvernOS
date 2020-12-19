@@ -44,6 +44,7 @@ typedef struct vfs_driver
   uint64_t (*isatty)(inode_t inode);
   dirent_t* (*readdir)(inode_t inode, uint64_t num);
   inode_t (*finddir)(inode_t inode, const char* name);
+  void (*cleanup)(inode_t inode);
 } vfs_driver_t;
 
 typedef struct vfs_node
