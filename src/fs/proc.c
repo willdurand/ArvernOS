@@ -195,7 +195,10 @@ uint64_t proc_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
 uint64_t proc_stat(inode_t inode, stat_t* st)
 {
   memset(st, 0, sizeof(stat_t));
-  st->size = 1; // Set a default value to show that the file is not empty.
+
+  if ((inode->type & FS_MOUNTPOINT) == FS_MOUNTPOINT) {
+    st->size = NB_PROC_FILES;
+  }
 
   if (strcmp(inode->name, "hostname") == 0) {
     st->size = strlen(hostname);

@@ -117,8 +117,11 @@ int main()
 
   describe("proc_stat()");
   stat_t stat;
+  vfs_stat(root, &stat);
+  assert(stat.size == 4, "sets a size equal to the number of files");
+
   vfs_stat(vfs_namei("/uptime"), &stat);
-  assert(stat.size == 1, "sets the size to 1 by default");
+  assert(stat.size == 0, "sets the size to 0 by default");
 
   vfs_stat(vfs_namei("/hostname"), &stat);
   assert(stat.size > 0, "sets the correct size for hostname");
