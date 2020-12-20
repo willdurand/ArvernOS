@@ -160,8 +160,58 @@ Functions</h2></td></tr>
 <tr class="separator:aaf4d9db68debae8e51bab96105966d07"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acd78a6bfbdc7cbbe0e578e52eccad8bf"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="paging_8h.html#acd78a6bfbdc7cbbe0e578e52eccad8bf">paging_amount_for_byte_size</a> (uint64_t start_address, uint64_t byte_size)</td></tr>
 <tr class="separator:acd78a6bfbdc7cbbe0e578e52eccad8bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fe6ae7a3d76ec54afbc3a0b484f5804"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="paging_8h.html#a0fe6ae7a3d76ec54afbc3a0b484f5804">identity_map</a> (uint64_t address, uint64_t flags)</td></tr>
+<tr class="separator:a0fe6ae7a3d76ec54afbc3a0b484f5804"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a0fe6ae7a3d76ec54afbc3a0b484f5804"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0fe6ae7a3d76ec54afbc3a0b484f5804">&#9670;&nbsp;</a></span>identity_map()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void identity_map </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>flags</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Maps a page (virtual address) to the equivalent frame (physical address).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>the address to map </td></tr>
+    <tr><td class="paramname">flags</td><td>paging flags </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="paging_8h_a0fe6ae7a3d76ec54afbc3a0b484f5804_cgraph.png" border="0" usemap="#paging_8h_a0fe6ae7a3d76ec54afbc3a0b484f5804_cgraph" alt=""/></div>
+<map name="paging_8h_a0fe6ae7a3d76ec54afbc3a0b484f5804_cgraph" id="paging_8h_a0fe6ae7a3d76ec54afbc3a0b484f5804_cgraph">
+<area shape="rect" title=" " alt="" coords="5,56,101,83"/>
+<area shape="rect" href="frame_8h.html#aa927a7ace957d1042c7af2b5113132e6" title=" " alt="" coords="161,31,307,57"/>
+<area shape="rect" href="paging_8h.html#a4a8869be87726e3c57c4856fc7b3531c" title=" " alt="" coords="149,81,319,108"/>
+<area shape="rect" href="bitmap_8h.html#ae60e1e9970fe0c4f68ee27902adbebfa" title=" " alt="" coords="411,5,497,32"/>
+<area shape="rect" href="frame_8h.html#aed98bfe02b2da161f9bd02d8ff4a3be7" title=" " alt="" coords="367,56,541,83"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="af55681dc6c9ebb94b26ea497afe673f8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af55681dc6c9ebb94b26ea497afe673f8">&#9670;&nbsp;</a></span>map()</h2>
 
@@ -187,7 +237,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Convenient function to map a pager (number) without providing a frame. The frame is automatically allocated.</p>
+<p>Convenient function to map a page (number) without providing a frame. The frame is automatically allocated.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">page_number</td><td>a page number (not an address) </td></tr>
@@ -287,12 +337,13 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="paging_8h_a4a8869be87726e3c57c4856fc7b3531c_icgraph.png" border="0" usemap="#paging_8h_a4a8869be87726e3c57c4856fc7b3531c_icgraph" alt=""/></div>
 <map name="paging_8h_a4a8869be87726e3c57c4856fc7b3531c_icgraph" id="paging_8h_a4a8869be87726e3c57c4856fc7b3531c_icgraph">
-<area shape="rect" title=" " alt="" coords="519,56,688,83"/>
+<area shape="rect" title=" " alt="" coords="519,81,688,108"/>
 <area shape="rect" href="alloc_8h.html#a0de47e42c61353f53c07a4274b87f864" title=" " alt="" coords="337,5,410,32"/>
-<area shape="rect" href="paging_8h.html#acd78a6bfbdc7cbbe0e578e52eccad8bf" title=" " alt="" coords="276,56,471,83"/>
-<area shape="rect" href="paging_8h.html#a1f069c46ac4245771221fc7f0bcfb2e0" title=" " alt="" coords="337,107,409,133"/>
-<area shape="rect" href="paging_8h.html#a2556847794baa9bcb9be757f7f67f6b4" title=" " alt="" coords="167,107,228,133"/>
-<area shape="rect" href="paging_8h.html#aaf4d9db68debae8e51bab96105966d07" title=" " alt="" coords="5,107,119,133"/>
+<area shape="rect" href="paging_8h.html#a0fe6ae7a3d76ec54afbc3a0b484f5804" title=" " alt="" coords="325,56,421,83"/>
+<area shape="rect" href="paging_8h.html#acd78a6bfbdc7cbbe0e578e52eccad8bf" title=" " alt="" coords="276,107,471,133"/>
+<area shape="rect" href="paging_8h.html#a1f069c46ac4245771221fc7f0bcfb2e0" title=" " alt="" coords="337,157,409,184"/>
+<area shape="rect" href="paging_8h.html#a2556847794baa9bcb9be757f7f67f6b4" title=" " alt="" coords="167,157,228,184"/>
+<area shape="rect" href="paging_8h.html#aaf4d9db68debae8e51bab96105966d07" title=" " alt="" coords="5,157,119,184"/>
 </map>
 </div>
 

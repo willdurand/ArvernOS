@@ -54,7 +54,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "alloc_8h.html",
-"structelf__section__header.html#a4a2021e43cc873ee45d437b720ccd5c1"
+"serial_8h.html#a0f5a915bc3e83fd89af8f6dd43c6f205"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

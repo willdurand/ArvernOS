@@ -143,13 +143,25 @@ Building willOS</h1>
 <div class="fragment"><div class="line">$ make clean kernel</div>
 </div><!-- fragment --><p>To build the ISO (this is the default target), run:</p>
 <div class="fragment"><div class="line">$ make clean iso</div>
-</div><!-- fragment --><p>To build the ISO in DEBUG mode, run:</p>
+</div><!-- fragment --><p>To build the ISO in debug mode, run:</p>
 <div class="fragment"><div class="line">$ make clean debug</div>
-</div><!-- fragment --><p>To compile the OS in DEBUG mode, build the ISO, and start <code>qemu</code> with the OS loaded, run:</p>
+</div><!-- fragment --><p>To compile the OS in debug mode, build the ISO, and start <code>qemu</code> with the OS loaded, run:</p>
 <div class="fragment"><div class="line">$ make clean run-debug</div>
-</div><!-- fragment --><p><b>Note:</b> in DEBUG mode, logging uses the serial port <code>COM1</code> to write various debugging information. <code>qemu</code> is configured to write the output of this serial port to <code>./logs/debug.log</code>.</p>
-<p>To compile the OS in normal mode, build the ISO, and start <code>qemu</code> with the OS loaded, run:</p>
-<div class="fragment"><div class="line">$ make clean un</div>
+</div><!-- fragment --><p><b>Note:</b> in DEBUG mode, logging uses the serial port <code>COM1</code> to write various debugging information. <code>qemu</code> is configured to write the output of this serial port to <code>./logs/debug.log</code>. <code>DEBUG</code> level logs are not necessarily written by default, though, and it is possible to enable <code>DEBUG</code> logs for specific modules like this:</p>
+<div class="fragment"><div class="line"># Enable the debug logs for the &quot;net&quot; and &quot;fs&quot; modules</div>
+<div class="line">$ make ENABLE_NET_DEBUG=1 ENABLE_FS_DEBUG=1 clean run-debug</div>
+</div><!-- fragment --><p>The available debug variables are:</p>
+<ul>
+<li><code>ENABLE_CONFIG_DEBUG</code></li>
+<li><code>ENABLE_CORE_DEBUG</code></li>
+<li><code>ENABLE_FS_DEBUG</code></li>
+<li><code>ENABLE_MMU_DEBUG</code></li>
+<li><code>ENABLE_NET_DEBUG</code></li>
+<li><code>ENABLE_SYS_DEBUG</code></li>
+</ul>
+<p>There is also <code>ENABLE_ALL_DEBUG</code> to turn all debug logs on.</p>
+<p>To compile the OS in release mode, build the ISO, and start <code>qemu</code> with the OS loaded, run:</p>
+<div class="fragment"><div class="line">$ make clean run</div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md5"></a>
 Early boot sequence</h1>
 <ol type="1">

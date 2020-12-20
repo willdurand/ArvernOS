@@ -154,6 +154,7 @@ ssize_t sendto(int sockfd,
  * @param len the size of the receiving buffer
  * @param flags some flags
  * @param src_addr the address of the sender
+ * @param addrlen the size of the sender address structure
  * @return the number of bytes actually received
  */
 ssize_t recvfrom(int sockfd,

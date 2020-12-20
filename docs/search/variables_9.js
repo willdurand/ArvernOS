@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['size_437',['size',['../structelf__section__header.html#a4437b55ab20c9bfcbbafa73cc4dbdb7c',1,'elf_section_header']]]
+  ['receive_5fts_544',['receive_ts',['../structntp__header.html#a75025a23ee0e4d386a8f0763e8611c4c',1,'ntp_header']]],
+  ['reference_5fts_545',['reference_ts',['../structntp__header.html#acb1a2486a22ea7ae786d51158750248a',1,'ntp_header']]]
 ];

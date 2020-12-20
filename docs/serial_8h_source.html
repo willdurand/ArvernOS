@@ -110,17 +110,14 @@ $(document).ready(function(){initNavTree('serial_8h_source.html',''); initResiza
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keywordtype">void</span> <a class="code" href="serial_8h.html#a1e9e38c6dbae13f53e8ed436fef0cd5b">serial_print</a>(uint16_t com, <span class="keyword">const</span> <span class="keywordtype">char</span>* str);</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#ifdef ENABLE_KERNEL_DEBUG</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keywordtype">void</span> serial_stream_output(<span class="keywordtype">char</span> c, <span class="keywordtype">void</span>* arg);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keywordtype">void</span> <a class="code" href="serial_8h.html#a0f5a915bc3e83fd89af8f6dd43c6f205">serial_stream_output</a>(<span class="keywordtype">char</span> c, <span class="keywordtype">void</span>* arg);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <div class="ttc" id="aport_8h_html_ac3c72bfda8c7b1920ef91bcc06c97c7f"><div class="ttname"><a href="port_8h.html#ac3c72bfda8c7b1920ef91bcc06c97c7f">port_byte_out</a></div><div class="ttdeci">void port_byte_out(uint16_t port, uint8_t value)</div><div class="ttdef"><b>Definition:</b> port.c:10</div></div>
 <div class="ttc" id="aport_8h_html"><div class="ttname"><a href="port_8h.html">port.h</a></div></div>
+<div class="ttc" id="aserial_8h_html_a0f5a915bc3e83fd89af8f6dd43c6f205"><div class="ttname"><a href="serial_8h.html#a0f5a915bc3e83fd89af8f6dd43c6f205">serial_stream_output</a></div><div class="ttdeci">void serial_stream_output(char c, void *arg)</div><div class="ttdef"><b>Definition:</b> serial.c:41</div></div>
 <div class="ttc" id="aserial_8h_html_a1e9e38c6dbae13f53e8ed436fef0cd5b"><div class="ttname"><a href="serial_8h.html#a1e9e38c6dbae13f53e8ed436fef0cd5b">serial_print</a></div><div class="ttdeci">void serial_print(uint16_t com, const char *str)</div><div class="ttdef"><b>Definition:</b> serial.c:34</div></div>
 <div class="ttc" id="aserial_8h_html_a86dbcd1e612dc4ca6f5270d81def6ccd"><div class="ttname"><a href="serial_8h.html#a86dbcd1e612dc4ca6f5270d81def6ccd">SERIAL_LINE_ENABLE_DLAB</a></div><div class="ttdeci">#define SERIAL_LINE_ENABLE_DLAB</div><div class="ttdef"><b>Definition:</b> serial.h:21</div></div>
 <div class="ttc" id="astdio_8h_html"><div class="ttname"><a href="stdio_8h.html">stdio.h</a></div></div>

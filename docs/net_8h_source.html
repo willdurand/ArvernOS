@@ -89,54 +89,60 @@ $(document).ready(function(){initNavTree('net_8h_source.html',''); initResizable
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#ifndef NET_NET_H</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#define NET_NET_H</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#define NET_MAX_INTERFACES 1</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structnet__driver.html">net_driver</a> net_driver_t;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structnet__interface.html">net_interface</a> net_interface_t;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="structnet__driver.html">   29</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structnet__driver.html">net_driver</a></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;{</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  net_interface_t* interface;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">char</span>* (*get_name)();</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  uint8_t* (*get_mac_address)();</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  void (*transmit_frame)(<span class="keywordtype">void</span>* data, uint32_t len);</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  void (*receive_frame)(net_interface_t* interface, <span class="keywordtype">void</span>* data, uint32_t len);</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;};</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="structnet__interface.html">   38</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structnet__interface.html">net_interface</a></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;{</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  net_driver_t* driver;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  uint8_t id;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  uint8_t mac[6];</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  uint8_t ip[4];</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  uint8_t gateway_mac[6];</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  uint8_t gateway_ip[4];</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  uint8_t dns_mac[6];</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  uint8_t dns_ip[4];</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;};</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keywordtype">void</span> <a class="code" href="net_8h.html#a9710447e6468aa9ef183c9b1dfcdcba0">net_interface_init</a>(uint8_t interface_id,</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;                        net_driver_t* driver,</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;                        uint8_t ip[4],</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                        uint8_t gateway_ip[4],</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                        uint8_t dns_ip[4]);</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;net_interface_t* <a class="code" href="net_8h.html#a18a484aee8b80774848889fdcff24496">net_get_interface</a>(uint8_t interface_id);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#define NET_MAX_INTERFACES 1</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structnet__driver.html">net_driver</a> net_driver_t;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structnet__interface.html">net_interface</a> net_interface_t;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="structnet__driver.html">   30</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structnet__driver.html">net_driver</a></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;{</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  net_interface_t* interface;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">char</span>* (*get_name)();</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  uint8_t* (*get_mac_address)();</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  void (*transmit_frame)(<span class="keywordtype">void</span>* data, uint32_t len);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  void (*receive_frame)(net_interface_t* interface,</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;                        uint8_t* data,</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;                        uint32_t len);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;};</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="structnet__interface.html">   41</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structnet__interface.html">net_interface</a></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;{</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  net_driver_t* driver;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  uint8_t id;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  uint8_t mac[6];</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  uint8_t ip[4];</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  uint8_t gateway_mac[6];</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  uint8_t gateway_ip[4];</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  uint8_t dns_mac[6];</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  uint8_t dns_ip[4];</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;};</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="keywordtype">void</span> <a class="code" href="net_8h.html#a5da8d53d480b13e24e293e0ab90a0ac3">net_interface_init</a>(uint8_t interface_id,</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;                        net_driver_t* driver,</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;                        <span class="keywordtype">bool</span> prefer_dhcp,</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;                        uint8_t ip[4],</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;                        uint8_t gateway_ip[4],</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                        uint8_t dns_ip[4]);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;net_interface_t* <a class="code" href="net_8h.html#a18a484aee8b80774848889fdcff24496">net_get_interface</a>(uint8_t interface_id);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="anet_8h_html_a18a484aee8b80774848889fdcff24496"><div class="ttname"><a href="net_8h.html#a18a484aee8b80774848889fdcff24496">net_get_interface</a></div><div class="ttdeci">net_interface_t * net_get_interface(uint8_t interface_id)</div><div class="ttdef"><b>Definition:</b> net.c:73</div></div>
-<div class="ttc" id="aarp_8h_html_ad4b17a9be56fc675686f1bb4ca2aba5b"><div class="ttname"><a href="arp_8h.html#ad4b17a9be56fc675686f1bb4ca2aba5b">arp_wait_reply</a></div><div class="ttdeci">void arp_wait_reply(uint8_t *dst_mac)</div><div class="ttdef"><b>Definition:</b> arp.c:32</div></div>
-<div class="ttc" id="astructnet__driver_html"><div class="ttname"><a href="structnet__driver.html">net_driver</a></div><div class="ttdef"><b>Definition:</b> net.h:29</div></div>
+<div class="ttc" id="anet_8h_html_a5da8d53d480b13e24e293e0ab90a0ac3"><div class="ttname"><a href="net_8h.html#a5da8d53d480b13e24e293e0ab90a0ac3">net_interface_init</a></div><div class="ttdeci">void net_interface_init(uint8_t interface_id, net_driver_t *driver, bool prefer_dhcp, uint8_t ip[4], uint8_t gateway_ip[4], uint8_t dns_ip[4])</div><div class="ttdef"><b>Definition:</b> net.c:12</div></div>
+<div class="ttc" id="anet_8h_html_a18a484aee8b80774848889fdcff24496"><div class="ttname"><a href="net_8h.html#a18a484aee8b80774848889fdcff24496">net_get_interface</a></div><div class="ttdeci">net_interface_t * net_get_interface(uint8_t interface_id)</div><div class="ttdef"><b>Definition:</b> net.c:84</div></div>
+<div class="ttc" id="aarp_8h_html_ad4b17a9be56fc675686f1bb4ca2aba5b"><div class="ttname"><a href="arp_8h.html#ad4b17a9be56fc675686f1bb4ca2aba5b">arp_wait_reply</a></div><div class="ttdeci">void arp_wait_reply(uint8_t *dst_mac)</div><div class="ttdef"><b>Definition:</b> arp.c:42</div></div>
+<div class="ttc" id="astructnet__driver_html"><div class="ttname"><a href="structnet__driver.html">net_driver</a></div><div class="ttdef"><b>Definition:</b> net.h:30</div></div>
 <div class="ttc" id="aethernet_8h_html"><div class="ttname"><a href="ethernet_8h.html">ethernet.h</a></div></div>
-<div class="ttc" id="anet_8h_html_a9710447e6468aa9ef183c9b1dfcdcba0"><div class="ttname"><a href="net_8h.html#a9710447e6468aa9ef183c9b1dfcdcba0">net_interface_init</a></div><div class="ttdeci">void net_interface_init(uint8_t interface_id, net_driver_t *driver, uint8_t ip[4], uint8_t gateway_ip[4], uint8_t dns_ip[4])</div><div class="ttdef"><b>Definition:</b> net.c:11</div></div>
 <div class="ttc" id="astdio_8h_html"><div class="ttname"><a href="stdio_8h.html">stdio.h</a></div></div>
-<div class="ttc" id="astructnet__interface_html"><div class="ttname"><a href="structnet__interface.html">net_interface</a></div><div class="ttdef"><b>Definition:</b> net.h:38</div></div>
-<div class="ttc" id="aarp_8h_html_a666f814a224975572b1d3fe88a7425af"><div class="ttname"><a href="arp_8h.html#a666f814a224975572b1d3fe88a7425af">arp_request</a></div><div class="ttdeci">void arp_request(net_interface_t *interface, uint8_t ip[4])</div><div class="ttdef"><b>Definition:</b> arp.c:10</div></div>
-<div class="ttc" id="aethernet_8h_html_aafb24417f47cd11c95b81566e3b7fc78"><div class="ttname"><a href="ethernet_8h.html#aafb24417f47cd11c95b81566e3b7fc78">ethernet_receive_frame</a></div><div class="ttdeci">void ethernet_receive_frame(net_interface_t *interface, uint8_t *data, uint32_t len)</div><div class="ttdef"><b>Definition:</b> ethernet.c:6</div></div>
+<div class="ttc" id="adhcp_8h_html_ae37a0dfd11fc8825b9808761417c979b"><div class="ttname"><a href="dhcp_8h.html#ae37a0dfd11fc8825b9808761417c979b">dhcp_negotiate</a></div><div class="ttdeci">bool dhcp_negotiate(net_interface_t *interface)</div><div class="ttdef"><b>Definition:</b> dhcp.c:22</div></div>
+<div class="ttc" id="adhcp_8h_html"><div class="ttname"><a href="dhcp_8h.html">dhcp.h</a></div></div>
+<div class="ttc" id="astructnet__interface_html"><div class="ttname"><a href="structnet__interface.html">net_interface</a></div><div class="ttdef"><b>Definition:</b> net.h:41</div></div>
+<div class="ttc" id="aarp_8h_html_a666f814a224975572b1d3fe88a7425af"><div class="ttname"><a href="arp_8h.html#a666f814a224975572b1d3fe88a7425af">arp_request</a></div><div class="ttdeci">void arp_request(net_interface_t *interface, uint8_t ip[4])</div><div class="ttdef"><b>Definition:</b> arp.c:14</div></div>
+<div class="ttc" id="aethernet_8h_html_aafb24417f47cd11c95b81566e3b7fc78"><div class="ttname"><a href="ethernet_8h.html#aafb24417f47cd11c95b81566e3b7fc78">ethernet_receive_frame</a></div><div class="ttdeci">void ethernet_receive_frame(net_interface_t *interface, uint8_t *data, uint32_t len)</div><div class="ttdef"><b>Definition:</b> ethernet.c:9</div></div>
 <div class="ttc" id="astdlib_8h_html"><div class="ttname"><a href="stdlib_8h.html">stdlib.h</a></div></div>
 <div class="ttc" id="anet_8h_html"><div class="ttname"><a href="net_8h.html">net.h</a></div><div class="ttdoc">This module defines network interfaces and drivers.</div></div>
 <div class="ttc" id="aarp_8h_html"><div class="ttname"><a href="arp_8h.html">arp.h</a></div></div>

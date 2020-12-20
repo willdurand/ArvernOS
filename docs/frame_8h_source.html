@@ -111,16 +111,19 @@ $(document).ready(function(){initNavTree('frame_8h_source.html',''); initResizab
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;uint64_t <a class="code" href="frame_8h.html#a66c86472c34ead88a5cad580925a3dac">frame_get_max_count</a>();</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="comment">// The declarations below are for testing purposes.</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keywordtype">void</span> _frame_init(reserved_areas_t* reserved, multiboot_tag_mmap_t* mmap);</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keywordtype">void</span> _frame_init_bitmap(<a class="code" href="bitmap_8h.html#ae1c22e18a745d7ab1519a37cb77ce1bb">bitmap_t</a>* addr);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="keywordtype">void</span> <a class="code" href="frame_8h.html#aa927a7ace957d1042c7af2b5113132e6">frame_mark_as_used</a>(uint64_t physical_address);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="comment">// The declarations below are for testing purposes.</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="keywordtype">void</span> _frame_init(reserved_areas_t* reserved, multiboot_tag_mmap_t* mmap);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keywordtype">void</span> _frame_init_bitmap(<a class="code" href="bitmap_8h.html#ae1c22e18a745d7ab1519a37cb77ce1bb">bitmap_t</a>* addr);</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <div class="ttc" id="amultiboot_8h_html_a62d6a6eaa877711b6b8308030f3f3dc0"><div class="ttname"><a href="multiboot_8h.html#a62d6a6eaa877711b6b8308030f3f3dc0">find_multiboot_tag</a></div><div class="ttdeci">void * find_multiboot_tag(multiboot_info_t *mbi, uint16_t type)</div><div class="ttdef"><b>Definition:</b> multiboot.c:5</div></div>
 <div class="ttc" id="abitmap_8h_html_acbd3f5323acaf517704e69c47396119f"><div class="ttname"><a href="bitmap_8h.html#acbd3f5323acaf517704e69c47396119f">bitmap_clear</a></div><div class="ttdeci">void bitmap_clear(bitmap_t *b, uint64_t n)</div><div class="ttdef"><b>Definition:</b> bitmap.c:13</div></div>
 <div class="ttc" id="aframe_8h_html_aed98bfe02b2da161f9bd02d8ff4a3be7"><div class="ttname"><a href="frame_8h.html#aed98bfe02b2da161f9bd02d8ff4a3be7">frame_containing_address</a></div><div class="ttdeci">frame_number_t frame_containing_address(uint64_t physical_address)</div><div class="ttdef"><b>Definition:</b> frame.c:117</div></div>
+<div class="ttc" id="aframe_8h_html_aa927a7ace957d1042c7af2b5113132e6"><div class="ttname"><a href="frame_8h.html#aa927a7ace957d1042c7af2b5113132e6">frame_mark_as_used</a></div><div class="ttdeci">void frame_mark_as_used(uint64_t physical_address)</div><div class="ttdef"><b>Definition:</b> frame.c:177</div></div>
 <div class="ttc" id="aframe_8h_html_ada91ff5ef3ceb241baf359ac078bb2d7"><div class="ttname"><a href="frame_8h.html#ada91ff5ef3ceb241baf359ac078bb2d7">frame_init</a></div><div class="ttdeci">void frame_init(multiboot_info_t *mbi)</div><div class="ttdef"><b>Definition:</b> frame.c:20</div></div>
 <div class="ttc" id="abitmap_8h_html"><div class="ttname"><a href="bitmap_8h.html">bitmap.h</a></div></div>
 <div class="ttc" id="amultiboot_8h_html_ae87c8fda1b62f7ace33b2e3ad24292c2"><div class="ttname"><a href="multiboot_8h.html#ae87c8fda1b62f7ace33b2e3ad24292c2">find_reserved_areas</a></div><div class="ttdeci">reserved_areas_t find_reserved_areas(multiboot_info_t *mbi)</div><div class="ttdef"><b>Definition:</b> multiboot.c:21</div></div>

@@ -102,8 +102,10 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="stdio_8h__dep__incl.png" border="0" usemap="#src_2include_2stdio_8hdep" alt=""/></div>
 <map name="src_2include_2stdio_8hdep" id="src_2include_2stdio_8hdep">
-<area shape="rect" title=" " alt="" coords="25,5,153,32"/>
-<area shape="rect" href="include_2sys_2syscall_8h.html" title=" " alt="" coords="5,80,172,107"/>
+<area shape="rect" title=" " alt="" coords="102,5,230,32"/>
+<area shape="rect" href="syscall_8h.html" title=" " alt="" coords="5,80,172,107"/>
+<area shape="rect" href="logging_8h_source.html" title=" " alt="" coords="197,80,293,107"/>
+<area shape="rect" href="unistd_8h.html" title=" " alt="" coords="21,155,156,181"/>
 </map>
 </div>
 </div>
@@ -113,6 +115,10 @@ This graph shows which files directly or indirectly include this file:</div>
 Functions</h2></td></tr>
 <tr class="memitem:a65c637ee51a44ec6d0d75d514c8109d0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stdio_8h.html#a65c637ee51a44ec6d0d75d514c8109d0">_putchar</a> (char c)</td></tr>
 <tr class="separator:a65c637ee51a44ec6d0d75d514c8109d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a948b7a0779c308ac5502c57e282e6933"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stdio_8h.html#a948b7a0779c308ac5502c57e282e6933">putchar</a> (char c)</td></tr>
+<tr class="separator:a948b7a0779c308ac5502c57e282e6933"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0979671914792955a7a68461634ff82d"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stdio_8h.html#a0979671914792955a7a68461634ff82d">getchar</a> ()</td></tr>
+<tr class="separator:a0979671914792955a7a68461634ff82d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a65c637ee51a44ec6d0d75d514c8109d0"></a>
@@ -131,6 +137,78 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>This function is needed for the <code>printf/printf.h</code> lib. </p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="stdio_8h_a65c637ee51a44ec6d0d75d514c8109d0_cgraph.png" border="0" usemap="#stdio_8h_a65c637ee51a44ec6d0d75d514c8109d0_cgraph" alt=""/></div>
+<map name="stdio_8h_a65c637ee51a44ec6d0d75d514c8109d0_cgraph" id="stdio_8h_a65c637ee51a44ec6d0d75d514c8109d0_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,77,32"/>
+<area shape="rect" href="stdio_8h.html#a948b7a0779c308ac5502c57e282e6933" title=" " alt="" coords="125,5,191,32"/>
+<area shape="rect" href="syscall_8h.html#abb39b21888372e95ad3e5c59b166f5c8" title=" " alt="" coords="239,5,289,32"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a0979671914792955a7a68461634ff82d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0979671914792955a7a68461634ff82d">&#9670;&nbsp;</a></span>getchar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char getchar </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Gets a character (an unsigned char) from the keyboard.</p>
+<dl class="section return"><dt>Returns</dt><dd>the character read </dd></dl>
+
+</div>
+</div>
+<a id="a948b7a0779c308ac5502c57e282e6933"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a948b7a0779c308ac5502c57e282e6933">&#9670;&nbsp;</a></span>putchar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void putchar </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>c</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Writes a character to the screen.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">c</td><td>a character to be written </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="stdio_8h_a948b7a0779c308ac5502c57e282e6933_cgraph.png" border="0" usemap="#stdio_8h_a948b7a0779c308ac5502c57e282e6933_cgraph" alt=""/></div>
+<map name="stdio_8h_a948b7a0779c308ac5502c57e282e6933_cgraph" id="stdio_8h_a948b7a0779c308ac5502c57e282e6933_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,71,32"/>
+<area shape="rect" href="syscall_8h.html#abb39b21888372e95ad3e5c59b166f5c8" title=" " alt="" coords="119,5,169,32"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="stdio_8h_a948b7a0779c308ac5502c57e282e6933_icgraph.png" border="0" usemap="#stdio_8h_a948b7a0779c308ac5502c57e282e6933_icgraph" alt=""/></div>
+<map name="stdio_8h_a948b7a0779c308ac5502c57e282e6933_icgraph" id="stdio_8h_a948b7a0779c308ac5502c57e282e6933_icgraph">
+<area shape="rect" title=" " alt="" coords="125,5,191,32"/>
+<area shape="rect" href="stdio_8h.html#a65c637ee51a44ec6d0d75d514c8109d0" title=" " alt="" coords="5,5,77,32"/>
+</map>
+</div>
 
 </div>
 </div>

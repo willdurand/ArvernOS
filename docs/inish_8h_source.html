@@ -91,89 +91,87 @@ $(document).ready(function(){initNavTree('inish_8h_source.html',''); initResizab
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;sys/types.h&gt;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#ifndef __is_libk</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &lt;fcntl.h&gt;</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &lt;sys/stat.h&gt;</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &lt;unistd.h&gt;</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="structinish__kv__pair.html">   22</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structinish__kv__pair.html">inish_kv_pair</a></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;{</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <span class="keywordtype">char</span>* key;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <span class="keywordtype">char</span>* value;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;} inish_kv_pair_t;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="structinish__array.html">   28</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structinish__array.html">inish_array</a></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;{</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <span class="keywordtype">char</span>* key;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  uint64_t n_values;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <span class="keywordtype">char</span>** values;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;} inish_array_t;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="structinish__section.html">   35</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structinish__section.html">inish_section</a></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;{</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <span class="keywordtype">char</span>* name;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  uint64_t n_kv_pairs;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  inish_kv_pair_t** kv_pairs;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  uint64_t n_arrays;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  inish_array_t** arrays;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;} inish_section_t;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="structinish__config.html">   46</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structinish__config.html">inish_config</a></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;{</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  uint64_t n_sections;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  inish_section_t** sections;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;} inish_config_t;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;inish_config_t* <a class="code" href="inish_8h.html#a3bb9aa17f1cc46b6c5db617a9668b0e8">inish_load</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* filename);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="keywordtype">void</span> <a class="code" href="inish_8h.html#a2dd888c965cc5597c8534c529c203256">inish_free</a>(inish_config_t* conf);</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;inish_section_t* <a class="code" href="inish_8h.html#a4f8dda3126e1754bd8a34ccb756ae39d">inish_get_section</a>(inish_config_t* conf, <span class="keyword">const</span> <span class="keywordtype">char</span>* name);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;inish_kv_pair_t* <a class="code" href="inish_8h.html#ae46d605d07b15a79127e430748f24fd4">inish_get_kv_pair</a>(inish_section_t* section, <span class="keyword">const</span> <span class="keywordtype">char</span>* key);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;inish_array_t* <a class="code" href="inish_8h.html#a6bdeab0345afbd491f0a56a2d4c1d547">inish_get_array</a>(inish_section_t* section, <span class="keyword">const</span> <span class="keywordtype">char</span>* key);</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="keywordtype">char</span>* <a class="code" href="inish_8h.html#ab706f97501694e6c47511c510a4953fe">inish_get_string</a>(inish_section_t* section, <span class="keyword">const</span> <span class="keywordtype">char</span>* key);</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;opt_uint64_t <a class="code" href="inish_8h.html#a48978dc4fe4de1765edba0031a2f1f47">inish_get_int</a>(inish_section_t* section, <span class="keyword">const</span> <span class="keywordtype">char</span>* key);</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;opt_bool_t <a class="code" href="inish_8h.html#a40db81930c9627ef29d70791e003a8cd">inish_get_bool</a>(inish_section_t* section, <span class="keyword">const</span> <span class="keywordtype">char</span>* key);</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160; </div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;uint8_t <a class="code" href="inish_8h.html#a7149712e2a187c4054c29d94b92470e5">inish_get_ipv4</a>(inish_section_t* section,</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;                       <span class="keyword">const</span> <span class="keywordtype">char</span>* key,</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;                       uint8_t ip[4]);</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160; </div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;sys/stat.h&gt;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;sys/types.h&gt;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
+<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="structinish__kv__pair.html">   17</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structinish__kv__pair.html">inish_kv_pair</a></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;{</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;  <span class="keywordtype">char</span>* key;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  <span class="keywordtype">char</span>* value;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;} inish_kv_pair_t;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="structinish__array.html">   23</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structinish__array.html">inish_array</a></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;{</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <span class="keywordtype">char</span>* key;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  uint64_t n_values;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="keywordtype">char</span>** values;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;} inish_array_t;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="structinish__section.html">   30</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structinish__section.html">inish_section</a></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;{</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <span class="keywordtype">char</span>* name;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  uint64_t n_kv_pairs;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  inish_kv_pair_t** kv_pairs;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  uint64_t n_arrays;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  inish_array_t** arrays;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;} inish_section_t;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="structinish__config.html">   41</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structinish__config.html">inish_config</a></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;{</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  uint64_t n_sections;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  inish_section_t** sections;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;} inish_config_t;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;inish_config_t* <a class="code" href="inish_8h.html#a3bb9aa17f1cc46b6c5db617a9668b0e8">inish_load</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* filename);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="keywordtype">void</span> <a class="code" href="inish_8h.html#a2dd888c965cc5597c8534c529c203256">inish_free</a>(inish_config_t* conf);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;inish_section_t* <a class="code" href="inish_8h.html#a4f8dda3126e1754bd8a34ccb756ae39d">inish_get_section</a>(inish_config_t* conf, <span class="keyword">const</span> <span class="keywordtype">char</span>* name);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;inish_kv_pair_t* <a class="code" href="inish_8h.html#ae46d605d07b15a79127e430748f24fd4">inish_get_kv_pair</a>(inish_section_t* section, <span class="keyword">const</span> <span class="keywordtype">char</span>* key);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;inish_array_t* <a class="code" href="inish_8h.html#a6bdeab0345afbd491f0a56a2d4c1d547">inish_get_array</a>(inish_section_t* section, <span class="keyword">const</span> <span class="keywordtype">char</span>* key);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="keywordtype">char</span>* <a class="code" href="inish_8h.html#ab706f97501694e6c47511c510a4953fe">inish_get_string</a>(inish_section_t* section, <span class="keyword">const</span> <span class="keywordtype">char</span>* key);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;opt_uint64_t <a class="code" href="inish_8h.html#a48978dc4fe4de1765edba0031a2f1f47">inish_get_int</a>(inish_section_t* section, <span class="keyword">const</span> <span class="keywordtype">char</span>* key);</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;opt_bool_t <a class="code" href="inish_8h.html#a40db81930c9627ef29d70791e003a8cd">inish_get_bool</a>(inish_section_t* section, <span class="keyword">const</span> <span class="keywordtype">char</span>* key);</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160; </div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;uint8_t <a class="code" href="inish_8h.html#a7149712e2a187c4054c29d94b92470e5">inish_get_ipv4</a>(inish_section_t* section,</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;                       <span class="keyword">const</span> <span class="keywordtype">char</span>* key,</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;                       uint8_t ip[4]);</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160; </div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
+<div class="ttc" id="afcntl_8h_html_a0d112bae8fd35be772185b6ec6bcbe64"><div class="ttname"><a href="fcntl_8h.html#a0d112bae8fd35be772185b6ec6bcbe64">SEEK_SET</a></div><div class="ttdeci">#define SEEK_SET</div><div class="ttdoc">Set file descriptor offset to offset.</div><div class="ttdef"><b>Definition:</b> fcntl.h:19</div></div>
+<div class="ttc" id="afcntl_8h_html"><div class="ttname"><a href="fcntl_8h.html">fcntl.h</a></div></div>
 <div class="ttc" id="ainish_8h_html"><div class="ttname"><a href="inish_8h.html">inish.h</a></div></div>
-<div class="ttc" id="astructinish__section_html"><div class="ttname"><a href="structinish__section.html">inish_section</a></div><div class="ttdef"><b>Definition:</b> inish.h:35</div></div>
-<div class="ttc" id="astructinish__array_html"><div class="ttname"><a href="structinish__array.html">inish_array</a></div><div class="ttdef"><b>Definition:</b> inish.h:28</div></div>
-<div class="ttc" id="ainclude_2sys_2syscall_8h_html_aafbcde67669a1b96577e735ddebd8634"><div class="ttname"><a href="include_2sys_2syscall_8h.html#aafbcde67669a1b96577e735ddebd8634">close</a></div><div class="ttdeci">int close(int fd)</div><div class="ttdef"><b>Definition:</b> close.c:3</div></div>
-<div class="ttc" id="ainish_8h_html_a7149712e2a187c4054c29d94b92470e5"><div class="ttname"><a href="inish_8h.html#a7149712e2a187c4054c29d94b92470e5">inish_get_ipv4</a></div><div class="ttdeci">uint8_t inish_get_ipv4(inish_section_t *section, const char *key, uint8_t ip[4])</div><div class="ttdef"><b>Definition:</b> inish.c:755</div></div>
-<div class="ttc" id="ainish_8h_html_a48978dc4fe4de1765edba0031a2f1f47"><div class="ttname"><a href="inish_8h.html#a48978dc4fe4de1765edba0031a2f1f47">inish_get_int</a></div><div class="ttdeci">opt_uint64_t inish_get_int(inish_section_t *section, const char *key)</div><div class="ttdef"><b>Definition:</b> inish.c:731</div></div>
-<div class="ttc" id="ainish_8h_html_ab706f97501694e6c47511c510a4953fe"><div class="ttname"><a href="inish_8h.html#ab706f97501694e6c47511c510a4953fe">inish_get_string</a></div><div class="ttdeci">char * inish_get_string(inish_section_t *section, const char *key)</div><div class="ttdef"><b>Definition:</b> inish.c:720</div></div>
-<div class="ttc" id="ainclude_2sys_2syscall_8h_html_afde00d8ce144212f452c321166e56e9a"><div class="ttname"><a href="include_2sys_2syscall_8h.html#afde00d8ce144212f452c321166e56e9a">open</a></div><div class="ttdeci">int open(const char *pathname, uint32_t flags,...)</div><div class="ttdef"><b>Definition:</b> open.c:3</div></div>
-<div class="ttc" id="ainish_8h_html_a3bb9aa17f1cc46b6c5db617a9668b0e8"><div class="ttname"><a href="inish_8h.html#a3bb9aa17f1cc46b6c5db617a9668b0e8">inish_load</a></div><div class="ttdeci">inish_config_t * inish_load(const char *filename)</div><div class="ttdef"><b>Definition:</b> inish.c:461</div></div>
-<div class="ttc" id="astructinish__config_html"><div class="ttname"><a href="structinish__config.html">inish_config</a></div><div class="ttdef"><b>Definition:</b> inish.h:46</div></div>
-<div class="ttc" id="ainish_8h_html_a2dd888c965cc5597c8534c529c203256"><div class="ttname"><a href="inish_8h.html#a2dd888c965cc5597c8534c529c203256">inish_free</a></div><div class="ttdeci">void inish_free(inish_config_t *conf)</div><div class="ttdef"><b>Definition:</b> inish.c:415</div></div>
+<div class="ttc" id="asyscall_8h_html_af32a16ad2dd9e48482f8f790db7dbbd2"><div class="ttname"><a href="syscall_8h.html#af32a16ad2dd9e48482f8f790db7dbbd2">read</a></div><div class="ttdeci">ssize_t read(int fd, void *buf, size_t count)</div><div class="ttdef"><b>Definition:</b> read.c:3</div></div>
+<div class="ttc" id="astructinish__section_html"><div class="ttname"><a href="structinish__section.html">inish_section</a></div><div class="ttdef"><b>Definition:</b> inish.h:30</div></div>
+<div class="ttc" id="astructinish__array_html"><div class="ttname"><a href="structinish__array.html">inish_array</a></div><div class="ttdef"><b>Definition:</b> inish.h:23</div></div>
+<div class="ttc" id="afcntl_8h_html_a4c8d0b76b470ba65a43ca46a88320f39"><div class="ttname"><a href="fcntl_8h.html#a4c8d0b76b470ba65a43ca46a88320f39">SEEK_CUR</a></div><div class="ttdeci">#define SEEK_CUR</div><div class="ttdoc">Set file descriptor offset to current plus offset.</div><div class="ttdef"><b>Definition:</b> fcntl.h:21</div></div>
+<div class="ttc" id="ainish_8h_html_a7149712e2a187c4054c29d94b92470e5"><div class="ttname"><a href="inish_8h.html#a7149712e2a187c4054c29d94b92470e5">inish_get_ipv4</a></div><div class="ttdeci">uint8_t inish_get_ipv4(inish_section_t *section, const char *key, uint8_t ip[4])</div><div class="ttdef"><b>Definition:</b> inish.c:756</div></div>
+<div class="ttc" id="ainish_8h_html_a48978dc4fe4de1765edba0031a2f1f47"><div class="ttname"><a href="inish_8h.html#a48978dc4fe4de1765edba0031a2f1f47">inish_get_int</a></div><div class="ttdeci">opt_uint64_t inish_get_int(inish_section_t *section, const char *key)</div><div class="ttdef"><b>Definition:</b> inish.c:732</div></div>
+<div class="ttc" id="ainish_8h_html_ab706f97501694e6c47511c510a4953fe"><div class="ttname"><a href="inish_8h.html#ab706f97501694e6c47511c510a4953fe">inish_get_string</a></div><div class="ttdeci">char * inish_get_string(inish_section_t *section, const char *key)</div><div class="ttdef"><b>Definition:</b> inish.c:721</div></div>
+<div class="ttc" id="ainish_8h_html_a3bb9aa17f1cc46b6c5db617a9668b0e8"><div class="ttname"><a href="inish_8h.html#a3bb9aa17f1cc46b6c5db617a9668b0e8">inish_load</a></div><div class="ttdeci">inish_config_t * inish_load(const char *filename)</div><div class="ttdef"><b>Definition:</b> inish.c:462</div></div>
+<div class="ttc" id="astructinish__config_html"><div class="ttname"><a href="structinish__config.html">inish_config</a></div><div class="ttdef"><b>Definition:</b> inish.h:41</div></div>
+<div class="ttc" id="ainish_8h_html_a2dd888c965cc5597c8534c529c203256"><div class="ttname"><a href="inish_8h.html#a2dd888c965cc5597c8534c529c203256">inish_free</a></div><div class="ttdeci">void inish_free(inish_config_t *conf)</div><div class="ttdef"><b>Definition:</b> inish.c:416</div></div>
 <div class="ttc" id="astdio_8h_html"><div class="ttname"><a href="stdio_8h.html">stdio.h</a></div></div>
-<div class="ttc" id="ainclude_2sys_2syscall_8h_html_a0d112bae8fd35be772185b6ec6bcbe64"><div class="ttname"><a href="include_2sys_2syscall_8h.html#a0d112bae8fd35be772185b6ec6bcbe64">SEEK_SET</a></div><div class="ttdeci">#define SEEK_SET</div><div class="ttdoc">Set file descriptor offset to offset.</div><div class="ttdef"><b>Definition:</b> syscall.h:24</div></div>
-<div class="ttc" id="ainish_8h_html_a4f8dda3126e1754bd8a34ccb756ae39d"><div class="ttname"><a href="inish_8h.html#a4f8dda3126e1754bd8a34ccb756ae39d">inish_get_section</a></div><div class="ttdeci">inish_section_t * inish_get_section(inish_config_t *conf, const char *name)</div><div class="ttdef"><b>Definition:</b> inish.c:669</div></div>
-<div class="ttc" id="ainclude_2sys_2syscall_8h_html_a8bd74caed008a66808d92d57fa74d9f6"><div class="ttname"><a href="include_2sys_2syscall_8h.html#a8bd74caed008a66808d92d57fa74d9f6">lseek</a></div><div class="ttdeci">off_t lseek(int fd, off_t offset, int whence)</div><div class="ttdef"><b>Definition:</b> lseek.c:3</div></div>
-<div class="ttc" id="ainclude_2sys_2syscall_8h_html_a4c8d0b76b470ba65a43ca46a88320f39"><div class="ttname"><a href="include_2sys_2syscall_8h.html#a4c8d0b76b470ba65a43ca46a88320f39">SEEK_CUR</a></div><div class="ttdeci">#define SEEK_CUR</div><div class="ttdoc">Set file descriptor offset to current plus offset.</div><div class="ttdef"><b>Definition:</b> syscall.h:26</div></div>
-<div class="ttc" id="ainish_8h_html_a40db81930c9627ef29d70791e003a8cd"><div class="ttname"><a href="inish_8h.html#a40db81930c9627ef29d70791e003a8cd">inish_get_bool</a></div><div class="ttdeci">opt_bool_t inish_get_bool(inish_section_t *section, const char *key)</div><div class="ttdef"><b>Definition:</b> inish.c:742</div></div>
-<div class="ttc" id="ainclude_2sys_2syscall_8h_html_af32a16ad2dd9e48482f8f790db7dbbd2"><div class="ttname"><a href="include_2sys_2syscall_8h.html#af32a16ad2dd9e48482f8f790db7dbbd2">read</a></div><div class="ttdeci">ssize_t read(int fd, void *buf, size_t count)</div><div class="ttdef"><b>Definition:</b> read.c:3</div></div>
+<div class="ttc" id="ainish_8h_html_a4f8dda3126e1754bd8a34ccb756ae39d"><div class="ttname"><a href="inish_8h.html#a4f8dda3126e1754bd8a34ccb756ae39d">inish_get_section</a></div><div class="ttdeci">inish_section_t * inish_get_section(inish_config_t *conf, const char *name)</div><div class="ttdef"><b>Definition:</b> inish.c:670</div></div>
+<div class="ttc" id="asyscall_8h_html_a8bd74caed008a66808d92d57fa74d9f6"><div class="ttname"><a href="syscall_8h.html#a8bd74caed008a66808d92d57fa74d9f6">lseek</a></div><div class="ttdeci">off_t lseek(int fd, off_t offset, int whence)</div><div class="ttdef"><b>Definition:</b> lseek.c:3</div></div>
+<div class="ttc" id="aunistd_8h_html"><div class="ttname"><a href="unistd_8h.html">unistd.h</a></div></div>
+<div class="ttc" id="ainish_8h_html_a40db81930c9627ef29d70791e003a8cd"><div class="ttname"><a href="inish_8h.html#a40db81930c9627ef29d70791e003a8cd">inish_get_bool</a></div><div class="ttdeci">opt_bool_t inish_get_bool(inish_section_t *section, const char *key)</div><div class="ttdef"><b>Definition:</b> inish.c:743</div></div>
+<div class="ttc" id="asyscall_8h_html_ab7c31bf64ff68f61762bda6e72e255d6"><div class="ttname"><a href="syscall_8h.html#ab7c31bf64ff68f61762bda6e72e255d6">open</a></div><div class="ttdeci">int open(const char *pathname, uint32_t flags)</div><div class="ttdef"><b>Definition:</b> open.c:3</div></div>
 <div class="ttc" id="astdlib_8h_html"><div class="ttname"><a href="stdlib_8h.html">stdlib.h</a></div></div>
-<div class="ttc" id="ainish_8h_html_a6bdeab0345afbd491f0a56a2d4c1d547"><div class="ttname"><a href="inish_8h.html#a6bdeab0345afbd491f0a56a2d4c1d547">inish_get_array</a></div><div class="ttdeci">inish_array_t * inish_get_array(inish_section_t *section, const char *key)</div><div class="ttdef"><b>Definition:</b> inish.c:703</div></div>
-<div class="ttc" id="astructinish__kv__pair_html"><div class="ttname"><a href="structinish__kv__pair.html">inish_kv_pair</a></div><div class="ttdef"><b>Definition:</b> inish.h:22</div></div>
-<div class="ttc" id="ainish_8h_html_ae46d605d07b15a79127e430748f24fd4"><div class="ttname"><a href="inish_8h.html#ae46d605d07b15a79127e430748f24fd4">inish_get_kv_pair</a></div><div class="ttdeci">inish_kv_pair_t * inish_get_kv_pair(inish_section_t *section, const char *key)</div><div class="ttdef"><b>Definition:</b> inish.c:686</div></div>
+<div class="ttc" id="ainish_8h_html_a6bdeab0345afbd491f0a56a2d4c1d547"><div class="ttname"><a href="inish_8h.html#a6bdeab0345afbd491f0a56a2d4c1d547">inish_get_array</a></div><div class="ttdeci">inish_array_t * inish_get_array(inish_section_t *section, const char *key)</div><div class="ttdef"><b>Definition:</b> inish.c:704</div></div>
+<div class="ttc" id="astructinish__kv__pair_html"><div class="ttname"><a href="structinish__kv__pair.html">inish_kv_pair</a></div><div class="ttdef"><b>Definition:</b> inish.h:17</div></div>
+<div class="ttc" id="ainish_8h_html_ae46d605d07b15a79127e430748f24fd4"><div class="ttname"><a href="inish_8h.html#ae46d605d07b15a79127e430748f24fd4">inish_get_kv_pair</a></div><div class="ttdeci">inish_kv_pair_t * inish_get_kv_pair(inish_section_t *section, const char *key)</div><div class="ttdef"><b>Definition:</b> inish.c:687</div></div>
+<div class="ttc" id="afcntl_8h_html_a7a68c9ffaac7dbcd652225dd7c06a54b"><div class="ttname"><a href="fcntl_8h.html#a7a68c9ffaac7dbcd652225dd7c06a54b">O_RDONLY</a></div><div class="ttdeci">#define O_RDONLY</div><div class="ttdoc">Open for reading only.</div><div class="ttdef"><b>Definition:</b> fcntl.h:6</div></div>
+<div class="ttc" id="asyscall_8h_html_aafbcde67669a1b96577e735ddebd8634"><div class="ttname"><a href="syscall_8h.html#aafbcde67669a1b96577e735ddebd8634">close</a></div><div class="ttdeci">int close(int fd)</div><div class="ttdef"><b>Definition:</b> close.c:3</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>

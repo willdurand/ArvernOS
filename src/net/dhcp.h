@@ -63,7 +63,7 @@ bool dhcp_negotiate(net_interface_t* interface);
  *
  * @param interface the interface on which the DHCP packet has been received
  * @param packet the DHCP packet
- * @param udp_header the UDP header
+ * @param header the UDP header
  */
 void dhcp_receive_packet(net_interface_t* interface,
                          uint8_t* packet,

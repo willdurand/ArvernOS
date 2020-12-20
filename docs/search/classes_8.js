@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['net_5fdriver_269',['net_driver',['../structnet__driver.html',1,'']]],
-  ['net_5finterface_270',['net_interface',['../structnet__interface.html',1,'']]]
+  ['page_5fentry_342',['page_entry',['../structpage__entry.html',1,'']]],
+  ['page_5ftable_343',['page_table',['../structpage__table.html',1,'']]],
+  ['pci_5fdevice_344',['pci_device',['../unionpci__device.html',1,'']]]
 ];

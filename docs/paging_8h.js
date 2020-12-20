@@ -6,6 +6,7 @@ var paging_8h =
     [ "PAGING_FLAG_PRESENT", "paging_8h.html#a28ff91b933f24d95e25ec5f03a736117", null ],
     [ "PAGING_FLAG_USER_ACCESSIBLE", "paging_8h.html#a5c235330203c88a6c6800a58a49cef17", null ],
     [ "PAGING_FLAG_WRITABLE", "paging_8h.html#adac89a5c7c54309cb4a4570d0f8cf75c", null ],
+    [ "identity_map", "paging_8h.html#a0fe6ae7a3d76ec54afbc3a0b484f5804", null ],
     [ "map", "paging_8h.html#af55681dc6c9ebb94b26ea497afe673f8", null ],
     [ "map_multiple", "paging_8h.html#a623291cd42facbd946e92e5307abe313", null ],
     [ "page_containing_address", "paging_8h.html#a4a8869be87726e3c57c4856fc7b3531c", null ],

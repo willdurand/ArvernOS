@@ -105,8 +105,8 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="isr_8h__dep__incl.png" border="0" usemap="#src_2core_2isr_8hdep" alt=""/></div>
 <map name="src_2core_2isr_8hdep" id="src_2core_2isr_8hdep">
-<area shape="rect" title=" " alt="" coords="32,5,129,32"/>
-<area shape="rect" href="core_2sys_2syscall_8h.html" title=" " alt="" coords="5,80,156,107"/>
+<area shape="rect" title=" " alt="" coords="24,5,121,32"/>
+<area shape="rect" href="k__syscall_8h.html" title=" " alt="" coords="5,80,140,107"/>
 </map>
 </div>
 </div>
@@ -157,6 +157,8 @@ Functions</h2></td></tr>
 <tr class="separator:a775b2177e54c4af963376f822f53a243"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a053905294332afc031508a03e6e10c86"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="isr_8h.html#a053905294332afc031508a03e6e10c86">isr_register_handler</a> (uint64_t id, <a class="el" href="isr_8h.html#a578e4aa356e844b0e91f9c4980d36cba">isr_t</a> handler)</td></tr>
 <tr class="separator:a053905294332afc031508a03e6e10c86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ca1f09683b78313b7959d0bb5f2902e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="isr_8h.html#a7ca1f09683b78313b7959d0bb5f2902e">isr_debug_registers</a> (registers_t *<a class="el" href="structregisters.html">registers</a>)</td></tr>
+<tr class="separator:a7ca1f09683b78313b7959d0bb5f2902e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="aae7afaff148e4f0f9212e8281cfa6b79"></a>
@@ -325,6 +327,31 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
+<a id="a7ca1f09683b78313b7959d0bb5f2902e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ca1f09683b78313b7959d0bb5f2902e">&#9670;&nbsp;</a></span>isr_debug_registers()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void isr_debug_registers </td>
+          <td>(</td>
+          <td class="paramtype">registers_t *&#160;</td>
+          <td class="paramname"><em>registers</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function dumps a given set of registers to the debug output.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">registers</td><td>registers to dump to the debug output </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a7cb233bc15b15bdafb22a1b23de2dd2f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7cb233bc15b15bdafb22a1b23de2dd2f">&#9670;&nbsp;</a></span>isr_handler()</h2>
 
@@ -364,7 +391,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="isr_8h_a7cb233bc15b15bdafb22a1b23de2dd2f_cgraph.png" border="0" usemap="#isr_8h_a7cb233bc15b15bdafb22a1b23de2dd2f_cgraph" alt=""/></div>
 <map name="isr_8h_a7cb233bc15b15bdafb22a1b23de2dd2f_cgraph" id="isr_8h_a7cb233bc15b15bdafb22a1b23de2dd2f_cgraph">
 <area shape="rect" title=" " alt="" coords="5,5,91,32"/>
-<area shape="rect" href="core_2sys_2syscall_8h.html#a362ef819e2d72c9411f40f5d87c5587a" title=" " alt="" coords="139,5,251,32"/>
+<area shape="rect" href="k__syscall_8h.html#a362ef819e2d72c9411f40f5d87c5587a" title=" " alt="" coords="139,5,251,32"/>
 </map>
 </div>
 

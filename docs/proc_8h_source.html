@@ -95,12 +95,11 @@ $(document).ready(function(){initNavTree('proc_8h_source.html',''); initResizabl
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;inode_t <a class="code" href="proc_8h.html#a1d5a67b3f507fe603a181b7a0d8cddc8">proc_fs_init</a>();</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keywordtype">void</span> <a class="code" href="proc_8h.html#ab7bf5bd260fd5379d5f6a2432bfd61ad">proc_fs_deinit</a>();</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;uint64_t <a class="code" href="proc_8h.html#a3c3b54b9d2e319b55ef3745780794544">proc_update_hostname</a>(<span class="keywordtype">char</span>* new_hostname, uint64_t length);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="aproc_8h_html_ab7bf5bd260fd5379d5f6a2432bfd61ad"><div class="ttname"><a href="proc_8h.html#ab7bf5bd260fd5379d5f6a2432bfd61ad">proc_fs_deinit</a></div><div class="ttdeci">void proc_fs_deinit()</div><div class="ttdef"><b>Definition:</b> proc.c:56</div></div>
 <div class="ttc" id="aframe_8h_html_a66c86472c34ead88a5cad580925a3dac"><div class="ttname"><a href="frame_8h.html#a66c86472c34ead88a5cad580925a3dac">frame_get_max_count</a></div><div class="ttdeci">uint64_t frame_get_max_count()</div><div class="ttdef"><b>Definition:</b> frame.c:172</div></div>
 <div class="ttc" id="aframe_8h_html_a7d467c1d283fdfa1f2081ba1e0d01b6e"><div class="ttname"><a href="frame_8h.html#a7d467c1d283fdfa1f2081ba1e0d01b6e">PAGE_SIZE</a></div><div class="ttdeci">#define PAGE_SIZE</div><div class="ttdoc">The default page size.</div><div class="ttdef"><b>Definition:</b> frame.h:10</div></div>
 <div class="ttc" id="atimer_8h_html_ad5df37e1f85cabd9c5d43aa1dfc0e37e"><div class="ttname"><a href="timer_8h.html#ad5df37e1f85cabd9c5d43aa1dfc0e37e">timer_uptime</a></div><div class="ttdeci">uint64_t timer_uptime()</div><div class="ttdef"><b>Definition:</b> timer.c:21</div></div>
@@ -108,10 +107,11 @@ $(document).ready(function(){initNavTree('proc_8h_source.html',''); initResizabl
 <div class="ttc" id="astdio_8h_html"><div class="ttname"><a href="stdio_8h.html">stdio.h</a></div></div>
 <div class="ttc" id="aalloc_8h_html"><div class="ttname"><a href="alloc_8h.html">alloc.h</a></div></div>
 <div class="ttc" id="aframe_8h_html"><div class="ttname"><a href="frame_8h.html">frame.h</a></div></div>
-<div class="ttc" id="aproc_8h_html_a1d5a67b3f507fe603a181b7a0d8cddc8"><div class="ttname"><a href="proc_8h.html#a1d5a67b3f507fe603a181b7a0d8cddc8">proc_fs_init</a></div><div class="ttdeci">inode_t proc_fs_init()</div><div class="ttdoc">Creates a &quot;proc&quot; file system.</div><div class="ttdef"><b>Definition:</b> proc.c:42</div></div>
+<div class="ttc" id="aproc_8h_html_a1d5a67b3f507fe603a181b7a0d8cddc8"><div class="ttname"><a href="proc_8h.html#a1d5a67b3f507fe603a181b7a0d8cddc8">proc_fs_init</a></div><div class="ttdeci">inode_t proc_fs_init()</div><div class="ttdoc">Creates a &quot;proc&quot; file system.</div><div class="ttdef"><b>Definition:</b> proc.c:49</div></div>
 <div class="ttc" id="aproc_8h_html"><div class="ttname"><a href="proc_8h.html">proc.h</a></div></div>
 <div class="ttc" id="aframe_8h_html_a5d09b4704202b05347bd92d99a5de64e"><div class="ttname"><a href="frame_8h.html#a5d09b4704202b05347bd92d99a5de64e">frame_get_used_count</a></div><div class="ttdeci">uint64_t frame_get_used_count()</div><div class="ttdef"><b>Definition:</b> frame.c:159</div></div>
 <div class="ttc" id="astdlib_8h_html"><div class="ttname"><a href="stdlib_8h.html">stdlib.h</a></div></div>
+<div class="ttc" id="aproc_8h_html_a3c3b54b9d2e319b55ef3745780794544"><div class="ttname"><a href="proc_8h.html#a3c3b54b9d2e319b55ef3745780794544">proc_update_hostname</a></div><div class="ttdeci">uint64_t proc_update_hostname(char *new_hostname, uint64_t length)</div><div class="ttdef"><b>Definition:</b> proc.c:218</div></div>
 <div class="ttc" id="akmain_8h_html"><div class="ttname"><a href="kmain_8h.html">kmain.h</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

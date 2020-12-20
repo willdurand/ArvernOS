@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['page_5fentry_276',['page_entry',['../structpage__entry.html',1,'']]],
-  ['page_5ftable_277',['page_table',['../structpage__table.html',1,'']]],
-  ['pci_5fdevice_278',['pci_device',['../unionpci__device.html',1,'']]]
+  ['sock_5fentry_347',['sock_entry',['../structsock__entry.html',1,'']]],
+  ['sockaddr_348',['sockaddr',['../structsockaddr.html',1,'']]],
+  ['sockaddr_5fin_349',['sockaddr_in',['../structsockaddr__in.html',1,'']]],
+  ['stack_350',['stack',['../structstack.html',1,'']]],
+  ['stat_351',['stat',['../structstat.html',1,'']]]
 ];

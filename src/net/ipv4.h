@@ -63,7 +63,7 @@ typedef struct icmpv4_reply
  * ICMPv4 reply.
  *
  * @param interface the interface to use to send the ICMPv4 request
- * @param dst_ip the IPv4 address to ping
+ * @param ip the IPv4 address to ping
  * @param reply the ICMPv4 reply
  * @return `0` on success, something else otherwise
  */
@@ -72,6 +72,7 @@ int ipv4_ping(net_interface_t* interface, uint8_t ip[4], icmpv4_reply_t* reply);
 /**
  * Handles IPv4 packets.
  *
+ * @param interface the interface that received the IPv4 packet
  * @param data the data containing the IPv4 packet
  * @param len the length of the data
  */

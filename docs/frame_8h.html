@@ -141,6 +141,8 @@ Functions</h2></td></tr>
 <tr class="separator:a5d09b4704202b05347bd92d99a5de64e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a66c86472c34ead88a5cad580925a3dac"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frame_8h.html#a66c86472c34ead88a5cad580925a3dac">frame_get_max_count</a> ()</td></tr>
 <tr class="separator:a66c86472c34ead88a5cad580925a3dac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa927a7ace957d1042c7af2b5113132e6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frame_8h.html#aa927a7ace957d1042c7af2b5113132e6">frame_mark_as_used</a> (uint64_t physical_address)</td></tr>
+<tr class="separator:aa927a7ace957d1042c7af2b5113132e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="ae2a26cdfa5b475a46dc4e26a21025252"></a>
@@ -195,6 +197,16 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a frame number </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="frame_8h_aed98bfe02b2da161f9bd02d8ff4a3be7_icgraph.png" border="0" usemap="#frame_8h_aed98bfe02b2da161f9bd02d8ff4a3be7_icgraph" alt=""/></div>
+<map name="frame_8h_aed98bfe02b2da161f9bd02d8ff4a3be7_icgraph" id="frame_8h_aed98bfe02b2da161f9bd02d8ff4a3be7_icgraph">
+<area shape="rect" title=" " alt="" coords="344,5,519,32"/>
+<area shape="rect" href="frame_8h.html#aa927a7ace957d1042c7af2b5113132e6" title=" " alt="" coords="149,5,296,32"/>
+<area shape="rect" href="paging_8h.html#a0fe6ae7a3d76ec54afbc3a0b484f5804" title=" " alt="" coords="5,5,101,32"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -303,6 +315,50 @@ Here is the call graph for this function:</div>
 <area shape="rect" title=" " alt="" coords="5,31,84,57"/>
 <area shape="rect" href="multiboot_8h.html#a62d6a6eaa877711b6b8308030f3f3dc0" title=" " alt="" coords="137,5,265,32"/>
 <area shape="rect" href="multiboot_8h.html#ae87c8fda1b62f7ace33b2e3ad24292c2" title=" " alt="" coords="132,56,271,83"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="aa927a7ace957d1042c7af2b5113132e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa927a7ace957d1042c7af2b5113132e6">&#9670;&nbsp;</a></span>frame_mark_as_used()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void frame_mark_as_used </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>physical_address</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Marks a frame as used.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">physical_address</td><td>a physical address (frame) </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="frame_8h_aa927a7ace957d1042c7af2b5113132e6_cgraph.png" border="0" usemap="#frame_8h_aa927a7ace957d1042c7af2b5113132e6_cgraph" alt=""/></div>
+<map name="frame_8h_aa927a7ace957d1042c7af2b5113132e6_cgraph" id="frame_8h_aa927a7ace957d1042c7af2b5113132e6_cgraph">
+<area shape="rect" title=" " alt="" coords="5,31,152,57"/>
+<area shape="rect" href="bitmap_8h.html#ae60e1e9970fe0c4f68ee27902adbebfa" title=" " alt="" coords="244,5,331,32"/>
+<area shape="rect" href="frame_8h.html#aed98bfe02b2da161f9bd02d8ff4a3be7" title=" " alt="" coords="200,56,375,83"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="frame_8h_aa927a7ace957d1042c7af2b5113132e6_icgraph.png" border="0" usemap="#frame_8h_aa927a7ace957d1042c7af2b5113132e6_icgraph" alt=""/></div>
+<map name="frame_8h_aa927a7ace957d1042c7af2b5113132e6_icgraph" id="frame_8h_aa927a7ace957d1042c7af2b5113132e6_icgraph">
+<area shape="rect" title=" " alt="" coords="149,5,296,32"/>
+<area shape="rect" href="paging_8h.html#a0fe6ae7a3d76ec54afbc3a0b484f5804" title=" " alt="" coords="5,5,101,32"/>
 </map>
 </div>
 

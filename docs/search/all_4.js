@@ -1,7 +1,19 @@
 var searchData=
 [
-  ['debug_2eh_27',['debug.h',['../fs_2debug_8h.html',1,'']]],
-  ['debug_5ffs_5finit_28',['debug_fs_init',['../fs_2debug_8h.html#a4a4e513b97927b8a57a3b1ea6183ab32',1,'debug.c']]],
-  ['device_5fnumber_29',['device_number',['../unionpci__device.html#aee8aa40f446189e5a8f9c67d90be5814',1,'pci_device']]],
-  ['dirent_30',['dirent',['../structdirent.html',1,'']]]
+  ['debug_2eh_28',['debug.h',['../debug_8h.html',1,'']]],
+  ['debug_5ffs_5finit_29',['debug_fs_init',['../debug_8h.html#a4a4e513b97927b8a57a3b1ea6183ab32',1,'debug.c']]],
+  ['delete_5fdescriptor_30',['delete_descriptor',['../descriptor_8h.html#a74df9557c5920fbbbf2a81e16f266db3',1,'descriptor.c']]],
+  ['descriptor_31',['descriptor',['../structdescriptor.html',1,'']]],
+  ['descriptor_2eh_32',['descriptor.h',['../descriptor_8h.html',1,'']]],
+  ['descriptor_5fudp_5flookup_33',['descriptor_udp_lookup',['../descriptor_8h.html#a3a4a85ff782854b3c65aacf9ff4574d5',1,'descriptor.c']]],
+  ['device_5fnumber_34',['device_number',['../unionpci__device.html#aee8aa40f446189e5a8f9c67d90be5814',1,'pci_device']]],
+  ['dhcp_2eh_35',['dhcp.h',['../dhcp_8h.html',1,'']]],
+  ['dhcp_5fheader_36',['dhcp_header',['../structdhcp__header.html',1,'']]],
+  ['dhcp_5fnegotiate_37',['dhcp_negotiate',['../dhcp_8h.html#ae37a0dfd11fc8825b9808761417c979b',1,'dhcp.c']]],
+  ['dhcp_5freceive_5fpacket_38',['dhcp_receive_packet',['../dhcp_8h.html#aaeb6c2139785dacf8f0c6f1cdf580c27',1,'dhcp.c']]],
+  ['dirent_39',['dirent',['../structdirent.html',1,'']]],
+  ['dns_2eh_40',['dns.h',['../dns_8h.html',1,'']]],
+  ['dns_5fanswer_5fheader_41',['dns_answer_header',['../structdns__answer__header.html',1,'']]],
+  ['dns_5fheader_42',['dns_header',['../structdns__header.html',1,'']]],
+  ['dns_5flookup_43',['dns_lookup',['../dns_8h.html#a625ff8641773273b1a293e7242680ef2',1,'dns.c']]]
 ];

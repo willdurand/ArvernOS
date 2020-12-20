@@ -1,12 +1,5 @@
 var searchData=
 [
-  ['seek_5fcur_474',['SEEK_CUR',['../include_2sys_2syscall_8h.html#a4c8d0b76b470ba65a43ca46a88320f39',1,'syscall.h']]],
-  ['seek_5fend_475',['SEEK_END',['../include_2sys_2syscall_8h.html#ad2a2e6c114780c3071efd24f16c7f7d8',1,'syscall.h']]],
-  ['seek_5fset_476',['SEEK_SET',['../include_2sys_2syscall_8h.html#a0d112bae8fd35be772185b6ec6bcbe64',1,'syscall.h']]],
-  ['serial_5fcom1_477',['SERIAL_COM1',['../serial_8h.html#a7dba27fd7950f6e40269808bd9238aca',1,'serial.h']]],
-  ['serial_5fline_5fenable_5fdlab_478',['SERIAL_LINE_ENABLE_DLAB',['../serial_8h.html#a86dbcd1e612dc4ca6f5270d81def6ccd',1,'serial.h']]],
-  ['serial_5fspeed_5f115200_479',['SERIAL_SPEED_115200',['../serial_8h.html#ad22db02c1b733cacbf6e2411ed8577d3',1,'serial.h']]],
-  ['serial_5fspeed_5f38400_480',['SERIAL_SPEED_38400',['../serial_8h.html#acb00722fe46bcf13413da98c229aded8',1,'serial.h']]],
-  ['serial_5fspeed_5f57600_481',['SERIAL_SPEED_57600',['../serial_8h.html#abc968786733c07230d2d5230cec1e138',1,'serial.h']]],
-  ['syscall_482',['SYSCALL',['../isr_8h.html#ac2b32acaa2085663ec396320d2e72fdb',1,'isr.h']]]
+  ['readline_5fsize_588',['READLINE_SIZE',['../kshell_8h.html#ac75983952a0074eee55efdb2cc0a5773',1,'kshell.h']]],
+  ['reboot_5fcmd_5frestart_589',['REBOOT_CMD_RESTART',['../reboot_8h.html#adc52a7803cb96790ea328a69fb56a73d',1,'reboot.h']]]
 ];

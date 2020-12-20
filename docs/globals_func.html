@@ -121,7 +121,7 @@ $(document).ready(function(){initNavTree('globals_func.html',''); initResizable(
 
 <h3><a id="index_c"></a>- c -</h3><ul>
 <li>close()
-: <a class="el" href="include_2sys_2syscall_8h.html#aafbcde67669a1b96577e735ddebd8634">syscall.h</a>
+: <a class="el" href="syscall_8h.html#aafbcde67669a1b96577e735ddebd8634">syscall.h</a>
 </li>
 <li>cmos_boot_time()
 : <a class="el" href="cmos_8h.html#a075a41918112363e92d77ce1e86d171b">cmos.h</a>
@@ -141,12 +141,33 @@ $(document).ready(function(){initNavTree('globals_func.html',''); initResizable(
 <li>console_write()
 : <a class="el" href="console_8h.html#ae757ada21a608ffb2ffb39e567feb07b">console.h</a>
 </li>
+<li>create_file_descriptor()
+: <a class="el" href="descriptor_8h.html#a9d772be036ad7ec4e9e926a190b76003">descriptor.h</a>
+</li>
+<li>create_socket_descriptor()
+: <a class="el" href="descriptor_8h.html#a04175d4d27dc399e18af7e68aa7e1a3a">descriptor.h</a>
+</li>
 </ul>
 
 
 <h3><a id="index_d"></a>- d -</h3><ul>
 <li>debug_fs_init()
-: <a class="el" href="fs_2debug_8h.html#a4a4e513b97927b8a57a3b1ea6183ab32">debug.h</a>
+: <a class="el" href="debug_8h.html#a4a4e513b97927b8a57a3b1ea6183ab32">debug.h</a>
+</li>
+<li>delete_descriptor()
+: <a class="el" href="descriptor_8h.html#a74df9557c5920fbbbf2a81e16f266db3">descriptor.h</a>
+</li>
+<li>descriptor_udp_lookup()
+: <a class="el" href="descriptor_8h.html#a3a4a85ff782854b3c65aacf9ff4574d5">descriptor.h</a>
+</li>
+<li>dhcp_negotiate()
+: <a class="el" href="dhcp_8h.html#ae37a0dfd11fc8825b9808761417c979b">dhcp.h</a>
+</li>
+<li>dhcp_receive_packet()
+: <a class="el" href="dhcp_8h.html#aaeb6c2139785dacf8f0c6f1cdf580c27">dhcp.h</a>
+</li>
+<li>dns_lookup()
+: <a class="el" href="dns_8h.html#a625ff8641773273b1a293e7242680ef2">dns.h</a>
 </li>
 </ul>
 
@@ -186,23 +207,38 @@ $(document).ready(function(){initNavTree('globals_func.html',''); initResizable(
 <li>frame_init()
 : <a class="el" href="frame_8h.html#ada91ff5ef3ceb241baf359ac078bb2d7">frame.h</a>
 </li>
+<li>frame_mark_as_used()
+: <a class="el" href="frame_8h.html#aa927a7ace957d1042c7af2b5113132e6">frame.h</a>
+</li>
 <li>frame_start_address()
 : <a class="el" href="frame_8h.html#a95fa44ebd51b61c7603f9798ff35730b">frame.h</a>
 </li>
 <li>fstat()
-: <a class="el" href="include_2sys_2syscall_8h.html#a27628bfab8ccdd0fdeed6778b25cd734">syscall.h</a>
+: <a class="el" href="syscall_8h.html#a27628bfab8ccdd0fdeed6778b25cd734">syscall.h</a>
 </li>
 </ul>
 
 
 <h3><a id="index_g"></a>- g -</h3><ul>
+<li>get_descriptor()
+: <a class="el" href="descriptor_8h.html#a1086f8e8b824491e0fb4503ef716ee0b">descriptor.h</a>
+</li>
+<li>getchar()
+: <a class="el" href="stdio_8h.html#a0979671914792955a7a68461634ff82d">stdio.h</a>
+</li>
+<li>gethostbyname2()
+: <a class="el" href="syscall_8h.html#aba00a3ed4c69aee0738c259d196779ed">syscall.h</a>
+</li>
 <li>gettimeofday()
-: <a class="el" href="include_2sys_2syscall_8h.html#a08c6fa45afb77767891dc6fb73d1010f">syscall.h</a>
+: <a class="el" href="syscall_8h.html#a08c6fa45afb77767891dc6fb73d1010f">syscall.h</a>
 </li>
 </ul>
 
 
 <h3><a id="index_i"></a>- i -</h3><ul>
+<li>identity_map()
+: <a class="el" href="paging_8h.html#a0fe6ae7a3d76ec54afbc3a0b484f5804">paging.h</a>
+</li>
 <li>idt_init()
 : <a class="el" href="idt_8h.html#a88d4205d069421eb4f8e7577285f1180">idt.h</a>
 </li>
@@ -239,6 +275,18 @@ $(document).ready(function(){initNavTree('globals_func.html',''); initResizable(
 <li>inish_load()
 : <a class="el" href="inish_8h.html#a3bb9aa17f1cc46b6c5db617a9668b0e8">inish.h</a>
 </li>
+<li>ipv4_checksum()
+: <a class="el" href="ipv4_8h.html#a70757066dd9950d01c1c5366d1bb36a5">ipv4.h</a>
+</li>
+<li>ipv4_ping()
+: <a class="el" href="ipv4_8h.html#a6d0ae76907eca011caedbad6fdf8e43e">ipv4.h</a>
+</li>
+<li>ipv4_receive_packet()
+: <a class="el" href="ipv4_8h.html#a6c04a1a0613bd9fae6de26f01ba5958b">ipv4.h</a>
+</li>
+<li>ipv4_send_packet()
+: <a class="el" href="ipv4_8h.html#a8f913ffc3ba073a5a2018ff80d0e8212">ipv4.h</a>
+</li>
 <li>irq_disable()
 : <a class="el" href="isr_8h.html#ab925df19b13ecfb0441d5ea0b4adaf5c">isr.h</a>
 </li>
@@ -247,6 +295,12 @@ $(document).ready(function(){initNavTree('globals_func.html',''); initResizable(
 </li>
 <li>irq_init()
 : <a class="el" href="isr_8h.html#a0eee1178db521b54c55074c2bdfebc73">isr.h</a>
+</li>
+<li>is_protocol_supported()
+: <a class="el" href="descriptor_8h.html#aafaf22ccaaa7bdc819da64a0947f9aa1">descriptor.h</a>
+</li>
+<li>isr_debug_registers()
+: <a class="el" href="isr_8h.html#a7ca1f09683b78313b7959d0bb5f2902e">isr.h</a>
 </li>
 <li>isr_handler()
 : <a class="el" href="isr_8h.html#a7cb233bc15b15bdafb22a1b23de2dd2f">isr.h</a>
@@ -273,9 +327,6 @@ $(document).ready(function(){initNavTree('globals_func.html',''); initResizable(
 <li>kmain()
 : <a class="el" href="kmain_8h.html#a3a723148ea74ca575865f61d277c0657">kmain.h</a>
 </li>
-<li>kreboot()
-: <a class="el" href="core_2sys_2reboot_8h.html#ab05a3718e8667efee772a5d5490c1a34">reboot.h</a>
-</li>
 <li>kshell_print_prompt()
 : <a class="el" href="kshell_8h.html#af0dfb69566e1acd19453a42d8e973e90">kshell.h</a>
 </li>
@@ -287,7 +338,7 @@ $(document).ready(function(){initNavTree('globals_func.html',''); initResizable(
 
 <h3><a id="index_l"></a>- l -</h3><ul>
 <li>lseek()
-: <a class="el" href="include_2sys_2syscall_8h.html#a8bd74caed008a66808d92d57fa74d9f6">syscall.h</a>
+: <a class="el" href="syscall_8h.html#a8bd74caed008a66808d92d57fa74d9f6">syscall.h</a>
 </li>
 </ul>
 
@@ -307,14 +358,14 @@ $(document).ready(function(){initNavTree('globals_func.html',''); initResizable(
 : <a class="el" href="net_8h.html#a18a484aee8b80774848889fdcff24496">net.h</a>
 </li>
 <li>net_interface_init()
-: <a class="el" href="net_8h.html#a9710447e6468aa9ef183c9b1dfcdcba0">net.h</a>
+: <a class="el" href="net_8h.html#a5da8d53d480b13e24e293e0ab90a0ac3">net.h</a>
 </li>
 </ul>
 
 
 <h3><a id="index_o"></a>- o -</h3><ul>
 <li>open()
-: <a class="el" href="include_2sys_2syscall_8h.html#afde00d8ce144212f452c321166e56e9a">syscall.h</a>
+: <a class="el" href="syscall_8h.html#ab7c31bf64ff68f61762bda6e72e255d6">syscall.h</a>
 </li>
 </ul>
 
@@ -359,18 +410,21 @@ $(document).ready(function(){initNavTree('globals_func.html',''); initResizable(
 <li>port_word_out()
 : <a class="el" href="port_8h.html#a08d9adffef857f1578d9086615626652">port.h</a>
 </li>
-<li>proc_fs_deinit()
-: <a class="el" href="proc_8h.html#ab7bf5bd260fd5379d5f6a2432bfd61ad">proc.h</a>
-</li>
 <li>proc_fs_init()
 : <a class="el" href="proc_8h.html#a1d5a67b3f507fe603a181b7a0d8cddc8">proc.h</a>
+</li>
+<li>proc_update_hostname()
+: <a class="el" href="proc_8h.html#a3c3b54b9d2e319b55ef3745780794544">proc.h</a>
+</li>
+<li>putchar()
+: <a class="el" href="stdio_8h.html#a948b7a0779c308ac5502c57e282e6933">stdio.h</a>
 </li>
 </ul>
 
 
 <h3><a id="index_r"></a>- r -</h3><ul>
 <li>read()
-: <a class="el" href="include_2sys_2syscall_8h.html#af32a16ad2dd9e48482f8f790db7dbbd2">syscall.h</a>
+: <a class="el" href="syscall_8h.html#af32a16ad2dd9e48482f8f790db7dbbd2">syscall.h</a>
 </li>
 <li>read_cr0()
 : <a class="el" href="register_8h.html#a89763d209b83a61f0f2c9a01022f7f88">register.h</a>
@@ -385,7 +439,10 @@ $(document).ready(function(){initNavTree('globals_func.html',''); initResizable(
 : <a class="el" href="register_8h.html#af21f5b42b403d57093c91fc8f27a3ddd">register.h</a>
 </li>
 <li>reboot()
-: <a class="el" href="include_2sys_2syscall_8h.html#a3e048601df87806f1bb72a84a6ff81e3">syscall.h</a>
+: <a class="el" href="syscall_8h.html#a3e048601df87806f1bb72a84a6ff81e3">syscall.h</a>
+</li>
+<li>recvfrom()
+: <a class="el" href="syscall_8h.html#ad144bb8d4119d5fa0ee5b6c4d06bc645">syscall.h</a>
 </li>
 <li>rtl8139_driver()
 : <a class="el" href="rtl8139_8h.html#ab2710fa050b40f0e325511227a4ec796">rtl8139.h</a>
@@ -397,17 +454,29 @@ $(document).ready(function(){initNavTree('globals_func.html',''); initResizable(
 
 
 <h3><a id="index_s"></a>- s -</h3><ul>
+<li>sendto()
+: <a class="el" href="syscall_8h.html#ae19bbc8361e8a64914e6d5d5d2258748">syscall.h</a>
+</li>
 <li>serial_init()
 : <a class="el" href="serial_8h.html#a086a2712ee8de77b7621d922d2b96857">serial.h</a>
 </li>
 <li>serial_print()
 : <a class="el" href="serial_8h.html#a1e9e38c6dbae13f53e8ed436fef0cd5b">serial.h</a>
 </li>
+<li>serial_stream_output()
+: <a class="el" href="serial_8h.html#a0f5a915bc3e83fd89af8f6dd43c6f205">serial.h</a>
+</li>
+<li>sock_fs_init()
+: <a class="el" href="sock_8h.html#aedc77d5ff0db9f7867873d7387db0be6">sock.h</a>
+</li>
+<li>socket()
+: <a class="el" href="syscall_8h.html#af4e0711877c45a41168ac677b0670ccd">syscall.h</a>
+</li>
 <li>syscall_handler()
-: <a class="el" href="core_2sys_2syscall_8h.html#a362ef819e2d72c9411f40f5d87c5587a">syscall.h</a>
+: <a class="el" href="k__syscall_8h.html#a362ef819e2d72c9411f40f5d87c5587a">k_syscall.h</a>
 </li>
 <li>syscall_init()
-: <a class="el" href="core_2sys_2syscall_8h.html#a581ed37968ead91b6d3a0b3b7a71da9d">syscall.h</a>
+: <a class="el" href="k__syscall_8h.html#a581ed37968ead91b6d3a0b3b7a71da9d">k_syscall.h</a>
 </li>
 </ul>
 
@@ -417,7 +486,7 @@ $(document).ready(function(){initNavTree('globals_func.html',''); initResizable(
 : <a class="el" href="tar_8h.html#a661af826d7d96126c71643d3c99371f7">tar.h</a>
 </li>
 <li>test()
-: <a class="el" href="include_2sys_2syscall_8h.html#afc62fdd40cdd010568045694291ee7d1">syscall.h</a>
+: <a class="el" href="syscall_8h.html#afc62fdd40cdd010568045694291ee7d1">syscall.h</a>
 </li>
 <li>timer_init()
 : <a class="el" href="timer_8h.html#a896a4c37c6ecf8868ef0dc758e5a598c">timer.h</a>
@@ -438,6 +507,12 @@ $(document).ready(function(){initNavTree('globals_func.html',''); initResizable(
 
 
 <h3><a id="index_u"></a>- u -</h3><ul>
+<li>udp_receive_packet()
+: <a class="el" href="udp_8h.html#a1e9dad20351b1ebb8b51196d2563c591">udp.h</a>
+</li>
+<li>udp_send_packet()
+: <a class="el" href="udp_8h.html#ac78d90d0d505eb6b507d0cf93c7499fb">udp.h</a>
+</li>
 <li>unmap()
 : <a class="el" href="paging_8h.html#a2556847794baa9bcb9be757f7f67f6b4">paging.h</a>
 </li>
@@ -465,7 +540,7 @@ $(document).ready(function(){initNavTree('globals_func.html',''); initResizable(
 
 <h3><a id="index_w"></a>- w -</h3><ul>
 <li>write()
-: <a class="el" href="include_2sys_2syscall_8h.html#abb39b21888372e95ad3e5c59b166f5c8">syscall.h</a>
+: <a class="el" href="syscall_8h.html#abb39b21888372e95ad3e5c59b166f5c8">syscall.h</a>
 </li>
 <li>write_cr0()
 : <a class="el" href="register_8h.html#a92cb192d651acbfd554a2967b181c9c7">register.h</a>

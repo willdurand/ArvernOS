@@ -106,28 +106,10 @@ Functions</h2></td></tr>
 <tr class="memitem:a1d5a67b3f507fe603a181b7a0d8cddc8"><td class="memItemLeft" align="right" valign="top">inode_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="proc_8h.html#a1d5a67b3f507fe603a181b7a0d8cddc8">proc_fs_init</a> ()</td></tr>
 <tr class="memdesc:a1d5a67b3f507fe603a181b7a0d8cddc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a "proc" file system.  <a href="proc_8h.html#a1d5a67b3f507fe603a181b7a0d8cddc8">More...</a><br /></td></tr>
 <tr class="separator:a1d5a67b3f507fe603a181b7a0d8cddc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab7bf5bd260fd5379d5f6a2432bfd61ad"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="proc_8h.html#ab7bf5bd260fd5379d5f6a2432bfd61ad">proc_fs_deinit</a> ()</td></tr>
-<tr class="separator:ab7bf5bd260fd5379d5f6a2432bfd61ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c3b54b9d2e319b55ef3745780794544"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="proc_8h.html#a3c3b54b9d2e319b55ef3745780794544">proc_update_hostname</a> (char *new_hostname, uint64_t length)</td></tr>
+<tr class="separator:a3c3b54b9d2e319b55ef3745780794544"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ab7bf5bd260fd5379d5f6a2432bfd61ad"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab7bf5bd260fd5379d5f6a2432bfd61ad">&#9670;&nbsp;</a></span>proc_fs_deinit()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void proc_fs_deinit </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function is used to de-initialize the "proc" file system. </p>
-
-</div>
-</div>
 <a id="a1d5a67b3f507fe603a181b7a0d8cddc8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1d5a67b3f507fe603a181b7a0d8cddc8">&#9670;&nbsp;</a></span>proc_fs_init()</h2>
 
@@ -146,6 +128,43 @@ Functions</h2></td></tr>
 <p>Creates a "proc" file system. </p>
 <p>This "proc" file system exposes kernel information using files.</p>
 <dl class="section return"><dt>Returns</dt><dd>the "root" inode of the proc file system </dd></dl>
+
+</div>
+</div>
+<a id="a3c3b54b9d2e319b55ef3745780794544"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c3b54b9d2e319b55ef3745780794544">&#9670;&nbsp;</a></span>proc_update_hostname()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint64_t proc_update_hostname </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>new_hostname</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>length</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function is used to update the hostname.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">new_hostname</td><td>the new hostname </td></tr>
+    <tr><td class="paramname">length</td><td>the length of the new hostname </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the length of the updated hostname </dd></dl>
 
 </div>
 </div>
