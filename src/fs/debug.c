@@ -19,7 +19,8 @@ static vfs_driver_t debug_driver = {
   debug_isatty, // isatty
   NULL,         // readdir
   NULL,         // finddir
-  NULL          // cleanup
+  NULL,         // cleanup
+  NULL,         // create
 };
 
 inode_t debug_fs_init()

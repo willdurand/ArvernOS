@@ -5,14 +5,11 @@
 
 #define VFS_NAME_MAX_SIZE 256
 
-#define FS_MOUNTPOINT  0x01
-#define FS_FILE        0x02
-#define FS_DIRECTORY   0x04
-#define FS_CHARDEVICE  0x08
-#define FS_BLOCKDEVICE 0x10
-#define FS_PIPE        0x20
-#define FS_SYMLINK     0x40
-#define FS_MASK        0xFE
+#define FS_MOUNTPOINT 0x01
+#define FS_FILE       0x02
+#define FS_DIRECTORY  0x04
+#define FS_CHARDEVICE 0x08
+#define FS_MASK       0xFE
 
 #define FS_ERR_NOTAMOUNTPOINT 1
 #define FS_ERR_HASCHILDREN    2
@@ -36,7 +33,7 @@ typedef struct dirent
 
 typedef struct vfs_driver
 {
-  uint64_t (*open)(inode_t inode, uint64_t mode);
+  uint64_t (*open)(inode_t inode, uint64_t flags);
   uint64_t (*close)(inode_t inode);
   uint64_t (*read)(inode_t inode, void* ptr, uint64_t length, uint64_t offset);
   uint64_t (*write)(inode_t inode, void* ptr, uint64_t length, uint64_t offset);
@@ -45,6 +42,7 @@ typedef struct vfs_driver
   dirent_t* (*readdir)(inode_t inode, uint64_t num);
   inode_t (*finddir)(inode_t inode, const char* name);
   void (*cleanup)(inode_t inode);
+  inode_t (*create)(inode_t parent, const char* name, uint64_t flags);
 } vfs_driver_t;
 
 typedef struct vfs_node
@@ -60,7 +58,7 @@ typedef struct vfs_node
 
 void vfs_init();
 
-uint64_t vfs_open(inode_t inode, uint64_t mode);
+uint64_t vfs_open(inode_t inode, uint64_t flags);
 
 uint64_t vfs_close(inode_t inode);
 
@@ -85,6 +83,8 @@ int vfs_umount(const char* path);
 int vfs_free(inode_t inode);
 
 int vfs_inode_type(inode_t inode);
+
+inode_t vfs_create(inode_t parent, const char* name, uint64_t flags);
 
 void vfs_debug(inode_t node, int depth);
 

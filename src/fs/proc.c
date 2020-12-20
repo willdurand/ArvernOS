@@ -25,7 +25,8 @@ static vfs_driver_t proc_driver = {
   proc_isatty,  // isatty
   proc_readdir, // readdir
   proc_finddir, // finddir
-  proc_cleanup  // cleanup
+  proc_cleanup, // cleanup
+  NULL,         // create
 };
 
 #define NB_PROC_FILES 4
