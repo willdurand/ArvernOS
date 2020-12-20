@@ -5,7 +5,7 @@
 #include <logging.h>
 
 #define __PANIC(format, ...)                                                   \
-  DEBUG_OUT(format "%s", __VA_ARGS__);                                         \
+  CORE_DEBUG(format "%s", __VA_ARGS__);                                        \
   kernel_panic("\nPANIC in %s() (line %d): " format "%s",                      \
                __func__,                                                       \
                __LINE__,                                                       \

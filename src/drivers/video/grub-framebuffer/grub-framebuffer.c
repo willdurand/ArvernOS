@@ -1,10 +1,10 @@
-#include <core/debug.h>
 #include <core/multiboot.h>
 #include <drivers/timer.h>
 #include <drivers/video/video_api.h>
 #include <drivers/video/video_console.h>
+#include <core/core-logging.h>
 #include <mmu/paging.h>
-#include <resources/psf1/psf1.h>
+#include <resources/psf2/psf2.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -20,7 +20,7 @@ uint64_t video_frame_timer = 0;
 
 //  Kernel Externals
 
-extern PSF1_font_t* kernel_console_font;
+extern psf2_font_t* kernel_console_font;
 extern vtconsole_t vtc;
 
 //  Framebuffer Common
@@ -67,7 +67,7 @@ const char* grub_framebuffer_type_string()
   return "RGB";
 }
 
-void grub_framebuffer_put_char(PSF1_font_t* font,
+void grub_framebuffer_put_char(psf2_font_t* font,
                                uint32_t color,
                                char character,
                                uint32_t x,
@@ -78,21 +78,29 @@ void grub_framebuffer_put_char(PSF1_font_t* font,
   }
 
   char* font_ptr =
-    (char*)font->glyph_buffer + (character * font->psf1_header->charsize);
+    (char*)font->glyph_buffer +
+    (character > 0 && character < font->header->num_glyph ? character : 0) * font->header->bytes_per_glyph;
 
-  for (uint32_t y_pos = 0, y_index = y * grub_framebuffer_width; y_pos < 16;
+	uint32_t bytes_per_line = (font->header->width + 7) / 8;
+
+  for (uint32_t y_pos = 0, y_index = y * grub_framebuffer_width; y_pos < font->header->height;
        y_pos++, y_index += grub_framebuffer_width) {
     if (y + y_pos >= grub_framebuffer_height) {
       continue;
     }
 
-    for (uint32_t x_pos = 0, x_index = y_index + x; x_pos < 8;
+    uint32_t mask = 1 << (font->header->width - 1);
+
+    for (uint32_t x_pos = 0, x_index = y_index + x; x_pos < font->header->width;
          x_pos++, x_index++) {
+
       uint32_t plot_color = 0x00000000;
 
-      if ((*font_ptr & (0x80 >> (x_pos))) > 0) {
+      if ((*font_ptr & (mask)) > 0) {
         plot_color = color;
       }
+
+      mask >>= 1;
 
       if (x + x_pos >= grub_framebuffer_width) {
         continue;
@@ -101,11 +109,11 @@ void grub_framebuffer_put_char(PSF1_font_t* font,
       framebuffer_buffer[x_index] = plot_color;
     }
 
-    font_ptr++;
+    font_ptr+=bytes_per_line;
   }
 }
 
-void grub_framebuffer_print(PSF1_font_t* font,
+void grub_framebuffer_print(psf2_font_t* font,
                             uint32_t color,
                             char* str,
                             uint32_t start_x,
@@ -129,7 +137,7 @@ void grub_framebuffer_print(PSF1_font_t* font,
   }
 }
 
-void grub_framebuffer_measure(PSF1_font_t* font,
+void grub_framebuffer_measure(psf2_font_t* font,
                               char* str,
                               uint32_t* in_x,
                               uint32_t* in_y,
@@ -146,7 +154,7 @@ void grub_framebuffer_measure(PSF1_font_t* font,
 
   while (*chr != 0) {
 
-    x += 8;
+    x += font->header->width;
 
     if (x + 8 > grub_framebuffer_width) {
       if (max_x < x) {
@@ -154,7 +162,7 @@ void grub_framebuffer_measure(PSF1_font_t* font,
       }
 
       x = start_x;
-      y += 16;
+      y += font->header->height;
 
       if (max_y < y) {
         max_y = y;
@@ -173,7 +181,7 @@ void grub_framebuffer_measure(PSF1_font_t* font,
   }
 
   *out_width = max_x - start_x;
-  *out_height = max_y - start_y + 16;
+  *out_height = max_y - start_y + font->header->height;
 }
 
 void grub_framebuffer_console_on_paint_callback(vtconsole_t* vtc,
@@ -221,7 +229,7 @@ bool grub_init_framebuffer(multiboot_info_t* mbi)
       mbi, MULTIBOOT_TAG_TYPE_FRAMEBUFFER);
 
   if (entry == NULL) {
-    DEBUG_OUT("%s", "Failed to find framebuffer tag in multiboot");
+    CORE_DEBUG("%s", "Failed to find framebuffer tag in multiboot");
 
     return false;
   }
@@ -287,7 +295,7 @@ bool grub_init_framebuffer(multiboot_info_t* mbi)
   framebuffer_green_field_position = entry->framebuffer_green_field_position;
   framebuffer_blue_field_position = entry->framebuffer_blue_field_position;
 
-  DEBUG_OUT(
+  CORE_DEBUG(
     "Got Framebuffer Info: %dx%dx%d (%s) located at %p, with double-buffer "
     "at %p",
     grub_framebuffer_width,
@@ -307,7 +315,7 @@ bool grub_init_framebuffer(multiboot_info_t* mbi)
 
 void grub_framebuffer_set_console_mode()
 {
-  DEBUG_OUT("%s", "Changing grub framebuffer to console mode");
+  CORE_DEBUG("%s", "Changing grub framebuffer to console mode");
 
   grub_framebuffer_is_console = true;
 
@@ -326,7 +334,7 @@ void grub_framebuffer_set_console_mode()
 
 void grub_framebuffer_set_canvas_mode()
 {
-  DEBUG_OUT("%s", "Changing grub framebuffer to canvas mode");
+  CORE_DEBUG("%s", "Changing grub framebuffer to canvas mode");
 
   grub_framebuffer_is_console = false;
 

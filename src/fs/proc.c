@@ -91,11 +91,7 @@ dirent_t* proc_readdir(inode_t inode, uint64_t num)
   strcpy(dir->name, nodes[num]->name);
   dir->inode = nodes[num];
 
-<<<<<<< HEAD
-  DEBUG_OUT("returning directory entry=%s", dir->name);
-=======
   FS_DEBUG("returning directory entry=%s", dir->name);
->>>>>>> cd080736337f92180c8e1821d448c419256c5e74
 
   return dir;
 }
@@ -112,12 +108,8 @@ inode_t proc_finddir(inode_t inode, const char* name)
         node->parent = inode;
         node->type = FS_FILE;
 
-<<<<<<< HEAD
-      DEBUG_OUT("found name=%s type=%ld", node->name, node->type);
-=======
         nodes[idx] = node;
       }
->>>>>>> cd080736337f92180c8e1821d448c419256c5e74
 
       FS_DEBUG("found name=%s type=%ld", nodes[idx]->name, nodes[idx]->type);
 
@@ -135,19 +127,11 @@ uint64_t proc_isatty(inode_t node)
 
 uint64_t proc_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
 {
-<<<<<<< HEAD
-  DEBUG_OUT("name=%s type=%d size=%lu offset=%lu",
-            node->name,
-            vfs_inode_type(node),
-            size,
-            offset);
-=======
   FS_DEBUG("name=%s type=%d size=%lu offset=%lu",
            node->name,
            vfs_type(node),
            size,
            offset);
->>>>>>> cd080736337f92180c8e1821d448c419256c5e74
   // Empty buffer.
   strcpy(buffer, "");
 
@@ -240,11 +224,7 @@ uint64_t proc_update_hostname(char* new_hostname, uint64_t length)
   char* tmp = realloc(hostname, sizeof(char) * (length + 1));
 
   if (!tmp) {
-<<<<<<< HEAD
-    DEBUG_OUT("%s", "failed to reallocate memory for hostname");
-=======
     FS_DEBUG("%s", "failed to reallocate memory for hostname");
->>>>>>> cd080736337f92180c8e1821d448c419256c5e74
     return 0;
   }
 

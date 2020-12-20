@@ -66,13 +66,7 @@ int dns_lookup(net_interface_t* interface, const char* domain, uint8_t ip[4])
 
   free(data);
 
-<<<<<<< HEAD
-  DEBUG_OUT("sending dns packet: id=0x%04x flags=0x%04x",
-            ntohs(dns_header.id),
-            ntohs(dns_header.flags));
-=======
   int sockfd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
->>>>>>> cd080736337f92180c8e1821d448c419256c5e74
 
   if (sockfd < 0) {
     NET_DEBUG("failed to create a socket (sockfd=%d)", sockfd);
@@ -128,19 +122,12 @@ int dns_lookup(net_interface_t* interface, const char* domain, uint8_t ip[4])
   dns_header.nscount = ntohs(dns_header.nscount);
   dns_header.arcount = ntohs(dns_header.arcount);
 
-<<<<<<< HEAD
-  DEBUG_OUT("dns packet received: id=0x%04x qdcount=%d ancount=%d",
-            dns_header.id,
-            dns_header.qdcount,
-            dns_header.ancount);
-=======
   NET_DEBUG(
     "dns packet received: id=0x%04x qdcount=%d ancount=%d bytes_received=%lld",
     dns_header.id,
     dns_header.qdcount,
     dns_header.ancount,
     bytes_received);
->>>>>>> cd080736337f92180c8e1821d448c419256c5e74
 
   uint8_t* dns_data = buf + sizeof(dns_header_t);
 

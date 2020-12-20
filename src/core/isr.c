@@ -1,5 +1,5 @@
 #include "isr.h"
-#include "logging.h"
+#include <core/core-logging.h>
 #include <core/idt.h>
 #include <core/port.h>
 #include <core/register.h>

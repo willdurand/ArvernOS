@@ -29,13 +29,8 @@ void ipv4_receive_packet(net_interface_t* interface,
   memcpy(&header, data, sizeof(ipv4_header_t));
 
   uint8_t src_ip[4] = { 0 };
-<<<<<<< HEAD
-  ipv4_from_value(header.src_addr, src_ip);
-  DEBUG_OUT("received IPv4 packet from: %d.%d.%d.%d on interface=%d",
-=======
   inet_ntoi(header.src_addr, src_ip, 4);
   NET_DEBUG("received IPv4 packet from: %d.%d.%d.%d on interface=%d",
->>>>>>> cd080736337f92180c8e1821d448c419256c5e74
             src_ip[0],
             src_ip[1],
             src_ip[2],
@@ -50,11 +45,7 @@ void ipv4_receive_packet(net_interface_t* interface,
       udp_receive_packet(interface, data, &header);
       break;
     default:
-<<<<<<< HEAD
-      DEBUG_OUT("unsupported IP protocol=%02x, dropping packet", header.proto);
-=======
       NET_DEBUG("unsupported IP protocol=%02x, dropping packet", header.proto);
->>>>>>> cd080736337f92180c8e1821d448c419256c5e74
   }
 }
 
@@ -88,22 +79,12 @@ void icmpv4_receive_packet(net_interface_t* interface,
   icmpv4_echo_t icmpv4_echo = { 0 };
   memcpy(&icmpv4_echo, data + (4 * header->ihl), sizeof(icmpv4_echo_t));
 
-<<<<<<< HEAD
-  DEBUG_OUT(
-=======
   NET_DEBUG(
->>>>>>> cd080736337f92180c8e1821d448c419256c5e74
     "received ICMPv4 packet on interface=%d type=%d code=%d checksum=%x",
     interface->id,
     icmpv4_echo.type,
     icmpv4_echo.code,
     icmpv4_echo.checksum);
-<<<<<<< HEAD
-
-  uint8_t src_ip[4] = { 0 };
-  ipv4_from_value(header->src_addr, src_ip);
-=======
->>>>>>> cd080736337f92180c8e1821d448c419256c5e74
 
   if (icmpv4_echo.type == ICMPV4_TYPE_REPLY) {
     icmpv4_reply = malloc(sizeof(icmpv4_reply_t));

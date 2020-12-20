@@ -21,11 +21,7 @@ void udp_receive_packet(net_interface_t* interface,
   udp_header.len = ntohs(udp_header.len);
   udp_header.checksum = ntohs(udp_header.checksum);
 
-<<<<<<< HEAD
-  DEBUG_OUT("udp packet received: src_port=%d dst_port=%d len=%d checksum=%x",
-=======
   NET_DEBUG("udp packet received: src_port=%d dst_port=%d len=%d checksum=%x",
->>>>>>> cd080736337f92180c8e1821d448c419256c5e74
             udp_header.src_port,
             udp_header.dst_port,
             udp_header.len,
@@ -46,17 +42,11 @@ void udp_receive_packet(net_interface_t* interface,
       dhcp_receive_packet(interface, udp_data, &udp_header);
       break;
     default:
-<<<<<<< HEAD
-      DEBUG_OUT(
-        "dropping udp packet (port=%d) because it cannot be handled yet",
-        udp_header.src_port);
-=======
       NET_DEBUG(
         "dropping udp packet (src_port=%d, dst_port=%d) because it cannot "
         "be handled yet",
         udp_header.src_port,
         udp_header.dst_port);
->>>>>>> cd080736337f92180c8e1821d448c419256c5e74
   }
 }
 

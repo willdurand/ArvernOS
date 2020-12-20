@@ -1,6 +1,7 @@
 #include "kshell.h"
 #include <arpa/inet.h>
 #include <core/elf.h>
+#include <core/core-logging.h>
 #include <drivers/cmos.h>
 #include <fs/debug.h>
 #include <fs/vfs.h>
@@ -351,11 +352,11 @@ void run_command()
 
   char** argv = malloc(sizeof(char*) * argc);
   argv[0] = strtok(readline, " ");
-  DEBUG_OUT("command='%s' argc=%d", argv[0], argc);
+  CORE_DEBUG("command='%s' argc=%d", argv[0], argc);
 
   for (int i = 1; i < argc; i++) {
     argv[i] = strtok(NULL, " ");
-    DEBUG_OUT("argv[%d]=%s", i, argv[i]);
+    CORE_DEBUG("argv[%d]=%s", i, argv[i]);
   }
 
   if (strcmp(argv[0], "help") == 0) {

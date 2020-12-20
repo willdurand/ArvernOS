@@ -1,5 +1,5 @@
-#include <core/debug.h>
-#include <resources/psf1/psf1.h>
+#include <core/core-logging.h>
+#include <resources/psf2/psf2.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>

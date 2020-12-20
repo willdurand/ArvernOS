@@ -1,6 +1,6 @@
 #ifndef _GRUB_FRAMEBUFFER_H_
 #define _GRUB_FRAMEBUFFER_H_
-#include <resources/psf1/psf1.h>
+#include <resources/psf2/psf2.h>
 
 extern uint32_t grub_framebuffer_width;
 extern uint32_t grub_framebuffer_height;
@@ -20,13 +20,13 @@ uint32_t* grub_framebuffer_buffer();
 
 void grub_framebuffer_swap_buffers();
 
-void grub_framebuffer_print(PSF1_font_t* font,
+void grub_framebuffer_print(psf2_font_t* font,
                             uint32_t color,
                             char* str,
                             uint32_t start_x,
                             uint32_t start_y);
 
-void grub_framebuffer_measure(PSF1_font_t* font,
+void grub_framebuffer_measure(psf2_font_t* font,
                               char* str,
                               uint32_t* in_x,
                               uint32_t* in_y,

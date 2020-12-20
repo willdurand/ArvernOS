@@ -17,19 +17,11 @@ void net_interface_init(uint8_t interface_id,
                         uint8_t dns_ip[4])
 {
   if (interface_id >= NET_MAX_INTERFACES) {
-<<<<<<< HEAD
-    DEBUG_OUT("could not initialize interface with id=%d", interface_id);
-    return;
-  }
-
-  DEBUG_OUT("initializing interface id=%d with driver='%s'",
-=======
     NET_DEBUG("could not initialize interface with id=%d", interface_id);
     return;
   }
 
   NET_DEBUG("initializing interface id=%d with driver='%s'",
->>>>>>> cd080736337f92180c8e1821d448c419256c5e74
             interface_id,
             driver->get_name());
 
@@ -56,11 +48,7 @@ void net_interface_init(uint8_t interface_id,
   arp_request(in, gateway_ip);
   arp_wait_reply(in->gateway_mac);
 
-<<<<<<< HEAD
-  DEBUG_OUT("MAC address for %d.%d.%d.%d (gateway) is: "
-=======
   NET_DEBUG("MAC address for %d.%d.%d.%d (gateway) is: "
->>>>>>> cd080736337f92180c8e1821d448c419256c5e74
             "%02x:%02x:%02x:%02x:%02x:%02x",
             in->gateway_ip[0],
             in->gateway_ip[1],
@@ -76,11 +64,7 @@ void net_interface_init(uint8_t interface_id,
   arp_request(in, dns_ip);
   arp_wait_reply(in->dns_mac);
 
-<<<<<<< HEAD
-  DEBUG_OUT("MAC address for %d.%d.%d.%d (dns) is: "
-=======
   NET_DEBUG("MAC address for %d.%d.%d.%d (dns) is: "
->>>>>>> cd080736337f92180c8e1821d448c419256c5e74
             "%02x:%02x:%02x:%02x:%02x:%02x",
             in->dns_ip[0],
             in->dns_ip[1],
@@ -94,12 +78,7 @@ void net_interface_init(uint8_t interface_id,
             in->dns_mac[5]);
 
   interfaces[interface_id] = in;
-<<<<<<< HEAD
-
-  DEBUG_OUT("interface id=%d successfully initialized", in->id);
-=======
   NET_DEBUG("interface id=%d successfully initialized", in->id);
->>>>>>> cd080736337f92180c8e1821d448c419256c5e74
 }
 
 net_interface_t* net_get_interface(uint8_t interface_id)

@@ -174,19 +174,10 @@ inode_t vfs_find_root(char** path)
 
   char* name = NULL;
   while ((name = strsep(path, "/")) != 0) {
-<<<<<<< HEAD
-    DEBUG_OUT("current->name=%s name=%s", current->name, name);
-    current = current->child;
-
-    while (current) {
-      if (strcmp(current->name, name) == 0) {
-        mount = current;
-=======
     uint64_t i = 0;
     for (; i < current->n_children; i++) {
       if (strcmp(current->children[i]->name, name) == 0) {
         mount = current->children[i];
->>>>>>> cd080736337f92180c8e1821d448c419256c5e74
         break;
       }
     }
@@ -202,11 +193,7 @@ inode_t vfs_find_root(char** path)
     }
   }
 
-<<<<<<< HEAD
-  DEBUG_OUT("found root=%s", mount->name);
-=======
   FS_DEBUG("found root node: %s", mount->name);
->>>>>>> cd080736337f92180c8e1821d448c419256c5e74
 
   return mount;
 }
@@ -225,17 +212,6 @@ inode_t vfs_namei_mount(const char* path, inode_t root)
 
       inode_t next = vfs_finddir(current, name);
 
-<<<<<<< HEAD
-      if (!next) {
-        DEBUG_OUT("%s", "no next, returning 0");
-        vfs_free(current);
-        free(npath);
-        return 0;
-      }
-
-      DEBUG_OUT("name=%s next_name=%s", name, next->name);
-
-=======
       if (next == NULL) {
         // Try to find a mounted FS, if any.
         for (uint64_t i = 0; i < current->n_children; i++) {
@@ -246,7 +222,6 @@ inode_t vfs_namei_mount(const char* path, inode_t root)
         }
       }
 
->>>>>>> cd080736337f92180c8e1821d448c419256c5e74
       if (root) {
         if (!next) {
           if (pth != NULL) {
@@ -301,20 +276,13 @@ inode_t vfs_namei_mount(const char* path, inode_t root)
     free(root);
   }
 
-<<<<<<< HEAD
-  DEBUG_OUT("returning current=%s", current->name);
-=======
   FS_DEBUG("returning current node: %s", current->name);
->>>>>>> cd080736337f92180c8e1821d448c419256c5e74
 
   return current;
 }
 
 inode_t vfs_mount(const char* path, inode_t root)
 {
-<<<<<<< HEAD
-  DEBUG_OUT("mounting path=%s root_fs=%s", path, root->name);
-=======
   if (vfs_root == NULL) {
     DEBUG("%s", "vfs_root is NULL. vfs_init() not called?");
     return NULL;
@@ -326,27 +294,17 @@ inode_t vfs_mount(const char* path, inode_t root)
   }
 
   FS_DEBUG("trying to mount fs=%s at path=%s", root->name, path);
->>>>>>> cd080736337f92180c8e1821d448c419256c5e74
   return vfs_namei_mount(path, root);
 }
 
 inode_t vfs_namei(const char* path)
 {
-<<<<<<< HEAD
-  DEBUG_OUT("finding path=%s", path);
-  return vfs_namei_mount(path, 0);
-=======
   FS_DEBUG("trying to find node for path=%s", path);
   return vfs_namei_mount(path, NULL);
->>>>>>> cd080736337f92180c8e1821d448c419256c5e74
 }
 
 int vfs_umount(const char* path)
 {
-<<<<<<< HEAD
-  DEBUG_OUT("umounting path=%s", path);
-  // TODO: implement me
-=======
   FS_DEBUG("trying to unmount path=%s", path);
   inode_t node = vfs_namei(path);
 
@@ -383,7 +341,6 @@ int vfs_umount(const char* path)
   vfs_free(node);
   node = NULL;
 
->>>>>>> cd080736337f92180c8e1821d448c419256c5e74
   return 0;
 }
 

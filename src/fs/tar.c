@@ -51,19 +51,11 @@ inode_t tar_fs_init(uint64_t address)
 
 uint64_t tar_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
 {
-<<<<<<< HEAD
-  DEBUG_OUT("name=%s type=%d size=%lu offset=%lu",
-            node->name,
-            vfs_inode_type(node),
-            size,
-            offset);
-=======
   FS_DEBUG("name=%s type=%d size=%lu offset=%lu",
            node->name,
            vfs_type(node),
            size,
            offset);
->>>>>>> cd080736337f92180c8e1821d448c419256c5e74
   // Empty buffer.
   strcpy(buffer, "");
 
@@ -83,19 +75,11 @@ uint64_t tar_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
       size = header_size - offset;
     }
 
-<<<<<<< HEAD
-    DEBUG_OUT("copying %ld bytes (offset=%lu header_size=%ld) to buffer=%p",
-              size,
-              offset,
-              header_size,
-              buffer);
-=======
     FS_DEBUG("copying %ld bytes (offset=%lu header_size=%ld) to buffer=%p",
              size,
              offset,
              header_size,
              buffer);
->>>>>>> cd080736337f92180c8e1821d448c419256c5e74
 
     memcpy(buffer, (char*)header + 512 + offset, size);
 
@@ -148,11 +132,7 @@ inode_t tar_finddir(inode_t inode, const char* name)
   free(fullpath);
 
   if (!header) {
-<<<<<<< HEAD
-    DEBUG_OUT("did not find name=%s", name);
-=======
     FS_DEBUG("did not find name=%s", name);
->>>>>>> cd080736337f92180c8e1821d448c419256c5e74
     free(node);
     return NULL;
   }
@@ -182,13 +162,9 @@ inode_t tar_finddir(inode_t inode, const char* name)
     node = tmp;
   }
 
-<<<<<<< HEAD
-  DEBUG_OUT("found name=%s type=%ld", node->name, node->type);
-=======
   FS_DEBUG("found node name=%s type=%lu",
            nodes[node->data]->name,
            nodes[node->data]->type);
->>>>>>> cd080736337f92180c8e1821d448c419256c5e74
 
   return nodes[node->data];
 }
@@ -283,11 +259,7 @@ dirent_t* tar_readdir(inode_t inode, uint64_t num)
   strcpy(dir->name, nodes[i]->name + strlen(name));
   dir->inode = nodes[i];
 
-<<<<<<< HEAD
-  DEBUG_OUT("returning directory entry=%s", dir->name);
-=======
   FS_DEBUG("returning directory entry=%s", dir->name);
->>>>>>> cd080736337f92180c8e1821d448c419256c5e74
 
   return dir;
 }

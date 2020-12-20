@@ -20,13 +20,13 @@
 #include <kernel/console.h>
 #include <kernel/kshell.h>
 #include <kernel/panic.h>
-#include <logging.h>
+#include <core/core-logging.h>
 #include <mmu/alloc.h>
 #include <mmu/frame.h>
 #include <mmu/paging.h>
 #include <net/net.h>
 #include <resources/embed/will_photo.png.h>
-#include <resources/psf1/psf1.h>
+#include <resources/psf2/psf2.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/k_syscall.h>
@@ -37,7 +37,7 @@ void print_sub_step(const char* msg);
 void print_ok();
 void check_interrupts();
 
-PSF1_font_t* kernel_console_font;
+psf2_font_t* kernel_console_font;
 
 void print_welcome_messge()
 {
@@ -95,70 +95,55 @@ void kmain(uint64_t addr)
 
   // enable serial ports, COM1 for debug logs, COM2 for console.
   serial_init(SERIAL_COM1, SERIAL_SPEED_115200);
-<<<<<<< HEAD
   serial_init(SERIAL_COM2, SERIAL_SPEED_115200);
-  DEBUG_OUT("%s has started", KERNEL_NAME);
-=======
+
   INFO("%s %s (%s) / Built on: %s at %s has started",
        KERNEL_NAME,
        KERNEL_VERSION,
        GIT_HASH,
        KERNEL_DATE,
        KERNEL_TIME);
->>>>>>> cd080736337f92180c8e1821d448c419256c5e74
 
-  DEBUG_OUT("%s", "initializing interruptions");
+  CORE_DEBUG("%s", "initializing interruptions");
   print_step("initializing interruptions");
   isr_init();
   irq_init();
   print_ok();
 
-  DEBUG_OUT("%s", "initializing frame allocator");
+  CORE_DEBUG("%s", "initializing frame allocator");
   print_step("initializing frame allocator");
   frame_init(mbi);
   print_ok();
 
-  DEBUG_OUT("%s", "initializing paging");
+  CORE_DEBUG("%s", "initializing paging");
   print_step("initializing paging");
   paging_init(mbi);
   print_ok();
 
-  DEBUG_OUT("%s", "initializing heap allocator");
+  CORE_DEBUG("%s", "initializing heap allocator");
   print_step("initializing heap allocator");
   alloc_init();
   print_ok();
 
-  DEBUG_OUT("%s", "initializing syscalls");
+  CORE_DEBUG("%s", "initializing syscalls");
   print_step("initializing syscalls");
   syscall_init();
   print_ok();
 
-<<<<<<< HEAD
-  DEBUG_OUT("%s", "initializing real time clock (cmos)");
-  print_step("initializing real time clock (cmos)");
-=======
   print_step("initializing cmos (real time clock)");
->>>>>>> cd080736337f92180c8e1821d448c419256c5e74
   cmos_init();
   print_ok();
 
-  DEBUG_OUT("%s", "initializing timer");
+  CORE_DEBUG("%s", "initializing timer");
   print_step("initializing timer");
   timer_init();
   print_ok();
 
   print_sub_step("checking interrupts");
   check_interrupts();
-<<<<<<< HEAD
-
-  DEBUG_OUT("%s", "initializing keyboard");
-  print_step("initializing keyboard");
-  keyboard_init();
-=======
->>>>>>> cd080736337f92180c8e1821d448c419256c5e74
   print_ok();
 
-  DEBUG_OUT("%s", "initializing virtual file system");
+  CORE_DEBUG("%s", "initializing virtual file system");
   print_step("initializing virtual file system");
   vfs_init();
   print_ok();
@@ -209,19 +194,15 @@ void kmain(uint64_t addr)
 
     if (hostname != NULL) {
       if (strlen(hostname) > 0) {
-<<<<<<< HEAD
-        DEBUG_OUT("updating hostname: %s", hostname);
-=======
         print_sub_step("setting hostname from config");
         DEBUG("updating hostname: %s", hostname);
->>>>>>> cd080736337f92180c8e1821d448c419256c5e74
         proc_update_hostname(hostname, strlen(hostname));
         print_ok();
       } else {
-        DEBUG_OUT("%s", "not updating hostname because value is empty");
+        CORE_DEBUG("%s", "not updating hostname because value is empty");
       }
     } else {
-      DEBUG_OUT("%s", "could not find system/hostname in kernel.inish");
+      CORE_DEBUG("%s", "could not find system/hostname in kernel.inish");
     }
   }
 
@@ -252,11 +233,10 @@ void kmain(uint64_t addr)
     inish_free(kernel_cfg);
   }
 
-<<<<<<< HEAD
-  DEBUG_OUT("%s", "loading kernel system font");
+  CORE_DEBUG("%s", "loading kernel system font");
   print_step("loading kernel system font");
 
-  kernel_console_font = psf1_load_font(KERNEL_CONSOLE_FONT_FILENAME);
+  kernel_console_font = psf2_load_font(KERNEL_CONSOLE_FONT_FILENAME);
   kernel_console_font != NULL ? print_ok() : print_ko();
 
   if (grub_init_framebuffer(mbi) == false) {
@@ -264,12 +244,11 @@ void kmain(uint64_t addr)
   }
 
   grub_framebuffer_set_console_mode();
-=======
+
   // Not needed before so let's initialize it at the end.
   print_step("initializing keyboard");
   keyboard_init();
   print_ok();
->>>>>>> cd080736337f92180c8e1821d448c419256c5e74
 
   multiboot_tag_string_t* cmdline = (multiboot_tag_string_t*)find_multiboot_tag(
     mbi, MULTIBOOT_TAG_TYPE_CMDLINE);

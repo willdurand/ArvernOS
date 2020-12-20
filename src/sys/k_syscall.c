@@ -1,5 +1,5 @@
 #include "k_syscall.h"
-#include "logging.h"
+#include <core/core-logging.h>
 #include <kernel/panic.h>
 #include <sys/syscall.h>
 
