@@ -248,7 +248,7 @@ void ls(int argc, char* argv[])
     return;
   }
 
-  if (vfs_inode_type(inode) != FS_DIRECTORY) {
+  if (vfs_type(inode) != FS_DIRECTORY) {
     printf("'%s' is not a directory\n", inode->name);
     return;
   }
@@ -295,7 +295,7 @@ int try_exec(int argc, char* argv[])
     return -1;
   }
 
-  if (vfs_inode_type(inode) != FS_FILE) {
+  if (vfs_type(inode) != FS_FILE) {
     return -2;
   }
 

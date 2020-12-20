@@ -53,13 +53,13 @@ uint64_t tar_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
 {
   FS_DEBUG("name=%s type=%d size=%lu offset=%lu",
            node->name,
-           vfs_inode_type(node),
+           vfs_type(node),
            size,
            offset);
   // Empty buffer.
   strcpy(buffer, "");
 
-  if (vfs_inode_type(node) == FS_FILE) {
+  if (vfs_type(node) == FS_FILE) {
     tar_header_t* header = headers[node->data];
     uint64_t header_size = oct_to_int(header->size);
 
@@ -174,7 +174,7 @@ inode_t tar_finddir(inode_t inode, const char* name)
 // otherwise. It returns a `dirent_t*`.
 dirent_t* tar_readdir(inode_t inode, uint64_t num)
 {
-  if (vfs_inode_type(inode) != FS_DIRECTORY) {
+  if (vfs_type(inode) != FS_DIRECTORY) {
     return NULL;
   }
 
@@ -268,7 +268,7 @@ uint64_t tar_stat(inode_t inode, vfs_stat_t* st)
 {
   // TODO: add support for directories
 
-  if (vfs_inode_type(inode) == FS_FILE) {
+  if (vfs_type(inode) == FS_FILE) {
     st->size = oct_to_int(headers[inode->data]->size);
   }
 

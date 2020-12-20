@@ -84,7 +84,7 @@ uint64_t sock_close(inode_t inode)
 // otherwise. It returns a `dirent_t*`.
 dirent_t* sock_readdir(inode_t inode, uint64_t num)
 {
-  if (vfs_inode_type(inode) != FS_DIRECTORY) {
+  if (vfs_type(inode) != FS_DIRECTORY) {
     return NULL;
   }
 
@@ -132,7 +132,7 @@ uint64_t sock_read(inode_t inode, void* buffer, uint64_t size, uint64_t offset)
 
 uint64_t sock_stat(inode_t inode, vfs_stat_t* st)
 {
-  if (vfs_inode_type(inode) == FS_DIRECTORY) {
+  if (vfs_type(inode) == FS_DIRECTORY) {
     st->size = nb_used_entries;
     return 0;
   }

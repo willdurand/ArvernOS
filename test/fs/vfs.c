@@ -99,21 +99,21 @@ int main()
   assert(test1 != NULL, "returns the test fs mountpoint");
   assert(strcmp(test1->name, "test1") == 0, "sets the correct name");
   assert(test1->parent == root, "has root as parent");
-  assert(vfs_inode_type(test1) == FS_DIRECTORY, "sets the correct type");
+  assert(vfs_type(test1) == FS_DIRECTORY, "sets the correct type");
 
   inode_t test2 = vfs_mount("/test2", test_fs_init("test-2"));
   assert(strcmp(test2->name, "test2") == 0, "sets the correct name");
-  assert(vfs_inode_type(test2) == FS_DIRECTORY, "sets the correct type");
+  assert(vfs_type(test2) == FS_DIRECTORY, "sets the correct type");
   assert(test2->parent == root, "has root as parent");
 
   inode_t test3 = vfs_mount("/test2/test3", test_fs_init("test-3"));
   assert(strcmp(test3->name, "test3") == 0, "sets the correct name");
-  assert(vfs_inode_type(test3) == FS_DIRECTORY, "sets the correct type");
+  assert(vfs_type(test3) == FS_DIRECTORY, "sets the correct type");
   assert(test3->parent == test2, "has test2 as parent");
 
   inode_t chardev = vfs_mount("/chardev", chardevfs_init());
   assert(strcmp(chardev->name, "chardev") == 0, "sets the correct name");
-  assert(vfs_inode_type(chardev) == FS_CHARDEVICE, "sets the correct type");
+  assert(vfs_type(chardev) == FS_CHARDEVICE, "sets the correct type");
   end_describe();
 
   describe("vfs_read()");
