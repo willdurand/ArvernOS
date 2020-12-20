@@ -24,13 +24,14 @@ static bool caps_lock_mode = false;
 static bool ctrl_mode = false;
 static bool shift_mode = false;
 
-#define NB_DOCUMENTED_COMMANDS 7
+#define NB_DOCUMENTED_COMMANDS 8
 
 static const char* commands[][NB_DOCUMENTED_COMMANDS] = {
   { "help", "display information about system shell commands" },
   { "host", "perform a DNS lookup" },
   { "ls", "list files" },
   { "net", "show configured network interfaces" },
+  { "ntp", "get the time from a time server" },
   { "overflow", "test the stack buffer overflow protection" },
   { "ping", "ping an IPv4 address" },
   { "selftest", "run the system test suite" },
