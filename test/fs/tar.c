@@ -42,7 +42,7 @@ int main()
   inode_t root = vfs_mount("/", tar_fs_init((uint64_t)initrd));
   assert(root != NULL, "can be mounted");
   assert(strcmp(root->name, "/") == 0, "is mounted to /");
-  assert(vfs_inode_type(root) == FS_DIRECTORY, "is a directory");
+  assert(vfs_type(root) == FS_DIRECTORY, "is a directory");
   assert(root->data == -1, "is sets data to -1");
   end_describe();
 
@@ -53,7 +53,7 @@ int main()
   assert(not_found == NULL, "returns NULL when partial file name is not found");
 
   inode_t home = vfs_namei("/home");
-  assert(vfs_inode_type(home) == FS_DIRECTORY, "can find a directory");
+  assert(vfs_type(home) == FS_DIRECTORY, "can find a directory");
   assert(home != NULL && strcmp(home->name, "home") == 0,
          "returns a directory with the right name");
   // TODO: fixme
@@ -62,7 +62,7 @@ int main()
   //       "supports trailing slash");
 
   inode_t will = vfs_namei("/home/will");
-  assert(vfs_inode_type(will) == FS_DIRECTORY, "can find a sub-directory");
+  assert(vfs_type(will) == FS_DIRECTORY, "can find a sub-directory");
   assert(will != NULL && strcmp(will->name, "home/will") == 0,
          "returns a sub-directory with the right name");
   end_describe();
@@ -126,7 +126,7 @@ int main()
   de = vfs_readdir(will, 2);
   assert(strcmp(de->name, "file") == 0,
          "returns the first direct child in /home/will/");
-  assert(vfs_inode_type(de->inode) == FS_FILE, "returns a file");
+  assert(vfs_type(de->inode) == FS_FILE, "returns a file");
   free(de);
   end_describe();
 

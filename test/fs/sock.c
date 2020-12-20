@@ -16,12 +16,12 @@ int main()
   describe("sock_fs_init()");
   inode_t root = vfs_mount("/", sock_fs_init());
   assert(root != 0, "can be mounted");
-  assert(vfs_inode_type(root) == FS_DIRECTORY, "is a directory");
+  assert(vfs_type(root) == FS_DIRECTORY, "is a directory");
   end_describe();
 
   describe("sock_create()");
   inode_t node1 = vfs_create(root, NULL, 0);
-  assert(vfs_inode_type(node1) == FS_FILE, "creates a file");
+  assert(vfs_type(node1) == FS_FILE, "creates a file");
   assert(strcmp(node1->name, "1.sock") == 0, "generates a name");
   assert(node1->parent == root, "sets the correct parent");
   assert(node1->data == 0, "stores the entry index");

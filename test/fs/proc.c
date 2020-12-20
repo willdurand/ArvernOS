@@ -48,7 +48,7 @@ int main()
   describe("proc_fs_init()");
   root = vfs_mount("/", proc_fs_init());
   assert(root != 0, "can be mounted");
-  assert(vfs_inode_type(root) == FS_DIRECTORY, "is a directory");
+  assert(vfs_type(root) == FS_DIRECTORY, "is a directory");
   end_describe();
 
   describe("proc_readdir()");
@@ -89,7 +89,7 @@ int main()
   assert(not_found == NULL, "returns NULL when file is not found");
 
   uptime = vfs_namei("/uptime");
-  assert(vfs_inode_type(uptime) == FS_FILE, "finds the uptime file");
+  assert(vfs_type(uptime) == FS_FILE, "finds the uptime file");
 
   inode_t not_uptime = vfs_namei("/uptimee");
   assert(not_uptime == NULL, "returns NULL when file is not found");

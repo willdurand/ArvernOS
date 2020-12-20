@@ -65,7 +65,7 @@ inode_t proc_fs_init()
 // otherwise. It returns a `dirent_t*`.
 dirent_t* proc_readdir(inode_t inode, uint64_t num)
 {
-  if (vfs_inode_type(inode) != FS_DIRECTORY) {
+  if (vfs_type(inode) != FS_DIRECTORY) {
     return NULL;
   }
 
@@ -129,13 +129,13 @@ uint64_t proc_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
 {
   FS_DEBUG("name=%s type=%d size=%lu offset=%lu",
            node->name,
-           vfs_inode_type(node),
+           vfs_type(node),
            size,
            offset);
   // Empty buffer.
   strcpy(buffer, "");
 
-  if (vfs_inode_type(node) != FS_FILE) {
+  if (vfs_type(node) != FS_FILE) {
     return 0;
   }
 

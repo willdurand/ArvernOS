@@ -107,7 +107,7 @@ dirent_t* vfs_readdir(inode_t inode, uint64_t num)
     return NULL;
   }
 
-  if (vfs_inode_type(inode) != FS_DIRECTORY) {
+  if (vfs_type(inode) != FS_DIRECTORY) {
     FS_DEBUG("%s", "inode is not a directory");
     return NULL;
   }
@@ -150,7 +150,7 @@ dirent_t* vfs_readdir(inode_t inode, uint64_t num)
 
 inode_t vfs_finddir(inode_t inode, const char* name)
 {
-  if (vfs_inode_type(inode) == FS_DIRECTORY) {
+  if (vfs_type(inode) == FS_DIRECTORY) {
     if (!strcmp(name, ".")) {
       return inode;
     }
@@ -261,11 +261,11 @@ inode_t vfs_namei_mount(const char* path, inode_t root)
 
   free(npath);
 
-  if (root != NULL && vfs_inode_type(current) == FS_DIRECTORY) {
+  if (root != NULL && vfs_type(current) == FS_DIRECTORY) {
     FS_DEBUG(
       "attempting to mount root_fs=%s (type=0x%x) at node=%s (parent=%s)",
       root->name,
-      vfs_inode_type(root),
+      vfs_type(root),
       current->name,
       current->parent->name);
 
@@ -373,7 +373,7 @@ int vfs_free(inode_t inode)
   return 0;
 }
 
-int vfs_inode_type(inode_t inode)
+int vfs_type(inode_t inode)
 {
   if (inode == NULL) {
     return 0;

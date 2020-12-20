@@ -83,7 +83,7 @@ int vfs_umount(const char* path);
 
 int vfs_free(inode_t inode);
 
-int vfs_inode_type(inode_t inode);
+int vfs_type(inode_t inode);
 
 inode_t vfs_create(inode_t parent, const char* name, uint64_t flags);
 
