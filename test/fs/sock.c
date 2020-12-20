@@ -10,7 +10,7 @@ int main()
 {
   vfs_init();
 
-  stat_t st = { 0 };
+  vfs_stat_t st = { 0 };
   char buf[BUF_SIZE];
 
   describe("sock_fs_init()");

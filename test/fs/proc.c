@@ -116,7 +116,7 @@ int main()
   end_describe();
 
   describe("proc_stat()");
-  stat_t stat;
+  vfs_stat_t stat = { 0 };
   vfs_stat(root, &stat);
   assert(stat.size == 4, "sets a size equal to the number of files");
 

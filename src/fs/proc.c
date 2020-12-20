@@ -12,7 +12,7 @@ dirent_t* proc_readdir(inode_t inode, uint64_t num);
 inode_t proc_finddir(inode_t inode, const char* name);
 uint64_t proc_isatty(inode_t node);
 uint64_t proc_read(inode_t node, void* buffer, uint64_t size, uint64_t offset);
-uint64_t proc_stat(inode_t inode, stat_t* st);
+uint64_t proc_stat(inode_t inode, vfs_stat_t* st);
 uint64_t proc_write(inode_t inode, void* ptr, uint64_t length, uint64_t offset);
 void proc_cleanup(inode_t inode);
 
@@ -193,7 +193,7 @@ uint64_t proc_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
   return size;
 }
 
-uint64_t proc_stat(inode_t inode, stat_t* st)
+uint64_t proc_stat(inode_t inode, vfs_stat_t* st)
 {
   if ((inode->type & FS_MOUNTPOINT) == FS_MOUNTPOINT) {
     st->size = NB_PROC_FILES;

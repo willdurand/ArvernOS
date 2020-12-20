@@ -10,7 +10,7 @@ uint64_t tar_read_headers(uint64_t address);
 uint64_t tar_read(inode_t node, void* buffer, uint64_t size, uint64_t offset);
 inode_t tar_finddir(inode_t inode, const char* name);
 dirent_t* tar_readdir(inode_t inode, uint64_t num);
-uint64_t tar_stat(inode_t inode, stat_t* st);
+uint64_t tar_stat(inode_t inode, vfs_stat_t* st);
 uint64_t tar_isatty(inode_t inode);
 void tar_cleanup(inode_t inode);
 bool starts_with(const char* s, const char* prefix);
@@ -264,7 +264,7 @@ dirent_t* tar_readdir(inode_t inode, uint64_t num)
   return dir;
 }
 
-uint64_t tar_stat(inode_t inode, stat_t* st)
+uint64_t tar_stat(inode_t inode, vfs_stat_t* st)
 {
   // TODO: add support for directories
 

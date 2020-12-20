@@ -131,7 +131,7 @@ int main()
   end_describe();
 
   describe("tar_stat()");
-  stat_t stat;
+  vfs_stat_t stat = { 0 };
   vfs_stat(vfs_namei("/home/will/file"), &stat);
   assert(stat.size == 13, "sets the file size");
 

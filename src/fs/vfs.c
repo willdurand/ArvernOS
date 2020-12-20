@@ -65,9 +65,9 @@ uint64_t vfs_write(inode_t inode, void* ptr, uint64_t length, uint64_t offset)
   return 0;
 }
 
-uint64_t vfs_stat(inode_t inode, stat_t* stat)
+uint64_t vfs_stat(inode_t inode, vfs_stat_t* stat)
 {
-  memset(stat, 0, sizeof(stat_t));
+  memset(stat, 0, sizeof(vfs_stat_t));
 
   switch (inode->type) {
     case FS_FILE:

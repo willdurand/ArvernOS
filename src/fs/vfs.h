@@ -20,11 +20,11 @@ struct vfs_node;
 
 typedef struct vfs_node* inode_t;
 
-typedef struct _stat
+typedef struct vfs_stat
 {
   uint64_t size;
   uint16_t mode;
-} stat_t;
+} vfs_stat_t;
 
 typedef struct dirent
 {
@@ -38,7 +38,7 @@ typedef struct vfs_driver
   uint64_t (*close)(inode_t inode);
   uint64_t (*read)(inode_t inode, void* ptr, uint64_t length, uint64_t offset);
   uint64_t (*write)(inode_t inode, void* ptr, uint64_t length, uint64_t offset);
-  uint64_t (*stat)(inode_t inode, stat_t* stat);
+  uint64_t (*stat)(inode_t inode, vfs_stat_t* stat);
   uint64_t (*isatty)(inode_t inode);
   dirent_t* (*readdir)(inode_t inode, uint64_t num);
   inode_t (*finddir)(inode_t inode, const char* name);
@@ -67,7 +67,7 @@ uint64_t vfs_read(inode_t inode, void* ptr, uint64_t length, uint64_t offset);
 
 uint64_t vfs_write(inode_t inode, void* ptr, uint64_t length, uint64_t offset);
 
-uint64_t vfs_stat(inode_t inode, stat_t* stat);
+uint64_t vfs_stat(inode_t inode, vfs_stat_t* stat);
 
 uint64_t vfs_isatty(inode_t inode);
 
