@@ -4,7 +4,7 @@
 #include <string.h>
 #include <sys/stat.h>
 
-uint64_t debug_stat(inode_t node, stat_t* st);
+uint64_t debug_stat(inode_t node, vfs_stat_t* st);
 uint64_t debug_write(inode_t node,
                      void* buffer,
                      uint64_t size,
@@ -35,7 +35,7 @@ inode_t debug_fs_init()
   return node;
 }
 
-uint64_t debug_stat(inode_t inode, stat_t* st)
+uint64_t debug_stat(inode_t inode, vfs_stat_t* st)
 {
   st->mode |= S_IFCHR;
 

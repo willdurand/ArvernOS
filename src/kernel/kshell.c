@@ -262,10 +262,10 @@ void ls(int argc, char* argv[])
       break;
     }
 
-    stat_t stat;
+    vfs_stat_t stat = { 0 };
     vfs_stat(de->inode, &stat);
-    char indicator = ' ';
 
+    char indicator = ' ';
     if ((stat.mode & S_IFSOCK) == S_IFSOCK) {
       indicator = '=';
     } else if ((stat.mode & S_IFDIR) == S_IFDIR) {
@@ -299,7 +299,7 @@ int try_exec(int argc, char* argv[])
     return -2;
   }
 
-  stat_t stat;
+  vfs_stat_t stat = { 0 };
   vfs_stat(inode, &stat);
 
   char* buf = malloc((stat.size + 1) * sizeof(char));

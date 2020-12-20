@@ -21,7 +21,7 @@ off_t k_lseek(int fd, off_t offset, int whence)
     return -EBADF;
   }
 
-  stat_t stat;
+  vfs_stat_t stat = { 0 };
   vfs_stat(desc->inode, &stat);
 
   switch (whence) {

@@ -12,7 +12,7 @@ uint64_t sock_close(inode_t inode);
 inode_t sock_create(inode_t parent, const char* name, uint64_t flags);
 uint64_t sock_read(inode_t inode, void* buffer, uint64_t size, uint64_t offset);
 uint64_t sock_write(inode_t inode, void* ptr, uint64_t length, uint64_t offset);
-uint64_t sock_stat(inode_t inode, stat_t* st);
+uint64_t sock_stat(inode_t inode, vfs_stat_t* st);
 dirent_t* sock_readdir(inode_t inode, uint64_t num);
 
 static sock_entry_t entries[MAX_ENTRIES] = { 0 };
@@ -130,7 +130,7 @@ uint64_t sock_read(inode_t inode, void* buffer, uint64_t size, uint64_t offset)
   return size;
 }
 
-uint64_t sock_stat(inode_t inode, stat_t* st)
+uint64_t sock_stat(inode_t inode, vfs_stat_t* st)
 {
   if (vfs_inode_type(inode) == FS_DIRECTORY) {
     st->size = nb_used_entries;

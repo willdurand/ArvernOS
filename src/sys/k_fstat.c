@@ -20,7 +20,7 @@ int k_fstat(int fd, struct stat* statbuf)
     return -EBADF;
   }
 
-  stat_t stat;
+  vfs_stat_t stat = { 0 };
   vfs_stat(desc->inode, &stat);
   statbuf->st_size = stat.size;
   statbuf->st_mode = stat.mode;
