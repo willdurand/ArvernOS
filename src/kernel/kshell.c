@@ -264,10 +264,17 @@ void ls(int argc, char* argv[])
 
     stat_t stat;
     vfs_stat(de->inode, &stat);
-    printf("%6llu %s%c\n",
-           stat.size,
-           de->name,
-           vfs_inode_type(de->inode) == FS_DIRECTORY ? '/' : ' ');
+    char indicator = ' ';
+
+    if ((stat.mode & S_IFSOCK) == S_IFSOCK) {
+      indicator = '=';
+    } else if ((stat.mode & S_IFDIR) == S_IFDIR) {
+      indicator = '/';
+    } else if ((stat.mode & S_IFCHR) == S_IFCHR) {
+      indicator = '%';
+    }
+
+    printf("%6llu %s%c\n", stat.size, de->name, indicator);
 
     free(de);
   }
