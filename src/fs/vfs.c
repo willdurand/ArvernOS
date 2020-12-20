@@ -69,7 +69,7 @@ uint64_t vfs_stat(inode_t inode, vfs_stat_t* stat)
 {
   memset(stat, 0, sizeof(vfs_stat_t));
 
-  switch (inode->type) {
+  switch (vfs_type(inode)) {
     case FS_FILE:
       stat->mode = S_IFREG;
       break;
