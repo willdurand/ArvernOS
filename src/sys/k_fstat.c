@@ -23,6 +23,7 @@ int k_fstat(int fd, struct stat* statbuf)
   stat_t stat;
   vfs_stat(desc->inode, &stat);
   statbuf->st_size = stat.size;
+  statbuf->st_mode = stat.mode;
 
   return 0;
 }

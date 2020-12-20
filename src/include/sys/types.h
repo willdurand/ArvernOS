@@ -9,6 +9,7 @@ typedef int64_t suseconds_t;
 typedef uint64_t size_t;
 typedef int64_t ssize_t;
 typedef int64_t off_t;
+typedef uint16_t mode_t;
 
 typedef struct opt_uint8
 {

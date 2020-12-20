@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
 
 uint64_t debug_stat(inode_t node, stat_t* st);
 uint64_t debug_write(inode_t node,
@@ -36,6 +37,8 @@ inode_t debug_fs_init()
 
 uint64_t debug_stat(inode_t inode, stat_t* st)
 {
+  st->mode |= S_IFCHR;
+
   return 0;
 }
 

@@ -23,6 +23,7 @@ typedef struct vfs_node* inode_t;
 typedef struct _stat
 {
   uint64_t size;
+  uint16_t mode;
 } stat_t;
 
 typedef struct dirent

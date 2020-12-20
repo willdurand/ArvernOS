@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
 
 inode_t vfs_find_root(char** path);
 inode_t vfs_namei_mount(const char* path, inode_t root);
@@ -67,6 +68,18 @@ uint64_t vfs_write(inode_t inode, void* ptr, uint64_t length, uint64_t offset)
 uint64_t vfs_stat(inode_t inode, stat_t* stat)
 {
   memset(stat, 0, sizeof(stat_t));
+
+  switch (inode->type) {
+    case FS_FILE:
+      stat->mode = S_IFREG;
+      break;
+    case FS_DIRECTORY:
+      stat->mode = S_IFDIR;
+      break;
+    case FS_CHARDEVICE:
+      stat->mode = S_IFCHR;
+      break;
+  }
 
   if (inode->driver && inode->driver->stat) {
     uint64_t ret = inode->driver->stat(inode, stat);
