@@ -24,10 +24,6 @@ int k_close(int fd)
     ret += vfs_close(desc->inode);
   }
 
-  if (desc->port != 0) {
-    ret += socket_delete_buffer(fd);
-  }
-
   delete_descriptor(fd);
 
   SYS_DEBUG("close fd=%d ret=%d", fd, ret);

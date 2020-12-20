@@ -195,7 +195,7 @@ test: libc
 		LD_PRELOAD=./build/$$file.so ./build/$$file || exit 1 ; \
 	done
 	# fs/vfs
-	gcc $(CFLAGS_FOR_TESTS) -o $(BUILD_DIR)/vfs test/fs/vfs.c src/fs/vfs.c
+	gcc $(CFLAGS_FOR_TESTS) -I./test/proxies/ -o $(BUILD_DIR)/vfs test/fs/vfs.c src/fs/vfs.c
 	valgrind --track-origins=yes --leak-check=yes ./$(BUILD_DIR)/vfs
 	# fs/tar
 	gcc $(CFLAGS_FOR_TESTS) -o $(BUILD_DIR)/tar test/fs/tar.c src/fs/tar.c src/fs/vfs.c
@@ -203,6 +203,9 @@ test: libc
 	# fs/proc
 	gcc $(CFLAGS_FOR_TESTS) -I./test/proxies/ -o $(BUILD_DIR)/proc test/fs/proc.c src/fs/proc.c src/fs/vfs.c
 	valgrind $(VALGRIND_OPTS) ./$(BUILD_DIR)/proc
+	# fs/sock
+	gcc $(CFLAGS_FOR_TESTS) -o $(BUILD_DIR)/sock test/fs/sock.c src/fs/sock.c src/fs/vfs.c
+	valgrind $(VALGRIND_OPTS) ./$(BUILD_DIR)/sock
 	# mmu/frame
 	gcc $(CFLAGS_FOR_TESTS) -Wformat=0 -I./test/proxies/ -o $(BUILD_DIR)/frame test/mmu/frame.c src/mmu/frame.c src/core/multiboot.c src/mmu/bitmap.c
 	valgrind $(VALGRIND_OPTS) ./$(BUILD_DIR)/frame

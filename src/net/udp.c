@@ -3,10 +3,10 @@
 #include <arpa/inet.h>
 #include <net/dhcp.h>
 #include <net/dns.h>
-#include <net/socket.h>
 #include <proc/descriptor.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/syscall.h>
 
 void udp_receive_packet(net_interface_t* interface,
                         uint8_t* packet,
@@ -29,11 +29,11 @@ void udp_receive_packet(net_interface_t* interface,
 
   uint8_t* udp_data = ip_data + sizeof(udp_header_t);
 
-  int sockfd = get_socket_descriptor_for_port(udp_header.dst_port);
+  int sockfd = descriptor_udp_lookup(udp_header.dst_port);
   NET_DEBUG("got sockfd=%d for dst_port=%d", sockfd, udp_header.dst_port);
 
   if (sockfd > 0) {
-    socket_bufferize(sockfd, udp_data, udp_header.len - sizeof(udp_header_t));
+    write(sockfd, udp_data, udp_header.len - sizeof(udp_header_t));
     return;
   }
 

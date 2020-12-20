@@ -29,16 +29,11 @@ ssize_t k_recvfrom(int sockfd,
     return -EBADF;
   }
 
-  if (desc->inode != NULL) {
-    SYS_DEBUG("sockfd=%d is not a socket descriptor", sockfd);
-    return -ENOTSOCK;
-  }
-
   if (desc->domain != AF_INET || desc->type != SOCK_DGRAM ||
       !is_protocol_supported(desc->type, desc->protocol)) {
     SYS_DEBUG("invalid sockfd=%d", sockfd);
     return -EINVAL;
   }
 
-  return socket_unbufferize(sockfd, (uint8_t*)buf, len);
+  return vfs_read(desc->inode, buf, len, 0);
 }

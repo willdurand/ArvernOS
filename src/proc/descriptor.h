@@ -13,11 +13,11 @@
 typedef struct descriptor
 {
   bool used;
-  // file descriptor
   inode_t inode;
+  // for file descriptors
   uint32_t offset;
   uint32_t flags;
-  // socket descriptor
+  // for socket descriptors
   uint32_t domain;
   uint32_t type;
   uint32_t protocol;
@@ -32,6 +32,20 @@ typedef struct descriptor
  * @return a descriptor ID or -1 in case of an error
  */
 int create_file_descriptor(inode_t inode, uint32_t flags);
+
+/**
+ * Creates a socket descriptor.
+ *
+ * @param inode the inode for the socket descriptor to create
+ * @param domain the domain of the socket
+ * @param type the type of the socket
+ * @param protocol the protocol of the socket
+ * @return a descriptor ID or -1 in case of an error
+ */
+int create_socket_descriptor(inode_t inode,
+                             uint32_t domain,
+                             uint32_t type,
+                             uint32_t protocol);
 
 /**
  * Returns a descriptor.
@@ -49,21 +63,22 @@ descriptor_t* get_descriptor(int id);
 void delete_descriptor(int id);
 
 /**
- * Creates a socket descriptor.
- *
- * @param domain the domain of the socket
- * @param type the type of the socket
- * @param protocol the protocol of the socket
- * @return a descriptor ID or -1 in case of an error
- */
-int create_socket_descriptor(int domain, int type, int protocol);
-
-/**
- * Returns a socket descriptor bound to a given port.
+ * Returns a socket descriptor for UDP.
  *
  * @param port the port bound to the socket to return
  * @return the socket descriptor or -1 when not found
  */
-int get_socket_descriptor_for_port(uint16_t port);
+int descriptor_udp_lookup(uint16_t port);
+
+/**
+ * Returns whether a socket protocol is supported.
+ *
+ * TODO: move this function somewhere else.
+ *
+ * @param type socket type
+ * @param protocol socket protocol
+ * @return `true` when the protocol is supported, `false` otherwise
+ */
+bool is_protocol_supported(uint32_t type, uint32_t protocol);
 
 #endif

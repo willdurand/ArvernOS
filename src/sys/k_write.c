@@ -27,6 +27,11 @@ ssize_t k_write(int fd, const void* buf, size_t count)
     return -EBADF;
   }
 
+  // Socket descriptors.
+  if (desc->port != 0) {
+    return vfs_write(desc->inode, (void*)buf, count, 0);
+  }
+
   if ((desc->flags != O_WRONLY && desc->flags != O_RDWR) ||
       desc->flags == O_RDONLY) {
     SYS_DEBUG("invalid flags for file descriptor fd=%d", fd);

@@ -96,7 +96,7 @@ int dns_lookup(net_interface_t* interface, const char* domain, uint8_t ip[4])
   free(packet);
   dns_id++;
 
-  NET_DEBUG("%s", "waiting for a response now");
+  NET_DEBUG("waiting for a response now (sockfd=%d)", sockfd);
 
   uint8_t buf[128];
   ssize_t bytes_received = recvfrom(sockfd,
