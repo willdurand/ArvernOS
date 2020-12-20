@@ -95,7 +95,6 @@ void kmain(uint64_t addr)
 
   // enable serial ports, COM1 for debug logs, COM2 for console.
   serial_init(SERIAL_COM1, SERIAL_SPEED_115200);
-  serial_init(SERIAL_COM2, SERIAL_SPEED_115200);
 
   INFO("%s %s (%s) / Built on: %s at %s has started",
        KERNEL_NAME,
@@ -104,28 +103,23 @@ void kmain(uint64_t addr)
        KERNEL_DATE,
        KERNEL_TIME);
 
-  CORE_DEBUG("%s", "initializing interruptions");
   print_step("initializing interruptions");
   isr_init();
   irq_init();
   print_ok();
 
-  CORE_DEBUG("%s", "initializing frame allocator");
   print_step("initializing frame allocator");
   frame_init(mbi);
   print_ok();
 
-  CORE_DEBUG("%s", "initializing paging");
   print_step("initializing paging");
   paging_init(mbi);
   print_ok();
 
-  CORE_DEBUG("%s", "initializing heap allocator");
   print_step("initializing heap allocator");
   alloc_init();
   print_ok();
 
-  CORE_DEBUG("%s", "initializing syscalls");
   print_step("initializing syscalls");
   syscall_init();
   print_ok();
@@ -134,7 +128,6 @@ void kmain(uint64_t addr)
   cmos_init();
   print_ok();
 
-  CORE_DEBUG("%s", "initializing timer");
   print_step("initializing timer");
   timer_init();
   print_ok();
@@ -143,7 +136,6 @@ void kmain(uint64_t addr)
   check_interrupts();
   print_ok();
 
-  CORE_DEBUG("%s", "initializing virtual file system");
   print_step("initializing virtual file system");
   vfs_init();
   print_ok();
@@ -233,7 +225,6 @@ void kmain(uint64_t addr)
     inish_free(kernel_cfg);
   }
 
-  CORE_DEBUG("%s", "loading kernel system font");
   print_step("loading kernel system font");
 
   kernel_console_font = psf2_load_font(KERNEL_CONSOLE_FONT_FILENAME);

@@ -9,7 +9,6 @@
 /// order, but they start at different values.
 
 #define SERIAL_COM1 0x3F8
-#define SERIAL_COM2 0x2F8
 
 #define SERIAL_DATA_PORT(base)          (base)
 #define SERIAL_FIFO_COMMAND_PORT(base)  (base + 2)

@@ -9,7 +9,7 @@
 
 extern vtconsole_t vtc;
 
-static const uint16_t serial_com2 = SERIAL_COM2;
+static const uint16_t serial_com1 = SERIAL_COM1;
 
 int video_console_x_cursor = 0;
 int video_console_y_cursor = 0;
@@ -55,7 +55,7 @@ void video_console_move_cursor(int x, int y)
     video_console_print_buffer[vtc.width] = '\0';
 
     fctprintf(&serial_stream_output,
-              (void*)&serial_com2,
+              (void*)&serial_com1,
               "%s\n",
               video_console_print_buffer);
   }

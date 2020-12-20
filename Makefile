@@ -41,7 +41,35 @@ CFLAGS = -DKERNEL_NAME=\"$(OS_NAME)\" \
 	 -fno-builtin -fstack-protector -mno-red-zone \
 	 -I src/ -I src/include/ -I libs/
 
-DEBUG_CFLAGS = -DENABLE_KERNEL_DEBUG -DDISABLE_MMU_DEBUG -DDEBUG_WITH_COLORS -DDEBUG -DENABLE_CORE_DEBUG
+DEBUG_CFLAGS = -DENABLE_KERNEL_DEBUG
+
+ifeq ($(ENABLE_CONFIG_DEBUG), 1)
+	DEBUG_CFLAGS += -DENABLE_CONFIG_DEBUG
+endif
+
+ifeq ($(ENABLE_CORE_DEBUG), 1)
+	DEBUG_CFLAGS += -DENABLE_CORE_DEBUG
+endif
+
+ifeq ($(ENABLE_FS_DEBUG), 1)
+	DEBUG_CFLAGS += -DENABLE_FS_DEBUG
+endif
+
+ifeq ($(ENABLE_MMU_DEBUG), 1)
+	DEBUG_CFLAGS += -DENABLE_MMU_DEBUG
+endif
+
+ifeq ($(ENABLE_NET_DEBUG), 1)
+	DEBUG_CFLAGS += -DENABLE_NET_DEBUG
+endif
+
+ifeq ($(ENABLE_SYS_DEBUG), 1)
+	DEBUG_CFLAGS += -DENABLE_SYS_DEBUG
+endif
+
+ifeq ($(ENABLE_ALL_DEBUG), 1)
+	DEBUG_CFLAGS += -DENABLE_CONFIG_DEBUG -DENABLE_CORE_DEBUG -DENABLE_FS_DEBUG -DENABLE_MMU_DEBUG -DENABLE_NET_DEBUG -DENABLE_SYS_DEBUG
+endif
 
 QEMU_OPTIONS = -m 500M \
 	       -netdev user,id=u1,ipv6=off,dhcpstart=10.0.2.20 \
@@ -121,7 +149,7 @@ debug: $(ISO)
 .PHONY: debug
 
 run-debug: ## run the OS in debug mode
-run-debug: QEMU_OPTIONS += -serial file:./logs/debug.log -serial file:./logs/console.log -d int --no-reboot
+run-debug: QEMU_OPTIONS += -serial file:./logs/debug.log -d int --no-reboot
 run-debug: debug run
 .PHONY: run-debug
 
@@ -192,7 +220,7 @@ test: libc
 	gcc $(CFLAGS_FOR_TESTS) -Wformat=0 -I./test/proxies/ -o $(BUILD_DIR)/paging test/mmu/paging.c src/mmu/paging.c src/core/multiboot.c src/mmu/frame.c src/mmu/bitmap.c src/core/register.c
 	./$(BUILD_DIR)/paging
 	# vga/video_api
-	gcc -DENABLE_DEBUG_FOR_TEST -I./test -I./src/ -o $(BUILD_DIR)/video_api test/vga/video_api.c src/drivers/video/video_api.c
+	gcc $(CFLAGS_FOR_TESTS) -I./test -I./src/ -o $(BUILD_DIR)/video_api test/vga/video_api.c src/drivers/video/video_api.c
 	./$(BUILD_DIR)/video_api
 	# config/inish
 	gcc $(CFLAGS_FOR_TESTS) -I./test/proxies/ -o $(BUILD_DIR)/inish test/config/inish.c src/config/inish.c
