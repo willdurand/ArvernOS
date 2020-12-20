@@ -54,7 +54,7 @@ typedef struct vfs_node
   inode_t parent;
   uint64_t n_children;
   inode_t* children;
-  int data;
+  int64_t data;
 } vfs_node_t;
 
 void vfs_init();

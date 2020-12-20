@@ -1,5 +1,6 @@
 #include "descriptor.h"
 #include <string.h>
+#include <sys/socket.h>
 
 #define NB_SYSTEM_DESCRIPTORS 20
 
@@ -16,6 +17,10 @@ int create_file_descriptor(inode_t inode, uint32_t flags)
       descriptors[fd].inode = inode;
       descriptors[fd].offset = 0;
       descriptors[fd].flags = flags;
+      descriptors[fd].domain = 0;
+      descriptors[fd].type = 0;
+      descriptors[fd].protocol = 0;
+      descriptors[fd].port = 0;
 
       return fd;
     }
@@ -42,12 +47,17 @@ void delete_descriptor(int id)
   memset(&descriptors[id], 0, sizeof(descriptor_t));
 }
 
-int create_socket_descriptor(int domain, int type, int protocol)
+int create_socket_descriptor(inode_t inode,
+                             uint32_t domain,
+                             uint32_t type,
+                             uint32_t protocol)
 {
   for (uint8_t fd = 3; fd < NB_SYSTEM_DESCRIPTORS; fd++) {
     if (!descriptors[fd].used) {
       descriptors[fd].used = true;
-      descriptors[fd].inode = NULL;
+      descriptors[fd].inode = inode;
+      descriptors[fd].offset = 0;
+      descriptors[fd].flags = 0;
       descriptors[fd].domain = domain;
       descriptors[fd].type = type;
       descriptors[fd].protocol = protocol;
@@ -60,7 +70,7 @@ int create_socket_descriptor(int domain, int type, int protocol)
   return -1;
 }
 
-int get_socket_descriptor_for_port(uint16_t port)
+int descriptor_udp_lookup(uint16_t port)
 {
   for (uint8_t fd = 3; fd < NB_SYSTEM_DESCRIPTORS; fd++) {
     if (descriptors[fd].used && descriptors[fd].port == port) {
@@ -69,4 +79,18 @@ int get_socket_descriptor_for_port(uint16_t port)
   }
 
   return -1;
+}
+
+bool is_protocol_supported(uint32_t type, uint32_t protocol)
+{
+  switch (type) {
+    case SOCK_DGRAM:
+      switch (protocol) {
+        case IPPROTO_UDP:
+          return true;
+      }
+      break;
+  }
+
+  return false;
 }
