@@ -37,6 +37,15 @@ uint64_t vfs_close(inode_t inode)
   return 0;
 }
 
+inode_t vfs_create(inode_t parent, const char* name, uint64_t flags)
+{
+  if (parent->driver && parent->driver->create) {
+    return parent->driver->create(parent, name, flags);
+  }
+
+  return NULL;
+}
+
 uint64_t vfs_read(inode_t inode, void* ptr, uint64_t length, uint64_t offset)
 {
   if (inode->driver && inode->driver->read) {
@@ -240,10 +249,12 @@ inode_t vfs_namei_mount(const char* path, inode_t root)
   free(npath);
 
   if (root != NULL && vfs_inode_type(current) == FS_DIRECTORY) {
-    FS_DEBUG("attempting to mount root_fs=%s at node=%s (parent=%s)",
-             root->name,
-             current->name,
-             current->parent->name);
+    FS_DEBUG(
+      "attempting to mount root_fs=%s (type=0x%x) at node=%s (parent=%s)",
+      root->name,
+      vfs_inode_type(root),
+      current->name,
+      current->parent->name);
 
     current->type = root->type | FS_MOUNTPOINT;
     current->driver = root->driver;

@@ -30,6 +30,7 @@ static vfs_driver_t tar_driver = {
   tar_readdir, // readdir
   tar_finddir, // finddir
   tar_cleanup, // cleanup
+  NULL,        // create
 };
 
 inode_t tar_fs_init(uint64_t address)
