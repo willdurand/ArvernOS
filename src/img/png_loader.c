@@ -1,6 +1,6 @@
+#include <core/core-logging.h>
 #include <drivers/video/video_api.h>
 #include <libpng/png.h>
-#include <core/core-logging.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>

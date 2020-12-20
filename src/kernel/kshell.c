@@ -1,7 +1,7 @@
 #include "kshell.h"
 #include <arpa/inet.h>
-#include <core/elf.h>
 #include <core/core-logging.h>
+#include <core/elf.h>
 #include <drivers/cmos.h>
 #include <fs/debug.h>
 #include <fs/vfs.h>

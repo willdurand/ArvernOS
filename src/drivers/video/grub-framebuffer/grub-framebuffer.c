@@ -1,8 +1,8 @@
+#include <core/core-logging.h>
 #include <core/multiboot.h>
 #include <drivers/timer.h>
 #include <drivers/video/video_api.h>
 #include <drivers/video/video_console.h>
-#include <core/core-logging.h>
 #include <mmu/paging.h>
 #include <resources/psf2/psf2.h>
 #include <stdbool.h>
@@ -79,11 +79,13 @@ void grub_framebuffer_put_char(psf2_font_t* font,
 
   char* font_ptr =
     (char*)font->glyph_buffer +
-    (character > 0 && character < font->header->num_glyph ? character : 0) * font->header->bytes_per_glyph;
+    (character > 0 && character < font->header->num_glyph ? character : 0) *
+      font->header->bytes_per_glyph;
 
-	uint32_t bytes_per_line = (font->header->width + 7) / 8;
+  uint32_t bytes_per_line = (font->header->width + 7) / 8;
 
-  for (uint32_t y_pos = 0, y_index = y * grub_framebuffer_width; y_pos < font->header->height;
+  for (uint32_t y_pos = 0, y_index = y * grub_framebuffer_width;
+       y_pos < font->header->height;
        y_pos++, y_index += grub_framebuffer_width) {
     if (y + y_pos >= grub_framebuffer_height) {
       continue;
@@ -109,7 +111,7 @@ void grub_framebuffer_put_char(psf2_font_t* font,
       framebuffer_buffer[x_index] = plot_color;
     }
 
-    font_ptr+=bytes_per_line;
+    font_ptr += bytes_per_line;
   }
 }
 

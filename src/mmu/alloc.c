@@ -1,6 +1,6 @@
 #include "alloc.h"
-#include <kernel/panic.h>
 #include <core/core-logging.h>
+#include <kernel/panic.h>
 #include <mmu/bitmap.h>
 #include <mmu/mmu-logging.h>
 #include <mmu/paging.h>
