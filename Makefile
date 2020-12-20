@@ -67,6 +67,10 @@ ifeq ($(ENABLE_SYS_DEBUG), 1)
 	DEBUG_CFLAGS += -DENABLE_SYS_DEBUG
 endif
 
+ifeq ($(ENABLE_ALL_DEBUG), 1)
+	DEBUG_CFLAGS += -DENABLE_CONFIG_DEBUG -DENABLE_CORE_DEBUG -DENABLE_FS_DEBUG -DENABLE_MMU_DEBUG -DENABLE_NET_DEBUG -DENABLE_SYS_DEBUG
+endif
+
 QEMU_OPTIONS = -m 500M \
 	       -netdev user,id=u1,ipv6=off,dhcpstart=10.0.2.20 \
 	       -device rtl8139,netdev=u1 \

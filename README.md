@@ -114,6 +114,17 @@ like this:
 $ make ENABLE_NET_DEBUG=1 ENABLE_FS_DEBUG=1 clean run-debug
 ```
 
+The available debug variables are:
+
+- `ENABLE_CONFIG_DEBUG`
+- `ENABLE_CORE_DEBUG`
+- `ENABLE_FS_DEBUG`
+- `ENABLE_MMU_DEBUG`
+- `ENABLE_NET_DEBUG`
+- `ENABLE_SYS_DEBUG`
+
+There is also `ENABLE_ALL_DEBUG` to turn all debug logs on.
+
 To compile the OS in release mode, build the ISO, and start `qemu` with the OS
 loaded, run:
 
