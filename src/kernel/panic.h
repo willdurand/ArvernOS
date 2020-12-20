@@ -2,7 +2,7 @@
 #ifndef CORE_PANIC_H
 #define CORE_PANIC_H
 
-#include <core/debug.h>
+#include <logging.h>
 
 #define __PANIC(format, ...)                                                   \
   DEBUG_OUT(format "%s", __VA_ARGS__);                                         \

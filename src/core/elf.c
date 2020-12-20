@@ -1,5 +1,5 @@
 #include "elf.h"
-#include <core/debug.h>
+#include "logging.h"
 #include <mmu/paging.h>
 #include <string.h>
 
@@ -11,11 +11,19 @@ elf_header_t* elf_load(uint8_t* data)
   elf_header_t* elf = (elf_header_t*)data;
 
   if (get_elf_type(elf) != ELF_TYPE_EXECUTABLE) {
+<<<<<<< HEAD
     DEBUG_OUT("%s", "not an executable");
     return 0;
   }
 
   DEBUG_OUT(
+=======
+    CORE_DEBUG("%s", "not an executable");
+    return 0;
+  }
+
+  CORE_DEBUG(
+>>>>>>> cd080736337f92180c8e1821d448c419256c5e74
     "file header: machine=%#x version=%#x type=%d entry=%p header_size=%u "
     "ph_size=%u ph_num=%d ph_offset=%llu sh_size=%u sh_num=%d sh_offset=%llu "
     "strtab_index=%d",
@@ -36,16 +44,26 @@ elf_header_t* elf_load(uint8_t* data)
     (elf_program_header_t*)((uint64_t)data + elf->ph_offset);
 
   for (uint64_t i = 0; i < elf->ph_num; i++) {
+<<<<<<< HEAD
     DEBUG_OUT("program header: type=%d addr=%p",
               program_header[i].type,
               program_header[i].virtual_address);
+=======
+    CORE_DEBUG("program header: type=%d addr=%p",
+               program_header[i].type,
+               program_header[i].virtual_address);
+>>>>>>> cd080736337f92180c8e1821d448c419256c5e74
 
     if (program_header[i].type == ELF_PROGRAM_TYPE_LOAD) {
       load_segment(data, &program_header[i]);
     }
   }
 
+<<<<<<< HEAD
   DEBUG_OUT("elf entry is now at: %p", elf->entry);
+=======
+  CORE_DEBUG("elf entry is now at: %p", elf->entry);
+>>>>>>> cd080736337f92180c8e1821d448c419256c5e74
 
   return elf;
 }
@@ -60,6 +78,7 @@ int get_elf_type(elf_header_t* elf)
   }
 
   if (iself == 0) {
+<<<<<<< HEAD
     DEBUG_OUT("%s", "validating elf structs");
 
     if (elf->header_size != sizeof(elf_header_t)) {
@@ -68,6 +87,16 @@ int get_elf_type(elf_header_t* elf)
       iself = -1;
     } else if (elf->ph_size != sizeof(elf_program_header_t)) {
       DEBUG_OUT("%s", "invalid program header size");
+=======
+    CORE_DEBUG("%s", "validating elf structs");
+
+    if (elf->header_size != sizeof(elf_header_t)) {
+      CORE_DEBUG("%s", "invalid elf header size");
+
+      iself = -1;
+    } else if (elf->ph_size != sizeof(elf_program_header_t)) {
+      CORE_DEBUG("%s", "invalid program header size");
+>>>>>>> cd080736337f92180c8e1821d448c419256c5e74
 
       iself = -1;
     }
@@ -95,7 +124,11 @@ void load_segment(uint8_t* data, elf_program_header_t* program_header)
     flags |= PAGING_FLAG_NO_EXECUTE;
   }
 
+<<<<<<< HEAD
   DEBUG_OUT("load segment at addr=%p with flags=%#x", addr, flags);
+=======
+  CORE_DEBUG("load segment at addr=%p with flags=%#x", addr, flags);
+>>>>>>> cd080736337f92180c8e1821d448c419256c5e74
 
   uint64_t start_page = page_containing_address(addr);
   uint32_t number_of_pages = paging_amount_for_byte_size(addr, mem_size);
@@ -134,5 +167,9 @@ void elf_unload(elf_header_t* elf)
     }
   }
 
+<<<<<<< HEAD
   DEBUG_OUT("%s", "unloaded elf");
+=======
+  CORE_DEBUG("%s", "unloaded elf");
+>>>>>>> cd080736337f92180c8e1821d448c419256c5e74
 }

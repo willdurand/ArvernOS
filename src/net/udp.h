@@ -10,7 +10,10 @@
 #include <net/net.h>
 #include <sys/types.h>
 
-#define PORT_DNS 53
+#define PORT_DNS         53
+#define PORT_DHCP_SERVER 67
+#define PORT_DHCP_CLIENT 68
+#define PORT_NTP         123
 
 typedef struct udp_header
 {

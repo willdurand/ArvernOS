@@ -1,5 +1,5 @@
 #include "proc.h"
-#include <core/debug.h>
+#include "logging.h"
 #include <drivers/timer.h>
 #include <kernel/kmain.h>
 #include <mmu/alloc.h>
@@ -12,32 +12,39 @@ dirent_t* proc_readdir(inode_t inode, uint64_t num);
 inode_t proc_finddir(inode_t inode, const char* name);
 uint64_t proc_isatty(inode_t node);
 uint64_t proc_read(inode_t node, void* buffer, uint64_t size, uint64_t offset);
-uint64_t proc_stat(inode_t inode, stat_t* st);
+uint64_t proc_stat(inode_t inode, vfs_stat_t* st);
 uint64_t proc_write(inode_t inode, void* ptr, uint64_t length, uint64_t offset);
+void proc_cleanup(inode_t inode);
 
 static vfs_driver_t proc_driver = {
-  0,            // open
-  0,            // close
+  NULL,         // open
+  NULL,         // close
   proc_read,    // read
   proc_write,   // write
   proc_stat,    // stat
   proc_isatty,  // isatty
   proc_readdir, // readdir
   proc_finddir, // finddir
+  proc_cleanup, // cleanup
+  NULL,         // create
 };
 
-#define NB_PROC_FILES 6
+#define NB_PROC_FILES 4
 
 static const char* proc_files[NB_PROC_FILES] = {
-  ".", "..", "hostname", "meminfo", "uptime", "version",
+  "hostname",
+  "meminfo",
+  "uptime",
+  "version",
 };
+static inode_t nodes[NB_PROC_FILES];
 
 #define DEFAULT_HOSTNAME    "machine"
 #define MAX_HOSTNAME_LENGTH 50
 
 // This is the variable containing the `hostname` value of the system.
 // TODO: move this variable somewhere else...
-static char* hostname = 0;
+static char* hostname = NULL;
 
 inode_t proc_fs_init()
 {
@@ -53,58 +60,72 @@ inode_t proc_fs_init()
   return node;
 }
 
-void proc_fs_deinit()
-{
-  free(hostname);
-}
-
 // If the current node is a directory, we need a way of enumerating its
 // contents. Readdir should return the n'th child node of a directory or 0
 // otherwise. It returns a `dirent_t*`.
 dirent_t* proc_readdir(inode_t inode, uint64_t num)
 {
-  if (vfs_inode_type(inode) != FS_DIRECTORY) {
-    return 0;
+  if (vfs_type(inode) != FS_DIRECTORY) {
+    return NULL;
   }
 
-  if (num < 2 || num >= NB_PROC_FILES) {
-    return 0;
+  num -= 2;
+
+  if (num >= NB_PROC_FILES) {
+    return NULL;
   }
 
   dirent_t* dir = calloc(1, sizeof(dirent_t));
-  inode_t node = calloc(1, sizeof(vfs_node_t));
 
-  strcpy(node->name, proc_files[num]);
-  node->driver = inode->driver;
-  node->parent = inode;
-  node->type = FS_FILE;
+  if (nodes[num] == NULL) {
+    inode_t node = calloc(1, sizeof(vfs_node_t));
 
-  strcpy(dir->name, node->name);
-  dir->inode = node;
+    strcpy(node->name, proc_files[num]);
+    node->driver = inode->driver;
+    node->parent = inode;
+    node->type = FS_FILE;
 
+    nodes[num] = node;
+  }
+
+  strcpy(dir->name, nodes[num]->name);
+  dir->inode = nodes[num];
+
+<<<<<<< HEAD
   DEBUG_OUT("returning directory entry=%s", dir->name);
+=======
+  FS_DEBUG("returning directory entry=%s", dir->name);
+>>>>>>> cd080736337f92180c8e1821d448c419256c5e74
 
   return dir;
 }
 
 inode_t proc_finddir(inode_t inode, const char* name)
 {
-  for (int idx = 2; idx < NB_PROC_FILES; idx++) {
+  for (int idx = 0; idx < NB_PROC_FILES; idx++) {
     if (strcmp(name, proc_files[idx]) == 0) {
-      inode_t node = calloc(1, sizeof(vfs_node_t));
+      if (nodes[idx] == NULL) {
+        inode_t node = calloc(1, sizeof(vfs_node_t));
 
-      strcpy(node->name, proc_files[idx]);
-      node->driver = &proc_driver;
-      node->parent = inode;
-      node->type = FS_FILE;
+        strcpy(node->name, proc_files[idx]);
+        node->driver = &proc_driver;
+        node->parent = inode;
+        node->type = FS_FILE;
 
+<<<<<<< HEAD
       DEBUG_OUT("found name=%s type=%ld", node->name, node->type);
+=======
+        nodes[idx] = node;
+      }
+>>>>>>> cd080736337f92180c8e1821d448c419256c5e74
 
-      return node;
+      FS_DEBUG("found name=%s type=%ld", nodes[idx]->name, nodes[idx]->type);
+
+      return nodes[idx];
     }
   }
 
-  return 0;
+  return NULL;
 }
 
 uint64_t proc_isatty(inode_t node)
@@ -114,15 +135,23 @@ uint64_t proc_isatty(inode_t node)
 
 uint64_t proc_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
 {
+<<<<<<< HEAD
   DEBUG_OUT("name=%s type=%d size=%lu offset=%lu",
             node->name,
             vfs_inode_type(node),
             size,
             offset);
+=======
+  FS_DEBUG("name=%s type=%d size=%lu offset=%lu",
+           node->name,
+           vfs_type(node),
+           size,
+           offset);
+>>>>>>> cd080736337f92180c8e1821d448c419256c5e74
   // Empty buffer.
   strcpy(buffer, "");
 
-  if (vfs_inode_type(node) != FS_FILE) {
+  if (vfs_type(node) != FS_FILE) {
     return 0;
   }
 
@@ -180,10 +209,11 @@ uint64_t proc_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
   return size;
 }
 
-uint64_t proc_stat(inode_t inode, stat_t* st)
+uint64_t proc_stat(inode_t inode, vfs_stat_t* st)
 {
-  memset(st, 0, sizeof(stat_t));
-  st->size = 1; // Set a default value to show that the file is not empty.
+  if ((inode->type & FS_MOUNTPOINT) == FS_MOUNTPOINT) {
+    st->size = NB_PROC_FILES;
+  }
 
   if (strcmp(inode->name, "hostname") == 0) {
     st->size = strlen(hostname);
@@ -210,7 +240,11 @@ uint64_t proc_update_hostname(char* new_hostname, uint64_t length)
   char* tmp = realloc(hostname, sizeof(char) * (length + 1));
 
   if (!tmp) {
+<<<<<<< HEAD
     DEBUG_OUT("%s", "failed to reallocate memory for hostname");
+=======
+    FS_DEBUG("%s", "failed to reallocate memory for hostname");
+>>>>>>> cd080736337f92180c8e1821d448c419256c5e74
     return 0;
   }
 
@@ -219,4 +253,18 @@ uint64_t proc_update_hostname(char* new_hostname, uint64_t length)
   strncpy(hostname, new_hostname, length + 1);
 
   return strlen(hostname);
+}
+
+void proc_cleanup(inode_t inode)
+{
+  FS_DEBUG("cleaning up %s", inode->name);
+
+  for (uint64_t i = 0; i < NB_PROC_FILES; i++) {
+    if (nodes[i] != NULL) {
+      nodes[i]->parent = NULL;
+      free(nodes[i]);
+    }
+  }
+
+  free(hostname);
 }

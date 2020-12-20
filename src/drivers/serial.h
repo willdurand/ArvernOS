@@ -44,15 +44,11 @@ void serial_init(uint16_t com, uint16_t speed);
  */
 void serial_print(uint16_t com, const char* str);
 
-#ifdef ENABLE_KERNEL_DEBUG
-
 /**
  * This function is only exposed when `ENABLE_KERNEL_DEBUG` is set to `true` so
  * that the `printf` lib can relies on the serial debug port to print debug
  * logs. The implementation of this function is designed for the `printf` lib.
  */
 void serial_stream_output(char c, void* arg);
-
-#endif
 
 #endif

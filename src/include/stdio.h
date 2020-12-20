@@ -9,7 +9,7 @@
  */
 void _putchar(char c);
 
-#ifdef __is_libc
+#ifndef __is_libk
 
 /**
  * Writes a character to the screen.

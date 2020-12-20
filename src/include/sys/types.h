@@ -10,7 +10,11 @@ typedef uint64_t size_t;
 typedef int64_t ssize_t;
 typedef int64_t off_t;
 
-#ifndef __is_libc
+#ifndef __mode_t_defined
+typedef uint16_t mode_t;
+#define __mode_t_defined
+#endif
+
 typedef struct opt_uint8
 {
   bool has_value;
@@ -40,6 +44,5 @@ typedef struct opt_bool
   bool has_value;
   bool value;
 } opt_bool_t;
-#endif
 
 #endif

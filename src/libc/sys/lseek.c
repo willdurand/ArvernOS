@@ -2,11 +2,18 @@
 
 off_t lseek(int fd, off_t offset, int whence)
 {
-  off_t ret;
+#ifdef __is_libk
+  return k_lseek(fd, offset, whence);
+#else
+  errno = 0;
+  off_t retval;
 
   __asm__(INT_SYSCALL
-          : "=d"(ret)
+          : "=d"(retval)
           : "a"(SYSCALL_LSEEK), "b"(fd), "c"(offset), "S"(whence));
 
-  return ret;
+  SYSCALL_SET_ERRNO();
+
+  return retval;
+#endif
 }

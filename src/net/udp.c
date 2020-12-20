@@ -1,10 +1,12 @@
 #include "udp.h"
+#include "logging.h"
 #include <arpa/inet.h>
-#include <core/debug.h>
+#include <net/dhcp.h>
 #include <net/dns.h>
-#include <net/ethernet.h>
+#include <proc/descriptor.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/syscall.h>
 
 void udp_receive_packet(net_interface_t* interface,
                         uint8_t* packet,
@@ -19,7 +21,11 @@ void udp_receive_packet(net_interface_t* interface,
   udp_header.len = ntohs(udp_header.len);
   udp_header.checksum = ntohs(udp_header.checksum);
 
+<<<<<<< HEAD
   DEBUG_OUT("udp packet received: src_port=%d dst_port=%d len=%d checksum=%x",
+=======
+  NET_DEBUG("udp packet received: src_port=%d dst_port=%d len=%d checksum=%x",
+>>>>>>> cd080736337f92180c8e1821d448c419256c5e74
             udp_header.src_port,
             udp_header.dst_port,
             udp_header.len,
@@ -27,14 +33,30 @@ void udp_receive_packet(net_interface_t* interface,
 
   uint8_t* udp_data = ip_data + sizeof(udp_header_t);
 
-  switch (udp_header.src_port) {
-    case PORT_DNS:
-      dns_receive_packet(interface, udp_data, &udp_header);
+  int sockfd = descriptor_udp_lookup(udp_header.dst_port);
+  NET_DEBUG("got sockfd=%d for dst_port=%d", sockfd, udp_header.dst_port);
+
+  if (sockfd > 0) {
+    write(sockfd, udp_data, udp_header.len - sizeof(udp_header_t));
+    return;
+  }
+
+  switch (udp_header.dst_port) {
+    case PORT_DHCP_CLIENT:
+      dhcp_receive_packet(interface, udp_data, &udp_header);
       break;
     default:
+<<<<<<< HEAD
       DEBUG_OUT(
         "dropping udp packet (port=%d) because it cannot be handled yet",
         udp_header.src_port);
+=======
+      NET_DEBUG(
+        "dropping udp packet (src_port=%d, dst_port=%d) because it cannot "
+        "be handled yet",
+        udp_header.src_port,
+        udp_header.dst_port);
+>>>>>>> cd080736337f92180c8e1821d448c419256c5e74
   }
 }
 
@@ -88,22 +110,16 @@ void udp_send_packet(net_interface_t* interface,
 
   free(pseudo_header);
 
-  // Create IPv4 datagram, encapsulating the UDP packet and data.
-  uint32_t datagram_len = sizeof(udp_header_t) + sizeof(ipv4_header_t) + len;
-
-  ipv4_header_t ipv4_header = ipv4_create_header(interface->ip,
-                                                 dst_addr->sin_addr.s_addr,
-                                                 IPV4_PROTO_UDP,
-                                                 IPV4_FLAG_DF,
-                                                 datagram_len);
+  uint32_t datagram_len = sizeof(udp_header_t) + len;
 
   uint8_t* datagram = malloc(datagram_len);
-  memcpy(datagram, &ipv4_header, sizeof(ipv4_header_t));
-  memcpy(datagram + sizeof(ipv4_header_t), &udp_header, sizeof(udp_header_t));
-  memcpy(datagram + sizeof(ipv4_header_t) + sizeof(udp_header_t), data, len);
+  memcpy(datagram, &udp_header, sizeof(udp_header_t));
+  memcpy(datagram + sizeof(udp_header_t), data, len);
 
-  ethernet_transmit_frame(
-    interface, dst_mac, ETHERTYPE_IPV4, datagram, datagram_len);
+  NET_DEBUG("sending packet to dst_port=%d", ntohs(dst_addr->sin_port));
+
+  ipv4_send_packet(
+    interface, dst_addr, IPV4_PROTO_UDP, IPV4_FLAG_DF, datagram, datagram_len);
 
   free(datagram);
 }

@@ -1,18 +1,18 @@
 #include "dns.h"
+#include "logging.h"
 #include <arpa/inet.h>
-#include <core/debug.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/syscall.h>
 
 static uint16_t dns_id = 1;
 
-void dns_request(net_interface_t* interface, char* domain)
+int dns_lookup(net_interface_t* interface, const char* domain, uint8_t ip[4])
 {
-  // TODO: fixme, we don't have the concept of port/socket yet.
-  uint16_t src_port = 42796;
+  memset(ip, 0, 4);
 
-  dns_header_t dns_header = {
+  dns_header_t dns_lookup_header = {
     .id = htons(dns_id),
     .qdcount = htons(0x0001),
     .flags = htons(0x0100), // recursion requested
@@ -61,35 +61,66 @@ void dns_request(net_interface_t* interface, char* domain)
 
   uint16_t packet_len = sizeof(dns_header_t) + data_len;
   uint8_t* packet = malloc(packet_len);
-  memcpy(packet, &dns_header, sizeof(dns_header_t));
+  memcpy(packet, &dns_lookup_header, sizeof(dns_header_t));
   memcpy(packet + sizeof(dns_header_t), data, data_len);
 
   free(data);
 
+<<<<<<< HEAD
   DEBUG_OUT("sending dns packet: id=0x%04x flags=0x%04x",
             ntohs(dns_header.id),
             ntohs(dns_header.flags));
+=======
+  int sockfd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+>>>>>>> cd080736337f92180c8e1821d448c419256c5e74
 
-  struct sockaddr_in addr = {
-    .sin_family = AF_INET,
-    .sin_port = htons(PORT_DNS),
-    .sin_addr = inet_addr2(interface->dns_ip),
-  };
+  if (sockfd < 0) {
+    NET_DEBUG("failed to create a socket (sockfd=%d)", sockfd);
+    return DNS_ERR_SOCK;
+  }
 
-  udp_send_packet(
-    interface, src_port, interface->dns_mac, &addr, packet, packet_len);
+  struct sockaddr_in server_addr;
+  server_addr.sin_family = AF_INET;
+  server_addr.sin_port = htons(PORT_DNS);
+  server_addr.sin_addr.s_addr = inet_addr2(interface->dns_ip);
 
-  dns_id++;
+  socklen_t server_addr_len = sizeof(struct sockaddr_in);
+
+  NET_DEBUG("sending dns packet: id=0x%04x flags=0x%04x",
+            ntohs(dns_lookup_header.id),
+            ntohs(dns_lookup_header.flags));
+
+  if (sendto(sockfd,
+             packet,
+             packet_len,
+             0,
+             (struct sockaddr*)&server_addr,
+             server_addr_len) < 0) {
+    return DNS_ERR_SEND;
+  }
 
   free(packet);
-}
+  dns_id++;
 
-void dns_receive_packet(net_interface_t* interface,
-                        uint8_t* packet,
-                        udp_header_t* header)
-{
+  NET_DEBUG("waiting for a response now (sockfd=%d)", sockfd);
+
+  uint8_t buf[128];
+  ssize_t bytes_received = recvfrom(sockfd,
+                                    buf,
+                                    sizeof(buf),
+                                    0,
+                                    (struct sockaddr*)&server_addr,
+                                    &server_addr_len);
+
+  close(sockfd);
+
+  if (bytes_received < sizeof(dns_header_t)) {
+    NET_DEBUG("not received enough data: bytes_received=%lld", bytes_received);
+    return DNS_ERR_RECV;
+  }
+
   dns_header_t dns_header = { 0 };
-  memcpy(&dns_header, packet, sizeof(dns_header_t));
+  memcpy(&dns_header, buf, sizeof(dns_header_t));
   dns_header.id = ntohs(dns_header.id);
   dns_header.flags = ntohs(dns_header.flags);
   dns_header.qdcount = ntohs(dns_header.qdcount);
@@ -97,12 +128,21 @@ void dns_receive_packet(net_interface_t* interface,
   dns_header.nscount = ntohs(dns_header.nscount);
   dns_header.arcount = ntohs(dns_header.arcount);
 
+<<<<<<< HEAD
   DEBUG_OUT("dns packet received: id=0x%04x qdcount=%d ancount=%d",
             dns_header.id,
             dns_header.qdcount,
             dns_header.ancount);
+=======
+  NET_DEBUG(
+    "dns packet received: id=0x%04x qdcount=%d ancount=%d bytes_received=%lld",
+    dns_header.id,
+    dns_header.qdcount,
+    dns_header.ancount,
+    bytes_received);
+>>>>>>> cd080736337f92180c8e1821d448c419256c5e74
 
-  uint8_t* dns_data = packet + sizeof(dns_header_t);
+  uint8_t* dns_data = buf + sizeof(dns_header_t);
 
   // Compute the query payload length so that we can skip it to read the
   // answers directly.
@@ -126,27 +166,17 @@ void dns_receive_packet(net_interface_t* interface,
     answer_header.data_len = ntohs(answer_header.data_len);
 
     if (answer_header.class == DNS_CLASS_IN && answer_header.data_len == 4) {
-      uint8_t addr[4] = { 0 };
-      memcpy(addr,
+      memcpy(ip,
              dns_data + query_len + sizeof(dns_answer_header_t),
              answer_header.data_len);
-
-      // TODO: fixme
-      printf("DNS response received: name=0x%04x type=0x%04x class=0x%04x\n  "
-             "                     ttl=%lu len=%d address=%d.%d.%d.%d\n",
-             answer_header.name,
-             answer_header.type,
-             answer_header.class,
-             answer_header.ttl,
-             answer_header.data_len,
-             addr[0],
-             addr[1],
-             addr[2],
-             addr[3]);
     } else {
-      printf("Unsupported DNS response class received\n");
+      DEBUG("%s", "wrong DNS class");
+      return DNS_ERR_CLASS;
     }
   } else {
-    printf("No response received\n");
+    DEBUG("%s", "no answer");
+    return DNS_ERR_NO_ANSWER;
   }
+
+  return 0;
 }

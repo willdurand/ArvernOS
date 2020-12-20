@@ -1,6 +1,6 @@
 #include "ethernet.h"
+#include "logging.h"
 #include <arpa/inet.h>
-#include <core/debug.h>
 #include <net/arp.h>
 #include <net/ipv4.h>
 #include <stdlib.h>
@@ -14,7 +14,11 @@ void ethernet_receive_frame(net_interface_t* interface,
   memcpy(&frame_header, data, sizeof(ethernet_header_t));
   frame_header.ethertype = ntohs(frame_header.ethertype);
 
+<<<<<<< HEAD
   DEBUG_OUT(
+=======
+  NET_DEBUG(
+>>>>>>> cd080736337f92180c8e1821d448c419256c5e74
     "received frame from: %02x:%02x:%02x:%02x:%02x:%02x on interface=%d",
     frame_header.src_mac[0],
     frame_header.src_mac[1],
@@ -36,7 +40,11 @@ void ethernet_receive_frame(net_interface_t* interface,
                           len - sizeof(ethernet_header_t));
       break;
     default:
+<<<<<<< HEAD
       DEBUG_OUT("unsupported ethernet frame: type=0x%04x",
+=======
+      NET_DEBUG("unsupported ethernet frame: type=0x%04x",
+>>>>>>> cd080736337f92180c8e1821d448c419256c5e74
                 frame_header.ethertype);
   }
 

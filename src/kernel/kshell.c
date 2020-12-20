@@ -1,18 +1,20 @@
 #include "kshell.h"
-#include <core/debug.h>
+#include <arpa/inet.h>
 #include <core/elf.h>
 #include <drivers/cmos.h>
-#include <drivers/timer.h>
 #include <fs/debug.h>
 #include <fs/vfs.h>
+#include <logging.h>
 #include <net/dns.h>
 #include <net/ipv4.h>
 #include <net/net.h>
+#include <net/ntp.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/syscall.h>
+#include <time.h>
 
 static char readline[READLINE_SIZE] = { 0 };
 static char last_readline[READLINE_SIZE] = { 0 };
@@ -22,13 +24,14 @@ static bool caps_lock_mode = false;
 static bool ctrl_mode = false;
 static bool shift_mode = false;
 
-#define NB_DOCUMENTED_COMMANDS 7
+#define NB_DOCUMENTED_COMMANDS 8
 
 static const char* commands[][NB_DOCUMENTED_COMMANDS] = {
   { "help", "display information about system shell commands" },
   { "host", "perform a DNS lookup" },
   { "ls", "list files" },
   { "net", "show configured network interfaces" },
+  { "ntp", "get the time from a time server" },
   { "overflow", "test the stack buffer overflow protection" },
   { "ping", "ping an IPv4 address" },
   { "selftest", "run the system test suite" },
@@ -105,6 +108,8 @@ void selftest()
 
   print_selftest_header("syscalls");
   printf("  syscalling\n");
+  // This does not call the syscall with an interrupt anymore, it directly uses
+  // `k_test()` under the hood.
   test("kshell");
 
   print_selftest_header("memory");
@@ -126,7 +131,6 @@ void selftest()
   inode_t debug = vfs_namei(FS_DEBUG_MOUNTPOINT);
   const char* message = "  this message should be written to the console\n";
   vfs_write(debug, (void*)message, strlen(message), 0);
-  vfs_free(debug);
 
   printf("\ndone.\n");
 }
@@ -136,10 +140,12 @@ void net()
   uint8_t in_id = 0;
   net_interface_t* in = net_get_interface(in_id);
 
+  char buf[16];
+
   printf("eth%d:\n", in_id);
   printf("  driver : %s\n", in->driver->get_name());
-  printf(
-    "  ip     : %d.%d.%d.%d\n", in->ip[0], in->ip[1], in->ip[2], in->ip[3]);
+  inet_itoa(in->ip, buf, 16);
+  printf("  ip     : %s\n", buf);
   printf("  mac    : %02x:%02x:%02x:%02x:%02x:%02x\n",
          in->mac[0],
          in->mac[1],
@@ -147,39 +153,35 @@ void net()
          in->mac[3],
          in->mac[4],
          in->mac[5]);
-  printf("  gateway: %d.%d.%d.%d\n",
-         in->gateway_ip[0],
-         in->gateway_ip[1],
-         in->gateway_ip[2],
-         in->gateway_ip[3]);
-  printf("  dns    : %d.%d.%d.%d\n",
-         in->dns_ip[0],
-         in->dns_ip[1],
-         in->dns_ip[2],
-         in->dns_ip[3]);
-}
-
-void busywait(uint32_t delay_in_seconds)
-{
-  uint64_t t = timer_uptime();
-  while (timer_uptime() < (t + delay_in_seconds)) {
-    ;
-  }
+  inet_itoa(in->gateway_ip, buf, 16);
+  printf("  gateway: %s\n", buf);
+  inet_itoa(in->dns_ip, buf, 16);
+  printf("  dns    : %s\n", buf);
 }
 
 void host(int argc, char* argv[])
 {
   if (argc != 2) {
-    printf("usage: %s domain.tld\n", argv[0]);
+    printf("usage: %s <hostname>\n", argv[0]);
     return;
   }
 
-  net_interface_t* in = net_get_interface(0);
+  struct in_addr in;
+  int retval = gethostbyname2(argv[1], &in);
 
-  printf("DNS lookup for: %s\n", argv[1]);
-  dns_request(in, argv[1]);
-
-  busywait(2);
+  switch (retval) {
+    case 0: {
+      char buf[16];
+      inet_ntoa2(in, buf, 16);
+      printf("%s has address %s\n", argv[1], buf);
+      break;
+    }
+    case DNS_ERR_NO_ANSWER:
+      printf("Host %s not found\n", argv[1]);
+      break;
+    default:
+      printf("DNS lookup failed (%d)\n", retval);
+  }
 }
 
 void ping(int argc, char* argv[])
@@ -198,10 +200,44 @@ void ping(int argc, char* argv[])
 
   net_interface_t* in = net_get_interface(0);
 
-  printf("PING %d.%d.%d.%d\n", ip[0], ip[1], ip[2], ip[3]);
-  ipv4_ping(in, ip);
+  char buf[16];
+  inet_itoa(ip, buf, 16);
 
-  busywait(2);
+  printf("PING %s\n", buf);
+  icmpv4_reply_t reply = { 0 };
+  int retval = ipv4_ping(in, ip, &reply);
+
+  switch (retval) {
+    case 0:
+      inet_itoa(reply.src_ip, buf, 16);
+      printf(
+        "PONG from %s (ttl=%d sequence=%ld)\n", buf, reply.ttl, reply.sequence);
+      break;
+    default:
+      printf("Ping failed (%d)\n", retval);
+  }
+}
+
+void ntp(int argc, char* argv[])
+{
+  if (argc != 2) {
+    printf("usage: %s <time server>\n", argv[0]);
+    return;
+  }
+
+  time_t server_time;
+  int retval = ntp_request(net_get_interface(0), argv[1], &server_time);
+
+  switch (retval) {
+    case 0: {
+      char buf[40];
+      strftime(buf, 40, "%c", localtime(&server_time));
+      printf("server time is: %s\n", buf);
+      break;
+    }
+    default:
+      printf("Nope. (%d)\n", retval);
+  }
 }
 
 void ls(int argc, char* argv[])
@@ -213,9 +249,8 @@ void ls(int argc, char* argv[])
     return;
   }
 
-  if (vfs_inode_type(inode) != FS_DIRECTORY) {
+  if (vfs_type(inode) != FS_DIRECTORY) {
     printf("'%s' is not a directory\n", inode->name);
-    vfs_free(inode);
     return;
   }
 
@@ -228,15 +263,22 @@ void ls(int argc, char* argv[])
       break;
     }
 
-    stat_t stat;
+    vfs_stat_t stat = { 0 };
     vfs_stat(de->inode, &stat);
-    printf("%6llu %s\n", stat.size, de->name);
 
-    vfs_free(de->inode);
+    char indicator = ' ';
+    if ((stat.mode & S_IFSOCK) == S_IFSOCK) {
+      indicator = '=';
+    } else if ((stat.mode & S_IFDIR) == S_IFDIR) {
+      indicator = '/';
+    } else if ((stat.mode & S_IFCHR) == S_IFCHR) {
+      indicator = '%';
+    }
+
+    printf("%6llu %s%c\n", stat.size, de->name, indicator);
+
     free(de);
   }
-
-  vfs_free(inode);
 }
 
 int try_exec(int argc, char* argv[])
@@ -254,12 +296,11 @@ int try_exec(int argc, char* argv[])
     return -1;
   }
 
-  if (vfs_inode_type(inode) != FS_FILE) {
-    vfs_free(inode);
+  if (vfs_type(inode) != FS_FILE) {
     return -2;
   }
 
-  stat_t stat;
+  vfs_stat_t stat = { 0 };
   vfs_stat(inode, &stat);
 
   char* buf = malloc((stat.size + 1) * sizeof(char));
@@ -269,7 +310,6 @@ int try_exec(int argc, char* argv[])
   elf_header_t* elf = elf_load((uint8_t*)buf);
 
   if (!elf) {
-    vfs_free(inode);
     free(buf);
     return -3;
   }
@@ -284,7 +324,6 @@ int try_exec(int argc, char* argv[])
 
   elf_unload(elf);
 
-  vfs_free(inode);
   free(buf);
 
   return 0;
@@ -333,6 +372,8 @@ void run_command()
     ping(argc, argv);
   } else if (strcmp(argv[0], "host") == 0) {
     host(argc, argv);
+  } else if (strcmp(argv[0], "ntp") == 0) {
+    ntp(argc, argv);
   } else {
     if (try_exec(argc, argv) != 0) {
       printf("invalid kshell command\n");

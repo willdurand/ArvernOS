@@ -36,14 +36,47 @@ GIT_HASH := $(shell git rev-parse --short HEAD)
 
 CFLAGS = -DKERNEL_NAME=\"$(OS_NAME)\" \
 	 -DGIT_HASH=\"$(GIT_HASH)\" \
+	 -DLOGS_WITH_COLORS \
 	 -Wall -pedantic -std=c11 -O0 -ffreestanding -nostdlib \
 	 -fno-builtin -fstack-protector -mno-red-zone \
-	 -I src/include/ -I src/ -I libs/
+	 -I src/ -I src/include/ -I libs/
 
+<<<<<<< HEAD
 DEBUG_CFLAGS = -DENABLE_KERNEL_DEBUG -DDISABLE_MMU_DEBUG -DDEBUG_WITH_COLORS -DDEBUG
+=======
+DEBUG_CFLAGS = -DENABLE_KERNEL_DEBUG
+
+ifeq ($(ENABLE_CONFIG_DEBUG), 1)
+	DEBUG_CFLAGS += -DENABLE_CONFIG_DEBUG
+endif
+
+ifeq ($(ENABLE_CORE_DEBUG), 1)
+	DEBUG_CFLAGS += -DENABLE_CORE_DEBUG
+endif
+
+ifeq ($(ENABLE_FS_DEBUG), 1)
+	DEBUG_CFLAGS += -DENABLE_FS_DEBUG
+endif
+
+ifeq ($(ENABLE_MMU_DEBUG), 1)
+	DEBUG_CFLAGS += -DENABLE_MMU_DEBUG
+endif
+
+ifeq ($(ENABLE_NET_DEBUG), 1)
+	DEBUG_CFLAGS += -DENABLE_NET_DEBUG
+endif
+
+ifeq ($(ENABLE_SYS_DEBUG), 1)
+	DEBUG_CFLAGS += -DENABLE_SYS_DEBUG
+endif
+
+ifeq ($(ENABLE_ALL_DEBUG), 1)
+	DEBUG_CFLAGS += -DENABLE_CONFIG_DEBUG -DENABLE_CORE_DEBUG -DENABLE_FS_DEBUG -DENABLE_MMU_DEBUG -DENABLE_NET_DEBUG -DENABLE_SYS_DEBUG
+endif
+>>>>>>> cd080736337f92180c8e1821d448c419256c5e74
 
 QEMU_OPTIONS = -m 500M \
-	       -netdev user,id=u1,ipv6=off \
+	       -netdev user,id=u1,ipv6=off,dhcpstart=10.0.2.20 \
 	       -device rtl8139,netdev=u1 \
 	       -object filter-dump,id=f1,netdev=u1,file=./logs/traffic.pcap
 
@@ -109,6 +142,7 @@ $(ISO): $(KERNEL) $(INITRD) $(GRUB_CFG)
 	grub-mkrescue -o $@ $(ISO_DIR)
 
 run: ## run the OS
+run: QEMU_OPTIONS += -serial file:./logs/release.log
 run: $(ISO)
 	$(QEMU) -cdrom $< $(QEMU_OPTIONS)
 .PHONY: run
@@ -124,7 +158,7 @@ run-debug: debug run
 .PHONY: run-debug
 
 run-test: ## run the OS in test mode
-run-test: QEMU_OPTIONS += -curses
+run-test: QEMU_OPTIONS += -curses -serial file:./logs/test.log
 run-test: GRUB_KERNEL_CMDLINE = "boot-and-exit"
 run-test: run
 .PHONY: run-test
@@ -157,6 +191,8 @@ test: CC=gcc
 test: LD=ld
 test: AR=ar
 test: CFLAGS += -fPIC
+test: CFLAGS_FOR_TESTS = -g -DENABLE_LOGS_FOR_TESTS -DTEST_ENV -I./test/ -I./src/
+test: VALGRIND_OPTS = --track-origins=yes --leak-check=yes
 test: libc
 	# libc
 	mkdir -p $(BUILD_DIR)/libc/string
@@ -166,29 +202,33 @@ test: libc
 		gcc -I./test/ -O0 test/$$file.c -o build/$$file ; \
 		LD_PRELOAD=./build/$$file.so ./build/$$file || exit 1 ; \
 	done
-	# fs/tar
-	gcc -DENABLE_DEBUG_FOR_TEST -I./test/ -I./src/ -o $(BUILD_DIR)/tar test/fs/tar.c src/fs/tar.c src/fs/vfs.c
-	./$(BUILD_DIR)/tar
 	# fs/vfs
-	gcc -DENABLE_DEBUG_FOR_TEST -I./test/ -I./src/ -o $(BUILD_DIR)/vfs test/fs/vfs.c src/fs/vfs.c
-	./$(BUILD_DIR)/vfs
+	gcc $(CFLAGS_FOR_TESTS) -I./test/proxies/ -o $(BUILD_DIR)/vfs test/fs/vfs.c src/fs/vfs.c
+	valgrind --track-origins=yes --leak-check=yes ./$(BUILD_DIR)/vfs
+	# fs/tar
+	gcc $(CFLAGS_FOR_TESTS) -o $(BUILD_DIR)/tar test/fs/tar.c src/fs/tar.c src/fs/vfs.c
+	valgrind $(VALGRIND_OPTS) ./$(BUILD_DIR)/tar
 	# fs/proc
-	gcc -g -DENABLE_DEBUG_FOR_TEST -I./test/ -I./test/proxies/ -I./src/ -o $(BUILD_DIR)/proc test/fs/proc.c src/fs/proc.c src/fs/vfs.c
+	gcc $(CFLAGS_FOR_TESTS) -I./test/proxies/ -o $(BUILD_DIR)/proc test/fs/proc.c src/fs/proc.c src/fs/vfs.c
+	valgrind $(VALGRIND_OPTS) ./$(BUILD_DIR)/proc
+	# fs/sock
+	gcc $(CFLAGS_FOR_TESTS) -o $(BUILD_DIR)/sock test/fs/sock.c src/fs/sock.c src/fs/vfs.c
+	valgrind $(VALGRIND_OPTS) ./$(BUILD_DIR)/sock
 	# mmu/frame
-	gcc -Wformat=0 -g -DENABLE_DEBUG_FOR_TEST -I./test/ -I./test/proxies/ -I./src/ -o $(BUILD_DIR)/frame test/mmu/frame.c src/mmu/frame.c src/core/multiboot.c src/mmu/bitmap.c
-	valgrind --track-origins=yes --leak-check=yes ./$(BUILD_DIR)/frame
+	gcc $(CFLAGS_FOR_TESTS) -Wformat=0 -I./test/proxies/ -o $(BUILD_DIR)/frame test/mmu/frame.c src/mmu/frame.c src/core/multiboot.c src/mmu/bitmap.c
+	valgrind $(VALGRIND_OPTS) ./$(BUILD_DIR)/frame
 	# mmu/bitmap
-	gcc -g -DENABLE_DEBUG_FOR_TEST -I./test/ -I./src/ -o $(BUILD_DIR)/bitmap test/mmu/bitmap.c src/mmu/bitmap.c
+	gcc $(CFLAGS_FOR_TESTS) -o $(BUILD_DIR)/bitmap test/mmu/bitmap.c src/mmu/bitmap.c
 	./$(BUILD_DIR)/bitmap
 	# mmu/paging
-	gcc -Wformat=0 -g -DENABLE_DEBUG_FOR_TEST -DTEST_ENV -I./test/ -I./test/proxies/ -I./src/ -o $(BUILD_DIR)/paging test/mmu/paging.c src/mmu/paging.c src/core/multiboot.c src/mmu/frame.c src/mmu/bitmap.c src/core/register.c
+	gcc $(CFLAGS_FOR_TESTS) -Wformat=0 -I./test/proxies/ -o $(BUILD_DIR)/paging test/mmu/paging.c src/mmu/paging.c src/core/multiboot.c src/mmu/frame.c src/mmu/bitmap.c src/core/register.c
 	./$(BUILD_DIR)/paging
 	# vga/video_api
 	gcc -DENABLE_DEBUG_FOR_TEST -I./test -I./src/ -o $(BUILD_DIR)/video_api test/vga/video_api.c src/drivers/video/video_api.c
 	./$(BUILD_DIR)/video_api
 	# config/inish
-	gcc -DENABLE_DEBUG_FOR_TEST -I./test/ -I./test/proxies/ -I./src/ -o $(BUILD_DIR)/inish test/config/inish.c src/config/inish.c
-	valgrind --track-origins=yes --leak-check=yes ./$(BUILD_DIR)/inish
+	gcc $(CFLAGS_FOR_TESTS) -I./test/proxies/ -o $(BUILD_DIR)/inish test/config/inish.c src/config/inish.c
+	valgrind $(VALGRIND_OPTS) ./$(BUILD_DIR)/inish
 .PHONY: test
 
 version: ## print tool versions
@@ -200,7 +240,6 @@ version: ## print tool versions
 $(INITRD): userland
 	cp -R userland/bin $(INITRD_DIR)
 	echo "$(OS_NAME) build info\n\nhash: $(GIT_HASH)\ndate: $(shell date)" > $(INITRD_DIR)/info
-	mkdir -p $(INITRD_DIR)/proc
 	cd $(INITRD_DIR) && tar -cvf ../$(INITRD) *
 
 initrd: ## build the init ram disk

@@ -1,7 +1,7 @@
 #include "alloc.h"
+#include "logging.h"
 #include <kernel/panic.h>
 #include <mmu/bitmap.h>
-#include <mmu/debug.h>
 #include <mmu/paging.h>
 #include <string.h>
 #include <sys/types.h>
@@ -15,12 +15,20 @@ void alloc_init()
   heap_end_page = page_containing_address(HEAP_START + HEAP_SIZE - 1);
   heap_start_page = page_containing_address(HEAP_START);
 
+<<<<<<< HEAD
   DEBUG_OUT(
     "initialized heap allocator with heap_start_page=%u heap_end_page=%u "
     "used_count=%d",
     heap_start_page,
     heap_end_page,
     alloc_get_used_count());
+=======
+  INFO("initialized heap allocator with heap_start_page=%u heap_end_page=%u "
+       "used_count=%d",
+       heap_start_page,
+       heap_end_page,
+       alloc_get_used_count());
+>>>>>>> cd080736337f92180c8e1821d448c419256c5e74
 }
 
 int liballoc_lock()
@@ -68,7 +76,11 @@ void* liballoc_alloc(int number_of_pages)
                number_of_pages,
                PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
 
+<<<<<<< HEAD
   DEBUG_OUT("allocated %d pages at addr=%p", number_of_pages, addr);
+=======
+  MMU_DEBUG("allocated %d pages at addr=%p", number_of_pages, addr);
+>>>>>>> cd080736337f92180c8e1821d448c419256c5e74
 
   return (void*)addr;
 }
@@ -86,7 +98,11 @@ int liballoc_free(void* ptr, int number_of_pages)
     bitmap_clear(allocated_pages, first_free_page + i);
   }
 
+<<<<<<< HEAD
   DEBUG_OUT(
+=======
+  MMU_DEBUG(
+>>>>>>> cd080736337f92180c8e1821d448c419256c5e74
     "free'd ptr=%p page=%u number_of_pages=%d", ptr, page, number_of_pages);
 
   return 0;

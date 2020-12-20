@@ -1,12 +1,16 @@
 #include "ipv4.h"
-#include <core/debug.h>
+#include "logging.h"
 #include <net/ethernet.h>
 #include <net/udp.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-void ipv4_from_value(uint32_t value, uint8_t ip[4]);
+ipv4_header_t ipv4_create_header(uint8_t src_ip[4],
+                                 in_addr_t dst_addr,
+                                 uint8_t protocol,
+                                 uint16_t flags,
+                                 uint16_t len);
 void icmpv4_receive_packet(net_interface_t* interface,
                            uint8_t* packet,
                            ipv4_header_t* header);
@@ -14,6 +18,8 @@ void icmpv4_receive_packet(net_interface_t* interface,
 // TODO: find a better approach to generate such IDs.
 static uint16_t ipv4_id = 1;
 static uint16_t icmpv4_id = 1;
+
+static icmpv4_reply_t* icmpv4_reply = NULL;
 
 void ipv4_receive_packet(net_interface_t* interface,
                          uint8_t* data,
@@ -23,8 +29,13 @@ void ipv4_receive_packet(net_interface_t* interface,
   memcpy(&header, data, sizeof(ipv4_header_t));
 
   uint8_t src_ip[4] = { 0 };
+<<<<<<< HEAD
   ipv4_from_value(header.src_addr, src_ip);
   DEBUG_OUT("received IPv4 packet from: %d.%d.%d.%d on interface=%d",
+=======
+  inet_ntoi(header.src_addr, src_ip, 4);
+  NET_DEBUG("received IPv4 packet from: %d.%d.%d.%d on interface=%d",
+>>>>>>> cd080736337f92180c8e1821d448c419256c5e74
             src_ip[0],
             src_ip[1],
             src_ip[2],
@@ -39,7 +50,11 @@ void ipv4_receive_packet(net_interface_t* interface,
       udp_receive_packet(interface, data, &header);
       break;
     default:
+<<<<<<< HEAD
       DEBUG_OUT("unsupported IP protocol=%02x, dropping packet", header.proto);
+=======
+      NET_DEBUG("unsupported IP protocol=%02x, dropping packet", header.proto);
+>>>>>>> cd080736337f92180c8e1821d448c419256c5e74
   }
 }
 
@@ -66,16 +81,6 @@ uint16_t ipv4_checksum(void* addr, int count)
   return ~sum;
 }
 
-// Retrieve src IP address from the uint32_t value. This might not work
-// correctly all the time because of endianness but it works for now...
-void ipv4_from_value(uint32_t value, uint8_t ip[4])
-{
-  memset(ip, 0, 4);
-  for (uint8_t i = 0; i < 4; i++) {
-    ip[i] = ((uint8_t*)&value)[i];
-  }
-}
-
 void icmpv4_receive_packet(net_interface_t* interface,
                            uint8_t* data,
                            ipv4_header_t* header)
@@ -83,29 +88,33 @@ void icmpv4_receive_packet(net_interface_t* interface,
   icmpv4_echo_t icmpv4_echo = { 0 };
   memcpy(&icmpv4_echo, data + (4 * header->ihl), sizeof(icmpv4_echo_t));
 
+<<<<<<< HEAD
   DEBUG_OUT(
+=======
+  NET_DEBUG(
+>>>>>>> cd080736337f92180c8e1821d448c419256c5e74
     "received ICMPv4 packet on interface=%d type=%d code=%d checksum=%x",
     interface->id,
     icmpv4_echo.type,
     icmpv4_echo.code,
     icmpv4_echo.checksum);
+<<<<<<< HEAD
 
   uint8_t src_ip[4] = { 0 };
   ipv4_from_value(header->src_addr, src_ip);
+=======
+>>>>>>> cd080736337f92180c8e1821d448c419256c5e74
 
   if (icmpv4_echo.type == ICMPV4_TYPE_REPLY) {
-    // TODO: fixme
-    printf("PONG from %d.%d.%d.%d icmp_seq=%d ttl=%d\n",
-           src_ip[0],
-           src_ip[1],
-           src_ip[2],
-           src_ip[3],
-           icmpv4_echo.sequence,
-           header->ttl);
+    icmpv4_reply = malloc(sizeof(icmpv4_reply_t));
+
+    icmpv4_reply->sequence = icmpv4_echo.sequence;
+    icmpv4_reply->ttl = header->ttl;
+    inet_ntoi(header->src_addr, icmpv4_reply->src_ip, 4);
   }
 }
 
-void ipv4_ping(net_interface_t* interface, uint8_t dst_ip[4])
+int ipv4_ping(net_interface_t* interface, uint8_t ip[4], icmpv4_reply_t* reply)
 {
   // Create ICMPv4 ECHO packet.
   icmpv4_echo_t icmpv4_echo = { .type = ICMPV4_TYPE_REQUEST,
@@ -115,22 +124,31 @@ void ipv4_ping(net_interface_t* interface, uint8_t dst_ip[4])
                                 .sequence = 0,
                                 .data = 0 };
   icmpv4_echo.checksum = ipv4_checksum(&icmpv4_echo, sizeof(icmpv4_echo_t));
-  icmpv4_id++;
 
-  // Create IPv4 datagram, encapsulating the ICMPv4 packet.
-  uint32_t datagram_len = sizeof(icmpv4_echo_t) + sizeof(ipv4_header_t);
+  NET_DEBUG("sending ICMP packet: id=0x%04x", ntohs(icmpv4_echo.id));
 
-  ipv4_header_t ipv4_header = ipv4_create_header(
-    interface->ip, inet_addr2(dst_ip), IPV4_PROTO_ICMP, 0, datagram_len);
+  struct sockaddr_in dst_addr = { .sin_addr = { .s_addr = inet_addr2(ip) } };
 
-  uint8_t* datagram = malloc(datagram_len);
-  memcpy(datagram, &ipv4_header, sizeof(ipv4_header_t));
-  memcpy(datagram + sizeof(ipv4_header_t), &icmpv4_echo, sizeof(icmpv4_echo));
+  ipv4_send_packet(interface,
+                   &dst_addr,
+                   IPV4_PROTO_ICMP,
+                   0,
+                   (uint8_t*)&icmpv4_echo,
+                   sizeof(icmpv4_echo_t));
 
-  ethernet_transmit_frame(
-    interface, interface->gateway_mac, ETHERTYPE_IPV4, datagram, datagram_len);
+  uint64_t elapsed = 0;
+  while (icmpv4_reply == NULL && elapsed < 10000) {
+    ;
+  }
 
-  free(datagram);
+  if (icmpv4_reply == NULL) {
+    return -1;
+  }
+
+  memcpy(reply, icmpv4_reply, sizeof(icmpv4_reply_t));
+  free(icmpv4_reply);
+
+  return 0;
 }
 
 ipv4_header_t ipv4_create_header(uint8_t src_ip[4],
@@ -156,4 +174,26 @@ ipv4_header_t ipv4_create_header(uint8_t src_ip[4],
   ipv4_id++;
 
   return ipv4_header;
+}
+
+void ipv4_send_packet(net_interface_t* interface,
+                      struct sockaddr_in* dst_addr,
+                      uint8_t protocol,
+                      uint16_t flags,
+                      uint8_t* data,
+                      uint32_t len)
+{
+  uint32_t packet_len = sizeof(ipv4_header_t) + len;
+
+  ipv4_header_t ipv4_header = ipv4_create_header(
+    interface->ip, dst_addr->sin_addr.s_addr, protocol, flags, packet_len);
+
+  uint8_t* packet = malloc(packet_len);
+  memcpy(packet, &ipv4_header, sizeof(ipv4_header_t));
+  memcpy(packet + sizeof(ipv4_header_t), data, len);
+
+  ethernet_transmit_frame(
+    interface, interface->gateway_mac, ETHERTYPE_IPV4, packet, packet_len);
+
+  free(packet);
 }

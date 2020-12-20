@@ -1,6 +1,7 @@
 #include "net.h"
-#include <core/debug.h>
+#include "logging.h"
 #include <net/arp.h>
+#include <net/dhcp.h>
 #include <net/ethernet.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,33 +11,56 @@ static net_interface_t* interfaces[NET_MAX_INTERFACES];
 
 void net_interface_init(uint8_t interface_id,
                         net_driver_t* driver,
+                        bool prefer_dhcp,
                         uint8_t ip[4],
                         uint8_t gateway_ip[4],
                         uint8_t dns_ip[4])
 {
   if (interface_id >= NET_MAX_INTERFACES) {
+<<<<<<< HEAD
     DEBUG_OUT("could not initialize interface with id=%d", interface_id);
     return;
   }
 
   DEBUG_OUT("initializing interface id=%d with driver='%s'",
+=======
+    NET_DEBUG("could not initialize interface with id=%d", interface_id);
+    return;
+  }
+
+  NET_DEBUG("initializing interface id=%d with driver='%s'",
+>>>>>>> cd080736337f92180c8e1821d448c419256c5e74
             interface_id,
             driver->get_name());
 
-  net_interface_t* in = malloc(sizeof(net_interface_t));
+  net_interface_t* in = calloc(1, sizeof(net_interface_t));
   in->id = interface_id;
   in->driver = driver;
   in->driver->receive_frame = ethernet_receive_frame;
   in->driver->interface = in;
   memcpy(in->mac, in->driver->get_mac_address(), 6);
-  memcpy(in->ip, ip, 6);
-  memcpy(in->gateway_ip, gateway_ip, 6);
-  memcpy(in->dns_ip, dns_ip, 6);
+
+  bool network_configured = false;
+
+  if (prefer_dhcp) {
+    network_configured = dhcp_negotiate(in);
+  }
+
+  // Use static configuration when DHCP has failed.
+  if (!network_configured) {
+    memcpy(in->ip, ip, 6);
+    memcpy(in->gateway_ip, gateway_ip, 6);
+    memcpy(in->dns_ip, dns_ip, 6);
+  }
 
   arp_request(in, gateway_ip);
   arp_wait_reply(in->gateway_mac);
 
+<<<<<<< HEAD
   DEBUG_OUT("MAC address for %d.%d.%d.%d (gateway) is: "
+=======
+  NET_DEBUG("MAC address for %d.%d.%d.%d (gateway) is: "
+>>>>>>> cd080736337f92180c8e1821d448c419256c5e74
             "%02x:%02x:%02x:%02x:%02x:%02x",
             in->gateway_ip[0],
             in->gateway_ip[1],
@@ -52,7 +76,11 @@ void net_interface_init(uint8_t interface_id,
   arp_request(in, dns_ip);
   arp_wait_reply(in->dns_mac);
 
+<<<<<<< HEAD
   DEBUG_OUT("MAC address for %d.%d.%d.%d (dns) is: "
+=======
+  NET_DEBUG("MAC address for %d.%d.%d.%d (dns) is: "
+>>>>>>> cd080736337f92180c8e1821d448c419256c5e74
             "%02x:%02x:%02x:%02x:%02x:%02x",
             in->dns_ip[0],
             in->dns_ip[1],
@@ -66,8 +94,12 @@ void net_interface_init(uint8_t interface_id,
             in->dns_mac[5]);
 
   interfaces[interface_id] = in;
+<<<<<<< HEAD
 
   DEBUG_OUT("interface id=%d successfully initialized", in->id);
+=======
+  NET_DEBUG("interface id=%d successfully initialized", in->id);
+>>>>>>> cd080736337f92180c8e1821d448c419256c5e74
 }
 
 net_interface_t* net_get_interface(uint8_t interface_id)

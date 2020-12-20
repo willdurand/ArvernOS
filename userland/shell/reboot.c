@@ -5,7 +5,7 @@
 
 void _reboot()
 {
-#ifdef __is_libc
+#ifdef __willos__
   printf("Restarting system now...\n");
   reboot(REBOOT_CMD_RESTART);
 #else

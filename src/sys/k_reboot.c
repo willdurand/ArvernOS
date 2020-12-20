@@ -1,5 +1,9 @@
-#include "reboot.h"
-#include <core/isr.h>
+/**
+ * @see https://wiki.osdev.org/Reboot
+ * @see http://man7.org/linux/man-pages/man2/reboot.2.html
+ */
+#include "k_syscall.h"
+#include "logging.h"
 #include <core/port.h>
 #include <errno.h>
 #include <sys/reboot.h>
@@ -9,17 +13,19 @@
 
 void restart();
 
-int kreboot(int command)
+int k_reboot(int command)
 {
-  errno = 0;
+  SYS_DEBUG("reboot command=%d", command);
 
   switch (command) {
     case REBOOT_CMD_RESTART:
       restart();
+      break;
     default:
-      errno = EINVAL;
-      return -1;
+      return -EINVAL;
   }
+
+  return 0;
 }
 
 void restart()

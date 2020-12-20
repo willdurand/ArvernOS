@@ -2,9 +2,16 @@
 
 int reboot(int command)
 {
-  int ret = 0;
+#ifdef __is_libk
+  return k_reboot(command);
+#else
+  errno = 0;
+  int retval;
 
-  __asm__(INT_SYSCALL : "=d"(ret) : "a"(SYSCALL_REBOOT), "b"(command));
+  __asm__(INT_SYSCALL : "=d"(retval) : "a"(SYSCALL_REBOOT), "b"(command));
 
-  return ret;
+  SYSCALL_SET_ERRNO();
+
+  return retval;
+#endif
 }

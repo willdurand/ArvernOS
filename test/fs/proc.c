@@ -48,44 +48,51 @@ int main()
   describe("proc_fs_init()");
   root = vfs_mount("/", proc_fs_init());
   assert(root != 0, "can be mounted");
-  assert(vfs_inode_type(root) == FS_DIRECTORY, "is a directory");
+  assert(vfs_type(root) == FS_DIRECTORY, "is a directory");
   end_describe();
 
   describe("proc_readdir()");
-  dirent_t* de;
+  dirent_t* de = NULL;
   de = vfs_readdir(root, 0);
   assert(strcmp(de->name, ".") == 0, "returns the current directory");
   assert(de->inode == root, "returns the same inode");
   free(de);
+
   de = vfs_readdir(root, 1);
   assert(strcmp(de->name, "..") == 0, "returns the parent directory");
   assert(de->inode == root->parent, "returns the parent inode");
   free(de);
+
   de = vfs_readdir(root, 2);
-  assert(strcmp(de->name, "uptime") == 0,
-         "returns the uptime file in position #2");
-  free(de->inode);
-  free(de);
-  de = vfs_readdir(root, 3);
-  assert(strcmp(de->name, "version") == 0,
-         "returns the version file in position #3");
-  free(de->inode);
-  free(de);
-  de = vfs_readdir(root, 4);
   assert(strcmp(de->name, "hostname") == 0,
-         "returns the hostname file in position #4");
-  free(de->inode);
+         "returns the hostname file in position #2");
+  free(de);
+
+  de = vfs_readdir(root, 3);
+  assert(strcmp(de->name, "meminfo") == 0,
+         "returns the meminfo file in position #3");
+  free(de);
+
+  de = vfs_readdir(root, 4);
+  assert(strcmp(de->name, "uptime") == 0,
+         "returns the uptime file in position #4");
+  free(de);
+
+  de = vfs_readdir(root, 5);
+  assert(strcmp(de->name, "version") == 0,
+         "returns the version file in position #5");
   free(de);
   end_describe();
 
   describe("proc_finddir()");
   inode_t not_found = vfs_namei("/file-not-found");
-  assert(not_found == 0, "returns 0 when file is not found");
+  assert(not_found == NULL, "returns NULL when file is not found");
+
   uptime = vfs_namei("/uptime");
-  assert(vfs_inode_type(uptime) == FS_FILE, "finds the uptime file");
-  free(uptime);
+  assert(vfs_type(uptime) == FS_FILE, "finds the uptime file");
+
   inode_t not_uptime = vfs_namei("/uptimee");
-  assert(not_uptime == 0, "returns 0 when file is not found");
+  assert(not_uptime == NULL, "returns NULL when file is not found");
   end_describe();
 
   describe("proc_isatty()");
@@ -97,26 +104,27 @@ int main()
   uint64_t bytes_read = vfs_read(uptime, buf, BUF_SIZE, 0);
   assert(strcmp(buf, "123\n") == 0, "reads the content of the uptime file");
   assert(bytes_read == 4, "returns the number of bytes read");
+
   bytes_read = vfs_read(uptime, buf, BUF_SIZE, 1);
   assert(strcmp(buf, "23\n") == 0,
          "reads the content of the uptime file with offset");
   assert(bytes_read == 3, "returns the number of bytes read with offset");
+
   bytes_read = vfs_read(uptime, buf, BUF_SIZE, 4);
   assert(strcmp(buf, "") == 0, "handles big offsets");
   assert(bytes_read == 0, "returns no bytes read when offset is too big");
-  free(uptime);
   end_describe();
 
   describe("proc_stat()");
-  hostname = vfs_namei("/hostname");
-  uptime = vfs_namei("/uptime");
-  stat_t stat;
-  vfs_stat(uptime, &stat);
-  assert(stat.size == 1, "sets the size to 1 by default");
-  vfs_stat(hostname, &stat);
+  vfs_stat_t stat = { 0 };
+  vfs_stat(root, &stat);
+  assert(stat.size == 4, "sets a size equal to the number of files");
+
+  vfs_stat(vfs_namei("/uptime"), &stat);
+  assert(stat.size == 0, "sets the size to 0 by default");
+
+  vfs_stat(vfs_namei("/hostname"), &stat);
   assert(stat.size > 0, "sets the correct size for hostname");
-  free(uptime);
-  free(hostname);
   end_describe();
 
   describe("proc_write()");
@@ -137,12 +145,8 @@ int main()
          "reallocs memory to deal with long hostname values");
   bytes_written = vfs_write(uptime, new_hostname, strlen(new_hostname), 0);
   assert(bytes_written == 0, "does not allow write to uptime");
-  free(uptime);
-  free(hostname);
-  end_describe();
 
-  proc_fs_deinit();
-  free(root);
+  vfs_free(root);
 
   return test_summary();
 }

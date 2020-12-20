@@ -2,8 +2,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifndef __is_libc
+#ifdef __is_libk
+
 #include <kernel/panic.h>
+
 #endif
 
 // TODO: Make this value randomized
@@ -17,9 +19,9 @@ uintptr_t __stack_chk_guard = STACK_CHK_GUARD;
  */
 void __stack_chk_fail(void)
 {
-#ifdef __is_libc
-  printf("Stack Smashing Detected (TODO: abort() impl)\n");
-#else
+#ifdef __is_libk
   PANIC("Stack Smashing Detected");
+#else
+  printf("Stack Smashing Detected (TODO: abort() impl)\n");
 #endif
 }

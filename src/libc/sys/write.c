@@ -2,11 +2,18 @@
 
 ssize_t write(int fd, const void* buf, size_t count)
 {
-  ssize_t ret;
+#ifdef __is_libk
+  return k_write(fd, buf, count);
+#else
+  errno = 0;
+  ssize_t retval;
 
   __asm__(INT_SYSCALL
-          : "=d"(ret)
+          : "=d"(retval)
           : "a"(SYSCALL_WRITE), "b"(fd), "c"(buf), "S"(count));
 
-  return ret;
+  SYSCALL_SET_ERRNO();
+
+  return retval;
+#endif
 }

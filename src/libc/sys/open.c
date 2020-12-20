@@ -1,12 +1,19 @@
 #include <sys/syscall.h>
 
-int open(const char* pathname, uint32_t flags, ...)
+int open(const char* pathname, uint32_t flags)
 {
-  int fd = 0;
+#ifdef __is_libk
+  return k_open(pathname, flags);
+#else
+  errno = 0;
+  int retval;
 
   __asm__(INT_SYSCALL
-          : "=d"(fd)
+          : "=d"(retval)
           : "a"(SYSCALL_OPEN), "b"(pathname), "c"(flags));
 
-  return fd;
+  SYSCALL_SET_ERRNO();
+
+  return retval;
+#endif
 }

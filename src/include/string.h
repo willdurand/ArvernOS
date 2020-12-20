@@ -3,6 +3,14 @@
 
 #include <stddef.h>
 
+// This is needed because `strdup()` relies on `malloc()`, which isn't
+// available in the `libc` yet.
+#ifdef __is_libk
+
+char* strdup(const char* s);
+
+#endif
+
 size_t strlen(const char* s);
 
 int strcmp(const char* s1, const char* s2);
@@ -17,8 +25,6 @@ char* strncpy(char* dest, const char* src, size_t len);
 char* strsep(char** str, const char* sep);
 
 int strcspn(const char* s1, const char* s2);
-
-char* strdup(const char* s);
 
 char* strcat(char* dest, const char* src);
 
