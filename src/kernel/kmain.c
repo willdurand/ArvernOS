@@ -140,6 +140,13 @@ void kmain(uint64_t addr)
   if (initrd) {
     print_ok();
 
+    print_sub_step("creating /dev virtual directory");
+    if (vfs_mount("/dev", vfs_make_directory("dev"))) {
+      print_ok();
+    } else {
+      print_ko();
+    }
+
     print_sub_step("mounting debugfs");
     if (vfs_mount(FS_DEBUG_MOUNTPOINT, debug_fs_init())) {
       print_ok();
