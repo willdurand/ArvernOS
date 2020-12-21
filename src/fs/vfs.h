@@ -87,6 +87,16 @@ int vfs_type(inode_t inode);
 
 inode_t vfs_create(inode_t parent, const char* name, uint64_t flags);
 
+/**
+ * This function creates a VFS directory, which has no driver and it is
+ * supposed to be used as a mountpoint. This function is not (yet?) designed to
+ * create directories in the different concrete FS implementations.
+ *
+ * @param name the name of the directory to create
+ * @return the inode that has been created
+ */
+inode_t vfs_make_directory(const char* name);
+
 void vfs_debug(inode_t node, int depth);
 
 #endif

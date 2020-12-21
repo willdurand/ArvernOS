@@ -12,12 +12,9 @@ static vfs_node_t* vfs_root = NULL;
 
 void vfs_init()
 {
-  vfs_root = calloc(1, sizeof(vfs_node_t));
-  strcpy(vfs_root->name, "/");
+  vfs_root = vfs_make_directory("/");
   vfs_root->parent = vfs_root;
-  vfs_root->type = FS_DIRECTORY | FS_MOUNTPOINT;
-  vfs_root->n_children = 0;
-  vfs_root->children = (inode_t*)calloc(0, sizeof(inode_t));
+  vfs_root->type |= FS_MOUNTPOINT;
 }
 
 uint64_t vfs_open(inode_t inode, uint64_t mode)
@@ -380,6 +377,18 @@ int vfs_type(inode_t inode)
   }
 
   return inode->type & FS_MASK;
+}
+
+inode_t vfs_make_directory(const char* name)
+{
+  inode_t node = calloc(1, sizeof(vfs_node_t));
+
+  strcpy(node->name, name);
+  node->type = FS_DIRECTORY;
+  node->n_children = 0;
+  node->children = (inode_t*)calloc(0, sizeof(inode_t));
+
+  return node;
 }
 
 void vfs_debug(inode_t node, int depth)

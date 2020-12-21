@@ -5,7 +5,7 @@
 #include <fs/vfs.h>
 #include <stdint.h>
 
-#define FS_DEBUG_MOUNTPOINT "/debug"
+#define FS_DEBUG_MOUNTPOINT "/dev/debug"
 
 /**
  * @brief Creates a "debug" file system.
