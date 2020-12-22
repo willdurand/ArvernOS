@@ -48,11 +48,8 @@ static char* hostname = NULL;
 
 inode_t proc_fs_init()
 {
-  inode_t node = calloc(1, sizeof(vfs_node_t));
-
-  strcpy(node->name, "proc");
+  inode_t node = vfs_make_directory("proc");
   node->driver = &proc_driver;
-  node->type = FS_DIRECTORY;
 
   hostname = malloc(sizeof(char) * (strlen(DEFAULT_HOSTNAME) + 1));
   strcpy(hostname, DEFAULT_HOSTNAME);
