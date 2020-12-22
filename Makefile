@@ -26,10 +26,11 @@ LIBK       = $(BUILD_DIR)/libk-$(OS_NAME).a
 INITRD_DIR = initrd
 INITRD_TAR = initrd.tar
 INITRD     = $(KERNEL_DIR)/$(INITRD_TAR)
+LIBS_DIRS  = libs/liballoc libs/printf libs/vtconsole
 
 ASM_OBJECTS  := $(patsubst %.asm,%.o,$(shell find asm -name '*.asm'))
-LIBK_OBJECTS := $(patsubst %.c,%_k.o,$(shell find libs src -name '*.c'))
-LIBC_OBJECTS := $(patsubst %.c,%.o,$(shell find src/libc libs -name '*.c'))
+LIBK_OBJECTS := $(patsubst %.c,%_k.o,$(shell find $(LIBS_DIRS) src -name '*.c'))
+LIBC_OBJECTS := $(patsubst %.c,%.o,$(shell find src/libc $(LIBS_DIRS) -name '*.c'))
 TEST_FILES   := $(patsubst test/%.c,%,$(shell find test/libc -name '*.c'))
 
 GIT_HASH := $(shell git rev-parse --short HEAD)
@@ -71,6 +72,13 @@ ifeq ($(ENABLE_ALL_DEBUG), 1)
 	DEBUG_CFLAGS += -DENABLE_CONFIG_DEBUG -DENABLE_CORE_DEBUG -DENABLE_FS_DEBUG -DENABLE_MMU_DEBUG -DENABLE_NET_DEBUG -DENABLE_SYS_DEBUG
 endif
 
+NASM_OPTIONS =
+
+ifeq ($(ENABLE_FRAMEBUFFER), 1)
+	CFLAGS += -DENABLE_FRAMEBUFFER
+	NASM_OPTIONS += -dENABLE_FRAMEBUFFER
+endif
+
 QEMU_OPTIONS = -m 500M \
 	       -netdev user,id=u1,ipv6=off,dhcpstart=10.0.2.20 \
 	       -device rtl8139,netdev=u1 \
@@ -104,7 +112,7 @@ $(KERNEL): $(ASM_OBJECTS) $(LIBK)
 
 $(ASM_OBJECTS): %.o: %.asm
 	mkdir -p $(BUILD_DIR)
-	$(NASM) -f elf64 $<
+	$(NASM) $(NASM_OPTIONS) -f elf64 $<
 
 $(LIBK_OBJECTS): CFLAGS += -D__is_libk
 $(LIBK_OBJECTS): %_k.o: %.c
