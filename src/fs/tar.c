@@ -35,11 +35,8 @@ static vfs_driver_t tar_driver = {
 
 inode_t tar_fs_init(uint64_t address)
 {
-  inode_t node = calloc(1, sizeof(vfs_node_t));
-
-  strcpy(node->name, "tar");
+  inode_t node = vfs_make_directory("tar");
   node->driver = &tar_driver;
-  node->type = FS_DIRECTORY;
   node->data = -1;
 
   nb_entries = tar_read_headers(address);

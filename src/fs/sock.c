@@ -33,11 +33,8 @@ static vfs_driver_t sock_driver = {
 
 inode_t sock_fs_init()
 {
-  inode_t node = calloc(1, sizeof(vfs_node_t));
-
-  strcpy(node->name, "sock");
+  inode_t node = vfs_make_directory("sock");
   node->driver = &sock_driver;
-  node->type = FS_DIRECTORY;
 
   return node;
 }
