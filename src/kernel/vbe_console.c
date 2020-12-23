@@ -10,8 +10,8 @@
 
 #include <ssfn.h>
 
-extern unsigned char _binary_font_sfn_start;
-extern unsigned char _binary_font_sfn_size;
+extern unsigned char _binary_console_sfn_start;
+extern unsigned char _binary_console_sfn_size;
 
 static uint32_t colors[] = {
   [VTCOLOR_BLACK] = 0x00000000, [VTCOLOR_RED] = 0xFFFF0000,
@@ -35,8 +35,8 @@ void vbe_console_init(multiboot_tag_framebuffer_common_t* common)
         common->framebuffer_height,
         common->framebuffer_pitch,
         common->framebuffer_bpp);
-  DEBUG("_binary_font_sfn_start=0x%x", &_binary_font_sfn_start);
-  DEBUG("_binary_font_sfn_size=0x%x", &_binary_font_sfn_size);
+  DEBUG("_binary_console_sfn_start=0x%x", &_binary_console_sfn_start);
+  DEBUG("_binary_console_sfn_size=0x%x", &_binary_console_sfn_size);
 
   uint64_t pages_for_fb =
     (common->framebuffer_pitch * common->framebuffer_height) / PAGE_SIZE;
@@ -46,7 +46,8 @@ void vbe_console_init(multiboot_tag_framebuffer_common_t* common)
                  PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
   }
 
-  ssfn_src = (ssfn_font_t*)&_binary_font_sfn_start; /* the bitmap font to use */
+  ssfn_src =
+    (ssfn_font_t*)&_binary_console_sfn_start; /* the bitmap font to use */
 
   ssfn_dst.ptr =
     common->framebuffer_addr; /* address of the linear frame buffer */
