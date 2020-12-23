@@ -80,11 +80,7 @@ void check_interrupts()
 
 void kmain(uint64_t addr)
 {
-  console_init();
-
   multiboot_info_t* mbi = (multiboot_info_t*)addr;
-
-  print_welcome_messge();
 
   // enable serial port
   serial_init(SERIAL_COM1, SERIAL_SPEED_115200);
@@ -95,13 +91,19 @@ void kmain(uint64_t addr)
        KERNEL_DATE,
        KERNEL_TIME);
 
+  // This is required to be able to identity map the framebuffer.
+  frame_init(mbi);
+
+  multiboot_tag_framebuffer_t* entry =
+    (multiboot_tag_framebuffer_t*)find_multiboot_tag(
+      mbi, MULTIBOOT_TAG_TYPE_FRAMEBUFFER);
+  console_init(&entry->common);
+
+  print_welcome_messge();
+
   print_step("initializing interruptions");
   isr_init();
   irq_init();
-  print_ok();
-
-  print_step("initializing frame allocator");
-  frame_init(mbi);
   print_ok();
 
   print_step("initializing paging");
