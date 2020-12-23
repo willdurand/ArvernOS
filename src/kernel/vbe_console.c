@@ -55,7 +55,8 @@ void vbe_console_init(multiboot_tag_framebuffer_common_t* common)
   ssfn_dst.h = common->framebuffer_height; /* height */
   ssfn_dst.p = common->framebuffer_pitch;  /* bytes per line */
   ssfn_dst.x = ssfn_dst.y = 0;             /* pen position */
-  ssfn_dst.fg = 0x00FFFFFF;                /* foreground color */
+  ssfn_dst.fg = 0xFFFFFFFF;                /* foreground color */
+  ssfn_dst.bg = 0xFF000000;                /* background color */
 }
 
 void vbe_on_paint_callback(vtconsole_t* vtc, vtcell_t* cell, int x, int y)
