@@ -5,6 +5,7 @@ jobs:
       - image: cimg/base:2020.11
     steps:
       - checkout
+      - run: git submodule sync && git submodule update --init
       - run:
           name: install dependencies
           command: |
