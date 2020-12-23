@@ -174,7 +174,7 @@ clean: ## remove build artifacts
 .PHONY: clean
 
 fmt: ## automatically format the code with clang-format
-	find . -type f \( -name '*.c' -o -name '*.h' \) -exec clang-format -style=file -i "{}" ";"
+	find . -path ./libs -prune -false -o -type f \( -name '*.c' -o -name '*.h' \) -exec clang-format -style=file -i "{}" ";"
 .PHONY: fmt
 
 gdb: ## build, run the OS in debug mode and enable GDB
