@@ -30,6 +30,10 @@ LIBS_DIRS  = libs/liballoc libs/printf libs/vtconsole
 # This should be a bitmap font.
 CONSOLE_FONT_PATH = libs/scalable-font2/fonts/u_vga16.sfn.gz
 CONSOLE_FONT      = $(BUILD_DIR)/font.o
+# This is used in `asm/multiboot_header.asm`.
+VBE_WIDTH  = 1024
+VBE_HEIGHT = 768
+VBE_BPP    = 32
 
 ASM_OBJECTS  := $(patsubst %.asm,%.o,$(shell find asm -name '*.asm'))
 LIBK_OBJECTS := $(patsubst %.c,%_k.o,$(shell find $(LIBS_DIRS) src -name '*.c'))
@@ -75,7 +79,7 @@ ifeq ($(ENABLE_ALL_DEBUG), 1)
 	DEBUG_CFLAGS += -DENABLE_CONFIG_DEBUG -DENABLE_CORE_DEBUG -DENABLE_FS_DEBUG -DENABLE_MMU_DEBUG -DENABLE_NET_DEBUG -DENABLE_SYS_DEBUG
 endif
 
-NASM_OPTIONS =
+NASM_OPTIONS = -dVBE_WIDTH=$(VBE_WIDTH) -dVBE_HEIGHT=$(VBE_HEIGHT) -dVBE_BPP=$(VBE_BPP)
 
 ifeq ($(ENABLE_FRAMEBUFFER), 1)
 	CFLAGS += -DENABLE_FRAMEBUFFER
