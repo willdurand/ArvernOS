@@ -177,6 +177,14 @@ uint64_t frame_get_max_count()
 void frame_mark_as_used(uint64_t physical_address)
 {
   frame_number_t frame = frame_containing_address(physical_address);
-  MMU_DEBUG("marking frame=%lld (addr=%p) as used", frame, physical_address);
-  bitmap_set(allocated_frames, frame);
+
+  if (frame < max_frames) {
+    MMU_DEBUG("marking frame=%lld (addr=%p) as used", frame, physical_address);
+    bitmap_set(allocated_frames, frame);
+  } else {
+    MMU_DEBUG("not marking frame=%lld (addr=%p) as used because address does "
+              "not point to usable RAM",
+              frame,
+              physical_address);
+  }
 }
