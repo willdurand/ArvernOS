@@ -5,11 +5,6 @@ section .multiboot_header
 %define PROTECTED_MODE_CODE      0 ; architecture 0 (protected mode i386)
                                    ; architecture 4 (MIPS)
 
-; TODO: configure these values in Makefile
-%define WIDTH  1024
-%define HEIGHT 768
-%define BPP  32
-
 header_start:
   ; `dd` means 'define double word'
   dd MULTIBOOT2_MAGIC_NUMBER   ; magic number
@@ -25,9 +20,9 @@ framebuffer_start:
   dw 5
   dw 0
   dd framebuffer_end - framebuffer_start
-  dd WIDTH
-  dd HEIGHT
-  dd BPP
+  dd VBE_WIDTH
+  dd VBE_HEIGHT
+  dd VBE_BPP
 framebuffer_end:
 %endif
 
