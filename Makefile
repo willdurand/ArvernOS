@@ -40,7 +40,7 @@ CFLAGS = -DKERNEL_NAME=\"$(OS_NAME)\" \
 	 -DLOGS_WITH_COLORS \
 	 -Wall -pedantic -std=c11 -O0 -ffreestanding -nostdlib \
 	 -fno-builtin -fstack-protector -mno-red-zone \
-	 -I src/ -I src/include/ -I libs/
+	 -I src/ -I src/include/ -I libs/ -I libs/scalable-font2/
 
 DEBUG_CFLAGS = -DENABLE_KERNEL_DEBUG
 
