@@ -35,8 +35,6 @@ void vbe_console_init(multiboot_tag_framebuffer_common_t* common)
         common->framebuffer_height,
         common->framebuffer_pitch,
         common->framebuffer_bpp);
-  DEBUG("_binary_console_sfn_start=0x%x", &_binary_console_sfn_start);
-  DEBUG("_binary_console_sfn_size=0x%x", &_binary_console_sfn_size);
 
   uint64_t pages_for_fb =
     (common->framebuffer_pitch * common->framebuffer_height) / PAGE_SIZE;
@@ -50,7 +48,7 @@ void vbe_console_init(multiboot_tag_framebuffer_common_t* common)
     (ssfn_font_t*)&_binary_console_sfn_start; /* the bitmap font to use */
 
   ssfn_dst.ptr =
-    common->framebuffer_addr; /* address of the linear frame buffer */
+    (uint8_t*)common->framebuffer_addr; /* address of the linear frame buffer */
   ssfn_dst.w = common->framebuffer_width;  /* width */
   ssfn_dst.h = common->framebuffer_height; /* height */
   ssfn_dst.p = common->framebuffer_pitch;  /* bytes per line */
@@ -61,8 +59,8 @@ void vbe_console_init(multiboot_tag_framebuffer_common_t* common)
 
 void vbe_on_paint_callback(vtconsole_t* vtc, vtcell_t* cell, int x, int y)
 {
-  ssfn_dst.x = x * 8;
-  ssfn_dst.y = y * 16;
+  ssfn_dst.x = x * CONSOLE_FONT_WIDTH;
+  ssfn_dst.y = y * CONSOLE_FONT_HEIGHT;
 
   if (cell->attr.bright) {
     ssfn_dst.fg = brightcolors[cell->attr.fg];

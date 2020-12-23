@@ -31,6 +31,15 @@ void print_step(const char* msg);
 void print_sub_step(const char* msg);
 void print_ok();
 void check_interrupts();
+void busywait(uint64_t seconds);
+
+void busywait(uint64_t seconds)
+{
+  uint64_t uptime = timer_uptime();
+  while (timer_uptime() < (uptime + seconds)) {
+    __asm__("hlt");
+  }
+}
 
 void print_welcome_messge()
 {
@@ -249,8 +258,19 @@ void kmain(uint64_t addr)
     return;
   }
 
+  if (console_mode_is_vbe()) {
+    print_step("switching to fullscreen mode");
+    busywait(2);
+
+    if (!console_fullscreen()) {
+      print_ko();
+      printf("\n");
+    }
+  } else {
+    printf("\n");
+  }
+
   // kshell
-  printf("\n");
   kshell_print_prompt();
 
   while (1) {
