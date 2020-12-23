@@ -3,11 +3,15 @@
 #define CONSOLE_H
 
 #include <core/multiboot.h>
+#include <stdbool.h>
 #include <stddef.h>
 #include <vtconsole/vtconsole.h>
 
 #define CONSOLE_WIDTH  80
 #define CONSOLE_HEIGHT 25
+
+#define CONSOLE_FONT_WIDTH  8
+#define CONSOLE_FONT_HEIGHT 16
 
 /**
  * Initializes the console (VT100).
@@ -29,6 +33,21 @@ void console_putchar(char c);
  * @return the number of characters printed to the console
  */
 size_t console_write(const char* s, size_t count);
+
+/**
+ * Indicates whether the console is initialized with VBE mode.
+ *
+ * @return `true` if the mode is VBE (graphics), `false` otherwise
+ */
+bool console_mode_is_vbe();
+
+/**
+ * Switches a console into "fullscreen", i.e. respects the VBE dimensions
+ * instead of the default one.
+ *
+ * @return `true` if the mode is VBE (graphics), `false` otherwise
+ */
+bool console_fullscreen();
 
 // Functions for the "VGA text mode"-based console.
 void vga_console_init();
