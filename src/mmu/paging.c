@@ -92,6 +92,21 @@ void remap_kernel(multiboot_info_t* mbi)
   identity_map(0xB8000, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
   MMU_DEBUG("%s", "mapped VGA!");
 
+  multiboot_tag_framebuffer_t* entry =
+    (multiboot_tag_framebuffer_t*)find_multiboot_tag(
+      mbi, MULTIBOOT_TAG_TYPE_FRAMEBUFFER);
+
+  if (entry->common.framebuffer_addr != 0xB8000) {
+    uint64_t pages_for_fb =
+      (entry->common.framebuffer_pitch * entry->common.framebuffer_height) /
+      PAGE_SIZE;
+
+    for (uint64_t i = 0; i < pages_for_fb; i++) {
+      identity_map((uint64_t)entry->common.framebuffer_addr + (i * PAGE_SIZE),
+                   PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
+    }
+  }
+
   identity_map(0x0, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
   MMU_DEBUG("%s", "mapped interrupt vector table!");
 
