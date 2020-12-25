@@ -6,11 +6,8 @@ int socket(int domain, int type, int protocol)
   return k_socket(domain, type, protocol);
 #else
   errno = 0;
-  int retval;
 
-  __asm__(INT_SYSCALL
-          : "=d"(retval)
-          : "a"(SYSCALL_SOCKET), "b"(domain), "c"(type), "S"(protocol));
+  int retval = syscall(SYSCALL_SOCKET, domain, type, protocol);
 
   SYSCALL_SET_ERRNO();
 

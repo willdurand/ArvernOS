@@ -9,6 +9,7 @@ extern int errno;
 #define EINVAL          22
 #define ENFILE          23
 #define EMFILE          24
+#define ENOSYS          38
 #define ENOTSOCK        88
 #define EPROTONOSUPPORT 93
 #define ESOCKTNOSUPPORT 94

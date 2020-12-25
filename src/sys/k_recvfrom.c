@@ -9,13 +9,12 @@
 ssize_t k_recvfrom(int sockfd,
                    void* buf,
                    size_t len,
-                   int flags,
+                   /* int flags, */
                    struct sockaddr* src_addr,
                    socklen_t* addrlen)
 {
   UNUSED(addrlen);
   UNUSED(src_addr);
-  UNUSED(flags);
 
   if (sockfd < 3) {
     SYS_DEBUG("invalid socket descriptor sd=%d", sockfd);

@@ -180,7 +180,3 @@ def_irq_handler 9
 def_irq_handler 10
 def_irq_handler 11
 def_irq_handler 12
-
-; define software interrupts
-; That is for syscalls
-def_int_handler 0x80

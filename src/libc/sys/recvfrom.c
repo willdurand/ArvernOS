@@ -9,30 +9,17 @@ ssize_t recvfrom(int sockfd,
 {
   ssize_t retval;
 
-#ifndef __is_libk
-  register int r10 __asm__("r10") = flags;
-  register struct sockaddr* r8 __asm__("r8") = src_addr;
-  register socklen_t* r9 __asm__("r9") = addrlen;
-#endif
-
   // We implement blocking here because the kernel does not run mulitple
   // processes/threads. It cannot be done in the syscall handler either because
   // it would block everything else.
   do {
 #ifdef __is_libk
-    retval = k_recvfrom(sockfd, buf, len, flags, src_addr, addrlen);
+    retval = k_recvfrom(sockfd, buf, len, /* flags, */ src_addr, addrlen);
 #else
     errno = 0;
 
-    __asm__(INT_SYSCALL
-            : "=d"(retval)
-            : "a"(SYSCALL_RECVFROM),
-              "S"(sockfd),
-              "d"(buf),
-              "c"(len),
-              "r"(r10),
-              "r"(r8),
-              "r"(r9));
+    retval = syscall(
+      SYSCALL_RECVFROM, sockfd, buf, len, /* flags, */ src_addr, addrlen);
 
     SYSCALL_SET_ERRNO();
 #endif

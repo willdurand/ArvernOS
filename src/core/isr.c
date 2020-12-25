@@ -7,7 +7,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/k_syscall.h>
 
 void breakpoint_handler(isr_stack_t* stack);
 void page_fault_handler(isr_stack_t* stack);
@@ -121,9 +120,6 @@ void isr_init()
   idt_register_interrupt(IRQ11, (uint64_t)irq11);
   idt_register_interrupt(IRQ12, (uint64_t)irq12);
 
-  // Syscalls
-  idt_register_gate(SYSCALL, (uint64_t)int0x80, INTERRUPT_GATE, 3);
-
   // Specific handlers for exceptions.
   isr_register_handler(EXCEPTION_BP, breakpoint_handler);
   isr_register_handler(EXCEPTION_PF, page_fault_handler);
@@ -140,12 +136,6 @@ void isr_disable_interrupts()
 
 void isr_int_handler(isr_stack_t stack)
 {
-  // We have a special handler for syscalls.
-  if (stack.id == SYSCALL) {
-    syscall_handler(&stack);
-    return;
-  }
-
   isr_handler_t handler = handlers[stack.id];
 
   if (handler != 0) {

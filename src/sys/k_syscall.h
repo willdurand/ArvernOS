@@ -9,22 +9,13 @@
 #include <sys/time.h>
 #include <sys/types.h>
 
-/// This type represents a syscall handler.
-typedef void (*syscall_handler_t)(isr_stack_t* stack);
+// This is defined in `src/asm/k_syscall.asm`.
+extern void syscall_handler();
 
 /**
  * Initializes the syscalls management.
  */
 void syscall_init();
-
-/**
- * This is the handler attached to the interrupt used by the syscalls. It is
- * called by the interrupt handler and responsible for finding the right
- * syscall handler to call.
- *
- * @param registers the registers passed to the handler
- */
-void syscall_handler(isr_stack_t* stack);
 
 int k_open(const char* pathname, uint32_t flags);
 int k_close(int fd);
@@ -36,7 +27,7 @@ int k_reboot(int command);
 ssize_t k_sendto(int sockfd,
                  const void* buf,
                  size_t len,
-                 int flags,
+                 /* int flags, */
                  const struct sockaddr* dst_addr,
                  socklen_t addrlen);
 int k_socket(int domain, int type, int protocol);
@@ -45,7 +36,7 @@ void k_test(const char* s);
 ssize_t k_recvfrom(int sockfd,
                    void* buf,
                    size_t len,
-                   int flags,
+                   /* int flags, */
                    struct sockaddr* src_addr,
                    socklen_t* addrlen);
 int k_gethostbyname2(const char* name, struct in_addr* in);

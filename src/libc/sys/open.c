@@ -6,11 +6,8 @@ int open(const char* pathname, uint32_t flags)
   return k_open(pathname, flags);
 #else
   errno = 0;
-  int retval;
 
-  __asm__(INT_SYSCALL
-          : "=d"(retval)
-          : "a"(SYSCALL_OPEN), "b"(pathname), "c"(flags));
+  int retval = syscall(SYSCALL_OPEN, pathname, flags);
 
   SYSCALL_SET_ERRNO();
 

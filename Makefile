@@ -42,6 +42,7 @@ VBE_BPP    := 32
 LIBK_OBJECTS     := $(patsubst %.c, $(LIBK_OBJS_DIR)/%.o, $(shell find src $(EXTERNALS) -name '*.c'))
 LIBK_ASM_OBJECTS := $(patsubst %.asm, $(LIBK_OBJS_DIR)/%.o, $(shell find src/asm -name '*.asm'))
 LIBC_OBJECTS     := $(patsubst %.c, $(LIBC_OBJS_DIR)/%.o, $(shell find src/libc $(EXTERNALS) -name '*.c'))
+LIBC_ASM_OBJECTS := $(patsubst %.asm, $(LIBC_OBJS_DIR)/%.o, $(shell find src/libc/asm -name '*.asm'))
 LIBC_TEST_FILES  := $(patsubst test/%.c, %, $(shell find test/libc -name '*.c'))
 
 NASM_OPTIONS = -dVBE_WIDTH=$(VBE_WIDTH) -dVBE_HEIGHT=$(VBE_HEIGHT) -dVBE_BPP=$(VBE_BPP)
@@ -152,12 +153,16 @@ libk: ## build the libk (kernel)
 libk: $(LIBK)
 .PHONY: libk
 
+$(LIBC_ASM_OBJECTS): $(LIBC_OBJS_DIR)/%.o: %.asm
+	mkdir -p $(dir $@)
+	$(NASM) $(NASM_OPTIONS) -f elf64 $< -o $@
+
 $(LIBC_OBJECTS): CFLAGS += -D__is_libc
 $(LIBC_OBJECTS): $(LIBC_OBJS_DIR)/%.o: %.c
 	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(LIBC): $(LIBC_OBJECTS)
+$(LIBC): $(LIBC_ASM_OBJECTS) $(LIBC_OBJECTS)
 	$(AR) rcs $@ $^
 
 libc: ## build the libc (userland)

@@ -11,8 +11,6 @@
 #include <sys/time.h>
 #include <sys/types.h>
 
-#define INT_SYSCALL            "int $0x80"
-#define NB_SYSCALLS            13
 #define SYSCALL_TEST           1
 #define SYSCALL_WRITE          2
 #define SYSCALL_READ           3
@@ -33,9 +31,13 @@
     retval = -1;                                                               \
   }
 
-// This is needed to export the kernel syscall implementations.
 #ifdef __is_libk
+// This is needed to export the kernel syscall implementations.
 #include <sys/k_syscall.h>
+#else
+// This is defined in src/libc/syscall.asm. The maximum number of syscall
+// arguments is 5. Other arguments should be put on the stack.
+extern int64_t syscall(uint64_t id, ...);
 #endif
 
 /**
