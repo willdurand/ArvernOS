@@ -2,6 +2,8 @@
 
 global start ; exports a label (makes it public). As start will be the entry
              ; point of our kernel, it needs to be public.
+global gdt64 ; exports the GDT as well
+
 
 section .text ; executable code
 bits 32 ; specifies that the following lines are 32-bit instructions.
@@ -25,7 +27,7 @@ start:
   ; load the 64-bit GDT
   lgdt [gdt64.pointer]
 
-  jmp gdt64.code:long_mode_start
+  jmp gdt64.kernel_code:long_mode_start
 
   ; Should not be reached.
   hlt
@@ -196,12 +198,13 @@ stack_top:
 ; 64-bit code, we need to set up a new Global Descriptor Table.
 section .rodata
 gdt64:
+.null_1;
   ; `dq` means 'define quad-word'
   dq 0
-.code: equ $ - gdt64
-  dq (1<<44) | (1<<47) | (1<<41) | (1<<43) | (1<<53)
-.data: equ $ - gdt64
-  dq (1<<44) | (1<<47) | (1<<41)
+.kernel_code: equ $ - gdt64
+  dq (1<<41) | (1<<43) | (1<<44) | (1<<47) | (1<<53)
+.kernel_data: equ $ - gdt64
+  dq (1<<41) | (1<<44) | (1<<47)
 .pointer:
   dw .pointer - gdt64 - 1
   dq gdt64
