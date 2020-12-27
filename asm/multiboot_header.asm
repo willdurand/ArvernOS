@@ -15,7 +15,7 @@ header_start:
   dd 0x100000000 - (MULTIBOOT2_MAGIC_NUMBER + 0 + (header_end - header_start))
 
 %ifdef ENABLE_FRAMEBUFFER
-  ; framebuffer
+; framebuffer
 framebuffer_start:
   dw 5
   dw 0
