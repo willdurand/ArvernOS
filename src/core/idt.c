@@ -4,7 +4,7 @@
 
 static idt_gate_t idt[IDT_ENTRIES] = { 0 };
 
-void idt_init()
+void idt_load()
 {
   idt_register_t idt_reg = { .base = (uint64_t)idt, .limit = sizeof(idt) - 1 };
   __asm__("lidt %0" : : "m"(idt_reg));

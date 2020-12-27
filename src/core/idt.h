@@ -53,9 +53,11 @@ typedef struct idt_register
 } __attribute__((packed)) idt_register_t;
 
 /**
- * Initializes the _Interrupt Descriptor Table_.
+ * Loads the _Interrupt Descriptor Table_. The table should be updated with
+ * `idt_register_gate()` and/or `idt_register_interrupt()` before calling this
+ * function.
  */
-void idt_init();
+void idt_load();
 
 /**
  * Registers a gate in the IDT.

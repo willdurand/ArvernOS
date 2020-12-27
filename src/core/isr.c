@@ -129,7 +129,7 @@ void isr_init()
   isr_register_handler(EXCEPTION_DF, double_fault_handler);
   isr_register_handler(EXCEPTION_PF, page_fault_handler);
 
-  idt_init();
+  idt_load();
 }
 
 void irq_init()
