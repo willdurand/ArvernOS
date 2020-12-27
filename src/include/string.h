@@ -40,4 +40,13 @@ size_t strspn(const char* s1, const char* s2);
 
 char* strchr(const char* s, int c);
 
+// Scans the initial `n` bytes of the memory area pointed to by `str` for the
+// first instance of `c`. Both `c` and the bytes of the memory area pointed to
+// by `str` are interpreted as unsigned char.
+void* memchr(const void* str, int c, size_t n);
+
+// Compares the first `length` bytes of memory area `a_ptr` and memory area
+// `b_ptr`.
+int memcmp(const void* a_ptr, const void* b_ptr, size_t length);
+
 #endif
