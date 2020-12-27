@@ -1,6 +1,7 @@
 #include "kmain.h"
 #include <config/inish.h>
 #include <core/elf.h>
+#include <core/gdt.h>
 #include <core/isr.h>
 #include <core/multiboot.h>
 #include <core/port.h>
@@ -32,6 +33,20 @@ void print_sub_step(const char* msg);
 void print_ok();
 void check_interrupts();
 void busywait(uint64_t seconds);
+void print_debug_gdt();
+
+void print_debug_gdt()
+{
+  // From `asm/boot.asm`.
+  extern gdt_table_t gdt64;
+
+  DEBUG("gdt64.kernel_code: type=0x%02x limit19_16_and_flags=0x%02x",
+        gdt64.kernel_code.type,
+        gdt64.kernel_code.limit19_16_and_flags);
+  DEBUG("gdt64.kernel_data: type=0x%02x limit19_16_and_flags=0x%02x",
+        gdt64.kernel_data.type,
+        gdt64.kernel_data.limit19_16_and_flags);
+}
 
 void busywait(uint64_t seconds)
 {
@@ -109,6 +124,7 @@ void kmain(uint64_t addr)
   console_init(&entry->common);
 
   print_welcome_messge();
+  print_debug_gdt();
 
   print_step("initializing interruptions");
   isr_init();
