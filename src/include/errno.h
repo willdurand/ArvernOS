@@ -14,4 +14,8 @@ extern int errno;
 #define ESOCKTNOSUPPORT 94
 #define EAFNOSUPPORT    97
 
+// Returns a pointer to a string that describes the error code passed in the
+// argument `errnum`.
+char* strerror(int errnum);
+
 #endif
