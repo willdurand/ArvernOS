@@ -227,4 +227,5 @@ long_mode_start:
   call kmain
 
   ; Should not happen.
+  cli
   hlt
