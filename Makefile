@@ -49,7 +49,7 @@ CFLAGS = -DKERNEL_NAME=\"$(OS_NAME)\" \
 	 -fno-builtin -fstack-protector -mno-red-zone \
 	 -I src/ -I src/include/ -I libs/ -I libs/scalable-font2/
 
-DEBUG_CFLAGS = -DENABLE_KERNEL_DEBUG
+DEBUG_CFLAGS = -g -DENABLE_KERNEL_DEBUG
 
 ifeq ($(ENABLE_CONFIG_DEBUG), 1)
 	DEBUG_CFLAGS += -DENABLE_CONFIG_DEBUG
@@ -195,7 +195,6 @@ fmt: ## automatically format the code with clang-format
 .PHONY: fmt
 
 gdb: ## build, run the OS in debug mode and enable GDB
-gdb: CFLAGS += -g -O0
 gdb: QEMU_OPTIONS += -s -S
 gdb: debug run
 .PHONY: gdb
