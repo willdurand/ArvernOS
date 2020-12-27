@@ -5,6 +5,7 @@
 #include <core/isr.h>
 #include <core/multiboot.h>
 #include <core/port.h>
+#include <core/tss.h>
 #include <drivers/cmos.h>
 #include <drivers/keyboard.h>
 #include <drivers/rtl8139.h>
@@ -34,6 +35,16 @@ void print_ok();
 void check_interrupts();
 void busywait(uint64_t seconds);
 void print_debug_gdt();
+void print_debug_tss();
+
+void print_debug_tss()
+{
+  // From `asm/boot.asm`.
+  extern tss_t tss;
+
+  DEBUG(
+    "tss: rsp0=0x%02x rsp1=0x%02x rsp2=0x%02x", tss.rsp0, tss.rsp1, tss.rsp2);
+}
 
 void print_debug_gdt()
 {
@@ -46,6 +57,12 @@ void print_debug_gdt()
   DEBUG("gdt64.kernel_data: type=0x%02x limit19_16_and_flags=0x%02x",
         gdt64.kernel_data.type,
         gdt64.kernel_data.limit19_16_and_flags);
+  DEBUG("gdt64.tss_low    : type=0x%02x limit19_16_and_flags=0x%02x",
+        gdt64.tss_low.type,
+        gdt64.tss_low.limit19_16_and_flags);
+  DEBUG("gdt64.tss_high   : type=0x%02x limit19_16_and_flags=0x%02x",
+        gdt64.tss_high.type,
+        gdt64.tss_high.limit19_16_and_flags);
 }
 
 void busywait(uint64_t seconds)
@@ -125,8 +142,9 @@ void kmain(uint64_t addr)
 
   print_welcome_messge();
   print_debug_gdt();
+  print_debug_tss();
 
-  print_step("initializing interruptions");
+  print_step("initializing interrupts");
   isr_init();
   irq_init();
   print_ok();
