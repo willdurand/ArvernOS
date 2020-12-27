@@ -3,7 +3,7 @@
 global start ; exports a label (makes it public). As start will be the entry
              ; point of our kernel, it needs to be public.
 global gdt64 ; exports the GDT as well
-
+global tss   ; ...and the TSS
 
 section .text ; executable code
 bits 32 ; specifies that the following lines are 32-bit instructions.
@@ -26,6 +26,10 @@ start:
 
   ; load the 64-bit GDT
   lgdt [gdt64.pointer]
+
+  ; Load the TSS
+  mov ax, gdt64.tss
+  ltr ax
 
   jmp gdt64.kernel_code:long_mode_start
 
@@ -205,9 +209,44 @@ gdt64:
   dq (1<<41) | (1<<43) | (1<<44) | (1<<47) | (1<<53)
 .kernel_data: equ $ - gdt64
   dq (1<<41) | (1<<44) | (1<<47)
+.tss: equ $ - gdt64
+  ; low
+  dw tss.size & 0xffff       ; limit 15:0
+  dw tss.base & 0xffff       ; base 15:0
+  db (tss.base >> 16) & 0xff ; base 23:16
+  db 0x89                    ; type: present + ring 0 + executable
+  db 0xa0                    ; limit 19:16 and flags
+  db (tss.base >> 24) & 0xff ; base 31:24
+  ; high
+  dw (tss.base >> 32) & 0xffff
+  dw (tss.base >> 48) & 0xffff
+  db 0
+  db 0
+  db 0
+  db 0
 .pointer:
   dw .pointer - gdt64 - 1
   dq gdt64
+
+; TSS
+tss:
+.base: equ tss - $$
+  dd 0 ; reserved0
+  dq 0 ; rsp0 (Privilege Stack Table)
+  dq 0 ; rsp1
+  dq 0 ; rsp2
+  dq 0 ; reserved1
+  dq 0 ; ist1 (Interrupt Stack Table)
+  dq 0 ; ist2
+  dq 0 ; ist3
+  dq 0 ; ist4
+  dq 0 ; ist5
+  dq 0 ; ist6
+  dq 0 ; ist7
+  dq 0 ; reserved2
+  dw 0 ; reserved3
+  dw 0 ; iopb_offset (I/O Map Base Address)
+.size: equ $ - tss
 
 ; -----------------------------------------------------------------------------
 ; 64-bit code below

@@ -18,6 +18,8 @@ typedef struct gdt_table
   gdt_entry_t null_1;
   gdt_entry_t kernel_code;
   gdt_entry_t kernel_data;
+  gdt_entry_t tss_low;
+  gdt_entry_t tss_high;
 } gdt_table_t;
 
 #endif
