@@ -12,7 +12,7 @@ uint8_t buffer_length = 0;
 uint8_t read_index = 0;
 uint8_t write_index = 0;
 
-static void keyboard_callback(stack_t* stack)
+static void keyboard_callback(isr_stack_t* stack)
 {
   uint8_t status = port_byte_in(KEYBOARD_STATUS_PORT);
 

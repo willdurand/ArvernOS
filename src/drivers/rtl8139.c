@@ -14,7 +14,7 @@ const char* get_name();
 uint8_t* rtl8139_get_mac_address();
 void rtl8139_transmit_frame(void* data, uint32_t len);
 void rtl8139_receive_frame();
-static void rtl8139_callback(stack_t* stack);
+static void rtl8139_callback(isr_stack_t* stack);
 
 static pci_device_t device = { 0 };
 static uint32_t ioaddr = 0;
@@ -177,7 +177,7 @@ void rtl8139_receive_frame()
   rx_index = index;
 }
 
-static void rtl8139_callback(stack_t* stack)
+static void rtl8139_callback(isr_stack_t* stack)
 {
   NET_DEBUG("%s", "interrupt received");
 

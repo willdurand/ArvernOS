@@ -15,7 +15,7 @@ void kernel_panic(const char* format, ...)
   printf("\n\n%45s\033[0m", "SYSTEM HALTED!");
 
   vga_text_disable_cursor();
-  irq_disable();
+  isr_disable_interrupts();
 
   while (1) {
     __asm__("hlt");

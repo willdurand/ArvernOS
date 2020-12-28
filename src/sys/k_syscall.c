@@ -7,19 +7,19 @@
 static syscall_handler_t syscall_handlers[NB_SYSCALLS + 1] = { 0 };
 
 void syscall_register_handler(uint8_t id, syscall_handler_t handler);
-void syscall_open(registers_t* registers);
-void syscall_close(registers_t* registers);
-void syscall_read(registers_t* registers);
-void syscall_lseek(registers_t* registers);
-void syscall_fstat(registers_t* registers);
-void syscall_gettimeofday(registers_t* registers);
-void syscall_reboot(registers_t* registers);
-void syscall_sendto(registers_t* registers);
-void syscall_socket(registers_t* registers);
-void syscall_write(registers_t* registers);
-void syscall_test(registers_t* registers);
-void syscall_recvfrom(registers_t* registers);
-void syscall_gethostbyname2(registers_t* registers);
+void syscall_open(isr_stack_t* stack);
+void syscall_close(isr_stack_t* stack);
+void syscall_read(isr_stack_t* stack);
+void syscall_lseek(isr_stack_t* stack);
+void syscall_fstat(isr_stack_t* stack);
+void syscall_gettimeofday(isr_stack_t* stack);
+void syscall_reboot(isr_stack_t* stack);
+void syscall_sendto(isr_stack_t* stack);
+void syscall_socket(isr_stack_t* stack);
+void syscall_write(isr_stack_t* stack);
+void syscall_test(isr_stack_t* stack);
+void syscall_recvfrom(isr_stack_t* stack);
+void syscall_gethostbyname2(isr_stack_t* stack);
 
 void syscall_init()
 {
@@ -43,127 +43,127 @@ void syscall_register_handler(uint8_t id, syscall_handler_t handler)
   syscall_handlers[id] = handler;
 }
 
-void syscall_handler(registers_t* registers)
+void syscall_handler(isr_stack_t* stack)
 {
-  syscall_handler_t handler = syscall_handlers[registers->rax];
+  syscall_handler_t handler = syscall_handlers[stack->rax];
 
   if (handler != 0) {
-    handler(registers);
+    handler(stack);
     return;
   }
 
-  PANIC("Received unimplemented syscall: %d\n", registers->rax);
+  PANIC("Received unimplemented syscall: %d\n", stack->rax);
 }
 
-void syscall_open(registers_t* registers)
+void syscall_open(isr_stack_t* stack)
 {
-  const char* pathname = (const char*)registers->rbx;
-  uint32_t flags = registers->rcx;
+  const char* pathname = (const char*)stack->rbx;
+  uint32_t flags = stack->rcx;
 
-  registers->rdx = k_open(pathname, flags);
+  stack->rdx = k_open(pathname, flags);
 }
 
-void syscall_close(registers_t* registers)
+void syscall_close(isr_stack_t* stack)
 {
-  int fd = (int)registers->rbx;
+  int fd = (int)stack->rbx;
 
-  registers->rdx = k_close(fd);
+  stack->rdx = k_close(fd);
 }
 
-void syscall_read(registers_t* registers)
+void syscall_read(isr_stack_t* stack)
 {
-  int fd = (int)registers->rbx;
-  void* buf = (char*)registers->rcx;
-  size_t count = (size_t)registers->rsi;
+  int fd = (int)stack->rbx;
+  void* buf = (char*)stack->rcx;
+  size_t count = (size_t)stack->rsi;
 
-  registers->rdx = k_read(fd, buf, count);
+  stack->rdx = k_read(fd, buf, count);
 }
 
-void syscall_lseek(registers_t* registers)
+void syscall_lseek(isr_stack_t* stack)
 {
-  int fd = (int)registers->rbx;
-  off_t offset = (off_t)registers->rcx;
-  int whence = (int)registers->rsi;
+  int fd = (int)stack->rbx;
+  off_t offset = (off_t)stack->rcx;
+  int whence = (int)stack->rsi;
 
-  registers->rdx = k_lseek(fd, offset, whence);
+  stack->rdx = k_lseek(fd, offset, whence);
 }
 
-void syscall_fstat(registers_t* registers)
+void syscall_fstat(isr_stack_t* stack)
 {
-  int fd = (int)registers->rbx;
-  struct stat* statbuf = (struct stat*)registers->rcx;
+  int fd = (int)stack->rbx;
+  struct stat* statbuf = (struct stat*)stack->rcx;
 
-  registers->rdx = k_fstat(fd, statbuf);
+  stack->rdx = k_fstat(fd, statbuf);
 }
 
-void syscall_gettimeofday(registers_t* registers)
+void syscall_gettimeofday(isr_stack_t* stack)
 {
-  struct timeval* t = (struct timeval*)registers->rbx;
-  void* z = (void*)registers->rcx;
+  struct timeval* t = (struct timeval*)stack->rbx;
+  void* z = (void*)stack->rcx;
 
-  registers->rdx = k_gettimeofday(t, z);
+  stack->rdx = k_gettimeofday(t, z);
 }
 
-void syscall_reboot(registers_t* registers)
+void syscall_reboot(isr_stack_t* stack)
 {
-  int command = (int)registers->rbx;
+  int command = (int)stack->rbx;
 
-  registers->rdx = k_reboot(command);
+  stack->rdx = k_reboot(command);
 }
 
-void syscall_sendto(registers_t* registers)
+void syscall_sendto(isr_stack_t* stack)
 {
-  int sockfd = (int)registers->rsi;
-  const void* buf = (const void*)registers->rdx;
-  size_t len = (size_t)registers->rcx;
-  int flags = (int)registers->r10;
-  const struct sockaddr* dst_addr = (const struct sockaddr*)registers->r8;
-  socklen_t addrlen = (socklen_t)registers->r9;
+  int sockfd = (int)stack->rsi;
+  const void* buf = (const void*)stack->rdx;
+  size_t len = (size_t)stack->rcx;
+  int flags = (int)stack->r10;
+  const struct sockaddr* dst_addr = (const struct sockaddr*)stack->r8;
+  socklen_t addrlen = (socklen_t)stack->r9;
 
-  registers->rdx = k_sendto(sockfd, buf, len, flags, dst_addr, addrlen);
+  stack->rdx = k_sendto(sockfd, buf, len, flags, dst_addr, addrlen);
 }
 
-void syscall_socket(registers_t* registers)
+void syscall_socket(isr_stack_t* stack)
 {
-  int domain = (int)registers->rbx;
-  int type = (int)registers->rcx;
-  int protocol = (int)registers->rsi;
+  int domain = (int)stack->rbx;
+  int type = (int)stack->rcx;
+  int protocol = (int)stack->rsi;
 
-  registers->rdx = k_socket(domain, type, protocol);
+  stack->rdx = k_socket(domain, type, protocol);
 }
 
-void syscall_write(registers_t* registers)
+void syscall_write(isr_stack_t* stack)
 {
-  int fd = (int)registers->rbx;
-  const char* buf = (char*)registers->rcx;
-  size_t count = (size_t)registers->rsi;
+  int fd = (int)stack->rbx;
+  const char* buf = (char*)stack->rcx;
+  size_t count = (size_t)stack->rsi;
 
-  registers->rdx = k_write(fd, buf, count);
+  stack->rdx = k_write(fd, buf, count);
 }
 
-void syscall_test(registers_t* registers)
+void syscall_test(isr_stack_t* stack)
 {
-  const char* s = (const char*)registers->rbx;
+  const char* s = (const char*)stack->rbx;
 
   k_test(s);
 }
 
-void syscall_recvfrom(registers_t* registers)
+void syscall_recvfrom(isr_stack_t* stack)
 {
-  int sockfd = (int)registers->rsi;
-  void* buf = (void*)registers->rdx;
-  size_t len = (size_t)registers->rcx;
-  int flags = (int)registers->r10;
-  struct sockaddr* src_addr = (struct sockaddr*)registers->r8;
-  socklen_t* addrlen = (socklen_t*)registers->r9;
+  int sockfd = (int)stack->rsi;
+  void* buf = (void*)stack->rdx;
+  size_t len = (size_t)stack->rcx;
+  int flags = (int)stack->r10;
+  struct sockaddr* src_addr = (struct sockaddr*)stack->r8;
+  socklen_t* addrlen = (socklen_t*)stack->r9;
 
-  registers->rdx = k_recvfrom(sockfd, buf, len, flags, src_addr, addrlen);
+  stack->rdx = k_recvfrom(sockfd, buf, len, flags, src_addr, addrlen);
 }
 
-void syscall_gethostbyname2(registers_t* registers)
+void syscall_gethostbyname2(isr_stack_t* stack)
 {
-  const char* name = (const char*)registers->rsi;
-  struct in_addr* in = (struct in_addr*)registers->rdx;
+  const char* name = (const char*)stack->rsi;
+  struct in_addr* in = (struct in_addr*)stack->rdx;
 
-  registers->rdx = k_gethostbyname2(name, in);
+  stack->rdx = k_gethostbyname2(name, in);
 }

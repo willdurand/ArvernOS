@@ -144,9 +144,8 @@ void kmain(uint64_t addr)
   print_debug_gdt();
   print_debug_tss();
 
-  print_step("initializing interrupts");
+  print_step("initializing interrupt service routine");
   isr_init();
-  irq_init();
   print_ok();
 
   print_step("initializing paging");
@@ -285,7 +284,7 @@ void kmain(uint64_t addr)
       __asm__("hlt");
     }
 
-    irq_disable();
+    isr_disable_interrupts();
     // Power-off for QEMU, see: https://wiki.osdev.org/Shutdown
     port_word_out(0x604, 0x2000);
 
