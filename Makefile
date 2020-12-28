@@ -1,46 +1,52 @@
-NASM = nasm
-QEMU = qemu-system-x86_64
+NASM := nasm
+QEMU := qemu-system-x86_64
 
 ifeq ($(shell uname -s),Darwin)
-	CC = x86_64-elf-gcc
-	LD = x86_64-elf-ld
-	AR = x86_64-elf-ar
+	CC := x86_64-elf-gcc
+	LD := x86_64-elf-ld
+	AR := x86_64-elf-ar
 else
-	CC = gcc
-	LD = ld
-	AR = ar
+	CC := gcc
+	LD := ld
+	AR := ar
 endif
 
-OS_NAME    = willOS
-BUILD_DIR  = build
-LINKER     = linker.ld
-ISO_DIR    = $(BUILD_DIR)/isofiles
-KERNEL_DIR = $(ISO_DIR)/boot
-GRUB_DIR   = $(KERNEL_DIR)/grub
-GRUB_CFG   = $(GRUB_DIR)/grub.cfg
-KERNEL_BIN = kernel.bin
-KERNEL     = $(KERNEL_DIR)/$(KERNEL_BIN)
-ISO        = $(BUILD_DIR)/$(OS_NAME).iso
-LIBC       = $(BUILD_DIR)/libc-$(OS_NAME).a
-LIBK       = $(BUILD_DIR)/libk-$(OS_NAME).a
-INITRD_DIR = initrd
-INITRD_TAR = initrd.tar
-INITRD     = $(KERNEL_DIR)/$(INITRD_TAR)
-LIBS_DIRS  = libs/liballoc libs/printf libs/vtconsole
+OS_NAME    := willOS
+BUILD_DIR  := build
+LINKER     := linker.ld
+ISO_DIR    := $(BUILD_DIR)/isofiles
+KERNEL_DIR := $(ISO_DIR)/boot
+GRUB_DIR   := $(KERNEL_DIR)/grub
+GRUB_CFG   := $(GRUB_DIR)/grub.cfg
+KERNEL_BIN := kernel.bin
+KERNEL     := $(KERNEL_DIR)/$(KERNEL_BIN)
+ISO        := $(BUILD_DIR)/$(OS_NAME).iso
+LIBC       := $(BUILD_DIR)/libc-$(OS_NAME).a
+LIBK       := $(BUILD_DIR)/libk-$(OS_NAME).a
+INITRD_DIR := initrd
+INITRD_TAR := initrd.tar
+INITRD     := $(KERNEL_DIR)/$(INITRD_TAR)
+LIBS_DIRS  := libs/liballoc libs/printf libs/vtconsole
+GIT_HASH   := $(shell git rev-parse --short HEAD)
 # This should be a bitmap font.
-CONSOLE_FONT_PATH = libs/scalable-font2/fonts/u_vga16.sfn.gz
-CONSOLE_FONT      = $(BUILD_DIR)/font.o
-# This is used in `asm/multiboot_header.asm`.
-VBE_WIDTH  = 1024
-VBE_HEIGHT = 768
-VBE_BPP    = 32
+CONSOLE_FONT_PATH := libs/scalable-font2/fonts/u_vga16.sfn.gz
+CONSOLE_FONT      := $(BUILD_DIR)/font.o
+# This is used in `src/asm/multiboot_header.asm`.
+VBE_WIDTH  := 1024
+VBE_HEIGHT := 768
+VBE_BPP    := 32
 
-ASM_OBJECTS  := $(patsubst %.asm,%.o,$(shell find asm -name '*.asm'))
-LIBK_OBJECTS := $(patsubst %.c,%_k.o,$(shell find $(LIBS_DIRS) src -name '*.c'))
-LIBC_OBJECTS := $(patsubst %.c,%.o,$(shell find src/libc $(LIBS_DIRS) -name '*.c'))
-TEST_FILES   := $(patsubst test/%.c,%,$(shell find test/libc -name '*.c'))
+LIBK_OBJECTS     := $(patsubst %.c, %_k.o, $(shell find src $(LIBS_DIRS) -name '*.c'))
+LIBK_ASM_OBJECTS := $(patsubst %.asm, %.o, $(shell find src/asm -name '*.asm'))
+LIBC_OBJECTS     := $(patsubst %.c, %.o, $(shell find src/libc $(LIBS_DIRS) -name '*.c'))
+LIBC_TEST_FILES  := $(patsubst test/%.c, %, $(shell find test/libc -name '*.c'))
 
-GIT_HASH := $(shell git rev-parse --short HEAD)
+NASM_OPTIONS = -dVBE_WIDTH=$(VBE_WIDTH) -dVBE_HEIGHT=$(VBE_HEIGHT) -dVBE_BPP=$(VBE_BPP)
+
+QEMU_OPTIONS = -m 500M \
+	       -netdev user,id=u1,ipv6=off,dhcpstart=10.0.2.20 \
+	       -device rtl8139,netdev=u1 \
+	       -object filter-dump,id=f1,netdev=u1,file=./logs/traffic.pcap
 
 CFLAGS = -DKERNEL_NAME=\"$(OS_NAME)\" \
 	 -DGIT_HASH=\"$(GIT_HASH)\" \
@@ -79,17 +85,10 @@ ifeq ($(ENABLE_ALL_DEBUG), 1)
 	DEBUG_CFLAGS += -DENABLE_CONFIG_DEBUG -DENABLE_CORE_DEBUG -DENABLE_FS_DEBUG -DENABLE_MMU_DEBUG -DENABLE_NET_DEBUG -DENABLE_SYS_DEBUG
 endif
 
-NASM_OPTIONS = -dVBE_WIDTH=$(VBE_WIDTH) -dVBE_HEIGHT=$(VBE_HEIGHT) -dVBE_BPP=$(VBE_BPP)
-
 ifeq ($(ENABLE_FRAMEBUFFER), 1)
 	CFLAGS += -DENABLE_FRAMEBUFFER
 	NASM_OPTIONS += -dENABLE_FRAMEBUFFER
 endif
-
-QEMU_OPTIONS = -m 500M \
-	       -netdev user,id=u1,ipv6=off,dhcpstart=10.0.2.20 \
-	       -device rtl8139,netdev=u1 \
-	       -object filter-dump,id=f1,netdev=u1,file=./logs/traffic.pcap
 
 GRUB_KERNEL_CMDLINE =
 
@@ -109,60 +108,81 @@ export GRUB_CFG_BODY
 
 default: iso
 
+$(BUILD_DIR):
+	mkdir -p $(BUILD_DIR)
+
+$(ISO_DIR): $(BUILD_DIR)
+	mkdir -p $(ISO_DIR)
+
+$(KERNEL_DIR): $(ISO_DIR)
+	mkdir -p $(KERNEL_DIR)
+
+$(GRUB_DIR): $(KERNEL_DIR)
+	mkdir -p $(GRUB_DIR)
+
+$(KERNEL): $(KERNEL_DIR) $(LIBK_ASM_OBJECTS) $(LIBK) $(CONSOLE_FONT)
+	$(LD) --nmagic --output=$@ --script=$(LINKER) $(LIBK_ASM_OBJECTS) $(LIBK) $(CONSOLE_FONT)
+
 kernel: ## compile the kernel
 kernel: $(KERNEL)
 .PHONY: kernel
 
-$(KERNEL): $(ASM_OBJECTS) $(LIBK) $(CONSOLE_FONT)
-	mkdir -p $(KERNEL_DIR)
-	$(LD) --nmagic --output=$@ --script=$(LINKER) $(ASM_OBJECTS) $(LIBK) $(CONSOLE_FONT)
-
-$(ASM_OBJECTS): %.o: %.asm
-	mkdir -p $(BUILD_DIR)
+$(LIBK_ASM_OBJECTS): %.o: %.asm
 	$(NASM) $(NASM_OPTIONS) -f elf64 $<
 
 $(LIBK_OBJECTS): CFLAGS += -D__is_libk
 $(LIBK_OBJECTS): %_k.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
+$(LIBK): $(LIBK_OBJECTS)
+	$(AR) rcs $@ $^
+
+libk: ## build the libk (kernel)
+libk: $(LIBK)
+.PHONY: libk
+
 $(LIBC_OBJECTS): CFLAGS += -D__is_libc
 $(LIBC_OBJECTS): %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(LIBK): $(LIBK_OBJECTS)
-	mkdir -p $(BUILD_DIR)
-	$(AR) rcs $@ $^
-
 $(LIBC): $(LIBC_OBJECTS)
-	mkdir -p $(BUILD_DIR)
 	$(AR) rcs $@ $^
 
-libc: ## build the libc (for userland)
+libc: ## build the libc (userland)
 libc: $(LIBC)
 .PHONY: libc
 
-$(CONSOLE_FONT):
+$(CONSOLE_FONT): $(BUILD_DIR)
 	cp $(CONSOLE_FONT_PATH) $(BUILD_DIR)/console.sfn.gz
 	gunzip -f $(BUILD_DIR)/console.sfn.gz
 	# We have to do this because we cannot control the symbol name generated by
 	# `ld`. We get a pretty nice name by cd'ing into the build directory.
 	cd $(BUILD_DIR) && $(LD) -r -b binary -o ../$(CONSOLE_FONT) console.sfn
 
+console-font: ## compile the (default) kernel console font
 console-font: $(CONSOLE_FONT)
 .PHONY: console-font
 
-iso: ## build the image of the OS (.iso)
-iso: $(ISO)
-.PHONY: iso
+$(INITRD): userland
+	cp -R userland/bin $(INITRD_DIR)
+	echo "$(OS_NAME) build info\n\nhash: $(GIT_HASH)\ndate: $(shell date)" > $(INITRD_DIR)/info
+	cd $(INITRD_DIR) && tar -cvf ../$(INITRD) *
 
-$(GRUB_CFG):
-	mkdir -p $(GRUB_DIR)
+initrd: ## build the init ram disk
+initrd: $(INITRD)
+.PHONY: initrd
+
+$(GRUB_CFG): $(GRUB_DIR)
 	echo "$$GRUB_CFG_BODY" > $@
 
 $(ISO): $(KERNEL) $(INITRD) $(GRUB_CFG)
 	grub-mkrescue -o $@ $(ISO_DIR)
 
-run: ## run the OS
+iso: ## build the image of the OS (.iso)
+iso: $(ISO)
+.PHONY: iso
+
+run: ## run the OS in release mode
 run: QEMU_OPTIONS += -serial file:./logs/release.log
 run: $(ISO)
 	$(QEMU) -cdrom $< $(QEMU_OPTIONS)
@@ -216,7 +236,7 @@ test: VALGRIND_OPTS = --track-origins=yes --leak-check=yes
 test: libc
 	# libc
 	mkdir -p $(BUILD_DIR)/libc/string
-	for file in $(TEST_FILES); do \
+	for file in $(LIBC_TEST_FILES); do \
 		echo ; \
 		gcc -shared src/$$file.o -o build/$$file.so ; \
 		gcc -I./test/ -O0 test/$$file.c -o build/$$file ; \
@@ -251,17 +271,10 @@ test: libc
 version: ## print tool versions
 	$(CC) --version
 	$(LD) --version
+	$(AR) --version
+	$(NASM) --version
 	$(QEMU) --version
 .PHONY: version
-
-$(INITRD): userland
-	cp -R userland/bin $(INITRD_DIR)
-	echo "$(OS_NAME) build info\n\nhash: $(GIT_HASH)\ndate: $(shell date)" > $(INITRD_DIR)/info
-	cd $(INITRD_DIR) && tar -cvf ../$(INITRD) *
-
-initrd: ## build the init ram disk
-initrd: $(INITRD)
-.PHONY: initrd
 
 docs: ## build the docs
 	rm -rf docs/*
