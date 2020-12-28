@@ -28,7 +28,7 @@ submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules). You have to
 clone the main project as well as the submodules, either by using this command:
 
 ```
-$ git clone --recurse-submodules <url to this repo>
+$ git clone --recurse-submodules <url pointing to this repo>
 ```
 
 or by using this command if you already have a copy of this git repository:
