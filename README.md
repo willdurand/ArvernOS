@@ -158,8 +158,9 @@ $ make clean run
 5. Various checks are performed to make sure we can continue the boot process
 6. Page table and paging are configured and enabled
 7. Load a 64-bit Global Descriptor Table
-8. Reload all the data segment registers
-9. Call the C `kmain()` function
+8. Load a Task State Segment
+9. Reload all the data segment registers
+10. Call the C `kmain()` function
 
 ## License
 
