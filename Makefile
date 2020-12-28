@@ -11,23 +11,25 @@ else
 	AR := ar
 endif
 
-OS_NAME    := willOS
-BUILD_DIR  := build
-LINKER     := linker.ld
-ISO_DIR    := $(BUILD_DIR)/isofiles
-KERNEL_DIR := $(ISO_DIR)/boot
-GRUB_DIR   := $(KERNEL_DIR)/grub
-GRUB_CFG   := $(GRUB_DIR)/grub.cfg
-KERNEL_BIN := kernel.bin
-KERNEL     := $(KERNEL_DIR)/$(KERNEL_BIN)
-ISO        := $(BUILD_DIR)/$(OS_NAME).iso
-LIBC       := $(BUILD_DIR)/libc-$(OS_NAME).a
-LIBK       := $(BUILD_DIR)/libk-$(OS_NAME).a
-INITRD_DIR := initrd
-INITRD_TAR := initrd.tar
-INITRD     := $(KERNEL_DIR)/$(INITRD_TAR)
-LIBS_DIRS  := libs/liballoc libs/printf libs/vtconsole
-GIT_HASH   := $(shell git rev-parse --short HEAD)
+OS_NAME       := willOS
+BUILD_DIR     := build
+LINKER        := linker.ld
+ISO_DIR       := $(BUILD_DIR)/isofiles
+KERNEL_DIR    := $(ISO_DIR)/boot
+GRUB_DIR      := $(KERNEL_DIR)/grub
+GRUB_CFG      := $(GRUB_DIR)/grub.cfg
+KERNEL_BIN    := kernel.bin
+KERNEL        := $(KERNEL_DIR)/$(KERNEL_BIN)
+ISO           := $(BUILD_DIR)/$(OS_NAME).iso
+LIBC          := $(BUILD_DIR)/libc-$(OS_NAME).a
+LIBC_OBJS_DIR := $(BUILD_DIR)/libc-objects
+LIBK          := $(BUILD_DIR)/libk-$(OS_NAME).a
+LIBK_OBJS_DIR := $(BUILD_DIR)/libk-objects
+INITRD_DIR    := initrd
+INITRD_TAR    := initrd.tar
+INITRD        := $(KERNEL_DIR)/$(INITRD_TAR)
+LIBS_DIRS     := libs/liballoc libs/printf libs/vtconsole
+GIT_HASH      := $(shell git rev-parse --short HEAD)
 # This should be a bitmap font.
 CONSOLE_FONT_PATH := libs/scalable-font2/fonts/u_vga16.sfn.gz
 CONSOLE_FONT      := $(BUILD_DIR)/font.o
@@ -36,9 +38,9 @@ VBE_WIDTH  := 1024
 VBE_HEIGHT := 768
 VBE_BPP    := 32
 
-LIBK_OBJECTS     := $(patsubst %.c, %_k.o, $(shell find src $(LIBS_DIRS) -name '*.c'))
-LIBK_ASM_OBJECTS := $(patsubst %.asm, %.o, $(shell find src/asm -name '*.asm'))
-LIBC_OBJECTS     := $(patsubst %.c, %.o, $(shell find src/libc $(LIBS_DIRS) -name '*.c'))
+LIBK_OBJECTS     := $(patsubst %.c, $(LIBK_OBJS_DIR)/%.o, $(shell find src $(LIBS_DIRS) -name '*.c'))
+LIBK_ASM_OBJECTS := $(patsubst %.asm, $(LIBK_OBJS_DIR)/%.o, $(shell find src/asm -name '*.asm'))
+LIBC_OBJECTS     := $(patsubst %.c, $(LIBC_OBJS_DIR)/%.o, $(shell find src/libc $(LIBS_DIRS) -name '*.c'))
 LIBC_TEST_FILES  := $(patsubst test/%.c, %, $(shell find test/libc -name '*.c'))
 
 NASM_OPTIONS = -dVBE_WIDTH=$(VBE_WIDTH) -dVBE_HEIGHT=$(VBE_HEIGHT) -dVBE_BPP=$(VBE_BPP)
@@ -127,11 +129,13 @@ kernel: ## compile the kernel
 kernel: $(KERNEL)
 .PHONY: kernel
 
-$(LIBK_ASM_OBJECTS): %.o: %.asm
-	$(NASM) $(NASM_OPTIONS) -f elf64 $<
+$(LIBK_ASM_OBJECTS): $(LIBK_OBJS_DIR)/%.o: %.asm
+	mkdir -p $(dir $@)
+	$(NASM) $(NASM_OPTIONS) -f elf64 $< -o $@
 
 $(LIBK_OBJECTS): CFLAGS += -D__is_libk
-$(LIBK_OBJECTS): %_k.o: %.c
+$(LIBK_OBJECTS): $(LIBK_OBJS_DIR)/%.o: %.c
+	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(LIBK): $(LIBK_OBJECTS)
@@ -142,7 +146,8 @@ libk: $(LIBK)
 .PHONY: libk
 
 $(LIBC_OBJECTS): CFLAGS += -D__is_libc
-$(LIBC_OBJECTS): %.o: %.c
+$(LIBC_OBJECTS): $(LIBC_OBJS_DIR)/%.o: %.c
+	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(LIBC): $(LIBC_OBJECTS)
@@ -205,9 +210,10 @@ run-test: run
 .PHONY: run-test
 
 clean: ## remove build artifacts
-	find . -name '*.orig' -exec rm "{}" ";"
-	find . -name '*.o' -exec rm "{}" ";"
-	rm -rf $(BUILD_DIR) userland/bin/ $(INITRD_DIR)/{info,bin/,proc/}
+	rm -rf $(BUILD_DIR) \
+		userland/bin/ \
+		$(INITRD_DIR)/info $(INITRD_DIR)/bin/ \
+		logs/*.log
 .PHONY: clean
 
 fmt: ## automatically format the code with clang-format
@@ -238,7 +244,7 @@ test: libc
 	mkdir -p $(BUILD_DIR)/libc/string
 	for file in $(LIBC_TEST_FILES); do \
 		echo ; \
-		gcc -shared src/$$file.o -o build/$$file.so ; \
+		gcc -shared $(LIBC_OBJS_DIR)/src/$$file.o -o build/$$file.so ; \
 		gcc -I./test/ -O0 test/$$file.c -o build/$$file ; \
 		LD_PRELOAD=./build/$$file.so ./build/$$file || exit 1 ; \
 	done
