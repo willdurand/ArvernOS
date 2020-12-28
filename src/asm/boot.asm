@@ -202,8 +202,7 @@ stack_top:
 ; 64-bit code, we need to set up a new Global Descriptor Table.
 section .rodata
 gdt64:
-.null_1;
-  ; `dq` means 'define quad-word'
+  ; .null_1
   dq 0
 .kernel_code: equ $ - gdt64
   dq (1<<41) | (1<<43) | (1<<44) | (1<<47) | (1<<53)

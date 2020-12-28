@@ -36,7 +36,7 @@ typedef struct idt_gate
       uint8_t s : 1;
       uint8_t dpl : 2;
       uint8_t present : 1;
-    }
+    };
   };
   uint16_t ptr_mid;
   uint32_t ptr_high;
