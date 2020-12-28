@@ -24,13 +24,14 @@ var NAVTREE =
 [
   [ "willOS", "index.html", [
     [ "Setting up a development environment", "index.html#autotoc_md0", [
-      [ "Docker (recommended way)", "index.html#autotoc_md1", null ],
-      [ "MacOS", "index.html#autotoc_md2", null ],
-      [ "Linux", "index.html#autotoc_md3", null ]
+      [ "Getting the sources", "index.html#autotoc_md1", null ],
+      [ "Docker (recommended way)", "index.html#autotoc_md2", null ],
+      [ "MacOS", "index.html#autotoc_md3", null ],
+      [ "Linux", "index.html#autotoc_md4", null ]
     ] ],
-    [ "Building willOS", "index.html#autotoc_md4", null ],
-    [ "Early boot sequence", "index.html#autotoc_md5", null ],
-    [ "License", "index.html#autotoc_md6", null ],
+    [ "Building willOS", "index.html#autotoc_md5", null ],
+    [ "Early boot sequence", "index.html#autotoc_md6", null ],
+    [ "License", "index.html#autotoc_md7", null ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
       [ "Data Structure Index", "classes.html", null ],
@@ -54,7 +55,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "alloc_8h.html",
-"serial_8h.html#a0f5a915bc3e83fd89af8f6dd43c6f205"
+"rtl8139_8h.html#ab2710fa050b40f0e325511227a4ec796"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

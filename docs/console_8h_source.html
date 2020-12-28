@@ -89,25 +89,48 @@ $(document).ready(function(){initNavTree('console_8h_source.html',''); initResiz
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#ifndef CONSOLE_H</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#define CONSOLE_H</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;stddef.h&gt;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keywordtype">void</span> <a class="code" href="console_8h.html#a463df5bcb42f4d4ad7d73c17c555e53d">console_init</a>();</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keywordtype">void</span> <a class="code" href="console_8h.html#ac156aa97dae8b45e5aea8f6534d38946">console_putchar</a>(<span class="keywordtype">char</span> c);</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keywordtype">size_t</span> <a class="code" href="console_8h.html#ae757ada21a608ffb2ffb39e567feb07b">console_write</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* s, <span class="keywordtype">size_t</span> count);</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="multiboot_8h.html">core/multiboot.h</a>&gt;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;stddef.h&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;vtconsole/vtconsole.h&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#define CONSOLE_WIDTH  80</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#define CONSOLE_HEIGHT 25</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#define CONSOLE_FONT_WIDTH  8</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#define CONSOLE_FONT_HEIGHT 16</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keywordtype">void</span> <a class="code" href="console_8h.html#a7f1237f8348103b7fee42f35e0b34e49">console_init</a>(multiboot_tag_framebuffer_common_t* common);</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keywordtype">void</span> <a class="code" href="console_8h.html#ac156aa97dae8b45e5aea8f6534d38946">console_putchar</a>(<span class="keywordtype">char</span> c);</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keywordtype">size_t</span> <a class="code" href="console_8h.html#ae757ada21a608ffb2ffb39e567feb07b">console_write</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* s, <span class="keywordtype">size_t</span> count);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="console_8h.html#a030af39db3ecd334ca5a8114ad2e156f">console_mode_is_vbe</a>();</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="console_8h.html#a14c7a4113d75bf35aedade2e82565c9f">console_fullscreen</a>();</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="comment">// Functions for the &quot;VGA text mode&quot;-based console.</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keywordtype">void</span> vga_console_init();</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="keywordtype">void</span> vga_on_paint_callback(vtconsole_t* vtc, vtcell_t* cell, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="keywordtype">void</span> vga_on_move_callback(vtconsole_t* vtc, vtcursor_t* cur);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="comment">// Functions for the VBE-based console.</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keywordtype">void</span> vbe_console_init(multiboot_tag_framebuffer_common_t* common);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="keywordtype">void</span> vbe_on_paint_callback(vtconsole_t* vtc, vtcell_t* cell, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="keywordtype">void</span> vbe_on_move_callback(vtconsole_t* vtc, vtcursor_t* cur);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
+<div class="ttc" id="aconsole_8h_html_a7f1237f8348103b7fee42f35e0b34e49"><div class="ttname"><a href="console_8h.html#a7f1237f8348103b7fee42f35e0b34e49">console_init</a></div><div class="ttdeci">void console_init(multiboot_tag_framebuffer_common_t *common)</div><div class="ttdef"><b>Definition:</b> console.c:20</div></div>
+<div class="ttc" id="aconsole_8h_html_a030af39db3ecd334ca5a8114ad2e156f"><div class="ttname"><a href="console_8h.html#a030af39db3ecd334ca5a8114ad2e156f">console_mode_is_vbe</a></div><div class="ttdeci">bool console_mode_is_vbe()</div><div class="ttdef"><b>Definition:</b> console.c:78</div></div>
 <div class="ttc" id="aconsole_8h_html"><div class="ttname"><a href="console_8h.html">console.h</a></div></div>
-<div class="ttc" id="avga__text_8h_html_a1b47282282147d894d75584ed77cced0"><div class="ttname"><a href="vga__text_8h.html#a1b47282282147d894d75584ed77cced0">vga_text_write_at</a></div><div class="ttdeci">void vga_text_write_at(char c, uint8_t scheme, uint8_t x, uint8_t y)</div><div class="ttdef"><b>Definition:</b> vga_text.c:18</div></div>
-<div class="ttc" id="avga__text_8h_html"><div class="ttname"><a href="vga__text_8h.html">vga_text.h</a></div></div>
-<div class="ttc" id="aconsole_8h_html_a463df5bcb42f4d4ad7d73c17c555e53d"><div class="ttname"><a href="console_8h.html#a463df5bcb42f4d4ad7d73c17c555e53d">console_init</a></div><div class="ttdeci">void console_init()</div><div class="ttdef"><b>Definition:</b> console.c:34</div></div>
-<div class="ttc" id="aconsole_8h_html_ac156aa97dae8b45e5aea8f6534d38946"><div class="ttname"><a href="console_8h.html#ac156aa97dae8b45e5aea8f6534d38946">console_putchar</a></div><div class="ttdeci">void console_putchar(char c)</div><div class="ttdef"><b>Definition:</b> console.c:57</div></div>
-<div class="ttc" id="avga__text_8h_html_af7e7957c30423a3a10d2843f7c10415e"><div class="ttname"><a href="vga__text_8h.html#af7e7957c30423a3a10d2843f7c10415e">vga_text_move_cursor</a></div><div class="ttdeci">void vga_text_move_cursor(uint8_t x, uint8_t y)</div><div class="ttdef"><b>Definition:</b> vga_text.c:27</div></div>
-<div class="ttc" id="avga__text_8h_html_a2087a1fae709cd6218098eac37f610a3"><div class="ttname"><a href="vga__text_8h.html#a2087a1fae709cd6218098eac37f610a3">vga_text_init</a></div><div class="ttdeci">void vga_text_init()</div><div class="ttdef"><b>Definition:</b> vga_text.c:13</div></div>
-<div class="ttc" id="aconsole_8h_html_ae757ada21a608ffb2ffb39e567feb07b"><div class="ttname"><a href="console_8h.html#ae757ada21a608ffb2ffb39e567feb07b">console_write</a></div><div class="ttdeci">size_t console_write(const char *s, size_t count)</div><div class="ttdef"><b>Definition:</b> console.c:62</div></div>
+<div class="ttc" id="aconsole_8h_html_a14c7a4113d75bf35aedade2e82565c9f"><div class="ttname"><a href="console_8h.html#a14c7a4113d75bf35aedade2e82565c9f">console_fullscreen</a></div><div class="ttdeci">bool console_fullscreen()</div><div class="ttdef"><b>Definition:</b> console.c:37</div></div>
+<div class="ttc" id="aconsole_8h_html_ac156aa97dae8b45e5aea8f6534d38946"><div class="ttname"><a href="console_8h.html#ac156aa97dae8b45e5aea8f6534d38946">console_putchar</a></div><div class="ttdeci">void console_putchar(char c)</div><div class="ttdef"><b>Definition:</b> console.c:62</div></div>
+<div class="ttc" id="astdlib_8h_html"><div class="ttname"><a href="stdlib_8h.html">stdlib.h</a></div></div>
+<div class="ttc" id="aconsole_8h_html_ae757ada21a608ffb2ffb39e567feb07b"><div class="ttname"><a href="console_8h.html#ae757ada21a608ffb2ffb39e567feb07b">console_write</a></div><div class="ttdeci">size_t console_write(const char *s, size_t count)</div><div class="ttdef"><b>Definition:</b> console.c:67</div></div>
+<div class="ttc" id="amultiboot_8h_html"><div class="ttname"><a href="multiboot_8h.html">multiboot.h</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>

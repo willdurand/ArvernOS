@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['registers_345',['registers',['../structregisters.html',1,'']]],
-  ['reserved_5fareas_346',['reserved_areas',['../structreserved__areas.html',1,'']]]
+  ['page_5fentry_353',['page_entry',['../structpage__entry.html',1,'']]],
+  ['page_5ftable_354',['page_table',['../structpage__table.html',1,'']]],
+  ['pci_5fdevice_355',['pci_device',['../unionpci__device.html',1,'']]]
 ];

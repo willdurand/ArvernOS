@@ -100,6 +100,12 @@ Setting up a development environment</h1>
 </ul>
 <p>This project targets <code>x86_64</code> architectures, so you likely need a cross-compilation toolchain.</p>
 <h2><a class="anchor" id="autotoc_md1"></a>
+Getting the sources</h2>
+<p>This project contains <a href="https://git-scm.com/book/en/v2/Git-Tools-Submodules">git submodules</a>. You have to clone the main project as well as the submodules, either by using this command:</p>
+<div class="fragment"><div class="line">$ git clone --recurse-submodules &lt;url pointing to this repo&gt;</div>
+</div><!-- fragment --><p>or by using this command if you already have a copy of this git repository:</p>
+<div class="fragment"><div class="line">$ git submodule update --init</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2"></a>
 Docker (recommended way)</h2>
 <p>Use <a href="https://docs.docker.com/">Docker</a> with the provided <a href="https://github.com/willdurand/willOS/blob/master/Dockerfile"><code>Dockerfile</code></a>:</p>
 <div class="fragment"><div class="line">$ docker build -t willos/toolchain .</div>
@@ -121,7 +127,7 @@ Docker (recommended way)</h2>
 <div class="line">test                           run unit tests</div>
 <div class="line">userland                       compile the userland programs (statically linked to libc)</div>
 <div class="line">version                        print tool versions</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3"></a>
 MacOS</h2>
 <p>Install <a href="https://brew.sh/">Homebrew</a>, then run the following commands:</p>
 <div class="fragment"><div class="line">$ brew install nasm</div>
@@ -134,10 +140,10 @@ MacOS</h2>
 <div class="line">$ brew install x86_64-pc-elf-gcc</div>
 <div class="line">$ brew install grub --with-x86_64-pc-elf --HEAD</div>
 </div><!-- fragment --><p>Hat tip to <a href="http://github.com/hawkw">Eliza Weisman</a> for the taps!</p>
-<h2><a class="anchor" id="autotoc_md3"></a>
+<h2><a class="anchor" id="autotoc_md4"></a>
 Linux</h2>
 <p>See the <a href="https://github.com/willdurand/willOS/blob/master/.circleci/config.yml">circle-ci config</a>.</p>
-<h1><a class="anchor" id="autotoc_md4"></a>
+<h1><a class="anchor" id="autotoc_md5"></a>
 Building willOS</h1>
 <p>To compile the kernel (ELF 64-bit), run:</p>
 <div class="fragment"><div class="line">$ make clean kernel</div>
@@ -162,7 +168,7 @@ Building willOS</h1>
 <p>There is also <code>ENABLE_ALL_DEBUG</code> to turn all debug logs on.</p>
 <p>To compile the OS in release mode, build the ISO, and start <code>qemu</code> with the OS loaded, run:</p>
 <div class="fragment"><div class="line">$ make clean run</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md5"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md6"></a>
 Early boot sequence</h1>
 <ol type="1">
 <li>The BIOS loads the bootloader (GRUB) from the ISO</li>
@@ -172,10 +178,11 @@ Early boot sequence</h1>
 <li>Various checks are performed to make sure we can continue the boot process</li>
 <li>Page table and paging are configured and enabled</li>
 <li>Load a 64-bit Global Descriptor Table</li>
+<li>Load a Task State Segment</li>
 <li>Reload all the data segment registers</li>
 <li>Call the C <code><a class="el" href="kmain_8h.html#a3a723148ea74ca575865f61d277c0657">kmain()</a></code> function</li>
 </ol>
-<h1><a class="anchor" id="autotoc_md6"></a>
+<h1><a class="anchor" id="autotoc_md7"></a>
 License</h1>
 <p>willOS is released under the MIT License. See the bundled <a href="https://github.com/willdurand/willOS/blob/master/LICENSE.md">LICENSE</a> file for details. In addition, some parts of this project have their own licenses attached (either in the source files or in a <code>LICENSE</code> file next to them). </p>
 </div></div><!-- PageDoc -->

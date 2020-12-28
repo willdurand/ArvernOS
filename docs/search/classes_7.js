@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['opt_5fbool_337',['opt_bool',['../structopt__bool.html',1,'']]],
-  ['opt_5fuint16_338',['opt_uint16',['../structopt__uint16.html',1,'']]],
-  ['opt_5fuint32_339',['opt_uint32',['../structopt__uint32.html',1,'']]],
-  ['opt_5fuint64_340',['opt_uint64',['../structopt__uint64.html',1,'']]],
-  ['opt_5fuint8_341',['opt_uint8',['../structopt__uint8.html',1,'']]]
+  ['net_5fdriver_344',['net_driver',['../structnet__driver.html',1,'']]],
+  ['net_5finterface_345',['net_interface',['../structnet__interface.html',1,'']]],
+  ['ntp_5fheader_346',['ntp_header',['../structntp__header.html',1,'']]],
+  ['ntp_5ftimestamp_347',['ntp_timestamp',['../structntp__timestamp.html',1,'']]]
 ];

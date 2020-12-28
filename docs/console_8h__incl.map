@@ -1,4 +1,8 @@
 <map id="src/kernel/console.h" name="src/kernel/console.h">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,144,32"/>
-<area shape="rect" id="node2" title=" " alt="" coords="40,80,109,107"/>
+<area shape="rect" id="node1" title=" " alt="" coords="125,5,264,32"/>
+<area shape="rect" id="node2" href="$multiboot_8h.html" title=" " alt="" coords="80,80,195,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,155,80,181"/>
+<area shape="rect" id="node5" title=" " alt="" coords="219,80,288,107"/>
+<area shape="rect" id="node6" title=" " alt="" coords="312,80,461,107"/>
+<area shape="rect" id="node4" title=" " alt="" coords="105,155,170,181"/>
 </map>

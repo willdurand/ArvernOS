@@ -104,8 +104,6 @@ Include dependency graph for idt.h:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structidt__gate__options.html">idt_gate_options</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structidt__gate.html">idt_gate</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structidt__register.html">idt_register</a></td></tr>
@@ -118,8 +116,8 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a88d4205d069421eb4f8e7577285f1180"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="idt_8h.html#a88d4205d069421eb4f8e7577285f1180">idt_init</a> ()</td></tr>
-<tr class="separator:a88d4205d069421eb4f8e7577285f1180"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac32911224d6d0fd8e287f2e021ee3ba4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="idt_8h.html#ac32911224d6d0fd8e287f2e021ee3ba4">idt_load</a> ()</td></tr>
+<tr class="separator:ac32911224d6d0fd8e287f2e021ee3ba4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8af8af8cf5ecf069d893ba9a96d55c7e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="idt_8h.html#a8af8af8cf5ecf069d893ba9a96d55c7e">idt_register_gate</a> (uint16_t n, uint64_t handler, uint8_t type)</td></tr>
 <tr class="separator:a8af8af8cf5ecf069d893ba9a96d55c7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae9b2767929a9d9b6851a7c60cb64e55c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="idt_8h.html#ae9b2767929a9d9b6851a7c60cb64e55c">idt_register_interrupt</a> (uint16_t n, uint64_t handler)</td></tr>
@@ -147,21 +145,21 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a88d4205d069421eb4f8e7577285f1180"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a88d4205d069421eb4f8e7577285f1180">&#9670;&nbsp;</a></span>idt_init()</h2>
+<a id="ac32911224d6d0fd8e287f2e021ee3ba4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac32911224d6d0fd8e287f2e021ee3ba4">&#9670;&nbsp;</a></span>idt_load()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void idt_init </td>
+          <td class="memname">void idt_load </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initializes the <em>Interrupt Descriptor Table</em>. </p>
+<p>Loads the <em>Interrupt Descriptor Table</em>. The table should be updated with <code><a class="el" href="idt_8h.html#a8af8af8cf5ecf069d893ba9a96d55c7e">idt_register_gate()</a></code> and/or <code><a class="el" href="idt_8h.html#ae9b2767929a9d9b6851a7c60cb64e55c">idt_register_interrupt()</a></code> before calling this function. </p>
 
 </div>
 </div>
