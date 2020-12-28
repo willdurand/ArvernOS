@@ -30,7 +30,7 @@ int k_reboot(int command)
 
 void restart()
 {
-  irq_disable();
+  isr_disable_interrupts();
 
   uint8_t status = 0x02;
   while (status & 0x02) {

@@ -10,7 +10,7 @@
 #include <sys/types.h>
 
 /// This type represents a syscall handler.
-typedef void (*syscall_handler_t)(registers_t* registers);
+typedef void (*syscall_handler_t)(isr_stack_t* stack);
 
 /**
  * Initializes the syscalls management.
@@ -24,7 +24,7 @@ void syscall_init();
  *
  * @param registers the registers passed to the handler
  */
-void syscall_handler(registers_t* registers);
+void syscall_handler(isr_stack_t* stack);
 
 int k_open(const char* pathname, uint32_t flags);
 int k_close(int fd);

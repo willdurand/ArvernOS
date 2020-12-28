@@ -11,7 +11,7 @@
 #define PIC_EOI   0x20 // end of interrupt
 #define IRQ_BASE  0x20
 
-// exceptions, cf. http://wiki.osdev.org/Exceptions
+// Exceptions, cf. http://wiki.osdev.org/Exceptions
 #define EXCEPTION_DE 0
 #define EXCEPTION_DB 1
 #define EXCEPTION_BP 3
@@ -30,6 +30,7 @@
 #define EXCEPTION_AC 17
 // ...
 
+// Hardware interrupts
 #define IRQ0  32
 #define IRQ1  33
 #define IRQ2  34
@@ -44,62 +45,43 @@
 #define IRQ11 43
 #define IRQ12 44
 
+// Software interrupts
 /// This is the ID of the special interrupt for syscalls.
 #define SYSCALL 0x80
 
-/// If this flag is set, the page fault was caused by a page-protection
-/// violation, else the page fault was caused by a not-present page.
-#define PF_PROTECTION_VIOLATION 1 << 0
-/// If this flag is set, the memory access that caused the page fault was a
-/// write. Else the access that caused the page fault is a memory read. This
-/// bit does not necessarily indicate the cause of the page fault was a read or
-/// write violation.
-#define PF_CAUSED_BY_WRITE 1 << 1
-/// If this flag is set, an access in user mode (CPL=3) caused the page fault.
-/// Else an access in supervisor mode (CPL=0, 1, or 2) caused the page fault.
-/// This bit does not necessarily indicate the cause of the page fault was a
-/// privilege violation.
-#define PF_USER_MODE 1 << 2
-/// If this flag is set, the page fault is a result of the processor reading a
-/// 1 from a reserved field within a page-translation-table entry.
-#define PF_MALFORMED_TABLE 1 << 3
-/// If this flag is set, it indicates that the access that caused the page
-/// fault was an instruction fetch.
-#define PF_INSTRUCTION_FETCH 1 << 4
-
-// These functions are declared in the `interrupts.asm` file.
-extern void isr0();
-extern void isr1();
-extern void isr2();
-extern void isr3();
-extern void isr4();
-extern void isr5();
-extern void isr6();
-extern void isr7();
-extern void isr8();
-extern void isr9();
-extern void isr10();
-extern void isr11();
-extern void isr12();
-extern void isr13();
-extern void isr14();
-extern void isr15();
-extern void isr16();
-extern void isr17();
-extern void isr18();
-extern void isr19();
-extern void isr20();
-extern void isr21();
-extern void isr22();
-extern void isr23();
-extern void isr24();
-extern void isr25();
-extern void isr26();
-extern void isr27();
-extern void isr28();
-extern void isr29();
-extern void isr30();
-extern void isr31();
+// These functions are declared in `src/asm/interrupts.asm`.
+extern void exc0();
+extern void exc1();
+extern void exc2();
+extern void exc3();
+extern void exc4();
+extern void exc5();
+extern void exc6();
+extern void exc7();
+extern void exc8();
+extern void exc9();
+extern void exc10();
+extern void exc11();
+extern void exc12();
+extern void exc13();
+extern void exc14();
+extern void exc15();
+extern void exc16();
+extern void exc17();
+extern void exc18();
+extern void exc19();
+extern void exc20();
+extern void exc21();
+extern void exc22();
+extern void exc23();
+extern void exc24();
+extern void exc25();
+extern void exc26();
+extern void exc27();
+extern void exc28();
+extern void exc29();
+extern void exc30();
+extern void exc31();
 
 extern void irq0();
 extern void irq1();
@@ -115,9 +97,10 @@ extern void irq10();
 extern void irq11();
 extern void irq12();
 
-extern void isr0x80();
+extern void int0x80();
 
-typedef struct registers
+/// This structure represents the interrupt stack.
+typedef struct _stack
 {
   uint64_t r15;
   uint64_t r14;
@@ -134,64 +117,61 @@ typedef struct registers
   uint64_t rcx;
   uint64_t rbx;
   uint64_t rax;
-} __attribute__((packed)) registers_t;
-
-typedef struct stack
-{
+  uint64_t id;
+  uint64_t error_code;
   uint64_t instruction_pointer;
   uint64_t code_segment;
   uint64_t cpu_flags;
   uint64_t stack_pointer;
   uint64_t stack_segment;
-} __attribute__((packed)) stack_t;
+} __attribute__((packed)) isr_stack_t;
 
 /// This type represents an interrupt handler.
-typedef void (*isr_t)(stack_t* stack);
+typedef void (*isr_handler_t)(isr_stack_t* stack);
 
 /**
- * Initializes the interrupt service routine.
+ * Initializes the _Interrupt Service Routine_ (ISR).
  */
 void isr_init();
 
 /**
- * Enables hardware interrupts.
- */
-void irq_init();
-
-/**
  * Disables hardware interrupts.
  */
-void irq_disable();
+void isr_disable_interrupts();
 
 /**
- * This is the handler for software interrupts.
+ * This is the handler for software interrupts and exceptions.
  *
- * @param id the interrupt id
- * @param stack the stack
- */
-void isr_handler(uint64_t id, uint64_t stack) __asm__("isr_handler");
-
-/**
- * This is the handler for harware interrupts.
+ * - Exceptions: These are generated internally by the CPU and used to alert
+ *   the running kernel of an event or situation which requires its attention.
+ *   On x86 CPUs, these include exception conditions such as Double Fault, Page
+ *   Fault, General Protection Fault, etc.
+ * - Software Interrupt: This is an interrupt signalled by software running on
+ *   a CPU to indicate that it needs the kernel's attention. These types of
+ *   interrupts are generally used for System Calls.
  *
- * @param id the interrupt id
- * @param stack the stack
+ * @param stack the interrupt stack
  */
-void irq_handler(uint64_t id, uint64_t stack) __asm__("irq_handler");
+void isr_int_handler(isr_stack_t s) __asm__("int_handler");
 
 /**
- * Registers a handler for a given interrupt.
+ * This is the handler for hardware interrupts.
+ *
+ * Interrupt Request (IRQ) or Hardware Interrupt are a type of interrupt that
+ * is generated externally by the chipset, and it is signalled by latching onto
+ * the #INTR pin or equivalent signal of the CPU in question.
+ *
+ * @param stack the interrupt stack
+ */
+void isr_irq_handler(isr_stack_t s) __asm__("irq_handler");
+
+/**
+ * Registers a handler for a given interrupt. It does not matter whether the
+ * interrupt is an exception, a hardware or software interrupt.
  *
  * @param id an interrupt id
  * @param handler the handler to attach to the interrupt
  */
-void isr_register_handler(uint64_t id, isr_t handler);
-
-/**
- * This function dumps a given set of registers to the debug output.
- *
- * @param registers registers to dump to the debug output
- */
-void isr_debug_registers(registers_t* registers);
+void isr_register_handler(uint64_t id, isr_handler_t handler);
 
 #endif

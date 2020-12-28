@@ -6,7 +6,7 @@
 
 uint64_t tick = 0;
 
-static void timer_callback(stack_t* stack)
+static void timer_callback(isr_stack_t* stack)
 {
   tick++;
 

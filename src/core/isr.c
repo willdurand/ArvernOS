@@ -9,10 +9,8 @@
 #include <string.h>
 #include <sys/k_syscall.h>
 
-stack_t* get_stack(uint64_t id, uint64_t stack);
-void breakpoint_handler(stack_t* stack);
-void double_fault_handler(stack_t* stack);
-void page_fault_handler(stack_t* stack);
+void breakpoint_handler(isr_stack_t* stack);
+void page_fault_handler(isr_stack_t* stack);
 
 static const char* exception_messages[] = { "Division By Zero",
                                             "Debug",
@@ -50,7 +48,7 @@ static const char* exception_messages[] = { "Division By Zero",
                                             "Reserved",
                                             "Reserved" };
 
-static isr_t interrupt_handlers[256] = { 0 };
+static isr_handler_t handlers[256] = { 0 };
 
 void isr_init()
 {
@@ -74,39 +72,41 @@ void isr_init()
   port_byte_out(PIC1_DATA, 0x00);
   port_byte_out(PIC2_DATA, 0x00);
 
-  idt_register_interrupt(0, (uint64_t)isr0);
-  idt_register_interrupt(1, (uint64_t)isr1);
-  idt_register_interrupt(2, (uint64_t)isr2);
-  idt_register_interrupt(3, (uint64_t)isr3);
-  idt_register_interrupt(4, (uint64_t)isr4);
-  idt_register_interrupt(5, (uint64_t)isr5);
-  idt_register_interrupt(6, (uint64_t)isr6);
-  idt_register_interrupt(7, (uint64_t)isr7);
-  idt_register_interrupt(8, (uint64_t)isr8);
-  idt_register_interrupt(9, (uint64_t)isr9);
-  idt_register_interrupt(10, (uint64_t)isr10);
-  idt_register_interrupt(11, (uint64_t)isr11);
-  idt_register_interrupt(12, (uint64_t)isr12);
-  idt_register_interrupt(13, (uint64_t)isr13);
-  idt_register_interrupt(14, (uint64_t)isr14);
-  idt_register_interrupt(15, (uint64_t)isr15);
-  idt_register_interrupt(16, (uint64_t)isr16);
-  idt_register_interrupt(17, (uint64_t)isr17);
-  idt_register_interrupt(18, (uint64_t)isr18);
-  idt_register_interrupt(19, (uint64_t)isr19);
-  idt_register_interrupt(20, (uint64_t)isr20);
-  idt_register_interrupt(21, (uint64_t)isr21);
-  idt_register_interrupt(22, (uint64_t)isr22);
-  idt_register_interrupt(23, (uint64_t)isr23);
-  idt_register_interrupt(24, (uint64_t)isr24);
-  idt_register_interrupt(25, (uint64_t)isr25);
-  idt_register_interrupt(26, (uint64_t)isr26);
-  idt_register_interrupt(27, (uint64_t)isr27);
-  idt_register_interrupt(28, (uint64_t)isr28);
-  idt_register_interrupt(29, (uint64_t)isr29);
-  idt_register_interrupt(30, (uint64_t)isr30);
-  idt_register_interrupt(31, (uint64_t)isr31);
+  // Exceptions
+  idt_register_interrupt(0, (uint64_t)exc0);
+  idt_register_interrupt(1, (uint64_t)exc1);
+  idt_register_interrupt(2, (uint64_t)exc2);
+  idt_register_interrupt(3, (uint64_t)exc3);
+  idt_register_interrupt(4, (uint64_t)exc4);
+  idt_register_interrupt(5, (uint64_t)exc5);
+  idt_register_interrupt(6, (uint64_t)exc6);
+  idt_register_interrupt(7, (uint64_t)exc7);
+  idt_register_interrupt(8, (uint64_t)exc8);
+  idt_register_interrupt(9, (uint64_t)exc9);
+  idt_register_interrupt(10, (uint64_t)exc10);
+  idt_register_interrupt(11, (uint64_t)exc11);
+  idt_register_interrupt(12, (uint64_t)exc12);
+  idt_register_interrupt(13, (uint64_t)exc13);
+  idt_register_interrupt(14, (uint64_t)exc14);
+  idt_register_interrupt(15, (uint64_t)exc15);
+  idt_register_interrupt(16, (uint64_t)exc16);
+  idt_register_interrupt(17, (uint64_t)exc17);
+  idt_register_interrupt(18, (uint64_t)exc18);
+  idt_register_interrupt(19, (uint64_t)exc19);
+  idt_register_interrupt(20, (uint64_t)exc20);
+  idt_register_interrupt(21, (uint64_t)exc21);
+  idt_register_interrupt(22, (uint64_t)exc22);
+  idt_register_interrupt(23, (uint64_t)exc23);
+  idt_register_interrupt(24, (uint64_t)exc24);
+  idt_register_interrupt(25, (uint64_t)exc25);
+  idt_register_interrupt(26, (uint64_t)exc26);
+  idt_register_interrupt(27, (uint64_t)exc27);
+  idt_register_interrupt(28, (uint64_t)exc28);
+  idt_register_interrupt(29, (uint64_t)exc29);
+  idt_register_interrupt(30, (uint64_t)exc30);
+  idt_register_interrupt(31, (uint64_t)exc31);
 
+  // Hardware interrupts
   idt_register_interrupt(IRQ0, (uint64_t)irq0);
   idt_register_interrupt(IRQ1, (uint64_t)irq1);
   idt_register_interrupt(IRQ2, (uint64_t)irq2);
@@ -121,112 +121,97 @@ void isr_init()
   idt_register_interrupt(IRQ11, (uint64_t)irq11);
   idt_register_interrupt(IRQ12, (uint64_t)irq12);
 
-  // syscalls
-  idt_register_interrupt(SYSCALL, (uint64_t)isr0x80);
+  // Syscalls
+  idt_register_interrupt(SYSCALL, (uint64_t)int0x80);
 
-  // handlers for isr exceptions
+  // Specific handlers for exceptions.
   isr_register_handler(EXCEPTION_BP, breakpoint_handler);
-  isr_register_handler(EXCEPTION_DF, double_fault_handler);
   isr_register_handler(EXCEPTION_PF, page_fault_handler);
 
   idt_load();
-}
 
-void irq_init()
-{
   __asm__("sti");
 }
 
-void irq_disable()
+void isr_disable_interrupts()
 {
   __asm__("cli");
 }
 
-void isr_handler(uint64_t id, uint64_t stack_addr)
+void isr_int_handler(isr_stack_t stack)
 {
-  stack_t* stack = get_stack(id, stack_addr);
-
   // We have a special handler for syscalls.
-  if (id == SYSCALL) {
-    syscall_handler((registers_t*)stack_addr);
+  if (stack.id == SYSCALL) {
+    syscall_handler(&stack);
     return;
   }
 
-  isr_t handler = interrupt_handlers[id];
+  isr_handler_t handler = handlers[stack.id];
 
   if (handler != 0) {
-
-    handler(stack);
+    handler(&stack);
     return;
   }
 
-  PANIC("Received interrupt: %d - %s\n\n"
+  PANIC("received interrupt (see below)\n\n"
+        "  %d - %s\n\n"
+        "  error_code          = %#x\n"
         "  instruction_pointer = %p\n"
-        "  code_segment        = %x\n"
+        "  code_segment        = %#x\n"
         "  cpu_flags           = %#x\n"
         "  stack_pointer       = %p\n"
-        "  stack_segment       = %x",
-        id,
-        exception_messages[id],
-        stack->instruction_pointer,
-        stack->code_segment,
-        stack->cpu_flags,
-        stack->stack_pointer,
-        stack->stack_segment);
+        "  stack_segment       = %#x\n"
+        "\n"
+        "  rax = 0x%08x    rbx = 0x%08x    rcx = 0x%08x\n"
+        "  rdx = 0x%08x    rsi = 0x%08x    rdi = 0x%08x\n"
+        "  rbp = 0x%08x    r8  = 0x%08x    r9  = 0x%08x\n"
+        "  r10 = 0x%08x    r11 = 0x%08x    r12 = 0x%08x\n"
+        "  r13 = 0x%08x    r14 = 0x%08x    r15 = 0x%08x",
+        stack.id,
+        exception_messages[stack.id],
+        stack.error_code,
+        stack.instruction_pointer,
+        stack.code_segment,
+        stack.cpu_flags,
+        stack.stack_pointer,
+        stack.stack_segment,
+        stack.rax,
+        stack.rbx,
+        stack.rcx,
+        stack.rdx,
+        stack.rsi,
+        stack.rdi,
+        stack.rbp,
+        stack.r8,
+        stack.r9,
+        stack.r10,
+        stack.r11,
+        stack.r12,
+        stack.r13,
+        stack.r14,
+        stack.r15);
 }
 
-void irq_handler(uint64_t id, uint64_t stack_addr)
+void isr_irq_handler(isr_stack_t stack)
 {
-  if (interrupt_handlers[id] != 0) {
-    isr_t handler = interrupt_handlers[id];
-    handler(get_stack(id, stack_addr));
+  if (handlers[stack.id] != 0) {
+    isr_handler_t handler = handlers[stack.id];
+    handler(&stack);
   }
 
-  if (id >= 40) {
+  if (stack.id >= 40) {
     port_byte_out(PIC2, PIC_EOI);
   }
 
   port_byte_out(PIC1, PIC_EOI);
 }
 
-void isr_register_handler(uint64_t id, isr_t handler)
+void isr_register_handler(uint64_t id, isr_handler_t handler)
 {
-  interrupt_handlers[id] = handler;
+  handlers[id] = handler;
 }
 
-stack_t* get_stack(uint64_t id, uint64_t stack_addr)
-{
-  // See:
-  // https://github.com/0xAX/linux-insides/blob/master/interrupts/interrupts-3.md
-  // See:
-  // https://github.com/littleosbook/littleosbook/blob/e90faeb24c5c9fed8cde9a35974893706e81cbbf/interrupts.md
-  //
-  //     +------------+
-  // +40 | %SS        |
-  // +32 | %RSP       |
-  // +24 | %CPU FLAGS |
-  // +16 | %CS        |
-  //  +8 | %IP        |
-  //   0 | ERROR CODE | <-- %RSP
-  //     +------------+
-  //
-  switch (id) {
-    case EXCEPTION_DF:
-    case EXCEPTION_TS:
-    case EXCEPTION_NP:
-    case EXCEPTION_SS:
-    case EXCEPTION_GP:
-    case EXCEPTION_PF:
-    case EXCEPTION_AC:
-      // skip error code, so that we always get the same stack_t
-      stack_addr += sizeof(uint64_t);
-      break;
-  }
-
-  return (stack_t*)(stack_addr + sizeof(registers_t));
-}
-
-void breakpoint_handler(stack_t* stack)
+void breakpoint_handler(isr_stack_t* stack)
 {
   printf("Exception: BREAKPOINT\n"
          "  instruction_pointer = %p\n"
@@ -241,28 +226,9 @@ void breakpoint_handler(stack_t* stack)
          stack->stack_segment);
 }
 
-void double_fault_handler(stack_t* stack)
+void page_fault_handler(isr_stack_t* stack)
 {
-  PANIC("Exception: DOUBLE FAULT\n"
-        "  instruction_pointer = %p\n"
-        "  code_segment        = %x\n"
-        "  cpu_flags           = %#x\n"
-        "  stack_pointer       = %p\n"
-        "  stack_segment       = %x\n",
-        stack->instruction_pointer,
-        stack->code_segment,
-        stack->cpu_flags,
-        stack->stack_pointer,
-        stack->stack_segment);
-}
-
-void page_fault_handler(stack_t* stack)
-{
-  // The `get_stack()` function removes the error code so that we can have
-  // generic handlers (and not all interruptions have an error code anyway).
-  // This handler needs the `error_code`, so let's retrieve it.
-  uint64_t error_code = ((uint64_t*)stack)[-1];
-
+  uint64_t error_code = stack->error_code;
   uint8_t is_present = (error_code >> 0) & 1;
   uint8_t is_write = (error_code >> 1) & 1;
   uint8_t is_user = (error_code >> 2) & 1;
@@ -271,7 +237,7 @@ void page_fault_handler(stack_t* stack)
 
   PANIC("Exception: PAGE FAULT\n"
         "  accessed address    = %p\n"
-        "  error code          = %#x\n"
+        "  error_code          = %#x\n"
         "  error details:\n"
         "    present           = %c\n"
         "    write             = %c\n"
@@ -279,10 +245,16 @@ void page_fault_handler(stack_t* stack)
         "    reserved write    = %c\n"
         "    instruction fetch = %c\n"
         "  instruction_pointer = %p\n"
-        "  code_segment        = %x\n"
+        "  code_segment        = %#x\n"
         "  cpu_flags           = %#x\n"
         "  stack_pointer       = %p\n"
-        "  stack_segment       = %x\n",
+        "  stack_segment       = %#x\n"
+        "\n"
+        "  rax = 0x%08x    rbx = 0x%08x    rcx = 0x%08x\n"
+        "  rdx = 0x%08x    rsi = 0x%08x    rdi = 0x%08x\n"
+        "  rbp = 0x%08x    r8  = 0x%08x    r9  = 0x%08x\n"
+        "  r10 = 0x%08x    r11 = 0x%08x    r12 = 0x%08x\n"
+        "  r13 = 0x%08x    r14 = 0x%08x    r15 = 0x%08x",
         read_cr2(),
         error_code,
         is_present != 0 ? 'Y' : 'N',
@@ -294,26 +266,20 @@ void page_fault_handler(stack_t* stack)
         stack->code_segment,
         stack->cpu_flags,
         stack->stack_pointer,
-        stack->stack_segment);
-}
-
-void isr_debug_registers(registers_t* registers)
-{
-  // We use `DEBUG()` because we want to print these messages even if the
-  // module logger is disabled.
-  DEBUG("rax=%#x", registers->rax);
-  DEBUG("rbx=%#x", registers->rbx);
-  DEBUG("rcx=%#x", registers->rcx);
-  DEBUG("rdx=%#x", registers->rdx);
-  DEBUG("rsi=%#x", registers->rsi);
-  DEBUG("rdi=%#x", registers->rdi);
-  DEBUG("rbp=%#x", registers->rbp);
-  DEBUG(" r8=%#x", registers->r8);
-  DEBUG(" r9=%#x", registers->r9);
-  DEBUG("r10=%#x", registers->r10);
-  DEBUG("r11=%#x", registers->r11);
-  DEBUG("r12=%#x", registers->r12);
-  DEBUG("r13=%#x", registers->r13);
-  DEBUG("r14=%#x", registers->r14);
-  DEBUG("r15=%#x", registers->r15);
+        stack->stack_segment,
+        stack->rax,
+        stack->rbx,
+        stack->rcx,
+        stack->rdx,
+        stack->rsi,
+        stack->rdi,
+        stack->rbp,
+        stack->r8,
+        stack->r9,
+        stack->r10,
+        stack->r11,
+        stack->r12,
+        stack->r13,
+        stack->r14,
+        stack->r15);
 }
