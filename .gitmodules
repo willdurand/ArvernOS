@@ -1,3 +1,6 @@
 [submodule "libs/scalable-font2"]
 	path = external/scalable-font2
 	url = https://gitlab.com/bztsrc/scalable-font2.git
+[submodule "external/printf"]
+	path = external/printf
+	url = https://github.com/mpaland/printf.git
