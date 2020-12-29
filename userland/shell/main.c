@@ -5,12 +5,11 @@
 
 #define READLINE_SIZE          256
 #define PROMPT                 "(sh) "
-#define NB_DOCUMENTED_COMMANDS 3
+#define NB_DOCUMENTED_COMMANDS 2
 
-int main()
+void main()
 {
   const char* commands[][NB_DOCUMENTED_COMMANDS] = {
-    { "exit", "exit the shell" },
     { "help", "display information about shell commands" },
     { "reboot", "stopping and restarting the system" },
   };
@@ -56,9 +55,7 @@ int main()
           ;
         }
 
-        if (strcmp(command, "exit") == 0) {
-          return 0;
-        } else if (strcmp(command, "help") == 0) {
+        if (strcmp(command, "help") == 0) {
           if (first_arg == NULL) {
             for (uint8_t i = 0; i < NB_DOCUMENTED_COMMANDS; i++) {
               printf("%-10s %s\n", commands[i][0], commands[i][1]);
@@ -96,6 +93,4 @@ int main()
         readline[readline_index++] = c;
     }
   }
-
-  return 0;
 }

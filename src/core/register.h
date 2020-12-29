@@ -5,10 +5,16 @@
 #include <stdint.h>
 
 /**
- * The MSR number of the Extended Feature Enable Register.
+ * Extended Feature Enables
  * @see https://wiki.osdev.org/CPU_Registers_x86-64#IA32_EFER
  */
 #define IA32_EFER 0xC0000080
+/// System Call Target Address
+#define IA32_STAR 0xC0000081
+/// IA-32e Mode System Call Target Address
+#define IA32_LSTAR 0xC0000082
+/// System Call Flag Mask
+#define IA32_SFMASK 0xC0000084
 
 /**
  * Returns the value of the CR0 register.

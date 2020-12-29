@@ -502,6 +502,13 @@ void paging_set_entry(page_entry_t* entry, uint64_t addr, uint64_t flags)
     entry->no_execute = 1;
   }
 
+  if (flags & PAGING_FLAG_USER_ACCESSIBLE) {
+    entry->user_accessible = 1;
+  }
+
+  // TODO: change that once we have a P4 for usermode
+  entry->user_accessible = 1;
+
   MMU_DEBUG_PAGE_ENTRY("set", (*entry));
 }
 

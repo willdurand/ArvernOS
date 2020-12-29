@@ -30,6 +30,7 @@ INITRD_TAR    := initrd.tar
 INITRD        := $(KERNEL_DIR)/$(INITRD_TAR)
 EXTERNALS     := external/liballoc external/printf external/vtconsole
 GIT_HASH      := $(shell git rev-parse --short HEAD)
+BUILD_MODE    := release
 # This should be a bitmap font.
 CONSOLE_FONT_PATH := external/scalable-font2/fonts/u_vga16.sfn.gz
 CONSOLE_FONT      := $(BUILD_DIR)/font.o
@@ -92,17 +93,23 @@ ifeq ($(ENABLE_FRAMEBUFFER), 1)
 	NASM_OPTIONS += -dENABLE_FRAMEBUFFER
 endif
 
-GRUB_KERNEL_CMDLINE =
+GRUB_KERNEL_CMDLINE ?= /bin/shell
 
 # See: https://stackoverflow.com/questions/649246/is-it-possible-to-create-a-multi-line-string-variable-in-a-makefile/649462#649462
 define GRUB_CFG_BODY
-set timeout=0
+set timeout=1
 set default=0
 
-menuentry "$(OS_NAME)" {
-    multiboot2 /boot/$(KERNEL_BIN) $(GRUB_KERNEL_CMDLINE)
-    module2 /boot/$(INITRD_TAR)
-    boot
+menuentry "$(OS_NAME) $(BUILD_MODE)" {
+	multiboot2 /boot/$(KERNEL_BIN) $(GRUB_KERNEL_CMDLINE)
+	module2 /boot/$(INITRD_TAR)
+	boot
+}
+
+menuentry "$(OS_NAME) $(BUILD_MODE) (kernel mode)" {
+	multiboot2 /boot/$(KERNEL_BIN) kshell
+	module2 /boot/$(INITRD_TAR)
+	boot
 }
 endef
 
@@ -195,6 +202,7 @@ run: $(ISO)
 
 debug: ## build the OS in debug mode
 debug: CFLAGS += $(DEBUG_CFLAGS)
+debug: BUILD_MODE = debug
 debug: $(ISO)
 .PHONY: debug
 

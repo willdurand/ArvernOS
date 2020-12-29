@@ -66,8 +66,9 @@ void idt_load();
  * @param n a gate number
  * @param handler the handler to register for the given gate
  * @param type the gate type
+ * @param dpl the DPL value ("ring")
  */
-void idt_register_gate(uint16_t n, uint64_t handler, uint8_t type);
+void idt_register_gate(uint16_t n, uint64_t handler, uint8_t type, uint8_t dpl);
 
 /**
  * Registers a an interrupt gate in the IDT.
