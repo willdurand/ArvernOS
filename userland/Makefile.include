@@ -17,7 +17,7 @@ PLATFORM = $(shell echo __$(OS_NAME)__ | tr '[:upper:]' '[:lower:]')
 # executable if needed, see: https://access.redhat.com/blogs/766093/posts/1975793
 CFLAGS = -Wl,-emain -Wall -pedantic -std=c11 -O0 -ffreestanding -nostdlib -fno-builtin \
 				 -D$(PLATFORM) \
-				 -I $(ROOT_DIR)/include/ -I $(ROOT_DIR)/libs/ \
+				 -I $(ROOT_DIR)/include/ -I $(ROOT_DIR)/external/ \
 				 -no-pie -fno-pie
 LIBS   = $(ROOT_DIR)/build/libc-$(OS_NAME).a
 
