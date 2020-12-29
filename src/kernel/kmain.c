@@ -24,11 +24,12 @@
 #include <mmu/frame.h>
 #include <mmu/paging.h>
 #include <net/net.h>
+#include <proc/usermode.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/k_syscall.h>
 
-void print_welcome_messge();
+void print_welcome_message();
 void print_step(const char* msg);
 void print_sub_step(const char* msg);
 void print_ok();
@@ -36,6 +37,9 @@ void check_interrupts();
 void busywait(uint64_t seconds);
 void print_debug_gdt();
 void print_debug_tss();
+
+// TODO: probably not a good idea but it works for now, heh
+static uint64_t user_stack[1024];
 
 void print_debug_tss()
 {
@@ -57,6 +61,12 @@ void print_debug_gdt()
   DEBUG("gdt64.kernel_data: type=0x%02x limit19_16_and_flags=0x%02x",
         gdt64.kernel_data.type,
         gdt64.kernel_data.limit19_16_and_flags);
+  DEBUG("gdt64.user_code  : type=0x%02x limit19_16_and_flags=0x%02x",
+        gdt64.user_code.type,
+        gdt64.user_code.limit19_16_and_flags);
+  DEBUG("gdt64.user_data  : type=0x%02x limit19_16_and_flags=0x%02x",
+        gdt64.user_data.type,
+        gdt64.user_data.limit19_16_and_flags);
   DEBUG("gdt64.tss_low    : type=0x%02x limit19_16_and_flags=0x%02x",
         gdt64.tss_low.type,
         gdt64.tss_low.limit19_16_and_flags);
@@ -73,7 +83,7 @@ void busywait(uint64_t seconds)
   }
 }
 
-void print_welcome_messge()
+void print_welcome_message()
 {
   printf("\033[1;34m%s\033[0m\n", KERNEL_ASCII);
   printf("%s %s (%s) / Built on: %s at %s\n\n",
@@ -140,7 +150,7 @@ void kmain(uint64_t addr)
       mbi, MULTIBOOT_TAG_TYPE_FRAMEBUFFER);
   console_init(&entry->common);
 
-  print_welcome_messge();
+  print_welcome_message();
   print_debug_gdt();
   print_debug_tss();
 
@@ -303,13 +313,37 @@ void kmain(uint64_t addr)
     printf("\n");
   }
 
-  // kshell
-  kshell_print_prompt();
+  if (cmdline && strcmp(cmdline->string, "kshell") == 0) {
+    printf("loading kshell...\n");
 
-  while (1) {
-    kshell_run(keyboard_get_scancode());
-    // This allows the CPU to enter a sleep state in which it consumes much
-    // less energy. See: https://en.wikipedia.org/wiki/HLT_(x86_instruction)
-    __asm__("hlt");
+    kshell_print_prompt();
+
+    while (1) {
+      kshell_run(keyboard_get_scancode());
+      // This allows the CPU to enter a sleep state in which it consumes much
+      // less energy. See: https://en.wikipedia.org/wiki/HLT_(x86_instruction)
+      __asm__("hlt");
+    }
   }
+
+  inode_t inode = vfs_namei(cmdline->string);
+
+  if (inode && vfs_type(inode) == FS_FILE) {
+    vfs_stat_t stat = { 0 };
+    vfs_stat(inode, &stat);
+
+    uint8_t* buf = (uint8_t*)malloc(stat.size * sizeof(uint8_t));
+    vfs_read(inode, buf, stat.size, 0);
+
+    elf_header_t* elf = elf_load((uint8_t*)buf);
+
+    if (!elf) {
+      free(buf);
+    } else {
+      printf("switching to usermode (entrypoint=%p)...\n", elf->entry);
+      switch_to_usermode((void*)elf->entry, (void*)&user_stack[1023]);
+    }
+  }
+
+  PANIC("unexpectedly reached end of kmain");
 }

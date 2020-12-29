@@ -2,6 +2,7 @@
 #define CORE_GDT_H
 
 #define KERNEL_BASE_SELECTOR 0x08
+#define USER_BASE_SELECTOR   0x18
 
 typedef struct gdt_descriptor
 {
@@ -18,6 +19,9 @@ typedef struct gdt_table
   gdt_descriptor_t null_1;
   gdt_descriptor_t kernel_code;
   gdt_descriptor_t kernel_data;
+  gdt_descriptor_t null_2;
+  gdt_descriptor_t user_data;
+  gdt_descriptor_t user_code;
   gdt_descriptor_t tss_low;
   gdt_descriptor_t tss_high;
 } gdt_table_t;

@@ -94,17 +94,7 @@ config](https://github.com/willdurand/willOS/blob/master/.circleci/config.yml).
 
 ## Building willOS
 
-To compile the kernel (ELF 64-bit), run:
-
-```
-$ make clean kernel
-```
-
-To build the ISO (this is the default target), run:
-
-```
-$ make clean iso
-```
+### Debug
 
 To build the ISO in debug mode, run:
 
@@ -141,12 +131,21 @@ The available debug variables are:
 
 There is also `ENABLE_ALL_DEBUG` to turn all debug logs on.
 
+### Release
+
 To compile the OS in release mode, build the ISO, and start `qemu` with the OS
 loaded, run:
 
 ```
 $ make clean run
 ```
+
+### Boot options
+
+The GRUB configuration offers two choices: the normal mode and the kernel mode.
+The normal (or "default") mode will load the `/bin/shell` program in user mode
+("ring 3"). The kernel mode will load the `kshell` instead and will stay in
+kernel mode (as its name implies).
 
 ## Early boot sequence
 
@@ -161,6 +160,7 @@ $ make clean run
 8. Load a Task State Segment
 9. Reload all the data segment registers
 10. Call the C `kmain()` function
+11. Eventually switch to user mode
 
 ## License
 

@@ -1,5 +1,7 @@
 #include "k_syscall.h"
 #include "logging.h"
+#include <core/gdt.h>
+#include <core/register.h>
 #include <kernel/panic.h>
 #include <sys/syscall.h>
 
@@ -36,6 +38,14 @@ void syscall_init()
   syscall_register_handler(SYSCALL_SENDTO, syscall_sendto);
   syscall_register_handler(SYSCALL_RECVFROM, syscall_recvfrom);
   syscall_register_handler(SYSCALL_GETHOSTBYNAME2, syscall_gethostbyname2);
+
+  // Enable IA32_EFER.SCE.
+  write_msr(IA32_EFER, read_msr(IA32_EFER) | 1);
+  // Set up the segments for syscall/sysret.
+  uint64_t star = read_msr(IA32_STAR);
+  star |= (uint64_t)KERNEL_BASE_SELECTOR << 32;
+  star |= (uint64_t)USER_BASE_SELECTOR << 48;
+  write_msr(IA32_STAR, star);
 }
 
 void syscall_register_handler(uint8_t id, syscall_handler_t handler)

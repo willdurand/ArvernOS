@@ -122,7 +122,7 @@ void isr_init()
   idt_register_interrupt(IRQ12, (uint64_t)irq12);
 
   // Syscalls
-  idt_register_interrupt(SYSCALL, (uint64_t)int0x80);
+  idt_register_gate(SYSCALL, (uint64_t)int0x80, INTERRUPT_GATE, 3);
 
   // Specific handlers for exceptions.
   isr_register_handler(EXCEPTION_BP, breakpoint_handler);

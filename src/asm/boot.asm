@@ -208,6 +208,12 @@ gdt64:
   dq (1<<41) | (1<<43) | (1<<44) | (1<<47) | (1<<53)
 .kernel_data: equ $ - gdt64
   dq (1<<41) | (1<<44) | (1<<47)
+.null_2: equ $ - gdt64
+  dq 0
+.user_data: equ $ - gdt64
+  dq (1<<41) | (1<<44) | (1<<45) | (1<<46) | (1<<47)
+.user_code: equ $ - gdt64
+  dq (1<<41) | (1<<43) | (1<<44) | (1<<45) | (1<<46) | (1<<47) | (1<<53)
 .tss: equ $ - gdt64
   ; low
   dw tss.size & 0xffff       ; limit 15:0

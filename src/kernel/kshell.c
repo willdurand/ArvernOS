@@ -281,53 +281,6 @@ void ls(int argc, char* argv[])
   }
 }
 
-int try_exec(int argc, char* argv[])
-{
-  inode_t inode = vfs_namei(argv[0]);
-
-  if (!inode) {
-    char* buf = malloc(strlen(argv[0]) + 5);
-    sprintf(buf, "/bin/%s", argv[0]);
-    inode = vfs_namei(buf);
-    free(buf);
-  }
-
-  if (!inode) {
-    return -1;
-  }
-
-  if (vfs_type(inode) != FS_FILE) {
-    return -2;
-  }
-
-  vfs_stat_t stat = { 0 };
-  vfs_stat(inode, &stat);
-
-  char* buf = malloc((stat.size + 1) * sizeof(char));
-  vfs_read(inode, buf, stat.size, 0);
-
-  elf_header_t* elf = elf_load((uint8_t*)buf);
-
-  if (!elf) {
-    free(buf);
-    return -3;
-  }
-
-  typedef int callable(int arvc, char* argv[]);
-  callable* c = (callable*)(elf->entry);
-  int retval = c(argc, argv);
-
-  if (retval != 0) {
-    printf("%s returned non-zero exit status %d.\n", argv[0], retval);
-  }
-
-  elf_unload(elf);
-
-  free(buf);
-
-  return 0;
-}
-
 void overflow()
 {
   char c[12];
@@ -374,9 +327,7 @@ void run_command()
   } else if (strcmp(argv[0], "ntp") == 0) {
     ntp(argc, argv);
   } else {
-    if (try_exec(argc, argv) != 0) {
-      printf("invalid kshell command\n");
-    }
+    printf("invalid kshell command\n");
   }
 
   free(argv);
