@@ -28,19 +28,19 @@ LIBK_OBJS_DIR := $(BUILD_DIR)/libk-objects
 INITRD_DIR    := initrd
 INITRD_TAR    := initrd.tar
 INITRD        := $(KERNEL_DIR)/$(INITRD_TAR)
-LIBS_DIRS     := libs/liballoc libs/printf libs/vtconsole
+EXTERNALS     := external/liballoc external/printf external/vtconsole
 GIT_HASH      := $(shell git rev-parse --short HEAD)
 # This should be a bitmap font.
-CONSOLE_FONT_PATH := libs/scalable-font2/fonts/u_vga16.sfn.gz
+CONSOLE_FONT_PATH := external/scalable-font2/fonts/u_vga16.sfn.gz
 CONSOLE_FONT      := $(BUILD_DIR)/font.o
 # This is used in `src/asm/multiboot_header.asm`.
 VBE_WIDTH  := 1024
 VBE_HEIGHT := 768
 VBE_BPP    := 32
 
-LIBK_OBJECTS     := $(patsubst %.c, $(LIBK_OBJS_DIR)/%.o, $(shell find src $(LIBS_DIRS) -name '*.c'))
+LIBK_OBJECTS     := $(patsubst %.c, $(LIBK_OBJS_DIR)/%.o, $(shell find src $(EXTERNALS) -name '*.c'))
 LIBK_ASM_OBJECTS := $(patsubst %.asm, $(LIBK_OBJS_DIR)/%.o, $(shell find src/asm -name '*.asm'))
-LIBC_OBJECTS     := $(patsubst %.c, $(LIBC_OBJS_DIR)/%.o, $(shell find src/libc $(LIBS_DIRS) -name '*.c'))
+LIBC_OBJECTS     := $(patsubst %.c, $(LIBC_OBJS_DIR)/%.o, $(shell find src/libc $(EXTERNALS) -name '*.c'))
 LIBC_TEST_FILES  := $(patsubst test/%.c, %, $(shell find test/libc -name '*.c'))
 
 NASM_OPTIONS = -dVBE_WIDTH=$(VBE_WIDTH) -dVBE_HEIGHT=$(VBE_HEIGHT) -dVBE_BPP=$(VBE_BPP)
@@ -55,7 +55,7 @@ CFLAGS = -DKERNEL_NAME=\"$(OS_NAME)\" \
 	 -DLOGS_WITH_COLORS \
 	 -Wall -pedantic -std=c11 -O0 -ffreestanding -nostdlib \
 	 -fno-builtin -fstack-protector -mno-red-zone \
-	 -I src/ -I include/ -I libs/ -I libs/scalable-font2/
+	 -I src/ -I include/ -I external/ -I external/scalable-font2/
 
 DEBUG_CFLAGS = -g -DENABLE_KERNEL_DEBUG
 
@@ -217,7 +217,7 @@ clean: ## remove build artifacts
 .PHONY: clean
 
 fmt: ## automatically format the code with clang-format
-	find . -path ./libs -prune -false -o -type f \( -name '*.c' -o -name '*.h' \) -exec clang-format -style=file -i "{}" ";"
+	find . -path ./external -prune -false -o -type f \( -name '*.c' -o -name '*.h' \) -exec clang-format -style=file -i "{}" ";"
 .PHONY: fmt
 
 gdb: ## build, run the OS in debug mode and enable GDB
