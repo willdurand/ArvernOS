@@ -213,7 +213,7 @@ run-debug: debug run
 
 run-test: ## run the OS in test mode
 run-test: QEMU_OPTIONS += -curses -serial file:./logs/test.log
-run-test: GRUB_KERNEL_CMDLINE = "boot-and-exit"
+run-test: GRUB_KERNEL_CMDLINE = /bin/boot-and-exit
 run-test: run
 .PHONY: run-test
 

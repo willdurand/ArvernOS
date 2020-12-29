@@ -12,6 +12,7 @@
 #define RESET_CPU_COMMAND    0xFE
 
 void restart();
+void poweroff();
 
 int k_reboot(int command)
 {
@@ -21,6 +22,8 @@ int k_reboot(int command)
     case REBOOT_CMD_RESTART:
       restart();
       break;
+    case REBOOT_CMD_POWER_OFF:
+      poweroff();
     default:
       return -EINVAL;
   }
@@ -30,6 +33,8 @@ int k_reboot(int command)
 
 void restart()
 {
+  printf("Restarting system now...\n");
+
   isr_disable_interrupts();
 
   uint8_t status = 0x02;
@@ -42,4 +47,14 @@ void restart()
   while (1) {
     __asm__("hlt");
   }
+}
+
+void poweroff()
+{
+  printf("Powering off system now...\n");
+
+  isr_disable_interrupts();
+
+  // Power-off for QEMU, see: https://wiki.osdev.org/Shutdown
+  port_word_out(0x604, 0x2000);
 }
