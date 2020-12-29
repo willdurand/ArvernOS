@@ -1,17 +1,42 @@
 #include "shell.h"
+#include <fcntl.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
+#include <sys/syscall.h>
 
 #define READLINE_SIZE          256
-#define PROMPT                 "(sh) "
-#define NB_DOCUMENTED_COMMANDS 2
+#define PROMPT                 "\033[0;36m(sh)\033[0m "
+#define NB_DOCUMENTED_COMMANDS 3
+
+void print_selftest_header(const char* name);
+
+void print_selftest_header(const char* name)
+{
+  printf("\n\033[1;33m[%s]\033[0m\n", name);
+}
+
+void selftest()
+{
+  print_selftest_header("syscall");
+  printf("  syscalling\n");
+  test("usermode");
+
+  print_selftest_header("filesystem");
+  int fd = open("/dev/debug", O_RDWR);
+  const char* message = "  this message should be written to the console\n";
+  write(fd, message, strlen(message));
+  close(fd);
+
+  printf("\ndone.\n");
+}
 
 void main()
 {
   const char* commands[][NB_DOCUMENTED_COMMANDS] = {
     { "help", "display information about shell commands" },
     { "reboot", "stopping and restarting the system" },
+    { "selftest", "run the system test suite" },
   };
 
   char readline[READLINE_SIZE] = { 0 };
@@ -70,6 +95,8 @@ void main()
           }
         } else if (strcmp(command, "reboot") == 0) {
           _reboot();
+        } else if (strcmp(command, "selftest") == 0) {
+          selftest();
         } else {
           printf("invalid command\n");
         }
