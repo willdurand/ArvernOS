@@ -19,7 +19,7 @@ void idt_register_gate(uint16_t n, uint64_t handler, uint8_t type)
   idt[n].ist = 0;
   idt[n].type = type;
   idt[n].s = 0;
-  idt[n].dpl = 0; // privilege to call the handler ("ring")
+  idt[n].dpl = 0;
   idt[n].present = 1;
 
   CORE_DEBUG(

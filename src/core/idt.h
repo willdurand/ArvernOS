@@ -20,7 +20,8 @@
 #define IDT_ENTRIES 256
 
 /**
- * This structure represents an IDT gate.
+ * This structure represents an IDT gate. A gate is the name of an entry in the
+ * IDT, which can contain Interrupt Gates, Task Gates and Trap Gates.
  */
 typedef struct idt_gate
 {
