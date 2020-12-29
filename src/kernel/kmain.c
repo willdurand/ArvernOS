@@ -282,25 +282,6 @@ void kmain(uint64_t addr)
   keyboard_init();
   print_ok();
 
-  multiboot_tag_string_t* cmdline = (multiboot_tag_string_t*)find_multiboot_tag(
-    mbi, MULTIBOOT_TAG_TYPE_CMDLINE);
-
-  if (cmdline && strcmp(cmdline->string, "boot-and-exit") == 0) {
-    printf("\n\nboot sequence completed, exiting now...");
-    INFO("%s", "boot sequence completed, exiting now...");
-
-    uint64_t uptime = timer_uptime();
-    while (timer_uptime() < uptime + 2) {
-      __asm__("hlt");
-    }
-
-    isr_disable_interrupts();
-    // Power-off for QEMU, see: https://wiki.osdev.org/Shutdown
-    port_word_out(0x604, 0x2000);
-
-    return;
-  }
-
   if (console_mode_is_vbe()) {
     print_step("switching to fullscreen mode");
     busywait(2);
@@ -312,6 +293,9 @@ void kmain(uint64_t addr)
   } else {
     printf("\n");
   }
+
+  multiboot_tag_string_t* cmdline = (multiboot_tag_string_t*)find_multiboot_tag(
+    mbi, MULTIBOOT_TAG_TYPE_CMDLINE);
 
   if (cmdline && strcmp(cmdline->string, "kshell") == 0) {
     printf("loading kshell...\n");
