@@ -23,6 +23,7 @@ syscall_ptr_t syscall_handlers[] = {
   [SYSCALL_SENDTO] = (syscall_ptr_t)k_sendto,
   [SYSCALL_RECVFROM] = (syscall_ptr_t)k_recvfrom,
   [SYSCALL_GETHOSTBYNAME2] = (syscall_ptr_t)k_gethostbyname2,
+  [SYSCALL_EXECV] = (syscall_ptr_t)k_execv,
 };
 
 void syscall_init()
