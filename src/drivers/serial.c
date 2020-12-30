@@ -24,11 +24,11 @@ void serial_init(uint16_t com, uint16_t speed)
   // Value:   | 0 | 0 | 0 0 0 | 0 | 1 1 | = 0x03
   port_byte_out(SERIAL_LINE_COMMAND_PORT(com), 0x03);
 
-  // Enable FIFO, clear them, with 14b threshold
+  // Enable FIFO, clear them, with 14 bytes as size of queue
   port_byte_out(SERIAL_FIFO_COMMAND_PORT(com), 0xC7);
 
-  // IRQs enabled, RTS/DSR set
-  port_byte_out(SERIAL_MODEM_COMMAND_PORT(com), 0x0B);
+  // Ready To Transmit (RTS) = 1, Data Terminal Ready (DTR) = 1, no interrupts
+  port_byte_out(SERIAL_MODEM_COMMAND_PORT(com), 0x03);
 }
 
 void serial_print(uint16_t com, const char* str)
