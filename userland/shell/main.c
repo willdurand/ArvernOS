@@ -1,6 +1,4 @@
 #include "shell.h"
-#include <errno.h>
-#include <fcntl.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
@@ -10,56 +8,29 @@
 #define PROMPT                 "\033[0;36m(sh)\033[0m "
 #define NB_DOCUMENTED_COMMANDS 3
 
-void print_selftest_header(const char* name);
+static const char* commands[][NB_DOCUMENTED_COMMANDS] = {
+  { "help", "display information about shell commands" },
+  { "reboot", "stopping and restarting the system" },
+  { "selftest", "run the system test suite" },
+};
 
-void print_selftest_header(const char* name)
-{
-  printf("\n\033[1;33m[%s]\033[0m\n", name);
-}
-
-void selftest()
-{
-#ifdef __willos__
-  print_selftest_header("syscall");
-  printf("  syscalling\n");
-  test("usermode");
-#endif
-
-  print_selftest_header("filesystem");
-  int fd = open("/dev/debug", O_WRONLY);
-
-  if (fd < 0) {
-    printf("could not open /dev/debug (errno=%d)\n", errno);
-  } else {
-    const char* message = "  this message should be written to the console\n";
-    if (write(fd, message, strlen(message)) < 0) {
-      printf("failed to write to /dev/debug (errno=%d)\n", errno);
-    }
-
-    close(fd);
-  }
-
-  printf("\ndone.\n");
-}
+static char readline[READLINE_SIZE] = { 0 };
+static unsigned int readline_index = 0;
 
 int main(int argc, char* argv[])
 {
-  const char* commands[][NB_DOCUMENTED_COMMANDS] = {
-    { "help", "display information about shell commands" },
-    { "reboot", "stopping and restarting the system" },
-    { "selftest", "run the system test suite" },
-  };
-
-  char readline[READLINE_SIZE] = { 0 };
-  unsigned int readline_index = 0;
-
   printf("shell: pid=%d\n", getpid());
+  printf("\nWelcome!\n"
+         "This is willOS user shell. Type 'help' for more information.\n\n");
   printf(PROMPT);
 
   while (1) {
     char c = getchar();
 
     switch (c) {
+      case 0:
+        break;
+
       case '\b':
         if (readline_index == 0) {
           break;
@@ -68,7 +39,7 @@ int main(int argc, char* argv[])
         // destructive backspace
         printf("\b \b");
 
-        if (readline_index >= 1) {
+        if (readline_index > 0) {
           readline_index--;
         }
 
