@@ -1,8 +1,9 @@
 #include <stdio.h>
+#include <unistd.h>
 
 int main(int argc, char* argv[])
 {
-  printf("%s started", argv[0]);
+  printf("init: %s started", argv[0]);
 
   if (argc == 1) {
     printf(" without any argument\n");
@@ -14,9 +15,11 @@ int main(int argc, char* argv[])
     }
   }
 
-  while (1) {
-    ;
-  }
+  const char* path = "/bin/shell";
+  char* args[] = { path, NULL };
+
+  printf("init: executing %s\n", path);
+  execv(path, args);
 
   return 0;
 }

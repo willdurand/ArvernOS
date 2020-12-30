@@ -42,7 +42,7 @@ void selftest()
   printf("\ndone.\n");
 }
 
-int main()
+int main(int argc, char* argv[])
 {
   const char* commands[][NB_DOCUMENTED_COMMANDS] = {
     { "help", "display information about shell commands" },
