@@ -92,13 +92,13 @@ void print_welcome_message()
 
 void print_step(const char* msg)
 {
-  printf("%-74s", msg);
+  printf("kernel: %-66s", msg);
   INFO("%s", msg);
 }
 
 void print_sub_step(const char* msg)
 {
-  printf("  %-72s", msg);
+  printf("kernel:   %-64s", msg);
   INFO("%s", msg);
 }
 
@@ -322,7 +322,7 @@ void kmain(uint64_t addr)
   }
   argv[argc] = NULL;
 
-  printf("switching to usermode... (%s)\n", argv[0]);
+  printf("kernel: switching to usermode... (%s)\n", argv[0]);
   k_execv(argv[0], argv);
 
   PANIC("unexpectedly reached end of kmain");
