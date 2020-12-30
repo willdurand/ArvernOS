@@ -94,7 +94,7 @@ ifeq ($(ENABLE_FRAMEBUFFER), 1)
 	NASM_OPTIONS += -dENABLE_FRAMEBUFFER
 endif
 
-GRUB_KERNEL_CMDLINE ?= /bin/shell
+GRUB_KERNEL_CMDLINE ?= /bin/init
 
 # See: https://stackoverflow.com/questions/649246/is-it-possible-to-create-a-multi-line-string-variable-in-a-makefile/649462#649462
 define GRUB_CFG_BODY
@@ -189,8 +189,10 @@ initrd: ## build the init ram disk
 initrd: $(INITRD)
 .PHONY: initrd
 
+# We mark this target as .PHONY to write the file every time.
 $(GRUB_CFG): $(GRUB_DIR)
 	echo "$$GRUB_CFG_BODY" > $@
+.PHONY: $(GRUB_CFG)
 
 $(ISO): $(KERNEL) $(INITRD) $(GRUB_CFG)
 	grub-mkrescue -o $@ $(ISO_DIR)

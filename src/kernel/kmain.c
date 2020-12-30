@@ -310,7 +310,23 @@ void kmain(uint64_t addr)
     }
   }
 
-  inode_t inode = vfs_namei(cmdline->string);
+  int argc = 1;
+  char* _cmdline = strdup(cmdline->string);
+  strtok(_cmdline, " ");
+  while (strtok(NULL, " ") != NULL) {
+    argc++;
+  }
+  free(_cmdline);
+
+  char** argv = (char**)malloc(sizeof(char*) * (argc + 1));
+  argv[0] = strtok(cmdline->string, " ");
+
+  for (int i = 1; i < argc; i++) {
+    argv[i] = strtok(NULL, " ");
+  }
+  argv[argc] = NULL;
+
+  inode_t inode = vfs_namei(argv[0]);
 
   if (inode && vfs_type(inode) == FS_FILE) {
     vfs_stat_t stat = { 0 };
@@ -325,7 +341,13 @@ void kmain(uint64_t addr)
       free(buf);
     } else {
       printf("switching to usermode (entrypoint=%p)...\n", elf->entry);
-      switch_to_usermode((void*)elf->entry, (void*)&user_stack[1023]);
+
+      void* stack = (void*)&user_stack[1023];
+      PUSH_TO_STACK(stack, char**, argv);
+      PUSH_TO_STACK(stack, int, argc);
+      // TODO: add support for `envp`
+
+      switch_to_usermode((void*)elf->entry, stack);
     }
   }
 

@@ -15,7 +15,7 @@ PLATFORM = $(shell echo __$(OS_NAME)__ | tr '[:upper:]' '[:lower:]')
 
 # Add `-no-pie` to disable the PIE feature that causes `gcc` to not create an
 # executable if needed, see: https://access.redhat.com/blogs/766093/posts/1975793
-CFLAGS = -Wl,-emain -Wall -pedantic -std=c11 -O0 -ffreestanding -nostdlib -fno-builtin \
+CFLAGS = -Wall -pedantic -std=c11 -O0 -ffreestanding -nostdlib -fno-builtin \
 				 -D$(PLATFORM) \
 				 -I $(ROOT_DIR)/include/ -I $(ROOT_DIR)/external/ \
 				 -no-pie -fno-pie
