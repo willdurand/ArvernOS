@@ -7,9 +7,9 @@ _start:
 	xor ebp, ebp ; Clear the frame pointer.
 
 	; Prepare the arguments for `start_main()`.
-	mov rdi, main      ; `main()`
-	mov rsi, [rsp]     ; `argc`
-	mov rdx, [rsp + 4] ; `argv`
+	mov rdi, main ; `main()`
+	pop rsi       ; `argc`
+	pop rdx       ; `argv`
 
 	extern start_main
 	call start_main
