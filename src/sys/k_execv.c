@@ -79,9 +79,9 @@ int k_execv(const char* path, char* const argv[])
   current_process->argv = _argv;
 
   void* stack = (void*)&current_process->user_stack[1023];
-  PUSH_TO_STACK(stack, char**, _argv);
-  PUSH_TO_STACK(stack, int, argc);
   // TODO: add support for `envp`
+  PUSH_TO_STACK(stack, uint64_t, (uint64_t)_argv);
+  PUSH_TO_STACK(stack, uint64_t, (uint64_t)argc);
 
   if (old_elf) {
     // Unload current process.
@@ -93,10 +93,13 @@ int k_execv(const char* path, char* const argv[])
   elf_header_t* elf = elf_load((uint8_t*)buf);
   current_process->elf = elf;
 
-  SYS_DEBUG("switching to process '%s' (entrypoint=%p stack=%p)",
-            current_process->name,
-            current_process->elf->entry,
-            stack);
+  SYS_DEBUG(
+    "switching to process '%s': entrypoint=%p stack=%p argc=%d _argv=%p",
+    current_process->name,
+    current_process->elf->entry,
+    stack,
+    argc,
+    _argv);
 
   switch_to_usermode((void*)current_process->elf->entry, stack);
 }
