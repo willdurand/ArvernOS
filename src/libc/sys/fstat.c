@@ -6,11 +6,8 @@ int fstat(int fd, struct stat* statbuf)
   return k_fstat(fd, statbuf);
 #else
   errno = 0;
-  int retval;
 
-  __asm__(INT_SYSCALL
-          : "=d"(retval)
-          : "a"(SYSCALL_FSTAT), "b"(fd), "c"(statbuf));
+  int retval = syscall(SYSCALL_FSTAT, fd, statbuf);
 
   SYSCALL_SET_ERRNO();
 

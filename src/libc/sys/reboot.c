@@ -6,9 +6,8 @@ int reboot(int command)
   return k_reboot(command);
 #else
   errno = 0;
-  int retval;
 
-  __asm__(INT_SYSCALL : "=d"(retval) : "a"(SYSCALL_REBOOT), "b"(command));
+  int retval = syscall(SYSCALL_REBOOT, command);
 
   SYSCALL_SET_ERRNO();
 

@@ -45,10 +45,6 @@
 #define IRQ11 43
 #define IRQ12 44
 
-// Software interrupts
-/// This is the ID of the special interrupt for syscalls.
-#define SYSCALL 0x80
-
 // These functions are declared in `src/asm/interrupts.asm`.
 extern void exc0();
 extern void exc1();
