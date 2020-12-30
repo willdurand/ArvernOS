@@ -9,6 +9,6 @@ void _reboot()
   printf("Restarting system now...\n");
   reboot(REBOOT_CMD_RESTART);
 #else
-  printf("error: command unsupported on this system\n");
+  printf("error: command not supported on this system\n");
 #endif
 }

@@ -1,9 +1,10 @@
 #include "shell.h"
+#include <errno.h>
 #include <fcntl.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
-#include <sys/syscall.h>
+#include <unistd.h>
 
 #define READLINE_SIZE          256
 #define PROMPT                 "\033[0;36m(sh)\033[0m "
@@ -18,20 +19,30 @@ void print_selftest_header(const char* name)
 
 void selftest()
 {
+#ifdef __willos__
   print_selftest_header("syscall");
   printf("  syscalling\n");
   test("usermode");
+#endif
 
   print_selftest_header("filesystem");
-  int fd = open("/dev/debug", O_RDWR);
-  const char* message = "  this message should be written to the console\n";
-  write(fd, message, strlen(message));
-  close(fd);
+  int fd = open("/dev/debug", O_WRONLY);
+
+  if (fd < 0) {
+    printf("could not open /dev/debug (errno=%d)\n", errno);
+  } else {
+    const char* message = "  this message should be written to the console\n";
+    if (write(fd, message, strlen(message)) < 0) {
+      printf("failed to write to /dev/debug (errno=%d)\n", errno);
+    }
+
+    close(fd);
+  }
 
   printf("\ndone.\n");
 }
 
-void main()
+int main()
 {
   const char* commands[][NB_DOCUMENTED_COMMANDS] = {
     { "help", "display information about shell commands" },
@@ -120,4 +131,6 @@ void main()
         readline[readline_index++] = c;
     }
   }
+
+  return 0;
 }
