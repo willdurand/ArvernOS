@@ -143,9 +143,16 @@ $ make clean run
 ### Boot options
 
 The GRUB configuration offers two choices: the normal mode and the kernel mode.
-The normal (or "default") mode will load the `/bin/shell` program in user mode
+The normal (or "default") mode will load the `/bin/init` program in user mode
 ("ring 3"). The kernel mode will load the `kshell` instead and will stay in
 kernel mode (as its name implies).
+
+It is possible to change the command line by passing the `GRUB_KERNEL_CMDLINE`
+variable to `make`:
+
+```
+$ make clean GRUB_KERNEL_CMDLINE="/bin/init foo bar" run-debug
+```
 
 ## Early boot sequence
 
@@ -160,7 +167,7 @@ kernel mode (as its name implies).
 8. Load a Task State Segment
 9. Reload all the data segment registers
 10. Call the C `kmain()` function
-11. Eventually switch to user mode
+11. Eventually switch to user mode and call `/bin/init` by default
 
 ## License
 
