@@ -68,4 +68,11 @@ uint64_t read_msr(uint64_t msr);
  */
 void write_msr(uint64_t msr, uint64_t value);
 
+/**
+ * Returns the value of the RSP register (stack pointer).
+ *
+ * @return the address contained in the RSP register
+ */
+uint64_t read_rsp();
+
 #endif
