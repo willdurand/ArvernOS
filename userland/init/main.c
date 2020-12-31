@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
   }
 
   const char* path = "/bin/shell";
-  char* args[] = { path, NULL };
+  char* args[] = { (char*)path, NULL };
 
   printf("init: executing %s\n", path);
   execv(path, args);

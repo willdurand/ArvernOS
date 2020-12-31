@@ -102,4 +102,7 @@ int k_execv(const char* path, char* const argv[])
     _argv);
 
   switch_to_usermode((void*)current_process->elf->entry, stack);
+
+  // Should not be possible.
+  return 0;
 }
