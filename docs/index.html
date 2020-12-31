@@ -145,11 +145,9 @@ Linux</h2>
 <p>See the <a href="https://github.com/willdurand/willOS/blob/master/.circleci/config.yml">circle-ci config</a>.</p>
 <h1><a class="anchor" id="autotoc_md5"></a>
 Building willOS</h1>
-<p>To compile the kernel (ELF 64-bit), run:</p>
-<div class="fragment"><div class="line">$ make clean kernel</div>
-</div><!-- fragment --><p>To build the ISO (this is the default target), run:</p>
-<div class="fragment"><div class="line">$ make clean iso</div>
-</div><!-- fragment --><p>To build the ISO in debug mode, run:</p>
+<h2><a class="anchor" id="autotoc_md6"></a>
+Debug</h2>
+<p>To build the ISO in debug mode, run:</p>
 <div class="fragment"><div class="line">$ make clean debug</div>
 </div><!-- fragment --><p>To compile the OS in debug mode, build the ISO, and start <code>qemu</code> with the OS loaded, run:</p>
 <div class="fragment"><div class="line">$ make clean run-debug</div>
@@ -166,9 +164,16 @@ Building willOS</h1>
 <li><code>ENABLE_SYS_DEBUG</code></li>
 </ul>
 <p>There is also <code>ENABLE_ALL_DEBUG</code> to turn all debug logs on.</p>
+<h2><a class="anchor" id="autotoc_md7"></a>
+Release</h2>
 <p>To compile the OS in release mode, build the ISO, and start <code>qemu</code> with the OS loaded, run:</p>
 <div class="fragment"><div class="line">$ make clean run</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md6"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md8"></a>
+Boot options</h2>
+<p>The GRUB configuration offers two choices: the normal mode and the kernel mode. The normal (or "default") mode will load the <code>/bin/init</code> program in user mode ("ring 3"). The kernel mode will load the <code>kshell</code> instead and will stay in kernel mode (as its name implies).</p>
+<p>It is possible to change the command line by passing the <code>GRUB_KERNEL_CMDLINE</code> variable to <code>make</code>:</p>
+<div class="fragment"><div class="line">$ make clean GRUB_KERNEL_CMDLINE=&quot;/bin/init foo bar&quot; run-debug</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md9"></a>
 Early boot sequence</h1>
 <ol type="1">
 <li>The BIOS loads the bootloader (GRUB) from the ISO</li>
@@ -181,8 +186,9 @@ Early boot sequence</h1>
 <li>Load a Task State Segment</li>
 <li>Reload all the data segment registers</li>
 <li>Call the C <code><a class="el" href="kmain_8h.html#a3a723148ea74ca575865f61d277c0657">kmain()</a></code> function</li>
+<li>Eventually switch to user mode and call <code>/bin/init</code> by default</li>
 </ol>
-<h1><a class="anchor" id="autotoc_md7"></a>
+<h1><a class="anchor" id="autotoc_md10"></a>
 License</h1>
 <p>willOS is released under the MIT License. See the bundled <a href="https://github.com/willdurand/willOS/blob/master/LICENSE.md">LICENSE</a> file for details. In addition, some parts of this project have their own licenses attached (either in the source files or in a <code>LICENSE</code> file next to them). </p>
 </div></div><!-- PageDoc -->

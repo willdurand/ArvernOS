@@ -29,9 +29,13 @@ var NAVTREE =
       [ "MacOS", "index.html#autotoc_md3", null ],
       [ "Linux", "index.html#autotoc_md4", null ]
     ] ],
-    [ "Building willOS", "index.html#autotoc_md5", null ],
-    [ "Early boot sequence", "index.html#autotoc_md6", null ],
-    [ "License", "index.html#autotoc_md7", null ],
+    [ "Building willOS", "index.html#autotoc_md5", [
+      [ "Debug", "index.html#autotoc_md6", null ],
+      [ "Release", "index.html#autotoc_md7", null ],
+      [ "Boot options", "index.html#autotoc_md8", null ]
+    ] ],
+    [ "Early boot sequence", "index.html#autotoc_md9", null ],
+    [ "License", "index.html#autotoc_md10", null ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
       [ "Data Structure Index", "classes.html", null ],
@@ -55,7 +59,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "alloc_8h.html",
-"rtl8139_8h.html#ab2710fa050b40f0e325511227a4ec796"
+"structelf__header.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -1,5 +1,4 @@
 <map id="udp_receive_packet" name="udp_receive_packet">
-<area shape="rect" id="node1" title=" " alt="" coords="5,31,144,57"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,5,144,32"/>
 <area shape="rect" id="node2" href="$descriptor_8h.html#a3a4a85ff782854b3c65aacf9ff4574d5" title=" " alt="" coords="192,5,344,32"/>
-<area shape="rect" id="node3" href="$syscall_8h.html#abb39b21888372e95ad3e5c59b166f5c8" title=" " alt="" coords="243,56,293,83"/>
 </map>

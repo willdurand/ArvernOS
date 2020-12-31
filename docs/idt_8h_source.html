@@ -96,49 +96,49 @@ $(document).ready(function(){initNavTree('idt_8h_source.html',''); initResizable
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
 <div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="idt_8h.html#a2a59a505aa55f15c152f30f811fbd310">   20</a></span>&#160;<span class="preprocessor">#define IDT_ENTRIES 256</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="structidt__gate.html">   25</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structidt__gate.html">idt_gate</a></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;{</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  uint16_t ptr_low;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  uint16_t selector;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  uint8_t ist;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <span class="keyword">union</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  {</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    uint8_t flags;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keyword">struct</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    {</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;      uint8_t type : 4;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;      uint8_t s : 1;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;      uint8_t dpl : 2;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;      uint8_t present : 1;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    };</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  };</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  uint16_t ptr_mid;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  uint32_t ptr_high;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  uint32_t reserved;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;} __attribute__((packed)) idt_gate_t;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="structidt__register.html">   49</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structidt__register.html">idt_register</a></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;{</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  uint16_t limit;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  uint64_t base;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;} __attribute__((packed)) idt_register_t;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="keywordtype">void</span> <a class="code" href="idt_8h.html#ac32911224d6d0fd8e287f2e021ee3ba4">idt_load</a>();</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="keywordtype">void</span> <a class="code" href="idt_8h.html#a8af8af8cf5ecf069d893ba9a96d55c7e">idt_register_gate</a>(uint16_t n, uint64_t handler, uint8_t type);</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="keywordtype">void</span> <a class="code" href="idt_8h.html#ae9b2767929a9d9b6851a7c60cb64e55c">idt_register_interrupt</a>(uint16_t n, uint64_t handler);</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="structidt__gate.html">   26</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structidt__gate.html">idt_gate</a></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;{</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  uint16_t ptr_low;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  uint16_t selector;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  uint8_t ist;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  <span class="keyword">union</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  {</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    uint8_t flags;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keyword">struct</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;      uint8_t type : 4;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;      uint8_t s : 1;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;      uint8_t dpl : 2;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;      uint8_t present : 1;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    };</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  };</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  uint16_t ptr_mid;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  uint32_t ptr_high;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  uint32_t reserved;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;} __attribute__((packed)) idt_gate_t;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="structidt__register.html">   50</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structidt__register.html">idt_register</a></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;{</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  uint16_t limit;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  uint64_t base;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;} __attribute__((packed)) idt_register_t;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="keywordtype">void</span> <a class="code" href="idt_8h.html#ac32911224d6d0fd8e287f2e021ee3ba4">idt_load</a>();</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="keywordtype">void</span> <a class="code" href="idt_8h.html#a2715dc490f9a700c8113c62e6a3bfd30">idt_register_gate</a>(uint16_t n, uint64_t handler, uint8_t type, uint8_t dpl);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="keywordtype">void</span> <a class="code" href="idt_8h.html#ae9b2767929a9d9b6851a7c60cb64e55c">idt_register_interrupt</a>(uint16_t n, uint64_t handler);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
+<div class="ttc" id="aidt_8h_html_a2715dc490f9a700c8113c62e6a3bfd30"><div class="ttname"><a href="idt_8h.html#a2715dc490f9a700c8113c62e6a3bfd30">idt_register_gate</a></div><div class="ttdeci">void idt_register_gate(uint16_t n, uint64_t handler, uint8_t type, uint8_t dpl)</div><div class="ttdef"><b>Definition:</b> idt.c:13</div></div>
 <div class="ttc" id="aidt_8h_html_a2a59a505aa55f15c152f30f811fbd310"><div class="ttname"><a href="idt_8h.html#a2a59a505aa55f15c152f30f811fbd310">IDT_ENTRIES</a></div><div class="ttdeci">#define IDT_ENTRIES</div><div class="ttdef"><b>Definition:</b> idt.h:20</div></div>
-<div class="ttc" id="aidt_8h_html_ae9b2767929a9d9b6851a7c60cb64e55c"><div class="ttname"><a href="idt_8h.html#ae9b2767929a9d9b6851a7c60cb64e55c">idt_register_interrupt</a></div><div class="ttdeci">void idt_register_interrupt(uint16_t n, uint64_t handler)</div><div class="ttdef"><b>Definition:</b> idt.c:29</div></div>
+<div class="ttc" id="aidt_8h_html_ae9b2767929a9d9b6851a7c60cb64e55c"><div class="ttname"><a href="idt_8h.html#ae9b2767929a9d9b6851a7c60cb64e55c">idt_register_interrupt</a></div><div class="ttdeci">void idt_register_interrupt(uint16_t n, uint64_t handler)</div><div class="ttdef"><b>Definition:</b> idt.c:32</div></div>
 <div class="ttc" id="aidt_8h_html"><div class="ttname"><a href="idt_8h.html">idt.h</a></div></div>
-<div class="ttc" id="aidt_8h_html_a8af8af8cf5ecf069d893ba9a96d55c7e"><div class="ttname"><a href="idt_8h.html#a8af8af8cf5ecf069d893ba9a96d55c7e">idt_register_gate</a></div><div class="ttdeci">void idt_register_gate(uint16_t n, uint64_t handler, uint8_t type)</div><div class="ttdef"><b>Definition:</b> idt.c:13</div></div>
-<div class="ttc" id="astructidt__register_html"><div class="ttname"><a href="structidt__register.html">idt_register</a></div><div class="ttdef"><b>Definition:</b> idt.h:49</div></div>
+<div class="ttc" id="astructidt__register_html"><div class="ttname"><a href="structidt__register.html">idt_register</a></div><div class="ttdef"><b>Definition:</b> idt.h:50</div></div>
 <div class="ttc" id="aidt_8h_html_ac32911224d6d0fd8e287f2e021ee3ba4"><div class="ttname"><a href="idt_8h.html#ac32911224d6d0fd8e287f2e021ee3ba4">idt_load</a></div><div class="ttdeci">void idt_load()</div><div class="ttdef"><b>Definition:</b> idt.c:7</div></div>
-<div class="ttc" id="astructidt__gate_html"><div class="ttname"><a href="structidt__gate.html">idt_gate</a></div><div class="ttdef"><b>Definition:</b> idt.h:25</div></div>
+<div class="ttc" id="astructidt__gate_html"><div class="ttname"><a href="structidt__gate.html">idt_gate</a></div><div class="ttdef"><b>Definition:</b> idt.h:26</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>

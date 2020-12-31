@@ -89,31 +89,35 @@ $(document).ready(function(){initNavTree('gdt_8h_source.html',''); initResizable
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define CORE_GDT_H</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#define KERNEL_BASE_SELECTOR 0x08</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno"><a class="line" href="structgdt__entry.html">    6</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structgdt__entry.html">gdt_entry</a></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;{</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;  uint16_t limit15_0;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;  uint16_t base15_0;</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;  uint8_t base23_16;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;  uint8_t type;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;  uint8_t limit19_16_and_flags;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;  uint8_t base31_24;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;} gdt_entry_t;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="structgdt__table.html">   16</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structgdt__table.html">gdt_table</a></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;{</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;  gdt_entry_t null_1;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;  gdt_entry_t kernel_code;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  gdt_entry_t kernel_data;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  gdt_entry_t tss_low;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  gdt_entry_t tss_high;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;} gdt_table_t;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#define USER_BASE_SELECTOR   0x18</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
+<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="structgdt__descriptor.html">    7</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structgdt__descriptor.html">gdt_descriptor</a></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;{</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;  uint16_t limit15_0;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;  uint16_t base15_0;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;  uint8_t base23_16;</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;  uint8_t type;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;  uint8_t limit19_16_and_flags;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;  uint8_t base31_24;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;} gdt_descriptor_t;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
+<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="structgdt__table.html">   17</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structgdt__table.html">gdt_table</a></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;{</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;  gdt_descriptor_t null_1;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  gdt_descriptor_t kernel_code;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  gdt_descriptor_t kernel_data;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  gdt_descriptor_t null_2;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  gdt_descriptor_t user_data;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  gdt_descriptor_t user_code;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  gdt_descriptor_t tss_low;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  gdt_descriptor_t tss_high;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;} gdt_table_t;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="astructgdt__table_html"><div class="ttname"><a href="structgdt__table.html">gdt_table</a></div><div class="ttdef"><b>Definition:</b> gdt.h:16</div></div>
-<div class="ttc" id="astructgdt__entry_html"><div class="ttname"><a href="structgdt__entry.html">gdt_entry</a></div><div class="ttdef"><b>Definition:</b> gdt.h:6</div></div>
+<div class="ttc" id="astructgdt__table_html"><div class="ttname"><a href="structgdt__table.html">gdt_table</a></div><div class="ttdef"><b>Definition:</b> gdt.h:17</div></div>
+<div class="ttc" id="astructgdt__descriptor_html"><div class="ttname"><a href="structgdt__descriptor.html">gdt_descriptor</a></div><div class="ttdef"><b>Definition:</b> gdt.h:7</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>

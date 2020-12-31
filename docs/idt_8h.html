@@ -118,8 +118,8 @@ Macros</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:ac32911224d6d0fd8e287f2e021ee3ba4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="idt_8h.html#ac32911224d6d0fd8e287f2e021ee3ba4">idt_load</a> ()</td></tr>
 <tr class="separator:ac32911224d6d0fd8e287f2e021ee3ba4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8af8af8cf5ecf069d893ba9a96d55c7e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="idt_8h.html#a8af8af8cf5ecf069d893ba9a96d55c7e">idt_register_gate</a> (uint16_t n, uint64_t handler, uint8_t type)</td></tr>
-<tr class="separator:a8af8af8cf5ecf069d893ba9a96d55c7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2715dc490f9a700c8113c62e6a3bfd30"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="idt_8h.html#a2715dc490f9a700c8113c62e6a3bfd30">idt_register_gate</a> (uint16_t n, uint64_t handler, uint8_t type, uint8_t dpl)</td></tr>
+<tr class="separator:a2715dc490f9a700c8113c62e6a3bfd30"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae9b2767929a9d9b6851a7c60cb64e55c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="idt_8h.html#ae9b2767929a9d9b6851a7c60cb64e55c">idt_register_interrupt</a> (uint16_t n, uint64_t handler)</td></tr>
 <tr class="separator:ae9b2767929a9d9b6851a7c60cb64e55c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -159,12 +159,12 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Loads the <em>Interrupt Descriptor Table</em>. The table should be updated with <code><a class="el" href="idt_8h.html#a8af8af8cf5ecf069d893ba9a96d55c7e">idt_register_gate()</a></code> and/or <code><a class="el" href="idt_8h.html#ae9b2767929a9d9b6851a7c60cb64e55c">idt_register_interrupt()</a></code> before calling this function. </p>
+<p>Loads the <em>Interrupt Descriptor Table</em>. The table should be updated with <code><a class="el" href="idt_8h.html#a2715dc490f9a700c8113c62e6a3bfd30">idt_register_gate()</a></code> and/or <code><a class="el" href="idt_8h.html#ae9b2767929a9d9b6851a7c60cb64e55c">idt_register_interrupt()</a></code> before calling this function. </p>
 
 </div>
 </div>
-<a id="a8af8af8cf5ecf069d893ba9a96d55c7e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8af8af8cf5ecf069d893ba9a96d55c7e">&#9670;&nbsp;</a></span>idt_register_gate()</h2>
+<a id="a2715dc490f9a700c8113c62e6a3bfd30"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2715dc490f9a700c8113c62e6a3bfd30">&#9670;&nbsp;</a></span>idt_register_gate()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -185,7 +185,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>type</em>&#160;</td>
+          <td class="paramname"><em>type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>dpl</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -200,14 +206,15 @@ Functions</h2></td></tr>
     <tr><td class="paramname">n</td><td>a gate number </td></tr>
     <tr><td class="paramname">handler</td><td>the handler to register for the given gate </td></tr>
     <tr><td class="paramname">type</td><td>the gate type </td></tr>
+    <tr><td class="paramname">dpl</td><td>the DPL value ("ring") </td></tr>
   </table>
   </dd>
 </dl>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="idt_8h_a8af8af8cf5ecf069d893ba9a96d55c7e_icgraph.png" border="0" usemap="#idt_8h_a8af8af8cf5ecf069d893ba9a96d55c7e_icgraph" alt=""/></div>
-<map name="idt_8h_a8af8af8cf5ecf069d893ba9a96d55c7e_icgraph" id="idt_8h_a8af8af8cf5ecf069d893ba9a96d55c7e_icgraph">
+<div class="center"><img src="idt_8h_a2715dc490f9a700c8113c62e6a3bfd30_icgraph.png" border="0" usemap="#idt_8h_a2715dc490f9a700c8113c62e6a3bfd30_icgraph" alt=""/></div>
+<map name="idt_8h_a2715dc490f9a700c8113c62e6a3bfd30_icgraph" id="idt_8h_a2715dc490f9a700c8113c62e6a3bfd30_icgraph">
 <area shape="rect" title=" " alt="" coords="193,5,312,32"/>
 <area shape="rect" href="idt_8h.html#ae9b2767929a9d9b6851a7c60cb64e55c" title=" " alt="" coords="5,5,145,32"/>
 </map>
@@ -254,7 +261,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="idt_8h_ae9b2767929a9d9b6851a7c60cb64e55c_cgraph.png" border="0" usemap="#idt_8h_ae9b2767929a9d9b6851a7c60cb64e55c_cgraph" alt=""/></div>
 <map name="idt_8h_ae9b2767929a9d9b6851a7c60cb64e55c_cgraph" id="idt_8h_ae9b2767929a9d9b6851a7c60cb64e55c_cgraph">
 <area shape="rect" title=" " alt="" coords="5,5,145,32"/>
-<area shape="rect" href="idt_8h.html#a8af8af8cf5ecf069d893ba9a96d55c7e" title=" " alt="" coords="193,5,312,32"/>
+<area shape="rect" href="idt_8h.html#a2715dc490f9a700c8113c62e6a3bfd30" title=" " alt="" coords="193,5,312,32"/>
 </map>
 </div>
 
