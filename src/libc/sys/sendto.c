@@ -8,12 +8,12 @@ ssize_t sendto(int sockfd,
                socklen_t addrlen)
 {
 #ifdef __is_libk
-  return k_sendto(sockfd, buf, len, /* flags, */ dst_addr, addrlen);
+  return k_sendto(sockfd, buf, len, flags, dst_addr, addrlen);
 #else
   errno = 0;
 
   ssize_t retval =
-    syscall(SYSCALL_SENDTO, sockfd, buf, len, /* flags, */ dst_addr, addrlen);
+    syscall(SYSCALL_SENDTO, sockfd, buf, len, flags, dst_addr, addrlen);
 
   SYSCALL_SET_ERRNO();
 

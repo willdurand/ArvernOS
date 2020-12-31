@@ -27,7 +27,7 @@ int k_reboot(int command);
 ssize_t k_sendto(int sockfd,
                  const void* buf,
                  size_t len,
-                 /* int flags, */
+                 int flags,
                  const struct sockaddr* dst_addr,
                  socklen_t addrlen);
 int k_socket(int domain, int type, int protocol);
@@ -36,7 +36,7 @@ void k_test(const char* s);
 ssize_t k_recvfrom(int sockfd,
                    void* buf,
                    size_t len,
-                   /* int flags, */
+                   int flags,
                    struct sockaddr* src_addr,
                    socklen_t* addrlen);
 int k_gethostbyname2(const char* name, struct in_addr* in);

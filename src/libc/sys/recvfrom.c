@@ -9,17 +9,17 @@ ssize_t recvfrom(int sockfd,
 {
   ssize_t retval;
 
-  // We implement blocking here because the kernel does not run mulitple
+  // We implement blocking here because the kernel does not run multiple
   // processes/threads. It cannot be done in the syscall handler either because
   // it would block everything else.
   do {
 #ifdef __is_libk
-    retval = k_recvfrom(sockfd, buf, len, /* flags, */ src_addr, addrlen);
+    retval = k_recvfrom(sockfd, buf, len, flags, src_addr, addrlen);
 #else
     errno = 0;
 
-    retval = syscall(
-      SYSCALL_RECVFROM, sockfd, buf, len, /* flags, */ src_addr, addrlen);
+    retval =
+      syscall(SYSCALL_RECVFROM, sockfd, buf, len, flags, src_addr, addrlen);
 
     SYSCALL_SET_ERRNO();
 #endif
