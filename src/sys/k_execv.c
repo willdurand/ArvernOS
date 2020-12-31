@@ -9,7 +9,7 @@
 #include <string.h>
 #include <sys/stat.h>
 
-static process_t* current_process = NULL;
+process_t* current_process = NULL;
 
 int k_execv(const char* path, char* const argv[])
 {

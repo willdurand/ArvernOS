@@ -41,5 +41,6 @@ ssize_t k_recvfrom(int sockfd,
                    socklen_t* addrlen);
 int k_gethostbyname2(const char* name, struct in_addr* in);
 int k_execv(const char* path, char* const argv[]);
+pid_t k_getpid();
 
 #endif
