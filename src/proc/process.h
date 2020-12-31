@@ -11,6 +11,13 @@ typedef struct process
   elf_header_t* elf;
   char** argv;
   uint64_t user_stack[1024];
+  uint64_t user_rsp;
 } process_t;
+
+process_t* process_create_root();
+
+process_t* process_exec(uint8_t* image, const char* name, char* const argv[]);
+
+process_t* process_get_current();
 
 #endif
