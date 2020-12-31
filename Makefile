@@ -94,6 +94,10 @@ ifeq ($(ENABLE_FRAMEBUFFER), 1)
 	NASM_OPTIONS += -dENABLE_FRAMEBUFFER
 endif
 
+ifeq ($(OPTIMIZE_DEBUG), 1)
+	CFLAGS += -O3
+endif
+
 GRUB_KERNEL_CMDLINE ?= /bin/init
 
 # See: https://stackoverflow.com/questions/649246/is-it-possible-to-create-a-multi-line-string-variable-in-a-makefile/649462#649462

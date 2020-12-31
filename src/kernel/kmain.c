@@ -29,6 +29,10 @@
 #include <string.h>
 #include <sys/k_syscall.h>
 
+#ifdef ENABLE_FRAMEBUFFER
+#include <drivers/video/vbe/vbe_video.h>
+#endif
+
 void print_welcome_message();
 void print_step(const char* msg);
 void print_sub_step(const char* msg);
@@ -165,6 +169,11 @@ void kmain(uint64_t addr)
   print_step("initializing heap allocator");
   alloc_init();
   print_ok();
+
+#ifdef ENABLE_FRAMEBUFFER
+  vbe_video_init(&entry->common);
+  video_clear(MAKE_RGB(0, 128, 0));
+#endif
 
   print_step("initializing syscalls");
   syscall_init();
@@ -313,9 +322,11 @@ void kmain(uint64_t addr)
   int argc = 1;
   char* _cmdline = strdup(cmdline->string);
   strtok(_cmdline, " ");
+
   while (strtok(NULL, " ") != NULL) {
     argc++;
   }
+
   free(_cmdline);
 
   char** argv = (char**)malloc(sizeof(char*) * (argc + 1));
@@ -324,6 +335,7 @@ void kmain(uint64_t addr)
   for (int i = 1; i < argc; i++) {
     argv[i] = strtok(NULL, " ");
   }
+
   argv[argc] = NULL;
 
   inode_t inode = vfs_namei(argv[0]);
