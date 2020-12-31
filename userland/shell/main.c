@@ -53,6 +53,7 @@ int main(int argc, char* argv[])
   char readline[READLINE_SIZE] = { 0 };
   unsigned int readline_index = 0;
 
+  printf("shell: pid=%d\n", getpid());
   printf(PROMPT);
 
   while (1) {

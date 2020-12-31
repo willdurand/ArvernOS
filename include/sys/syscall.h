@@ -25,6 +25,7 @@
 #define SYSCALL_RECVFROM       12
 #define SYSCALL_GETHOSTBYNAME2 13
 #define SYSCALL_EXECV          14
+#define SYSCALL_GETPID         15
 
 #define SYSCALL_SET_ERRNO()                                                    \
   if (retval < 0) {                                                            \
@@ -186,5 +187,12 @@ int gethostbyname2(const char* name, struct in_addr* in);
  * @return only return if an error has occurred
  */
 int execv(const char* path, char* const argv[]);
+
+/**
+ * Implements the getpid syscall.
+ *
+ * @return the process ID (PID) of the calling process
+ */
+pid_t getpid();
 
 #endif

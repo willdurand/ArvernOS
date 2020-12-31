@@ -15,6 +15,8 @@ int main(int argc, char* argv[])
     }
   }
 
+  printf("init: pid=%d\n", getpid());
+
   const char* path = "/bin/shell";
   char* args[] = { (char*)path, NULL };
 
