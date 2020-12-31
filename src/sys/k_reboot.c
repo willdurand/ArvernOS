@@ -33,6 +33,7 @@ int k_reboot(int command)
 
 void restart()
 {
+  SYS_DEBUG("%s", "restarting system");
   printf("Restarting system now...\n");
 
   isr_disable_interrupts();
@@ -51,6 +52,7 @@ void restart()
 
 void poweroff()
 {
+  SYS_DEBUG("%s", "powering off system");
   printf("Powering off system now...\n");
 
   isr_disable_interrupts();
