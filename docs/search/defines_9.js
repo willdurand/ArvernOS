@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['timer_5fhz_613',['TIMER_HZ',['../timer_8h.html#a429afe1773b2b1b37429368dc2691c40',1,'timer.h']]]
+  ['video_5faddress_512',['VIDEO_ADDRESS',['../vga__text_8h.html#a446862b030fd0351d3b4b871147dd625',1,'vga_text.h']]]
 ];

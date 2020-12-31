@@ -42,7 +42,7 @@ void selftest()
   printf("\ndone.\n");
 }
 
-int main()
+int main(int argc, char* argv[])
 {
   const char* commands[][NB_DOCUMENTED_COMMANDS] = {
     { "help", "display information about shell commands" },
@@ -53,6 +53,7 @@ int main()
   char readline[READLINE_SIZE] = { 0 };
   unsigned int readline_index = 0;
 
+  printf("shell: pid=%d\n", getpid());
   printf(PROMPT);
 
   while (1) {

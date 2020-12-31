@@ -1,11 +1,7 @@
 var searchData=
 [
-  ['sendto_518',['sendto',['../syscall_8h.html#ae19bbc8361e8a64914e6d5d5d2258748',1,'sendto.c']]],
-  ['serial_5finit_519',['serial_init',['../serial_8h.html#a086a2712ee8de77b7621d922d2b96857',1,'serial.c']]],
-  ['serial_5fprint_520',['serial_print',['../serial_8h.html#a1e9e38c6dbae13f53e8ed436fef0cd5b',1,'serial.c']]],
-  ['serial_5fstream_5foutput_521',['serial_stream_output',['../serial_8h.html#a0f5a915bc3e83fd89af8f6dd43c6f205',1,'serial.c']]],
-  ['sock_5ffs_5finit_522',['sock_fs_init',['../sock_8h.html#aedc77d5ff0db9f7867873d7387db0be6',1,'sock.c']]],
-  ['socket_523',['socket',['../syscall_8h.html#af4e0711877c45a41168ac677b0670ccd',1,'socket.c']]],
-  ['syscall_5fhandler_524',['syscall_handler',['../k__syscall_8h.html#a362ef819e2d72c9411f40f5d87c5587a',1,'k_syscall.c']]],
-  ['syscall_5finit_525',['syscall_init',['../k__syscall_8h.html#a581ed37968ead91b6d3a0b3b7a71da9d',1,'k_syscall.c']]]
+  ['vga_5ftext_5fdisable_5fcursor_450',['vga_text_disable_cursor',['../vga__text_8h.html#ad1fc59685312d0c91988280ab70f1c01',1,'vga_text.c']]],
+  ['vga_5ftext_5finit_451',['vga_text_init',['../vga__text_8h.html#a2087a1fae709cd6218098eac37f610a3',1,'vga_text.c']]],
+  ['vga_5ftext_5fmove_5fcursor_452',['vga_text_move_cursor',['../vga__text_8h.html#af7e7957c30423a3a10d2843f7c10415e',1,'vga_text.c']]],
+  ['vga_5ftext_5fwrite_5fat_453',['vga_text_write_at',['../vga__text_8h.html#a1b47282282147d894d75584ed77cced0',1,'vga_text.c']]]
 ];

@@ -125,7 +125,7 @@ $(document).ready(function(){initNavTree('vfs_8h_source.html',''); initResizable
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  uint64_t (*close)(inode_t inode);</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  uint64_t (*read)(inode_t inode, <span class="keywordtype">void</span>* ptr, uint64_t length, uint64_t offset);</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  uint64_t (*write)(inode_t inode, <span class="keywordtype">void</span>* ptr, uint64_t length, uint64_t offset);</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  uint64_t (*<a class="code" href="structstat.html">stat</a>)(inode_t inode, vfs_stat_t* <a class="code" href="structstat.html">stat</a>);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  uint64_t (*stat)(inode_t inode, vfs_stat_t* stat);</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  uint64_t (*isatty)(inode_t inode);</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  dirent_t* (*readdir)(inode_t inode, uint64_t num);</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  inode_t (*finddir)(inode_t inode, <span class="keyword">const</span> <span class="keywordtype">char</span>* name);</div>
@@ -154,7 +154,7 @@ $(document).ready(function(){initNavTree('vfs_8h_source.html',''); initResizable
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;uint64_t vfs_write(inode_t inode, <span class="keywordtype">void</span>* ptr, uint64_t length, uint64_t offset);</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;uint64_t <a class="code" href="structvfs__stat.html">vfs_stat</a>(inode_t inode, vfs_stat_t* <a class="code" href="structstat.html">stat</a>);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;uint64_t <a class="code" href="structvfs__stat.html">vfs_stat</a>(inode_t inode, vfs_stat_t* stat);</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;uint64_t vfs_isatty(inode_t inode);</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
@@ -181,12 +181,10 @@ $(document).ready(function(){initNavTree('vfs_8h_source.html',''); initResizable
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="astructstat_html"><div class="ttname"><a href="structstat.html">stat</a></div><div class="ttdef"><b>Definition:</b> stat.h:11</div></div>
 <div class="ttc" id="astructvfs__stat_html"><div class="ttname"><a href="structvfs__stat.html">vfs_stat</a></div><div class="ttdef"><b>Definition:</b> vfs.h:23</div></div>
 <div class="ttc" id="astructvfs__node_html"><div class="ttname"><a href="structvfs__node.html">vfs_node</a></div><div class="ttdef"><b>Definition:</b> vfs.h:49</div></div>
 <div class="ttc" id="astructdirent_html"><div class="ttname"><a href="structdirent.html">dirent</a></div><div class="ttdef"><b>Definition:</b> vfs.h:29</div></div>
 <div class="ttc" id="astructvfs__driver_html"><div class="ttname"><a href="structvfs__driver.html">vfs_driver</a></div><div class="ttdef"><b>Definition:</b> vfs.h:35</div></div>
-<div class="ttc" id="astdlib_8h_html"><div class="ttname"><a href="stdlib_8h.html">stdlib.h</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>

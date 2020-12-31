@@ -24,7 +24,6 @@
 #include <mmu/frame.h>
 #include <mmu/paging.h>
 #include <net/net.h>
-#include <proc/usermode.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/k_syscall.h>
@@ -42,12 +41,9 @@ void busywait(uint64_t seconds);
 void print_debug_gdt();
 void print_debug_tss();
 
-// TODO: probably not a good idea but it works for now, heh
-static uint64_t user_stack[1024];
-
 void print_debug_tss()
 {
-  // From `asm/boot.asm`.
+  // From `src/asm/boot.asm`.
   extern tss_t tss;
 
   DEBUG(
@@ -56,7 +52,7 @@ void print_debug_tss()
 
 void print_debug_gdt()
 {
-  // From `asm/boot.asm`.
+  // From `src/asm/boot.asm`.
   extern gdt_table_t gdt64;
 
   DEBUG("gdt64.kernel_code: type=0x%02x limit19_16_and_flags=0x%02x",
@@ -100,13 +96,13 @@ void print_welcome_message()
 
 void print_step(const char* msg)
 {
-  printf("%-74s", msg);
+  printf("kernel: %-66s", msg);
   INFO("%s", msg);
 }
 
 void print_sub_step(const char* msg)
 {
-  printf("  %-72s", msg);
+  printf("kernel:   %-64s", msg);
   INFO("%s", msg);
 }
 
@@ -338,30 +334,8 @@ void kmain(uint64_t addr)
 
   argv[argc] = NULL;
 
-  inode_t inode = vfs_namei(argv[0]);
-
-  if (inode && vfs_type(inode) == FS_FILE) {
-    vfs_stat_t stat = { 0 };
-    vfs_stat(inode, &stat);
-
-    uint8_t* buf = (uint8_t*)malloc(stat.size * sizeof(uint8_t));
-    vfs_read(inode, buf, stat.size, 0);
-
-    elf_header_t* elf = elf_load((uint8_t*)buf);
-
-    if (!elf) {
-      free(buf);
-    } else {
-      printf("switching to usermode (entrypoint=%p)...\n", elf->entry);
-
-      void* stack = (void*)&user_stack[1023];
-      PUSH_TO_STACK(stack, char**, argv);
-      PUSH_TO_STACK(stack, int, argc);
-      // TODO: add support for `envp`
-
-      switch_to_usermode((void*)elf->entry, stack);
-    }
-  }
+  printf("kernel: switching to usermode... (%s)\n", argv[0]);
+  k_execv(argv[0], argv);
 
   PANIC("unexpectedly reached end of kmain");
 }

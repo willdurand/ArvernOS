@@ -10,6 +10,11 @@ typedef uint64_t size_t;
 typedef int64_t ssize_t;
 typedef int64_t off_t;
 
+#ifndef __pid_t_defined
+typedef int64_t pid_t;
+#define __pid_t_defined
+#endif
+
 #ifndef __mode_t_defined
 typedef uint16_t mode_t;
 #define __mode_t_defined

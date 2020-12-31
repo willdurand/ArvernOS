@@ -83,7 +83,6 @@ $(document).ready(function(){initNavTree('isr_8h.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
@@ -114,137 +113,39 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structregisters.html">registers</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__stack.html">_stack</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This structure represents the interrupt stack.  <a href="struct__stack.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstack.html">stack</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ac2b32acaa2085663ec396320d2e72fdb"><td class="memItemLeft" align="right" valign="top"><a id="ac2b32acaa2085663ec396320d2e72fdb"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="isr_8h.html#ac2b32acaa2085663ec396320d2e72fdb">SYSCALL</a>&#160;&#160;&#160;0x80</td></tr>
-<tr class="memdesc:ac2b32acaa2085663ec396320d2e72fdb"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is the ID of the special interrupt for syscalls. <br /></td></tr>
-<tr class="separator:ac2b32acaa2085663ec396320d2e72fdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a589ec46ff7327ddc8fd86c1352ded786"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="isr_8h.html#a589ec46ff7327ddc8fd86c1352ded786">PF_PROTECTION_VIOLATION</a>&#160;&#160;&#160;1 &lt;&lt; 0</td></tr>
-<tr class="separator:a589ec46ff7327ddc8fd86c1352ded786"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae7afaff148e4f0f9212e8281cfa6b79"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="isr_8h.html#aae7afaff148e4f0f9212e8281cfa6b79">PF_CAUSED_BY_WRITE</a>&#160;&#160;&#160;1 &lt;&lt; 1</td></tr>
-<tr class="separator:aae7afaff148e4f0f9212e8281cfa6b79"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2c012aeaf9d7e17ce719abf3476e5d8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="isr_8h.html#ab2c012aeaf9d7e17ce719abf3476e5d8">PF_USER_MODE</a>&#160;&#160;&#160;1 &lt;&lt; 2</td></tr>
-<tr class="separator:ab2c012aeaf9d7e17ce719abf3476e5d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab05b226866002973346b2da22ab6907f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="isr_8h.html#ab05b226866002973346b2da22ab6907f">PF_MALFORMED_TABLE</a>&#160;&#160;&#160;1 &lt;&lt; 3</td></tr>
-<tr class="separator:ab05b226866002973346b2da22ab6907f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab07f8f9ace844e31f94b9b1049325a98"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="isr_8h.html#ab07f8f9ace844e31f94b9b1049325a98">PF_INSTRUCTION_FETCH</a>&#160;&#160;&#160;1 &lt;&lt; 4</td></tr>
-<tr class="separator:ab07f8f9ace844e31f94b9b1049325a98"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a578e4aa356e844b0e91f9c4980d36cba"><td class="memItemLeft" align="right" valign="top"><a id="a578e4aa356e844b0e91f9c4980d36cba"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="isr_8h.html#a578e4aa356e844b0e91f9c4980d36cba">isr_t</a>) (stack_t *<a class="el" href="structstack.html">stack</a>)</td></tr>
-<tr class="memdesc:a578e4aa356e844b0e91f9c4980d36cba"><td class="mdescLeft">&#160;</td><td class="mdescRight">This type represents an interrupt handler. <br /></td></tr>
-<tr class="separator:a578e4aa356e844b0e91f9c4980d36cba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa471c2795f33fab83cb9301c27577a20"><td class="memItemLeft" align="right" valign="top"><a id="aa471c2795f33fab83cb9301c27577a20"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="isr_8h.html#aa471c2795f33fab83cb9301c27577a20">isr_handler_t</a>) (isr_stack_t *stack)</td></tr>
+<tr class="memdesc:aa471c2795f33fab83cb9301c27577a20"><td class="mdescLeft">&#160;</td><td class="mdescRight">This type represents an interrupt handler. <br /></td></tr>
+<tr class="separator:aa471c2795f33fab83cb9301c27577a20"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a2ea31f33125954459edbe7f4d7971ffa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="isr_8h.html#a2ea31f33125954459edbe7f4d7971ffa">isr_init</a> ()</td></tr>
 <tr class="separator:a2ea31f33125954459edbe7f4d7971ffa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0eee1178db521b54c55074c2bdfebc73"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="isr_8h.html#a0eee1178db521b54c55074c2bdfebc73">irq_init</a> ()</td></tr>
-<tr class="separator:a0eee1178db521b54c55074c2bdfebc73"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab925df19b13ecfb0441d5ea0b4adaf5c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="isr_8h.html#ab925df19b13ecfb0441d5ea0b4adaf5c">irq_disable</a> ()</td></tr>
-<tr class="separator:ab925df19b13ecfb0441d5ea0b4adaf5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7cb233bc15b15bdafb22a1b23de2dd2f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="isr_8h.html#a7cb233bc15b15bdafb22a1b23de2dd2f">isr_handler</a> (uint64_t id, uint64_t <a class="el" href="structstack.html">stack</a>) __asm__(&quot;isr_handler&quot;)</td></tr>
-<tr class="separator:a7cb233bc15b15bdafb22a1b23de2dd2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a775b2177e54c4af963376f822f53a243"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="isr_8h.html#a775b2177e54c4af963376f822f53a243">irq_handler</a> (uint64_t id, uint64_t <a class="el" href="structstack.html">stack</a>) __asm__(&quot;irq_handler&quot;)</td></tr>
-<tr class="separator:a775b2177e54c4af963376f822f53a243"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a053905294332afc031508a03e6e10c86"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="isr_8h.html#a053905294332afc031508a03e6e10c86">isr_register_handler</a> (uint64_t id, <a class="el" href="isr_8h.html#a578e4aa356e844b0e91f9c4980d36cba">isr_t</a> handler)</td></tr>
-<tr class="separator:a053905294332afc031508a03e6e10c86"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ca1f09683b78313b7959d0bb5f2902e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="isr_8h.html#a7ca1f09683b78313b7959d0bb5f2902e">isr_debug_registers</a> (registers_t *<a class="el" href="structregisters.html">registers</a>)</td></tr>
-<tr class="separator:a7ca1f09683b78313b7959d0bb5f2902e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48c1ab85abf749224864c1576a186a3b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="isr_8h.html#a48c1ab85abf749224864c1576a186a3b">isr_disable_interrupts</a> ()</td></tr>
+<tr class="separator:a48c1ab85abf749224864c1576a186a3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a309e84e00ab6c296809ea2f0167de593"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="isr_8h.html#a309e84e00ab6c296809ea2f0167de593">isr_int_handler</a> (isr_stack_t s) __asm__(&quot;int_handler&quot;)</td></tr>
+<tr class="separator:a309e84e00ab6c296809ea2f0167de593"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90e538b3202ebb875fa17720d5eb46ba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="isr_8h.html#a90e538b3202ebb875fa17720d5eb46ba">isr_irq_handler</a> (isr_stack_t s) __asm__(&quot;irq_handler&quot;)</td></tr>
+<tr class="separator:a90e538b3202ebb875fa17720d5eb46ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cbfff83b3f84b3704ed9ff573fc2b77"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="isr_8h.html#a2cbfff83b3f84b3704ed9ff573fc2b77">isr_register_handler</a> (uint64_t id, <a class="el" href="isr_8h.html#aa471c2795f33fab83cb9301c27577a20">isr_handler_t</a> handler)</td></tr>
+<tr class="separator:a2cbfff83b3f84b3704ed9ff573fc2b77"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="aae7afaff148e4f0f9212e8281cfa6b79"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aae7afaff148e4f0f9212e8281cfa6b79">&#9670;&nbsp;</a></span>PF_CAUSED_BY_WRITE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define PF_CAUSED_BY_WRITE&#160;&#160;&#160;1 &lt;&lt; 1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>If this flag is set, the memory access that caused the page fault was a write. Else the access that caused the page fault is a memory read. This bit does not necessarily indicate the cause of the page fault was a read or write violation. </p>
-
-</div>
-</div>
-<a id="ab07f8f9ace844e31f94b9b1049325a98"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab07f8f9ace844e31f94b9b1049325a98">&#9670;&nbsp;</a></span>PF_INSTRUCTION_FETCH</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define PF_INSTRUCTION_FETCH&#160;&#160;&#160;1 &lt;&lt; 4</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>If this flag is set, it indicates that the access that caused the page fault was an instruction fetch. </p>
-
-</div>
-</div>
-<a id="ab05b226866002973346b2da22ab6907f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab05b226866002973346b2da22ab6907f">&#9670;&nbsp;</a></span>PF_MALFORMED_TABLE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define PF_MALFORMED_TABLE&#160;&#160;&#160;1 &lt;&lt; 3</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>If this flag is set, the page fault is a result of the processor reading a 1 from a reserved field within a page-translation-table entry. </p>
-
-</div>
-</div>
-<a id="a589ec46ff7327ddc8fd86c1352ded786"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a589ec46ff7327ddc8fd86c1352ded786">&#9670;&nbsp;</a></span>PF_PROTECTION_VIOLATION</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define PF_PROTECTION_VIOLATION&#160;&#160;&#160;1 &lt;&lt; 0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>If this flag is set, the page fault was caused by a page-protection violation, else the page fault was caused by a not-present page. </p>
-
-</div>
-</div>
-<a id="ab2c012aeaf9d7e17ce719abf3476e5d8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab2c012aeaf9d7e17ce719abf3476e5d8">&#9670;&nbsp;</a></span>PF_USER_MODE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define PF_USER_MODE&#160;&#160;&#160;1 &lt;&lt; 2</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>If this flag is set, an access in user mode (CPL=3) caused the page fault. Else an access in supervisor mode (CPL=0, 1, or 2) caused the page fault. This bit does not necessarily indicate the cause of the page fault was a privilege violation. </p>
-
-</div>
-</div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ab925df19b13ecfb0441d5ea0b4adaf5c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab925df19b13ecfb0441d5ea0b4adaf5c">&#9670;&nbsp;</a></span>irq_disable()</h2>
+<a id="a48c1ab85abf749224864c1576a186a3b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48c1ab85abf749224864c1576a186a3b">&#9670;&nbsp;</a></span>isr_disable_interrupts()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void irq_disable </td>
+          <td class="memname">void isr_disable_interrupts </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -255,143 +156,10 @@ Functions</h2></td></tr>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="isr_8h_ab925df19b13ecfb0441d5ea0b4adaf5c_icgraph.png" border="0" usemap="#isr_8h_ab925df19b13ecfb0441d5ea0b4adaf5c_icgraph" alt=""/></div>
-<map name="isr_8h_ab925df19b13ecfb0441d5ea0b4adaf5c_icgraph" id="isr_8h_ab925df19b13ecfb0441d5ea0b4adaf5c_icgraph">
-<area shape="rect" title=" " alt="" coords="148,5,232,32"/>
+<div class="center"><img src="isr_8h_a48c1ab85abf749224864c1576a186a3b_icgraph.png" border="0" usemap="#isr_8h_a48c1ab85abf749224864c1576a186a3b_icgraph" alt=""/></div>
+<map name="isr_8h_a48c1ab85abf749224864c1576a186a3b_icgraph" id="isr_8h_a48c1ab85abf749224864c1576a186a3b_icgraph">
+<area shape="rect" title=" " alt="" coords="148,5,293,32"/>
 <area shape="rect" href="panic_8h.html#acd2b4a8b19af5b3201990bbdeb5cf5e6" title=" " alt="" coords="5,5,100,32"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="a775b2177e54c4af963376f822f53a243"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a775b2177e54c4af963376f822f53a243">&#9670;&nbsp;</a></span>irq_handler()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void irq_handler </td>
-          <td>(</td>
-          <td class="paramtype">uint64_t&#160;</td>
-          <td class="paramname"><em>id</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint64_t&#160;</td>
-          <td class="paramname"><em>stack</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This is the handler for harware interrupts.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">id</td><td>the interrupt id </td></tr>
-    <tr><td class="paramname">stack</td><td>the stack </td></tr>
-  </table>
-  </dd>
-</dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="isr_8h_a775b2177e54c4af963376f822f53a243_cgraph.png" border="0" usemap="#isr_8h_a775b2177e54c4af963376f822f53a243_cgraph" alt=""/></div>
-<map name="isr_8h_a775b2177e54c4af963376f822f53a243_cgraph" id="isr_8h_a775b2177e54c4af963376f822f53a243_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,91,32"/>
-<area shape="rect" href="port_8h.html#ac3c72bfda8c7b1920ef91bcc06c97c7f" title=" " alt="" coords="139,5,240,32"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="a0eee1178db521b54c55074c2bdfebc73"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0eee1178db521b54c55074c2bdfebc73">&#9670;&nbsp;</a></span>irq_init()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void irq_init </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Enables hardware interrupts. </p>
-
-</div>
-</div>
-<a id="a7ca1f09683b78313b7959d0bb5f2902e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7ca1f09683b78313b7959d0bb5f2902e">&#9670;&nbsp;</a></span>isr_debug_registers()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void isr_debug_registers </td>
-          <td>(</td>
-          <td class="paramtype">registers_t *&#160;</td>
-          <td class="paramname"><em>registers</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function dumps a given set of registers to the debug output.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">registers</td><td>registers to dump to the debug output </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a7cb233bc15b15bdafb22a1b23de2dd2f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7cb233bc15b15bdafb22a1b23de2dd2f">&#9670;&nbsp;</a></span>isr_handler()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void isr_handler </td>
-          <td>(</td>
-          <td class="paramtype">uint64_t&#160;</td>
-          <td class="paramname"><em>id</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint64_t&#160;</td>
-          <td class="paramname"><em>stack</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This is the handler for software interrupts.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">id</td><td>the interrupt id </td></tr>
-    <tr><td class="paramname">stack</td><td>the stack </td></tr>
-  </table>
-  </dd>
-</dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="isr_8h_a7cb233bc15b15bdafb22a1b23de2dd2f_cgraph.png" border="0" usemap="#isr_8h_a7cb233bc15b15bdafb22a1b23de2dd2f_cgraph" alt=""/></div>
-<map name="isr_8h_a7cb233bc15b15bdafb22a1b23de2dd2f_cgraph" id="isr_8h_a7cb233bc15b15bdafb22a1b23de2dd2f_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,91,32"/>
-<area shape="rect" href="k__syscall_8h.html#a362ef819e2d72c9411f40f5d87c5587a" title=" " alt="" coords="139,5,251,32"/>
 </map>
 </div>
 
@@ -411,7 +179,7 @@ Here is the call graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initializes the interrupt service routine. </p>
+<p>Initializes the <em>Interrupt Service Routine</em> (ISR). </p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -424,8 +192,72 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
-<a id="a053905294332afc031508a03e6e10c86"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a053905294332afc031508a03e6e10c86">&#9670;&nbsp;</a></span>isr_register_handler()</h2>
+<a id="a309e84e00ab6c296809ea2f0167de593"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a309e84e00ab6c296809ea2f0167de593">&#9670;&nbsp;</a></span>isr_int_handler()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void isr_int_handler </td>
+          <td>(</td>
+          <td class="paramtype">isr_stack_t&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This is the handler for software interrupts and exceptions.</p>
+<ul>
+<li>Exceptions: These are generated internally by the CPU and used to alert the running kernel of an event or situation which requires its attention. On x86 CPUs, these include exception conditions such as Double Fault, Page Fault, General Protection Fault, etc.</li>
+<li>Software Interrupt: This is an interrupt signalled by software running on a CPU to indicate that it needs the kernel's attention. These types of interrupts are generally used for System Calls.</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>the interrupt stack </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a90e538b3202ebb875fa17720d5eb46ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a90e538b3202ebb875fa17720d5eb46ba">&#9670;&nbsp;</a></span>isr_irq_handler()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void isr_irq_handler </td>
+          <td>(</td>
+          <td class="paramtype">isr_stack_t&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This is the handler for hardware interrupts.</p>
+<p>Interrupt Request (IRQ) or Hardware Interrupt are a type of interrupt that is generated externally by the chipset, and it is signalled by latching onto the INTR pin or equivalent signal of the CPU in question.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>the interrupt stack </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="isr_8h_a90e538b3202ebb875fa17720d5eb46ba_cgraph.png" border="0" usemap="#isr_8h_a90e538b3202ebb875fa17720d5eb46ba_cgraph" alt=""/></div>
+<map name="isr_8h_a90e538b3202ebb875fa17720d5eb46ba_cgraph" id="isr_8h_a90e538b3202ebb875fa17720d5eb46ba_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,112,32"/>
+<area shape="rect" href="port_8h.html#ac3c72bfda8c7b1920ef91bcc06c97c7f" title=" " alt="" coords="160,5,261,32"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a2cbfff83b3f84b3704ed9ff573fc2b77"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2cbfff83b3f84b3704ed9ff573fc2b77">&#9670;&nbsp;</a></span>isr_register_handler()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -439,7 +271,7 @@ Here is the call graph for this function:</div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="isr_8h.html#a578e4aa356e844b0e91f9c4980d36cba">isr_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="isr_8h.html#aa471c2795f33fab83cb9301c27577a20">isr_handler_t</a>&#160;</td>
           <td class="paramname"><em>handler</em>&#160;</td>
         </tr>
         <tr>
@@ -449,7 +281,7 @@ Here is the call graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Registers a handler for a given interrupt.</p>
+<p>Registers a handler for a given interrupt. It does not matter whether the interrupt is an exception, a hardware or software interrupt.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">id</td><td>an interrupt id </td></tr>
@@ -460,8 +292,8 @@ Here is the call graph for this function:</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="isr_8h_a053905294332afc031508a03e6e10c86_icgraph.png" border="0" usemap="#isr_8h_a053905294332afc031508a03e6e10c86_icgraph" alt=""/></div>
-<map name="isr_8h_a053905294332afc031508a03e6e10c86_icgraph" id="isr_8h_a053905294332afc031508a03e6e10c86_icgraph">
+<div class="center"><img src="isr_8h_a2cbfff83b3f84b3704ed9ff573fc2b77_icgraph.png" border="0" usemap="#isr_8h_a2cbfff83b3f84b3704ed9ff573fc2b77_icgraph" alt=""/></div>
+<map name="isr_8h_a2cbfff83b3f84b3704ed9ff573fc2b77_icgraph" id="isr_8h_a2cbfff83b3f84b3704ed9ff573fc2b77_icgraph">
 <area shape="rect" title=" " alt="" coords="152,31,287,57"/>
 <area shape="rect" href="keyboard_8h.html#aaeb4e4a3c4813ee1efc6b98bba9ec781" title=" " alt="" coords="5,5,104,32"/>
 <area shape="rect" href="timer_8h.html#a896a4c37c6ecf8868ef0dc758e5a598c" title=" " alt="" coords="17,56,92,83"/>

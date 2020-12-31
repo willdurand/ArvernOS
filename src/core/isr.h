@@ -146,7 +146,7 @@ void isr_disable_interrupts();
  *   a CPU to indicate that it needs the kernel's attention. These types of
  *   interrupts are generally used for System Calls.
  *
- * @param stack the interrupt stack
+ * @param s the interrupt stack
  */
 void isr_int_handler(isr_stack_t s) __asm__("int_handler");
 
@@ -155,9 +155,9 @@ void isr_int_handler(isr_stack_t s) __asm__("int_handler");
  *
  * Interrupt Request (IRQ) or Hardware Interrupt are a type of interrupt that
  * is generated externally by the chipset, and it is signalled by latching onto
- * the #INTR pin or equivalent signal of the CPU in question.
+ * the INTR pin or equivalent signal of the CPU in question.
  *
- * @param stack the interrupt stack
+ * @param s the interrupt stack
  */
 void isr_irq_handler(isr_stack_t s) __asm__("irq_handler");
 

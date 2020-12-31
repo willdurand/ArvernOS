@@ -24,6 +24,8 @@
 #define SYSCALL_SENDTO         11
 #define SYSCALL_RECVFROM       12
 #define SYSCALL_GETHOSTBYNAME2 13
+#define SYSCALL_EXECV          14
+#define SYSCALL_GETPID         15
 
 #define SYSCALL_SET_ERRNO()                                                    \
   if (retval < 0) {                                                            \
@@ -175,5 +177,22 @@ ssize_t recvfrom(int sockfd,
  * @return `0` on success, a non-zero value otherwise
  */
 int gethostbyname2(const char* name, struct in_addr* in);
+
+/**
+ * Implements the execv syscall.
+ *
+ * @param path the name of a file that is to be executed
+ * @param argv a list of one or more pointers to null-terminated strings that
+ * represent the argument list available to the executed program
+ * @return only return if an error has occurred
+ */
+int execv(const char* path, char* const argv[]);
+
+/**
+ * Implements the getpid syscall.
+ *
+ * @return the process ID (PID) of the calling process
+ */
+pid_t getpid();
 
 #endif

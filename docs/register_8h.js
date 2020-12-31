@@ -1,6 +1,9 @@
 var register_8h =
 [
     [ "IA32_EFER", "register_8h.html#a781940174888ffe44a60eac2cef0c9ff", null ],
+    [ "IA32_LSTAR", "register_8h.html#a591479e9e26bb3a18a1dd959ab4e5e82", null ],
+    [ "IA32_SFMASK", "register_8h.html#a5de164a8c8e809ef57afad3c12024521", null ],
+    [ "IA32_STAR", "register_8h.html#ac177c522e3e9cf4ff3143d9e9b4057e3", null ],
     [ "read_cr0", "register_8h.html#a89763d209b83a61f0f2c9a01022f7f88", null ],
     [ "read_cr2", "register_8h.html#a7b2de5d97ae8b57fd726fa100087f2b9", null ],
     [ "read_cr3", "register_8h.html#a37758a1d9dd7aa158743e035016ea79b", null ],

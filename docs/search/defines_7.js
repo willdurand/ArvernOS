@@ -1,5 +1,8 @@
 var searchData=
 [
-  ['readline_5fsize_602',['READLINE_SIZE',['../kshell_8h.html#ac75983952a0074eee55efdb2cc0a5773',1,'kshell.h']]],
-  ['reboot_5fcmd_5frestart_603',['REBOOT_CMD_RESTART',['../reboot_8h.html#adc52a7803cb96790ea328a69fb56a73d',1,'reboot.h']]]
+  ['serial_5fcom1_506',['SERIAL_COM1',['../serial_8h.html#a7dba27fd7950f6e40269808bd9238aca',1,'serial.h']]],
+  ['serial_5fline_5fenable_5fdlab_507',['SERIAL_LINE_ENABLE_DLAB',['../serial_8h.html#a86dbcd1e612dc4ca6f5270d81def6ccd',1,'serial.h']]],
+  ['serial_5fspeed_5f115200_508',['SERIAL_SPEED_115200',['../serial_8h.html#ad22db02c1b733cacbf6e2411ed8577d3',1,'serial.h']]],
+  ['serial_5fspeed_5f38400_509',['SERIAL_SPEED_38400',['../serial_8h.html#acb00722fe46bcf13413da98c229aded8',1,'serial.h']]],
+  ['serial_5fspeed_5f57600_510',['SERIAL_SPEED_57600',['../serial_8h.html#abc968786733c07230d2d5230cec1e138',1,'serial.h']]]
 ];
