@@ -12,6 +12,7 @@ bits 32 ; specifies that the following lines are 32-bit instructions.
         ; use bits 64 (64-bit instructions).
 start:
   mov esp, stack_top
+  mov ebp, 0
   ; `ebx` points to a boot information structure. We move it to `edi` to
   ; pass it to our kernel.
   mov edi, ebx
