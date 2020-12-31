@@ -4,13 +4,15 @@
 #include <core/elf.h>
 #include <sys/types.h>
 
+#define USER_STACK_SIZE 1024
+
 typedef struct process
 {
   pid_t pid;
   char* name;
   elf_header_t* elf;
   char** argv;
-  uint64_t user_stack[1024];
+  uint64_t user_stack[USER_STACK_SIZE];
   uint64_t user_rsp;
 } process_t;
 

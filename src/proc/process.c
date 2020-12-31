@@ -41,7 +41,7 @@ process_t* process_exec(uint8_t* image, const char* name, char* const argv[])
   // Set current process name.
   current_process->name = strdup(name);
   // Reset user stack.
-  memset(current_process->user_stack, 0, sizeof(current_process->user_stack));
+  memset(current_process->user_stack, 0, USER_STACK_SIZE);
 
   // We need both `argc` and `argv` so we start by retrieving `argc`. Then, we
   // need to `strdup()` all the given arguments becaue `exec` replaces the
@@ -58,7 +58,7 @@ process_t* process_exec(uint8_t* image, const char* name, char* const argv[])
   _argv[argc] = NULL;
   current_process->argv = _argv;
 
-  void* stack = (void*)&current_process->user_stack[1023];
+  void* stack = (void*)&current_process->user_stack[USER_STACK_SIZE - 1];
   // TODO: add support for `envp`
   PUSH_TO_STACK(stack, uint64_t, (uint64_t)_argv);
   PUSH_TO_STACK(stack, uint64_t, (uint64_t)argc);
