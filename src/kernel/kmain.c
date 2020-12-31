@@ -280,7 +280,7 @@ void kmain(uint64_t addr)
 
   if (console_mode_is_vbe()) {
     print_step("switching to fullscreen mode");
-    busywait(2);
+    busywait(1);
 
     if (!console_fullscreen()) {
       print_ko();
@@ -294,7 +294,8 @@ void kmain(uint64_t addr)
     mbi, MULTIBOOT_TAG_TYPE_CMDLINE);
 
   if (cmdline && strcmp(cmdline->string, "kshell") == 0) {
-    printf("loading kshell...\n");
+    printf("kernel: loading kshell...\n");
+    INFO("%s", "loading kshell");
 
     kshell_print_prompt();
 
@@ -323,6 +324,7 @@ void kmain(uint64_t addr)
   argv[argc] = NULL;
 
   printf("kernel: switching to usermode... (%s)\n", argv[0]);
+  INFO("switching to usermode (%s)", argv[0]);
   k_execv(argv[0], argv);
 
   PANIC("unexpectedly reached end of kmain");
