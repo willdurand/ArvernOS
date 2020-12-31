@@ -1,5 +1,6 @@
 #include "k_syscall.h"
 #include "logging.h"
+#include <core/utils.h>
 #include <errno.h>
 #include <net/net.h>
 #include <net/udp.h>
@@ -9,10 +10,12 @@
 ssize_t k_sendto(int sockfd,
                  const void* buf,
                  size_t len,
-                 /* int flags, */
+                 int flags,
                  const struct sockaddr* dst_addr,
                  socklen_t addrlen)
 {
+  UNUSED(flags);
+
   if (sockfd < 3) {
     SYS_DEBUG("invalid socket descriptor sd=%d", sockfd);
     return -ENOTSOCK;
