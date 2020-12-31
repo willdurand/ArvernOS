@@ -227,8 +227,7 @@ run-test: run
 clean: ## remove build artifacts
 	rm -rf $(BUILD_DIR) \
 		userland/bin/ \
-		$(INITRD_DIR)/info $(INITRD_DIR)/bin/ \
-		logs/*.log
+		$(INITRD_DIR)/info $(INITRD_DIR)/bin/
 .PHONY: clean
 
 fmt: ## automatically format the code with clang-format
