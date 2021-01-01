@@ -26,7 +26,7 @@ OBJS += $(addprefix $(BUILD_DIR)/$(EXTERNAL_DIR)/,$(EXTERNAL_OBJS))
 
 # Add `-no-pie` to disable the PIE feature that causes `gcc` to not create an
 # executable if needed, see: https://access.redhat.com/blogs/766093/posts/1975793
-COMMON_CFLAGS = -Wall -pedantic -std=c11 -O0 \
+COMMON_CFLAGS = -Wall -pedantic -std=c11 -O2 \
 								$(addprefix -I$(EXTERNAL_DIR)/,$(EXTERNAL_DEPS))
 CFLAGS = $(COMMON_CFLAGS) -ffreestanding -fno-builtin -fno-pie \
 				 -D$(PLATFORM) \
