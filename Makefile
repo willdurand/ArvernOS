@@ -100,7 +100,7 @@ ifeq ($(ENABLE_FRAMEBUFFER), 1)
 	NASM_OPTIONS += -dENABLE_FRAMEBUFFER
 endif
 
-GRUB_KERNEL_CMDLINE ?= /bin/init
+GRUB_KERNEL_CMDLINE ?= /bin/init -s
 
 # See: https://stackoverflow.com/questions/649246/is-it-possible-to-create-a-multi-line-string-variable-in-a-makefile/649462#649462
 define GRUB_CFG_BODY
