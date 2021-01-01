@@ -24,6 +24,4 @@ int main(int argc, char* argv[])
   printf("init: executing %s\n", path);
 
   return execv(path, args);
-
-  return 0;
 }
