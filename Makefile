@@ -1,63 +1,69 @@
-NASM := nasm
-QEMU := qemu-system-x86_64
+NASM = nasm
+QEMU = qemu-system-x86_64
 
 ifeq ($(shell uname -s),Darwin)
-	CC := x86_64-elf-gcc
-	LD := x86_64-elf-ld
-	AR := x86_64-elf-ar
+	CC = x86_64-elf-gcc
+	LD = x86_64-elf-ld
+	AR = x86_64-elf-ar
 else
-	CC := gcc
-	LD := ld
-	AR := ar
+	CC = gcc
+	LD = ld
+	AR = ar
 endif
 
-OS_NAME       := willOS
-BUILD_DIR     := build
-LINKER        := linker.ld
+OS_NAME       = willOS
+BUILD_DIR     = build
+LINKER        = linker.ld
 ISO_DIR       := $(BUILD_DIR)/isofiles
 KERNEL_DIR    := $(ISO_DIR)/boot
 GRUB_DIR      := $(KERNEL_DIR)/grub
 GRUB_CFG      := $(GRUB_DIR)/grub.cfg
-KERNEL_BIN    := kernel.bin
+KERNEL_BIN    = kernel.bin
 KERNEL        := $(KERNEL_DIR)/$(KERNEL_BIN)
 ISO           := $(BUILD_DIR)/$(OS_NAME).iso
 LIBC          := $(BUILD_DIR)/libc-$(OS_NAME).a
 LIBC_OBJS_DIR := $(BUILD_DIR)/libc-objects
 LIBK          := $(BUILD_DIR)/libk-$(OS_NAME).a
 LIBK_OBJS_DIR := $(BUILD_DIR)/libk-objects
-INITRD_DIR    := initrd
-INITRD_TAR    := initrd.tar
+INITRD_DIR    = initrd
+INITRD_TAR    = initrd.tar
 INITRD        := $(KERNEL_DIR)/$(INITRD_TAR)
-EXTERNALS     := external/liballoc external/printf external/vtconsole
+EXTERNAL_DIR  = external
 GIT_HASH      := $(shell git rev-parse --short HEAD)
-BUILD_MODE    := release
+BUILD_MODE    = release
 # This should be a bitmap font.
-CONSOLE_FONT_PATH := external/scalable-font2/fonts/u_vga16.sfn.gz
+CONSOLE_FONT_PATH = external/scalable-font2/fonts/u_vga16.sfn.gz
 CONSOLE_FONT      := $(BUILD_DIR)/font.o
 # This is used in `src/asm/multiboot_header.asm`.
-VBE_WIDTH  := 1024
-VBE_HEIGHT := 768
-VBE_BPP    := 32
+VBE_WIDTH  = 1024
+VBE_HEIGHT = 768
+VBE_BPP    = 32
 
-LIBK_OBJECTS     := $(patsubst %.c, $(LIBK_OBJS_DIR)/%.o, $(shell find src $(EXTERNALS) -name '*.c'))
+# This is the list of external libraries we use and need to build for the
+# kernel (libk) and the libc.
+EXTERNAL_DEPS = liballoc printf vtconsole
+
+EXTERNAL_DIRS    := $(addprefix $(EXTERNAL_DIR)/,$(EXTERNAL_DEPS))
+LIBK_OBJECTS     := $(patsubst %.c, $(LIBK_OBJS_DIR)/%.o, $(shell find src $(EXTERNAL_DIRS) -name '*.c'))
 LIBK_ASM_OBJECTS := $(patsubst %.asm, $(LIBK_OBJS_DIR)/%.o, $(shell find src/asm -name '*.asm'))
-LIBC_OBJECTS     := $(patsubst %.c, $(LIBC_OBJS_DIR)/%.o, $(shell find src/libc $(EXTERNALS) -name '*.c'))
+LIBC_OBJECTS     := $(patsubst %.c, $(LIBC_OBJS_DIR)/%.o, $(shell find src/libc $(EXTERNAL_DIRS) -name '*.c'))
 LIBC_ASM_OBJECTS := $(patsubst %.asm, $(LIBC_OBJS_DIR)/%.o, $(shell find src/libc/asm -name '*.asm'))
 LIBC_TEST_FILES  := $(patsubst test/%.c, %, $(shell find test/libc -name '*.c'))
 
-NASM_OPTIONS = -dVBE_WIDTH=$(VBE_WIDTH) -dVBE_HEIGHT=$(VBE_HEIGHT) -dVBE_BPP=$(VBE_BPP)
+NASM_OPTIONS := -dVBE_WIDTH=$(VBE_WIDTH) -dVBE_HEIGHT=$(VBE_HEIGHT) -dVBE_BPP=$(VBE_BPP)
 
 QEMU_OPTIONS = -m 500M \
 	       -netdev user,id=u1,ipv6=off,dhcpstart=10.0.2.20 \
 	       -device rtl8139,netdev=u1 \
 	       -object filter-dump,id=f1,netdev=u1,file=./logs/traffic.pcap
 
-CFLAGS = -DKERNEL_NAME=\"$(OS_NAME)\" \
-	 -DGIT_HASH=\"$(GIT_HASH)\" \
+CFLAGS := -DKERNEL_NAME=\"$(OS_NAME)\" \
+	-DGIT_HASH=\"$(GIT_HASH)\" \
 	 -DLOGS_WITH_COLORS \
 	 -Wall -pedantic -std=c11 -O0 -ffreestanding -nostdlib \
 	 -fno-builtin -fstack-protector -mno-red-zone \
-	 -I src/ -I include/ -I external/ -I external/scalable-font2/
+	 -I src/ -I include/ $(addprefix -I$(EXTERNAL_DIR)/,$(EXTERNAL_DEPS)) \
+	 -I $(EXTERNAL_DIR)/scalable-font2
 
 DEBUG_CFLAGS = -g -DENABLE_KERNEL_DEBUG
 
@@ -225,10 +231,7 @@ run-test: run
 .PHONY: run-test
 
 clean: ## remove build artifacts
-	rm -rf $(BUILD_DIR) $(INITRD_DIR)/info $(INITRD_DIR)/bin/
-	@for userland_program in $(shell find userland/* -type d -not \( -path userland/bin -o -path userland/local-build \)); do \
-		$(MAKE) -C $$userland_program clean ; \
-	done
+	rm -rf $(BUILD_DIR) $(INITRD_DIR)/info $(INITRD_DIR)/bin/ userland/bin/ userland/local-build/
 .PHONY: clean
 
 fmt: ## automatically format the code with clang-format
