@@ -60,8 +60,8 @@ QEMU_OPTIONS = -m 500M \
 CFLAGS := -DKERNEL_NAME=\"$(OS_NAME)\" \
 	-DGIT_HASH=\"$(GIT_HASH)\" \
 	 -DLOGS_WITH_COLORS \
-	 -Wall -pedantic -std=c11 -O0 -ffreestanding -nostdlib \
-	 -fno-builtin -fstack-protector -mno-red-zone \
+	 -Wall -pedantic -std=c11 -O2 -ffreestanding -nostdlib \
+	 -fno-builtin -fstack-protector -mno-red-zone -mno-sse2 \
 	 -I src/ -I include/ $(addprefix -I$(EXTERNAL_DIR)/,$(EXTERNAL_DEPS)) \
 	 -I $(EXTERNAL_DIR)/scalable-font2
 
@@ -222,6 +222,8 @@ debug: $(ISO)
 run-debug: ## run the OS in debug mode
 run-debug: QEMU_OPTIONS += -serial file:./logs/debug.log -d int --no-reboot
 run-debug: debug run
+run-debug: debug
+	$(QEMU) -cdrom $(ISO) $(QEMU_OPTIONS)
 .PHONY: run-debug
 
 run-test: ## run the OS in test mode
@@ -263,7 +265,7 @@ test: libc
 	for file in $(LIBC_TEST_FILES); do \
 		echo ; \
 		gcc -shared $(LIBC_OBJS_DIR)/src/$$file.o -o build/$$file.so ; \
-		gcc -I./test/ -O0 test/$$file.c -o build/$$file ; \
+		gcc -I./test/ test/$$file.c -o build/$$file ; \
 		LD_PRELOAD=./build/$$file.so ./build/$$file || exit 1 ; \
 	done
 	# fs/vfs
