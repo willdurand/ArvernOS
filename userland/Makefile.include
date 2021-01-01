@@ -6,6 +6,7 @@ endif
 
 ROOT_DIR     = ../..
 BIN_DIR      = ../bin
+BUILD_DIR    := $(ROOT_DIR)/build/userland-objects/userland/$(BIN_NAME)
 TARGET       := $(BIN_DIR)/$(BIN_NAME)
 PLATFORM     := $(shell echo __$(OS_NAME)__ | tr '[:upper:]' '[:lower:]')
 EXTERNAL_DIR := $(ROOT_DIR)/external
@@ -15,20 +16,21 @@ LOCAL_BUILD_TARGET := $(LOCAL_BUILD_DIR)/$(BIN_NAME)
 
 # The list of external dependencies.
 EXTERNAL_DEPS ?=
+EXTERNAL_DEPS += printf
 # The list of external objects to build.
 EXTERNAL_OBJS ?=
+EXTERNAL_OBJS += printf/printf.o
 
-OBJS := $(patsubst %.c, %.o, $(shell find . -name '*.c'))
-OBJS += $(addprefix $(EXTERNAL_DIR)/,$(EXTERNAL_OBJS))
+OBJS := $(patsubst %.c, $(BUILD_DIR)/%.o, $(shell find . -name '*.c'))
+OBJS += $(addprefix $(BUILD_DIR)/$(EXTERNAL_DIR)/,$(EXTERNAL_OBJS))
 
 # Add `-no-pie` to disable the PIE feature that causes `gcc` to not create an
 # executable if needed, see: https://access.redhat.com/blogs/766093/posts/1975793
 COMMON_CFLAGS = -Wall -pedantic -std=c11 -O0 \
 								$(addprefix -I$(EXTERNAL_DIR)/,$(EXTERNAL_DEPS))
-CFLAGS = $(COMMON_CFLAGS) -ffreestanding -nostdlib -fno-builtin \
+CFLAGS = $(COMMON_CFLAGS) -ffreestanding -fno-builtin -fno-pie \
 				 -D$(PLATFORM) \
-				 -I $(ROOT_DIR)/include/ -I $(ROOT_DIR)/external/ \
-				 -fno-pie
+				 -I $(ROOT_DIR)/include/
 
 LDFLAGS ?=
 LDFLAGS += -nostdlib -no-pie $(ROOT_DIR)/build/libc-$(OS_NAME).a
@@ -39,7 +41,8 @@ $(TARGET): $(OBJS)
 	mkdir -p $(BIN_DIR)
 	$(CC) -o $@ $^ $(LDFLAGS)
 
-%.o: %.c
+$(OBJS): $(BUILD_DIR)/%.o : %.c
+	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 local: CC      = gcc

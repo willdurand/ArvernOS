@@ -10,7 +10,7 @@
 #define _HAVE_SIZE_T
 #define _HAVE_UINTPTR_T
 
-#include <liballoc/liballoc.h>
+#include <liballoc.h>
 
 #endif
 

@@ -5,7 +5,7 @@
 #include <core/multiboot.h>
 #include <stdbool.h>
 #include <stddef.h>
-#include <vtconsole/vtconsole.h>
+#include <vtconsole.h>
 
 #define CONSOLE_WIDTH  80
 #define CONSOLE_HEIGHT 25
