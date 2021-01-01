@@ -16,10 +16,13 @@ LOCAL_BUILD_TARGET := $(LOCAL_BUILD_DIR)/$(BIN_NAME)
 
 # The list of external dependencies.
 EXTERNAL_DEPS ?=
-EXTERNAL_DEPS += printf
 # The list of external objects to build.
 EXTERNAL_OBJS ?=
-EXTERNAL_OBJS += printf/printf.o
+
+ifdef OS_NAME
+	EXTERNAL_OBJS += printf/printf.o
+	EXTERNAL_DEPS += printf
+endif
 
 OBJS := $(patsubst %.c, $(BUILD_DIR)/%.o, $(shell find . -name '*.c'))
 OBJS += $(addprefix $(BUILD_DIR)/$(EXTERNAL_DIR)/,$(EXTERNAL_OBJS))
