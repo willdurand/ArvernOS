@@ -12,6 +12,7 @@ int k_open(const char* pathname, uint32_t flags)
   inode_t inode = vfs_namei(pathname);
 
   if (inode == 0) {
+    SYS_DEBUG("%s not found", pathname);
     return -ENOENT;
   }
 
