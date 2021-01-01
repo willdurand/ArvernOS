@@ -221,7 +221,6 @@ debug: $(ISO)
 
 run-debug: ## run the OS in debug mode
 run-debug: QEMU_OPTIONS += -serial file:./logs/debug.log -d int --no-reboot
-run-debug: debug run
 run-debug: debug
 	$(QEMU) -cdrom $(ISO) $(QEMU_OPTIONS)
 .PHONY: run-debug
