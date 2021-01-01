@@ -4,36 +4,52 @@ else
 	CC = gcc
 endif
 
-ROOT_DIR = ../..
-BIN_DIR  = ../bin
-TARGET   = $(BIN_DIR)/$(BIN_NAME)
+ROOT_DIR     = ../..
+BIN_DIR      = ../bin
+TARGET       := $(BIN_DIR)/$(BIN_NAME)
+PLATFORM     := $(shell echo __$(OS_NAME)__ | tr '[:upper:]' '[:lower:]')
+EXTERNAL_DIR := $(ROOT_DIR)/external
 
 LOCAL_BUILD_DIR = ../local-build
-LOCAL_BUILD_TARGET = $(LOCAL_BUILD_DIR)/$(BIN_NAME)
+LOCAL_BUILD_TARGET := $(LOCAL_BUILD_DIR)/$(BIN_NAME)
 
-PLATFORM = $(shell echo __$(OS_NAME)__ | tr '[:upper:]' '[:lower:]')
+# The list of external dependencies.
+EXTERNAL_DEPS ?=
+# The list of external objects to build.
+EXTERNAL_OBJS ?=
+
+OBJS := $(patsubst %.c, %.o, $(shell find . -name '*.c'))
+OBJS += $(addprefix $(EXTERNAL_DIR)/,$(EXTERNAL_OBJS))
 
 # Add `-no-pie` to disable the PIE feature that causes `gcc` to not create an
 # executable if needed, see: https://access.redhat.com/blogs/766093/posts/1975793
-CFLAGS = -Wall -pedantic -std=c11 -O0 -ffreestanding -nostdlib -fno-builtin \
+COMMON_CFLAGS = -Wall -pedantic -std=c11 -O0 \
+								$(addprefix -I$(EXTERNAL_DIR)/,$(EXTERNAL_DEPS))
+CFLAGS = $(COMMON_CFLAGS) -ffreestanding -nostdlib -fno-builtin \
 				 -D$(PLATFORM) \
 				 -I $(ROOT_DIR)/include/ -I $(ROOT_DIR)/external/ \
-				 -no-pie -fno-pie
-LIBS   = $(ROOT_DIR)/build/libc-$(OS_NAME).a
+				 -fno-pie
+
+LDFLAGS ?=
+LDFLAGS += -nostdlib -no-pie $(ROOT_DIR)/build/libc-$(OS_NAME).a
 
 default: $(TARGET)
 
-$(TARGET): *.c
+$(TARGET): $(OBJS)
 	mkdir -p $(BIN_DIR)
-	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
+	$(CC) -o $@ $^ $(LDFLAGS)
 
-local: CC=gcc
-local: CFLAGS=-Wall -pedantic -std=c11 -O0
-local: *.c
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+local: CC      = gcc
+local: CFLAGS  = $(COMMON_CFLAGS)
+local: LDFLAGS =
+local: $(OBJS)
 	mkdir -p $(LOCAL_BUILD_DIR)
-	$(CC) -o $(LOCAL_BUILD_TARGET) $^ $(CFLAGS)
+	$(CC) -o $(LOCAL_BUILD_TARGET) $^ $(LDFLAGS)
 .PHONY: local
 
 clean:
-	rm -f $(TARGET) $(LOCAL_BUILD_TARGET)
+	rm -f $(TARGET) $(LOCAL_BUILD_TARGET) $(OBJS)
 .PHONY: clean

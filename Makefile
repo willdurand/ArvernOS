@@ -225,9 +225,10 @@ run-test: run
 .PHONY: run-test
 
 clean: ## remove build artifacts
-	rm -rf $(BUILD_DIR) \
-		userland/bin/ \
-		$(INITRD_DIR)/info $(INITRD_DIR)/bin/
+	rm -rf $(BUILD_DIR) $(INITRD_DIR)/info $(INITRD_DIR)/bin/
+	@for userland_program in $(shell find userland/* -type d -not \( -path userland/bin -o -path userland/local-build \)); do \
+		$(MAKE) -C $$userland_program clean ; \
+	done
 .PHONY: clean
 
 fmt: ## automatically format the code with clang-format
