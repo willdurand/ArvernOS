@@ -61,7 +61,7 @@ CFLAGS := -DKERNEL_NAME=\"$(OS_NAME)\" \
 	-DGIT_HASH=\"$(GIT_HASH)\" \
 	 -DLOGS_WITH_COLORS \
 	 -Wall -pedantic -std=c11 -O2 -ffreestanding -nostdlib \
-	 -fno-builtin -fstack-protector -mno-red-zone -mno-sse2 \
+	 -fno-builtin -fstack-protector-all -mno-red-zone -mno-sse2 \
 	 -I src/ -I include/ $(addprefix -I$(EXTERNAL_DIR)/,$(EXTERNAL_DEPS)) \
 	 -I $(EXTERNAL_DIR)/scalable-font2
 

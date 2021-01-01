@@ -108,14 +108,11 @@ void remap_kernel(multiboot_info_t* mbi)
     }
   }
 
-  identity_map(0x0, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
-  MMU_DEBUG("%s", "mapped interrupt vector table!");
-
   // Allocated frames
   MMU_DEBUG("mapping %d pages for frame allocator, starting at addr=%p",
             frames_for_bitmap,
             allocated_frames);
-  for (uint8_t i = 0; i < frames_for_bitmap; i++) {
+  for (uint8_t i = 0; i <= frames_for_bitmap; i++) {
     identity_map((uint64_t)allocated_frames + (i * PAGE_SIZE),
                  PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
   }

@@ -25,12 +25,14 @@ void frame_init(multiboot_info_t* mbi)
 
   _frame_init(&reserved, mmap);
 
-  opt_uint64_t frame = read_mmap(42);
+  opt_uint64_t frame = read_mmap(0);
   if (!frame.has_value) {
     PANIC("could not get a frame to initialize the frame allocator");
   }
 
-  _frame_init_bitmap((bitmap_t*)frame.value);
+  // `0x500` should put us in a good enough place, see:
+  // https://wiki.osdev.org/Memory_Map_(x86)#Overview
+  _frame_init_bitmap((bitmap_t*)((uint64_t)frame.value + 0x500));
 
   INFO("initialized frame allocator with multiboot_start = %p "
        "multiboot_end=%p kernel_start=%p kernel_end=%p max_frames=%lld "
@@ -79,9 +81,9 @@ void _frame_init(reserved_areas_t* reserved, multiboot_tag_mmap_t* mmap)
 void _frame_init_bitmap(bitmap_t* addr)
 {
   allocated_frames = addr;
-  memset(allocated_frames, 0, frames_for_bitmap * PAGE_SIZE);
+  memset(allocated_frames, 0, (frames_for_bitmap + 1) * PAGE_SIZE);
 
-  for (uint64_t i = 0; i < frames_for_bitmap; i++) {
+  for (uint64_t i = 0; i <= frames_for_bitmap; i++) {
     bitmap_set(allocated_frames,
                frame_containing_address((uint64_t)allocated_frames) + i);
   }
@@ -89,23 +91,29 @@ void _frame_init_bitmap(bitmap_t* addr)
 
 opt_uint64_t frame_allocate()
 {
-  uint64_t frame_number = 0;
+  opt_uint64_t frame_number = (opt_uint64_t){ .has_value = false, .value = 0 };
 
   for (uint64_t i = 0; i < max_frames; i++) {
     if (bitmap_get(allocated_frames, i) == false) {
-      frame_number = i;
+      frame_number.value = i;
+      frame_number.has_value = true;
       break;
     }
   }
 
-  opt_uint64_t frame = read_mmap(frame_number);
+  if (frame_number.has_value) {
+    opt_uint64_t frame = read_mmap(frame_number.value);
 
-  if (frame.has_value) {
-    MMU_DEBUG("allocated frame=%lld addr=%p", frame_number, frame.value);
-    bitmap_set(allocated_frames, frame_number);
+    if (frame.has_value) {
+      MMU_DEBUG(
+        "allocated frame=%lld addr=%p", frame_number.value, frame.value);
+      bitmap_set(allocated_frames, frame_number.value);
+    }
+
+    return frame;
   }
 
-  return frame;
+  return (opt_uint64_t){ .has_value = false, .value = 0 };
 }
 
 void frame_deallocate(frame_number_t frame_number)
@@ -140,8 +148,7 @@ opt_uint64_t read_mmap(uint64_t request)
 
     for (uint64_t addr = entry->addr; addr + PAGE_SIZE <= entry_end;
          addr += PAGE_SIZE) {
-      if ((addr >= multiboot_start && addr <= multiboot_end) ||
-          (addr >= kernel_start && addr <= kernel_end)) {
+      if (addr >= kernel_start && addr <= multiboot_end) {
         continue;
       }
 
