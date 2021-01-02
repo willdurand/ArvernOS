@@ -9,9 +9,9 @@
 #define NB_DOCUMENTED_COMMANDS 3
 
 static const char* commands[][NB_DOCUMENTED_COMMANDS] = {
-  { "help", "display information about shell commands" },
-  { "reboot", "stopping and restarting the system" },
-  { "selftest", "run the system test suite" },
+  { "help", "print this help message" },
+  { "reboot", "reboot the system" },
+  { "selftest", "run the user mode test suite" },
 };
 
 static char readline[READLINE_SIZE] = { 0 };

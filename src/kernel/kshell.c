@@ -28,14 +28,14 @@ static bool shift_mode = false;
 
 static const char* commands[][NB_DOCUMENTED_COMMANDS] = {
   { "exec", "execute a program in user mode" },
-  { "help", "display information about system shell commands" },
+  { "help", "print this help message" },
   { "host", "perform a DNS lookup" },
   { "ls", "list files" },
   { "net", "show configured network interfaces" },
   { "ntp", "get the time from a time server" },
   { "overflow", "test the stack buffer overflow protection" },
   { "ping", "ping an IPv4 address" },
-  { "selftest", "run the system test suite" },
+  { "selftest", "run the kernel test suite" },
 };
 
 static unsigned char keymap[][128] = {
