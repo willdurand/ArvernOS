@@ -24,9 +24,10 @@ static bool caps_lock_mode = false;
 static bool ctrl_mode = false;
 static bool shift_mode = false;
 
-#define NB_DOCUMENTED_COMMANDS 8
+#define NB_DOCUMENTED_COMMANDS 9
 
 static const char* commands[][NB_DOCUMENTED_COMMANDS] = {
+  { "exec", "execute a program in user mode" },
   { "help", "display information about system shell commands" },
   { "host", "perform a DNS lookup" },
   { "ls", "list files" },
@@ -287,6 +288,24 @@ void overflow()
   strcpy(c, "123456789012345678901234567890");
 }
 
+void exec(int argc, char* argv[])
+{
+  if (argc < 2) {
+    printf("usage: %s <program> ...\n", argv[0]);
+    return;
+  }
+
+  char** args = (char**)malloc(argc * sizeof(char*));
+  for (int i = 1; i < argc; i++) {
+    args[i - 1] = argv[i];
+  }
+  args[argc - 1] = NULL;
+
+  int retval = k_execv(args[0], args);
+
+  printf("error trying to exec %s: %d\n", args[0], retval);
+}
+
 void run_command()
 {
   if (*readline == 0) {
@@ -326,6 +345,8 @@ void run_command()
     host(argc, argv);
   } else if (strcmp(argv[0], "ntp") == 0) {
     ntp(argc, argv);
+  } else if (strcmp(argv[0], "exec") == 0) {
+    exec(argc, argv);
   } else {
     printf("invalid kshell command\n");
   }
