@@ -44,8 +44,7 @@
     jmp int_common_stub
 %endmacro
 
-int_common_stub:
-  ; save registers
+%macro save_registers 0
   push rax
   push rbx
   push rcx
@@ -61,12 +60,9 @@ int_common_stub:
   push r13
   push r14
   push r15
+%endmacro
 
-  ; call handler
-  extern int_handler
-  call int_handler
-
-  ; restore registers
+%macro restore_registers 0
   pop r15
   pop r14
   pop r13
@@ -82,50 +78,22 @@ int_common_stub:
   pop rcx
   pop rbx
   pop rax
+%endmacro
 
+int_common_stub:
+  save_registers
+  extern int_handler
+  call int_handler
+  restore_registers
   add rsp, 16
   sti
   iretq
 
 irq_common_stub:
-  ; save registers
-  push rax
-  push rbx
-  push rcx
-  push rdx
-  push rsi
-  push rdi
-  push rbp
-  push r8
-  push r9
-  push r10
-  push r11
-  push r12
-  push r13
-  push r14
-  push r15
-
-  ; call handler
+  save_registers
   extern irq_handler
   call irq_handler
-
-  ; restore registers
-  pop r15
-  pop r14
-  pop r13
-  pop r12
-  pop r11
-  pop r10
-  pop r9
-  pop r8
-  pop rbp
-  pop rdi
-  pop rsi
-  pop rdx
-  pop rcx
-  pop rbx
-  pop rax
-
+  restore_registers
   add rsp, 16
   sti
   iretq
