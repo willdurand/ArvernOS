@@ -1,10 +1,23 @@
 #include <stdio.h>
 
-int start_main(int (*main)(int, char**), int argc, char* argv[])
+char** environ = NULL;
+
+#ifndef __is_libk
+
+int start_main(int (*main)(int, char**, char**),
+               int argc,
+               char* argv[],
+               char* envp[])
 {
-  // printf("start_main: main=%p argc=%d argv=%p\n", main, argc, argv);
+#ifdef DEBUG_LIBC
+  printf(
+    "start_main: main=%p argc=%d argv=%p envp=%p\n", main, argc, argv, envp);
+#endif
 
-  return main(argc, argv);
+  environ = envp;
 
+  return main(argc, argv, envp);
   // TODO: call `exit()`
 }
+
+#endif

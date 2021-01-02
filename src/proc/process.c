@@ -36,6 +36,11 @@ process_t* process_exec(uint8_t* image, const char* name, char* const argv[])
       free(current_process->argv[i]);
     }
     free(current_process->argv);
+    // Free old env vars.
+    for (int i = 0; current_process->envp[i] != NULL; i++) {
+      free(current_process->envp[i]);
+    }
+    free(current_process->envp);
   }
 
   // Set current process name.
@@ -58,8 +63,12 @@ process_t* process_exec(uint8_t* image, const char* name, char* const argv[])
   _argv[argc] = NULL;
   current_process->argv = _argv;
 
+  // TODO: do not use a fixed size.
+  char** envp = (char**)calloc(1, sizeof(char*) * 10);
+  current_process->envp = envp;
+
   void* stack = (void*)&current_process->user_stack[USER_STACK_SIZE - 1];
-  // TODO: add support for `envp`
+  PUSH_TO_STACK(stack, uint64_t, (uint64_t)envp);
   PUSH_TO_STACK(stack, uint64_t, (uint64_t)_argv);
   PUSH_TO_STACK(stack, uint64_t, (uint64_t)argc);
   current_process->user_rsp = (uint64_t)stack;

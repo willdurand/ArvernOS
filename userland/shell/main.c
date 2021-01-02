@@ -5,10 +5,13 @@
 #include <unistd.h>
 
 #define READLINE_SIZE          256
-#define PROMPT                 "\033[0;36m(sh)\033[0m "
-#define NB_DOCUMENTED_COMMANDS 3
+#define PROMPT                 "\033[0;36m$\033[0m "
+#define NB_DOCUMENTED_COMMANDS 4
+
+void print_prompt();
 
 static const char* commands[][NB_DOCUMENTED_COMMANDS] = {
+  { "env", "print the environment variables" },
   { "help", "print this help message" },
   { "reboot", "reboot the system" },
   { "selftest", "run the user mode test suite" },
@@ -17,12 +20,21 @@ static const char* commands[][NB_DOCUMENTED_COMMANDS] = {
 static char readline[READLINE_SIZE] = { 0 };
 static unsigned int readline_index = 0;
 
+void print_prompt()
+{
+  printf(PROMPT);
+}
+
 int main(int argc, char* argv[])
 {
+  putenv("USER=user");
+  putenv("SHELL=/bin/shell");
+
   printf("shell: pid=%d\n", getpid());
   printf("\nWelcome!\n"
          "This is willOS user shell. Type 'help' for more information.\n\n");
-  printf(PROMPT);
+
+  print_prompt();
 
   while (1) {
     char c = getchar();
@@ -51,7 +63,7 @@ int main(int argc, char* argv[])
         printf("\n");
 
         if (*readline == 0) {
-          printf(PROMPT);
+          print_prompt();
           break;
         }
 
@@ -80,6 +92,8 @@ int main(int argc, char* argv[])
           _reboot();
         } else if (strcmp(command, "selftest") == 0) {
           selftest();
+        } else if (strcmp(command, "env") == 0) {
+          env();
         } else {
           printf("invalid command\n");
         }
@@ -87,7 +101,7 @@ int main(int argc, char* argv[])
         readline_index = 0;
         memset(readline, 0, READLINE_SIZE);
 
-        printf(PROMPT);
+        print_prompt();
 
         break;
 

@@ -12,6 +12,7 @@ typedef struct process
   char* name;
   elf_header_t* elf;
   char** argv;
+  char** envp;
   uint64_t user_stack[USER_STACK_SIZE];
   uint64_t user_rsp;
 } process_t;
