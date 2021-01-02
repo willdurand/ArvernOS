@@ -6,6 +6,7 @@
 #include <fs/vfs.h>
 #include <proc/descriptor.h>
 #include <stddef.h>
+#include <sys/types.h>
 
 ssize_t k_read(int fd, void* buf, size_t count)
 {
@@ -13,7 +14,7 @@ ssize_t k_read(int fd, void* buf, size_t count)
     uint8_t scancode = keyboard_get_scancode();
 
     if (scancode) {
-      ((char*)buf)[0] = scancode;
+      ((uint8_t*)buf)[0] = scancode;
       return 1;
     }
 
