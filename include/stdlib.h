@@ -12,6 +12,12 @@
 
 #include <liballoc.h>
 
+#else
+
+char* getenv(const char* name);
+
+int putenv(char* str);
+
 #endif
 
 int atoi(char* s);
