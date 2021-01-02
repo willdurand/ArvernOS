@@ -143,9 +143,10 @@ $ make clean run
 ### Boot options
 
 The GRUB configuration offers two choices: the normal mode and the kernel mode.
-The normal (or "default") mode will load the `/bin/init` program in user mode
-("ring 3"). The kernel mode will load the `kshell` instead and will stay in
-kernel mode (as its name implies).
+The normal (or "default") mode will load the
+[`/bin/init`](./userland/init/README.md) program in user mode ("ring 3"). The
+kernel mode will load the `kshell` instead and will stay in kernel mode (as its
+name implies).
 
 It is possible to change the command line by passing the `GRUB_KERNEL_CMDLINE`
 variable to `make`:
