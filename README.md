@@ -48,6 +48,7 @@ $ docker build -t willos/toolchain .
 
 $ docker run -it --rm -v $(pwd):/app willos/toolchain make help
 clean                          remove build artifacts
+console-font                   compile the (default) kernel console font
 debug                          build the OS in debug mode
 docs                           build the docs
 fmt                            automatically format the code with clang-format
@@ -55,10 +56,11 @@ gdb                            build, run the OS in debug mode and enable GDB
 initrd                         build the init ram disk
 iso                            build the image of the OS (.iso)
 kernel                         compile the kernel
-libc                           build the libc (for userland)
+libc                           build the libc (userland)
+libk                           build the libk (kernel)
 run-debug                      run the OS in debug mode
 run-test                       run the OS in test mode
-run                            run the OS
+run                            run the OS in release mode
 test                           run unit tests
 userland                       compile the userland programs (statically linked to libc)
 version                        print tool versions
@@ -144,7 +146,7 @@ $ make clean run
 
 The GRUB configuration offers two choices: the normal mode and the kernel mode.
 The normal (or "default") mode will load the
-[`/bin/init`](./userland/init/README.md) program in user mode ("ring 3"). The
+[`/bin/init`](userland/init/README.md) program in user mode ("ring 3"). The
 kernel mode will load the `kshell` instead and will stay in kernel mode (as its
 name implies).
 
