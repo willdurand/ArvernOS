@@ -11,12 +11,13 @@
 #define MMU_DEBUG_PAGE_ENTRY(message, e)                                       \
   MMU_DEBUG("%s "                                                              \
             "page entry addr=%p present=%d "                                   \
-            "writable=%d no_execute=%d huge_page=%d",                          \
+            "writable=%d no_execute=%d user_accessible=%d huge_page=%d",       \
             message,                                                           \
             (e).packed & 0x000ffffffffff000,                                   \
             (e).present,                                                       \
             (e).writable,                                                      \
             (e).no_execute,                                                    \
+            (e).user_accessible,                                               \
             (e).huge_page)
 
 void map_page_to_frame(page_number_t page_number,
@@ -528,13 +529,13 @@ void unmap(page_number_t page_number)
 {
   uint64_t addr = page_start_address(page_number);
 
-  MMU_DEBUG("unmapping page_number=%d addr=%p", page_number, addr);
+  MMU_DEBUG("unmapping page_number=%llu addr=%p", page_number, addr);
 
 #ifndef TEST_ENV
   // Do not call `translate()` here, otherwise our test suite wouldn't be able
   // to fake the calls to `next_table_address()` right after.
   if (!translate(addr).has_value) {
-    MMU_DEBUG("cannot unmap page=%u (start_address=%p) because it is "
+    MMU_DEBUG("cannot unmap page=%llu (start_address=%p) because it is "
               "not mapped",
               page_number,
               addr);
