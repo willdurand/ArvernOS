@@ -316,12 +316,14 @@ void kmain(uint64_t addr)
   free(_cmdline);
 
   char** argv = (char**)malloc(sizeof(char*) * (argc + 1));
-  argv[0] = strtok(cmdline->string, " ");
+  _cmdline = strdup(cmdline->string);
+  argv[0] = strtok(_cmdline, " ");
 
   for (int i = 1; i < argc; i++) {
     argv[i] = strtok(NULL, " ");
   }
   argv[argc] = NULL;
+  free(_cmdline);
 
   printf("kernel: switching to usermode... (%s)\n", argv[0]);
   INFO("switching to usermode (%s)", argv[0]);
