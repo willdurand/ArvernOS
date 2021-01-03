@@ -6,7 +6,9 @@
 #ifdef ENABLE_NET_DEBUG
 #define NET_DEBUG(format, ...) DEBUG(format, __VA_ARGS__)
 #else
-#define NET_DEBUG(format, ...)
+#define NET_DEBUG(format, ...)                                                 \
+  do {                                                                         \
+  } while (0)
 #endif
 
 #endif
