@@ -15,6 +15,9 @@ void willos_log_init()
     return;
   }
 
+  // Write nothing to force-clear the serial transmit queue.
+  write(fd, "", 1);
+
   com1_fd = fd;
 }
 

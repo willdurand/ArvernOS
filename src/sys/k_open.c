@@ -23,7 +23,7 @@ int k_open(const char* pathname, uint32_t flags)
     return -ENFILE;
   }
 
-  SYS_DEBUG("fd=%d inode=%p flags=%d", fd, inode, flags);
+  SYS_DEBUG("fd=%d inode=%p flags=%d pathname=%s", fd, inode, flags, pathname);
 
   return fd;
 }
