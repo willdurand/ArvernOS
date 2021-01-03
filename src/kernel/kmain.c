@@ -317,10 +317,10 @@ void kmain(uint64_t addr)
 
   char** argv = (char**)malloc(sizeof(char*) * (argc + 1));
   _cmdline = strdup(cmdline->string);
-  argv[0] = strtok(_cmdline, " ");
+  argv[0] = strdup(strtok(_cmdline, " "));
 
   for (int i = 1; i < argc; i++) {
-    argv[i] = strtok(NULL, " ");
+    argv[i] = strdup(strtok(NULL, " "));
   }
   argv[argc] = NULL;
   free(_cmdline);
