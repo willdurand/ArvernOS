@@ -10,14 +10,19 @@ int start_main(int (*main)(int, char**, char**),
                char* argv[],
                char* envp[])
 {
+#ifdef ENABLE_USERLAND_DEBUG
   willos_log_init();
   WILLOS_LOG("main=%p argc=%d argv=%p envp=%p", main, argc, argv, envp);
+#endif
 
   environ = envp;
 
   int retval = main(argc, argv, envp);
 
+#ifdef ENABLE_USERLAND_DEBUG
   willos_log_deinit();
+#endif
+
   // TODO: call `exit()`
   return retval;
 }

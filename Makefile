@@ -95,8 +95,12 @@ ifeq ($(ENABLE_SYS_DEBUG), 1)
 	DEBUG_CFLAGS += -DENABLE_SYS_DEBUG
 endif
 
+ifeq ($(ENABLE_USERLAND_DEBUG), 1)
+	DEBUG_CFLAGS += -DENABLE_USERLAND_DEBUG
+endif
+
 ifeq ($(ENABLE_ALL_DEBUG), 1)
-	DEBUG_CFLAGS += -DENABLE_CONFIG_DEBUG -DENABLE_CORE_DEBUG -DENABLE_FS_DEBUG -DENABLE_MMU_DEBUG -DENABLE_NET_DEBUG -DENABLE_PROC_DEBUG -DENABLE_SYS_DEBUG
+	DEBUG_CFLAGS += -DENABLE_CONFIG_DEBUG -DENABLE_CORE_DEBUG -DENABLE_FS_DEBUG -DENABLE_MMU_DEBUG -DENABLE_NET_DEBUG -DENABLE_PROC_DEBUG -DENABLE_SYS_DEBUG -DENABLE_USERLAND_DEBUG
 endif
 
 ifeq ($(ENABLE_FRAMEBUFFER), 1)
@@ -251,7 +255,7 @@ gdb: debug run
 userland: ## compile the userland programs (statically linked to libc)
 userland: libc
 	@for userland_program in $(shell find userland/* -type d -not \( -path userland/bin -o -path userland/local-build \)); do \
-	    $(MAKE) -C $$userland_program OS_NAME="$(OS_NAME)" ; \
+	    $(MAKE) -C $$userland_program OS_NAME="$(OS_NAME)" ENABLE_USERLAND_DEBUG=$(ENABLE_USERLAND_DEBUG) ; \
 	done
 .PHONY: userland
 
