@@ -76,9 +76,13 @@ static const uint16_t serial_com1 = SERIAL_COM1;
 
 #else // ENABLE_KERNEL_DEBUG || ENABLE_LOGS_FOR_TESTS
 
-#define DEBUG(format, ...)
+#define DEBUG(format, ...)                                                     \
+  do {                                                                         \
+  } while (0)
 
-#define HEX_DEBUG(data, len)
+#define HEX_DEBUG(data, len)                                                   \
+  do {                                                                         \
+  } while (0)
 
 #endif // ENABLE_KERNEL_DEBUG || ENABLE_LOGS_FOR_TESTS
 
