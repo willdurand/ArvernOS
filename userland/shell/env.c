@@ -1,5 +1,6 @@
 #include "shell.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 
 void env()
