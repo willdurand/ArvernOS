@@ -131,6 +131,7 @@ The available debug variables are:
 - `ENABLE_NET_DEBUG`
 - `ENABLE_PROC_DEBUG`
 - `ENABLE_SYS_DEBUG`
+- `ENABLE_USERLAND_DEBUG`
 
 There is also `ENABLE_ALL_DEBUG` to turn all debug logs on.
 

@@ -18,7 +18,10 @@ ssize_t k_write(int fd, const void* buf, size_t count)
     return -EPERM;
   }
 
+#ifndef ENABLE_USERLAND_DEBUG
+  // This would conflict with the userland message being written.
   SYS_DEBUG("fd=%d buf=%p count=%d", fd, buf, count);
+#endif
 
   descriptor_t* desc = get_descriptor(fd);
 

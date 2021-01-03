@@ -6,7 +6,9 @@
 #ifdef ENABLE_SYS_DEBUG
 #define SYS_DEBUG(format, ...) DEBUG(format, __VA_ARGS__)
 #else
-#define SYS_DEBUG(format, ...)
+#define SYS_DEBUG(format, ...)                                                 \
+  do {                                                                         \
+  } while (0)
 #endif
 
 #endif

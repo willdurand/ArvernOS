@@ -35,6 +35,10 @@ CFLAGS = $(COMMON_CFLAGS) -ffreestanding -fno-builtin -fno-pie \
 				 -D$(PLATFORM) \
 				 -I $(ROOT_DIR)/include/
 
+ifeq ($(ENABLE_USERLAND_DEBUG), 1)
+	CFLAGS += -DENABLE_USERLAND_DEBUG
+endif
+
 LDFLAGS ?=
 LDFLAGS += -nostdlib -no-pie $(ROOT_DIR)/build/libc-$(OS_NAME).a
 

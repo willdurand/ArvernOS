@@ -4,6 +4,8 @@
 #ifndef __is_libk
 #include <sys/types.h>
 
+#ifdef ENABLE_USERLAND_DEBUG
+
 #define LEVEL "USERLAND"
 #define _WILLOS_LOG(format, ...)                                               \
   fctprintf(&willos_log_putchar,                                               \
@@ -17,12 +19,20 @@
 
 #define WILLOS_LOG(...) _WILLOS_LOG(__VA_ARGS__, "\n")
 
+#else // ENABLE_USERLAND_DEBUG
+
+#define WILLOS_LOG(...)                                                        \
+  do {                                                                         \
+  } while (0)
+
+#endif // ENABLE_USERLAND_DEBUG
+
 void willos_log_init();
 
 void willos_log_deinit();
 
 void willos_log_putchar(char c, void* arg);
 
-#endif
+#endif // __is_libk
 
 #endif
