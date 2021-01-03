@@ -7,8 +7,8 @@
 #include <string.h>
 
 void serial_write(uint16_t com, char c);
-bool serial_received(uint16_t com);
-bool serial_is_transmit_fifo_empty(uint16_t com);
+bool serial_is_waiting(uint16_t com);
+bool serial_is_transmitting(uint16_t com);
 char serial_read(uint16_t com);
 
 void serial_init(uint16_t com, uint16_t speed)
@@ -44,29 +44,31 @@ void serial_stream_output(char c, void* arg)
   serial_write(com, c);
 }
 
-bool serial_is_transmit_fifo_empty(uint16_t com)
+bool serial_is_transmitting(uint16_t com)
 {
   /* 0x20 = 0010 0000 */
   return (port_byte_in(SERIAL_LINE_STATUS_PORT(com)) & 0x20);
 }
 
-bool serial_received(uint16_t com)
+bool serial_is_waiting(uint16_t com)
 {
   return (port_byte_in(SERIAL_LINE_STATUS_PORT(com)) & 1);
 }
 
 char serial_read(uint16_t com)
 {
-  while (serial_received(com) == 0)
+  while (serial_is_waiting(com) == 0) {
     ;
+  }
 
   return port_byte_in(com);
 }
 
 void serial_write(uint16_t com, char c)
 {
-  while (serial_is_transmit_fifo_empty(com) == 0)
+  while (serial_is_transmitting(com) == 0) {
     ;
+  }
 
   port_byte_out(com, c);
 }
