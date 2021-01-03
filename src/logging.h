@@ -12,7 +12,7 @@
 #ifdef ENABLE_LOGS_FOR_TESTS
 
 #define LOG(level, level_color, format, ...)                                   \
-  printf("%s%s:%lu:%s(): " format "%s\n",                                      \
+  printf("%s%s:%llu:%s(): " format "%s\n",                                     \
          ANSICOLOR_FG_LIGHTGRAY,                                               \
          __FILE__,                                                             \
          (uint64_t)__LINE__,                                                   \
@@ -32,7 +32,7 @@ static const uint16_t serial_com1 = SERIAL_COM1;
 #define LOG(level, level_color, format, ...)                                   \
   fctprintf(&serial_stream_output,                                             \
             (void*)&serial_com1,                                               \
-            "%s%-8s%s | %s%s:%lu:%s():%s " format "\n",                        \
+            "%s%-8s%s | %s%s:%llu:%s():%s " format "\n",                       \
             level_color,                                                       \
             level,                                                             \
             ANSICOLOR_RESET,                                                   \
@@ -48,7 +48,7 @@ static const uint16_t serial_com1 = SERIAL_COM1;
 #define LOG(level, level_color, format, ...)                                   \
   fctprintf(&serial_stream_output,                                             \
             (void*)&serial_com1,                                               \
-            "%-8s | %s:%lu:%s(): " format "\n",                                \
+            "%-8s | %s:%llu:%s(): " format "\n",                               \
             level,                                                             \
             __FILE__,                                                          \
             (uint64_t)__LINE__,                                                \
