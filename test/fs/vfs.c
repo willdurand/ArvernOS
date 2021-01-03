@@ -21,7 +21,7 @@ static vfs_driver_t test_driver = {
   NULL          // finddir
 };
 
-inode_t test_fs_init(const char* name)
+inode_t test_fs_create(const char* name)
 {
   inode_t node = calloc(1, sizeof(vfs_node_t));
 
@@ -95,18 +95,18 @@ int main()
   inode_t m = vfs_mount("/test1", NULL);
   assert(m == NULL, "returns null when root fs is invalid");
 
-  inode_t test1 = vfs_mount("/test1", test_fs_init("test-1"));
+  inode_t test1 = vfs_mount("/test1", test_fs_create("test-1"));
   assert(test1 != NULL, "returns the test fs mountpoint");
   assert(strcmp(test1->name, "test1") == 0, "sets the correct name");
   assert(test1->parent == root, "has root as parent");
   assert(vfs_type(test1) == FS_DIRECTORY, "sets the correct type");
 
-  inode_t test2 = vfs_mount("/test2", test_fs_init("test-2"));
+  inode_t test2 = vfs_mount("/test2", test_fs_create("test-2"));
   assert(strcmp(test2->name, "test2") == 0, "sets the correct name");
   assert(vfs_type(test2) == FS_DIRECTORY, "sets the correct type");
   assert(test2->parent == root, "has root as parent");
 
-  inode_t test3 = vfs_mount("/test2/test3", test_fs_init("test-3"));
+  inode_t test3 = vfs_mount("/test2/test3", test_fs_create("test-3"));
   assert(strcmp(test3->name, "test3") == 0, "sets the correct name");
   assert(vfs_type(test3) == FS_DIRECTORY, "sets the correct type");
   assert(test3->parent == test2, "has test2 as parent");

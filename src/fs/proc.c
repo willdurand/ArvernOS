@@ -46,13 +46,18 @@ static inode_t nodes[NB_PROC_FILES];
 // TODO: move this variable somewhere else...
 static char* hostname = NULL;
 
-inode_t proc_fs_init()
+bool proc_fs_init()
 {
-  inode_t node = vfs_make_directory("proc");
-  node->driver = &proc_driver;
+  return (bool)vfs_mount(FS_PROC_MOUNTPOINT, proc_fs_create());
+}
 
+inode_t proc_fs_create()
+{
   hostname = malloc(sizeof(char) * (strlen(DEFAULT_HOSTNAME) + 1));
   strcpy(hostname, DEFAULT_HOSTNAME);
+
+  inode_t node = vfs_make_directory("proc");
+  node->driver = &proc_driver;
 
   return node;
 }

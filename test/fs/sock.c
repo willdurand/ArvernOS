@@ -13,8 +13,8 @@ int main()
   vfs_stat_t st = { 0 };
   char buf[BUF_SIZE];
 
-  describe("sock_fs_init()");
-  inode_t root = vfs_mount("/", sock_fs_init());
+  describe("sock_fs_create()");
+  inode_t root = vfs_mount("/", sock_fs_create());
   assert(root != 0, "can be mounted");
   assert(vfs_type(root) == FS_DIRECTORY, "is a directory");
   end_describe();

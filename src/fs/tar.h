@@ -26,7 +26,7 @@ typedef struct tar_header
 } tar_header_t;
 
 /**
- * @brief Creates a TAR-based read-only file system.
+ * Creates a TAR-based read-only file system root node.
  *
  * This function creates a TAR-based read-only file system by reading an
  * archive stored in memory at the address specified as first argument. This
@@ -34,8 +34,8 @@ typedef struct tar_header
  * a (init) "ram disk" because the GRUB will load the entire archive in memory.
  *
  * @param address the memory address where the TAR archive is located
- * @return the "root" inode of the tar file system
+ * @return the root inode of the tar file system
  */
-inode_t tar_fs_init(uint64_t address);
+inode_t tar_fs_create(uint64_t address);
 
 #endif
