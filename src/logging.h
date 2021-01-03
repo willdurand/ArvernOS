@@ -64,7 +64,7 @@ static const uint16_t serial_com1 = SERIAL_COM1;
 #define DEBUG(format, ...) LOG("DEBUG", ANSICOLOR_FG_CYAN, format, __VA_ARGS__)
 
 #define HEX_DEBUG(data, len)                                                   \
-  DEBUG("%s", "(hexdump)");                                                    \
+  DEBUG("(hexdump) data=%p len=%llu", data, (uint64_t)len);                    \
   for (uint64_t i = 0; i < len; i++) {                                         \
     if (i > 0 && i % 8 == 0) {                                                 \
       fctprintf(&serial_stream_output, (void*)&serial_com1, "\n");             \
