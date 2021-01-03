@@ -13,6 +13,7 @@
 #include <drivers/timer.h>
 #include <fs/debug.h>
 #include <fs/proc.h>
+#include <fs/serial.h>
 #include <fs/sock.h>
 #include <fs/tar.h>
 #include <fs/vfs.h>
@@ -192,6 +193,13 @@ void kmain(uint64_t addr)
 
     print_sub_step("creating /dev virtual directory");
     if (vfs_mount("/dev", vfs_make_directory("dev"))) {
+      print_ok();
+    } else {
+      print_ko();
+    }
+
+    print_sub_step("mounting serial devices");
+    if (serial_fs_init()) {
       print_ok();
     } else {
       print_ko();

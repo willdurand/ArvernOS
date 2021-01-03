@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <willos/debug.h>
 
 char** environ = NULL;
 
@@ -9,10 +10,8 @@ int start_main(int (*main)(int, char**, char**),
                char* argv[],
                char* envp[])
 {
-#ifdef DEBUG_LIBC
-  printf(
+  willos_debug(
     "start_main: main=%p argc=%d argv=%p envp=%p\n", main, argc, argv, envp);
-#endif
 
   environ = envp;
 
