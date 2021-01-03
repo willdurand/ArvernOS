@@ -1,4 +1,5 @@
 #include "process.h"
+#include "logging.h"
 #include <proc/usermode.h>
 #include <stdlib.h>
 #include <string.h>
@@ -20,6 +21,8 @@ process_t* process_get_current()
 
 process_t* process_exec(uint8_t* image, const char* name, char* const argv[])
 {
+  PROC_DEBUG("image=%p name=%s", image, name);
+
   elf_header_t* old_elf = NULL;
 
   if (current_process == NULL) {

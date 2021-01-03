@@ -129,6 +129,7 @@ The available debug variables are:
 - `ENABLE_FS_DEBUG`
 - `ENABLE_MMU_DEBUG`
 - `ENABLE_NET_DEBUG`
+- `ENABLE_PROC_DEBUG`
 - `ENABLE_SYS_DEBUG`
 
 There is also `ENABLE_ALL_DEBUG` to turn all debug logs on.
