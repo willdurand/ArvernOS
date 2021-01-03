@@ -45,8 +45,8 @@ int main()
 
   inode_t root, uptime, hostname;
 
-  describe("proc_fs_init()");
-  root = vfs_mount("/", proc_fs_init());
+  describe("proc_fs_create()");
+  root = vfs_mount("/", proc_fs_create());
   assert(root != 0, "can be mounted");
   assert(vfs_type(root) == FS_DIRECTORY, "is a directory");
   end_describe();

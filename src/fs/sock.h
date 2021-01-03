@@ -3,6 +3,7 @@
 #define FS_SOCK_H
 
 #include <fs/vfs.h>
+#include <stdbool.h>
 
 #define FS_SOCK_MOUNTPOINT "/proc/net"
 
@@ -20,10 +21,15 @@ typedef struct sock_entry
 } sock_entry_t;
 
 /**
- * @brief Creates a "sock" file system.
- *
- * @return the "root" inode of the sock file system
+ * Initializes the "sock" file system.
  */
-inode_t sock_fs_init();
+bool sock_fs_init();
+
+/**
+ * Creates the "sock" file system root node.
+ *
+ * @return the root inode of the sock file system
+ */
+inode_t sock_fs_create();
 
 #endif

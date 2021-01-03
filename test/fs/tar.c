@@ -38,8 +38,8 @@ int main()
     return 1;
   }
 
-  describe("tar_fs_init()");
-  inode_t root = vfs_mount("/", tar_fs_init((uint64_t)initrd));
+  describe("tar_fs_create()");
+  inode_t root = vfs_mount("/", tar_fs_create((uint64_t)initrd));
   assert(root != NULL, "can be mounted");
   assert(strcmp(root->name, "/") == 0, "is mounted to /");
   assert(vfs_type(root) == FS_DIRECTORY, "is a directory");

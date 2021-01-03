@@ -186,7 +186,7 @@ void kmain(uint64_t addr)
   print_sub_step("mounting tarfs (init ramdisk)");
   multiboot_tag_module_t* module =
     (multiboot_tag_module_t*)find_multiboot_tag(mbi, MULTIBOOT_TAG_TYPE_MODULE);
-  inode_t initrd = vfs_mount("/", tar_fs_init((uint64_t)module->mod_start));
+  inode_t initrd = vfs_mount("/", tar_fs_create((uint64_t)module->mod_start));
 
   if (initrd) {
     print_ok();
@@ -206,21 +206,21 @@ void kmain(uint64_t addr)
     }
 
     print_sub_step("mounting debugfs");
-    if (vfs_mount(FS_DEBUG_MOUNTPOINT, debug_fs_init())) {
+    if (debug_fs_init()) {
       print_ok();
     } else {
       print_ko();
     }
 
     print_sub_step("mounting procfs");
-    if (vfs_mount(FS_PROC_MOUNTPOINT, proc_fs_init())) {
+    if (proc_fs_init()) {
       print_ok();
     } else {
       print_ko();
     }
 
     print_sub_step("mounting sockfs");
-    if (vfs_mount(FS_SOCK_MOUNTPOINT, sock_fs_init())) {
+    if (sock_fs_init()) {
       print_ok();
     } else {
       print_ko();

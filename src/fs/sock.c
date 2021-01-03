@@ -31,7 +31,12 @@ static vfs_driver_t sock_driver = {
   sock_create   // create
 };
 
-inode_t sock_fs_init()
+bool sock_fs_init()
+{
+  return (bool)vfs_mount(FS_SOCK_MOUNTPOINT, sock_fs_create());
+}
+
+inode_t sock_fs_create()
 {
   inode_t node = vfs_make_directory("sock");
   node->driver = &sock_driver;
