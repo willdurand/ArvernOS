@@ -203,25 +203,45 @@ stack_top:
 ; 64-bit code, we need to set up a new Global Descriptor Table.
 section .rodata
 gdt64:
-  ; .null_1
+  ; .null_1 / 0x00
   dq 0
-.kernel_code: equ $ - gdt64
-  dq (1<<41) | (1<<43) | (1<<44) | (1<<47) | (1<<53)
-.kernel_data: equ $ - gdt64
-  dq (1<<41) | (1<<44) | (1<<47)
-.null_2: equ $ - gdt64
+.kernel_code: equ $ - gdt64 ; 0x08
+  dw 0xffff
+  dw 0
+  db 0
+  db 10011010b
+  db 10100000b
+  db 0
+.kernel_data: equ $ - gdt64 ; 0x10
+  dw 0xffff
+  dw 0
+  db 0
+  db 10010010b
+  db 10000000b
+  db 0
+.null_2: equ $ - gdt64 ; 0x18
   dq 0
-.user_data: equ $ - gdt64
-  dq (1<<41) | (1<<44) | (1<<45) | (1<<46) | (1<<47)
-.user_code: equ $ - gdt64
-  dq (1<<41) | (1<<43) | (1<<44) | (1<<45) | (1<<46) | (1<<47) | (1<<53)
-.tss: equ $ - gdt64
+.user_data: equ $ - gdt64 ; 0x20
+  dw 0xffff
+  dw 0
+  db 0
+  db 11110010b
+  db 10000000b
+  db 0
+.user_code: equ $ - gdt64 ; 0x28
+  dw 0xffff
+  dw 0
+  db 0
+  db 11111010b
+  db 10100000b
+  db 0
+.tss: equ $ - gdt64 ; 0x30
   ; low
   dw tss.size & 0xffff       ; limit 15:0
   dw tss.base & 0xffff       ; base 15:0
   db (tss.base >> 16) & 0xff ; base 23:16
-  db 0x89                    ; type: present + ring 0 + executable
-  db 0xa0                    ; limit 19:16 and flags
+  db 10001001b               ; type
+  db 10100000b               ; limit 19:16 and flags
   db (tss.base >> 24) & 0xff ; base 31:24
   ; high
   dw (tss.base >> 32) & 0xffff
