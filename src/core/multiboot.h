@@ -139,6 +139,8 @@ typedef struct reserved_areas
   uint64_t kernel_end;
   uint64_t multiboot_start;
   uint64_t multiboot_end;
+  uint64_t start;
+  uint64_t end;
 } reserved_areas_t;
 
 typedef struct multiboot_color

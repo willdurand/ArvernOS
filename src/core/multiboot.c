@@ -21,10 +21,12 @@ void* find_multiboot_tag(multiboot_info_t* mbi, uint16_t type)
 reserved_areas_t find_reserved_areas(multiboot_info_t* mbi)
 {
   multiboot_tag_t* tag = NULL;
-  reserved_areas_t reserved = { .kernel_start = -1,
+  reserved_areas_t reserved = { .kernel_start = 0,
                                 .kernel_end = 0,
                                 .multiboot_start = (uint64_t)mbi,
-                                .multiboot_end = 0 };
+                                .multiboot_end = 0,
+                                .start = 0,
+                                .end = 0 };
 
   CORE_DEBUG("announced MBI size %#x", mbi->size);
 
@@ -45,6 +47,7 @@ reserved_areas_t find_reserved_areas(multiboot_info_t* mbi)
                    ((multiboot_tag_module_t*)tag)->mod_start,
                    ((multiboot_tag_module_t*)tag)->mod_end,
                    ((multiboot_tag_module_t*)tag)->cmdline);
+        reserved.end = (uint64_t)((multiboot_tag_module_t*)tag)->mod_end;
         break;
 
       case MULTIBOOT_TAG_TYPE_BASIC_MEMINFO:
@@ -118,13 +121,12 @@ reserved_areas_t find_reserved_areas(multiboot_info_t* mbi)
             continue;
           }
 
-          if (((elf->addr)) < reserved.kernel_start) {
+          if (elf->addr < reserved.kernel_start || reserved.kernel_start == 0) {
             reserved.kernel_start = elf->addr;
           }
 
-          if (((elf->addr)) + elf->size > reserved.kernel_end) {
-            reserved.kernel_end = elf->addr;
-            reserved.kernel_end += elf->size;
+          if ((elf->addr + elf->size) > reserved.kernel_end) {
+            reserved.kernel_end = elf->addr + elf->size;
           }
         }
         break;
@@ -147,6 +149,17 @@ reserved_areas_t find_reserved_areas(multiboot_info_t* mbi)
   reserved.multiboot_end = (uint64_t)tag;
 
   CORE_DEBUG("total MBI size %#x", (uint64_t)tag - (uint64_t)mbi);
+
+  reserved.start = reserved.kernel_start;
+
+  CORE_DEBUG("kernel_start=%#x kernel_end=%#x multiboot_start=%#x "
+             "multiboot_end=%#x reserved start=%#x end=%#x",
+             reserved.kernel_start,
+             reserved.kernel_end,
+             reserved.multiboot_start,
+             reserved.multiboot_end,
+             reserved.start,
+             reserved.end);
 
   return reserved;
 }
