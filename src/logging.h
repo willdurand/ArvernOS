@@ -8,6 +8,7 @@
 #define ANSICOLOR_FG_CYAN      "\x1b[36m"
 #define ANSICOLOR_FG_LIGHTGRAY "\x1b[90m"
 #define ANSICOLOR_FG_YELLOW    "\x1b[33m"
+#define ANSICOLOR_FG_RED       "\x1b[31m"
 
 #ifdef ENABLE_LOGS_FOR_TESTS
 
@@ -87,5 +88,7 @@ static const uint16_t serial_com1 = SERIAL_COM1;
 #endif // ENABLE_KERNEL_DEBUG || ENABLE_LOGS_FOR_TESTS
 
 #define INFO(format, ...) LOG("INFO", ANSICOLOR_FG_YELLOW, format, __VA_ARGS__)
+
+#define ERROR(format, ...) LOG("ERROR", ANSICOLOR_FG_RED, format, __VA_ARGS__)
 
 #endif

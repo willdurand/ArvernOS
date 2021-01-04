@@ -6,20 +6,21 @@
 #include <string.h>
 #include <sys/types.h>
 
-uint64_t heap_end_page;
-uint64_t heap_start_page;
-bitmap_t allocated_pages[(MAX_PAGES / BITS_PER_WORD) + 1] = { 0 };
+static uint64_t heap_end_page = 0;
+static uint64_t heap_start_page = 0;
+static bitmap_t allocated_pages[(MAX_PAGES / BITS_PER_WORD) + 1] = { 0 };
 
 void alloc_init()
 {
   heap_end_page = page_containing_address(HEAP_START + HEAP_SIZE - 1);
   heap_start_page = page_containing_address(HEAP_START);
 
-  INFO("initialized heap allocator with heap_start_page=%u heap_end_page=%u "
-       "used_count=%d",
-       heap_start_page,
-       heap_end_page,
-       alloc_get_used_count());
+  INFO(
+    "initialized heap allocator with heap_start_page=%llu heap_end_page=%llu "
+    "used_count=%llu",
+    heap_start_page,
+    heap_end_page,
+    alloc_get_used_count());
 }
 
 int liballoc_lock()

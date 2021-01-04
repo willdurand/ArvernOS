@@ -186,6 +186,7 @@ error:
 ; -----------------------------------------------------------------------------
 section .bss
 align 4096
+
 p4_table:
   ; `resb` means 'reserves bytes'
   resb 4096
@@ -203,6 +204,7 @@ stack_top:
 ; The processor is still in a 32-bit compatibility submode. To actually execute
 ; 64-bit code, we need to set up a new Global Descriptor Table.
 section .rodata
+
 gdt64:
   ; .null_1 / 0x00
   dq 0
@@ -284,6 +286,7 @@ extern kmain
 
 section .text
 bits 64
+
 long_mode_start:
   ; load 0 into all data segment registers
   mov ax, 0
