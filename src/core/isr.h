@@ -93,8 +93,6 @@ extern void irq10();
 extern void irq11();
 extern void irq12();
 
-extern void int0x80();
-
 /// This structure represents the interrupt stack.
 typedef struct _stack
 {
