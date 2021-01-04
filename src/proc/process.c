@@ -44,13 +44,12 @@ process_t* process_exec(uint8_t* image, const char* name, char* const argv[])
       free(current_process->envp[i]);
     }
     free(current_process->envp);
-    free(current_process->user_stack);
   }
 
   // Set current process name.
   current_process->name = strdup(name);
   // Set up user stack.
-  current_process->user_stack = calloc(1, USER_STACK_SIZE);
+  memset(current_process->user_stack, 0, USER_STACK_SIZE);
 
   // We need both `argc` and `argv` so we start by retrieving `argc`. Then, we
   // need to `strdup()` all the given arguments becaue `exec` replaces the
