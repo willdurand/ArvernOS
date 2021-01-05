@@ -108,7 +108,8 @@ check_long_mode:
   jmp error
 
 ; -----------------------------------------------------------------------------
-; Paging
+; Paging: we identity map the first gigabyte of our kernel with 512 2MiB pages.
+; See: https://os.phil-opp.com/entering-longmode/#paging
 set_up_page_tables:
   ; See: https://os.phil-opp.com/page-tables/#implementation
   mov eax, p4_table
@@ -122,15 +123,15 @@ set_up_page_tables:
   mov dword [p4_table], eax
 
   ; Point the first entry of the level 3 page table to the first entry in the
-  ; p2 table
+  ; p2 table.
   mov eax, p2_table
   or eax, 0b11 ; present + writable
   mov dword [p3_table], eax
 
-  ; point each page table level two entry to a page
+  ; Point each page table level two entry to a page.
   mov ecx, 0 ; counter variable
 .map_p2_table:
-  ; map ecx-th P2 entry to a huge page that starts at address 2MiB*ecx
+  ; Map ecx-th P2 entry to a huge page that starts at address 2MiB*ecx.
   mov eax, 0x200000             ; 2MiB
   mul ecx                       ; start address of ecx-th page
   or eax, 0b10000011            ; present + writable + huge
