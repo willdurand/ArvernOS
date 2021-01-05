@@ -40,7 +40,9 @@ ifeq ($(ENABLE_USERLAND_DEBUG), 1)
 endif
 
 LDFLAGS ?=
-LDFLAGS += -nostdlib -no-pie $(ROOT_DIR)/build/libc-$(OS_NAME).a
+LDFLAGS += -Wl,-Ttext-segment=40000000 \
+					 -nostdlib -no-pie \
+					 $(ROOT_DIR)/build/libc-$(OS_NAME).a
 
 default: $(TARGET)
 
