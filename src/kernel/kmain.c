@@ -149,10 +149,10 @@ void kmain(uint64_t addr)
 
   print_welcome_message();
   print_debug_gdt();
-  print_debug_tss();
 
   print_step("initializing interrupt service routine");
   isr_init();
+  print_debug_tss();
   print_ok();
 
   print_step("initializing paging");

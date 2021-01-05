@@ -207,14 +207,14 @@ gdt64:
   ; .null_1 / 0x00
   dq 0
 .kernel_code: equ $ - gdt64 ; 0x08
-  dw 0xffff
+  dw 0
   dw 0
   db 0
   db 10011010b
   db 10100000b
   db 0
 .kernel_data: equ $ - gdt64 ; 0x10
-  dw 0xffff
+  dw 0
   dw 0
   db 0
   db 10010010b
@@ -223,14 +223,14 @@ gdt64:
 .null_2: equ $ - gdt64 ; 0x18
   dq 0
 .user_data: equ $ - gdt64 ; 0x20
-  dw 0xffff
+  dw 0
   dw 0
   db 0
   db 11110010b
   db 10000000b
   db 0
 .user_code: equ $ - gdt64 ; 0x28
-  dw 0xffff
+  dw 0
   dw 0
   db 0
   db 11111010b
