@@ -18,8 +18,8 @@
 #include <fs/tar.h>
 #include <fs/vfs.h>
 #include <kernel/console.h>
-#include <kernel/kshell.h>
 #include <kernel/panic.h>
+#include <kshell/kshell.h>
 #include <logging.h>
 #include <mmu/alloc.h>
 #include <mmu/frame.h>
