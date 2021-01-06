@@ -57,11 +57,12 @@ QEMU_OPTIONS = -m 500M \
 	       -device rtl8139,netdev=u1 \
 	       -object filter-dump,id=f1,netdev=u1,file=./logs/traffic.pcap
 
-CFLAGS := -DKERNEL_NAME=\"$(OS_NAME)\" \
-	-DGIT_HASH=\"$(GIT_HASH)\" \
+ # We need to have -fno-omit-frame-pointer or the kernel stack backtrace won't get the stack
+ CFLAGS := -DKERNEL_NAME=\"$(OS_NAME)\" \
+	 -DGIT_HASH=\"$(GIT_HASH)\" \
 	 -DLOGS_WITH_COLORS \
 	 -Wall -pedantic -std=c11 -O2 -ffreestanding -nostdlib \
-	 -fno-builtin -fstack-protector -mno-red-zone -mno-sse2 \
+	 -fno-builtin -fstack-protector -mno-red-zone -mno-sse2 -fno-omit-frame-pointer \
 	 -I src/ -I include/ $(addprefix -I$(EXTERNAL_DIR)/,$(EXTERNAL_DEPS)) \
 	 -I $(EXTERNAL_DIR)/scalable-font2
 
