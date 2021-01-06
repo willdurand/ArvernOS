@@ -39,4 +39,13 @@ void kshell_run(uint8_t scancode);
  */
 void kshell_print_prompt();
 
+void exec(int argc, char* argv[]);
+void host(int argc, char* argv[]);
+void ls(int argc, char* argv[]);
+void net();
+void ntp(int argc, char* argv[]);
+void overflow();
+void ping(int argc, char* argv[]);
+void selftest();
+
 #endif
