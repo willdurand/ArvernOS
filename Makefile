@@ -110,11 +110,12 @@ ifeq ($(ENABLE_FRAMEBUFFER), 1)
 endif
 
 GRUB_KERNEL_CMDLINE ?= /bin/init -s
+GRUB_DEFAULT ?= 0
 
 # See: https://stackoverflow.com/questions/649246/is-it-possible-to-create-a-multi-line-string-variable-in-a-makefile/649462#649462
 define GRUB_CFG_BODY
 set timeout=1
-set default=0
+set default=$(GRUB_DEFAULT)
 
 menuentry "$(OS_NAME) $(BUILD_MODE)" {
 	multiboot2 /boot/$(KERNEL_BIN) $(GRUB_KERNEL_CMDLINE)
@@ -225,6 +226,7 @@ run: $(ISO)
 debug: ## build the OS in debug mode
 debug: CFLAGS += $(DEBUG_CFLAGS)
 debug: BUILD_MODE = debug
+debug: GRUB_DEFAULT = 1
 debug: $(ISO)
 .PHONY: debug
 

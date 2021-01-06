@@ -26,6 +26,11 @@
 #define KB_TAB 15
 
 /**
+ * Initializes the kernel shell.
+ */
+void kshell_init();
+
+/**
  * Runs the kernel shell. This function takes a `scancode` as input and handles
  * the logic to convert it to a character and then run commands depending on
  * the command line buffer.
@@ -33,11 +38,6 @@
  * @param scancode a scancode from the keyboard driver
  */
 void kshell_run(uint8_t scancode);
-
-/**
- * Prints the kernel shell prompt to the screen.
- */
-void kshell_print_prompt();
 
 void exec(int argc, char* argv[]);
 void host(int argc, char* argv[]);

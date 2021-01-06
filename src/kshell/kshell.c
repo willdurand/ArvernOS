@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+void kshell_print_prompt();
+
 static char readline[READLINE_SIZE] = { 0 };
 static char last_readline[READLINE_SIZE] = { 0 };
 static unsigned int readline_index = 0;
@@ -13,7 +15,7 @@ static bool caps_lock_mode = false;
 static bool ctrl_mode = false;
 static bool shift_mode = false;
 
-#define NB_DOCUMENTED_COMMANDS 9
+#define NB_DOCUMENTED_COMMANDS 10
 
 static const char* commands[][NB_DOCUMENTED_COMMANDS] = {
   { "exec", "execute a program in user mode" },
@@ -25,6 +27,7 @@ static const char* commands[][NB_DOCUMENTED_COMMANDS] = {
   { "overflow", "test the stack buffer overflow protection" },
   { "ping", "ping an IPv4 address" },
   { "selftest", "run the kernel test suite" },
+  { "usermode", "switch to usermode (alias for 'exec /bin/init -s')" },
 };
 
 static unsigned char keymap[][128] = {
@@ -126,6 +129,9 @@ void run_command()
     ntp(argc, argv);
   } else if (strcmp(argv[0], "exec") == 0) {
     exec(argc, argv);
+  } else if (strcmp(argv[0], "usermode") == 0) {
+    char* args[] = { "exec", "/bin/init", "-s" };
+    exec(3, args);
   } else {
     printf("invalid kshell command\n");
   }
@@ -145,6 +151,14 @@ void reset_readline()
   for (unsigned int i = 0; i < READLINE_SIZE; i++) {
     readline[i] = 0;
   }
+}
+
+void kshell_init()
+{
+  printf("\nThis is willOS kernel shell. Type 'help' for more information.\n"
+         "Protip: switch to usermode with the 'usermode' command.\n\n");
+
+  kshell_print_prompt();
 }
 
 void kshell_run(uint8_t scancode)

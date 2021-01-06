@@ -309,7 +309,7 @@ void kmain(uint64_t addr)
     printf("kernel: loading kshell...\n");
     INFO("%s", "loading kshell");
 
-    kshell_print_prompt();
+    kshell_init();
 
     while (1) {
       kshell_run(keyboard_get_scancode());
