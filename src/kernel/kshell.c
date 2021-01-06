@@ -113,6 +113,10 @@ void selftest()
   // `k_test()` under the hood.
   test("kshell");
 
+  print_selftest_header("stack tracing");
+  printf("  stack tracing");
+  kernel_dump_stacktrace();
+
   print_selftest_header("memory");
   printf("  simple test with malloc()/free()\n");
   char* str = (void*)0x42;
