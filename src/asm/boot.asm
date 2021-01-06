@@ -28,10 +28,6 @@ start:
   ; load the 64-bit GDT
   lgdt [gdt64.pointer]
 
-  ; Load the TSS
-  mov ax, gdt64.tss
-  ltr ax
-
   jmp gdt64.kernel_code:long_mode_start
 
   ; Should not be reached.
@@ -185,6 +181,7 @@ error:
 
 ; -----------------------------------------------------------------------------
 section .bss
+; This ensures that the page tables are page aligned.
 align 4096
 
 p4_table:
@@ -201,10 +198,10 @@ stack_bottom:
 stack_top:
 
 ; -----------------------------------------------------------------------------
+section .data
+
 ; The processor is still in a 32-bit compatibility submode. To actually execute
 ; 64-bit code, we need to set up a new Global Descriptor Table.
-section .rodata
-
 gdt64:
   ; .null_1 / 0x00
   dq 0
@@ -239,30 +236,25 @@ gdt64:
   db 10100000b
   db 0
 .tss: equ $ - gdt64 ; 0x30
+  ; We only set type and flags below. Other values will be set in `tss_init()`.
   ; low
-  dw tss.size & 0xffff       ; limit 15:0
-  dw tss.base & 0xffff       ; base 15:0
-  db (tss.base >> 16) & 0xff ; base 23:16
-  db 10001001b               ; type
-  db 10100000b               ; limit 19:16 and flags
-  db (tss.base >> 24) & 0xff ; base 31:24
+  dw 0         ; limit 15:0
+  dw 0         ; base 15:0
+  db 0         ; base 23:16
+  db 10001001b ; type
+  db 10100000b ; limit 19:16 and flags
+  db 0         ; base 31:24
   ; high
-  dw (tss.base >> 32) & 0xffff
-  dw (tss.base >> 48) & 0xffff
-  db 0
-  db 0
-  db 0
-  db 0
+  dq 0
 .pointer:
   dw .pointer - gdt64 - 1
   dq gdt64
 
 ; TSS
-; I am pretty sure this does not belong to the .rodata section but it is easier
-; to get the base address that way (given that the .rodata section is the first
-; one, see `linker.ld`).
 tss:
-.base: equ 0x100000 + gdt64.pointer + tss
+; We don't load the TSS right now, we create it here and we'll finish the
+; initialization in `tss_init()`.
+.base: equ 0
   dd 0 ; reserved0
   dq 0 ; rsp0 (Privilege Stack Table)
   dq 0 ; rsp1

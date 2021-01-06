@@ -1,6 +1,8 @@
 #ifndef CORE_TSS_H
 #define CORE_TSS_H
 
+#include <sys/types.h>
+
 typedef struct tss
 {
   uint32_t reserved0;
@@ -19,5 +21,7 @@ typedef struct tss
   uint16_t reserved3;
   uint16_t iopb_offset;
 } tss_t;
+
+void tss_init();
 
 #endif

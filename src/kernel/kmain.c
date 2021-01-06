@@ -148,11 +148,15 @@ void kmain(uint64_t addr)
   console_init(&entry->common);
 
   print_welcome_message();
+
+  print_step("initializing TSS");
+  tss_init();
   print_debug_gdt();
+  print_debug_tss();
+  print_ok();
 
   print_step("initializing interrupt service routine");
   isr_init();
-  print_debug_tss();
   print_ok();
 
   print_step("initializing paging");

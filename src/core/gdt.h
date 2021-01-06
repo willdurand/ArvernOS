@@ -1,8 +1,12 @@
 #ifndef CORE_GDT_H
 #define CORE_GDT_H
 
+#include <sys/types.h>
+
+// See: `src/asm/boot.asm`.
 #define KERNEL_BASE_SELECTOR 0x08
 #define USER_BASE_SELECTOR   0x18
+#define TSS_SEGMENT          0x30
 
 typedef struct gdt_descriptor
 {
