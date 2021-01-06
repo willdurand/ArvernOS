@@ -256,8 +256,11 @@ gdt64:
   dq gdt64
 
 ; TSS
+; I am pretty sure this does not belong to the .rodata section but it is easier
+; to get the base address that way (given that the .rodata section is the first
+; one, see `linker.ld`).
 tss:
-.base: equ tss - $$
+.base: equ 0x100000 + gdt64.pointer + tss
   dd 0 ; reserved0
   dq 0 ; rsp0 (Privilege Stack Table)
   dq 0 ; rsp1
