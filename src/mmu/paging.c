@@ -94,7 +94,7 @@ void remap_kernel(multiboot_info_t* mbi)
   for (uint64_t addr = 0; addr < 0x000A0000; addr += PAGE_SIZE) {
     identity_map(addr, PAGING_FLAG_PRESENT);
   }
-  for (uint64_t addr = 0x000A0000; addr < 0x100000; addr += PAGE_SIZE) {
+  for (uint64_t addr = 0x000A0000; addr < 0x00100000; addr += PAGE_SIZE) {
     identity_map(addr, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
   }
   MMU_DEBUG("%s", "mapped first 1MB!");
@@ -112,19 +112,16 @@ void remap_kernel(multiboot_info_t* mbi)
       identity_map((uint64_t)entry->common.framebuffer_addr + (i * PAGE_SIZE),
                    PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
     }
+    MMU_DEBUG("%s", "mapped VBE framebuffer!");
   }
 
-  // Bitmap for allocated frames.
-  MMU_DEBUG("mapping %d pages for frame allocator, starting at addr=%p",
-            frames_for_bitmap,
-            allocated_frames);
-  for (uint8_t i = 0; i < frames_for_bitmap; i++) {
-    identity_map((uint64_t)allocated_frames + (i * PAGE_SIZE),
-                 PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
-  }
-  MMU_DEBUG("%s", "pages for frame allocator mapped!");
+  reserved_areas_t reserved = find_reserved_areas(mbi);
+  frame_number_t multiboot_start_frame =
+    frame_containing_address(reserved.multiboot_start);
+  frame_number_t multiboot_end_frame =
+    frame_containing_address(reserved.multiboot_end - 1);
 
-  MMU_DEBUG("%s", "mapping elf sections");
+  MMU_DEBUG("%s", "mapping kernel sections");
   multiboot_tag_elf_sections_t* tag =
     (multiboot_tag_elf_sections_t*)find_multiboot_tag(
       mbi, MULTIBOOT_TAG_TYPE_ELF_SECTIONS);
@@ -159,13 +156,7 @@ void remap_kernel(multiboot_info_t* mbi)
       identity_map(frame_start_address(i), flags);
     }
   }
-  MMU_DEBUG("%s", "elf sections mapped!");
-
-  reserved_areas_t reserved = find_reserved_areas(mbi);
-  frame_number_t multiboot_start_frame =
-    frame_containing_address(reserved.multiboot_start);
-  frame_number_t multiboot_end_frame =
-    frame_containing_address(reserved.multiboot_end - 1);
+  MMU_DEBUG("%s", "kernel sections mapped!");
 
   MMU_DEBUG("mapping multiboot info: start_frame=%d end_frame=%d",
             multiboot_start_frame,
@@ -183,14 +174,24 @@ void remap_kernel(multiboot_info_t* mbi)
   frame_number_t initrd_end_frame =
     frame_containing_address((uint64_t)module->mod_end - 1);
 
-  MMU_DEBUG("mapping multiboot module: start_frame=%d end_frame=%d",
+  MMU_DEBUG("mapping multiboot modules: start_frame=%d end_frame=%d",
             initrd_start_frame,
             initrd_end_frame);
 
   for (uint64_t i = initrd_start_frame; i <= initrd_end_frame; i++) {
     identity_map(frame_start_address(i), PAGING_FLAG_PRESENT);
   }
-  MMU_DEBUG("%s", "mapped multiboot module!");
+  MMU_DEBUG("%s", "mapped multiboot modules!");
+
+  // Bitmap for allocated frames.
+  MMU_DEBUG("mapping %d pages for frame allocator, starting at addr=%p",
+            frames_for_bitmap,
+            allocated_frames);
+  for (uint8_t i = 0; i < frames_for_bitmap; i++) {
+    identity_map((uint64_t)allocated_frames + (i * PAGE_SIZE),
+                 PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
+  }
+  MMU_DEBUG("%s", "pages for frame allocator mapped!");
 
   // restore recursive mapping to original p4 table
   paging_set_entry(&p4_table->entries[511],
