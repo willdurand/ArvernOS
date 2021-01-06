@@ -114,6 +114,7 @@ void selftest()
   test("kshell");
 
   print_selftest_header("memory");
+  printf("  simple test with malloc()/free()\n");
   char* str = (void*)0x42;
   printf("  pointer before malloc(): p=%p\n", str);
   int str_len = 9;
@@ -125,6 +126,17 @@ void selftest()
     printf("  success! p=%p", str);
     strncpy(str, "it works", str_len);
     printf(" and value is: %s\n", str);
+    free(str);
+  }
+
+  printf("  now allocating a large chunk of memory...\n");
+  printf("  pointer before malloc(): p=%p\n", str);
+  str = (char*)malloc(1024 * 1024 * 5 * sizeof(char));
+
+  if (str == 0) {
+    printf("  failed\n");
+  } else {
+    printf("  success!\n");
     free(str);
   }
 
