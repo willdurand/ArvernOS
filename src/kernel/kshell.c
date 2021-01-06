@@ -114,7 +114,6 @@ void selftest()
   test("kshell");
 
   print_selftest_header("stack tracing");
-  printf("  stack tracing");
   kernel_dump_stacktrace();
 
   print_selftest_header("memory");
