@@ -113,19 +113,19 @@ check_long_mode:
 set_up_page_tables:
   ; See: https://os.phil-opp.com/page-tables/#implementation
   mov eax, p4_table
-  or eax, 0b11 ; present + writable
+  or eax, 11b ; present + writable
   mov [p4_table + 511 * 8], eax
 
   ; Point the first entry of the level 4 page table to the first entry in the
   ; p3 table.
   mov eax, p3_table
-  or eax, 0b11 ; present + writable
+  or eax, 11b ; present + writable
   mov dword [p4_table], eax
 
   ; Point the first entry of the level 3 page table to the first entry in the
   ; p2 table.
   mov eax, p2_table
-  or eax, 0b11 ; present + writable
+  or eax, 11b ; present + writable
   mov dword [p3_table], eax
 
   ; Point each page table level two entry to a page.
@@ -134,7 +134,7 @@ set_up_page_tables:
   ; Map ecx-th P2 entry to a huge page that starts at address 2MiB*ecx.
   mov eax, 0x200000             ; 2MiB
   mul ecx                       ; start address of ecx-th page
-  or eax, 0b10000011            ; present + writable + huge
+  or eax, 10000011b             ; present + writable + huge
   mov [p2_table + ecx * 8], eax ; map ecx-th entry
 
   inc ecx           ; increase counter
