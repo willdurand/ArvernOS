@@ -120,6 +120,8 @@ int main(int argc, char* argv[])
         printf("%c", c);
         readline[readline_index++] = c;
     }
+
+    yield();
   }
 
   return 0;

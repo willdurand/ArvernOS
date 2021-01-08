@@ -25,6 +25,7 @@
 #include <mmu/frame.h>
 #include <mmu/paging.h>
 #include <net/net.h>
+#include <proc/process.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/k_syscall.h>
@@ -38,9 +39,58 @@ void busywait(uint64_t seconds);
 void print_debug_gdt();
 void print_debug_tss();
 
+void task_kshell()
+{
+  printf("kernel: loading kshell...\n");
+  INFO("%s", "loading kshell");
+
+  kshell_init();
+
+  while (1) {
+    kshell_run(keyboard_get_scancode());
+    k_yield();
+  }
+}
+
+void task_1()
+{
+  int i = 0;
+
+  while (1) {
+    DEBUG("i=%d", i++);
+
+    if (i == 10) {
+      k_yield();
+    }
+
+    if (i == 20) {
+      i = 0;
+      k_yield();
+    }
+  }
+}
+
+void task_2()
+{
+  int i = 100;
+
+  while (1) {
+    DEBUG("i=%d", i++);
+
+    if (i == 110) {
+      k_yield();
+    }
+
+    if (i == 120) {
+      i = 100;
+      k_yield();
+    }
+  }
+}
+
 void print_debug_tss()
 {
-  // From `src/arch/x86_64/boot.asm`.
+  // From `src/arch/x86_64/asm/boot.asm`.
   extern tss_t tss;
 
   DEBUG(
@@ -49,7 +99,7 @@ void print_debug_tss()
 
 void print_debug_gdt()
 {
-  // From `src/arch/x86_64/boot.asm`.
+  // From `src/arch/x86_64/asm/boot.asm`.
   extern gdt_table_t gdt64;
 
   DEBUG("gdt64.kernel_code: type=0x%02x limit19_16_and_flags=0x%02x",
@@ -306,16 +356,13 @@ void kmain(uint64_t addr)
     mbi, MULTIBOOT_TAG_TYPE_CMDLINE);
 
   if (cmdline && strcmp(cmdline->string, "kshell") == 0) {
-    printf("kernel: loading kshell...\n");
-    INFO("%s", "loading kshell");
-
-    kshell_init();
+    process_init();
+    process_create_task("kshell", (uint64_t)&task_kshell);
+    process_create_task("t1", (uint64_t)&task_1);
+    process_create_task("t2", (uint64_t)&task_2);
 
     while (1) {
-      kshell_run(keyboard_get_scancode());
-      // This allows the CPU to enter a sleep state in which it consumes much
-      // less energy. See: https://en.wikipedia.org/wiki/HLT_(x86_instruction)
-      __asm__("hlt");
+      k_yield();
     }
   }
 
