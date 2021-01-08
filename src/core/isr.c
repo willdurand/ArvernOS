@@ -126,6 +126,11 @@ void isr_init()
 
   idt_load();
 
+  isr_enable_interrupts();
+}
+
+void isr_enable_interrupts()
+{
   __asm__("sti");
 }
 
