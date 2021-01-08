@@ -70,8 +70,10 @@ static const uint16_t serial_com1 = SERIAL_COM1;
     if (i > 0 && i % 8 == 0) {                                                 \
       fctprintf(&serial_stream_output, (void*)&serial_com1, "\n");             \
     }                                                                          \
-    fctprintf(                                                                 \
-      &serial_stream_output, (void*)&serial_com1, "%02x ", (uint8_t)data[i]);  \
+    fctprintf(&serial_stream_output,                                           \
+              (void*)&serial_com1,                                             \
+              "%02x ",                                                         \
+              (uint8_t)(data + i));                                            \
   }                                                                            \
   fctprintf(&serial_stream_output, (void*)&serial_com1, "\n");
 
