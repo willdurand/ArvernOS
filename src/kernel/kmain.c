@@ -174,6 +174,11 @@ void kmain(uint64_t addr)
 #ifdef ENABLE_FRAMEBUFFER
   vbe_video_init(&entry->common);
   video_clear(MAKE_RGB(0, 128, 0));
+  video_console_attach();
+
+  #if ENABLE_FRAMEBUFFER_STATS
+    video_enable_debug_stats(true);
+  #endif
 #endif
 
   print_step("initializing syscalls");
@@ -321,10 +326,16 @@ void kmain(uint64_t addr)
     kshell_init();
 
     while (1) {
+
       kshell_run(keyboard_get_scancode());
+
+#if ENABLE_FRAMEBUFFER
+      video_swap_buffers();
+#else
       // This allows the CPU to enter a sleep state in which it consumes much
       // less energy. See: https://en.wikipedia.org/wiki/HLT_(x86_instruction)
       __asm__("hlt");
+#endif
     }
   }
 

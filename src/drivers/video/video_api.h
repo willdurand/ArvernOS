@@ -96,4 +96,15 @@ void video_blit(uint32_t* src_buffer,
  */
 void video_swap_buffers();
 
+/**
+ * Attaches the video API to the console API
+ * Used to print the console to the double-buffer
+ */
+void video_console_attach();
+
+/**
+ * Detaches the video API from the console API
+ */
+void video_console_detach();
+
 #endif
