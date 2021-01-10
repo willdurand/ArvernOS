@@ -1,10 +1,10 @@
 #include <core/logging.h>
+#include <ssfn.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ssfn.h>
 
 #include "video_api.h"
 
@@ -156,8 +156,8 @@ void video_swap_buffers()
 void video_console_attach()
 {
   ssfn_dst.ptr =
-    (uint8_t*)video_driver.buffer; /* address of the linear frame buffer */
+    (uint8_t*)video_driver.buffer;  /* address of the linear frame buffer */
   ssfn_dst.w = video_driver.width;  /* width */
   ssfn_dst.h = video_driver.height; /* height */
-  ssfn_dst.p = video_driver.width * sizeof(uint32_t);  /* bytes per line */
+  ssfn_dst.p = video_driver.width * sizeof(uint32_t); /* bytes per line */
 }

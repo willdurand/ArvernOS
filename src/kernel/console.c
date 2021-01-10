@@ -1,7 +1,7 @@
 #include "console.h"
+#include <logging.h>
 #include <stdlib.h>
 #include <string.h>
-#include <logging.h>
 
 static multiboot_tag_framebuffer_common_t* fb_common = NULL;
 

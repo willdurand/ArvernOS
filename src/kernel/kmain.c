@@ -176,9 +176,9 @@ void kmain(uint64_t addr)
   video_clear(MAKE_RGB(0, 128, 0));
   video_console_attach();
 
-  #if ENABLE_FRAMEBUFFER_STATS
-    video_enable_debug_stats(true);
-  #endif
+#if ENABLE_FRAMEBUFFER_STATS
+  video_enable_debug_stats(true);
+#endif
 #endif
 
   print_step("initializing syscalls");
