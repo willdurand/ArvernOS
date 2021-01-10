@@ -113,6 +113,7 @@ Docker (recommended way)</h2>
 <div class="line"> </div>
 <div class="line">$ docker run -it --rm -v $(pwd):/app willos/toolchain make help</div>
 <div class="line">clean                          remove build artifacts</div>
+<div class="line">console-font                   compile the (default) kernel console font</div>
 <div class="line">debug                          build the OS in debug mode</div>
 <div class="line">docs                           build the docs</div>
 <div class="line">fmt                            automatically format the code with clang-format</div>
@@ -120,10 +121,11 @@ Docker (recommended way)</h2>
 <div class="line">initrd                         build the init ram disk</div>
 <div class="line">iso                            build the image of the OS (.iso)</div>
 <div class="line">kernel                         compile the kernel</div>
-<div class="line">libc                           build the libc (for userland)</div>
+<div class="line">libc                           build the libc (userland)</div>
+<div class="line">libk                           build the libk (kernel)</div>
 <div class="line">run-debug                      run the OS in debug mode</div>
 <div class="line">run-test                       run the OS in test mode</div>
-<div class="line">run                            run the OS</div>
+<div class="line">run                            run the OS in release mode</div>
 <div class="line">test                           run unit tests</div>
 <div class="line">userland                       compile the userland programs (statically linked to libc)</div>
 <div class="line">version                        print tool versions</div>
@@ -170,7 +172,7 @@ Release</h2>
 <div class="fragment"><div class="line">$ make clean run</div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md8"></a>
 Boot options</h2>
-<p>The GRUB configuration offers two choices: the normal mode and the kernel mode. The normal (or "default") mode will load the <code>/bin/init</code> program in user mode ("ring 3"). The kernel mode will load the <code>kshell</code> instead and will stay in kernel mode (as its name implies).</p>
+<p>The GRUB configuration offers two choices: the normal mode and the kernel mode. The normal (or "default") mode will load the <a class="el" href="md_userland_init__r_e_a_d_m_e.html">`/bin/init`</a> program in user mode ("ring 3"). The kernel mode will load the <code>kshell</code> instead and will stay in kernel mode (as its name implies).</p>
 <p>It is possible to change the command line by passing the <code>GRUB_KERNEL_CMDLINE</code> variable to <code>make</code>:</p>
 <div class="fragment"><div class="line">$ make clean GRUB_KERNEL_CMDLINE=&quot;/bin/init foo bar&quot; run-debug</div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md9"></a>

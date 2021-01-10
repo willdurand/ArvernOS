@@ -12,6 +12,7 @@ bits 32 ; specifies that the following lines are 32-bit instructions.
         ; use bits 64 (64-bit instructions).
 start:
   mov esp, stack_top
+  mov ebp, 0
   ; `ebx` points to a boot information structure. We move it to `edi` to
   ; pass it to our kernel.
   mov edi, ebx
@@ -26,12 +27,6 @@ start:
 
   ; load the 64-bit GDT
   lgdt [gdt64.pointer]
-
-  call enable_sse
-
-  ; Load the TSS
-  mov ax, gdt64.tss
-  ltr ax
 
   jmp gdt64.kernel_code:long_mode_start
 
@@ -128,32 +123,33 @@ check_long_mode:
   jmp error
 
 ; -----------------------------------------------------------------------------
-; Paging
+; Paging: we identity map the first gigabyte of our kernel with 512 2MiB pages.
+; See: https://os.phil-opp.com/entering-longmode/#paging
 set_up_page_tables:
   ; See: https://os.phil-opp.com/page-tables/#implementation
   mov eax, p4_table
-  or eax, 0b11 ; present + writable
+  or eax, 11b ; present + writable
   mov [p4_table + 511 * 8], eax
 
   ; Point the first entry of the level 4 page table to the first entry in the
   ; p3 table.
   mov eax, p3_table
-  or eax, 0b11 ; present + writable
+  or eax, 11b ; present + writable
   mov dword [p4_table], eax
 
   ; Point the first entry of the level 3 page table to the first entry in the
-  ; p2 table
+  ; p2 table.
   mov eax, p2_table
-  or eax, 0b11 ; present + writable
+  or eax, 11b ; present + writable
   mov dword [p3_table], eax
 
-  ; point each page table level two entry to a page
+  ; Point each page table level two entry to a page.
   mov ecx, 0 ; counter variable
 .map_p2_table:
-  ; map ecx-th P2 entry to a huge page that starts at address 2MiB*ecx
+  ; Map ecx-th P2 entry to a huge page that starts at address 2MiB*ecx.
   mov eax, 0x200000             ; 2MiB
   mul ecx                       ; start address of ecx-th page
-  or eax, 0b10000011            ; present + writable + huge
+  or eax, 10000011b             ; present + writable + huge
   mov [p2_table + ecx * 8], eax ; map ecx-th entry
 
   inc ecx           ; increase counter
@@ -204,7 +200,9 @@ error:
 
 ; -----------------------------------------------------------------------------
 section .bss
+; This ensures that the page tables are page aligned.
 align 4096
+
 p4_table:
   ; `resb` means 'reserves bytes'
   resb 4096
@@ -219,44 +217,63 @@ stack_bottom:
 stack_top:
 
 ; -----------------------------------------------------------------------------
+section .data
+
 ; The processor is still in a 32-bit compatibility submode. To actually execute
 ; 64-bit code, we need to set up a new Global Descriptor Table.
-section .rodata
 gdt64:
-  ; .null_1
+  ; .null_1 / 0x00
   dq 0
-.kernel_code: equ $ - gdt64
-  dq (1<<41) | (1<<43) | (1<<44) | (1<<47) | (1<<53)
-.kernel_data: equ $ - gdt64
-  dq (1<<41) | (1<<44) | (1<<47)
-.null_2: equ $ - gdt64
+.kernel_code: equ $ - gdt64 ; 0x08
+  dw 0
+  dw 0
+  db 0
+  db 10011010b
+  db 10100000b
+  db 0
+.kernel_data: equ $ - gdt64 ; 0x10
+  dw 0
+  dw 0
+  db 0
+  db 10010010b
+  db 10000000b
+  db 0
+.null_2: equ $ - gdt64 ; 0x18
   dq 0
-.user_data: equ $ - gdt64
-  dq (1<<41) | (1<<44) | (1<<45) | (1<<46) | (1<<47)
-.user_code: equ $ - gdt64
-  dq (1<<41) | (1<<43) | (1<<44) | (1<<45) | (1<<46) | (1<<47) | (1<<53)
-.tss: equ $ - gdt64
+.user_data: equ $ - gdt64 ; 0x20
+  dw 0
+  dw 0
+  db 0
+  db 11110010b
+  db 10000000b
+  db 0
+.user_code: equ $ - gdt64 ; 0x28
+  dw 0
+  dw 0
+  db 0
+  db 11111010b
+  db 10100000b
+  db 0
+.tss: equ $ - gdt64 ; 0x30
+  ; We only set type and flags below. Other values will be set in `tss_init()`.
   ; low
-  dw tss.size & 0xffff       ; limit 15:0
-  dw tss.base & 0xffff       ; base 15:0
-  db (tss.base >> 16) & 0xff ; base 23:16
-  db 0x89                    ; type: present + ring 0 + executable
-  db 0xa0                    ; limit 19:16 and flags
-  db (tss.base >> 24) & 0xff ; base 31:24
+  dw 0         ; limit 15:0
+  dw 0         ; base 15:0
+  db 0         ; base 23:16
+  db 10001001b ; type
+  db 10100000b ; limit 19:16 and flags
+  db 0         ; base 31:24
   ; high
-  dw (tss.base >> 32) & 0xffff
-  dw (tss.base >> 48) & 0xffff
-  db 0
-  db 0
-  db 0
-  db 0
+  dq 0
 .pointer:
   dw .pointer - gdt64 - 1
   dq gdt64
 
 ; TSS
 tss:
-.base: equ tss - $$
+; We don't load the TSS right now, we create it here and we'll finish the
+; initialization in `tss_init()`.
+.base: equ 0
   dd 0 ; reserved0
   dq 0 ; rsp0 (Privilege Stack Table)
   dq 0 ; rsp1
@@ -280,6 +297,7 @@ extern kmain
 
 section .text
 bits 64
+
 long_mode_start:
   ; load 0 into all data segment registers
   mov ax, 0

@@ -24,7 +24,12 @@ static vfs_driver_t debug_driver = {
   NULL,         // create
 };
 
-inode_t debug_fs_init()
+bool debug_fs_init()
+{
+  return (bool)vfs_mount(FS_DEBUG_MOUNTPOINT, debug_fs_create());
+}
+
+inode_t debug_fs_create()
 {
   inode_t node = calloc(1, sizeof(vfs_node_t));
 

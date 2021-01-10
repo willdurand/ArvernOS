@@ -1,20 +1,11 @@
 #include "kshell.h"
-#include <arpa/inet.h>
-#include <core/elf.h>
-#include <drivers/cmos.h>
-#include <fs/debug.h>
-#include <fs/vfs.h>
 #include <logging.h>
-#include <net/dns.h>
-#include <net/ipv4.h>
-#include <net/net.h>
-#include <net/ntp.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/syscall.h>
-#include <time.h>
+
+void kshell_print_prompt();
 
 static char readline[READLINE_SIZE] = { 0 };
 static char last_readline[READLINE_SIZE] = { 0 };
@@ -24,17 +15,19 @@ static bool caps_lock_mode = false;
 static bool ctrl_mode = false;
 static bool shift_mode = false;
 
-#define NB_DOCUMENTED_COMMANDS 8
+#define NB_DOCUMENTED_COMMANDS 10
 
 static const char* commands[][NB_DOCUMENTED_COMMANDS] = {
-  { "help", "display information about system shell commands" },
+  { "exec", "execute a program in user mode" },
+  { "help", "print this help message" },
   { "host", "perform a DNS lookup" },
   { "ls", "list files" },
   { "net", "show configured network interfaces" },
   { "ntp", "get the time from a time server" },
   { "overflow", "test the stack buffer overflow protection" },
   { "ping", "ping an IPv4 address" },
-  { "selftest", "run the system test suite" },
+  { "selftest", "run the kernel test suite" },
+  { "usermode", "switch to usermode (alias for 'exec /bin/init -s')" },
 };
 
 static unsigned char keymap[][128] = {
@@ -95,198 +88,6 @@ void help(int argc, char* argv[])
   printf("no help for this command\n");
 }
 
-void print_selftest_header(const char* name)
-{
-  printf("\n\033[1;33m[%s]\033[0m\n", name);
-}
-
-void selftest()
-{
-  print_selftest_header("interrupts");
-  printf("  invoking breakpoint exception\n");
-  __asm__("int3");
-
-  print_selftest_header("syscalls");
-  printf("  syscalling\n");
-  // This does not call the syscall with an interrupt anymore, it directly uses
-  // `k_test()` under the hood.
-  test("kshell");
-
-  print_selftest_header("memory");
-  char* str = (void*)0x42;
-  printf("  pointer before malloc(): p=%p\n", str);
-  int str_len = 9;
-  str = (char*)malloc(str_len * sizeof(char));
-
-  if (str == 0) {
-    printf("  failed\n");
-  } else {
-    printf("  success! p=%p", str);
-    strncpy(str, "it works", str_len);
-    printf(" and value is: %s\n", str);
-    free(str);
-  }
-
-  print_selftest_header("filesystem");
-  inode_t debug = vfs_namei(FS_DEBUG_MOUNTPOINT);
-  const char* message = "  this message should be written to the console\n";
-  vfs_write(debug, (void*)message, strlen(message), 0);
-
-  printf("\ndone.\n");
-}
-
-void net()
-{
-  uint8_t in_id = 0;
-  net_interface_t* in = net_get_interface(in_id);
-
-  char buf[16];
-
-  printf("eth%d:\n", in_id);
-  printf("  driver : %s\n", in->driver->get_name());
-  inet_itoa(in->ip, buf, 16);
-  printf("  ip     : %s\n", buf);
-  printf("  mac    : %02x:%02x:%02x:%02x:%02x:%02x\n",
-         in->mac[0],
-         in->mac[1],
-         in->mac[2],
-         in->mac[3],
-         in->mac[4],
-         in->mac[5]);
-  inet_itoa(in->gateway_ip, buf, 16);
-  printf("  gateway: %s\n", buf);
-  inet_itoa(in->dns_ip, buf, 16);
-  printf("  dns    : %s\n", buf);
-}
-
-void host(int argc, char* argv[])
-{
-  if (argc != 2) {
-    printf("usage: %s <hostname>\n", argv[0]);
-    return;
-  }
-
-  struct in_addr in;
-  int retval = gethostbyname2(argv[1], &in);
-
-  switch (retval) {
-    case 0: {
-      char buf[16];
-      inet_ntoa2(in, buf, 16);
-      printf("%s has address %s\n", argv[1], buf);
-      break;
-    }
-    case DNS_ERR_NO_ANSWER:
-      printf("Host %s not found\n", argv[1]);
-      break;
-    default:
-      printf("DNS lookup failed (%d)\n", retval);
-  }
-}
-
-void ping(int argc, char* argv[])
-{
-  if (argc != 5) {
-    printf("usage: %s w x y z\n", argv[0]);
-    return;
-  }
-
-  uint8_t ip[4] = {
-    (uint8_t)atoi(argv[1]),
-    (uint8_t)atoi(argv[2]),
-    (uint8_t)atoi(argv[3]),
-    (uint8_t)atoi(argv[4]),
-  };
-
-  net_interface_t* in = net_get_interface(0);
-
-  char buf[16];
-  inet_itoa(ip, buf, 16);
-
-  printf("PING %s\n", buf);
-  icmpv4_reply_t reply = { 0 };
-  int retval = ipv4_ping(in, ip, &reply);
-
-  switch (retval) {
-    case 0:
-      inet_itoa(reply.src_ip, buf, 16);
-      printf(
-        "PONG from %s (ttl=%d sequence=%ld)\n", buf, reply.ttl, reply.sequence);
-      break;
-    default:
-      printf("Ping failed (%d)\n", retval);
-  }
-}
-
-void ntp(int argc, char* argv[])
-{
-  if (argc != 2) {
-    printf("usage: %s <time server>\n", argv[0]);
-    return;
-  }
-
-  time_t server_time;
-  int retval = ntp_request(net_get_interface(0), argv[1], &server_time);
-
-  switch (retval) {
-    case 0: {
-      char buf[40];
-      strftime(buf, 40, "%c", localtime(&server_time));
-      printf("server time is: %s\n", buf);
-      break;
-    }
-    default:
-      printf("Nope. (%d)\n", retval);
-  }
-}
-
-void ls(int argc, char* argv[])
-{
-  inode_t inode = argc == 1 ? vfs_namei("/") : vfs_namei(argv[1]);
-
-  if (!inode) {
-    printf("no such file or directory\n");
-    return;
-  }
-
-  if (vfs_type(inode) != FS_DIRECTORY) {
-    printf("'%s' is not a directory\n", inode->name);
-    return;
-  }
-
-  uint64_t num = 0;
-
-  while (1) {
-    dirent_t* de = vfs_readdir(inode, num++);
-
-    if (!de) {
-      break;
-    }
-
-    vfs_stat_t stat = { 0 };
-    vfs_stat(de->inode, &stat);
-
-    char indicator = ' ';
-    if ((stat.mode & S_IFSOCK) == S_IFSOCK) {
-      indicator = '=';
-    } else if ((stat.mode & S_IFDIR) == S_IFDIR) {
-      indicator = '/';
-    } else if ((stat.mode & S_IFCHR) == S_IFCHR) {
-      indicator = '%';
-    }
-
-    printf("%6llu %s%c\n", stat.size, de->name, indicator);
-
-    free(de);
-  }
-}
-
-void overflow()
-{
-  char c[12];
-  strcpy(c, "123456789012345678901234567890");
-}
-
 void run_command()
 {
   if (*readline == 0) {
@@ -326,6 +127,11 @@ void run_command()
     host(argc, argv);
   } else if (strcmp(argv[0], "ntp") == 0) {
     ntp(argc, argv);
+  } else if (strcmp(argv[0], "exec") == 0) {
+    exec(argc, argv);
+  } else if (strcmp(argv[0], "usermode") == 0) {
+    char* args[] = { "exec", "/bin/init", "-s" };
+    exec(3, args);
   } else {
     printf("invalid kshell command\n");
   }
@@ -345,6 +151,14 @@ void reset_readline()
   for (unsigned int i = 0; i < READLINE_SIZE; i++) {
     readline[i] = 0;
   }
+}
+
+void kshell_init()
+{
+  printf("\nThis is willOS kernel shell. Type 'help' for more information.\n"
+         "Protip: switch to usermode with the 'usermode' command.\n\n");
+
+  kshell_print_prompt();
 }
 
 void kshell_run(uint8_t scancode)

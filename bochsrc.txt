@@ -1,6 +1,9 @@
 boot: cdrom
 
 ata0: enabled=1, ioaddr1=0x1f0, ioaddr2=0x3f0, irq=14
-ata0-master:  type=cdrom, path=./build/willOS.iso, status=inserted
+ata0-master: type=cdrom, path=./build/willOS.iso, status=inserted
 
 com1: enabled=1, mode=file, dev=./logs/debug.log
+
+cpu: reset_on_triple_fault=0
+debug: cpu0=report

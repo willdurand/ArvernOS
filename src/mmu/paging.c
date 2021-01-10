@@ -11,12 +11,13 @@
 #define MMU_DEBUG_PAGE_ENTRY(message, e)                                       \
   MMU_DEBUG("%s "                                                              \
             "page entry addr=%p present=%d "                                   \
-            "writable=%d no_execute=%d huge_page=%d",                          \
+            "writable=%d no_execute=%d user_accessible=%d huge_page=%d",       \
             message,                                                           \
             (e).packed & 0x000ffffffffff000,                                   \
             (e).present,                                                       \
             (e).writable,                                                      \
             (e).no_execute,                                                    \
+            (e).user_accessible,                                               \
             (e).huge_page)
 
 void map_page_to_frame(page_number_t page_number,
@@ -35,13 +36,12 @@ void paging_set_entry(page_entry_t* entry, uint64_t addr, uint64_t flags);
 opt_uint64_t paging_frame_allocate();
 void paging_frame_deallocate(frame_number_t frame_number);
 
-static page_table_t* active_p4_table = (page_table_t*)P4_TABLE;
-static bool can_deallocate_frames = false;
-
-extern void load_p4(uint64_t addr);
-
 extern uint64_t frames_for_bitmap;
 extern bitmap_t* allocated_frames;
+extern void load_p4(uint64_t addr);
+
+static page_table_t* active_p4_table = (page_table_t*)P4_TABLE;
+static bool can_deallocate_frames = false;
 
 void paging_init(multiboot_info_t* mbi)
 {
@@ -53,7 +53,7 @@ void paging_init(multiboot_info_t* mbi)
 void remap_kernel(multiboot_info_t* mbi)
 {
   uint64_t inactive_page_table_frame = paging_frame_allocate().value;
-  page_number_t temporary_page = page_containing_address(0xcafebabe);
+  page_number_t temporary_page = 0xcafec000;
 
   map_page_to_frame(temporary_page,
                     inactive_page_table_frame,
@@ -89,8 +89,15 @@ void remap_kernel(multiboot_info_t* mbi)
   // We shouldn't deallocate the `inactive_page_table_frame`.
   can_deallocate_frames = true;
 
-  identity_map(0xB8000, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
-  MMU_DEBUG("%s", "mapped VGA!");
+  // Identity map first 1 MB.
+  // See: https://wiki.osdev.org/Memory_Map_(x86)
+  for (uint64_t addr = 0; addr < 0x000A0000; addr += PAGE_SIZE) {
+    identity_map(addr, PAGING_FLAG_PRESENT);
+  }
+  for (uint64_t addr = 0x000A0000; addr < 0x00100000; addr += PAGE_SIZE) {
+    identity_map(addr, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
+  }
+  MMU_DEBUG("%s", "mapped first 1MB!");
 
   multiboot_tag_framebuffer_t* entry =
     (multiboot_tag_framebuffer_t*)find_multiboot_tag(
@@ -105,22 +112,16 @@ void remap_kernel(multiboot_info_t* mbi)
       identity_map((uint64_t)entry->common.framebuffer_addr + (i * PAGE_SIZE),
                    PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
     }
+    MMU_DEBUG("%s", "mapped VBE framebuffer!");
   }
 
-  identity_map(0x0, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
-  MMU_DEBUG("%s", "mapped interrupt vector table!");
+  reserved_areas_t reserved = find_reserved_areas(mbi);
+  frame_number_t multiboot_start_frame =
+    frame_containing_address(reserved.multiboot_start);
+  frame_number_t multiboot_end_frame =
+    frame_containing_address(reserved.multiboot_end - 1);
 
-  // Allocated frames
-  MMU_DEBUG("mapping %d pages for frame allocator, starting at addr=%p",
-            frames_for_bitmap,
-            allocated_frames);
-  for (uint8_t i = 0; i < frames_for_bitmap; i++) {
-    identity_map((uint64_t)allocated_frames + (i * PAGE_SIZE),
-                 PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
-  }
-  MMU_DEBUG("%s", "pages for frame allocator mapped");
-
-  MMU_DEBUG("%s", "mapping elf sections");
+  MMU_DEBUG("%s", "mapping kernel sections");
   multiboot_tag_elf_sections_t* tag =
     (multiboot_tag_elf_sections_t*)find_multiboot_tag(
       mbi, MULTIBOOT_TAG_TYPE_ELF_SECTIONS);
@@ -155,13 +156,7 @@ void remap_kernel(multiboot_info_t* mbi)
       identity_map(frame_start_address(i), flags);
     }
   }
-  MMU_DEBUG("%s", "elf sections mapped!");
-
-  reserved_areas_t reserved = find_reserved_areas(mbi);
-  frame_number_t multiboot_start_frame =
-    frame_containing_address(reserved.multiboot_start);
-  frame_number_t multiboot_end_frame =
-    frame_containing_address(reserved.multiboot_end - 1);
+  MMU_DEBUG("%s", "kernel sections mapped!");
 
   MMU_DEBUG("mapping multiboot info: start_frame=%d end_frame=%d",
             multiboot_start_frame,
@@ -179,14 +174,24 @@ void remap_kernel(multiboot_info_t* mbi)
   frame_number_t initrd_end_frame =
     frame_containing_address((uint64_t)module->mod_end - 1);
 
-  MMU_DEBUG("mapping multiboot module: start_frame=%d end_frame=%d",
+  MMU_DEBUG("mapping multiboot modules: start_frame=%d end_frame=%d",
             initrd_start_frame,
             initrd_end_frame);
 
   for (uint64_t i = initrd_start_frame; i <= initrd_end_frame; i++) {
     identity_map(frame_start_address(i), PAGING_FLAG_PRESENT);
   }
-  MMU_DEBUG("%s", "mapped multiboot module!");
+  MMU_DEBUG("%s", "mapped multiboot modules!");
+
+  // Bitmap for allocated frames.
+  MMU_DEBUG("mapping %d pages for frame allocator, starting at addr=%p",
+            frames_for_bitmap,
+            allocated_frames);
+  for (uint8_t i = 0; i < frames_for_bitmap; i++) {
+    identity_map((uint64_t)allocated_frames + (i * PAGE_SIZE),
+                 PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
+  }
+  MMU_DEBUG("%s", "pages for frame allocator mapped!");
 
   // restore recursive mapping to original p4 table
   paging_set_entry(&p4_table->entries[511],
@@ -224,10 +229,6 @@ void enable_write_protection()
 void zero_table(page_table_t* table)
 {
   memset((void*)table, 0, sizeof(page_table_t));
-
-  for (uint32_t i = 0; i < PAGE_ENTRIES; i++) {
-    table->entries[i].packed = 0;
-  }
 }
 
 page_table_t* next_table_address(page_table_t* table, uint64_t index)
@@ -392,8 +393,8 @@ void map_page_to_frame(page_number_t page_number,
                        uint64_t frame,
                        uint64_t flags)
 {
-  MMU_DEBUG("mapping page=%u (start_addr=%p) to frame=%u (start_addr=%p) with "
-            "flags=%#x",
+  MMU_DEBUG("mapping page=%llu (start_addr=%p) to frame=%llu (start_addr=%p) "
+            "with flags=%#x",
             page_number,
             page_start_address(page_number),
             frame_containing_address(frame),
@@ -528,13 +529,13 @@ void unmap(page_number_t page_number)
 {
   uint64_t addr = page_start_address(page_number);
 
-  MMU_DEBUG("unmapping page_number=%d addr=%p", page_number, addr);
+  MMU_DEBUG("unmapping page_number=%llu addr=%p", page_number, addr);
 
 #ifndef TEST_ENV
   // Do not call `translate()` here, otherwise our test suite wouldn't be able
   // to fake the calls to `next_table_address()` right after.
   if (!translate(addr).has_value) {
-    MMU_DEBUG("cannot unmap page=%u (start_address=%p) because it is "
+    MMU_DEBUG("cannot unmap page=%llu (start_address=%p) because it is "
               "not mapped",
               page_number,
               addr);
@@ -645,9 +646,4 @@ void identity_map(uint64_t address, uint64_t flags)
 {
   page_number_t page = page_containing_address(address);
   map_page_to_frame(page, address, flags);
-#ifdef TEST_ENV
-  test_frame_mark_as_used(address);
-#else
-  frame_mark_as_used(address);
-#endif
 }

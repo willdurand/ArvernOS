@@ -48,6 +48,7 @@ $ docker build -t willos/toolchain .
 
 $ docker run -it --rm -v $(pwd):/app willos/toolchain make help
 clean                          remove build artifacts
+console-font                   compile the (default) kernel console font
 debug                          build the OS in debug mode
 docs                           build the docs
 fmt                            automatically format the code with clang-format
@@ -55,10 +56,11 @@ gdb                            build, run the OS in debug mode and enable GDB
 initrd                         build the init ram disk
 iso                            build the image of the OS (.iso)
 kernel                         compile the kernel
-libc                           build the libc (for userland)
+libc                           build the libc (userland)
+libk                           build the libk (kernel)
 run-debug                      run the OS in debug mode
 run-test                       run the OS in test mode
-run                            run the OS
+run                            run the OS in release mode
 test                           run unit tests
 userland                       compile the userland programs (statically linked to libc)
 version                        print tool versions
@@ -127,7 +129,9 @@ The available debug variables are:
 - `ENABLE_FS_DEBUG`
 - `ENABLE_MMU_DEBUG`
 - `ENABLE_NET_DEBUG`
+- `ENABLE_PROC_DEBUG`
 - `ENABLE_SYS_DEBUG`
+- `ENABLE_USERLAND_DEBUG`
 
 There is also `ENABLE_ALL_DEBUG` to turn all debug logs on.
 
@@ -143,9 +147,10 @@ $ make clean run
 ### Boot options
 
 The GRUB configuration offers two choices: the normal mode and the kernel mode.
-The normal (or "default") mode will load the `/bin/init` program in user mode
-("ring 3"). The kernel mode will load the `kshell` instead and will stay in
-kernel mode (as its name implies).
+The normal (or "default") mode will load the
+[`/bin/init`](userland/init/README.md) program in user mode ("ring 3"). The
+kernel mode will load the `kshell` instead and will stay in kernel mode (as its
+name implies).
 
 It is possible to change the command line by passing the `GRUB_KERNEL_CMDLINE`
 variable to `make`:
@@ -168,6 +173,42 @@ $ make clean GRUB_KERNEL_CMDLINE="/bin/init foo bar" run-debug
 9. Reload all the data segment registers
 10. Call the C `kmain()` function
 11. Eventually switch to user mode and call `/bin/init` by default
+
+## Memory management
+
+During the early boot sequence, we identity map the first gigabyte of our kernel
+with 512 2MiB pages. When `kmain()` is called, we call `paging_init()` to update
+the mapping:
+
+1. Memory from `0x00000000` to `0x000A0000` is identity mapped (present)
+2. Memory from `0x000A0000` to `0x00100000` is identity mapped (present +
+   writable)
+3. The VBE framebuffer might be identity mapped as well (present + writable,
+   and only if `ENABLE_FRAMEBUFFER=1` is passed to `make`)
+4. The kernel sections are identity mapped with the correct flags for each
+   section
+5. The multiboot information is identity mapped
+6. The multiboot modules are identity mapped with the correct flags (in our
+   case, it is the init ramdisk)
+7. The memory allocated for the frame allocator is then identity mapped
+
+In addition, `paging_init()` will:
+
+1. enable the write protection
+2. enable the no-execute feature
+3. create a guard page
+
+### Memory map
+
+#### Virtual address space
+
+- `0x00000000` to `0x00100000`: the first 1MiB area is reserved
+- `0x00100000`: the kernel code and data and multiboot modules
+- `0x0020xxxx`: after the end of the previous area (which is computed at runtime
+   using the multiboot information), we allocate some space for the frame
+   allocator
+- `0x10000000`: kernel heap area (we currently have a fixed heap size)
+- `0x40000000`: user space
 
 ## License
 

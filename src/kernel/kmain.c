@@ -13,12 +13,13 @@
 #include <drivers/timer.h>
 #include <fs/debug.h>
 #include <fs/proc.h>
+#include <fs/serial.h>
 #include <fs/sock.h>
 #include <fs/tar.h>
 #include <fs/vfs.h>
 #include <kernel/console.h>
-#include <kernel/kshell.h>
 #include <kernel/panic.h>
+#include <kshell/kshell.h>
 #include <logging.h>
 #include <mmu/alloc.h>
 #include <mmu/frame.h>
@@ -151,8 +152,12 @@ void kmain(uint64_t addr)
   console_init(&entry->common);
 
   print_welcome_message();
+
+  print_step("initializing TSS");
+  tss_init();
   print_debug_gdt();
   print_debug_tss();
+  print_ok();
 
   print_step("initializing interrupt service routine");
   isr_init();
@@ -194,7 +199,7 @@ void kmain(uint64_t addr)
   print_sub_step("mounting tarfs (init ramdisk)");
   multiboot_tag_module_t* module =
     (multiboot_tag_module_t*)find_multiboot_tag(mbi, MULTIBOOT_TAG_TYPE_MODULE);
-  inode_t initrd = vfs_mount("/", tar_fs_init((uint64_t)module->mod_start));
+  inode_t initrd = vfs_mount("/", tar_fs_create((uint64_t)module->mod_start));
 
   if (initrd) {
     print_ok();
@@ -206,22 +211,29 @@ void kmain(uint64_t addr)
       print_ko();
     }
 
+    print_sub_step("mounting serial devices");
+    if (serial_fs_init()) {
+      print_ok();
+    } else {
+      print_ko();
+    }
+
     print_sub_step("mounting debugfs");
-    if (vfs_mount(FS_DEBUG_MOUNTPOINT, debug_fs_init())) {
+    if (debug_fs_init()) {
       print_ok();
     } else {
       print_ko();
     }
 
     print_sub_step("mounting procfs");
-    if (vfs_mount(FS_PROC_MOUNTPOINT, proc_fs_init())) {
+    if (proc_fs_init()) {
       print_ok();
     } else {
       print_ko();
     }
 
     print_sub_step("mounting sockfs");
-    if (vfs_mount(FS_SOCK_MOUNTPOINT, sock_fs_init())) {
+    if (sock_fs_init()) {
       print_ok();
     } else {
       print_ko();
@@ -289,7 +301,7 @@ void kmain(uint64_t addr)
 
   if (console_mode_is_vbe()) {
     print_step("switching to fullscreen mode");
-    busywait(2);
+    busywait(1);
 
     if (!console_fullscreen()) {
       print_ko();
@@ -303,9 +315,10 @@ void kmain(uint64_t addr)
     mbi, MULTIBOOT_TAG_TYPE_CMDLINE);
 
   if (cmdline && strcmp(cmdline->string, "kshell") == 0) {
-    printf("loading kshell...\n");
+    printf("kernel: loading kshell...\n");
+    INFO("%s", "loading kshell");
 
-    kshell_print_prompt();
+    kshell_init();
 
     while (1) {
       kshell_run(keyboard_get_scancode());
@@ -326,15 +339,18 @@ void kmain(uint64_t addr)
   free(_cmdline);
 
   char** argv = (char**)malloc(sizeof(char*) * (argc + 1));
-  argv[0] = strtok(cmdline->string, " ");
+  _cmdline = strdup(cmdline->string);
+  argv[0] = strdup(strtok(_cmdline, " "));
 
   for (int i = 1; i < argc; i++) {
-    argv[i] = strtok(NULL, " ");
+    argv[i] = strdup(strtok(NULL, " "));
   }
 
   argv[argc] = NULL;
+  free(_cmdline);
 
   printf("kernel: switching to usermode... (%s)\n", argv[0]);
+  INFO("switching to usermode (%s)", argv[0]);
   k_execv(argv[0], argv);
 
   PANIC("unexpectedly reached end of kmain");

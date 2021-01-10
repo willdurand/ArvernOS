@@ -33,7 +33,7 @@ static vfs_driver_t tar_driver = {
   NULL,        // create
 };
 
-inode_t tar_fs_init(uint64_t address)
+inode_t tar_fs_create(uint64_t address)
 {
   inode_t node = vfs_make_directory("tar");
   node->driver = &tar_driver;

@@ -47,6 +47,8 @@ var annotated_dup =
     [ "process", "structprocess.html", null ],
     [ "reserved_areas", "structreserved__areas.html", null ],
     [ "sock_entry", "structsock__entry.html", null ],
+    [ "stack_frame", "structstack__frame.html", null ],
+    [ "t_cdate", "structs__cdate.html", null ],
     [ "tar_header", "structtar__header.html", null ],
     [ "tss", "structtss.html", null ],
     [ "udp_header", "structudp__header.html", null ],

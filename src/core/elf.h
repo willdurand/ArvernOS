@@ -10,12 +10,26 @@
 /// Loadable program type.
 #define ELF_PROGRAM_TYPE_LOAD 0x1
 
+/// Inactive section with undefined values.
+#define ELF_SECTION_TYPE_NULL 0x0
+/// Section data contains executable code and data.
+#define ELF_SECTION_TYPE_PROGBITS 0x1
+/// Section data contains a symbol table.
+#define ELF_SECTION_TYPE_SYMTAB 0x2
+/// Section data contains a string table
+#define ELF_SECTION_TYPE_STRTAB 0x3
+/// Section data occupies no space in the file.
+#define ELF_SECTION_TYPE_NOBITS 0x8
+
 /// Execute Program Flag.
 #define ELF_PROGRAM_FLAG_EXECUTE 0x1
 /// Write Program Flag.
 #define ELF_PROGRAM_FLAG_WRITE 0x2
 /// Read Program Flag.
 #define ELF_PROGRAM_FLAG_READ 0x4
+
+/// Identifies a section that occupies memory during process execution.
+#define ELF_SECTION_FLAG_ALLOC 0x2
 
 typedef struct elf_header
 {
@@ -49,16 +63,16 @@ typedef struct elf_program_header
 
 typedef struct elf_section_header
 {
-  uint32_t name;      ///< Section name
-  uint32_t type;      ///< Section type
-  uint64_t flags;     ///< Section attributes
-  uint64_t addr;      ///< Virtual address in memory
-  uint64_t offset;    ///< Offset in file
-  uint64_t size;      ///< Size of section
-  uint32_t link;      ///< Link to other section
-  uint32_t info;      ///< Miscellaneous information
-  uint64_t addralign; ///< Address alignment boundary
-  uint64_t entsize;   ///< Size of entries, if section has table
+  uint32_t name;            ///< Section name
+  uint32_t type;            ///< Section type
+  uint64_t flags;           ///< Section attributes
+  uint64_t virtual_address; ///< Virtual address in memory
+  uint64_t offset;          ///< Offset in file
+  uint64_t size;            ///< Size of section
+  uint32_t link;            ///< Link to other section
+  uint32_t info;            ///< Miscellaneous information
+  uint64_t addralign;       ///< Address alignment boundary
+  uint64_t entsize;         ///< Size of entries, if section has table
 } __attribute__((packed)) elf_section_header_t;
 
 elf_header_t* elf_load(uint8_t* data);

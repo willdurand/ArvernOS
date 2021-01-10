@@ -10,7 +10,13 @@
 #define _HAVE_SIZE_T
 #define _HAVE_UINTPTR_T
 
-#include <liballoc/liballoc.h>
+#include <liballoc.h>
+
+#else
+
+char* getenv(const char* name);
+
+int putenv(char* str);
 
 #endif
 

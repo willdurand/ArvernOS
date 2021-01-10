@@ -36,6 +36,10 @@ var NAVTREE =
     ] ],
     [ "Early boot sequence", "index.html#autotoc_md9", null ],
     [ "License", "index.html#autotoc_md10", null ],
+    [ "init", "md_userland_init__r_e_a_d_m_e.html", null ],
+    [ "userland", "md_userland__r_e_a_d_m_e.html", [
+      [ "Local builds", "md_userland__r_e_a_d_m_e.html#autotoc_md13", null ]
+    ] ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
       [ "Data Structure Index", "classes.html", null ],
@@ -59,7 +63,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "alloc_8h.html",
-"structelf__header.html"
+"sock_8h.html#aedc77d5ff0db9f7867873d7387db0be6"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

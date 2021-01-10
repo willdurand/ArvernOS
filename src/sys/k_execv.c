@@ -13,6 +13,7 @@ int k_execv(const char* path, char* const argv[])
 {
   int fd = k_open(path, O_RDONLY);
   if (fd < 3) {
+    SYS_DEBUG("%s", "error k_open");
     return fd;
   }
 
@@ -20,6 +21,7 @@ int k_execv(const char* path, char* const argv[])
 
   int retval = k_fstat(fd, &stat);
   if (retval != 0) {
+    SYS_DEBUG("%s", "error k_fstat");
     return retval;
   }
 
@@ -27,11 +29,13 @@ int k_execv(const char* path, char* const argv[])
 
   retval = k_read(fd, buf, stat.st_size);
   if (retval != stat.st_size) {
+    SYS_DEBUG("%s", "error k_read");
     return retval;
   }
 
   retval = k_close(fd);
   if (retval != 0) {
+    SYS_DEBUG("%s", "error k_close");
     return retval;
   }
 

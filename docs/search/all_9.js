@@ -42,5 +42,6 @@ var searchData=
   ['isr_5finit_117',['isr_init',['../isr_8h.html#a2ea31f33125954459edbe7f4d7971ffa',1,'isr.c']]],
   ['isr_5fint_5fhandler_118',['isr_int_handler',['../isr_8h.html#a309e84e00ab6c296809ea2f0167de593',1,'isr.c']]],
   ['isr_5firq_5fhandler_119',['isr_irq_handler',['../isr_8h.html#a90e538b3202ebb875fa17720d5eb46ba',1,'isr.c']]],
-  ['isr_5fregister_5fhandler_120',['isr_register_handler',['../isr_8h.html#a2cbfff83b3f84b3704ed9ff573fc2b77',1,'isr.c']]]
+  ['isr_5fregister_5fhandler_120',['isr_register_handler',['../isr_8h.html#a2cbfff83b3f84b3704ed9ff573fc2b77',1,'isr.c']]],
+  ['init_121',['init',['../md_userland_init__r_e_a_d_m_e.html',1,'']]]
 ];

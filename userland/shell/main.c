@@ -1,65 +1,49 @@
 #include "shell.h"
-#include <errno.h>
-#include <fcntl.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
 #define READLINE_SIZE          256
-#define PROMPT                 "\033[0;36m(sh)\033[0m "
-#define NB_DOCUMENTED_COMMANDS 3
+#define PROMPT                 "\033[0;36m$\033[0m "
+#define NB_DOCUMENTED_COMMANDS 4
 
-void print_selftest_header(const char* name);
+void print_prompt();
 
-void print_selftest_header(const char* name)
+static const char* commands[][NB_DOCUMENTED_COMMANDS] = {
+  { "env", "print the environment variables" },
+  { "help", "print this help message" },
+  { "reboot", "reboot the system" },
+  { "selftest", "run the user mode test suite" },
+};
+
+static char readline[READLINE_SIZE] = { 0 };
+static unsigned int readline_index = 0;
+
+void print_prompt()
 {
-  printf("\n\033[1;33m[%s]\033[0m\n", name);
-}
-
-void selftest()
-{
-#ifdef __willos__
-  print_selftest_header("syscall");
-  printf("  syscalling\n");
-  test("usermode");
-#endif
-
-  print_selftest_header("filesystem");
-  int fd = open("/dev/debug", O_WRONLY);
-
-  if (fd < 0) {
-    printf("could not open /dev/debug (errno=%d)\n", errno);
-  } else {
-    const char* message = "  this message should be written to the console\n";
-    if (write(fd, message, strlen(message)) < 0) {
-      printf("failed to write to /dev/debug (errno=%d)\n", errno);
-    }
-
-    close(fd);
-  }
-
-  printf("\ndone.\n");
+  printf(PROMPT);
 }
 
 int main(int argc, char* argv[])
 {
-  const char* commands[][NB_DOCUMENTED_COMMANDS] = {
-    { "help", "display information about shell commands" },
-    { "reboot", "stopping and restarting the system" },
-    { "selftest", "run the system test suite" },
-  };
-
-  char readline[READLINE_SIZE] = { 0 };
-  unsigned int readline_index = 0;
+  putenv("USER=user");
+  putenv("SHELL=/bin/shell");
 
   printf("shell: pid=%d\n", getpid());
-  printf(PROMPT);
+  printf("\nWelcome!\n"
+         "This is willOS user shell. Type 'help' for more information.\n\n");
+
+  print_prompt();
 
   while (1) {
     char c = getchar();
 
     switch (c) {
+      case 0:
+        break;
+
       case '\b':
         if (readline_index == 0) {
           break;
@@ -68,7 +52,7 @@ int main(int argc, char* argv[])
         // destructive backspace
         printf("\b \b");
 
-        if (readline_index >= 1) {
+        if (readline_index > 0) {
           readline_index--;
         }
 
@@ -80,7 +64,7 @@ int main(int argc, char* argv[])
         printf("\n");
 
         if (*readline == 0) {
-          printf(PROMPT);
+          print_prompt();
           break;
         }
 
@@ -109,6 +93,8 @@ int main(int argc, char* argv[])
           _reboot();
         } else if (strcmp(command, "selftest") == 0) {
           selftest();
+        } else if (strcmp(command, "env") == 0) {
+          env();
         } else {
           printf("invalid command\n");
         }
@@ -116,7 +102,7 @@ int main(int argc, char* argv[])
         readline_index = 0;
         memset(readline, 0, READLINE_SIZE);
 
-        printf(PROMPT);
+        print_prompt();
 
         break;
 

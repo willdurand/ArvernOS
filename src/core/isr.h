@@ -45,7 +45,7 @@
 #define IRQ11 43
 #define IRQ12 44
 
-// These functions are declared in `src/asm/interrupts.asm`.
+// These functions are declared in `src/asm/isr.asm`.
 extern void exc0();
 extern void exc1();
 extern void exc2();
@@ -92,8 +92,6 @@ extern void irq9();
 extern void irq10();
 extern void irq11();
 extern void irq12();
-
-extern void int0x80();
 
 /// This structure represents the interrupt stack.
 typedef struct _stack

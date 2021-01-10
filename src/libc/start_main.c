@@ -1,10 +1,30 @@
 #include <stdio.h>
+#include <willos/log.h>
 
-int start_main(int (*main)(int, char**), int argc, char* argv[])
+char** environ = NULL;
+
+#ifndef __is_libk
+
+int start_main(int (*main)(int, char**, char**),
+               int argc,
+               char* argv[],
+               char* envp[])
 {
-  // printf("start_main: main=%p argc=%d argv=%p\n", main, argc, argv);
+#ifdef ENABLE_USERLAND_DEBUG
+  willos_log_init();
+  WILLOS_LOG("main=%p argc=%d argv=%p envp=%p", main, argc, argv, envp);
+#endif
 
-  return main(argc, argv);
+  environ = envp;
+
+  int retval = main(argc, argv, envp);
+
+#ifdef ENABLE_USERLAND_DEBUG
+  willos_log_deinit();
+#endif
 
   // TODO: call `exit()`
+  return retval;
 }
+
+#endif

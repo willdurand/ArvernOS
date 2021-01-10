@@ -60,15 +60,8 @@ uint64_t frame_get_used_count();
  */
 uint64_t frame_get_max_count();
 
-/**
- * Marks a frame as used.
- *
- * @param physical_address a physical address (frame)
- */
-void frame_mark_as_used(uint64_t physical_address);
-
 // The declarations below are for testing purposes.
-void _frame_init(reserved_areas_t* reserved, multiboot_tag_mmap_t* mmap);
-void _frame_init_bitmap(bitmap_t* addr);
+void _frame_init(reserved_areas_t* reserved_areas, multiboot_tag_mmap_t* _mmap);
+void _frame_set_bitmap(bitmap_t* bitmap);
 
 #endif

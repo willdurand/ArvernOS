@@ -1,4 +1,5 @@
 #include "process.h"
+#include "logging.h"
 #include <proc/usermode.h>
 #include <stdlib.h>
 #include <string.h>
@@ -20,6 +21,8 @@ process_t* process_get_current()
 
 process_t* process_exec(uint8_t* image, const char* name, char* const argv[])
 {
+  PROC_DEBUG("image=%p name=%s", image, name);
+
   elf_header_t* old_elf = NULL;
 
   if (current_process == NULL) {
@@ -36,12 +39,17 @@ process_t* process_exec(uint8_t* image, const char* name, char* const argv[])
       free(current_process->argv[i]);
     }
     free(current_process->argv);
+    // Free old env vars.
+    for (int i = 0; current_process->envp[i] != NULL; i++) {
+      free(current_process->envp[i]);
+    }
+    free(current_process->envp);
   }
 
   // Set current process name.
   current_process->name = strdup(name);
-  // Reset user stack.
-  memset(current_process->user_stack, 0, sizeof(current_process->user_stack));
+  // Set up user stack.
+  memset(current_process->user_stack, 0, USER_STACK_SIZE);
 
   // We need both `argc` and `argv` so we start by retrieving `argc`. Then, we
   // need to `strdup()` all the given arguments becaue `exec` replaces the
@@ -58,8 +66,12 @@ process_t* process_exec(uint8_t* image, const char* name, char* const argv[])
   _argv[argc] = NULL;
   current_process->argv = _argv;
 
-  void* stack = (void*)&current_process->user_stack[1023];
-  // TODO: add support for `envp`
+  // TODO: do not use a fixed size.
+  char** envp = (char**)calloc(1, sizeof(char*) * 10);
+  current_process->envp = envp;
+
+  void* stack = (void*)&current_process->user_stack[USER_STACK_SIZE - 1];
+  PUSH_TO_STACK(stack, uint64_t, (uint64_t)envp);
   PUSH_TO_STACK(stack, uint64_t, (uint64_t)_argv);
   PUSH_TO_STACK(stack, uint64_t, (uint64_t)argc);
   current_process->user_rsp = (uint64_t)stack;

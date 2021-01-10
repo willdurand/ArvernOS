@@ -9,6 +9,15 @@ uint64_t read_cr0()
   return value;
 }
 
+uint64_t read_rsp()
+{
+  uint64_t value = 0;
+
+  __asm__("mov %%rsp, %0" : "=r"(value) : /* no input */);
+
+  return value;
+}
+
 uint64_t read_cr2()
 {
   uint64_t value = 0;

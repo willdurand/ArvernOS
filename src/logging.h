@@ -8,11 +8,12 @@
 #define ANSICOLOR_FG_CYAN      "\x1b[36m"
 #define ANSICOLOR_FG_LIGHTGRAY "\x1b[90m"
 #define ANSICOLOR_FG_YELLOW    "\x1b[33m"
+#define ANSICOLOR_FG_RED       "\x1b[31m"
 
 #ifdef ENABLE_LOGS_FOR_TESTS
 
 #define LOG(level, level_color, format, ...)                                   \
-  printf("%s%s:%lu:%s(): " format "%s\n",                                      \
+  printf("%s%s:%llu:%s(): " format "%s\n",                                     \
          ANSICOLOR_FG_LIGHTGRAY,                                               \
          __FILE__,                                                             \
          (uint64_t)__LINE__,                                                   \
@@ -32,7 +33,7 @@ static const uint16_t serial_com1 = SERIAL_COM1;
 #define LOG(level, level_color, format, ...)                                   \
   fctprintf(&serial_stream_output,                                             \
             (void*)&serial_com1,                                               \
-            "%s%-8s%s | %s%s:%lu:%s():%s " format "\n",                        \
+            "%s%-8s%s | %s%s:%llu:%s():%s " format "\n",                       \
             level_color,                                                       \
             level,                                                             \
             ANSICOLOR_RESET,                                                   \
@@ -48,7 +49,7 @@ static const uint16_t serial_com1 = SERIAL_COM1;
 #define LOG(level, level_color, format, ...)                                   \
   fctprintf(&serial_stream_output,                                             \
             (void*)&serial_com1,                                               \
-            "%-8s | %s:%lu:%s(): " format "\n",                                \
+            "%-8s | %s:%llu:%s(): " format "\n",                               \
             level,                                                             \
             __FILE__,                                                          \
             (uint64_t)__LINE__,                                                \
@@ -64,7 +65,7 @@ static const uint16_t serial_com1 = SERIAL_COM1;
 #define DEBUG(format, ...) LOG("DEBUG", ANSICOLOR_FG_CYAN, format, __VA_ARGS__)
 
 #define HEX_DEBUG(data, len)                                                   \
-  DEBUG("%s", "(hexdump)");                                                    \
+  DEBUG("(hexdump) data=%p len=%llu", data, (uint64_t)len);                    \
   for (uint64_t i = 0; i < len; i++) {                                         \
     if (i > 0 && i % 8 == 0) {                                                 \
       fctprintf(&serial_stream_output, (void*)&serial_com1, "\n");             \
@@ -76,12 +77,18 @@ static const uint16_t serial_com1 = SERIAL_COM1;
 
 #else // ENABLE_KERNEL_DEBUG || ENABLE_LOGS_FOR_TESTS
 
-#define DEBUG(format, ...)
+#define DEBUG(format, ...)                                                     \
+  do {                                                                         \
+  } while (0)
 
-#define HEX_DEBUG(data, len)
+#define HEX_DEBUG(data, len)                                                   \
+  do {                                                                         \
+  } while (0)
 
 #endif // ENABLE_KERNEL_DEBUG || ENABLE_LOGS_FOR_TESTS
 
 #define INFO(format, ...) LOG("INFO", ANSICOLOR_FG_YELLOW, format, __VA_ARGS__)
+
+#define ERROR(format, ...) LOG("ERROR", ANSICOLOR_FG_RED, format, __VA_ARGS__)
 
 #endif
