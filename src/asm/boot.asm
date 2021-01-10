@@ -28,23 +28,16 @@ start:
   ; load the 64-bit GDT
   lgdt [gdt64.pointer]
 
+%ifdef ENABLE_SSE2
+  call enable_sse
+%endif
+
   jmp gdt64.kernel_code:long_mode_start
 
   ; Should not be reached.
   hlt
 
-; -----------------------------------------------------------------------------
-; make sure the kernel was really loaded by a Multiboot compliant bootloader
-%define MULTIBOOT2_MAGIC_VALUE 0x36d76289
-
-check_multiboot:
-  cmp eax, MULTIBOOT2_MAGIC_VALUE
-  jne .no_multiboot
-  ret
-.no_multiboot:
-  mov al, "0"
-  jmp error
-
+%ifdef ENABLE_SSE2
 ; -----------------------------------------------------------------------------
 ; Enable SSE
 enable_sse:
@@ -63,6 +56,19 @@ enable_sse:
 
 .no_sse:
   ret
+%endif
+
+; -----------------------------------------------------------------------------
+; make sure the kernel was really loaded by a Multiboot compliant bootloader
+%define MULTIBOOT2_MAGIC_VALUE 0x36d76289
+
+check_multiboot:
+  cmp eax, MULTIBOOT2_MAGIC_VALUE
+  jne .no_multiboot
+  ret
+.no_multiboot:
+  mov al, "0"
+  jmp error
 
 ; -----------------------------------------------------------------------------
 ; CPUID check
