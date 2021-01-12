@@ -25,8 +25,12 @@ void cat(int argc, char* argv[])
     }
 
     char buf[512];
-    vfs_read(f, buf, sizeof(buf), 0);
-    printf("%s", buf);
+    for (int offset = 0, bytes_read = 0;
+         (bytes_read = vfs_read(f, buf, sizeof(buf), offset)) > 0;
+         offset += bytes_read) {
+      console_write(buf, bytes_read);
+    }
+
     vfs_free(f);
   }
 }
