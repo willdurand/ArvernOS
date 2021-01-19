@@ -42,6 +42,7 @@ void kshell_run(uint8_t scancode);
 void exec(int argc, char* argv[]);
 void host(int argc, char* argv[]);
 void ls(int argc, char* argv[]);
+void cat(int argc, char* argv[]);
 void net();
 void ntp(int argc, char* argv[]);
 void overflow();

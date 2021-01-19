@@ -22,6 +22,7 @@ static const char* commands[][NB_DOCUMENTED_COMMANDS] = {
   { "help", "print this help message" },
   { "host", "perform a DNS lookup" },
   { "ls", "list files" },
+  { "cat", "print on the standard output" },
   { "net", "show configured network interfaces" },
   { "ntp", "get the time from a time server" },
   { "overflow", "test the stack buffer overflow protection" },
@@ -115,6 +116,8 @@ void run_command()
     help(argc, argv);
   } else if (strcmp(argv[0], "ls") == 0) {
     ls(argc, argv);
+  } else if (strcmp(argv[0], "cat") == 0) {
+    cat(argc, argv);
   } else if (strcmp(argv[0], "selftest") == 0) {
     selftest();
   } else if (strcmp(argv[0], "overflow") == 0) {
