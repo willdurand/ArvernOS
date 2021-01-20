@@ -15,6 +15,7 @@ header_start:
   dd 0x100000000 - (MULTIBOOT2_MAGIC_NUMBER + 0 + (header_end - header_start))
 
 %ifdef ENABLE_FRAMEBUFFER
+align 8
 ; framebuffer
 framebuffer_start:
   dw 5
@@ -26,9 +27,10 @@ framebuffer_start:
 framebuffer_end:
 %endif
 
+align 8
   ; required end tag
   ; `dw` means 'define word' (word = 16 bits on x86_64)
   dw 0  ; type
   dw 0  ; flags
-  dd 0  ; size
+  dd 8  ; size
 header_end:

@@ -22,8 +22,6 @@ void console_init(multiboot_tag_framebuffer_common_t* common)
 {
   fb_common = common;
 
-  INFO("%s", "ABC");
-
   if (console_mode_is_vbe()) {
     vbe_console_init(common);
     vtc->on_paint = vbe_on_paint_callback;

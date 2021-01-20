@@ -61,8 +61,8 @@ QEMU_OPTIONS = -m 500M \
  CFLAGS := -DKERNEL_NAME=\"$(OS_NAME)\" \
 	 -DGIT_HASH=\"$(GIT_HASH)\" \
 	 -DLOGS_WITH_COLORS \
-	 -Wall -pedantic -std=c11 -O2 -ffreestanding -nostdlib \
-	 -fno-builtin -fstack-protector-all -mno-red-zone -mno-sse2 -fno-omit-frame-pointer \
+	 -Wall -pedantic -std=c11 -O3 -ffreestanding -nostdlib \
+	 -fno-builtin -fstack-protector-all -mno-red-zone -fno-omit-frame-pointer \
 	 -I src/ -I include/ $(addprefix -I$(EXTERNAL_DIR)/,$(EXTERNAL_DEPS)) \
 	 -I $(EXTERNAL_DIR)/scalable-font2
 
@@ -114,8 +114,10 @@ ifeq ($(ENABLE_FRAMEBUFFER_STATS), 1)
 endif
 
 ifeq ($(ENABLE_SSE2), 1)
-	CFLAGS += -msse2
+	#CFLAGS += -msse2
 	NASM_OPTIONS += -dENABLE_SSE2
+else
+	CFLAGS += -mno-sse2
 endif
 
 GRUB_KERNEL_CMDLINE ?= /bin/init -s
