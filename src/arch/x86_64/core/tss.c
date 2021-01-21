@@ -1,7 +1,7 @@
 #include "tss.h"
 #include <core/gdt.h>
 
-// Defined in `src/asm/boot.asm`.
+// Defined in `src/arch/x86_64/boot.asm`.
 extern tss_t tss;
 extern gdt_table_t gdt64;
 
