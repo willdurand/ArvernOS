@@ -57,7 +57,6 @@ initrd                         build the init ram disk
 iso                            build the image of the OS (.iso)
 kernel                         compile the kernel
 libc                           build the libc (userland)
-libk                           build the libk (kernel)
 run-debug                      run the OS in debug mode
 run-test                       run the OS in test mode
 run                            run the OS in release mode
@@ -95,6 +94,8 @@ See the [circle-ci
 config](https://github.com/willdurand/willOS/blob/master/.circleci/config.yml).
 
 ## Building willOS
+
+The different final files are located in the `build/<arch>/dist/` folder.
 
 ### Debug
 

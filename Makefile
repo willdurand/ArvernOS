@@ -134,7 +134,7 @@ endef
 
 export GRUB_CFG_BODY
 
-default: iso
+default: help
 
 $(BUILD_DIR):
 	mkdir -p $@
@@ -276,9 +276,9 @@ test: libc
 	mkdir -p $(ARCH_BUILD_DIR)/libc/string
 	for file in $(LIBC_TEST_FILES); do \
 		echo ; \
-		gcc -shared $(LIBC_OBJS_DIR)/src/$$file.o -o build/$$file.so ; \
-		gcc -I./test/ test/$$file.c -o build/$$file ; \
-		LD_PRELOAD=./build/$$file.so ./build/$$file || exit 1 ; \
+		gcc -shared $(LIBC_OBJS_DIR)/src/$$file.o -o $(ARCH_BUILD_DIR)/$$file.so ; \
+		gcc -I./test/ test/$$file.c -o $(ARCH_BUILD_DIR)/$$file ; \
+		LD_PRELOAD=./$(ARCH_BUILD_DIR)/$$file.so ./$(ARCH_BUILD_DIR)/$$file || exit 1 ; \
 	done
 	# fs/vfs
 	gcc $(CFLAGS_FOR_TESTS) -I./test/proxies/ -o $(ARCH_BUILD_DIR)/vfs test/fs/vfs.c src/fs/vfs.c
