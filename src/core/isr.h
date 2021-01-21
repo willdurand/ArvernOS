@@ -129,6 +129,11 @@ typedef void (*isr_handler_t)(isr_stack_t* stack);
 void isr_init();
 
 /**
+ * Enables hardware interrupts.
+ */
+void isr_enable_interrupts();
+
+/**
  * Disables hardware interrupts.
  */
 void isr_disable_interrupts();
