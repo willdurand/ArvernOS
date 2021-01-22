@@ -40,7 +40,7 @@ void print_debug_tss();
 
 void print_debug_tss()
 {
-  // From `src/asm/boot.asm`.
+  // From `src/arch/x86_64/boot.asm`.
   extern tss_t tss;
 
   DEBUG(
@@ -49,7 +49,7 @@ void print_debug_tss()
 
 void print_debug_gdt()
 {
-  // From `src/asm/boot.asm`.
+  // From `src/arch/x86_64/boot.asm`.
   extern gdt_table_t gdt64;
 
   DEBUG("gdt64.kernel_code: type=0x%02x limit19_16_and_flags=0x%02x",

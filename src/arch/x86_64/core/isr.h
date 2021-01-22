@@ -45,7 +45,7 @@
 #define IRQ11 43
 #define IRQ12 44
 
-// These functions are declared in `src/asm/isr.asm`.
+// These functions are declared in `src/arch/x86_64/isr.asm`.
 extern void exc0();
 extern void exc1();
 extern void exc2();

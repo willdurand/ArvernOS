@@ -9,7 +9,7 @@
 #include <sys/time.h>
 #include <sys/types.h>
 
-// This is defined in `src/asm/k_syscall.asm`.
+// This is defined in `src/arch/x86_64/k_syscall.asm`.
 extern void syscall_handler();
 
 /**

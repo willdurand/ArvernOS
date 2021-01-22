@@ -1,3 +1,5 @@
+ARCH ?= x86_64
+
 NASM = nasm
 QEMU = qemu-system-x86_64
 
@@ -12,15 +14,15 @@ else
 endif
 
 OS_NAME        = willOS
-ARCH           = x86_64
 BUILD_DIR      = build
-LINKER         = linker.ld
 ARCH_BUILD_DIR := $(BUILD_DIR)/$(ARCH)
 DIST_DIR       := $(ARCH_BUILD_DIR)/dist
 ISO_DIR        := $(ARCH_BUILD_DIR)/isofiles
 ISO_BOOT_DIR   := $(ISO_DIR)/boot
 GRUB_DIR       := $(ISO_BOOT_DIR)/grub
 GRUB_CFG       := $(GRUB_DIR)/grub.cfg
+ARCH_SRC       := src/arch/$(ARCH)
+LINKER         := $(ARCH_SRC)/linker.ld
 KERNEL_BIN     := kernel-$(ARCH).bin
 KERNEL         := $(ISO_BOOT_DIR)/$(KERNEL_BIN)
 ISO            := $(DIST_DIR)/$(OS_NAME)-$(ARCH).iso
@@ -46,8 +48,8 @@ VBE_BPP    = 32
 EXTERNAL_DEPS = liballoc printf vtconsole
 
 EXTERNAL_DIRS    := $(addprefix $(EXTERNAL_DIR)/,$(EXTERNAL_DEPS))
-LIBK_OBJECTS     := $(patsubst %.c, $(LIBK_OBJS_DIR)/%.o, $(shell find src $(EXTERNAL_DIRS) -name '*.c'))
-LIBK_ASM_OBJECTS := $(patsubst %.asm, $(LIBK_OBJS_DIR)/%.o, $(shell find src/asm -name '*.asm'))
+LIBK_OBJECTS     := $(patsubst %.c, $(LIBK_OBJS_DIR)/%.o, $(shell find $(ARCH_SRC) src/libc $(EXTERNAL_DIRS) -name '*.c'))
+LIBK_ASM_OBJECTS := $(patsubst %.asm, $(LIBK_OBJS_DIR)/%.o, $(shell find $(ARCH_SRC)/asm -name '*.asm'))
 LIBC_OBJECTS     := $(patsubst %.c, $(LIBC_OBJS_DIR)/%.o, $(shell find src/libc $(EXTERNAL_DIRS) -name '*.c'))
 LIBC_ASM_OBJECTS := $(patsubst %.asm, $(LIBC_OBJS_DIR)/%.o, $(shell find src/libc/asm -name '*.asm'))
 LIBC_TEST_FILES  := $(patsubst test/%.c, %, $(shell find test/libc -name '*.c'))
@@ -65,7 +67,7 @@ QEMU_OPTIONS = -m 500M \
 	 -DLOGS_WITH_COLORS \
 	 -Wall -pedantic -std=c11 -O2 -ffreestanding -nostdlib \
 	 -fno-builtin -fstack-protector -mno-red-zone -mno-sse2 -fno-omit-frame-pointer \
-	 -I src/ -I include/ $(addprefix -I$(EXTERNAL_DIR)/,$(EXTERNAL_DEPS)) \
+	 -I src/ -I src/arch/$(ARCH)/ -I include/ $(addprefix -I$(EXTERNAL_DIR)/,$(EXTERNAL_DEPS)) \
 	 -I $(EXTERNAL_DIR)/scalable-font2/
 
 DEBUG_CFLAGS = -g -DENABLE_KERNEL_DEBUG
@@ -269,7 +271,7 @@ test: CC=gcc
 test: LD=ld
 test: AR=ar
 test: CFLAGS += -fPIC
-test: CFLAGS_FOR_TESTS = -g -DENABLE_LOGS_FOR_TESTS -DTEST_ENV -I./test/ -I./src/
+test: CFLAGS_FOR_TESTS = -g -DENABLE_LOGS_FOR_TESTS -DTEST_ENV -I./test/ -I./src/ -I./src/arch/$(ARCH)/
 test: VALGRIND_OPTS = --track-origins=yes --leak-check=yes
 test: libc
 	# libc
@@ -281,28 +283,28 @@ test: libc
 		LD_PRELOAD=./$(ARCH_BUILD_DIR)/$$file.so ./$(ARCH_BUILD_DIR)/$$file || exit 1 ; \
 	done
 	# fs/vfs
-	gcc $(CFLAGS_FOR_TESTS) -I./test/proxies/ -o $(ARCH_BUILD_DIR)/vfs test/fs/vfs.c src/fs/vfs.c
+	gcc $(CFLAGS_FOR_TESTS) -I./test/proxies/ -o $(ARCH_BUILD_DIR)/vfs test/fs/vfs.c src/arch/$(ARCH)/fs/vfs.c
 	valgrind --track-origins=yes --leak-check=yes ./$(ARCH_BUILD_DIR)/vfs
 	# fs/tar
-	gcc $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/tar test/fs/tar.c src/fs/tar.c src/fs/vfs.c
+	gcc $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/tar test/fs/tar.c src/arch/$(ARCH)/fs/tar.c src/arch/$(ARCH)/fs/vfs.c
 	valgrind $(VALGRIND_OPTS) ./$(ARCH_BUILD_DIR)/tar
 	# fs/proc
-	gcc $(CFLAGS_FOR_TESTS) -I./test/proxies/ -o $(ARCH_BUILD_DIR)/proc test/fs/proc.c src/fs/proc.c src/fs/vfs.c
+	gcc $(CFLAGS_FOR_TESTS) -I./test/proxies/ -o $(ARCH_BUILD_DIR)/proc test/fs/proc.c src/arch/$(ARCH)/fs/proc.c src/arch/$(ARCH)/fs/vfs.c
 	valgrind $(VALGRIND_OPTS) ./$(ARCH_BUILD_DIR)/proc
 	# fs/sock
-	gcc $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/sock test/fs/sock.c src/fs/sock.c src/fs/vfs.c
+	gcc $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/sock test/fs/sock.c src/arch/$(ARCH)/fs/sock.c src/arch/$(ARCH)/fs/vfs.c
 	valgrind $(VALGRIND_OPTS) ./$(ARCH_BUILD_DIR)/sock
 	# mmu/frame
-	gcc $(CFLAGS_FOR_TESTS) -Wformat=0 -I./test/proxies/ -o $(ARCH_BUILD_DIR)/frame test/mmu/frame.c src/mmu/frame.c src/core/multiboot.c src/mmu/bitmap.c
+	gcc $(CFLAGS_FOR_TESTS) -Wformat=0 -I./test/proxies/ -o $(ARCH_BUILD_DIR)/frame test/mmu/frame.c src/arch/$(ARCH)/mmu/frame.c src/arch/$(ARCH)/core/multiboot.c src/arch/$(ARCH)/mmu/bitmap.c
 	valgrind $(VALGRIND_OPTS) ./$(ARCH_BUILD_DIR)/frame
 	# mmu/bitmap
-	gcc $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/bitmap test/mmu/bitmap.c src/mmu/bitmap.c
+	gcc $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/bitmap test/mmu/bitmap.c src/arch/$(ARCH)/mmu/bitmap.c
 	./$(ARCH_BUILD_DIR)/bitmap
 	# mmu/paging
-	gcc $(CFLAGS_FOR_TESTS) -Wformat=0 -I./test/proxies/ -o $(ARCH_BUILD_DIR)/paging test/mmu/paging.c src/mmu/paging.c src/core/multiboot.c src/mmu/frame.c src/mmu/bitmap.c src/core/register.c
+	gcc $(CFLAGS_FOR_TESTS) -Wformat=0 -I./test/proxies/ -o $(ARCH_BUILD_DIR)/paging test/mmu/paging.c src/arch/$(ARCH)/mmu/paging.c src/arch/$(ARCH)/core/multiboot.c src/arch/$(ARCH)/mmu/frame.c src/arch/$(ARCH)/mmu/bitmap.c src/arch/$(ARCH)/core/register.c
 	./$(ARCH_BUILD_DIR)/paging
 	# config/inish
-	gcc $(CFLAGS_FOR_TESTS) -I./test/proxies/ -o $(ARCH_BUILD_DIR)/inish test/config/inish.c src/config/inish.c
+	gcc $(CFLAGS_FOR_TESTS) -I./test/proxies/ -o $(ARCH_BUILD_DIR)/inish test/config/inish.c src/arch/$(ARCH)/config/inish.c
 	valgrind $(VALGRIND_OPTS) ./$(ARCH_BUILD_DIR)/inish
 .PHONY: test
 
@@ -320,5 +322,5 @@ docs: ## build the docs
 .PHONY: docs
 
 help:
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' Makefile* | awk '{line = gensub(/^Makefile(-(.+)\.include)?:/, "ARCH=\\2 ", "g", $$0); gsub(/^ARCH= /, "", line); print line}' | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 .PHONY: help

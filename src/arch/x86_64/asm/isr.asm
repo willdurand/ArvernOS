@@ -99,7 +99,7 @@ irq_common_stub:
   iretq
 
 ; define exceptions
-; should be keep in sync with src/core/isr.h
+; should be keep in sync with src/arch/x86_64/core/isr.h
 def_exception_handler 0
 def_exception_handler 1
 def_exception_handler 2
@@ -134,7 +134,7 @@ def_exception_handler 30
 def_exception_handler 31
 
 ; define hardware interrupts
-; should be keep in sync with src/core/isr.h
+; should be keep in sync with src/arch/x86_64/core/isr.h
 def_irq_handler 0
 def_irq_handler 1
 def_irq_handler 2

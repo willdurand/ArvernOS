@@ -3,7 +3,7 @@
 
 #include <sys/types.h>
 
-// See: `src/asm/boot.asm`.
+// See: `src/arch/x86_64/boot.asm`.
 #define KERNEL_BASE_SELECTOR 0x08
 #define USER_BASE_SELECTOR   0x18
 #define TSS_SEGMENT          0x30
