@@ -3,7 +3,7 @@ initrd/bin/
 initrd/info
 userland/bin/
 userland/local-build/
-logs/
+log/
 *.a
 *.bin
 *.o

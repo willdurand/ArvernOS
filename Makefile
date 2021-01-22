@@ -57,7 +57,7 @@ NASM_OPTIONS := -dVBE_WIDTH=$(VBE_WIDTH) -dVBE_HEIGHT=$(VBE_HEIGHT) -dVBE_BPP=$(
 QEMU_OPTIONS = -m 500M \
 	       -netdev user,id=u1,ipv6=off,dhcpstart=10.0.2.20 \
 	       -device rtl8139,netdev=u1 \
-	       -object filter-dump,id=f1,netdev=u1,file=./logs/traffic.pcap
+	       -object filter-dump,id=f1,netdev=u1,file=./log/traffic.pcap
 
  # We need to have -fno-omit-frame-pointer or the kernel stack backtrace won't get the stack
  CFLAGS := -DKERNEL_NAME=\"$(OS_NAME)\" \
@@ -220,7 +220,7 @@ iso: $(ISO)
 .PHONY: iso
 
 run: ## run the OS in release mode
-run: QEMU_OPTIONS += -serial file:./logs/release.log
+run: QEMU_OPTIONS += -serial file:./log/release.log
 run: $(ISO)
 	$(QEMU) -cdrom $< $(QEMU_OPTIONS)
 .PHONY: run
@@ -233,13 +233,13 @@ debug: $(ISO)
 .PHONY: debug
 
 run-debug: ## run the OS in debug mode
-run-debug: QEMU_OPTIONS += -serial file:./logs/debug.log -d int --no-reboot
+run-debug: QEMU_OPTIONS += -serial file:./log/debug.log -d int --no-reboot
 run-debug: debug
 	$(QEMU) -cdrom $(ISO) $(QEMU_OPTIONS)
 .PHONY: run-debug
 
 run-test: ## run the OS in test mode
-run-test: QEMU_OPTIONS += -curses -serial file:./logs/test.log
+run-test: QEMU_OPTIONS += -curses -serial file:./log/test.log
 run-test: GRUB_KERNEL_CMDLINE = /bin/boot-and-exit
 run-test: run
 .PHONY: run-test
@@ -253,7 +253,7 @@ fmt: ## automatically format the code with clang-format
 .PHONY: fmt
 
 gdb: ## build, run the OS in debug mode and enable GDB
-gdb: QEMU_OPTIONS += -nographic -s -S -serial file:./logs/debug.log
+gdb: QEMU_OPTIONS += -nographic -s -S -serial file:./log/debug.log
 gdb: debug run
 .PHONY: gdb
 
