@@ -114,7 +114,7 @@ $ make clean run-debug
 
 **Note:** in DEBUG mode, logging uses the serial port `COM1` to write various
 debugging information. `qemu` is configured to write the output of this serial
-port to `./logs/debug.log`. `DEBUG` level logs are not necessarily written by
+port to `./log/debug.log`. `DEBUG` level logs are not necessarily written by
 default, though, and it is possible to enable `DEBUG` logs for specific modules
 like this:
 
