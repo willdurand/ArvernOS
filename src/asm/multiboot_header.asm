@@ -1,5 +1,6 @@
 ; This is a Multiboot-compliant header file in assembly code.
 section .multiboot_header
+align 8
 
 %define MULTIBOOT2_MAGIC_NUMBER  0xe85250d6
 %define PROTECTED_MODE_CODE      0 ; architecture 0 (protected mode i386)
@@ -30,5 +31,5 @@ framebuffer_end:
   ; `dw` means 'define word' (word = 16 bits on x86_64)
   dw 0  ; type
   dw 0  ; flags
-  dd 0  ; size
+  dd 8  ; size
 header_end:
