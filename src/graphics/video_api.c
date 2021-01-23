@@ -1,11 +1,11 @@
 #include <core/logging.h>
+#include <core/multiboot.h>
 #include <ssfn.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <core/multiboot.h>
 
 #include "video_api.h"
 
@@ -14,7 +14,7 @@ static uint32_t video_frames = 0;
 static uint64_t video_frame_timer = 0;
 static bool video_debug_stats_enabled = false;
 
-extern multiboot_tag_framebuffer_common_t *multiboot_framebuffer_common;
+extern multiboot_tag_framebuffer_common_t* multiboot_framebuffer_common;
 
 void video_clear(uint32_t color)
 {
@@ -172,9 +172,10 @@ void video_console_attach()
 
 void video_console_detach()
 {
-  ssfn_dst.ptr =
-    (uint8_t*)multiboot_framebuffer_common->framebuffer_addr;  /* address of the linear frame buffer */
+  ssfn_dst.ptr = (uint8_t*)multiboot_framebuffer_common
+                   ->framebuffer_addr; /* address of the linear frame buffer */
   ssfn_dst.w = multiboot_framebuffer_common->framebuffer_width;  /* width */
   ssfn_dst.h = multiboot_framebuffer_common->framebuffer_height; /* height */
-  ssfn_dst.p = multiboot_framebuffer_common->framebuffer_pitch; /* bytes per line */
+  ssfn_dst.p =
+    multiboot_framebuffer_common->framebuffer_pitch; /* bytes per line */
 }

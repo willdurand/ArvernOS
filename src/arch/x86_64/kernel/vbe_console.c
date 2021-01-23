@@ -27,7 +27,7 @@ static uint32_t brightcolors[] = {
   [VTCOLOR_CYAN] = 0xFFE0FFFF,  [VTCOLOR_GREY] = 0xFFFFFF,
 };
 
-multiboot_tag_framebuffer_common_t *multiboot_framebuffer_common = NULL;
+multiboot_tag_framebuffer_common_t* multiboot_framebuffer_common = NULL;
 
 void vbe_console_init(multiboot_tag_framebuffer_common_t* common)
 {
