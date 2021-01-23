@@ -73,59 +73,90 @@ void video_clear_region(uint32_t color,
   }
 }
 
+frame_buffer_area_t video_area_at(int32_t x,
+                                  int32_t y,
+                                  int32_t width,
+                                  int32_t height)
+{
+  frame_buffer_area_t outArea = {
+    .x = x,
+    .y = y,
+    .width = video_driver.width,
+    .height = video_driver.height,
+    .target_x = 0,
+    .target_y = 0,
+    .target_width = width,
+    .target_height = height,
+    .buffer = NULL,
+  };
+
+  if (x >= video_driver.width || y >= video_driver.height || width <= 0 ||
+      height <= 0) {
+        DEBUG("invalid base bounds: x: %s, y: %s, w: %s, h: %s", x >= video_driver.width ? "Y" : "N", y >= video_driver.height ? "Y" : "N", width <= 0 ? "Y" : "N", height <= 0 ? "Y" : "N");
+    return outArea;
+  }
+
+  if (x < 0) {
+    outArea.x = 0;
+    outArea.target_x = -x;
+    outArea.target_width = width + x;
+  }
+
+  if (y < 0) {
+    outArea.y = 0;
+    outArea.target_y = -y;
+    outArea.target_height = height + y;
+  }
+
+  if (x + width > (int32_t)video_driver.width) {
+    outArea.target_width = (int32_t)video_driver.width - outArea.x;
+  }
+
+  if (y + height > video_driver.height) {
+    outArea.target_height = video_driver.height - outArea.y;
+  }
+
+  if (outArea.target_x < 0 || outArea.target_y < 0 ||
+      outArea.target_width <= 0 || outArea.target_height <= 0) {
+        DEBUG("%s", "invalid target bounds");
+    return outArea;
+  }
+
+  outArea.buffer = video_driver.buffer;
+
+  return outArea;
+}
+
 void video_blit(uint32_t* src_buffer,
-                int32_t src_x,
-                int32_t src_y,
+                int32_t x,
+                int32_t y,
                 int32_t src_width,
                 int32_t src_height,
                 int32_t src_buffer_width,
-                int32_t src_buffer_height,
-                int32_t dst_x,
-                int32_t dst_y)
+                int32_t src_buffer_height)
 {
-  if (src_width < 0 || src_height < 0 || src_buffer_width < 0 ||
-      src_buffer_height < 0 || src_x + src_width > src_buffer_width ||
-      src_y + src_height > src_buffer_height) {
+  frame_buffer_area_t area = video_area_at(x, y, src_width, src_height);
+
+  if (area.buffer == NULL) {
+    DEBUG("%s", "Invalid area buffer");
     return;
   }
 
-  uint32_t* buffer = video_driver.buffer;
-
-  if (buffer == NULL) {
-    return;
-  }
+  uint32_t* buffer = area.buffer;
 
   for (int32_t y_pos = 0,
-               y_index = dst_y * video_driver.width,
-               src_y_index = src_y * src_buffer_width;
-       y_pos < src_height;
-       y_pos++,
-               y_index += video_driver.width,
-               src_y_index += src_buffer_width) {
-
-    if (dst_y < 0 && dst_y + y_pos < 0) {
-      continue;
-    }
-
-    if (dst_y + y_pos >= video_driver.height) {
-      break;
-    }
+               y_index = area.y * area.width,
+               src_y_index = area.target_y * src_buffer_width;
+       y_pos < area.target_height;
+       y_pos++, y_index += area.width, src_y_index += src_buffer_width) {
 
     for (int32_t x_pos = 0,
-                 x_index = dst_x + y_index,
-                 src_x_index = src_y_index + src_x;
-         x_pos < src_width;
-         x_pos++, x_index++) {
+                 x_index = y_index + area.x,
+                 src_x_index = area.target_x + src_y_index;
+         x_pos < area.target_width;
+         x_pos++, x_index++, src_x_index++) {
 
-      if (dst_x < 0 && dst_x + x_pos < 0) {
-        continue;
-      }
-
-      if (dst_x + x_pos >= video_driver.width) {
-        break;
-      }
-
-      buffer[x_index] = src_buffer[src_x_index + x_pos];
+      buffer[x_index] = src_buffer[src_x_index];
     }
   }
 }

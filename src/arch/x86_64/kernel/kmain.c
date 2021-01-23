@@ -31,6 +31,7 @@
 
 #ifdef ENABLE_FRAMEBUFFER
 #include <drivers/vbe_video.h>
+#include <graphics/image.h>
 #endif
 
 void print_welcome_message();
@@ -319,11 +320,27 @@ void kmain(uint64_t addr)
   multiboot_tag_string_t* cmdline = (multiboot_tag_string_t*)find_multiboot_tag(
     mbi, MULTIBOOT_TAG_TYPE_CMDLINE);
 
+#if ENABLE_FRAMEBUFFER
+  image_t* willImage = load_image("/willdurand.jpg");
+#endif
+
   if (cmdline && strcmp(cmdline->string, "kshell") == 0) {
     printf("kernel: loading kshell...\n");
     INFO("%s", "loading kshell");
 
     kshell_init();
+
+#if ENABLE_FRAMEBUFFER
+    if (willImage != NULL) {
+      video_blit(willImage->buffer,
+                 -100,
+                 -100,
+                 willImage->width,
+                 willImage->height,
+                 willImage->width,
+                 willImage->height);
+    }
+#endif
 
     while (1) {
 
