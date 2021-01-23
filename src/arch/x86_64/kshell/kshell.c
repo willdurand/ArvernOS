@@ -15,7 +15,7 @@ static bool caps_lock_mode = false;
 static bool ctrl_mode = false;
 static bool shift_mode = false;
 
-#define NB_DOCUMENTED_COMMANDS 10
+#define NB_DOCUMENTED_COMMANDS 11
 
 static const char* commands[][NB_DOCUMENTED_COMMANDS] = {
   { "exec", "execute a program in user mode" },

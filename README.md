@@ -40,12 +40,17 @@ $ git submodule update --init
 ### Docker (recommended way)
 
 Use [Docker](https://docs.docker.com/) with the provided
-[`Dockerfile`](https://github.com/willdurand/willOS/blob/master/Dockerfile):
+[`Dockerfile`](https://github.com/willdurand/willOS/blob/master/Dockerfile).
+Start by building the toolchain image:
 
 ```
 $ docker build -t willos/toolchain .
 [...]
+```
 
+You can then use it with `docker run`:
+
+```
 $ docker run -it --rm -v $(pwd):/app willos/toolchain make help
 clean                          remove build artifacts
 console-font                   compile the (default) kernel console font
@@ -57,7 +62,6 @@ initrd                         build the init ram disk
 iso                            build the image of the OS (.iso)
 kernel                         compile the kernel
 libc                           build the libc (userland)
-libk                           build the libk (kernel)
 run-debug                      run the OS in debug mode
 run-test                       run the OS in test mode
 run                            run the OS in release mode
@@ -96,6 +100,8 @@ config](https://github.com/willdurand/willOS/blob/master/.circleci/config.yml).
 
 ## Building willOS
 
+The different final files are located in the `build/<arch>/dist/` folder.
+
 ### Debug
 
 To build the ISO in debug mode, run:
@@ -113,7 +119,7 @@ $ make clean run-debug
 
 **Note:** in DEBUG mode, logging uses the serial port `COM1` to write various
 debugging information. `qemu` is configured to write the output of this serial
-port to `./logs/debug.log`. `DEBUG` level logs are not necessarily written by
+port to `./log/debug.log`. `DEBUG` level logs are not necessarily written by
 default, though, and it is possible to enable `DEBUG` logs for specific modules
 like this:
 
