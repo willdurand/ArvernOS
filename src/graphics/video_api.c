@@ -16,6 +16,8 @@ static bool video_debug_stats_enabled = false;
 
 extern multiboot_tag_framebuffer_common_t* multiboot_framebuffer_common;
 
+uint32_t video_blend_alpha_callback(uint32_t src, uint32_t dst);
+
 void video_clear(uint32_t color)
 {
   uint32_t* buffer = video_driver.buffer;
@@ -92,11 +94,6 @@ frame_buffer_area_t video_area_at(int32_t x,
 
   if (x >= video_driver.width || y >= video_driver.height || width <= 0 ||
       height <= 0) {
-    DEBUG("invalid base bounds: x: %s, y: %s, w: %s, h: %s",
-          x >= video_driver.width ? "Y" : "N",
-          y >= video_driver.height ? "Y" : "N",
-          width <= 0 ? "Y" : "N",
-          height <= 0 ? "Y" : "N");
     return outArea;
   }
 
@@ -122,7 +119,6 @@ frame_buffer_area_t video_area_at(int32_t x,
 
   if (outArea.target_x < 0 || outArea.target_y < 0 ||
       outArea.target_width <= 0 || outArea.target_height <= 0) {
-    DEBUG("%s", "invalid target bounds");
     return outArea;
   }
 
@@ -142,7 +138,6 @@ void video_blit(uint32_t* src_buffer,
   frame_buffer_area_t area = video_area_at(x, y, src_width, src_height);
 
   if (area.buffer == NULL) {
-    DEBUG("%s", "Invalid area buffer");
     return;
   }
 
@@ -161,6 +156,63 @@ void video_blit(uint32_t* src_buffer,
          x_pos++, x_index++, src_x_index++) {
 
       buffer[x_index] = src_buffer[src_x_index];
+    }
+  }
+}
+
+void video_blit_blend(uint32_t* src_buffer,
+                      int32_t x,
+                      int32_t y,
+                      int32_t src_width,
+                      int32_t src_height,
+                      int32_t src_buffer_width,
+                      int32_t src_buffer_height,
+                      video_blend_type_t blend_type)
+{
+  uint32_t (*blend_function)(uint32_t, uint32_t) = NULL;
+
+  switch (blend_type) {
+    case video_blend_alpha:
+
+      blend_function = video_blend_alpha_callback;
+
+      break;
+
+    default:
+
+      video_blit(src_buffer,
+                 x,
+                 y,
+                 src_width,
+                 src_height,
+                 src_buffer_width,
+                 src_buffer_height);
+
+      return;
+  }
+
+  frame_buffer_area_t area = video_area_at(x, y, src_width, src_height);
+
+  if (area.buffer == NULL) {
+    return;
+  }
+
+  uint32_t* buffer = area.buffer;
+
+  for (int32_t y_pos = 0,
+               y_index = area.y * area.width,
+               src_y_index = area.target_y * src_buffer_width;
+       y_pos < area.target_height;
+       y_pos++, y_index += area.width, src_y_index += src_buffer_width) {
+
+    for (int32_t x_pos = 0,
+                 x_index = y_index + area.x,
+                 src_x_index = area.target_x + src_y_index;
+         x_pos < area.target_width;
+         x_pos++, x_index++, src_x_index++) {
+
+      buffer[x_index] =
+        blend_function(src_buffer[src_x_index], buffer[x_index]);
     }
   }
 }
@@ -213,4 +265,22 @@ void video_console_detach()
   ssfn_dst.h = multiboot_framebuffer_common->framebuffer_height; /* height */
   ssfn_dst.p =
     multiboot_framebuffer_common->framebuffer_pitch; /* bytes per line */
+}
+
+uint32_t video_blend_alpha_callback(uint32_t src, uint32_t dst)
+{
+  uint32_t alpha = src >> 24;
+
+  if (alpha == 0) {
+    return dst;
+  }
+
+  uint32_t red_blue =
+    (((src & 0x00FF00FF) * alpha) + ((dst & 0x00FF00FF) * (0xFF - alpha))) &
+    0xFF00FF00;
+  uint32_t green =
+    (((src & 0x0000FF00) * alpha) + ((dst & 0x0000FF00) * (0xFF - alpha))) &
+    0x00FF0000;
+
+  return (src & 0xFF000000) | ((red_blue | green) >> 8);
 }

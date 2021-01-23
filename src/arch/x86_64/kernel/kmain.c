@@ -332,13 +332,14 @@ void kmain(uint64_t addr)
 
 #if ENABLE_FRAMEBUFFER_DEMO
     if (willImage != NULL) {
-      video_blit(willImage->buffer,
-                 -100,
-                 -100,
-                 willImage->width,
-                 willImage->height,
-                 willImage->width,
-                 willImage->height);
+      video_blit_blend(willImage->buffer,
+                       -100,
+                       -100,
+                       willImage->width,
+                       willImage->height,
+                       willImage->width,
+                       willImage->height,
+                       video_blend_alpha);
     }
 #endif
 
