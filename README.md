@@ -40,12 +40,17 @@ $ git submodule update --init
 ### Docker (recommended way)
 
 Use [Docker](https://docs.docker.com/) with the provided
-[`Dockerfile`](https://github.com/willdurand/willOS/blob/master/Dockerfile):
+[`Dockerfile`](https://github.com/willdurand/willOS/blob/master/Dockerfile).
+Start by building the toolchain image:
 
 ```
 $ docker build -t willos/toolchain .
 [...]
+```
 
+You can then use it with `docker run`:
+
+```
 $ docker run -it --rm -v $(pwd):/app willos/toolchain make help
 clean                          remove build artifacts
 console-font                   compile the (default) kernel console font
