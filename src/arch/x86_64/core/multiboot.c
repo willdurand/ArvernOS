@@ -148,6 +148,10 @@ reserved_areas_t find_reserved_areas(multiboot_info_t* mbi)
   tag = (multiboot_tag_t*)((uint8_t*)tag + ((tag->size + 7) & ~7));
   reserved.multiboot_end = (uint64_t)tag;
 
+  if (reserved.multiboot_end > reserved.end) {
+    reserved.end = reserved.multiboot_end;
+  }
+
   CORE_DEBUG("total MBI size %#x", (uint64_t)tag - (uint64_t)mbi);
 
   reserved.start = reserved.kernel_start;
