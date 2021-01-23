@@ -320,7 +320,7 @@ void kmain(uint64_t addr)
   multiboot_tag_string_t* cmdline = (multiboot_tag_string_t*)find_multiboot_tag(
     mbi, MULTIBOOT_TAG_TYPE_CMDLINE);
 
-#if ENABLE_FRAMEBUFFER
+#if ENABLE_FRAMEBUFFER_DEMO
   image_t* willImage = load_image("/willdurand.jpg");
 #endif
 
