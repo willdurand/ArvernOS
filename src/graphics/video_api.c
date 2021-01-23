@@ -92,7 +92,11 @@ frame_buffer_area_t video_area_at(int32_t x,
 
   if (x >= video_driver.width || y >= video_driver.height || width <= 0 ||
       height <= 0) {
-        DEBUG("invalid base bounds: x: %s, y: %s, w: %s, h: %s", x >= video_driver.width ? "Y" : "N", y >= video_driver.height ? "Y" : "N", width <= 0 ? "Y" : "N", height <= 0 ? "Y" : "N");
+    DEBUG("invalid base bounds: x: %s, y: %s, w: %s, h: %s",
+          x >= video_driver.width ? "Y" : "N",
+          y >= video_driver.height ? "Y" : "N",
+          width <= 0 ? "Y" : "N",
+          height <= 0 ? "Y" : "N");
     return outArea;
   }
 
@@ -118,7 +122,7 @@ frame_buffer_area_t video_area_at(int32_t x,
 
   if (outArea.target_x < 0 || outArea.target_y < 0 ||
       outArea.target_width <= 0 || outArea.target_height <= 0) {
-        DEBUG("%s", "invalid target bounds");
+    DEBUG("%s", "invalid target bounds");
     return outArea;
   }
 

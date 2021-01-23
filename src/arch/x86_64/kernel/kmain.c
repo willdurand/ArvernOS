@@ -330,7 +330,7 @@ void kmain(uint64_t addr)
 
     kshell_init();
 
-#if ENABLE_FRAMEBUFFER
+#if ENABLE_FRAMEBUFFER_DEMO
     if (willImage != NULL) {
       video_blit(willImage->buffer,
                  -100,
