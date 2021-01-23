@@ -1,7 +1,7 @@
-#ifndef _VBE_VIDEO_H_
-#define _VBE_VIDEO_H_
+#ifndef _DRIVERS_VBE_VIDEO_H_
+#define _DRIVERS_VBE_VIDEO_H_
 #include <core/multiboot.h>
-#include <drivers/video/video_api.h>
+#include <graphics/video_api.h>
 
 void vbe_video_init(multiboot_tag_framebuffer_common_t* common);
 

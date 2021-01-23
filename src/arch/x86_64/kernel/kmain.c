@@ -30,7 +30,7 @@
 #include <sys/k_syscall.h>
 
 #ifdef ENABLE_FRAMEBUFFER
-#include <drivers/video/vbe/vbe_video.h>
+#include <drivers/vbe_video.h>
 #endif
 
 void print_welcome_message();

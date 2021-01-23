@@ -27,6 +27,8 @@ static uint32_t brightcolors[] = {
   [VTCOLOR_CYAN] = 0xFFE0FFFF,  [VTCOLOR_GREY] = 0xFFFFFF,
 };
 
+multiboot_tag_framebuffer_common_t *multiboot_framebuffer_common = NULL;
+
 void vbe_console_init(multiboot_tag_framebuffer_common_t* common)
 {
   DEBUG("VBE framebuffer: addr=0x%x width=%d height=%d pitch=%d bpp=%d",
@@ -35,6 +37,8 @@ void vbe_console_init(multiboot_tag_framebuffer_common_t* common)
         common->framebuffer_height,
         common->framebuffer_pitch,
         common->framebuffer_bpp);
+
+  multiboot_framebuffer_common = common;
 
   uint64_t pages_for_fb =
     (common->framebuffer_pitch * common->framebuffer_height) / PAGE_SIZE;

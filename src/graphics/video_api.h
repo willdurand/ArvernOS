@@ -60,10 +60,16 @@ static inline uint32_t video_height()
 }
 
 /**
- * Enables or disables some debug statistics such as FPS
+ * Enables some debug statistics such as FPS
  * @param enable whether to enable them
  */
-void video_enable_debug_stats(bool enable);
+void video_enable_debug_stats();
+
+/**
+ * Disables some debug statistics such as FPS
+ * @param enable whether to enable them
+ */
+void video_disable_debug_stats();
 
 /**
  * Blits a buffer into the video buffer
