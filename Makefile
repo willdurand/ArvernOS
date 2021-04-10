@@ -45,7 +45,7 @@ VBE_BPP    = 32
 
 # This is the list of external libraries we use and need to build for the
 # kernel (libk) and the libc.
-EXTERNAL_DEPS = liballoc printf vtconsole stb_image
+EXTERNAL_DEPS = liballoc printf vtconsole
 
 EXTERNAL_DIRS    := $(addprefix $(EXTERNAL_DIR)/,$(EXTERNAL_DEPS))
 LIBK_OBJECTS     := $(patsubst %.c, $(LIBK_OBJS_DIR)/%.o, $(shell find $(ARCH_SRC) src/libc src/graphics $(EXTERNAL_DIRS) -name '*.c'))
