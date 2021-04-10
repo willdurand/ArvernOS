@@ -31,7 +31,6 @@
 
 #ifdef ENABLE_FRAMEBUFFER
 #include <drivers/vbe_video.h>
-#include <graphics/image.h>
 #endif
 
 void print_welcome_message();
