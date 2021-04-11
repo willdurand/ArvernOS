@@ -1,4 +1,5 @@
 #include "vbe_video.h"
+#include <graphics/video_api.h>
 #include <logging.h>
 
 void vbe_swap_buffers()
