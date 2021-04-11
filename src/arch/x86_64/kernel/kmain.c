@@ -341,11 +341,9 @@ void kmain(uint64_t addr)
   int argc = 1;
   char* _cmdline = strdup(cmdline->string);
   strtok(_cmdline, " ");
-
   while (strtok(NULL, " ") != NULL) {
     argc++;
   }
-
   free(_cmdline);
 
   char** argv = (char**)malloc(sizeof(char*) * (argc + 1));
@@ -355,7 +353,6 @@ void kmain(uint64_t addr)
   for (int i = 1; i < argc; i++) {
     argv[i] = strdup(strtok(NULL, " "));
   }
-
   argv[argc] = NULL;
   free(_cmdline);
 
