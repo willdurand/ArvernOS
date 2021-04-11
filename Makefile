@@ -118,7 +118,6 @@ ifeq ($(ENABLE_FRAMEBUFFER_STATS), 1)
 endif
 
 ifeq ($(ENABLE_SSE2), 1)
-	#CFLAGS += -msse2
 	NASM_OPTIONS += -dENABLE_SSE2
 else
 	CFLAGS += -mno-sse2
