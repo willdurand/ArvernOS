@@ -1,11 +1,7 @@
 #include <string.h>  
-/**
- * strpbrk - searches for one of the characters in the list you give it as a string
- * @src  :  main string  
- * @s    :  characters list 
- */ 
 
-char *strpbrk ( const char * src , const char *s ) {
+char *strpbrk ( const char * src , const char *s ) 
+{
     char *_b  =  (char *) s ; 
     while ( *src != *s && *src ) 
     {
@@ -13,8 +9,8 @@ char *strpbrk ( const char * src , const char *s ) {
         if (!*s)
         {
             s=_b ; 
-            src++;  
+            src++; 
         }
     }
     return  (char *) src ; 
-} 
+}
