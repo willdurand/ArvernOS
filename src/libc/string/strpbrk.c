@@ -5,8 +5,7 @@
  * @s    :  characters list 
  */ 
 
-extern char *
-strpbrk ( const char * src , const char *s ) {
+char *strpbrk ( const char * src , const char *s ) {
     char *_b  =  (char *) s ; 
     while ( *src != *s && *src ) 
     {
