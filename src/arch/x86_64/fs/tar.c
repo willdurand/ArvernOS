@@ -1,6 +1,7 @@
 #include "tar.h"
 #include "logging.h"
 #include <core/utils.h>
+#include <inttypes.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -140,7 +141,7 @@ inode_t tar_finddir(inode_t inode, const char* name)
     node->driver = &tar_driver;
     node->parent = inode;
 
-    FS_DEBUG("adding node #%d to the list of nodes", node->data);
+    FS_DEBUG("adding node #%" PRIi64 " to the list of nodes", node->data);
     nodes[node->data] = node;
 
     switch (header->type) {
