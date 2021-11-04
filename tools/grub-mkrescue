@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+#
+# This is a thin wrapper to hide xorriso's output unless something went wrong.
+#
+set -euo pipefail
+
+OUTPUT=$(grub-mkrescue $* 2>&1)
+
+if [[ ! "$OUTPUT" =~ "completed successfully" ]] ; then
+	echo $OUTPUT
+	exit 1
+fi

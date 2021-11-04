@@ -1,8 +1,5 @@
-ifeq ($(shell uname -s),Darwin)
-	CC = x86_64-elf-gcc
-else
-	CC = gcc
-endif
+# The path is relative to the different userland folders.
+include ../../Makefile.include
 
 ARCH         ?= x86_64
 ROOT_DIR     = ../..
@@ -28,41 +25,46 @@ endif
 OBJS := $(patsubst %.c, $(BUILD_DIR)/%.o, $(shell find . -name '*.c'))
 OBJS += $(addprefix $(BUILD_DIR)/$(EXTERNAL_DIR)/,$(EXTERNAL_OBJS))
 
+COMMON_CFLAGS += -Wall -Wextra -pedantic -std=c11
+COMMON_CFLAGS += $(addprefix -I$(EXTERNAL_DIR)/,$(EXTERNAL_DEPS))
+
+CFLAGS += $(COMMON_CFLAGS)
+CFLAGS += --target=x86_64
 # Add `-no-pie` to disable the PIE feature that causes `gcc` to not create an
 # executable if needed, see: https://access.redhat.com/blogs/766093/posts/1975793
-COMMON_CFLAGS = -Wall -pedantic -std=c11 -O2 \
-								$(addprefix -I$(EXTERNAL_DIR)/,$(EXTERNAL_DEPS))
-CFLAGS = $(COMMON_CFLAGS) -ffreestanding -fno-builtin -fno-pie \
-				 -D$(PLATFORM) \
-				 -I $(ROOT_DIR)/include/
+CFLAGS += -ffreestanding -fno-builtin -fno-pie
+CFLAGS += -D$(PLATFORM)
+CFLAGS += -I $(ROOT_DIR)/include/
 
 ifeq ($(ENABLE_USERLAND_DEBUG), 1)
 	CFLAGS += -DENABLE_USERLAND_DEBUG
 endif
 
-LDFLAGS ?=
-LDFLAGS += -Wl,-Ttext-segment=40000000 \
-					 -nostdlib -no-pie \
-					 $(ROOT_DIR)/build/$(ARCH)/dist/libc-$(OS_NAME)-$(ARCH).a
+LDFLAGS += --image-base=0x40000000
+LDFLAGS += -nostdlib -no-pie
+LDFLAGS += $(ROOT_DIR)/build/$(ARCH)/dist/libc-$(OS_NAME)-$(ARCH).a
 
 default: $(TARGET)
 
 $(TARGET): $(OBJS)
+	$(PROGRESS) "LD" $@
 	mkdir -p $(BIN_DIR)
-	$(CC) -o $@ $^ $(LDFLAGS)
+	$(LD) -o $@ $^ $(LDFLAGS)
 
 $(OBJS): $(BUILD_DIR)/%.o : %.c
+	$(PROGRESS) "CC" $<
 	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-local: CC      = gcc
 local: CFLAGS  = $(COMMON_CFLAGS)
-local: LDFLAGS =
+local: LDFLAGS = -fuse-ld=lld
 local: $(OBJS)
+	$(PROGRESS) "LD" $(LOCAL_BUILD_TARGET)
 	mkdir -p $(LOCAL_BUILD_DIR)
-	$(CC) -o $(LOCAL_BUILD_TARGET) $^ $(LDFLAGS)
+	$(CC) $(LDFLAGS) -o $(LOCAL_BUILD_TARGET) $^
 .PHONY: local
 
 clean:
+	$(PROGRESS) "CLEAN"
 	rm -f $(TARGET) $(LOCAL_BUILD_TARGET) $(OBJS)
 .PHONY: clean

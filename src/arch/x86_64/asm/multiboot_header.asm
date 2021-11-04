@@ -31,5 +31,10 @@ framebuffer_end:
   ; `dw` means 'define word' (word = 16 bits on x86_64)
   dw 0  ; type
   dw 0  ; flags
+
+%ifdef ENABLE_FRAMEBUFFER
+  dd 0  ; size
+%else
   dd 8  ; size
+%endif
 header_end:
