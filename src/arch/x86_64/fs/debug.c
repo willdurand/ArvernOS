@@ -1,4 +1,5 @@
 #include "debug.h"
+#include <core/utils.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -42,6 +43,8 @@ inode_t debug_fs_create()
 
 uint64_t debug_stat(inode_t inode, vfs_stat_t* st)
 {
+  UNUSED(inode);
+
   st->mode |= S_IFCHR;
 
   return 0;
@@ -52,6 +55,8 @@ uint64_t debug_write(inode_t inode,
                      uint64_t size,
                      uint64_t offset)
 {
+  UNUSED(inode);
+
   if (offset < size) {
     printf("%s", (char*)buffer + offset);
     return size - offset;
@@ -62,5 +67,7 @@ uint64_t debug_write(inode_t inode,
 
 uint64_t debug_isatty(inode_t inode)
 {
+  UNUSED(inode);
+
   return 1;
 }

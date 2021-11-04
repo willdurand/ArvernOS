@@ -1,5 +1,6 @@
 #include "proc.h"
 #include "logging.h"
+#include <core/utils.h>
 #include <drivers/timer.h>
 #include <kernel/kmain.h>
 #include <mmu/alloc.h>
@@ -124,11 +125,15 @@ inode_t proc_finddir(inode_t inode, const char* name)
 
 uint64_t proc_isatty(inode_t node)
 {
+  UNUSED(node);
+
   return 0;
 }
 
 uint64_t proc_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
 {
+  UNUSED(offset);
+
   FS_DEBUG("name=%s type=%d size=%lu offset=%lu",
            node->name,
            vfs_type(node),
@@ -210,6 +215,8 @@ uint64_t proc_stat(inode_t inode, vfs_stat_t* st)
 
 uint64_t proc_write(inode_t inode, void* ptr, uint64_t length, uint64_t offset)
 {
+  UNUSED(offset);
+
   if (strcmp(inode->name, "hostname") != 0) {
     return 0;
   }
@@ -240,6 +247,7 @@ uint64_t proc_update_hostname(char* new_hostname, uint64_t length)
 void proc_cleanup(inode_t inode)
 {
   FS_DEBUG("cleaning up %s", inode->name);
+  UNUSED(inode);
 
   for (uint64_t i = 0; i < NB_PROC_FILES; i++) {
     if (nodes[i] != NULL) {

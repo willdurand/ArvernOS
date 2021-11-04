@@ -1,4 +1,5 @@
 #include "console.h"
+#include <core/utils.h>
 #include <drivers/vga_text.h>
 
 static char colors[] = {
@@ -22,6 +23,8 @@ void vga_console_init()
 
 void vga_on_paint_callback(vtconsole_t* vtc, vtcell_t* cell, int x, int y)
 {
+  UNUSED(*vtc);
+
   if (cell->attr.bright) {
     vga_text_write_at(
       cell->c, brightcolors[cell->attr.fg] | colors[cell->attr.bg] << 4, x, y);
@@ -33,5 +36,7 @@ void vga_on_paint_callback(vtconsole_t* vtc, vtcell_t* cell, int x, int y)
 
 void vga_on_move_callback(vtconsole_t* vtc, vtcursor_t* cur)
 {
+  UNUSED(*vtc);
+
   vga_text_move_cursor(cur->x, cur->y);
 }

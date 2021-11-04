@@ -1,5 +1,6 @@
 #include "sock.h"
 #include "logging.h"
+#include <core/utils.h>
 #include <fcntl.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -46,6 +47,9 @@ inode_t sock_fs_create()
 
 inode_t sock_create(inode_t parent, const char* name, uint64_t flags)
 {
+  UNUSED(name);
+  UNUSED(flags);
+
   for (uint64_t i = 0; i < MAX_ENTRIES; i++) {
     if (!entries[i].inode) {
       inode_t inode = calloc(1, sizeof(vfs_node_t));
@@ -106,6 +110,8 @@ dirent_t* sock_readdir(inode_t inode, uint64_t num)
 
 uint64_t sock_read(inode_t inode, void* buffer, uint64_t size, uint64_t offset)
 {
+  UNUSED(offset);
+
   sock_entry_t* entry = &entries[inode->data];
 
   FS_DEBUG("found entry for inode: %s len=%d read=%d write=%d",
@@ -151,6 +157,8 @@ uint64_t sock_stat(inode_t inode, vfs_stat_t* st)
 
 uint64_t sock_write(inode_t inode, void* ptr, uint64_t length, uint64_t offset)
 {
+  UNUSED(offset);
+
   sock_entry_t* entry = &entries[inode->data];
 
   if (!entry->inode) {

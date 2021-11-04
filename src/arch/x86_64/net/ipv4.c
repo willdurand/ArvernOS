@@ -1,5 +1,6 @@
 #include "ipv4.h"
 #include "logging.h"
+#include <core/utils.h>
 #include <net/ethernet.h>
 #include <net/udp.h>
 #include <stdio.h>
@@ -25,6 +26,8 @@ void ipv4_receive_packet(net_interface_t* interface,
                          uint8_t* data,
                          uint32_t len)
 {
+  UNUSED(len);
+
   ipv4_header_t header = { 0 };
   memcpy(&header, data, sizeof(ipv4_header_t));
 
@@ -76,6 +79,8 @@ void icmpv4_receive_packet(net_interface_t* interface,
                            uint8_t* data,
                            ipv4_header_t* header)
 {
+  UNUSED(*interface);
+
   icmpv4_echo_t icmpv4_echo = { 0 };
   memcpy(&icmpv4_echo, data + (4 * header->ihl), sizeof(icmpv4_echo_t));
 

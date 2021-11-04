@@ -1,5 +1,6 @@
 #include "tar.h"
 #include "logging.h"
+#include <core/utils.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -274,12 +275,15 @@ uint64_t tar_stat(inode_t inode, vfs_stat_t* st)
 
 uint64_t tar_isatty(inode_t inode)
 {
+  UNUSED(inode);
+
   return 0;
 }
 
 void tar_cleanup(inode_t inode)
 {
   FS_DEBUG("cleaning up %s", inode->name);
+  UNUSED(inode);
 
   for (uint64_t i = 0; i < nb_entries; i++) {
     if (nodes[i] != NULL) {
@@ -300,7 +304,7 @@ int get_level(const char* path)
 {
   int level = 0;
 
-  for (int i = 0; i < strlen(path); i++) {
+  for (size_t i = 0; i < strlen(path); i++) {
     if (path[i] == '/') {
       level++;
     }

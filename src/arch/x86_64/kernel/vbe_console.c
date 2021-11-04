@@ -1,4 +1,5 @@
 #include "console.h"
+#include <core/utils.h>
 #include <logging.h>
 #include <mmu/paging.h>
 
@@ -59,6 +60,8 @@ void vbe_console_init(multiboot_tag_framebuffer_common_t* common)
 
 void vbe_on_paint_callback(vtconsole_t* vtc, vtcell_t* cell, int x, int y)
 {
+  UNUSED(*vtc);
+
   ssfn_dst.x = x * CONSOLE_FONT_WIDTH;
   ssfn_dst.y = y * CONSOLE_FONT_HEIGHT;
 
@@ -71,4 +74,8 @@ void vbe_on_paint_callback(vtconsole_t* vtc, vtcell_t* cell, int x, int y)
   ssfn_putc(cell->c);
 }
 
-void vbe_on_move_callback(vtconsole_t* vtc, vtcursor_t* cur) {}
+void vbe_on_move_callback(vtconsole_t* vtc, vtcursor_t* cur)
+{
+  UNUSED(*vtc);
+  UNUSED(*cur);
+}

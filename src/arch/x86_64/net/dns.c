@@ -108,7 +108,7 @@ int dns_lookup(net_interface_t* interface, const char* domain, uint8_t ip[4])
 
   close(sockfd);
 
-  if (bytes_received < sizeof(dns_header_t)) {
+  if (bytes_received < (ssize_t)sizeof(dns_header_t)) {
     NET_DEBUG("not received enough data: bytes_received=%lld", bytes_received);
     return DNS_ERR_RECV;
   }
