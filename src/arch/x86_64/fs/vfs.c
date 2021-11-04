@@ -404,7 +404,7 @@ void vfs_debug(inode_t node, int depth)
 
   depth++;
 
-  for (int i = 0; i < node->n_children; i++) {
+  for (uint64_t i = 0; i < node->n_children; i++) {
     vfs_debug(node->children[i], depth);
   }
 }

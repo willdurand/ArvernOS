@@ -28,6 +28,9 @@ void print_prompt()
 
 int main(int argc, char* argv[])
 {
+  (void)(argc);
+  (void)(**argv);
+
   putenv("USER=user");
   putenv("SHELL=/bin/shell");
 

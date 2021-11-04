@@ -1,6 +1,7 @@
 #include "arp.h"
 #include "logging.h"
 #include <arpa/inet.h>
+#include <core/utils.h>
 #include <net/ethernet.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -56,6 +57,8 @@ void arp_wait_reply(uint8_t* dst_mac)
 
 void arp_receive_packet(net_interface_t* interface, uint8_t* data, uint32_t len)
 {
+  UNUSED(len);
+
   arp_packet_t packet = { 0 };
   memcpy(&packet, data, sizeof(arp_packet_t));
   packet.hardware_type = ntohs(packet.hardware_type);

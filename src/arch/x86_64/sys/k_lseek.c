@@ -26,14 +26,14 @@ off_t k_lseek(int fd, off_t offset, int whence)
 
   switch (whence) {
     case SEEK_SET:
-      if (offset > stat.size) {
+      if (offset > (off_t)stat.size) {
         return -EINVAL;
       }
 
       desc->offset = offset;
       break;
     case SEEK_CUR:
-      if (desc->offset + offset > stat.size) {
+      if (desc->offset + offset > (off_t)stat.size) {
         return -EINVAL;
       }
 

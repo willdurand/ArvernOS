@@ -32,6 +32,8 @@ void willos_log_deinit()
 
 void willos_log_putchar(char c, void* arg)
 {
+  (void)(*arg);
+
   if (com1_fd < 3) {
     return;
   }

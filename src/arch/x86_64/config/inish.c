@@ -1,5 +1,6 @@
 #include "inish.h"
 #include "logging.h"
+#include <core/utils.h>
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -217,6 +218,8 @@ token_t* inish_lex_whitespace(int fd, token_t* t)
 
 token_t* inish_lex_newline(int fd, token_t* t)
 {
+  UNUSED(fd);
+
   line++;
 
   t->type = NEWLINE;
@@ -415,10 +418,10 @@ token_t* inish_lex_number(int fd, token_t* t)
 
 void inish_free(inish_config_t* conf)
 {
-  for (int i = 0; i < conf->n_sections; i++) {
+  for (uint64_t i = 0; i < conf->n_sections; i++) {
     inish_section_t* s = conf->sections[i];
 
-    for (int j = 0; j < s->n_kv_pairs; j++) {
+    for (uint64_t j = 0; j < s->n_kv_pairs; j++) {
       inish_kv_pair_t* kv = s->kv_pairs[j];
 
       free(kv->key);
@@ -426,10 +429,10 @@ void inish_free(inish_config_t* conf)
       free(kv);
     }
 
-    for (int j = 0; j < s->n_arrays; j++) {
+    for (uint64_t j = 0; j < s->n_arrays; j++) {
       inish_array_t* array = s->arrays[j];
 
-      for (int k = 0; k < array->n_values; k++) {
+      for (uint64_t k = 0; k < array->n_values; k++) {
         free(array->values[k]);
       }
 
@@ -673,7 +676,7 @@ inish_section_t* inish_get_section(inish_config_t* conf, const char* name)
     return NULL;
   }
 
-  for (int i = 0; i < conf->n_sections; i++) {
+  for (uint64_t i = 0; i < conf->n_sections; i++) {
     inish_section_t* s = conf->sections[i];
 
     if (strcmp(s->name, name) == 0) {
@@ -690,7 +693,7 @@ inish_kv_pair_t* inish_get_kv_pair(inish_section_t* section, const char* key)
     return NULL;
   }
 
-  for (int i = 0; i < section->n_kv_pairs; i++) {
+  for (uint64_t i = 0; i < section->n_kv_pairs; i++) {
     inish_kv_pair_t* kv = section->kv_pairs[i];
 
     if (strcmp(kv->key, key) == 0) {
@@ -707,7 +710,7 @@ inish_array_t* inish_get_array(inish_section_t* section, const char* key)
     return NULL;
   }
 
-  for (int i = 0; i < section->n_arrays; i++) {
+  for (uint64_t i = 0; i < section->n_arrays; i++) {
     inish_array_t* array = section->arrays[i];
 
     if (strcmp(array->key, key) == 0) {

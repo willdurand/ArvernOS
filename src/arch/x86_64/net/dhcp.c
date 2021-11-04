@@ -1,6 +1,7 @@
 #include "dhcp.h"
 #include "logging.h"
 #include <arpa/inet.h>
+#include <core/utils.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -85,6 +86,9 @@ void dhcp_receive_packet(net_interface_t* interface,
                          uint8_t* packet,
                          udp_header_t* header)
 {
+  UNUSED(*interface);
+  UNUSED(*header);
+
   dhcp_header_t dhcp_header = { 0 };
   memcpy(&dhcp_header, packet, sizeof(dhcp_header_t));
   dhcp_header.xid = ntohl(dhcp_header.xid);

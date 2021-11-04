@@ -1,4 +1,5 @@
 #include "serial.h"
+#include <core/utils.h>
 #include <drivers/serial.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -49,6 +50,8 @@ inode_t serial_device_create(uint16_t serial_port)
 
 uint64_t fs_serial_stat(inode_t inode, vfs_stat_t* st)
 {
+  UNUSED(inode);
+
   st->mode |= S_IFCHR;
 
   return 0;
@@ -69,5 +72,7 @@ uint64_t fs_serial_write(inode_t inode,
 
 uint64_t fs_serial_isatty(inode_t inode)
 {
+  UNUSED(inode);
+
   return 1;
 }

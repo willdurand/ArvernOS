@@ -1,6 +1,7 @@
 #include "ntp.h"
 #include "logging.h"
 #include <arpa/inet.h>
+#include <core/utils.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/syscall.h>
@@ -10,6 +11,8 @@ int ntp_request(net_interface_t* interface,
                 const char* server,
                 time_t* server_time)
 {
+  UNUSED(*interface);
+
   ntp_header_t ntp_header = {
     .li_vn_mode = NTP_V4 | NTP_MODE_CLIENT,
   };
@@ -58,7 +61,7 @@ int ntp_request(net_interface_t* interface,
 
   close(sockfd);
 
-  if (bytes_received < sizeof(ntp_header_t)) {
+  if (bytes_received < (ssize_t)sizeof(ntp_header_t)) {
     NET_DEBUG("bytes_received=%lld", bytes_received);
     return NTP_ERR_RECV;
   }

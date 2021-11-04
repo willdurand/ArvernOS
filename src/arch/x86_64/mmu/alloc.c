@@ -39,7 +39,7 @@ void* liballoc_alloc(int number_of_pages)
 {
   opt_uint64_t first_free_page = { .has_value = false, .value = 0 };
 
-  uint32_t free_page_count = 0;
+  int32_t free_page_count = 0;
   for (uint64_t i = 0; i < MAX_PAGES; i++) {
     if (bitmap_get(allocated_pages, i) == false) {
       free_page_count++;
@@ -60,7 +60,7 @@ void* liballoc_alloc(int number_of_pages)
 
   uint64_t addr = page_start_address(heap_start_page + first_free_page.value);
 
-  for (uint64_t i = 0; i < number_of_pages; i++) {
+  for (int32_t i = 0; i < number_of_pages; i++) {
     bitmap_set(allocated_pages, first_free_page.value + i);
   }
 
@@ -82,7 +82,7 @@ int liballoc_free(void* ptr, int number_of_pages)
 
   uint64_t first_free_page =
     page_containing_address((uint64_t)ptr - HEAP_START);
-  for (uint64_t i = 0; i < number_of_pages; i++) {
+  for (int32_t i = 0; i < number_of_pages; i++) {
     bitmap_clear(allocated_pages, first_free_page + i);
   }
 

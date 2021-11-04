@@ -1,6 +1,7 @@
 #include "udp.h"
 #include "logging.h"
 #include <arpa/inet.h>
+#include <core/utils.h>
 #include <net/dhcp.h>
 #include <net/dns.h>
 #include <proc/descriptor.h>
@@ -57,6 +58,8 @@ void udp_send_packet(net_interface_t* interface,
                      uint8_t* data,
                      uint32_t len)
 {
+  UNUSED(dst_mac);
+
   uint16_t udp_len = sizeof(udp_header_t) + len;
   udp_header_t udp_header = { .src_port = htons(src_port),
                               .dst_port = dst_addr->sin_port,
