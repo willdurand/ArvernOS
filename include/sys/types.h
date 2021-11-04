@@ -2,12 +2,10 @@
 #define SYS_TYPES_H
 
 #include <stdbool.h>
-#include <stdint.h>
+#include <stddef.h>
 
 typedef int64_t time_t;
 typedef int64_t suseconds_t;
-typedef uint64_t size_t;
-typedef int64_t ssize_t;
 typedef int64_t off_t;
 
 #ifndef __pid_t_defined
