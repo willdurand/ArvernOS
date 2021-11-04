@@ -401,12 +401,16 @@ void map_page_to_frame(page_number_t page_number,
             frame,
             flags);
 
+#ifndef TEST_ENV
+  // Do not call `translate_page()` here, otherwise our test suite wouldn't be
+  // able to fake the calls to `next_table_address()` right after.
   opt_uint64_t maybe_frame = translate_page(page_number);
   if (maybe_frame.has_value) {
     MMU_DEBUG(
       "page=%u already mapped to frame=%u", page_number, maybe_frame.value);
     return;
   }
+#endif
 
   uint64_t p4_idx = p4_index(page_number);
   uint64_t p3_idx = _p3_index(page_number);

@@ -290,7 +290,12 @@ inode_t vfs_mount(const char* path, inode_t root)
     return NULL;
   }
 
-  FS_DEBUG("trying to mount fs=%s at path=%s", root->name, path);
+  if (root != NULL) {
+    FS_DEBUG("trying to mount fs=%s at path=%s", root->name, path);
+  } else {
+    FS_DEBUG("trying to mount fs=NULL at path=%s", path);
+  }
+
   return vfs_namei_mount(path, root);
 }
 

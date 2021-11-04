@@ -3,7 +3,7 @@
 
 #include <logging.h>
 
-#ifdef ENABLE_MMU_DEBUG
+#if defined(ENABLE_MMU_DEBUG) || defined(ENABLE_LOGS_FOR_TESTS)
 #define MMU_DEBUG(format, ...) DEBUG(format, __VA_ARGS__)
 #else
 #define MMU_DEBUG(format, ...)                                                 \

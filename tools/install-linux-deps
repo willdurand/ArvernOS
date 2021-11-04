@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+#
+# This script automatically installs dependencies on Linux systems.
+#
+set -euxo pipefail
+
+apt-get update
+
+apt-get install -y \
+	software-properties-common \
+	lsb-release \
+	build-essential \
+	nasm \
+	xorriso \
+	grub2-common \
+	grub-pc-bin \
+	git \
+	valgrind \
+	qemu-system \
+	wget \
+	bzip2 \
+	bison \
+	flex \
+	bc
+
+wget https://apt.llvm.org/llvm.sh
+chmod +x llvm.sh
+./llvm.sh 13
+rm -f llvm.sh
+
+apt-get install -y clang-format-13
+
+apt-get clean

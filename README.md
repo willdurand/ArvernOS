@@ -11,15 +11,13 @@ Twitter thread](https://twitter.com/couac/status/866693418130575361).
 
 The following dependencies are required to build this project:
 
-* `gcc` (`build-essential`)
+* `llvm` (13)
 * `nasm`
-* `ld`
 * `grub-mkrescue` (part of `grub2-common`)
 * `xorriso`
 * (optional) `qemu`
 
-This project targets `x86_64` architectures, so you likely need a
-cross-compilation toolchain.
+Currently, this project targets `x86_64` architectures.
 
 ### Getting the sources
 
@@ -78,25 +76,13 @@ Install [Homebrew](https://brew.sh/), then run the following commands:
 $ brew install nasm
 $ brew install xorriso
 $ brew install qemu
-$ brew install x86_64-elf-gcc
+$ brew install llvm
 ```
-
-You need to tap `hawkw/x86_64-pc-elf` and `hawkw/grub` to be able to install the
-GRUB utility:
-
-```
-$ brew tap hawkw/x86_64-pc-elf
-$ brew tap hawkw/grub
-$ brew install x86_64-pc-elf-gcc
-$ brew install grub --with-x86_64-pc-elf --HEAD
-```
-
-Hat tip to [Eliza Weisman](http://github.com/hawkw) for the taps!
 
 ### Linux
 
-See the [circle-ci
-config](https://github.com/willdurand/willOS/blob/master/.circleci/config.yml).
+The `tools/install-linux-deps` script is used to install the dependencies. It is
+currently used by both the `Dockerfile` and Circle CI.
 
 ## Building willOS
 

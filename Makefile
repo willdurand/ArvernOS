@@ -1,20 +1,13 @@
-ARCH ?= x86_64
+include ./Makefile.include
 
-NASM = nasm
-QEMU = qemu-system-x86_64
-
-ifeq ($(shell uname -s),Darwin)
-	CC = x86_64-elf-gcc
-	LD = x86_64-elf-ld
-	AR = x86_64-elf-ar
-else
-	CC = gcc
-	LD = ld
-	AR = ar
-endif
-
+ARCH           ?= x86_64
 OS_NAME        = willOS
+BUILD_MODE     = release
+# We (more or less) follow the PFL project structure:
+# https://api.csswg.org/bikeshed/?force=1&url=https://raw.githubusercontent.com/vector-of-bool/pitchfork/develop/data/spec.bs#intro.dirs
 BUILD_DIR      = build
+EXTERNAL_DIR   = external
+TOOLS_DIR      = tools
 ARCH_BUILD_DIR := $(BUILD_DIR)/$(ARCH)
 DIST_DIR       := $(ARCH_BUILD_DIR)/dist
 ISO_DIR        := $(ARCH_BUILD_DIR)/isofiles
@@ -32,16 +25,19 @@ LIBK_OBJS_DIR  := $(ARCH_BUILD_DIR)/libk-objects
 INITRD_DIR     = initrd
 INITRD_TAR     = initrd.tar
 INITRD         := $(ISO_BOOT_DIR)/$(INITRD_TAR)
-EXTERNAL_DIR   = external
 GIT_HASH       := $(shell git rev-parse --short HEAD)
-BUILD_MODE     = release
+
 # This should be a bitmap font.
-KERNEL_CONSOLE_FONT_PATH = external/scalable-font2/fonts/u_vga16.sfn.gz
+KERNEL_CONSOLE_FONT_PATH := $(EXTERNAL_DIR)/scalable-font2/fonts/u_vga16.sfn.gz
 KERNEL_CONSOLE_FONT      := $(ARCH_BUILD_DIR)/font.o
-# This is used in `src/asm/multiboot_header.asm`.
+# This is used in `src/arch/x86_64/asm/multiboot_header.asm`.
 VBE_WIDTH  = 1024
 VBE_HEIGHT = 768
 VBE_BPP    = 32
+
+# More tools.
+NASM = nasm
+QEMU = qemu-system-x86_64
 
 # This is the list of external libraries we use and need to build for the
 # kernel (libk) and the libc.
@@ -56,21 +52,35 @@ LIBC_TEST_FILES  := $(patsubst test/%.c, %, $(shell find test/libc -name '*.c'))
 
 NASM_OPTIONS := -dVBE_WIDTH=$(VBE_WIDTH) -dVBE_HEIGHT=$(VBE_HEIGHT) -dVBE_BPP=$(VBE_BPP)
 
-QEMU_OPTIONS = -m 500M \
-	       -netdev user,id=u1,ipv6=off,dhcpstart=10.0.2.20 \
-	       -device rtl8139,netdev=u1 \
-	       -object filter-dump,id=f1,netdev=u1,file=./log/traffic.pcap
+QEMU_OPTIONS += -m 500M
+QEMU_OPTIONS += -netdev user,id=u1,ipv6=off,dhcpstart=10.0.2.20
+QEMU_OPTIONS += -device rtl8139,netdev=u1
+QEMU_OPTIONS += -object filter-dump,id=f1,netdev=u1,file=./log/traffic.pcap
 
- # We need to have -fno-omit-frame-pointer or the kernel stack backtrace won't get the stack
- CFLAGS := -DKERNEL_NAME=\"$(OS_NAME)\" \
-	 -DGIT_HASH=\"$(GIT_HASH)\" \
-	 -DLOGS_WITH_COLORS \
-	 -Wall -Wextra -pedantic -std=c11 -O2 -ffreestanding -nostdlib \
-	 -fno-builtin -fstack-protector -mno-red-zone -mno-sse2 -fno-omit-frame-pointer \
-	 -I src/ -I src/arch/$(ARCH)/ -I include/ $(addprefix -I$(EXTERNAL_DIR)/,$(EXTERNAL_DEPS)) \
-	 -I $(EXTERNAL_DIR)/scalable-font2/
+INCLUDES += -Isrc/
+INCLUDES += -Isrc/arch/$(ARCH)/
+INCLUDES += -Iinclude/
+INCLUDES += $(addprefix -I$(EXTERNAL_DIR)/,$(EXTERNAL_DEPS))
+INCLUDES += -I$(EXTERNAL_DIR)/scalable-font2/
 
-DEBUG_CFLAGS = -g -DENABLE_KERNEL_DEBUG
+WERRORS += -Wall -Wextra -Werror
+WERRORS += -Werror=implicit-function-declaration
+WERRORS += -Werror=int-conversion
+WERRORS += -Werror=incompatible-pointer-types
+WERRORS += -Werror=shift-count-overflow
+WERRORS += -Werror=switch
+
+CFLAGS := -DKERNEL_NAME=\"$(OS_NAME)\"
+CFLAGS += -DGIT_HASH=\"$(GIT_HASH)\"
+CFLAGS += -DLOGS_WITH_COLORS
+CFLAGS += -std=c11 -ffreestanding -nostdinc -nostdlib -fno-builtin
+# We need to have -fno-omit-frame-pointer or the kernel stack backtrace won't
+# get the stack.
+CFLAGS += --target=x86_64 -fno-omit-frame-pointer -fstack-protector
+CFLAGS += -mno-red-zone -mno-mmx -mno-sse -mno-sse2 -mno-avx -mno-avx2
+CFLAGS += $(WERRORS)
+
+DEBUG_CFLAGS = -g3 -DENABLE_KERNEL_DEBUG
 
 ifeq ($(ENABLE_CONFIG_DEBUG), 1)
 	DEBUG_CFLAGS += -DENABLE_CONFIG_DEBUG
@@ -157,6 +167,7 @@ $(GRUB_DIR): $(ISO_BOOT_DIR)
 	mkdir -p $@
 
 $(KERNEL): $(ISO_BOOT_DIR) $(DIST_DIR) $(LIBK_ASM_OBJECTS) $(LIBK_OBJECTS) $(KERNEL_CONSOLE_FONT)
+	$(PROGRESS) "LD" $@
 	$(LD) --nmagic --output=$@ --script=$(LINKER) $(LIBK_ASM_OBJECTS) $(LIBK_OBJECTS) $(KERNEL_CONSOLE_FONT)
 	cp $(KERNEL) $(DIST_DIR)
 
@@ -165,24 +176,29 @@ kernel: $(KERNEL)
 .PHONY: kernel
 
 $(LIBK_ASM_OBJECTS): $(LIBK_OBJS_DIR)/%.o: %.asm
+	$(PROGRESS) "NASM" $<
 	mkdir -p $(dir $@)
 	$(NASM) $(NASM_OPTIONS) -f elf64 $< -o $@
 
 $(LIBK_OBJECTS): CFLAGS += -D__is_libk
 $(LIBK_OBJECTS): $(LIBK_OBJS_DIR)/%.o: %.c
+	$(PROGRESS) "CC" $<
 	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(LIBC_ASM_OBJECTS): $(LIBC_OBJS_DIR)/%.o: %.asm
+	$(PROGRESS) "NASM" $<
 	mkdir -p $(dir $@)
 	$(NASM) $(NASM_OPTIONS) -f elf64 $< -o $@
 
 $(LIBC_OBJECTS): CFLAGS += -D__is_libc
 $(LIBC_OBJECTS): $(LIBC_OBJS_DIR)/%.o: %.c
+	$(PROGRESS) "CC" $<
 	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(LIBC): $(DIST_DIR) $(LIBC_ASM_OBJECTS) $(LIBC_OBJECTS)
+	$(PROGRESS) "AR" $@
 	$(AR) rcs $@ $(LIBC_ASM_OBJECTS) $(LIBC_OBJECTS)
 
 libc: ## build the libc (userland)
@@ -190,24 +206,22 @@ libc: $(LIBC)
 .PHONY: libc
 
 $(KERNEL_CONSOLE_FONT): $(ARCH_BUILD_DIR)
+	$(PROGRESS) "LD" $@
 	cp $(KERNEL_CONSOLE_FONT_PATH) $(ARCH_BUILD_DIR)/console.sfn.gz
 	gunzip -f $(ARCH_BUILD_DIR)/console.sfn.gz
 	# We have to do this because we cannot control the symbol name generated by
 	# `ld`. We get a pretty nice name by cd'ing into the build directory.
-	cd $(ARCH_BUILD_DIR) && $(LD) -r -b binary -o ../../$@ console.sfn
+	cd $(ARCH_BUILD_DIR) && $(LD) -m elf_x86_64 -r -b binary -o ../../$@ console.sfn
 
 console-font: ## compile the (default) kernel console font
 console-font: $(KERNEL_CONSOLE_FONT)
 .PHONY: console-font
 
 $(INITRD): $(INITRD_DIR) userland
+	$(PROGRESS) "TAR" $@
 	cp -R userland/bin $(INITRD_DIR)
 	echo "$(OS_NAME) ($(ARCH)) build info\n\nhash: $(GIT_HASH)\ndate: $(shell date)" > $(INITRD_DIR)/info
-	cd $(INITRD_DIR) && tar -cvf ../$(INITRD) *
-
-initrd: ## build the init ram disk
-initrd: $(INITRD)
-.PHONY: initrd
+	cd $(INITRD_DIR) && tar -cf ../$@ *
 
 # We mark this target as .PHONY to write the file every time.
 $(GRUB_CFG): $(GRUB_DIR)
@@ -215,7 +229,8 @@ $(GRUB_CFG): $(GRUB_DIR)
 .PHONY: $(GRUB_CFG)
 
 $(ISO): $(DIST_DIR) $(KERNEL) $(INITRD) $(GRUB_CFG)
-	grub-mkrescue -o $@ $(ISO_DIR)
+	$(PROGRESS) GRUB $@
+	$(TOOLS_DIR)/grub-mkrescue -o $@ $(ISO_DIR)
 
 iso: ## build the image of the OS (.iso)
 iso: $(ISO)
@@ -224,6 +239,7 @@ iso: $(ISO)
 run: ## run the OS in release mode
 run: QEMU_OPTIONS += -serial file:./log/release.log
 run: $(ISO)
+	$(PROGRESS) "RUN" $<
 	$(QEMU) -cdrom $< $(QEMU_OPTIONS)
 .PHONY: run
 
@@ -235,8 +251,9 @@ debug: $(ISO)
 .PHONY: debug
 
 run-debug: ## run the OS in debug mode
-run-debug: QEMU_OPTIONS += -serial file:./log/debug.log -d int --no-reboot
+run-debug: QEMU_OPTIONS += -serial file:./log/debug.log -d guest_errors,unimp --no-reboot
 run-debug: debug
+	$(PROGRESS) "RUN" $(ISO)
 	$(QEMU) -cdrom $(ISO) $(QEMU_OPTIONS)
 .PHONY: run-debug
 
@@ -247,11 +264,12 @@ run-test: run
 .PHONY: run-test
 
 clean: ## remove build artifacts
+	$(PROGRESS) "CLEAN"
 	rm -rf $(ARCH_BUILD_DIR) $(INITRD_DIR)/info $(INITRD_DIR)/bin/ userland/bin/ userland/local-build/
 .PHONY: clean
 
 fmt: ## automatically format the code with clang-format
-	find . -path ./external -prune -false -o -type f \( -name '*.c' -o -name '*.h' \) -exec clang-format -style=file -i "{}" ";"
+	find . -path ./external -prune -false -o -type f \( -name '*.c' -o -name '*.h' \) -exec clang-format$(LLVM_SUFFIX) -style=file -i "{}" ";"
 .PHONY: fmt
 
 gdb: ## build, run the OS in debug mode and enable GDB
@@ -267,45 +285,42 @@ userland: libc
 .PHONY: userland
 
 test: ## run unit tests
-test: CC=gcc
-test: LD=ld
-test: AR=ar
-test: CFLAGS += -fPIC
-test: CFLAGS_FOR_TESTS = -g -DENABLE_LOGS_FOR_TESTS -DTEST_ENV -I./test/ -I./src/ -I./src/arch/$(ARCH)/
+test: CFLAGS += -fPIC -g3 -fsanitize=undefined
+test: CFLAGS_FOR_TESTS = -g3 -fsanitize=undefined -DENABLE_LOGS_FOR_TESTS -DTEST_ENV -I./test/ -I./src/ -I./src/arch/$(ARCH)/
 test: VALGRIND_OPTS = --track-origins=yes --leak-check=yes
 test: libc
 	# libc
 	mkdir -p $(ARCH_BUILD_DIR)/libc/string
 	for file in $(LIBC_TEST_FILES); do \
 		echo ; \
-		gcc -shared $(LIBC_OBJS_DIR)/src/$$file.o -o $(ARCH_BUILD_DIR)/$$file.so ; \
-		gcc -I./test/ test/$$file.c -o $(ARCH_BUILD_DIR)/$$file ; \
+		$(CC) -shared $(LIBC_OBJS_DIR)/src/$$file.o -o $(ARCH_BUILD_DIR)/$$file.so ; \
+		$(CC) -I./test/ test/$$file.c -o $(ARCH_BUILD_DIR)/$$file ; \
 		LD_PRELOAD=./$(ARCH_BUILD_DIR)/$$file.so ./$(ARCH_BUILD_DIR)/$$file || exit 1 ; \
 	done
 	# fs/vfs
-	gcc $(CFLAGS_FOR_TESTS) -I./test/proxies/ -o $(ARCH_BUILD_DIR)/vfs test/fs/vfs.c src/arch/$(ARCH)/fs/vfs.c
+	$(CC) $(CFLAGS_FOR_TESTS) -I./test/proxies/ -o $(ARCH_BUILD_DIR)/vfs test/fs/vfs.c src/arch/$(ARCH)/fs/vfs.c
 	valgrind --track-origins=yes --leak-check=yes ./$(ARCH_BUILD_DIR)/vfs
 	# fs/tar
-	gcc $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/tar test/fs/tar.c src/arch/$(ARCH)/fs/tar.c src/arch/$(ARCH)/fs/vfs.c
+	$(CC) $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/tar test/fs/tar.c src/arch/$(ARCH)/fs/tar.c src/arch/$(ARCH)/fs/vfs.c
 	valgrind $(VALGRIND_OPTS) ./$(ARCH_BUILD_DIR)/tar
 	# fs/proc
-	gcc $(CFLAGS_FOR_TESTS) -I./test/proxies/ -o $(ARCH_BUILD_DIR)/proc test/fs/proc.c src/arch/$(ARCH)/fs/proc.c src/arch/$(ARCH)/fs/vfs.c
+	$(CC) $(CFLAGS_FOR_TESTS) -I./test/proxies/ -o $(ARCH_BUILD_DIR)/proc test/fs/proc.c src/arch/$(ARCH)/fs/proc.c src/arch/$(ARCH)/fs/vfs.c
 	valgrind $(VALGRIND_OPTS) ./$(ARCH_BUILD_DIR)/proc
 	# fs/sock
-	gcc $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/sock test/fs/sock.c src/arch/$(ARCH)/fs/sock.c src/arch/$(ARCH)/fs/vfs.c
+	$(CC) $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/sock test/fs/sock.c src/arch/$(ARCH)/fs/sock.c src/arch/$(ARCH)/fs/vfs.c
 	valgrind $(VALGRIND_OPTS) ./$(ARCH_BUILD_DIR)/sock
 	# mmu/frame
-	gcc $(CFLAGS_FOR_TESTS) -Wformat=0 -I./test/proxies/ -o $(ARCH_BUILD_DIR)/frame test/mmu/frame.c src/arch/$(ARCH)/mmu/frame.c src/arch/$(ARCH)/core/multiboot.c src/arch/$(ARCH)/mmu/bitmap.c
+	$(CC) $(CFLAGS_FOR_TESTS) -Wformat=0 -I./test/proxies/ -o $(ARCH_BUILD_DIR)/frame test/mmu/frame.c src/arch/$(ARCH)/mmu/frame.c src/arch/$(ARCH)/core/multiboot.c src/arch/$(ARCH)/mmu/bitmap.c
 	valgrind $(VALGRIND_OPTS) ./$(ARCH_BUILD_DIR)/frame
+	# config/inish
+	$(CC) $(CFLAGS_FOR_TESTS) -I./test/proxies/ -o $(ARCH_BUILD_DIR)/inish test/config/inish.c src/arch/$(ARCH)/config/inish.c
+	valgrind $(VALGRIND_OPTS) ./$(ARCH_BUILD_DIR)/inish
 	# mmu/bitmap
-	gcc $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/bitmap test/mmu/bitmap.c src/arch/$(ARCH)/mmu/bitmap.c
+	$(CC) $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/bitmap test/mmu/bitmap.c src/arch/$(ARCH)/mmu/bitmap.c
 	./$(ARCH_BUILD_DIR)/bitmap
 	# mmu/paging
-	gcc $(CFLAGS_FOR_TESTS) -Wformat=0 -I./test/proxies/ -o $(ARCH_BUILD_DIR)/paging test/mmu/paging.c src/arch/$(ARCH)/mmu/paging.c src/arch/$(ARCH)/core/multiboot.c src/arch/$(ARCH)/mmu/frame.c src/arch/$(ARCH)/mmu/bitmap.c src/arch/$(ARCH)/core/register.c
+	$(CC) $(CFLAGS_FOR_TESTS) -Wformat=0 -I./test/proxies/ -o $(ARCH_BUILD_DIR)/paging test/mmu/paging.c src/arch/$(ARCH)/mmu/paging.c src/arch/$(ARCH)/core/multiboot.c src/arch/$(ARCH)/mmu/frame.c src/arch/$(ARCH)/mmu/bitmap.c src/arch/$(ARCH)/core/register.c
 	./$(ARCH_BUILD_DIR)/paging
-	# config/inish
-	gcc $(CFLAGS_FOR_TESTS) -I./test/proxies/ -o $(ARCH_BUILD_DIR)/inish test/config/inish.c src/arch/$(ARCH)/config/inish.c
-	valgrind $(VALGRIND_OPTS) ./$(ARCH_BUILD_DIR)/inish
 .PHONY: test
 
 version: ## print tool versions
