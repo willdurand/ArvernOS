@@ -35,11 +35,12 @@ SECTIONS {
         . = ALIGN(4K);
     }
 
-    /* get rid of unnecessary gcc bits */
+    /* get rid of unnecessary compiler bits */
     /DISCARD/ :
     {
         *(.comment)
         *(.eh_frame)
         *(.note.gnu.build-id)
+        *(.debug*)
     }
 }
