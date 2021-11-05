@@ -70,7 +70,7 @@ WERRORS += -Werror=incompatible-pointer-types
 WERRORS += -Werror=shift-count-overflow
 WERRORS += -Werror=switch
 
-CFLAGS := -DKERNEL_NAME=\"$(OS_NAME)\"
+CFLAGS += -DKERNEL_NAME=\"$(OS_NAME)\"
 CFLAGS += -DGIT_HASH=\"$(GIT_HASH)\"
 CFLAGS += -DLOGS_WITH_COLORS
 CFLAGS += -std=c11 -ffreestanding -nostdinc -nostdlib -fno-builtin
@@ -220,7 +220,16 @@ console-font: $(KERNEL_CONSOLE_FONT)
 $(INITRD): $(INITRD_DIR) userland
 	$(PROGRESS) "TAR" $@
 	cp -R userland/bin $(INITRD_DIR)
-	echo "$(OS_NAME) ($(ARCH)) build info\n\nhash: $(GIT_HASH)\ndate: $(shell date)" > $(INITRD_DIR)/info
+	echo "$(OS_NAME) ($(ARCH)) build info" > $(INITRD_DIR)/info
+	echo "" >> $(INITRD_DIR)/info
+	echo "hash: $(GIT_HASH)" >> $(INITRD_DIR)/info
+	echo "date: $(shell date)" >> $(INITRD_DIR)/info
+	echo "mode: $(BUILD_MODE)" >> $(INITRD_DIR)/info
+	echo "" >> $(INITRD_DIR)/info
+	echo "compiler: $(shell $(CC) --version | head -n 1)" >> $(INITRD_DIR)/info
+	echo "" >> $(INITRD_DIR)/info
+	echo "CFLAGS: $(CFLAGS)" >> $(INITRD_DIR)/info
+	echo "INCLUDES: $(INCLUDES)" >> $(INITRD_DIR)/info
 	cd $(INITRD_DIR) && tar -cf ../$@ *
 
 # We mark this target as .PHONY to write the file every time.
@@ -261,6 +270,7 @@ run-test: ## run the OS in test mode
 run-test: QEMU_OPTIONS += -curses -serial file:./log/test.log
 run-test: GRUB_KERNEL_CMDLINE = /bin/boot-and-exit
 run-test: run
+	cat initrd/info
 .PHONY: run-test
 
 clean: ## remove build artifacts

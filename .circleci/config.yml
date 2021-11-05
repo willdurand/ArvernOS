@@ -45,3 +45,9 @@ jobs:
           command: |
             export TERM=xterm
             make clean run-test
+      - run:
+          name: integration tests with ubsan
+          command: |
+            export TERM=xterm
+            make clean run-test UBSAN=1
+          no_output_timeout: 2m

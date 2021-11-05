@@ -230,7 +230,7 @@ static struct liballoc_major* allocate_new_page(unsigned int size)
   return maj;
 }
 
-void* PREFIX(malloc)(size_t req_size)
+__attribute__((no_sanitize("undefined"))) void* PREFIX(malloc)(size_t req_size)
 {
   int startedBet = 0;
   unsigned long long bestSize = 0;
@@ -558,7 +558,7 @@ void* PREFIX(malloc)(size_t req_size)
   return NULL;
 }
 
-void PREFIX(free)(void* ptr)
+__attribute__((no_sanitize("undefined"))) void PREFIX(free)(void* ptr)
 {
   struct liballoc_minor* min;
   struct liballoc_major* maj;
@@ -700,7 +700,8 @@ void* PREFIX(calloc)(size_t nobj, size_t size)
   return p;
 }
 
-void* PREFIX(realloc)(void* p, size_t size)
+__attribute__((no_sanitize("undefined"))) void* PREFIX(realloc)(void* p,
+                                                                size_t size)
 {
   void* ptr;
   struct liballoc_minor* min;
