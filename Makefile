@@ -295,36 +295,39 @@ userland: libc
 .PHONY: userland
 
 test: ## run unit tests
-test: CFLAGS += -fPIC -g3 -fsanitize=undefined
-test: CFLAGS_FOR_TESTS = -g3 -fsanitize=undefined -DENABLE_LOGS_FOR_TESTS -DTEST_ENV -I./test/ -I./src/ -I./src/arch/$(ARCH)/
-test: VALGRIND_OPTS = --track-origins=yes --leak-check=yes
+test: CFLAGS_WITHOUT_TARGET := $(filter-out --target=x86_64,$(CFLAGS))
+test: CFLAGS = $(CFLAGS_WITHOUT_TARGET)
+test: CFLAGS += -fPIC -g3 -fsanitize=undefined -fsanitize=address
+test: CFLAGS_FOR_TESTS += -g3 -fsanitize=undefined -fsanitize=address
+test: CFLAGS_FOR_TESTS += -DENABLE_LOGS_FOR_TESTS -DTEST_ENV
+test: CFLAGS_FOR_TESTS += -I./test/ -I./src/ -I./src/arch/$(ARCH)/
 test: libc
 	# libc
 	mkdir -p $(ARCH_BUILD_DIR)/libc/string
 	for file in $(LIBC_TEST_FILES); do \
 		echo ; \
 		$(CC) -shared $(LIBC_OBJS_DIR)/src/$$file.o -o $(ARCH_BUILD_DIR)/$$file.so ; \
-		$(CC) -I./test/ test/$$file.c -o $(ARCH_BUILD_DIR)/$$file ; \
+		$(CC) -g3 -fsanitize=undefined -fsanitize=address -I./test/ test/$$file.c -o $(ARCH_BUILD_DIR)/$$file ; \
 		LD_PRELOAD=./$(ARCH_BUILD_DIR)/$$file.so ./$(ARCH_BUILD_DIR)/$$file || exit 1 ; \
 	done
 	# fs/vfs
 	$(CC) $(CFLAGS_FOR_TESTS) -I./test/proxies/ -o $(ARCH_BUILD_DIR)/vfs test/fs/vfs.c src/arch/$(ARCH)/fs/vfs.c
-	valgrind --track-origins=yes --leak-check=yes ./$(ARCH_BUILD_DIR)/vfs
+	./$(ARCH_BUILD_DIR)/vfs
 	# fs/tar
 	$(CC) $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/tar test/fs/tar.c src/arch/$(ARCH)/fs/tar.c src/arch/$(ARCH)/fs/vfs.c
-	valgrind $(VALGRIND_OPTS) ./$(ARCH_BUILD_DIR)/tar
+	./$(ARCH_BUILD_DIR)/tar
 	# fs/proc
 	$(CC) $(CFLAGS_FOR_TESTS) -I./test/proxies/ -o $(ARCH_BUILD_DIR)/proc test/fs/proc.c src/arch/$(ARCH)/fs/proc.c src/arch/$(ARCH)/fs/vfs.c
-	valgrind $(VALGRIND_OPTS) ./$(ARCH_BUILD_DIR)/proc
+	./$(ARCH_BUILD_DIR)/proc
 	# fs/sock
 	$(CC) $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/sock test/fs/sock.c src/arch/$(ARCH)/fs/sock.c src/arch/$(ARCH)/fs/vfs.c
-	valgrind $(VALGRIND_OPTS) ./$(ARCH_BUILD_DIR)/sock
+	./$(ARCH_BUILD_DIR)/sock
 	# mmu/frame
 	$(CC) $(CFLAGS_FOR_TESTS) -Wformat=0 -I./test/proxies/ -o $(ARCH_BUILD_DIR)/frame test/mmu/frame.c src/arch/$(ARCH)/mmu/frame.c src/arch/$(ARCH)/core/multiboot.c src/arch/$(ARCH)/mmu/bitmap.c
-	valgrind $(VALGRIND_OPTS) ./$(ARCH_BUILD_DIR)/frame
+	./$(ARCH_BUILD_DIR)/frame
 	# config/inish
 	$(CC) $(CFLAGS_FOR_TESTS) -I./test/proxies/ -o $(ARCH_BUILD_DIR)/inish test/config/inish.c src/arch/$(ARCH)/config/inish.c
-	valgrind $(VALGRIND_OPTS) ./$(ARCH_BUILD_DIR)/inish
+	./$(ARCH_BUILD_DIR)/inish
 	# mmu/bitmap
 	$(CC) $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/bitmap test/mmu/bitmap.c src/arch/$(ARCH)/mmu/bitmap.c
 	./$(ARCH_BUILD_DIR)/bitmap

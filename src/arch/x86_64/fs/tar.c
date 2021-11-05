@@ -245,9 +245,8 @@ dirent_t* tar_readdir(inode_t inode, uint64_t num)
     i++;
   }
 
-  free(name);
-
   if (!found) {
+    free(name);
     free(dir);
 
     return 0;
@@ -259,6 +258,7 @@ dirent_t* tar_readdir(inode_t inode, uint64_t num)
   dir->inode = nodes[i];
 
   FS_DEBUG("returning directory entry=%s", dir->name);
+  free(name);
 
   return dir;
 }
