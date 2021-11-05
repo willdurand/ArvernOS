@@ -270,6 +270,10 @@ inode_t vfs_namei_mount(const char* path, inode_t root)
     current->driver = root->driver;
     current->data = root->data;
 
+    if (root->children != NULL) {
+      free(root->children);
+    }
+
     free(root);
   }
 
