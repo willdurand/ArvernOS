@@ -20,7 +20,7 @@ typedef struct tss
   uint64_t reserved2;
   uint16_t reserved3;
   uint16_t iopb_offset;
-} tss_t;
+} __attribute__((packed)) tss_t;
 
 void tss_init();
 

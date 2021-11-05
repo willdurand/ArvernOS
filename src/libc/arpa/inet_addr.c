@@ -19,5 +19,6 @@ in_addr_t inet_addr(const char* s)
 
 in_addr_t inet_addr2(uint8_t ip[4])
 {
-  return (in_addr_t)(ip[0] | (ip[1] << 8) | (ip[2] << 16) | (ip[3] << 24));
+  return (in_addr_t)(ip[0] | (ip[1] << 8) | (ip[2] << 16) |
+                     ((uint32_t)ip[3] << 24));
 }

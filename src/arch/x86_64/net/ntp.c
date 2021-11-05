@@ -67,7 +67,8 @@ int ntp_request(net_interface_t* interface,
   }
 
   ntp_header.transmit_ts.seconds = ntohl(ntp_header.transmit_ts.seconds);
-  ntp_header.transmit_ts.fraction = ntohl(ntp_header.transmit_ts.fraction);
+  ntp_header.transmit_ts.fraction =
+    ntohl((uint32_t)ntp_header.transmit_ts.fraction);
 
   *server_time = ntp_header.transmit_ts.seconds - NTP_TIMESTAMP_DELTA;
 
