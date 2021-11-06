@@ -103,11 +103,13 @@ loaded, run:
 $ make clean run-debug
 ```
 
-**Note:** in DEBUG mode, logging uses the serial port `COM1` to write various
-debugging information. `qemu` is configured to write the output of this serial
-port to `./log/debug.log`. `DEBUG` level logs are not necessarily written by
-default, though, and it is possible to enable `DEBUG` logs for specific modules
-like this:
+#### Logging
+
+In DEBUG mode, logging uses the serial port `COM1` to write various debugging
+information. `qemu` is configured to write the output of this serial port to
+`./log/debug.log`. `DEBUG` level logs are not necessarily written by default,
+though, and it is possible to enable `DEBUG` logs for specific modules like
+this:
 
 ```
 # Enable the debug logs for the "net" and "fs" modules
@@ -126,6 +128,52 @@ The available debug variables are:
 - `ENABLE_USERLAND_DEBUG`
 
 There is also `ENABLE_ALL_DEBUG` to turn all debug logs on.
+
+##### Stacktraces
+
+Log files may contain stacktraces:
+
+```
+[...]
+DEBUG    | src/arch/x86_64/kshell/kshell.c:108:run_command(): command='selftest' argc=1
+DEBUG    | src/arch/x86_64/kernel/panic.c:30:kernel_dump_stacktrace(): kernel stacktrace:
+DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 00000000001163B3
+DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 0000000000115941
+DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 0000000000115BE1
+DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 00000000001152BF
+DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 000000000010935B
+```
+
+Use the `tools/fix-stacktrace.py` script to add missing symbol names to the
+output:
+
+```
+$ ./tools/fix-stacktrace.py build/x86_64/symbols.txt log/debug.log
+[...]
+DEBUG    | src/arch/x86_64/kshell/kshell.c:108:run_command(): command='selftest' argc=1
+DEBUG    | src/arch/x86_64/kernel/panic.c:30:kernel_dump_stacktrace(): kernel stacktrace:
+DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   00000000001163B3 - selftest +0x63
+DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   0000000000115941 - run_command +0x271
+DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   0000000000115BE1 - kshell_run +0x181
+DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   00000000001152BF - kmain +0x107f
+DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   000000000010935B - long_mode_start +0x13
+```
+
+In addition, you might want to find the corresponding line of code in the source
+files by using `llvm-addr2line` or `llvm-symbolizer`:
+
+```
+$ llvm-symbolizer-13 --obj=build/x86_64/dist/kernel-x86_64.bin 0x01163B3
+print_selftest_header
+/Users/william/projects/willos/src/arch/x86_64/kshell/selftest.c:12:3
+selftest
+/Users/william/projects/willos/src/arch/x86_64/kshell/selftest.c:30:3
+```
+
+```
+$ llvm-addr2line-13 -e build/x86_64/dist/kernel-x86_64.bin 01163B3
+/Users/william/projects/willos/src/arch/x86_64/kshell/selftest.c:12
+```
 
 ### Release
 
