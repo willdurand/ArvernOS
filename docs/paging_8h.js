@@ -1,7 +1,7 @@
 var paging_8h =
 [
-    [ "page_entry", "structpage__entry.html", null ],
-    [ "page_table", "structpage__table.html", null ],
+    [ "page_entry_t", "structpage__entry__t.html", null ],
+    [ "page_table_t", "structpage__table__t.html", null ],
     [ "PAGING_FLAG_NO_EXECUTE", "paging_8h.html#a9b636c6433bad872f80f46458db566f7", null ],
     [ "PAGING_FLAG_PRESENT", "paging_8h.html#a28ff91b933f24d95e25ec5f03a736117", null ],
     [ "PAGING_FLAG_USER_ACCESSIBLE", "paging_8h.html#a5c235330203c88a6c6800a58a49cef17", null ],

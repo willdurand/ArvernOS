@@ -1,4 +1,4 @@
-<map id="src/kernel/panic.h" name="src/kernel/panic.h">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,131,32"/>
-<area shape="rect" id="node2" title=" " alt="" coords="31,80,105,107"/>
+<map id="src/arch/x86_64/kernel/panic.h" name="src/arch/x86_64/kernel/panic.h">
+<area shape="rect" id="node1" title=" " alt="" coords="5,5,163,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="46,95,122,121"/>
 </map>

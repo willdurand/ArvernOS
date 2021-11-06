@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['descriptor_265',['descriptor',['../structdescriptor.html',1,'']]],
-  ['dhcp_5fheader_266',['dhcp_header',['../structdhcp__header.html',1,'']]],
-  ['dirent_267',['dirent',['../structdirent.html',1,'']]],
-  ['dns_5fanswer_5fheader_268',['dns_answer_header',['../structdns__answer__header.html',1,'']]],
-  ['dns_5fheader_269',['dns_header',['../structdns__header.html',1,'']]]
+  ['elf_5fheader_5ft_276',['elf_header_t',['../structelf__header__t.html',1,'']]],
+  ['elf_5fprogram_5fheader_5ft_277',['elf_program_header_t',['../structelf__program__header__t.html',1,'']]],
+  ['elf_5fsection_5fheader_5ft_278',['elf_section_header_t',['../structelf__section__header__t.html',1,'']]],
+  ['ethernet_5fheader_5ft_279',['ethernet_header_t',['../structethernet__header__t.html',1,'']]]
 ];

@@ -1,6 +1,6 @@
-<map id="src/net/ethernet.h" name="src/net/ethernet.h">
-<area shape="rect" id="node1" title=" " alt="" coords="38,5,162,32"/>
-<area shape="rect" id="node2" href="$net_8h.html" title="This module defines network interfaces and drivers." alt="" coords="26,80,99,107"/>
-<area shape="rect" id="node4" title=" " alt="" coords="105,155,170,181"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,155,80,181"/>
+<map id="src/arch/x86_64/net/ethernet.h" name="src/arch/x86_64/net/ethernet.h">
+<area shape="rect" id="node1" title=" " alt="" coords="31,5,170,47"/>
+<area shape="rect" id="node2" href="$net_8h.html" title="This module defines network interfaces and drivers." alt="" coords="27,95,100,121"/>
+<area shape="rect" id="node4" title=" " alt="" coords="105,169,171,196"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,169,81,196"/>
 </map>

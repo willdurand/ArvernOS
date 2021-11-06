@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['enable_469',['enable',['../unionpci__device.html#a7d682630d8362700f6eba62e7e302248',1,'pci_device']]],
-  ['entsize_470',['entsize',['../structelf__section__header.html#a8b02731080db801fc77cc8ee4242cdb2',1,'elf_section_header']]]
+  ['enable_476',['enable',['../unionpci__device__t.html#a3b2a8dd5288be193663299e3ae378a5b',1,'pci_device_t']]],
+  ['entsize_477',['entsize',['../structelf__section__header__t.html#afe55e22dc0bc25ce8354bb602ba79857',1,'elf_section_header_t']]]
 ];

@@ -1,20 +1,12 @@
 var searchData=
 [
-  ['map_141',['map',['../paging_8h.html#af55681dc6c9ebb94b26ea497afe673f8',1,'paging.c']]],
-  ['map_5fmultiple_142',['map_multiple',['../paging_8h.html#a623291cd42facbd946e92e5307abe313',1,'paging.c']]],
-  ['max_5fpages_143',['MAX_PAGES',['../alloc_8h.html#a85f89e842475a0305bb474a98d61bdfe',1,'alloc.h']]],
-  ['multiboot_2eh_144',['multiboot.h',['../multiboot_8h.html',1,'']]],
-  ['multiboot_5fcolor_145',['multiboot_color',['../structmultiboot__color.html',1,'']]],
-  ['multiboot_5felf_5fsections_5fentry_146',['multiboot_elf_sections_entry',['../structmultiboot__elf__sections__entry.html',1,'']]],
-  ['multiboot_5finfo_147',['multiboot_info',['../structmultiboot__info.html',1,'']]],
-  ['multiboot_5fmmap_5fentry_148',['multiboot_mmap_entry',['../structmultiboot__mmap__entry.html',1,'']]],
-  ['multiboot_5ftag_149',['multiboot_tag',['../structmultiboot__tag.html',1,'']]],
-  ['multiboot_5ftag_5fbasic_5fmeminfo_150',['multiboot_tag_basic_meminfo',['../structmultiboot__tag__basic__meminfo.html',1,'']]],
-  ['multiboot_5ftag_5fbootdev_151',['multiboot_tag_bootdev',['../structmultiboot__tag__bootdev.html',1,'']]],
-  ['multiboot_5ftag_5felf_5fsections_152',['multiboot_tag_elf_sections',['../structmultiboot__tag__elf__sections.html',1,'']]],
-  ['multiboot_5ftag_5fframebuffer_153',['multiboot_tag_framebuffer',['../structmultiboot__tag__framebuffer.html',1,'']]],
-  ['multiboot_5ftag_5fframebuffer_5fcommon_154',['multiboot_tag_framebuffer_common',['../structmultiboot__tag__framebuffer__common.html',1,'']]],
-  ['multiboot_5ftag_5fmmap_155',['multiboot_tag_mmap',['../structmultiboot__tag__mmap.html',1,'']]],
-  ['multiboot_5ftag_5fmodule_156',['multiboot_tag_module',['../structmultiboot__tag__module.html',1,'']]],
-  ['multiboot_5ftag_5fstring_157',['multiboot_tag_string',['../structmultiboot__tag__string.html',1,'']]]
+  ['name_164',['name',['../structelf__section__header__t.html#ac874b50ab72c734c2b5eb5dfd02d989b',1,'elf_section_header_t']]],
+  ['net_2eh_165',['net.h',['../net_8h.html',1,'']]],
+  ['net_5fdriver_166',['net_driver',['../structnet__driver.html',1,'']]],
+  ['net_5fget_5finterface_167',['net_get_interface',['../net_8h.html#a18a484aee8b80774848889fdcff24496',1,'net.c']]],
+  ['net_5finterface_168',['net_interface',['../structnet__interface.html',1,'']]],
+  ['net_5finterface_5finit_169',['net_interface_init',['../net_8h.html#a5da8d53d480b13e24e293e0ab90a0ac3',1,'net.c']]],
+  ['ntp_2eh_170',['ntp.h',['../ntp_8h.html',1,'']]],
+  ['ntp_5fheader_5ft_171',['ntp_header_t',['../structntp__header__t.html',1,'']]],
+  ['ntp_5ftimestamp_5ft_172',['ntp_timestamp_t',['../structntp__timestamp__t.html',1,'']]]
 ];

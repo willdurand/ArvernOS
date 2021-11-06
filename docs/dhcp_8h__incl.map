@@ -1,10 +1,10 @@
-<map id="src/net/dhcp.h" name="src/net/dhcp.h">
-<area shape="rect" id="node1" title=" " alt="" coords="130,5,235,32"/>
-<area shape="rect" id="node2" href="$net_8h.html" title="This module defines network interfaces and drivers." alt="" coords="53,229,126,256"/>
-<area shape="rect" id="node5" href="$udp_8h.html" title=" " alt="" coords="145,80,221,107"/>
-<area shape="rect" id="node8" title=" " alt="" coords="257,229,348,256"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,304,80,331"/>
-<area shape="rect" id="node4" title=" " alt="" coords="105,304,170,331"/>
-<area shape="rect" id="node6" title=" " alt="" coords="151,229,233,256"/>
-<area shape="rect" id="node7" href="$ipv4_8h.html" title=" " alt="" coords="182,155,261,181"/>
+<map id="src/arch/x86_64/net/dhcp.h" name="src/arch/x86_64/net/dhcp.h">
+<area shape="rect" id="node1" title=" " alt="" coords="115,5,254,47"/>
+<area shape="rect" id="node2" href="$net_8h.html" title="This module defines network interfaces and drivers." alt="" coords="53,244,127,271"/>
+<area shape="rect" id="node5" href="$udp_8h.html" title=" " alt="" coords="146,95,223,121"/>
+<area shape="rect" id="node8" title=" " alt="" coords="261,244,351,271"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,319,81,345"/>
+<area shape="rect" id="node4" title=" " alt="" coords="105,319,171,345"/>
+<area shape="rect" id="node6" title=" " alt="" coords="151,244,237,271"/>
+<area shape="rect" id="node7" href="$ipv4_8h.html" title=" " alt="" coords="183,169,263,196"/>
 </map>

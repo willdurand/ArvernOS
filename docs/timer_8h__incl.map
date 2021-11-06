@@ -1,4 +1,4 @@
-<map id="src/drivers/timer.h" name="src/drivers/timer.h">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,132,32"/>
-<area shape="rect" id="node2" title=" " alt="" coords="36,80,101,107"/>
+<map id="src/arch/x86_64/drivers/timer.h" name="src/arch/x86_64/drivers/timer.h">
+<area shape="rect" id="node1" title=" " alt="" coords="5,5,165,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="53,95,118,121"/>
 </map>

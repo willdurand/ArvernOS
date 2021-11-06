@@ -1,7 +1,7 @@
-<map id="src/core/multiboot.h" name="src/core/multiboot.h">
-<area shape="rect" id="node1" title=" " alt="" coords="161,5,298,32"/>
-<area shape="rect" id="node2" href="$console_8h.html" title=" " alt="" coords="5,80,144,107"/>
-<area shape="rect" id="node3" href="$frame_8h.html" title=" " alt="" coords="169,80,290,107"/>
-<area shape="rect" id="node5" href="$paging_8h.html" title=" " alt="" coords="265,155,391,181"/>
-<area shape="rect" id="node4" href="$alloc_8h.html" title=" " alt="" coords="125,155,240,181"/>
+<map id="src/arch/x86_64/core/multiboot.h" name="src/arch/x86_64/core/multiboot.h">
+<area shape="rect" id="node1" title=" " alt="" coords="189,5,336,47"/>
+<area shape="rect" id="node2" href="$console_8h.html" title=" " alt="" coords="5,95,163,136"/>
+<area shape="rect" id="node3" href="$frame_8h.html" title=" " alt="" coords="187,95,338,136"/>
+<area shape="rect" id="node5" href="$paging_8h.html" title=" " alt="" coords="301,184,451,225"/>
+<area shape="rect" id="node4" href="$alloc_8h.html" title=" " alt="" coords="126,184,277,225"/>
 </map>

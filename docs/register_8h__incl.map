@@ -1,4 +1,4 @@
-<map id="src/core/register.h" name="src/core/register.h">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,132,32"/>
-<area shape="rect" id="node2" title=" " alt="" coords="36,80,101,107"/>
+<map id="src/arch/x86_64/core/register.h" name="src/arch/x86_64/core/register.h">
+<area shape="rect" id="node1" title=" " alt="" coords="5,5,152,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="46,95,111,121"/>
 </map>

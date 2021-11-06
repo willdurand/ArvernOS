@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['s_5fcdate_307',['s_cdate',['../structs__cdate.html',1,'']]],
-  ['sock_5fentry_308',['sock_entry',['../structsock__entry.html',1,'']]],
-  ['stack_5fframe_309',['stack_frame',['../structstack__frame.html',1,'']]]
+  ['tar_5fheader_5ft_317',['tar_header_t',['../structtar__header__t.html',1,'']]],
+  ['tss_5ft_318',['tss_t',['../structtss__t.html',1,'']]]
 ];

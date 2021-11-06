@@ -1,24 +1,26 @@
 /*
-@licstart  The following is the entire license notice for the
-JavaScript code in this file.
+ @licstart  The following is the entire license notice for the JavaScript code in this file.
 
-Copyright (C) 1997-2019 by Dimitri van Heesch
+ The MIT License (MIT)
 
-This program is free software; you can redistribute it and/or modify
-it under the terms of version 2 of the GNU General Public License as published by
-the Free Software Foundation
+ Copyright (C) 1997-2020 by Dimitri van Heesch
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
+ Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+ and associated documentation files (the "Software"), to deal in the Software without restriction,
+ including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
 
-You should have received a copy of the GNU General Public License along
-with this program; if not, write to the Free Software Foundation, Inc.,
-51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ The above copyright notice and this permission notice shall be included in all copies or
+ substantial portions of the Software.
 
-@licend  The above is the entire license notice
-for the JavaScript code in this file
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+ BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+ @licend  The above is the entire license notice for the JavaScript code in this file
 */
 var NAVTREE =
 [
@@ -30,15 +32,24 @@ var NAVTREE =
       [ "Linux", "index.html#autotoc_md4", null ]
     ] ],
     [ "Building willOS", "index.html#autotoc_md5", [
-      [ "Debug", "index.html#autotoc_md6", null ],
-      [ "Release", "index.html#autotoc_md7", null ],
-      [ "Boot options", "index.html#autotoc_md8", null ]
+      [ "Debug", "index.html#autotoc_md6", [
+        [ "Logging", "index.html#autotoc_md7", [
+          [ "Stacktraces", "index.html#autotoc_md8", null ]
+        ] ]
+      ] ],
+      [ "Release", "index.html#autotoc_md9", null ],
+      [ "Boot options", "index.html#autotoc_md10", null ]
     ] ],
-    [ "Early boot sequence", "index.html#autotoc_md9", null ],
-    [ "License", "index.html#autotoc_md10", null ],
+    [ "Early boot sequence", "index.html#autotoc_md11", null ],
+    [ "Memory management", "index.html#autotoc_md12", [
+      [ "Memory map", "index.html#autotoc_md13", [
+        [ "Virtual address space", "index.html#autotoc_md14", null ]
+      ] ]
+    ] ],
+    [ "License", "index.html#autotoc_md15", null ],
     [ "init", "md_userland_init__r_e_a_d_m_e.html", null ],
     [ "userland", "md_userland__r_e_a_d_m_e.html", [
-      [ "Local builds", "md_userland__r_e_a_d_m_e.html#autotoc_md13", null ]
+      [ "Local builds", "md_userland__r_e_a_d_m_e.html#autotoc_md18", null ]
     ] ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
@@ -63,7 +74,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "alloc_8h.html",
-"sock_8h.html#aedc77d5ff0db9f7867873d7387db0be6"
+"register_8h.html#a591479e9e26bb3a18a1dd959ab4e5e82"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

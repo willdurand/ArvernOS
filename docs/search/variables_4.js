@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['flags_471',['flags',['../structelf__section__header.html#a4a2021e43cc873ee45d437b720ccd5c1',1,'elf_section_header']]],
-  ['function_5fnumber_472',['function_number',['../unionpci__device.html#a3752288a1cd4a82b0667bd39439c8cf4',1,'pci_device']]]
+  ['flags_478',['flags',['../structelf__section__header__t.html#a9f359cf835d1a06da5445ef3100033df',1,'elf_section_header_t']]],
+  ['function_5fnumber_479',['function_number',['../unionpci__device__t.html#a72ec60cd7f37ed6a45f2bdd341a656d3',1,'pci_device_t']]]
 ];

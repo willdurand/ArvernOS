@@ -1,4 +1,4 @@
-<map id="src/kernel/kmain.h" name="src/kernel/kmain.h">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,135,32"/>
-<area shape="rect" id="node2" title=" " alt="" coords="37,80,103,107"/>
+<map id="src/arch/x86_64/kernel/kmain.h" name="src/arch/x86_64/kernel/kmain.h">
+<area shape="rect" id="node1" title=" " alt="" coords="5,5,163,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="51,95,117,121"/>
 </map>

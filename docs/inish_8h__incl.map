@@ -1,7 +1,7 @@
-<map id="src/config/inish.h" name="src/config/inish.h">
-<area shape="rect" id="node1" title=" " alt="" coords="125,5,246,32"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,80,80,107"/>
-<area shape="rect" id="node3" title=" " alt="" coords="105,80,170,107"/>
-<area shape="rect" id="node4" title=" " alt="" coords="195,80,275,107"/>
-<area shape="rect" id="node5" title=" " alt="" coords="299,80,389,107"/>
+<map id="src/arch/x86_64/config/inish.h" name="src/arch/x86_64/config/inish.h">
+<area shape="rect" id="node1" title=" " alt="" coords="108,5,264,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,95,81,121"/>
+<area shape="rect" id="node3" title=" " alt="" coords="105,95,171,121"/>
+<area shape="rect" id="node4" title=" " alt="" coords="195,95,273,121"/>
+<area shape="rect" id="node5" title=" " alt="" coords="297,95,387,121"/>
 </map>

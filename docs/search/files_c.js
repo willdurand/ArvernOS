@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['serial_2eh_346',['serial.h',['../serial_8h.html',1,'']]],
-  ['sock_2eh_347',['sock.h',['../sock_8h.html',1,'']]]
+  ['serial_2eh_352',['serial.h',['../drivers_2serial_8h.html',1,'(Global Namespace)'],['../fs_2serial_8h.html',1,'(Global Namespace)']]],
+  ['sock_2eh_353',['sock.h',['../sock_8h.html',1,'']]]
 ];

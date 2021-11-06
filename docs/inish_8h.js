@@ -1,9 +1,9 @@
 var inish_8h =
 [
-    [ "inish_kv_pair", "structinish__kv__pair.html", null ],
-    [ "inish_array", "structinish__array.html", null ],
-    [ "inish_section", "structinish__section.html", null ],
-    [ "inish_config", "structinish__config.html", null ],
+    [ "inish_kv_pair_t", "structinish__kv__pair__t.html", null ],
+    [ "inish_array_t", "structinish__array__t.html", null ],
+    [ "inish_section_t", "structinish__section__t.html", null ],
+    [ "inish_config_t", "structinish__config__t.html", null ],
     [ "inish_free", "inish_8h.html#a2dd888c965cc5597c8534c529c203256", null ],
     [ "inish_get_array", "inish_8h.html#a6bdeab0345afbd491f0a56a2d4c1d547", null ],
     [ "inish_get_bool", "inish_8h.html#a40db81930c9627ef29d70791e003a8cd", null ],

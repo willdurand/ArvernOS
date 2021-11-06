@@ -1,6 +1,6 @@
-<map id="src/net/udp.h" name="src/net/udp.h">
-<area shape="rect" id="node1" title=" " alt="" coords="135,5,234,32"/>
-<area shape="rect" id="node2" href="$dhcp_8h.html" title=" " alt="" coords="5,80,111,107"/>
-<area shape="rect" id="node3" href="$dns_8h.html" title=" " alt="" coords="135,80,234,107"/>
-<area shape="rect" id="node4" href="$ntp_8h.html" title=" " alt="" coords="259,80,353,107"/>
+<map id="src/arch/x86_64/net/udp.h" name="src/arch/x86_64/net/udp.h">
+<area shape="rect" id="node1" title=" " alt="" coords="168,5,307,47"/>
+<area shape="rect" id="node2" href="$dhcp_8h.html" title=" " alt="" coords="5,95,144,136"/>
+<area shape="rect" id="node3" href="$dns_8h.html" title=" " alt="" coords="168,95,307,136"/>
+<area shape="rect" id="node4" href="$ntp_8h.html" title=" " alt="" coords="331,95,469,136"/>
 </map>
