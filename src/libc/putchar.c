@@ -5,5 +5,6 @@
 
 void putchar(char c)
 {
-  write(STDOUT, &c, 1);
+  // Make sure we write a null-terminated string.
+  write(STDOUT, (char[]){ c, '\0' }, 1);
 }

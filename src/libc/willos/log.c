@@ -38,7 +38,8 @@ void willos_log_putchar(char c, void* arg)
     return;
   }
 
-  write(com1_fd, &c, 1);
+  // Make sure we write a null-terminated string.
+  write(com1_fd, (char[]){ c, '\0' }, 1);
 }
 
 #endif
