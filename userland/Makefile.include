@@ -25,14 +25,23 @@ endif
 OBJS := $(patsubst %.c, $(BUILD_DIR)/%.o, $(shell find . -name '*.c'))
 OBJS += $(addprefix $(BUILD_DIR)/$(EXTERNAL_DIR)/,$(EXTERNAL_OBJS))
 
-COMMON_CFLAGS += -Wall -Wextra -pedantic -std=c11
+WERRORS += -Wall -Wextra -Werror
+WERRORS += -Werror=implicit-function-declaration
+WERRORS += -Werror=int-conversion
+WERRORS += -Werror=incompatible-pointer-types
+WERRORS += -Werror=shift-count-overflow
+WERRORS += -Werror=switch
+
+COMMON_CFLAGS += $(WERRORS)
+COMMON_CFLAGS += -O2 -std=c11
 COMMON_CFLAGS += $(addprefix -I$(EXTERNAL_DIR)/,$(EXTERNAL_DEPS))
 
 CFLAGS += $(COMMON_CFLAGS)
 CFLAGS += --target=x86_64
+CFLAGS += -ffreestanding -nostdinc -nostdlib -fno-builtin
 # Add `-no-pie` to disable the PIE feature that causes `gcc` to not create an
 # executable if needed, see: https://access.redhat.com/blogs/766093/posts/1975793
-CFLAGS += -ffreestanding -fno-builtin -fno-pie
+CFLAGS += -fno-pie
 CFLAGS += -D$(PLATFORM)
 CFLAGS += -I $(ROOT_DIR)/include/
 
