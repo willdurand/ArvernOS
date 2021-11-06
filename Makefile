@@ -8,6 +8,7 @@ BUILD_MODE     = release
 BUILD_DIR      = build
 EXTERNAL_DIR   = external
 TOOLS_DIR      = tools
+LOG_DIR        = log
 ARCH_BUILD_DIR := $(BUILD_DIR)/$(ARCH)
 DIST_DIR       := $(ARCH_BUILD_DIR)/dist
 ISO_DIR        := $(ARCH_BUILD_DIR)/isofiles
@@ -26,6 +27,8 @@ INITRD_DIR     = initrd
 INITRD_TAR     = initrd.tar
 INITRD         := $(ISO_BOOT_DIR)/$(INITRD_TAR)
 GIT_HASH       := $(shell git rev-parse --short HEAD)
+SYMBOLS_FILE   := $(ARCH_BUILD_DIR)/symbols.txt
+LOG_FILE       = $(LOG_DIR)/$(BUILD_MODE).log
 
 # This should be a bitmap font.
 KERNEL_CONSOLE_FONT_PATH := $(EXTERNAL_DIR)/scalable-font2/fonts/u_vga16.sfn.gz
@@ -52,10 +55,11 @@ LIBC_TEST_FILES  := $(patsubst test/%.c, %, $(shell find test/libc -name '*.c'))
 
 NASM_OPTIONS := -dVBE_WIDTH=$(VBE_WIDTH) -dVBE_HEIGHT=$(VBE_HEIGHT) -dVBE_BPP=$(VBE_BPP)
 
+QEMU_OPTIONS += -serial file:$(LOG_FILE)
 QEMU_OPTIONS += -m 500M
 QEMU_OPTIONS += -netdev user,id=u1,ipv6=off,dhcpstart=10.0.2.20
 QEMU_OPTIONS += -device rtl8139,netdev=u1
-QEMU_OPTIONS += -object filter-dump,id=f1,netdev=u1,file=./log/traffic.pcap
+QEMU_OPTIONS += -object filter-dump,id=f1,netdev=u1,file=$(LOG_DIR)/traffic-$(BUILD_MODE).pcap
 
 INCLUDES += -Isrc/
 INCLUDES += -Isrc/arch/$(ARCH)/
@@ -169,7 +173,8 @@ $(GRUB_DIR): $(ISO_BOOT_DIR)
 $(KERNEL): $(ISO_BOOT_DIR) $(DIST_DIR) $(LIBK_ASM_OBJECTS) $(LIBK_OBJECTS) $(KERNEL_CONSOLE_FONT)
 	$(PROGRESS) "LD" $@
 	$(LD) --nmagic --output=$@ --script=$(LINKER) $(LIBK_ASM_OBJECTS) $(LIBK_OBJECTS) $(KERNEL_CONSOLE_FONT)
-	cp $(KERNEL) $(DIST_DIR)
+	$(NM) $@ | awk '{ print $$1, $$3 }' | sort > $(SYMBOLS_FILE)
+	cp $@ $(DIST_DIR)
 
 kernel: ## compile the kernel
 kernel: $(KERNEL)
@@ -246,7 +251,6 @@ iso: $(ISO)
 .PHONY: iso
 
 run: ## run the OS in release mode
-run: QEMU_OPTIONS += -serial file:./log/release.log
 run: $(ISO)
 	$(PROGRESS) "RUN" $<
 	$(QEMU) -cdrom $< $(QEMU_OPTIONS)
@@ -260,14 +264,16 @@ debug: $(ISO)
 .PHONY: debug
 
 run-debug: ## run the OS in debug mode
-run-debug: QEMU_OPTIONS += -serial file:./log/debug.log -d guest_errors,unimp --no-reboot
+run-debug: BUILD_MODE = debug
+run-debug: QEMU_OPTIONS += -d guest_errors,unimp --no-reboot
 run-debug: debug
 	$(PROGRESS) "RUN" $(ISO)
 	$(QEMU) -cdrom $(ISO) $(QEMU_OPTIONS)
 .PHONY: run-debug
 
 run-test: ## run the OS in test mode
-run-test: QEMU_OPTIONS += -curses -serial file:./log/test.log
+run-test: BUILD_MODE = test
+run-test: QEMU_OPTIONS += -curses
 run-test: GRUB_KERNEL_CMDLINE = /bin/boot-and-exit
 run-test: run
 	cat initrd/info
@@ -283,7 +289,8 @@ fmt: ## automatically format the code with clang-format
 .PHONY: fmt
 
 gdb: ## build, run the OS in debug mode and enable GDB
-gdb: QEMU_OPTIONS += -nographic -s -S -serial file:./log/debug.log
+gdb: BUILD_MODE = debug
+gdb: QEMU_OPTIONS += -nographic -s -S
 gdb: debug run
 .PHONY: gdb
 
