@@ -38,7 +38,8 @@ def fix_stacktrace():
     load_symbols_table(args.symbols)
 
     with open(args.logfile, "r") as logfile:
-        stacktrace = re.compile('.+kernel_dump_stacktrace.+([0-9A-Z]{16})')
+        stacktrace = re.compile(".+kernel_dump_stacktrace.+([0-9A-Z]{16}).+\\?\\?\\?")
+        offset = len(" - ???+0x0\n")
 
         for line in logfile.readlines():
             matches = stacktrace.match(line)
@@ -46,8 +47,8 @@ def fix_stacktrace():
             if matches:
                 addr = int(matches.group(1), 16)
                 [symbol_addr, name] = find_symbol(addr)
-                offset = '+0x{:x}'.format(addr - symbol_addr)
-                print(f"{line[:-1]} - {name} {offset}")
+                addr_offset = '+0x{:x}'.format(addr - symbol_addr)
+                print(f"{line[:-offset]} - {name}{addr_offset}")
             else:
                 print(line, end="")
 

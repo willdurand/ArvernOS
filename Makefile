@@ -27,7 +27,8 @@ INITRD_DIR     = initrd
 INITRD_TAR     = initrd.tar
 INITRD         := $(ISO_BOOT_DIR)/$(INITRD_TAR)
 GIT_HASH       := $(shell git rev-parse --short HEAD)
-SYMBOLS_FILE   := $(ARCH_BUILD_DIR)/symbols.txt
+SYMBOLS_TXT    := symbols.txt
+SYMBOLS        := $(ISO_BOOT_DIR)/$(SYMBOLS_TXT)
 LOG_FILE       = $(LOG_DIR)/$(BUILD_MODE).log
 
 # This should be a bitmap font.
@@ -138,12 +139,14 @@ set default=$(GRUB_DEFAULT)
 menuentry "$(OS_NAME) $(BUILD_MODE)" {
 	multiboot2 /boot/$(KERNEL_BIN) $(GRUB_KERNEL_CMDLINE)
 	module2 /boot/$(INITRD_TAR) initrd
+	module2 /boot/$(SYMBOLS_TXT) symbols
 	boot
 }
 
 menuentry "$(OS_NAME) $(BUILD_MODE) (kernel mode)" {
 	multiboot2 /boot/$(KERNEL_BIN) kshell
 	module2 /boot/$(INITRD_TAR) initrd
+	module2 /boot/$(SYMBOLS_TXT) symbols
 	boot
 }
 endef
@@ -173,7 +176,7 @@ $(GRUB_DIR): $(ISO_BOOT_DIR)
 $(KERNEL): $(ISO_BOOT_DIR) $(DIST_DIR) $(LIBK_ASM_OBJECTS) $(LIBK_OBJECTS) $(KERNEL_CONSOLE_FONT)
 	$(PROGRESS) "LD" $@
 	$(LD) --nmagic --output=$@ --script=$(LINKER) $(LIBK_ASM_OBJECTS) $(LIBK_OBJECTS) $(KERNEL_CONSOLE_FONT)
-	$(NM) $@ | awk '{ print $$1, $$3 }' | sort > $(SYMBOLS_FILE)
+	$(NM) $@ | awk '{ print $$1, $$3 }' | sort > $(SYMBOLS)
 	cp $@ $(DIST_DIR)
 
 kernel: ## compile the kernel
