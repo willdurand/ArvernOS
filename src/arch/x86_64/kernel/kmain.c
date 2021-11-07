@@ -39,6 +39,7 @@ void print_debug_gdt();
 void print_debug_tss();
 void load_modules(multiboot_info_t* mbi);
 void load_initrd(multiboot_tag_module_t* module);
+void load_symbols(multiboot_tag_module_t* module, uint64_t size);
 
 void print_debug_tss()
 {
@@ -135,12 +136,22 @@ void load_modules(multiboot_info_t* mbi)
        tag = (multiboot_tag_t*)((uint8_t*)tag + ((tag->size + 7) & ~7))) {
     if (tag->type == MULTIBOOT_TAG_TYPE_MODULE) {
       multiboot_tag_module_t* module = (multiboot_tag_module_t*)tag;
+      uint64_t size = module->mod_end - module->mod_start;
 
       if (strcmp(module->cmdline, "initrd") == 0) {
         load_initrd(module);
+      } else if (strcmp(module->cmdline, "symbols") == 0) {
+        load_symbols(module, size);
       }
     }
   }
+}
+
+void load_symbols(multiboot_tag_module_t* module, uint64_t size)
+{
+  print_step("loading debug symbols");
+  kernel_load_symbols(module->mod_start, size);
+  print_ok();
 }
 
 void load_initrd(multiboot_tag_module_t* module)

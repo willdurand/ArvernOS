@@ -3,6 +3,7 @@
 #define CORE_PANIC_H
 
 #include <logging.h>
+#include <stdint.h>
 
 #define __PANIC(format, ...)                                                   \
   DEBUG(format "%s", __VA_ARGS__);                                             \
@@ -27,6 +28,17 @@ typedef struct stack_frame
  */
 void kernel_panic(const char* format, ...);
 
+/**
+ * Loads symbols used in stacktraces.
+ *
+ * @param addr the address of the symbols data
+ * @param size the size of the symbols data
+ */
+void kernel_load_symbols(uint64_t addr, uint64_t size);
+
+/**
+ * Prints a stacktrace.
+ */
 void kernel_dump_stacktrace();
 
 #endif

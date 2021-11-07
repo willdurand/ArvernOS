@@ -40,6 +40,10 @@ size_t strspn(const char* s1, const char* s2);
 
 char* strchr(const char* s, int c);
 
+// Like strchr() except that when `c` is not found in `s`, it returns a pointer
+// to the null byte at the end of `s`, rather than `NULL`.
+char* strchrnul(const char* s, int c);
+
 // Scans the initial `n` bytes of the memory area pointed to by `str` for the
 // first instance of `c`. Both `c` and the bytes of the memory area pointed to
 // by `str` are interpreted as unsigned char.
