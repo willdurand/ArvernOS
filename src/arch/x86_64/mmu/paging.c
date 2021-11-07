@@ -167,18 +167,28 @@ void remap_kernel(multiboot_info_t* mbi)
   }
   MMU_DEBUG("%s", "multiboot info mapped!");
 
+  // Find the first module.
   multiboot_tag_module_t* module =
     (multiboot_tag_module_t*)find_multiboot_tag(mbi, MULTIBOOT_TAG_TYPE_MODULE);
-  frame_number_t initrd_start_frame =
+  frame_number_t modules_start_frame =
     frame_containing_address((uint64_t)module->mod_start);
-  frame_number_t initrd_end_frame =
-    frame_containing_address((uint64_t)module->mod_end - 1);
+
+  // Find the last frame of the last module.
+  frame_number_t modules_end_frame;
+  for (multiboot_tag_t* tag = (multiboot_tag_t*)mbi->tags;
+       tag->type != MULTIBOOT_TAG_TYPE_END;
+       tag = (multiboot_tag_t*)((uint8_t*)tag + ((tag->size + 7) & ~7))) {
+    if (tag->type == MULTIBOOT_TAG_TYPE_MODULE) {
+      modules_end_frame = frame_containing_address(
+        (uint64_t)((multiboot_tag_module_t*)tag)->mod_end - 1);
+    }
+  }
 
   MMU_DEBUG("mapping multiboot modules: start_frame=%d end_frame=%d",
-            initrd_start_frame,
-            initrd_end_frame);
+            modules_start_frame,
+            modules_end_frame);
 
-  for (uint64_t i = initrd_start_frame; i <= initrd_end_frame; i++) {
+  for (uint64_t i = modules_start_frame; i <= modules_end_frame; i++) {
     identity_map(frame_start_address(i), PAGING_FLAG_PRESENT);
   }
   MMU_DEBUG("%s", "mapped multiboot modules!");

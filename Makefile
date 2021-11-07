@@ -137,13 +137,13 @@ set default=$(GRUB_DEFAULT)
 
 menuentry "$(OS_NAME) $(BUILD_MODE)" {
 	multiboot2 /boot/$(KERNEL_BIN) $(GRUB_KERNEL_CMDLINE)
-	module2 /boot/$(INITRD_TAR)
+	module2 /boot/$(INITRD_TAR) initrd
 	boot
 }
 
 menuentry "$(OS_NAME) $(BUILD_MODE) (kernel mode)" {
 	multiboot2 /boot/$(KERNEL_BIN) kshell
-	module2 /boot/$(INITRD_TAR)
+	module2 /boot/$(INITRD_TAR) initrd
 	boot
 }
 endef
