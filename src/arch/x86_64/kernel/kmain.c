@@ -37,6 +37,8 @@ void check_interrupts();
 void busywait(uint64_t seconds);
 void print_debug_gdt();
 void print_debug_tss();
+void load_modules(multiboot_info_t* mbi);
+void load_initrd(multiboot_tag_module_t* module);
 
 void print_debug_tss()
 {
@@ -126,6 +128,68 @@ void check_interrupts()
   }
 }
 
+void load_modules(multiboot_info_t* mbi)
+{
+  for (multiboot_tag_t* tag = (multiboot_tag_t*)mbi->tags;
+       tag->type != MULTIBOOT_TAG_TYPE_END;
+       tag = (multiboot_tag_t*)((uint8_t*)tag + ((tag->size + 7) & ~7))) {
+    if (tag->type == MULTIBOOT_TAG_TYPE_MODULE) {
+      multiboot_tag_module_t* module = (multiboot_tag_module_t*)tag;
+
+      if (strcmp(module->cmdline, "initrd") == 0) {
+        load_initrd(module);
+      }
+    }
+  }
+}
+
+void load_initrd(multiboot_tag_module_t* module)
+{
+  print_sub_step("mounting tarfs (init ramdisk)");
+  inode_t initrd = vfs_mount("/", tar_fs_create((uint64_t)module->mod_start));
+
+  if (initrd) {
+    print_ok();
+
+    print_sub_step("creating /dev virtual directory");
+    if (vfs_mount("/dev", vfs_make_directory("dev"))) {
+      print_ok();
+    } else {
+      print_ko();
+    }
+
+    print_sub_step("mounting serial devices");
+    if (serial_fs_init()) {
+      print_ok();
+    } else {
+      print_ko();
+    }
+
+    print_sub_step("mounting debugfs");
+    if (debug_fs_init()) {
+      print_ok();
+    } else {
+      print_ko();
+    }
+
+    print_sub_step("mounting procfs");
+    if (proc_fs_init()) {
+      print_ok();
+    } else {
+      print_ko();
+    }
+
+    print_sub_step("mounting sockfs");
+    if (sock_fs_init()) {
+      print_ok();
+    } else {
+      print_ko();
+    }
+  } else {
+    print_ko();
+  }
+}
+
 void kmain(uint64_t addr)
 {
   multiboot_info_t* mbi = (multiboot_info_t*)addr;
@@ -187,51 +251,7 @@ void kmain(uint64_t addr)
   vfs_init();
   print_ok();
 
-  print_sub_step("mounting tarfs (init ramdisk)");
-  multiboot_tag_module_t* module =
-    (multiboot_tag_module_t*)find_multiboot_tag(mbi, MULTIBOOT_TAG_TYPE_MODULE);
-  inode_t initrd = vfs_mount("/", tar_fs_create((uint64_t)module->mod_start));
-
-  if (initrd) {
-    print_ok();
-
-    print_sub_step("creating /dev virtual directory");
-    if (vfs_mount("/dev", vfs_make_directory("dev"))) {
-      print_ok();
-    } else {
-      print_ko();
-    }
-
-    print_sub_step("mounting serial devices");
-    if (serial_fs_init()) {
-      print_ok();
-    } else {
-      print_ko();
-    }
-
-    print_sub_step("mounting debugfs");
-    if (debug_fs_init()) {
-      print_ok();
-    } else {
-      print_ko();
-    }
-
-    print_sub_step("mounting procfs");
-    if (proc_fs_init()) {
-      print_ok();
-    } else {
-      print_ko();
-    }
-
-    print_sub_step("mounting sockfs");
-    if (sock_fs_init()) {
-      print_ok();
-    } else {
-      print_ko();
-    }
-  } else {
-    print_ko();
-  }
+  load_modules(mbi);
 
   print_step("loading kernel.inish configuration");
   inish_config_t* kernel_cfg = inish_load("/etc/kernel.inish");
