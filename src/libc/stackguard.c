@@ -8,8 +8,9 @@
 
 #endif
 
-// TODO: Make this value randomized
-#define STACK_CHK_GUARD 0x595e9fbd94fda766
+#ifndef STACK_CHK_GUARD
+#define STACK_CHK_GUARD 0xdeadbeefa55a857
+#endif
 
 uintptr_t __stack_chk_guard = STACK_CHK_GUARD;
 
@@ -22,7 +23,7 @@ void __stack_chk_fail(void)
 #ifdef __is_libk
   PANIC("Stack smashing detected");
 #else
-  printf("Stack smashing detected\n");
+  printf("Stack smashing detected! Aborting program.\n");
   // TODO: use `abort()`
 #endif
 }
