@@ -81,7 +81,7 @@ CFLAGS += -DLOGS_WITH_COLORS
 CFLAGS += -O2 -std=c11 -ffreestanding -nostdinc -nostdlib -fno-builtin
 # We need to have -fno-omit-frame-pointer or the kernel stack backtrace won't
 # get the stack.
-CFLAGS += --target=x86_64 -fno-omit-frame-pointer -fstack-protector
+CFLAGS += --target=x86_64 -fno-omit-frame-pointer -fstack-protector-strong
 CFLAGS += -mno-red-zone -mno-mmx -mno-sse -mno-sse2 -mno-avx -mno-avx2
 CFLAGS += $(WERRORS)
 
