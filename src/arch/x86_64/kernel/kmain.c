@@ -12,6 +12,7 @@
 #include <drivers/serial.h>
 #include <drivers/timer.h>
 #include <fs/debug.h>
+#include <fs/dev.h>
 #include <fs/proc.h>
 #include <fs/serial.h>
 #include <fs/sock.h>
@@ -162,16 +163,16 @@ void load_initrd(multiboot_tag_module_t* module)
   if (initrd) {
     print_ok();
 
-    print_sub_step("creating /dev virtual directory");
-    if (vfs_mount("/dev", vfs_make_directory("dev"))) {
+    print_sub_step("mounting devfs");
+    if (dev_fs_init()) {
       print_ok();
-    } else {
-      print_ko();
-    }
 
-    print_sub_step("mounting serial devices");
-    if (serial_fs_init()) {
-      print_ok();
+      print_sub_step("mounting serial devices");
+      if (serial_fs_init()) {
+        print_ok();
+      } else {
+        print_ko();
+      }
     } else {
       print_ko();
     }
