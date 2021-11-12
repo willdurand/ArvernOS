@@ -10,10 +10,11 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            # Copy this file to /tmp to let `Makefile` know that we are running
-            # in a Docker-ish configuration.
-            cp tools/install-linux-deps /tmp/
-            sudo /tmp/install-linux-deps
+            sudo ./tools/install-linux-deps
+      - run:
+          name: create willosconfig for Circle CI
+          command: |
+            cp .circleci/willosconfig willosconfig
       - run:
           name: build (debug)
           command: |

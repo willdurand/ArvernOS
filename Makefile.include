@@ -1,3 +1,5 @@
+-include ./willosconfig
+
 # By default, we tell `make` to remain silent. We can enable a more verbose
 # output by passing `VERBOSE=1` to `make`.
 ifeq ($(VERBOSE),)
@@ -13,9 +15,6 @@ IN_DOCKER = $(wildcard /tmp/install-linux-deps)
 ifneq ($(IN_DOCKER),)
 	LLVM_PREFIX =
 	LLVM_SUFFIX = -13
-else
-	LLVM_PREFIX ?= /usr/local/opt/llvm@13/bin/
-	LLVM_SUFFIX ?=
 endif
 
 ifeq ($(UBSAN),1)

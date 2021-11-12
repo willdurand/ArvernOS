@@ -88,6 +88,26 @@ currently used by both the `Dockerfile` and Circle CI.
 
 The different final files are located in the `build/<arch>/dist/` folder.
 
+### `willosconfig` files
+
+`willosconfig` files are used to configure how a build works. The content must
+be compatible with `make`. Here is an example:
+
+```
+# LLVM config on MacOS with Homebrew
+LLVM_PREFIX = /usr/local/opt/llvm@13/bin/
+LLVM_SUFFIX =
+
+# Always enable the Undefined Behavior sanitizer
+UBSAN=1
+
+# Sensible logging
+ENABLE_CORE_DEBUG=1
+ENABLE_PROC_DEBUG=1
+ENABLE_SYS_DEBUG=1
+ENABLE_USERLAND_DEBUG=1
+```
+
 ### Debug
 
 To build the ISO in debug mode, run:
@@ -127,7 +147,8 @@ The available debug variables are:
 - `ENABLE_SYS_DEBUG`
 - `ENABLE_USERLAND_DEBUG`
 
-There is also `ENABLE_ALL_DEBUG` to turn all debug logs on.
+There is also `ENABLE_ALL_DEBUG` to turn all debug logs on (which negatively
+impacts the performances).
 
 ##### Stacktraces
 
@@ -194,7 +215,7 @@ kernel mode will load the `kshell` instead and will stay in kernel mode (as its
 name implies).
 
 It is possible to change the command line by passing the `GRUB_KERNEL_CMDLINE`
-variable to `make`:
+variable to `make` (or add it to your `willosconfig` file):
 
 ```
 $ make clean GRUB_KERNEL_CMDLINE="/bin/init foo bar" run-debug
