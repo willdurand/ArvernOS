@@ -39,7 +39,10 @@ int k_execv(const char* path, char* const argv[])
     return retval;
   }
 
-  process_t* current_process = process_exec(buf, path, argv);
+  char** envp = (char**)malloc(sizeof(char*));
+  envp[0] = NULL;
+
+  process_t* current_process = process_exec(buf, path, argv, envp);
 
   SYS_DEBUG("switching to process '%s': entrypoint=%p user_rsp=%p",
             current_process->name,

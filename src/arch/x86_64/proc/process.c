@@ -1,5 +1,6 @@
 #include "process.h"
 #include "logging.h"
+#include <mmu/paging.h>
 #include <proc/usermode.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,9 +9,6 @@ static process_t* current_process = NULL;
 
 process_t* process_create_root()
 {
-  // TODO: A process should have its own P4, otherwise loading some code later
-  // (like an ELF with `process_exec()`) forces us to mark all entries as "user
-  // accessible" (see other TODO in `paging.c`.
   current_process = (process_t*)malloc(sizeof(process_t));
   current_process->pid = 0;
 
@@ -22,66 +20,88 @@ process_t* process_get_current()
   return current_process;
 }
 
-process_t* process_exec(uint8_t* image, const char* name, char* const argv[])
+process_t* process_exec(uint8_t* image,
+                        const char* name,
+                        char* const argv[],
+                        char* const envp[])
 {
   PROC_DEBUG("image=%p name=%s", image, name);
 
   elf_header_t* old_elf = NULL;
 
+  // The top of the stack is right below 0x40000000, which is where we load
+  // userland programs.
+  void* stack = (void*)0x40000000;
+
   if (current_process == NULL) {
     current_process = process_create_root();
+
+    // Map the user stack with the user accessible flag set.
+    map_multiple(page_containing_address((uint64_t)stack - (4 * PAGE_SIZE)),
+                 4,
+                 PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE |
+                   PAGING_FLAG_USER_ACCESSIBLE);
+
   } else {
-    // Give a new PID to the current process.
-    //
-    // TODO: this isn't correct at all–we give the illusion that a new process
-    // has been created but all it does is replacing the current one, so the
-    // PID shouldn't change.
-    current_process->pid++;
     // Save the old ELF pointer for later.
     old_elf = current_process->elf;
     // Free the current name as we'll update it right after.
     free(current_process->name);
-    // Free old args.
-    for (int i = 0; current_process->argv[i] != NULL; i++) {
-      free(current_process->argv[i]);
-    }
-    free(current_process->argv);
-    // Free old env vars.
-    for (int i = 0; current_process->envp[i] != NULL; i++) {
-      free(current_process->envp[i]);
-    }
-    free(current_process->envp);
+    // Clear previous stack.
+    memset((void*)current_process->user_rsp,
+           0,
+           0x40000000 - current_process->user_rsp);
   }
 
   // Set current process name.
   current_process->name = strdup(name);
-  // Set up user stack.
-  memset(current_process->user_stack, 0, USER_STACK_SIZE);
 
-  // We need both `argc` and `argv` so we start by retrieving `argc`. Then, we
-  // need to `strdup()` all the given arguments because `exec` replaces the
-  // (old) process image so we won't have access to them for a very long time.
-  int argc = 0;
+  // We need both `argc` and `argv` so we start by retrieving `argc`.
+  uint8_t argc = 0;
   while (argv[argc]) {
     argc++;
   }
 
-  char** _argv = (char**)malloc(sizeof(char*) * (argc + 1));
+  // In order to pass argv/envp to the userland, we need to prepare the user
+  // stack. We'll start by pushing the different values in argv.
+  char* _argv_ptrs[argc];
   for (int i = 0; i < argc; i++) {
-    _argv[i] = strdup(argv[i]);
+    PUSHSTR_TO_STACK(stack, argv[i]);
+    _argv_ptrs[i] = (char*)stack;
+    free(argv[i]);
   }
-  _argv[argc] = NULL;
-  current_process->argv = _argv;
+  free((void*)argv);
 
-  // TODO: do not use a fixed size.
-  char** envp = (char**)calloc(1, sizeof(char*) * 10);
-  current_process->envp = envp;
+  uint8_t envc = 0;
+  while (envp[envc]) {
+    envc++;
+  }
 
-  void* stack = (void*)&current_process->user_stack[USER_STACK_SIZE - 1];
-  PUSH_TO_STACK(stack, uint64_t, (uint64_t)envp);
-  PUSH_TO_STACK(stack, uint64_t, (uint64_t)_argv);
-  PUSH_TO_STACK(stack, uint64_t, (uint64_t)argc);
-  current_process->user_rsp = (uint64_t)stack;
+  // Now we can push the different values in envp.
+  char* _envp_ptrs[envc];
+  for (int i = 0; i < envc; i++) {
+    PUSHSTR_TO_STACK(stack, envp[i]);
+    _envp_ptrs[i] = (char*)stack;
+    free(envp[i]);
+  }
+  free((void*)envp);
+
+  PUSH_TO_STACK(stack, uintptr_t, 0); // envp[envc] = NULL
+  for (int i = envc - 1; i >= 0; i--) {
+    PUSH_TO_STACK(stack, char*, _envp_ptrs[i]);
+  }
+  char** _envp = (char**)stack;
+
+  PUSH_TO_STACK(stack, uintptr_t, 0); // argv[argc] = NULL
+  for (int i = argc - 1; i >= 0; i--) {
+    PUSH_TO_STACK(stack, char*, _argv_ptrs[i]);
+  }
+  char** _argv = (char**)stack;
+
+  PUSH_TO_STACK(stack, uintptr_t, (uintptr_t)_envp);
+  PUSH_TO_STACK(stack, uintptr_t, (uintptr_t)_argv);
+  PUSH_TO_STACK(stack, uint64_t, argc);
+  current_process->user_rsp = (uintptr_t)stack;
 
   if (old_elf) {
     // Unload current process.
