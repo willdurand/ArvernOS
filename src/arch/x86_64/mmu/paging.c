@@ -478,8 +478,14 @@ page_table_t* next_table_create(page_table_t* table, uint64_t index)
       PANIC("%s", "frame is unexpectedly missing");
     }
 
-    paging_set_entry(
-      entry, frame.value, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
+    paging_set_entry(entry,
+                     frame.value,
+                     // Set `PAGING_FLAG_USER_ACCESSIBLE` on P3, P2 and P1 so
+                     // that usermode can walk through the hierarchy. The entry
+                     // in P1 should have the right flags for access control so
+                     // that should be fine.
+                     PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE |
+                       PAGING_FLAG_USER_ACCESSIBLE);
 
     MMU_DEBUG_PAGE_ENTRY("created", table->entries[index]);
 
@@ -520,9 +526,6 @@ void paging_set_entry(page_entry_t* entry, uint64_t addr, uint64_t flags)
   if (flags & PAGING_FLAG_USER_ACCESSIBLE) {
     entry->user_accessible = 1;
   }
-
-  // TODO: change that once we have a P4 for usermode
-  entry->user_accessible = 1;
 
   MMU_DEBUG_PAGE_ENTRY("set", (*entry));
 }
