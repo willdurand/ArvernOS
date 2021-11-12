@@ -8,6 +8,9 @@ static process_t* current_process = NULL;
 
 process_t* process_create_root()
 {
+  // TODO: A process should have its own P4, otherwise loading some code later
+  // (like an ELF with `process_exec()`) forces us to mark all entries as "user
+  // accessible" (see other TODO in `paging.c`.
   current_process = (process_t*)malloc(sizeof(process_t));
   current_process->pid = 0;
 
@@ -29,6 +32,10 @@ process_t* process_exec(uint8_t* image, const char* name, char* const argv[])
     current_process = process_create_root();
   } else {
     // Give a new PID to the current process.
+    //
+    // TODO: this isn't correct at all–we give the illusion that a new process
+    // has been created but all it does is replacing the current one, so the
+    // PID shouldn't change.
     current_process->pid++;
     // Save the old ELF pointer for later.
     old_elf = current_process->elf;
@@ -52,7 +59,7 @@ process_t* process_exec(uint8_t* image, const char* name, char* const argv[])
   memset(current_process->user_stack, 0, USER_STACK_SIZE);
 
   // We need both `argc` and `argv` so we start by retrieving `argc`. Then, we
-  // need to `strdup()` all the given arguments becaue `exec` replaces the
+  // need to `strdup()` all the given arguments because `exec` replaces the
   // (old) process image so we won't have access to them for a very long time.
   int argc = 0;
   while (argv[argc]) {
