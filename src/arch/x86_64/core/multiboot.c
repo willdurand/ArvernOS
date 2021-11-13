@@ -5,16 +5,17 @@
 void* find_multiboot_tag(multiboot_info_t* mbi, uint16_t type)
 {
   multiboot_tag_t* tag = NULL;
-
   // `*tag` points to the first tag of the multiboot_info_t struct
   for (tag = (multiboot_tag_t*)mbi->tags; tag->type != MULTIBOOT_TAG_TYPE_END;
        tag = (multiboot_tag_t*)((uint8_t*)tag + ((tag->size + 7) & ~7))) {
+    CORE_DEBUG("found tag with type=%d", tag->type);
     if (tag->type == type) {
       CORE_DEBUG("found tag for type=%d", type);
       return tag;
     }
   }
 
+  CORE_DEBUG("could not find tag for type=%d", type);
   return NULL;
 }
 
@@ -32,6 +33,8 @@ reserved_areas_t find_reserved_areas(multiboot_info_t* mbi)
 
   for (tag = (multiboot_tag_t*)mbi->tags; tag->type != MULTIBOOT_TAG_TYPE_END;
        tag = (multiboot_tag_t*)((uint8_t*)tag + ((tag->size + 7) & ~7))) {
+    CORE_DEBUG("found tag with type=%d", tag->type);
+
     switch (tag->type) {
       case MULTIBOOT_TAG_TYPE_CMDLINE:
         CORE_DEBUG("command line=%s", ((multiboot_tag_string_t*)tag)->string);
@@ -79,9 +82,12 @@ reserved_areas_t find_reserved_areas(multiboot_info_t* mbi)
         break;
       }
 
-      case MULTIBOOT_TAG_TYPE_FRAMEBUFFER:
-        CORE_DEBUG("%s", "framebuffer");
+      case MULTIBOOT_TAG_TYPE_FRAMEBUFFER: {
+        CORE_DEBUG(
+          "framebuffer framebuffer_addr=%p",
+          ((multiboot_tag_framebuffer_t*)tag)->common.framebuffer_addr);
         break;
+      }
 
       case MULTIBOOT_TAG_TYPE_APM:
         CORE_DEBUG("%s", "apm");
