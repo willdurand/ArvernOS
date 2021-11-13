@@ -20,6 +20,8 @@ int start_main(int (*main)(int, char**, char**),
 
   int retval = main(argc, argv, envp);
 
+  WILLOS_LOG("retval=%d", retval);
+
 #ifdef ENABLE_USERLAND_DEBUG
   willos_log_deinit();
 #endif
