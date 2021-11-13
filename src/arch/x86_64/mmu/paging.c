@@ -293,7 +293,7 @@ page_number_t page_containing_address(uint64_t virtual_address)
   }
 
   PANIC("invalid address=%p", virtual_address);
-  return 0; // never reached but avoid a GCC warning.
+  return 0; // never reached but avoid a compiler error.
 }
 
 uint64_t page_start_address(page_number_t page_number)
