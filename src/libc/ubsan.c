@@ -1,5 +1,6 @@
 #include "ubsan.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 #ifdef __is_libk
 
@@ -148,6 +149,6 @@ void ubsan_panic_at(ubsan_source_location_t* location, const char* error)
     printf("ubsan: file=(unknown) line=(unknown) column=(unknown) error=%s\n",
            error);
   }
-  // TODO: use `abort()`
+  abort();
 #endif
 }
