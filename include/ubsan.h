@@ -67,6 +67,12 @@ typedef struct ubsan_pointer_overflow_data
   ubsan_source_location_t location;
 } ubsan_pointer_overflow_data_t;
 
+typedef struct ubsan_vla_bound_data
+{
+  ubsan_source_location_t location;
+  ubsan_type_t* type;
+} ubsan_vla_bound_data_t;
+
 // TODO: check why it is _v1
 void __ubsan_handle_type_mismatch_v1(ubsan_mismatch_v1_data_t* data,
                                      uintptr_t ptr);
@@ -106,5 +112,8 @@ void __ubsan_handle_float_cast_overflow(ubsan_float_cast_overflow_data_t* data,
 void __ubsan_handle_pointer_overflow(ubsan_pointer_overflow_data_t* data,
                                      void* lhs,
                                      void* rhs);
+
+void __ubsan_handle_vla_bound_not_positive(ubsan_vla_bound_data_t* data,
+                                           void* bound);
 
 #endif

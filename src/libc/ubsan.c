@@ -116,6 +116,14 @@ void __ubsan_handle_pointer_overflow(ubsan_pointer_overflow_data_t* data,
   ubsan_panic_at(&data->location, "pointer overflow");
 }
 
+void __ubsan_handle_vla_bound_not_positive(ubsan_vla_bound_data_t* data,
+                                           void* bound)
+{
+  UNUSED(*bound);
+
+  ubsan_panic_at(&data->location, "vla bound not positive");
+}
+
 void ubsan_panic_at(ubsan_source_location_t* location, const char* error)
 {
 #ifdef __is_libk
