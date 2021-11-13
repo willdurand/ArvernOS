@@ -57,7 +57,7 @@ LIBC_TEST_FILES  := $(patsubst test/%.c, %, $(shell find test/libc -name '*.c'))
 NASM_OPTIONS := -dVBE_WIDTH=$(VBE_WIDTH) -dVBE_HEIGHT=$(VBE_HEIGHT) -dVBE_BPP=$(VBE_BPP)
 
 QEMU_OPTIONS += -serial file:$(LOG_FILE)
-QEMU_OPTIONS += -m 500M
+QEMU_OPTIONS += -m 512M
 QEMU_OPTIONS += -netdev user,id=u1,ipv6=off,dhcpstart=10.0.2.20
 QEMU_OPTIONS += -device rtl8139,netdev=u1
 QEMU_OPTIONS += -object filter-dump,id=f1,netdev=u1,file=$(LOG_DIR)/traffic-$(BUILD_MODE).pcap
