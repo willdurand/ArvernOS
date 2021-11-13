@@ -16,7 +16,7 @@ void kernel_load_symbols(uint64_t addr, uint64_t size)
   symbols[size] = 0;
 }
 
-void kernel_panic(const char* format, ...)
+void kernel_panic(bool dump_stacktrace, const char* format, ...)
 {
   printf("\033[0;31m");
 
@@ -25,7 +25,9 @@ void kernel_panic(const char* format, ...)
   vprintf(format, arg);
   va_end(arg);
 
-  kernel_dump_stacktrace();
+  if (dump_stacktrace) {
+    kernel_dump_stacktrace();
+  }
 
   printf("\n\n%45s\033[0m", "SYSTEM HALTED!");
 
