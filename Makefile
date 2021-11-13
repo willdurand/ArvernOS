@@ -293,7 +293,7 @@ fmt: ## automatically format the code with clang-format
 
 gdb: ## build, run the OS in debug mode and enable GDB
 gdb: BUILD_MODE = debug
-gdb: QEMU_OPTIONS += -nographic -s -S
+gdb: QEMU_OPTIONS += -s -S --no-reboot
 gdb: debug run
 .PHONY: gdb
 
