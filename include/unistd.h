@@ -9,7 +9,7 @@
 #include <sys/syscall.h>
 
 #ifndef __is_libk
-extern char** environ;
+extern char* environ[];
 #endif
 
 #endif
