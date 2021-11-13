@@ -4,6 +4,7 @@
 #include <string.h>
 
 opt_uint64_t read_mmap(uint64_t request);
+uint64_t frame_number_to_request(frame_number_t frame_number);
 
 // These variables can be accessed by other parts of the kernel and we do that
 // in `paging_init()` to identity map the bitmap for allocated frames.
@@ -106,8 +107,18 @@ opt_uint64_t frame_allocate()
 
 void frame_deallocate(frame_number_t frame_number)
 {
-  MMU_DEBUG("deallocating frame=%llu", frame_number);
-  bitmap_clear(allocated_frames, frame_number);
+  uint64_t request = frame_number_to_request(frame_number);
+  MMU_DEBUG("deallocating frame=%llu request=%llu", frame_number, request);
+
+  if (request == 0) {
+    DEBUG("failed to deallocate frame=%llu because request=%llu, which it is "
+          "very suspicious",
+          frame_number,
+          request);
+    return;
+  }
+
+  bitmap_clear(allocated_frames, request);
 }
 
 frame_number_t frame_containing_address(uint64_t physical_address)
@@ -144,6 +155,33 @@ opt_uint64_t read_mmap(uint64_t request)
   }
 
   return (opt_uint64_t){ .has_value = false, .value = 0 };
+}
+
+uint64_t frame_number_to_request(frame_number_t frame_number)
+{
+  uintptr_t frame = frame_start_address(frame_number);
+
+  uint64_t request = 0;
+  for (multiboot_mmap_entry_t* entry = mmap->entries;
+       (uint8_t*)entry < (uint8_t*)mmap + mmap->size;
+       entry = (multiboot_mmap_entry_t*)((uint64_t)entry + mmap->entry_size)) {
+    if (entry->type != MULTIBOOT_MEMORY_AVAILABLE) {
+      continue;
+    }
+
+    uint64_t entry_end = entry->addr + entry->len;
+
+    for (uint64_t addr = entry->addr; addr + PAGE_SIZE <= entry_end;
+         addr += PAGE_SIZE) {
+      if (addr == frame) {
+        return request;
+      }
+
+      request++;
+    }
+  }
+
+  return 0;
 }
 
 uint64_t frame_get_used_count()
