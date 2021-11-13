@@ -27,4 +27,6 @@ int abs(int x);
 
 long int strtol_wip(const char* str, char** end, int base);
 
+void abort();
+
 #endif
