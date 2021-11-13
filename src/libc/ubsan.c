@@ -5,6 +5,7 @@
 #ifdef __is_libk
 
 #include <kernel/panic.h>
+#include <logging.h>
 
 #endif
 
@@ -12,15 +13,42 @@
 
 void ubsan_panic_at(ubsan_source_location_t* location, const char* error);
 
+static const char* kinds[] = {
+  "load",
+  "store",
+  "reference binding",
+  "member access",
+  "member call",
+  "constructor call",
+  "downcast",
+  "downcast",
+  "upcast",
+  "cast to virtual base",
+};
+
 void __ubsan_handle_type_mismatch_v1(ubsan_mismatch_v1_data_t* data,
                                      uintptr_t ptr)
 {
-  const char* error = "type mismatch";
+  const char* error = "type mismatch (insufficient size)";
 
   if (!ptr) {
     error = "null pointer access";
   } else if (data->alignment && (ptr & (data->alignment - 1))) {
     error = "unaligned access";
+  } else {
+#ifdef __is_libk
+    DEBUG("ubsan: kind=%s ptr=%p type=%s",
+          kinds[data->kind],
+          (void*)ptr,
+          data->type->name);
+    // In non-debug mode, this variable is not used.
+    UNUSED(*kinds);
+#else
+    printf("ubsan: kind=%s ptr=%p type=%s\n",
+           kinds[data->kind],
+           (void*)ptr,
+           data->type->name);
+#endif
   }
 
   ubsan_panic_at(&data->location, error);
