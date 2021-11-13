@@ -21,7 +21,7 @@ uintptr_t __stack_chk_guard = STACK_CHK_GUARD;
 void __stack_chk_fail(void)
 {
 #ifdef __is_libk
-  PANIC("Stack smashing detected");
+  PANIC_NO_STACKTRACE("Stack smashing detected");
 #else
   printf("Stack smashing detected! Aborting program.\n");
   // TODO: use `abort()`
