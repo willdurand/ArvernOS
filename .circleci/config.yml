@@ -22,11 +22,12 @@ commands:
       command:
         type: string
     steps:
-      - run: echo 'export TERM=xterm' >> $BASH_ENV
       - run:
           name: << parameters.title >>
           command: << parameters.command >>
           no_output_timeout: 2m
+          environment:
+            TERM: xterm-256color
 
 jobs:
   build-debug:
