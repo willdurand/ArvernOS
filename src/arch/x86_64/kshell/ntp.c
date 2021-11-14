@@ -11,8 +11,15 @@ void ntp(int argc, char* argv[])
     return;
   }
 
+  net_interface_t* in = net_get_interface(0);
+
+  if (in == NULL) {
+    printf("no interface found\n");
+    return;
+  }
+
   time_t server_time;
-  int retval = ntp_request(net_get_interface(0), argv[1], &server_time);
+  int retval = ntp_request(in, argv[1], &server_time);
 
   switch (retval) {
     case 0: {

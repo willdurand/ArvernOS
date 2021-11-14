@@ -10,6 +10,10 @@ int k_gethostbyname2(const char* name, struct in_addr* in)
 {
   net_interface_t* interface = net_get_interface(0);
 
+  if (interface == NULL) {
+    return -1;
+  }
+
   uint8_t ip[4] = { 0 };
   int retval = dns_lookup(interface, name, ip);
 
