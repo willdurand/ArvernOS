@@ -100,6 +100,14 @@ jobs:
           title: kernel selftest
           command: make clean run-test GRUB_KERNEL_CMDLINE='kshell selftest'
 
+  kernel-selftest-ubsan:
+    <<: *defaults
+    steps:
+      - setup
+      - run_qemu:
+          title: kernel selftest with UBSan enabled
+          command: make clean run-test GRUB_KERNEL_CMDLINE='kshell selftest' UBSAN=1
+
   kernel-selftest-10-times:
     <<: *defaults
     steps:
@@ -118,4 +126,5 @@ workflows:
       - userland-test-suite
       - userland-test-suite-ubsan
       - kernel-selftest
+      - kernel-selftest-ubsan
       - kernel-selftest-10-times
