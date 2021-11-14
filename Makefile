@@ -249,12 +249,8 @@ $(ISO): $(DIST_DIR) $(KERNEL) $(INITRD) $(GRUB_CFG)
 	$(PROGRESS) GRUB $@
 	$(TOOLS_DIR)/grub-mkrescue -o $@ $(ISO_DIR)
 
-iso: ## build the image of the OS (.iso)
-iso: $(ISO)
-.PHONY: iso
-
 release: ## build the OS in release mode
-release: iso
+release: $(ISO)
 .PHONY: release
 
 run: ## run the OS in release mode

@@ -1,20 +1,25 @@
 version: 2.1
 
-jobs:
-  build:
+references:
+  defaults: &defaults
     docker:
       - image: willdurand/willos-circle:latest
+
+commands:
+  setup:
     steps:
       - checkout
       - run: git submodule sync && git submodule update --init
       - run:
-          name: install dependencies
-          command: |
-            sudo ./tools/install-linux-deps
-      - run:
           name: create willosconfig for Circle CI
           command: |
             cp .circleci/willosconfig willosconfig
+
+jobs:
+  build-debug:
+    <<: *defaults
+    steps:
+      - setup
       - run:
           name: build (debug)
           command: |
@@ -24,32 +29,66 @@ jobs:
             test -f build/x86_64/dist/kernel-x86_64.bin
             test -f build/x86_64/dist/libc-willOS-x86_64.a
             test -f build/x86_64/dist/willOS-x86_64.iso
+
+  build-release:
+    <<: *defaults
+    steps:
+      - setup
       - run:
           name: build (release)
           command: |
-            make clean iso
+            make clean release
             test -f build/x86_64/isofiles/boot/grub/grub.cfg
             test -f build/x86_64/isofiles/boot/initrd.tar
             test -f build/x86_64/dist/kernel-x86_64.bin
             test -f build/x86_64/dist/libc-willOS-x86_64.a
             test -f build/x86_64/dist/willOS-x86_64.iso
+
+  unit-tests:
+    <<: *defaults
+    steps:
+      - setup
       - run:
           name: unit tests
           command: make clean test
+
+  checks:
+    <<: *defaults
+    steps:
+      - setup
       - run:
           name: fmt
           command: |
             make fmt
             git diff --exit-code || (echo "\n\nPlease run 'make fmt' to format the code and fix the problem(s) above"; false)
+
+  userland-test-suite:
+    <<: *defaults
+    steps:
+      - setup
       - run:
           name: userland test suite
           command: |
             export TERM=xterm
             make clean run-test
           no_output_timeout: 2m
+
+  userland-test-suite-ubsan:
+    <<: *defaults
+    steps:
+      - setup
       - run:
           name: userland test suite with UBSan enabled
           command: |
             export TERM=xterm
             make clean run-test UBSAN=1
           no_output_timeout: 2m
+
+workflows:
+  default-workflow:
+    jobs:
+      - build-debug
+      - build-release
+      - unit-tests
+      - userland-test-suite
+      - userland-test-suite-ubsan
