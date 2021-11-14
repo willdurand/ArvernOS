@@ -253,10 +253,14 @@ iso: ## build the image of the OS (.iso)
 iso: $(ISO)
 .PHONY: iso
 
+release: ## build the OS in release mode
+release: iso
+.PHONY: release
+
 run: ## run the OS in release mode
-run: $(ISO)
-	$(PROGRESS) "RUN" $<
-	$(QEMU) -cdrom $< $(QEMU_OPTIONS)
+run: release
+	$(PROGRESS) "RUN" $(ISO)
+	$(QEMU) -cdrom $(ISO) $(QEMU_OPTIONS)
 .PHONY: run
 
 debug: ## build the OS in debug mode
