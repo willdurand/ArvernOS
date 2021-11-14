@@ -15,18 +15,19 @@ static bool caps_lock_mode = false;
 static bool ctrl_mode = false;
 static bool shift_mode = false;
 
-#define NB_DOCUMENTED_COMMANDS 11
+#define NB_DOCUMENTED_COMMANDS 12
 
 static const char* commands[][NB_DOCUMENTED_COMMANDS] = {
+  { "cat", "print on the standard output" },
   { "exec", "execute a program in user mode" },
   { "help", "print this help message" },
   { "host", "perform a DNS lookup" },
   { "ls", "list files" },
-  { "cat", "print on the standard output" },
   { "net", "show configured network interfaces" },
   { "ntp", "get the time from a time server" },
   { "overflow", "test the stack buffer overflow protection" },
   { "ping", "ping an IPv4 address" },
+  { "poweroff", "power off the system" },
   { "selftest", "run the kernel test suite" },
   { "usermode", "switch to usermode (alias for 'exec /bin/init -s')" },
 };
@@ -135,6 +136,8 @@ void run_command()
   } else if (strcmp(argv[0], "usermode") == 0) {
     char* args[] = { "exec", "/bin/init", "-s" };
     exec(3, args);
+  } else if (strcmp(argv[0], "poweroff") == 0) {
+    power_off();
   } else {
     printf("invalid kshell command\n");
   }
@@ -158,6 +161,18 @@ void reset_readline()
 
 void kshell_init(int argc, char* argv[])
 {
+  if (argc > 1) {
+    for (int i = 1; i < argc; i++) {
+      if (strcmp(argv[i], "selftest") == 0) {
+        selftest();
+      } else {
+        printf("unsupported command: %s\n", argv[i]);
+      }
+    }
+
+    power_off();
+  }
+
   printf("\nThis is willOS kernel shell. Type 'help' for more information.\n"
          "Protip: switch to usermode with the 'usermode' command.\n\n");
 
