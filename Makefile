@@ -281,9 +281,8 @@ run-debug: debug
 run-test: ## run the OS in test mode
 run-test: BUILD_MODE = test
 run-test: QEMU_OPTIONS += -curses
-run-test: GRUB_KERNEL_CMDLINE = /bin/boot-and-exit
+run-test: GRUB_KERNEL_CMDLINE = /bin/userland-testsuite
 run-test: run
-	cat initrd/info
 .PHONY: run-test
 
 clean: ## remove build artifacts
