@@ -362,6 +362,10 @@ docs: ## build the docs
 	doxygen ./Doxyfile
 .PHONY: docs
 
+build-docker-image-for-circle:
+	docker build . -f .circleci/images/circle/Dockerfile -t willdurand/willos-circle:latest
+.PHONY: build-docker-image-for-circle
+
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' Makefile* | awk '{line = gensub(/^Makefile(-(.+)\.include)?:/, "ARCH=\\2 ", "g", $$0); gsub(/^ARCH= /, "", line); print line}' | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 .PHONY: help

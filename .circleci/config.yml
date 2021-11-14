@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: cimg/base:2021.10
+      - image: willdurand/willos-circle:latest
     steps:
       - checkout
       - run: git submodule sync && git submodule update --init
