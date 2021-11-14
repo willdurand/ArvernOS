@@ -50,16 +50,16 @@ You can then use it with `docker run`:
 
 ```
 $ docker run -it --rm -v $(pwd):/app willos/toolchain make help
+make help
 clean                          remove build artifacts
 console-font                   compile the (default) kernel console font
 debug                          build the OS in debug mode
 docs                           build the docs
 fmt                            automatically format the code with clang-format
 gdb                            build, run the OS in debug mode and enable GDB
-initrd                         build the init ram disk
-iso                            build the image of the OS (.iso)
 kernel                         compile the kernel
 libc                           build the libc (userland)
+release                        build the OS in release mode
 run-debug                      run the OS in debug mode
 run-test                       run the OS in test mode
 run                            run the OS in release mode
