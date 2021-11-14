@@ -15,6 +15,19 @@ commands:
           command: |
             cp .circleci/willosconfig willosconfig
 
+  run_qemu:
+    parameters:
+      title:
+        type: string
+      command:
+        type: string
+    steps:
+      - run: echo 'export TERM=xterm' >> $BASH_ENV
+      - run:
+          name: << parameters.title >>
+          command: << parameters.command >>
+          no_output_timeout: 2m
+
 jobs:
   build-debug:
     <<: *defaults
@@ -66,23 +79,25 @@ jobs:
     <<: *defaults
     steps:
       - setup
-      - run:
-          name: userland test suite
-          command: |
-            export TERM=xterm
-            make clean run-test
-          no_output_timeout: 2m
+      - run_qemu:
+          title: userland test suite
+          command: make clean run-test
 
   userland-test-suite-ubsan:
     <<: *defaults
     steps:
       - setup
-      - run:
-          name: userland test suite with UBSan enabled
-          command: |
-            export TERM=xterm
-            make clean run-test UBSAN=1
-          no_output_timeout: 2m
+      - run_qemu:
+          title: userland test suite with UBSan enabled
+          command: make clean run-test UBSAN=1
+
+  kernel-selftest:
+    <<: *defaults
+    steps:
+      - setup
+      - run_qemu:
+          title: kernel selftest
+          command: make clean run-test GRUB_KERNEL_CMDLINE='kshell selftest'
 
 workflows:
   default-workflow:
@@ -92,3 +107,4 @@ workflows:
       - unit-tests
       - userland-test-suite
       - userland-test-suite-ubsan
+      - kernel-selftest
