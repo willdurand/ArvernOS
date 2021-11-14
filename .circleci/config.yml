@@ -42,12 +42,13 @@ jobs:
             make fmt
             git diff --exit-code || (echo "\n\nPlease run 'make fmt' to format the code and fix the problem(s) above"; false)
       - run:
-          name: integration tests
+          name: userland test suite
           command: |
             export TERM=xterm
             make clean run-test
+          no_output_timeout: 2m
       - run:
-          name: integration tests with ubsan
+          name: userland test suite with UBSan enabled
           command: |
             export TERM=xterm
             make clean run-test UBSAN=1

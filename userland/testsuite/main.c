@@ -6,6 +6,12 @@
 
 int main()
 {
+  printf("==== userland test suite ====");
+
+#ifndef __willos__
+  printf("This program should be compiled for and executed on willOS\n");
+  return 1;
+#else
   // Invoke some syscalls.
   int fd = open("/dev/null", O_WRONLY);
   int bytes_written = write(fd, NULL, 50);
@@ -14,12 +20,11 @@ int main()
   if (bytes_written == 50) {
     printf("Looks like everything is alright!\n");
 
-#ifdef __willos__
     reboot(REBOOT_CMD_POWER_OFF);
-#endif
 
     return 0;
   }
 
   return 1;
+#endif
 }
