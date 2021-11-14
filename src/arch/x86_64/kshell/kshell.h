@@ -28,7 +28,7 @@
 /**
  * Initializes the kernel shell.
  */
-void kshell_init();
+void kshell_init(int argc, char* argv[]);
 
 /**
  * Runs the kernel shell. This function takes a `scancode` as input and handles

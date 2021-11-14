@@ -337,20 +337,6 @@ void kmain(uint64_t addr)
   multiboot_tag_string_t* cmdline = (multiboot_tag_string_t*)find_multiboot_tag(
     mbi, MULTIBOOT_TAG_TYPE_CMDLINE);
 
-  if (cmdline && strcmp(cmdline->string, "kshell") == 0) {
-    printf("kernel: loading kshell...\n");
-    INFO("%s", "loading kshell");
-
-    kshell_init();
-
-    while (1) {
-      kshell_run(keyboard_get_scancode());
-      // This allows the CPU to enter a sleep state in which it consumes much
-      // less energy. See: https://en.wikipedia.org/wiki/HLT_(x86_instruction)
-      __asm__("hlt");
-    }
-  }
-
   int argc = 1;
   char* _cmdline = strdup(cmdline->string);
   strtok(_cmdline, " ");
@@ -369,8 +355,22 @@ void kmain(uint64_t addr)
   argv[argc] = NULL;
   free(_cmdline);
 
+  if (strcmp(argv[0], "kshell") == 0) {
+    printf("kernel: loading %s...\n", argv[0]);
+    INFO("kernel: loading %s...", argv[0]);
+
+    kshell_init(argc, argv);
+
+    while (1) {
+      kshell_run(keyboard_get_scancode());
+      // This allows the CPU to enter a sleep state in which it consumes much
+      // less energy. See: https://en.wikipedia.org/wiki/HLT_(x86_instruction)
+      __asm__("hlt");
+    }
+  }
+
   printf("kernel: switching to usermode... (%s)\n", argv[0]);
-  INFO("switching to usermode (%s)", argv[0]);
+  INFO("kernel: switching to usermode... (%s)", argv[0]);
   k_execv(argv[0], argv);
 
   PANIC("unexpectedly reached end of kmain");
