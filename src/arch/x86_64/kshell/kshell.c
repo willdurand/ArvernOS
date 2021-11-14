@@ -156,7 +156,7 @@ void reset_readline()
   }
 }
 
-void kshell_init()
+void kshell_init(int argc, char* argv[])
 {
   printf("\nThis is willOS kernel shell. Type 'help' for more information.\n"
          "Protip: switch to usermode with the 'usermode' command.\n\n");
