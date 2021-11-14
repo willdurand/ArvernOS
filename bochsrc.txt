@@ -7,3 +7,5 @@ com1: enabled=1, mode=file, dev=./log/bochs-debug.log
 
 cpu: reset_on_triple_fault=0
 debug: cpu0=report
+
+debug_symbols: file=./build/x86_64/isofiles/boot/symbols.txt
