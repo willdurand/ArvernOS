@@ -8,6 +8,11 @@ void net()
   uint8_t in_id = 0;
   net_interface_t* in = net_get_interface(in_id);
 
+  if (in == NULL) {
+    printf("no interface found\n");
+    return;
+  }
+
   char buf[16];
 
   printf("eth%d:\n", in_id);

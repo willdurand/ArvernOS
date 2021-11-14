@@ -12,14 +12,19 @@ void ping(int argc, char* argv[])
     return;
   }
 
+  net_interface_t* in = net_get_interface(0);
+
+  if (in == NULL) {
+    printf("no interface found\n");
+    return;
+  }
+
   uint8_t ip[4] = {
     (uint8_t)atoi(argv[1]),
     (uint8_t)atoi(argv[2]),
     (uint8_t)atoi(argv[3]),
     (uint8_t)atoi(argv[4]),
   };
-
-  net_interface_t* in = net_get_interface(0);
 
   char buf[16];
   inet_itoa(ip, buf, 16);
