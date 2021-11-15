@@ -46,9 +46,14 @@ QEMU = qemu-system-x86_64
 # This is the list of external libraries we use and need to build for the
 # kernel (libk) and the libc.
 EXTERNAL_DEPS = liballoc printf vtconsole
+EXTERNAL_DIRS := $(addprefix $(EXTERNAL_DIR)/,$(EXTERNAL_DEPS))
 
-EXTERNAL_DIRS    := $(addprefix $(EXTERNAL_DIR)/,$(EXTERNAL_DEPS))
-LIBK_OBJECTS     := $(patsubst %.c, $(LIBK_OBJS_DIR)/%.o, $(shell find $(ARCH_SRC) src/libc $(EXTERNAL_DIRS) -name '*.c'))
+# First, we gather the files for the architecture, then all the other files in
+# `src/` but without the arch files.
+LIBK_C_FILES := $(shell find $(ARCH_SRC) -name '*.c')
+LIBK_C_FILES += $(shell find src $(EXTERNAL_DIRS) -not -path 'src/arch/*' -name '*.c')
+
+LIBK_OBJECTS     := $(patsubst %.c, $(LIBK_OBJS_DIR)/%.o, $(LIBK_C_FILES))
 LIBK_ASM_OBJECTS := $(patsubst %.asm, $(LIBK_OBJS_DIR)/%.o, $(shell find $(ARCH_SRC)/asm -name '*.asm'))
 LIBC_OBJECTS     := $(patsubst %.c, $(LIBC_OBJS_DIR)/%.o, $(shell find src/libc $(EXTERNAL_DIRS) -name '*.c'))
 LIBC_ASM_OBJECTS := $(patsubst %.asm, $(LIBC_OBJS_DIR)/%.o, $(shell find src/libc/asm -name '*.asm'))
@@ -335,7 +340,7 @@ test: libc
 	$(CC) $(CFLAGS_FOR_TESTS) -Wformat=0 -I./test/proxies/ -o $(ARCH_BUILD_DIR)/frame test/mmu/frame.c src/arch/$(ARCH)/mmu/frame.c src/arch/$(ARCH)/core/multiboot.c src/arch/$(ARCH)/mmu/bitmap.c
 	./$(ARCH_BUILD_DIR)/frame
 	# config/inish
-	$(CC) $(CFLAGS_FOR_TESTS) -I./test/proxies/ -o $(ARCH_BUILD_DIR)/inish test/config/inish.c src/arch/$(ARCH)/config/inish.c
+	$(CC) $(CFLAGS_FOR_TESTS) -I./test/proxies/ -o $(ARCH_BUILD_DIR)/inish test/config/inish.c src/config/inish.c
 	./$(ARCH_BUILD_DIR)/inish
 	# mmu/bitmap
 	$(CC) $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/bitmap test/mmu/bitmap.c src/arch/$(ARCH)/mmu/bitmap.c
