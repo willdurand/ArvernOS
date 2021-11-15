@@ -30,17 +30,21 @@
 #include <string.h>
 #include <sys/k_syscall.h>
 
-void print_welcome_message();
-void print_step(const char* msg);
-void print_sub_step(const char* msg);
-void print_ok();
-void check_interrupts();
 void busywait(uint64_t seconds);
+void check_interrupts();
+void jump_to_usermode(char* argv[]);
+void load_initrd(multiboot_tag_module_t* module);
+void load_kshell(int argc, char* argv[]);
+void load_modules(multiboot_info_t* mbi);
+void load_network_config(inish_config_t* kernel_cfg, net_driver_t* driver);
+void load_symbols(multiboot_tag_module_t* module, uint64_t size);
+void load_system_config(inish_config_t* kernel_cfg);
 void print_debug_gdt();
 void print_debug_tss();
-void load_modules(multiboot_info_t* mbi);
-void load_initrd(multiboot_tag_module_t* module);
-void load_symbols(multiboot_tag_module_t* module, uint64_t size);
+void print_ok();
+void print_step(const char* msg);
+void print_sub_step(const char* msg);
+void print_welcome_message();
 
 void print_debug_tss()
 {
@@ -202,6 +206,68 @@ void load_initrd(multiboot_tag_module_t* module)
   }
 }
 
+void load_system_config(inish_config_t* kernel_cfg)
+{
+  inish_section_t* system = inish_get_section(kernel_cfg, "system");
+  char* hostname = inish_get_string(system, "hostname");
+
+  if (hostname != NULL) {
+    if (strlen(hostname) > 0) {
+      print_sub_step("setting hostname from config");
+      DEBUG("updating hostname: %s", hostname);
+      proc_update_hostname(hostname, strlen(hostname));
+      print_ok();
+    } else {
+      DEBUG("%s", "not updating hostname because value is empty");
+    }
+  } else {
+    DEBUG("%s", "could not find system/hostname in kernel.inish");
+  }
+}
+
+void load_network_config(inish_config_t* kernel_cfg, net_driver_t* driver)
+{
+  uint8_t ip[4] = { 0 };
+  uint8_t gateway_ip[4] = { 0 };
+  uint8_t dns_ip[4] = { 0 };
+
+  inish_section_t* network = inish_get_section(kernel_cfg, "network");
+  opt_bool_t prefer_dhcp = inish_get_bool(network, "prefer-dhcp");
+  inish_get_ipv4(network, "ip", ip);
+  inish_get_ipv4(network, "gateway_ip", gateway_ip);
+  inish_get_ipv4(network, "dns_ip", dns_ip);
+
+  net_interface_init(0,
+                     driver,
+                     // Use DHCP when there is no network config.
+                     prefer_dhcp.has_value ? prefer_dhcp.value : true,
+                     ip,
+                     gateway_ip,
+                     dns_ip);
+}
+
+void jump_to_usermode(char* argv[])
+{
+  printf("kernel: switching to usermode... (%s)\n", argv[0]);
+  INFO("kernel: switching to usermode... (%s)", argv[0]);
+  k_execv(argv[0], argv);
+}
+
+void load_kshell(int argc, char* argv[])
+{
+  printf("kernel: loading %s...\n", argv[0]);
+  INFO("kernel: loading %s...", argv[0]);
+
+  kshell_init(argc, argv);
+
+  while (1) {
+    kshell_run(keyboard_get_scancode());
+    // This allows the CPU to enter a sleep state in which it consumes much
+    // less energy. See: https://en.wikipedia.org/wiki/HLT_(x86_instruction)
+    __asm__("hlt");
+  }
+}
+
 void kmain(uint64_t addr)
 {
   multiboot_info_t* mbi = (multiboot_info_t*)addr;
@@ -272,42 +338,14 @@ void kmain(uint64_t addr)
     print_ko();
   } else {
     print_ok();
-
-    inish_section_t* system = inish_get_section(kernel_cfg, "system");
-    char* hostname = inish_get_string(system, "hostname");
-
-    if (hostname != NULL) {
-      if (strlen(hostname) > 0) {
-        print_sub_step("setting hostname from config");
-        DEBUG("updating hostname: %s", hostname);
-        proc_update_hostname(hostname, strlen(hostname));
-        print_ok();
-      } else {
-        DEBUG("%s", "not updating hostname because value is empty");
-      }
-    } else {
-      DEBUG("%s", "could not find system/hostname in kernel.inish");
-    }
   }
+
+  load_system_config(kernel_cfg);
 
   print_step("initializing network");
   if (rtl8139_init()) {
-    uint8_t ip[4] = { 0 };
-    uint8_t gateway_ip[4] = { 0 };
-    uint8_t dns_ip[4] = { 0 };
-
-    inish_section_t* network = inish_get_section(kernel_cfg, "network");
-    opt_bool_t prefer_dhcp = inish_get_bool(network, "prefer-dhcp");
-    inish_get_ipv4(network, "ip", ip);
-    inish_get_ipv4(network, "gateway_ip", gateway_ip);
-    inish_get_ipv4(network, "dns_ip", dns_ip);
-
-    net_interface_init(0,
-                       rtl8139_driver(),
-                       prefer_dhcp.has_value && prefer_dhcp.value,
-                       ip,
-                       gateway_ip,
-                       dns_ip);
+    net_driver_t* rtl8139 = rtl8139_driver();
+    load_network_config(kernel_cfg, rtl8139);
     print_ok();
   } else {
     print_ko();
@@ -316,11 +354,6 @@ void kmain(uint64_t addr)
   if (kernel_cfg != NULL) {
     inish_free(kernel_cfg);
   }
-
-  // Not needed before so let's initialize it at the end.
-  print_step("initializing keyboard");
-  keyboard_init();
-  print_ok();
 
   if (console_mode_is_vbe()) {
     print_step("switching to fullscreen mode");
@@ -333,6 +366,11 @@ void kmain(uint64_t addr)
   } else {
     printf("\n");
   }
+
+  // Not needed before so let's initialize it at the end.
+  print_step("initializing keyboard");
+  keyboard_init();
+  print_ok();
 
   multiboot_tag_string_t* cmdline = (multiboot_tag_string_t*)find_multiboot_tag(
     mbi, MULTIBOOT_TAG_TYPE_CMDLINE);
@@ -356,22 +394,10 @@ void kmain(uint64_t addr)
   free(_cmdline);
 
   if (strcmp(argv[0], "kshell") == 0) {
-    printf("kernel: loading %s...\n", argv[0]);
-    INFO("kernel: loading %s...", argv[0]);
-
-    kshell_init(argc, argv);
-
-    while (1) {
-      kshell_run(keyboard_get_scancode());
-      // This allows the CPU to enter a sleep state in which it consumes much
-      // less energy. See: https://en.wikipedia.org/wiki/HLT_(x86_instruction)
-      __asm__("hlt");
-    }
+    load_kshell(argc, argv);
+  } else {
+    jump_to_usermode(argv);
   }
-
-  printf("kernel: switching to usermode... (%s)\n", argv[0]);
-  INFO("kernel: switching to usermode... (%s)", argv[0]);
-  k_execv(argv[0], argv);
 
   PANIC("unexpectedly reached end of kmain");
 }
