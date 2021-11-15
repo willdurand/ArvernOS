@@ -5,12 +5,12 @@
 int main()
 {
   describe("empty configuration file");
-  inish_config_t* empty = inish_load("./tests/config/empty.inish");
+  inish_config_t* empty = inish_load("./tests/kernel/config/empty.inish");
   assert(empty != NULL, "accepts an empty file");
   inish_free(empty);
   end_describe();
 
-  inish_config_t* conf = inish_load("./tests/config/test.inish");
+  inish_config_t* conf = inish_load("./tests/kernel/config/test.inish");
   assert(conf != NULL, "reads the configuration file");
 
   describe("sections");

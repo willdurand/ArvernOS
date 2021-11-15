@@ -5,37 +5,38 @@ OS_NAME        = willOS
 BUILD_MODE     = release
 # We (more or less) follow the PFL project structure:
 # https://api.csswg.org/bikeshed/?force=1&url=https://raw.githubusercontent.com/vector-of-bool/pitchfork/develop/data/spec.bs#intro.dirs
-BUILD_DIR      := build
-DATA_DIR       := data
-EXTERNAL_DIR   := external
-INCLUDE_DIR    := include
-LOG_DIR        := log
-SRC_DIR        := src
-TESTS_DIR      := tests
-TOOLS_DIR      := tools
-KERNEL_SRC_DIR := $(SRC_DIR)/kernel
-USERLAND_DIR   := $(SRC_DIR)/userland
-ARCH_BUILD_DIR := $(BUILD_DIR)/$(ARCH)
-DIST_DIR       := $(ARCH_BUILD_DIR)/dist
-ISO_DIR        := $(ARCH_BUILD_DIR)/isofiles
-ISO_BOOT_DIR   := $(ISO_DIR)/boot
-GRUB_DIR       := $(ISO_BOOT_DIR)/grub
-GRUB_CFG       := $(GRUB_DIR)/grub.cfg
-ARCH_SRC       := $(KERNEL_SRC_DIR)/arch/$(ARCH)
-LINKER         := $(ARCH_SRC)/linker.ld
-KERNEL_BIN     := kernel-$(ARCH).bin
-KERNEL         := $(ISO_BOOT_DIR)/$(KERNEL_BIN)
-ISO            := $(DIST_DIR)/$(OS_NAME)-$(ARCH).iso
-LIBC           := $(DIST_DIR)/libc-$(OS_NAME)-$(ARCH).a
-LIBC_OBJS_DIR  := $(ARCH_BUILD_DIR)/libc-objects
-LIBK_OBJS_DIR  := $(ARCH_BUILD_DIR)/libk-objects
-INITRD_DIR     := $(DATA_DIR)/initrd
-INITRD_TAR     := initrd.tar
-INITRD         := $(ISO_BOOT_DIR)/$(INITRD_TAR)
-GIT_HASH       := $(shell git rev-parse --short HEAD)
-SYMBOLS_TXT    := symbols.txt
-SYMBOLS        := $(ISO_BOOT_DIR)/$(SYMBOLS_TXT)
-LOG_FILE       := $(LOG_DIR)/$(BUILD_MODE).log
+BUILD_DIR        := build
+DATA_DIR         := data
+EXTERNAL_DIR     := external
+INCLUDE_DIR      := include
+LOG_DIR          := log
+SRC_DIR          := src
+TESTS_DIR        := tests
+TOOLS_DIR        := tools
+KERNEL_SRC_DIR   := $(SRC_DIR)/kernel
+KERNEL_TESTS_DIR := $(TESTS_DIR)/kernel
+USERLAND_DIR     := $(SRC_DIR)/userland
+ARCH_BUILD_DIR   := $(BUILD_DIR)/$(ARCH)
+DIST_DIR         := $(ARCH_BUILD_DIR)/dist
+ISO_DIR          := $(ARCH_BUILD_DIR)/isofiles
+ISO_BOOT_DIR     := $(ISO_DIR)/boot
+GRUB_DIR         := $(ISO_BOOT_DIR)/grub
+GRUB_CFG         := $(GRUB_DIR)/grub.cfg
+ARCH_SRC         := $(KERNEL_SRC_DIR)/arch/$(ARCH)
+LINKER           := $(ARCH_SRC)/linker.ld
+KERNEL_BIN       := kernel-$(ARCH).bin
+KERNEL           := $(ISO_BOOT_DIR)/$(KERNEL_BIN)
+ISO              := $(DIST_DIR)/$(OS_NAME)-$(ARCH).iso
+LIBC             := $(DIST_DIR)/libc-$(OS_NAME)-$(ARCH).a
+LIBC_OBJS_DIR    := $(ARCH_BUILD_DIR)/libc-objects
+LIBK_OBJS_DIR    := $(ARCH_BUILD_DIR)/libk-objects
+INITRD_DIR       := $(DATA_DIR)/initrd
+INITRD_TAR       := initrd.tar
+INITRD           := $(ISO_BOOT_DIR)/$(INITRD_TAR)
+GIT_HASH         := $(shell git rev-parse --short HEAD)
+SYMBOLS_TXT      := symbols.txt
+SYMBOLS          := $(ISO_BOOT_DIR)/$(SYMBOLS_TXT)
+LOG_FILE         := $(LOG_DIR)/$(BUILD_MODE).log
 
 # This should be a bitmap font.
 KERNEL_CONSOLE_FONT_PATH := $(EXTERNAL_DIR)/scalable-font2/fonts/u_vga16.sfn.gz
@@ -332,28 +333,36 @@ test: libc
 		LD_PRELOAD=./$(ARCH_BUILD_DIR)/$$file.so ./$(ARCH_BUILD_DIR)/$$file || exit 1 ; \
 	done
 	# fs/vfs
-	$(CC) $(CFLAGS_FOR_TESTS) -I$(TESTS_DIR)/proxies/ -o $(ARCH_BUILD_DIR)/vfs $(TESTS_DIR)/fs/vfs.c $(KERNEL_SRC_DIR)/fs/vfs.c
+	$(CC) $(CFLAGS_FOR_TESTS) -I$(TESTS_DIR)/proxies/ -o $(ARCH_BUILD_DIR)/vfs \
+		$(KERNEL_TESTS_DIR)/fs/vfs.c $(KERNEL_SRC_DIR)/fs/vfs.c
 	./$(ARCH_BUILD_DIR)/vfs
 	# fs/tar
-	$(CC) $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/tar $(TESTS_DIR)/fs/tar.c $(KERNEL_SRC_DIR)/fs/tar.c $(KERNEL_SRC_DIR)/fs/vfs.c
+	$(CC) $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/tar \
+		$(KERNEL_TESTS_DIR)/fs/tar.c $(KERNEL_SRC_DIR)/fs/tar.c $(KERNEL_SRC_DIR)/fs/vfs.c
 	./$(ARCH_BUILD_DIR)/tar
 	# fs/proc
-	$(CC) $(CFLAGS_FOR_TESTS) -I$(TESTS_DIR)/proxies/ -o $(ARCH_BUILD_DIR)/proc $(TESTS_DIR)/fs/proc.c $(ARCH_SRC)/fs/proc.c $(KERNEL_SRC_DIR)/fs/vfs.c
+	$(CC) $(CFLAGS_FOR_TESTS) -I$(TESTS_DIR)/proxies/ -o $(ARCH_BUILD_DIR)/proc \
+		$(KERNEL_TESTS_DIR)/fs/proc.c $(ARCH_SRC)/fs/proc.c $(KERNEL_SRC_DIR)/fs/vfs.c
 	./$(ARCH_BUILD_DIR)/proc
 	# fs/sock
-	$(CC) $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/sock $(TESTS_DIR)/fs/sock.c $(KERNEL_SRC_DIR)/fs/sock.c $(KERNEL_SRC_DIR)/fs/vfs.c
+	$(CC) $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/sock \
+		$(KERNEL_TESTS_DIR)/fs/sock.c $(KERNEL_SRC_DIR)/fs/sock.c $(KERNEL_SRC_DIR)/fs/vfs.c
 	./$(ARCH_BUILD_DIR)/sock
 	# mmu/frame
-	$(CC) $(CFLAGS_FOR_TESTS) -Wformat=0 -I$(TESTS_DIR)/proxies/ -o $(ARCH_BUILD_DIR)/frame $(TESTS_DIR)/mmu/frame.c $(ARCH_SRC)/mmu/frame.c $(ARCH_SRC)/core/multiboot.c $(KERNEL_SRC_DIR)/mmu/bitmap.c
+	$(CC) $(CFLAGS_FOR_TESTS) -Wformat=0 -I$(TESTS_DIR)/proxies/ -o $(ARCH_BUILD_DIR)/frame \
+		$(KERNEL_TESTS_DIR)/mmu/frame.c $(ARCH_SRC)/mmu/frame.c $(ARCH_SRC)/core/multiboot.c $(KERNEL_SRC_DIR)/mmu/bitmap.c
 	./$(ARCH_BUILD_DIR)/frame
 	# config/inish
-	$(CC) $(CFLAGS_FOR_TESTS) -I$(TESTS_DIR)/proxies/ -o $(ARCH_BUILD_DIR)/inish $(TESTS_DIR)/config/inish.c $(KERNEL_SRC_DIR)/config/inish.c
+	$(CC) $(CFLAGS_FOR_TESTS) -I$(TESTS_DIR)/proxies/ -o $(ARCH_BUILD_DIR)/inish \
+		$(KERNEL_TESTS_DIR)/config/inish.c $(KERNEL_SRC_DIR)/config/inish.c
 	./$(ARCH_BUILD_DIR)/inish
 	# mmu/bitmap
-	$(CC) $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/bitmap $(TESTS_DIR)/mmu/bitmap.c $(KERNEL_SRC_DIR)/mmu/bitmap.c
+	$(CC) $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/bitmap \
+		$(KERNEL_TESTS_DIR)/mmu/bitmap.c $(KERNEL_SRC_DIR)/mmu/bitmap.c
 	./$(ARCH_BUILD_DIR)/bitmap
 	# mmu/paging
-	$(CC) $(CFLAGS_FOR_TESTS) -Wformat=0 -I$(TESTS_DIR)/proxies/ -o $(ARCH_BUILD_DIR)/paging $(TESTS_DIR)/mmu/paging.c $(ARCH_SRC)/mmu/paging.c $(ARCH_SRC)/core/multiboot.c $(ARCH_SRC)/mmu/frame.c $(KERNEL_SRC_DIR)/mmu/bitmap.c $(ARCH_SRC)/core/register.c
+	$(CC) $(CFLAGS_FOR_TESTS) -Wformat=0 -I$(TESTS_DIR)/proxies/ -o $(ARCH_BUILD_DIR)/paging \
+		$(KERNEL_TESTS_DIR)/mmu/paging.c $(ARCH_SRC)/mmu/paging.c $(ARCH_SRC)/core/multiboot.c $(ARCH_SRC)/mmu/frame.c $(KERNEL_SRC_DIR)/mmu/bitmap.c $(ARCH_SRC)/core/register.c
 	./$(ARCH_BUILD_DIR)/paging
 .PHONY: test
 
