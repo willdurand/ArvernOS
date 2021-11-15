@@ -1,7 +1,7 @@
 #include "alloc.h"
-#include "logging.h"
 #include <kernel/panic.h>
 #include <mmu/bitmap.h>
+#include <mmu/logging.h>
 #include <mmu/paging.h>
 #include <string.h>
 #include <sys/types.h>

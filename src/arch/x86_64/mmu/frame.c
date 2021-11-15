@@ -1,6 +1,6 @@
 #include "frame.h"
-#include "logging.h"
 #include <kernel/panic.h>
+#include <mmu/logging.h>
 #include <string.h>
 
 opt_uint64_t read_mmap(uint64_t request);

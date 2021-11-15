@@ -1,4 +1,4 @@
-#include "bitmap.h"
+#include <mmu/bitmap.h>
 
 bool bitmap_get(const bitmap_t* b, uint64_t n)
 {

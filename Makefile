@@ -337,16 +337,16 @@ test: libc
 	$(CC) $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/sock test/fs/sock.c src/fs/sock.c src/fs/vfs.c
 	./$(ARCH_BUILD_DIR)/sock
 	# mmu/frame
-	$(CC) $(CFLAGS_FOR_TESTS) -Wformat=0 -I./test/proxies/ -o $(ARCH_BUILD_DIR)/frame test/mmu/frame.c src/arch/$(ARCH)/mmu/frame.c src/arch/$(ARCH)/core/multiboot.c src/arch/$(ARCH)/mmu/bitmap.c
+	$(CC) $(CFLAGS_FOR_TESTS) -Wformat=0 -I./test/proxies/ -o $(ARCH_BUILD_DIR)/frame test/mmu/frame.c src/arch/$(ARCH)/mmu/frame.c src/arch/$(ARCH)/core/multiboot.c src/mmu/bitmap.c
 	./$(ARCH_BUILD_DIR)/frame
 	# config/inish
 	$(CC) $(CFLAGS_FOR_TESTS) -I./test/proxies/ -o $(ARCH_BUILD_DIR)/inish test/config/inish.c src/config/inish.c
 	./$(ARCH_BUILD_DIR)/inish
 	# mmu/bitmap
-	$(CC) $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/bitmap test/mmu/bitmap.c src/arch/$(ARCH)/mmu/bitmap.c
+	$(CC) $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/bitmap test/mmu/bitmap.c src/mmu/bitmap.c
 	./$(ARCH_BUILD_DIR)/bitmap
 	# mmu/paging
-	$(CC) $(CFLAGS_FOR_TESTS) -Wformat=0 -I./test/proxies/ -o $(ARCH_BUILD_DIR)/paging test/mmu/paging.c src/arch/$(ARCH)/mmu/paging.c src/arch/$(ARCH)/core/multiboot.c src/arch/$(ARCH)/mmu/frame.c src/arch/$(ARCH)/mmu/bitmap.c src/arch/$(ARCH)/core/register.c
+	$(CC) $(CFLAGS_FOR_TESTS) -Wformat=0 -I./test/proxies/ -o $(ARCH_BUILD_DIR)/paging test/mmu/paging.c src/arch/$(ARCH)/mmu/paging.c src/arch/$(ARCH)/core/multiboot.c src/arch/$(ARCH)/mmu/frame.c src/mmu/bitmap.c src/arch/$(ARCH)/core/register.c
 	./$(ARCH_BUILD_DIR)/paging
 .PHONY: test
 
