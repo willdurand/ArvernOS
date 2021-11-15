@@ -1,4 +1,5 @@
-#include "k_syscall.h"
+#include <sys/k_syscall.h>
+
 #include <net/dns.h>
 #include <net/net.h>
 #include <stddef.h>

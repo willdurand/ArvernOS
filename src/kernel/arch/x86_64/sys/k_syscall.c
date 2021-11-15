@@ -1,8 +1,12 @@
-#include "k_syscall.h"
+#include <sys/k_syscall.h>
+
 #include <core/gdt.h>
 #include <core/register.h>
 #include <sys/logging.h>
 #include <sys/syscall.h>
+
+// This is defined in `src/arch/x86_64/k_syscall.asm`.
+extern void syscall_handler();
 
 int k_not_implemented();
 
