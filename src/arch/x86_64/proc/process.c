@@ -1,5 +1,6 @@
 #include "process.h"
-#include "logging.h"
+
+#include <proc/logging.h>
 #include <proc/usermode.h>
 #include <stdlib.h>
 #include <string.h>
