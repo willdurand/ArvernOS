@@ -1,4 +1,5 @@
-#include "debug.h"
+#include <fs/debug.h>
+
 #include <core/utils.h>
 #include <stdio.h>
 #include <stdlib.h>

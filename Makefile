@@ -67,7 +67,7 @@ QEMU_OPTIONS += -netdev user,id=u1,ipv6=off,dhcpstart=10.0.2.20
 QEMU_OPTIONS += -device rtl8139,netdev=u1
 QEMU_OPTIONS += -object filter-dump,id=f1,netdev=u1,file=$(LOG_DIR)/traffic-$(BUILD_MODE).pcap
 
-INCLUDES += -Isrc/
+INCLUDES += -Isrc/include/
 INCLUDES += -Isrc/arch/$(ARCH)/
 INCLUDES += -Iinclude/
 INCLUDES += $(addprefix -I$(EXTERNAL_DIR)/,$(EXTERNAL_DEPS))
@@ -314,7 +314,7 @@ test: CFLAGS = $(CFLAGS_WITHOUT_TARGET)
 test: CFLAGS += -fPIC -g3 -fsanitize=undefined -fsanitize=address
 test: CFLAGS_FOR_TESTS += -g3 -fsanitize=undefined -fsanitize=address
 test: CFLAGS_FOR_TESTS += -DENABLE_LOGS_FOR_TESTS -DTEST_ENV
-test: CFLAGS_FOR_TESTS += -I./test/ -I./src/ -I./src/arch/$(ARCH)/
+test: CFLAGS_FOR_TESTS += -I./test/ -I./src/include/ -I./src/arch/$(ARCH)/
 test: libc
 	# libc
 	mkdir -p $(ARCH_BUILD_DIR)/libc/string

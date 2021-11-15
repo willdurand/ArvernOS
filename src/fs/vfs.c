@@ -1,4 +1,5 @@
-#include "vfs.h"
+#include <fs/vfs.h>
+
 #include <fs/logging.h>
 #include <stdbool.h>
 #include <stdlib.h>
