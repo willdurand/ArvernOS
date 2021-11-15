@@ -5,17 +5,20 @@ OS_NAME        = willOS
 BUILD_MODE     = release
 # We (more or less) follow the PFL project structure:
 # https://api.csswg.org/bikeshed/?force=1&url=https://raw.githubusercontent.com/vector-of-bool/pitchfork/develop/data/spec.bs#intro.dirs
-BUILD_DIR      = build
-EXTERNAL_DIR   = external
-TOOLS_DIR      = tools
-LOG_DIR        = log
+BUILD_DIR      := build
+EXTERNAL_DIR   := external
+INCLUDE_DIR    := include
+LOG_DIR        := log
+SRC_DIR        := src
+TOOLS_DIR      := tools
+KERNEL_SRC_DIR := $(SRC_DIR)/kernel
 ARCH_BUILD_DIR := $(BUILD_DIR)/$(ARCH)
 DIST_DIR       := $(ARCH_BUILD_DIR)/dist
 ISO_DIR        := $(ARCH_BUILD_DIR)/isofiles
 ISO_BOOT_DIR   := $(ISO_DIR)/boot
 GRUB_DIR       := $(ISO_BOOT_DIR)/grub
 GRUB_CFG       := $(GRUB_DIR)/grub.cfg
-ARCH_SRC       := src/arch/$(ARCH)
+ARCH_SRC       := $(KERNEL_SRC_DIR)/arch/$(ARCH)
 LINKER         := $(ARCH_SRC)/linker.ld
 KERNEL_BIN     := kernel-$(ARCH).bin
 KERNEL         := $(ISO_BOOT_DIR)/$(KERNEL_BIN)
@@ -23,18 +26,18 @@ ISO            := $(DIST_DIR)/$(OS_NAME)-$(ARCH).iso
 LIBC           := $(DIST_DIR)/libc-$(OS_NAME)-$(ARCH).a
 LIBC_OBJS_DIR  := $(ARCH_BUILD_DIR)/libc-objects
 LIBK_OBJS_DIR  := $(ARCH_BUILD_DIR)/libk-objects
-INITRD_DIR     = initrd
-INITRD_TAR     = initrd.tar
+INITRD_DIR     := initrd
+INITRD_TAR     := initrd.tar
 INITRD         := $(ISO_BOOT_DIR)/$(INITRD_TAR)
 GIT_HASH       := $(shell git rev-parse --short HEAD)
 SYMBOLS_TXT    := symbols.txt
 SYMBOLS        := $(ISO_BOOT_DIR)/$(SYMBOLS_TXT)
-LOG_FILE       = $(LOG_DIR)/$(BUILD_MODE).log
+LOG_FILE       := $(LOG_DIR)/$(BUILD_MODE).log
 
 # This should be a bitmap font.
 KERNEL_CONSOLE_FONT_PATH := $(EXTERNAL_DIR)/scalable-font2/fonts/u_vga16.sfn.gz
 KERNEL_CONSOLE_FONT      := $(ARCH_BUILD_DIR)/font.o
-# This is used in `src/arch/x86_64/asm/multiboot_header.asm`.
+# This is used in `src/kernel/arch/x86_64/asm/multiboot_header.asm`.
 VBE_WIDTH  = 1024
 VBE_HEIGHT = 768
 VBE_BPP    = 32
@@ -51,7 +54,7 @@ EXTERNAL_DIRS := $(addprefix $(EXTERNAL_DIR)/,$(EXTERNAL_DEPS))
 # First, we gather the files for the architecture, then all the other files in
 # `src/` but without the arch files.
 LIBK_C_FILES := $(shell find $(ARCH_SRC) -name '*.c')
-LIBK_C_FILES += $(shell find src $(EXTERNAL_DIRS) -not -path 'src/arch/*' -name '*.c')
+LIBK_C_FILES += $(shell find $(KERNEL_SRC_DIR) src/libc $(EXTERNAL_DIRS) -not -path "$(ARCH_SRC)/*" -name '*.c')
 
 LIBK_OBJECTS     := $(patsubst %.c, $(LIBK_OBJS_DIR)/%.o, $(LIBK_C_FILES))
 LIBK_ASM_OBJECTS := $(patsubst %.asm, $(LIBK_OBJS_DIR)/%.o, $(shell find $(ARCH_SRC)/asm -name '*.asm'))
@@ -67,9 +70,9 @@ QEMU_OPTIONS += -netdev user,id=u1,ipv6=off,dhcpstart=10.0.2.20
 QEMU_OPTIONS += -device rtl8139,netdev=u1
 QEMU_OPTIONS += -object filter-dump,id=f1,netdev=u1,file=$(LOG_DIR)/traffic-$(BUILD_MODE).pcap
 
-INCLUDES += -Isrc/include/
-INCLUDES += -Isrc/arch/$(ARCH)/
-INCLUDES += -Iinclude/
+INCLUDES += -I$(INCLUDE_DIR)/kernel/
+INCLUDES += -I$(INCLUDE_DIR)/libc/
+INCLUDES += -I$(ARCH_SRC)/
 INCLUDES += $(addprefix -I$(EXTERNAL_DIR)/,$(EXTERNAL_DEPS))
 INCLUDES += -I$(EXTERNAL_DIR)/scalable-font2/
 
@@ -314,7 +317,7 @@ test: CFLAGS = $(CFLAGS_WITHOUT_TARGET)
 test: CFLAGS += -fPIC -g3 -fsanitize=undefined -fsanitize=address
 test: CFLAGS_FOR_TESTS += -g3 -fsanitize=undefined -fsanitize=address
 test: CFLAGS_FOR_TESTS += -DENABLE_LOGS_FOR_TESTS -DTEST_ENV
-test: CFLAGS_FOR_TESTS += -I./test/ -I./src/include/ -I./src/arch/$(ARCH)/
+test: CFLAGS_FOR_TESTS += -I./test/ -I$(INCLUDE_DIR)/kernel/ -I$(ARCH_SRC)/
 test: libc
 	# libc
 	mkdir -p $(ARCH_BUILD_DIR)/libc/string
@@ -325,28 +328,28 @@ test: libc
 		LD_PRELOAD=./$(ARCH_BUILD_DIR)/$$file.so ./$(ARCH_BUILD_DIR)/$$file || exit 1 ; \
 	done
 	# fs/vfs
-	$(CC) $(CFLAGS_FOR_TESTS) -I./test/proxies/ -o $(ARCH_BUILD_DIR)/vfs test/fs/vfs.c src/fs/vfs.c
+	$(CC) $(CFLAGS_FOR_TESTS) -I./test/proxies/ -o $(ARCH_BUILD_DIR)/vfs test/fs/vfs.c $(KERNEL_SRC_DIR)/fs/vfs.c
 	./$(ARCH_BUILD_DIR)/vfs
 	# fs/tar
-	$(CC) $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/tar test/fs/tar.c src/fs/tar.c src/fs/vfs.c
+	$(CC) $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/tar test/fs/tar.c $(KERNEL_SRC_DIR)/fs/tar.c $(KERNEL_SRC_DIR)/fs/vfs.c
 	./$(ARCH_BUILD_DIR)/tar
 	# fs/proc
-	$(CC) $(CFLAGS_FOR_TESTS) -I./test/proxies/ -o $(ARCH_BUILD_DIR)/proc test/fs/proc.c src/arch/$(ARCH)/fs/proc.c src/fs/vfs.c
+	$(CC) $(CFLAGS_FOR_TESTS) -I./test/proxies/ -o $(ARCH_BUILD_DIR)/proc test/fs/proc.c $(ARCH_SRC)/fs/proc.c $(KERNEL_SRC_DIR)/fs/vfs.c
 	./$(ARCH_BUILD_DIR)/proc
 	# fs/sock
-	$(CC) $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/sock test/fs/sock.c src/fs/sock.c src/fs/vfs.c
+	$(CC) $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/sock test/fs/sock.c $(KERNEL_SRC_DIR)/fs/sock.c $(KERNEL_SRC_DIR)/fs/vfs.c
 	./$(ARCH_BUILD_DIR)/sock
 	# mmu/frame
-	$(CC) $(CFLAGS_FOR_TESTS) -Wformat=0 -I./test/proxies/ -o $(ARCH_BUILD_DIR)/frame test/mmu/frame.c src/arch/$(ARCH)/mmu/frame.c src/arch/$(ARCH)/core/multiboot.c src/mmu/bitmap.c
+	$(CC) $(CFLAGS_FOR_TESTS) -Wformat=0 -I./test/proxies/ -o $(ARCH_BUILD_DIR)/frame test/mmu/frame.c $(ARCH_SRC)/mmu/frame.c $(ARCH_SRC)/core/multiboot.c $(KERNEL_SRC_DIR)/mmu/bitmap.c
 	./$(ARCH_BUILD_DIR)/frame
 	# config/inish
-	$(CC) $(CFLAGS_FOR_TESTS) -I./test/proxies/ -o $(ARCH_BUILD_DIR)/inish test/config/inish.c src/config/inish.c
+	$(CC) $(CFLAGS_FOR_TESTS) -I./test/proxies/ -o $(ARCH_BUILD_DIR)/inish test/config/inish.c $(KERNEL_SRC_DIR)/config/inish.c
 	./$(ARCH_BUILD_DIR)/inish
 	# mmu/bitmap
-	$(CC) $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/bitmap test/mmu/bitmap.c src/mmu/bitmap.c
+	$(CC) $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/bitmap test/mmu/bitmap.c $(KERNEL_SRC_DIR)/mmu/bitmap.c
 	./$(ARCH_BUILD_DIR)/bitmap
 	# mmu/paging
-	$(CC) $(CFLAGS_FOR_TESTS) -Wformat=0 -I./test/proxies/ -o $(ARCH_BUILD_DIR)/paging test/mmu/paging.c src/arch/$(ARCH)/mmu/paging.c src/arch/$(ARCH)/core/multiboot.c src/arch/$(ARCH)/mmu/frame.c src/mmu/bitmap.c src/arch/$(ARCH)/core/register.c
+	$(CC) $(CFLAGS_FOR_TESTS) -Wformat=0 -I./test/proxies/ -o $(ARCH_BUILD_DIR)/paging test/mmu/paging.c $(ARCH_SRC)/mmu/paging.c $(ARCH_SRC)/core/multiboot.c $(ARCH_SRC)/mmu/frame.c $(KERNEL_SRC_DIR)/mmu/bitmap.c $(ARCH_SRC)/core/register.c
 	./$(ARCH_BUILD_DIR)/paging
 .PHONY: test
 

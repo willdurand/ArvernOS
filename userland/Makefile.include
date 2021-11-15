@@ -45,7 +45,7 @@ CFLAGS += -mno-mmx -mno-sse -mno-sse2 -mno-avx -mno-avx2
 # executable if needed, see: https://access.redhat.com/blogs/766093/posts/1975793
 CFLAGS += -fno-pie
 CFLAGS += -D$(PLATFORM)
-CFLAGS += -I $(ROOT_DIR)/include/
+CFLAGS += -I $(ROOT_DIR)/include/libc/
 
 ifeq ($(ENABLE_USERLAND_DEBUG), 1)
 	CFLAGS += -DENABLE_USERLAND_DEBUG
