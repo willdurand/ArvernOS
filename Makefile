@@ -325,16 +325,16 @@ test: libc
 		LD_PRELOAD=./$(ARCH_BUILD_DIR)/$$file.so ./$(ARCH_BUILD_DIR)/$$file || exit 1 ; \
 	done
 	# fs/vfs
-	$(CC) $(CFLAGS_FOR_TESTS) -I./test/proxies/ -o $(ARCH_BUILD_DIR)/vfs test/fs/vfs.c src/arch/$(ARCH)/fs/vfs.c
+	$(CC) $(CFLAGS_FOR_TESTS) -I./test/proxies/ -o $(ARCH_BUILD_DIR)/vfs test/fs/vfs.c src/fs/vfs.c
 	./$(ARCH_BUILD_DIR)/vfs
 	# fs/tar
-	$(CC) $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/tar test/fs/tar.c src/arch/$(ARCH)/fs/tar.c src/arch/$(ARCH)/fs/vfs.c
+	$(CC) $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/tar test/fs/tar.c src/fs/tar.c src/fs/vfs.c
 	./$(ARCH_BUILD_DIR)/tar
 	# fs/proc
-	$(CC) $(CFLAGS_FOR_TESTS) -I./test/proxies/ -o $(ARCH_BUILD_DIR)/proc test/fs/proc.c src/arch/$(ARCH)/fs/proc.c src/arch/$(ARCH)/fs/vfs.c
+	$(CC) $(CFLAGS_FOR_TESTS) -I./test/proxies/ -o $(ARCH_BUILD_DIR)/proc test/fs/proc.c src/arch/$(ARCH)/fs/proc.c src/fs/vfs.c
 	./$(ARCH_BUILD_DIR)/proc
 	# fs/sock
-	$(CC) $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/sock test/fs/sock.c src/arch/$(ARCH)/fs/sock.c src/arch/$(ARCH)/fs/vfs.c
+	$(CC) $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/sock test/fs/sock.c src/fs/sock.c src/fs/vfs.c
 	./$(ARCH_BUILD_DIR)/sock
 	# mmu/frame
 	$(CC) $(CFLAGS_FOR_TESTS) -Wformat=0 -I./test/proxies/ -o $(ARCH_BUILD_DIR)/frame test/mmu/frame.c src/arch/$(ARCH)/mmu/frame.c src/arch/$(ARCH)/core/multiboot.c src/arch/$(ARCH)/mmu/bitmap.c
