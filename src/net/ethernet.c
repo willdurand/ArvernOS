@@ -1,8 +1,9 @@
-#include "ethernet.h"
-#include "logging.h"
+#include <net/ethernet.h>
+
 #include <arpa/inet.h>
 #include <net/arp.h>
 #include <net/ipv4.h>
+#include <net/logging.h>
 #include <stdlib.h>
 #include <string.h>
 

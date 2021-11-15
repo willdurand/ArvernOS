@@ -1,7 +1,8 @@
-#include "ntp.h"
-#include "logging.h"
+#include <net/ntp.h>
+
 #include <arpa/inet.h>
 #include <core/utils.h>
+#include <net/logging.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/syscall.h>

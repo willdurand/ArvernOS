@@ -1,6 +1,7 @@
-#include "dns.h"
-#include "logging.h"
+#include <net/dns.h>
+
 #include <arpa/inet.h>
+#include <net/logging.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

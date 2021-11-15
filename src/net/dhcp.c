@@ -1,7 +1,8 @@
-#include "dhcp.h"
-#include "logging.h"
+#include <net/dhcp.h>
+
 #include <arpa/inet.h>
 #include <core/utils.h>
+#include <net/logging.h>
 #include <stdlib.h>
 #include <string.h>
 
