@@ -1,4 +1,5 @@
-#include "kmain.h"
+#include <kernel/kmain.h>
+
 #include <config/inish.h>
 #include <core/elf.h>
 #include <core/gdt.h>
