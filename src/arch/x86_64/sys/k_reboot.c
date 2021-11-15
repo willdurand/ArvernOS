@@ -3,9 +3,9 @@
  * @see http://man7.org/linux/man-pages/man2/reboot.2.html
  */
 #include "k_syscall.h"
-#include "logging.h"
 #include <core/port.h>
 #include <errno.h>
+#include <sys/logging.h>
 #include <sys/reboot.h>
 
 #define KEYBOARD_STATUS_PORT 0x64

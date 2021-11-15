@@ -1,10 +1,10 @@
 #include "k_syscall.h"
-#include "logging.h"
 #include <errno.h>
 #include <fcntl.h>
 #include <fs/vfs.h>
 #include <proc/descriptor.h>
 #include <stddef.h>
+#include <sys/logging.h>
 #include <sys/types.h>
 
 off_t k_lseek(int fd, off_t offset, int whence)

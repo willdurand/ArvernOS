@@ -1,8 +1,8 @@
 #include "k_syscall.h"
-#include "logging.h"
 #include <core/utils.h>
 #include <drivers/cmos.h>
 #include <drivers/timer.h>
+#include <sys/logging.h>
 
 int k_gettimeofday(struct timeval* p, void* z)
 {

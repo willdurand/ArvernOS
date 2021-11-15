@@ -1,10 +1,10 @@
 #include "k_syscall.h"
-#include "logging.h"
 #include <errno.h>
 #include <fs/vfs.h>
 #include <inttypes.h>
 #include <proc/descriptor.h>
 #include <stddef.h>
+#include <sys/logging.h>
 #include <sys/types.h>
 
 int k_fstat(int fd, struct stat* statbuf)
