@@ -1,4 +1,5 @@
-#include "kshell.h"
+#include <kshell/kshell.h>
+
 #include <logging.h>
 #include <stdbool.h>
 #include <stdio.h>

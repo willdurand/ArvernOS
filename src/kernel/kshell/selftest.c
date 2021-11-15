@@ -1,4 +1,5 @@
-#include "kshell.h"
+#include <kshell/kshell.h>
+
 #include <fs/debug.h>
 #include <fs/vfs.h>
 #include <kernel/panic.h>

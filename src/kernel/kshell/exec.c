@@ -1,4 +1,5 @@
-#include "kshell.h"
+#include <kshell/kshell.h>
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/syscall.h>
