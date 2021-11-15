@@ -6,6 +6,7 @@ BUILD_MODE     = release
 # We (more or less) follow the PFL project structure:
 # https://api.csswg.org/bikeshed/?force=1&url=https://raw.githubusercontent.com/vector-of-bool/pitchfork/develop/data/spec.bs#intro.dirs
 BUILD_DIR      := build
+DATA_DIR       := data
 EXTERNAL_DIR   := external
 INCLUDE_DIR    := include
 LOG_DIR        := log
@@ -28,7 +29,7 @@ ISO            := $(DIST_DIR)/$(OS_NAME)-$(ARCH).iso
 LIBC           := $(DIST_DIR)/libc-$(OS_NAME)-$(ARCH).a
 LIBC_OBJS_DIR  := $(ARCH_BUILD_DIR)/libc-objects
 LIBK_OBJS_DIR  := $(ARCH_BUILD_DIR)/libk-objects
-INITRD_DIR     := initrd
+INITRD_DIR     := $(DATA_DIR)/initrd
 INITRD_TAR     := initrd.tar
 INITRD         := $(ISO_BOOT_DIR)/$(INITRD_TAR)
 GIT_HASH       := $(shell git rev-parse --short HEAD)
@@ -47,6 +48,7 @@ VBE_BPP    = 32
 # More tools.
 NASM = nasm
 QEMU = qemu-system-x86_64
+TAR  = tar
 
 # This is the list of external libraries we use and need to build for the
 # kernel (libk) and the libc.
@@ -235,7 +237,7 @@ console-font: ## compile the (default) kernel console font
 console-font: $(KERNEL_CONSOLE_FONT)
 .PHONY: console-font
 
-$(INITRD): $(INITRD_DIR) userland
+$(INITRD): userland
 	$(PROGRESS) "TAR" $@
 	cp -R $(USERLAND_DIR)/bin $(INITRD_DIR)
 	echo "$(OS_NAME) ($(ARCH)) build info" > $(INITRD_DIR)/info
@@ -248,7 +250,7 @@ $(INITRD): $(INITRD_DIR) userland
 	echo "" >> $(INITRD_DIR)/info
 	echo "CFLAGS: $(CFLAGS)" >> $(INITRD_DIR)/info
 	echo "INCLUDES: $(INCLUDES)" >> $(INITRD_DIR)/info
-	cd $(INITRD_DIR) && tar -cf ../$@ *
+	cd $(INITRD_DIR) && $(TAR) -cf ../../$@ *
 
 # We mark this target as .PHONY to write the file every time.
 $(GRUB_CFG): $(GRUB_DIR)

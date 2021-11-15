@@ -5,8 +5,8 @@
 *.tar
 /.gdb_history
 /build/
-/initrd/bin/
-/initrd/info
+/data/initrd/bin/
+/data/initrd/info
 /log/
 /src/userland/bin/
 /src/userland/local-build/
