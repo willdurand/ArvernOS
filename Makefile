@@ -337,7 +337,7 @@ test: libc
 		$(KERNEL_TESTS_DIR)/fs/vfs.c $(KERNEL_SRC_DIR)/fs/vfs.c
 	./$(ARCH_BUILD_DIR)/vfs
 	# fs/tar
-	$(CC) $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/tar \
+	$(CC) $(CFLAGS_FOR_TESTS) -I$(TESTS_DIR)/proxies/ -o $(ARCH_BUILD_DIR)/tar \
 		$(KERNEL_TESTS_DIR)/fs/tar.c $(KERNEL_SRC_DIR)/fs/tar.c $(KERNEL_SRC_DIR)/fs/vfs.c
 	./$(ARCH_BUILD_DIR)/tar
 	# fs/proc
@@ -345,7 +345,7 @@ test: libc
 		$(KERNEL_TESTS_DIR)/fs/proc.c $(ARCH_SRC)/fs/proc.c $(KERNEL_SRC_DIR)/fs/vfs.c
 	./$(ARCH_BUILD_DIR)/proc
 	# fs/sock
-	$(CC) $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/sock \
+	$(CC) $(CFLAGS_FOR_TESTS) -I$(TESTS_DIR)/proxies/ -o $(ARCH_BUILD_DIR)/sock \
 		$(KERNEL_TESTS_DIR)/fs/sock.c $(KERNEL_SRC_DIR)/fs/sock.c $(KERNEL_SRC_DIR)/fs/vfs.c
 	./$(ARCH_BUILD_DIR)/sock
 	# mmu/frame

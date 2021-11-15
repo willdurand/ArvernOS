@@ -1,7 +1,7 @@
 #include "console.h"
-#include <core/utils.h>
 #include <logging.h>
 #include <mmu/paging.h>
+#include <willos/utils.h>
 
 #ifdef ENABLE_FRAMEBUFFER
 #define SSFN_CONSOLEBITMAP_TRUECOLOR

@@ -1,6 +1,7 @@
 #include "ubsan.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <willos/utils.h>
 
 #ifdef __is_libk
 
@@ -8,8 +9,6 @@
 #include <logging.h>
 
 #endif
-
-#define UNUSED(x) (void)(x)
 
 void ubsan_panic_at(ubsan_source_location_t* location, const char* error);
 

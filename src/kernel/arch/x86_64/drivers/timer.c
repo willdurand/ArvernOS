@@ -1,8 +1,8 @@
 #include "timer.h"
 #include <core/isr.h>
 #include <core/port.h>
-#include <core/utils.h>
 #include <stdlib.h>
+#include <willos/utils.h>
 
 uint64_t tick = 0;
 
