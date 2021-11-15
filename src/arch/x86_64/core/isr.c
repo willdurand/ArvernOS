@@ -1,6 +1,6 @@
 #include "isr.h"
-#include "logging.h"
 #include <core/idt.h>
+#include <core/logging.h>
 #include <core/port.h>
 #include <core/register.h>
 #include <kernel/panic.h>

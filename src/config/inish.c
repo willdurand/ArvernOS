@@ -1,5 +1,6 @@
-#include "inish.h"
-#include "logging.h"
+#include <config/inish.h>
+
+#include <config/logging.h>
 #include <core/utils.h>
 #include <fcntl.h>
 #include <stdio.h>

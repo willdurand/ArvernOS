@@ -1,5 +1,5 @@
 #include "elf.h"
-#include "logging.h"
+#include <core/logging.h>
 #include <mmu/paging.h>
 #include <string.h>
 

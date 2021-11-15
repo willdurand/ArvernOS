@@ -1,5 +1,5 @@
 #include "multiboot.h"
-#include "logging.h"
+#include <core/logging.h>
 #include <stdio.h>
 
 void* find_multiboot_tag(multiboot_info_t* mbi, uint16_t type)

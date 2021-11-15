@@ -1,4 +1,5 @@
-#include "descriptor.h"
+#include <proc/descriptor.h>
+
 #include <string.h>
 #include <sys/socket.h>
 

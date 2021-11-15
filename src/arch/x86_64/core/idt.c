@@ -1,6 +1,6 @@
 #include "idt.h"
-#include "logging.h"
 #include <core/gdt.h>
+#include <core/logging.h>
 
 static idt_gate_t idt[IDT_ENTRIES] = { 0 };
 
