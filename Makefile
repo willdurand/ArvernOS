@@ -12,6 +12,7 @@ LOG_DIR        := log
 SRC_DIR        := src
 TOOLS_DIR      := tools
 KERNEL_SRC_DIR := $(SRC_DIR)/kernel
+USERLAND_DIR   := $(SRC_DIR)/userland
 ARCH_BUILD_DIR := $(BUILD_DIR)/$(ARCH)
 DIST_DIR       := $(ARCH_BUILD_DIR)/dist
 ISO_DIR        := $(ARCH_BUILD_DIR)/isofiles
@@ -235,7 +236,7 @@ console-font: $(KERNEL_CONSOLE_FONT)
 
 $(INITRD): $(INITRD_DIR) userland
 	$(PROGRESS) "TAR" $@
-	cp -R userland/bin $(INITRD_DIR)
+	cp -R $(USERLAND_DIR)/bin $(INITRD_DIR)
 	echo "$(OS_NAME) ($(ARCH)) build info" > $(INITRD_DIR)/info
 	echo "" >> $(INITRD_DIR)/info
 	echo "hash: $(GIT_HASH)" >> $(INITRD_DIR)/info
@@ -291,7 +292,7 @@ run-test: run
 
 clean: ## remove build artifacts
 	$(PROGRESS) "CLEAN"
-	rm -rf $(ARCH_BUILD_DIR) $(INITRD_DIR)/info $(INITRD_DIR)/bin/ userland/bin/ userland/local-build/
+	rm -rf $(ARCH_BUILD_DIR) $(INITRD_DIR)/info $(INITRD_DIR)/bin/ $(USERLAND_DIR)/bin/ $(USERLAND_DIR)/local-build/
 .PHONY: clean
 
 fmt: ## automatically format the code with clang-format
@@ -306,7 +307,7 @@ gdb: debug run
 
 userland: ## compile the userland programs (statically linked to libc)
 userland: libc
-	@for userland_program in $(shell find userland/* -type d -not \( -path userland/bin -o -path userland/local-build \)); do \
+	@for userland_program in $(shell find $(USERLAND_DIR)/* -type d -not \( -path $(USERLAND_DIR)/bin -o -path $(USERLAND_DIR)/local-build \)); do \
 	    $(MAKE) -C $$userland_program OS_NAME="$(OS_NAME)" ARCH="$(ARCH)" ENABLE_USERLAND_DEBUG=$(ENABLE_USERLAND_DEBUG) ; \
 	done
 .PHONY: userland
