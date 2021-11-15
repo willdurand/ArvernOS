@@ -8,7 +8,7 @@
 
 char* get_initrd()
 {
-  FILE* file = fopen("test/test.tar", "rb");
+  FILE* file = fopen("tests/test.tar", "rb");
 
   if (!file) {
     return NULL;
