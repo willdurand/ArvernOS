@@ -2,8 +2,8 @@
 #include <core/isr.h>
 #include <core/pci.h>
 #include <core/port.h>
-#include <core/utils.h>
 #include <mmu/paging.h>
+#include <willos/utils.h>
 // We use the net logger because this driver is for a network card.
 #include <net/logging.h>
 #include <stdint.h>

@@ -1,10 +1,10 @@
 #include "serial.h"
-#include <core/utils.h>
 #include <drivers/serial.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <willos/utils.h>
 
 uint64_t fs_serial_stat(inode_t node, vfs_stat_t* st);
 uint64_t fs_serial_write(inode_t node,

@@ -1,4 +1,5 @@
 #include <willos/log.h>
+#include <willos/utils.h>
 
 #ifndef __is_libk
 #include <fcntl.h>
@@ -32,7 +33,7 @@ void willos_log_deinit()
 
 void willos_log_putchar(char c, void* arg)
 {
-  (void)(*arg);
+  UNUSED(*arg);
 
   if (com1_fd < 3) {
     return;

@@ -1,9 +1,9 @@
 #include <fs/dev.h>
 
-#include <core/utils.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <willos/utils.h>
 
 inode_t dev_device_create(const char* name, vfs_driver_t* driver);
 uint64_t null_read(inode_t node, void* buffer, uint64_t size, uint64_t offset);

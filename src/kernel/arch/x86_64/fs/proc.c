@@ -1,5 +1,4 @@
 #include "proc.h"
-#include <core/utils.h>
 #include <drivers/timer.h>
 #include <fs/logging.h>
 #include <kernel/kmain.h>
@@ -8,6 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <willos/utils.h>
 
 dirent_t* proc_readdir(inode_t inode, uint64_t num);
 inode_t proc_finddir(inode_t inode, const char* name);

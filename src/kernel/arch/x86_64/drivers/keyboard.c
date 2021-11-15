@@ -1,9 +1,9 @@
 #include "keyboard.h"
 #include <core/isr.h>
 #include <core/port.h>
-#include <core/utils.h>
 #include <logging.h>
 #include <stdlib.h>
+#include <willos/utils.h>
 
 #define RING_BUFFER_SIZE 8
 

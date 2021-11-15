@@ -1,6 +1,5 @@
 #include <fs/sock.h>
 
-#include <core/utils.h>
 #include <fcntl.h>
 #include <fs/logging.h>
 #include <stdbool.h>
@@ -8,6 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <willos/utils.h>
 
 uint64_t sock_open(inode_t inode, uint64_t flags);
 uint64_t sock_close(inode_t inode);

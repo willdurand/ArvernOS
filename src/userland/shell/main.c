@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <willos/utils.h>
 
 #define READLINE_SIZE          256
 #define PROMPT                 "\033[0;36m$\033[0m "
@@ -28,8 +29,8 @@ void print_prompt()
 
 int main(int argc, char* argv[])
 {
-  (void)(argc);
-  (void)(**argv);
+  UNUSED(argc);
+  UNUSED(**argv);
 
   putenv("USER=user");
   putenv("SHELL=/bin/shell");
