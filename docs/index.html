@@ -112,16 +112,16 @@ Docker (recommended way)</h2>
 <div class="line">[...]</div>
 </div><!-- fragment --><p>You can then use it with <code>docker run</code>:</p>
 <div class="fragment"><div class="line">$ docker run -it --rm -v $(pwd):/app willos/toolchain make help</div>
+<div class="line">make help</div>
 <div class="line">clean                          remove build artifacts</div>
 <div class="line">console-font                   compile the (default) kernel console font</div>
 <div class="line">debug                          build the OS in debug mode</div>
 <div class="line">docs                           build the docs</div>
 <div class="line">fmt                            automatically format the code with clang-format</div>
 <div class="line">gdb                            build, run the OS in debug mode and enable GDB</div>
-<div class="line">initrd                         build the init ram disk</div>
-<div class="line">iso                            build the image of the OS (.iso)</div>
 <div class="line">kernel                         compile the kernel</div>
 <div class="line">libc                           build the libc (userland)</div>
+<div class="line">release                        build the OS in release mode</div>
 <div class="line">run-debug                      run the OS in debug mode</div>
 <div class="line">run-test                       run the OS in test mode</div>
 <div class="line">run                            run the OS in release mode</div>
@@ -142,12 +142,27 @@ Linux</h2>
 Building willOS</h1>
 <p>The different final files are located in the <code>build/&lt;arch&gt;/dist/</code> folder.</p>
 <h2><a class="anchor" id="autotoc_md6"></a>
+&lt;tt&gt;willosconfig&lt;/tt&gt; files</h2>
+<p><code>willosconfig</code> files are used to configure how a build works. The content must be compatible with <code>make</code>. Here is an example:</p>
+<div class="fragment"><div class="line"># LLVM config on MacOS with Homebrew</div>
+<div class="line">LLVM_PREFIX = /usr/local/opt/llvm@13/bin/</div>
+<div class="line">LLVM_SUFFIX =</div>
+<div class="line"> </div>
+<div class="line"># Always enable the Undefined Behavior sanitizer</div>
+<div class="line">UBSAN=1</div>
+<div class="line"> </div>
+<div class="line"># Sensible logging</div>
+<div class="line">ENABLE_CORE_DEBUG=1</div>
+<div class="line">ENABLE_PROC_DEBUG=1</div>
+<div class="line">ENABLE_SYS_DEBUG=1</div>
+<div class="line">ENABLE_USERLAND_DEBUG=1</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md7"></a>
 Debug</h2>
 <p>To build the ISO in debug mode, run:</p>
 <div class="fragment"><div class="line">$ make clean debug</div>
 </div><!-- fragment --><p>To compile the OS in debug mode, build the ISO, and start <code>qemu</code> with the OS loaded, run:</p>
 <div class="fragment"><div class="line">$ make clean run-debug</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md7"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md8"></a>
 Logging</h3>
 <p>In DEBUG mode, logging uses the serial port <code>COM1</code> to write various debugging information. <code>qemu</code> is configured to write the output of this serial port to <code>./log/debug.log</code>. <code>DEBUG</code> level logs are not necessarily written by default, though, and it is possible to enable <code>DEBUG</code> logs for specific modules like this:</p>
 <div class="fragment"><div class="line"># Enable the debug logs for the &quot;net&quot; and &quot;fs&quot; modules</div>
@@ -163,20 +178,20 @@ Logging</h3>
 <li><code>ENABLE_SYS_DEBUG</code></li>
 <li><code>ENABLE_USERLAND_DEBUG</code></li>
 </ul>
-<p>There is also <code>ENABLE_ALL_DEBUG</code> to turn all debug logs on.</p>
-<h4><a class="anchor" id="autotoc_md8"></a>
+<p>There is also <code>ENABLE_ALL_DEBUG</code> to turn all debug logs on (which negatively impacts the performances).</p>
+<h4><a class="anchor" id="autotoc_md9"></a>
 Stacktraces</h4>
-<p>Log files may contain stacktraces:</p>
+<p>Log files may contain stacktraces without debug symbols if the symbols haven't been loaded via GRUB:</p>
 <div class="fragment"><div class="line">[...]</div>
 <div class="line">DEBUG    | src/arch/x86_64/kshell/kshell.c:108:run_command(): command=&#39;selftest&#39; argc=1</div>
 <div class="line">DEBUG    | src/arch/x86_64/kernel/panic.c:30:kernel_dump_stacktrace(): kernel stacktrace:</div>
-<div class="line">DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 00000000001163B3</div>
-<div class="line">DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 0000000000115941</div>
-<div class="line">DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 0000000000115BE1</div>
-<div class="line">DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 00000000001152BF</div>
-<div class="line">DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 000000000010935B</div>
+<div class="line">DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 00000000001163B3 - ???+0x0</div>
+<div class="line">DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 0000000000115941 - ???+0x0</div>
+<div class="line">DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 0000000000115BE1 - ???+0x0</div>
+<div class="line">DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 00000000001152BF - ???+0x0</div>
+<div class="line">DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 000000000010935B - ???+0x0</div>
 </div><!-- fragment --><p>Use the <code>tools/fix-stacktrace.py</code> script to add missing symbol names to the output:</p>
-<div class="fragment"><div class="line">$ ./tools/fix-stacktrace.py build/x86_64/symbols.txt log/debug.log</div>
+<div class="fragment"><div class="line">$ ./tools/fix-stacktrace.py build/x86_64/isofiles/boot/symbols.txt log/debug.log</div>
 <div class="line">[...]</div>
 <div class="line">DEBUG    | src/arch/x86_64/kshell/kshell.c:108:run_command(): command=&#39;selftest&#39; argc=1</div>
 <div class="line">DEBUG    | src/arch/x86_64/kernel/panic.c:30:kernel_dump_stacktrace(): kernel stacktrace:</div>
@@ -193,16 +208,16 @@ Stacktraces</h4>
 <div class="line">/Users/william/projects/willos/src/arch/x86_64/kshell/selftest.c:30:3</div>
 </div><!-- fragment --><div class="fragment"><div class="line">$ llvm-addr2line-13 -e build/x86_64/dist/kernel-x86_64.bin 01163B3</div>
 <div class="line">/Users/william/projects/willos/src/arch/x86_64/kshell/selftest.c:12</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md9"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md10"></a>
 Release</h2>
 <p>To compile the OS in release mode, build the ISO, and start <code>qemu</code> with the OS loaded, run:</p>
 <div class="fragment"><div class="line">$ make clean run</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md10"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md11"></a>
 Boot options</h2>
-<p>The GRUB configuration offers two choices: the normal mode and the kernel mode. The normal (or "default") mode will load the <a class="el" href="md_userland_init__r_e_a_d_m_e.html">`/bin/init`</a> program in user mode ("ring 3"). The kernel mode will load the <code>kshell</code> instead and will stay in kernel mode (as its name implies).</p>
-<p>It is possible to change the command line by passing the <code>GRUB_KERNEL_CMDLINE</code> variable to <code>make</code>:</p>
+<p>The GRUB configuration offers two choices: the normal mode and the kernel mode. The normal (or "default") mode will load the <a class="el" href="md_src_userland_init__r_e_a_d_m_e.html">`/bin/init`</a> program in user mode ("ring 3"). The kernel mode will load the <code>kshell</code> instead and will stay in kernel mode (as its name implies).</p>
+<p>It is possible to change the command line by passing the <code>GRUB_KERNEL_CMDLINE</code> variable to <code>make</code> (or add it to your <code>willosconfig</code> file):</p>
 <div class="fragment"><div class="line">$ make clean GRUB_KERNEL_CMDLINE=&quot;/bin/init foo bar&quot; run-debug</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md11"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md12"></a>
 Early boot sequence</h1>
 <ol type="1">
 <li>The BIOS loads the bootloader (GRUB) from the ISO</li>
@@ -217,7 +232,7 @@ Early boot sequence</h1>
 <li>Call the C <code><a class="el" href="kmain_8h.html#a3a723148ea74ca575865f61d277c0657">kmain()</a></code> function</li>
 <li>Eventually switch to user mode and call <code>/bin/init</code> by default</li>
 </ol>
-<h1><a class="anchor" id="autotoc_md12"></a>
+<h1><a class="anchor" id="autotoc_md13"></a>
 Memory management</h1>
 <p>During the early boot sequence, we identity map the first gigabyte of our kernel with 512 2MiB pages. When <code><a class="el" href="kmain_8h.html#a3a723148ea74ca575865f61d277c0657">kmain()</a></code> is called, we call <code><a class="el" href="paging_8h.html#a44fe56c079dc6d3c0d4b29f5b9dab5a5" title="Initializes paging to separate virtual and physical memory.">paging_init()</a></code> to update the mapping:</p>
 <ol type="1">
@@ -235,9 +250,9 @@ Memory management</h1>
 <li>enable the no-execute feature</li>
 <li>create a guard page</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md13"></a>
+<h2><a class="anchor" id="autotoc_md14"></a>
 Memory map</h2>
-<h3><a class="anchor" id="autotoc_md14"></a>
+<h3><a class="anchor" id="autotoc_md15"></a>
 Virtual address space</h3>
 <ul>
 <li><code>0x00000000</code> to <code>0x00100000</code>: the first 1MiB area is reserved</li>
@@ -246,7 +261,7 @@ Virtual address space</h3>
 <li><code>0x10000000</code>: kernel heap area (we currently have a fixed heap size)</li>
 <li><code>0x40000000</code>: user space</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md15"></a>
+<h1><a class="anchor" id="autotoc_md16"></a>
 License</h1>
 <p>willOS is released under the MIT License. See the bundled <a href="https://github.com/willdurand/willOS/blob/master/LICENSE.md">LICENSE</a> file for details. In addition, some parts of this project have their own licenses attached (either in the source files or in a <code>LICENSE</code> file next to them). </p>
 </div></div><!-- PageDoc -->

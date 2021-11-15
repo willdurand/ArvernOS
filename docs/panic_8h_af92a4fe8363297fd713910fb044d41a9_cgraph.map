@@ -1,0 +1,7 @@
+<map id="kernel_panic" name="kernel_panic">
+<area shape="rect" id="node1" title=" " alt="" coords="5,56,103,83"/>
+<area shape="rect" id="node2" href="$isr_8h.html#a48c1ab85abf749224864c1576a186a3b" title=" " alt="" coords="159,5,309,32"/>
+<area shape="rect" id="node3" href="$panic_8h.html#a714e1c8a23ac88c46756c44ec1a5b7f8" title=" " alt="" coords="151,56,317,83"/>
+<area shape="rect" id="node4" href="$vga__text_8h.html#ad1fc59685312d0c91988280ab70f1c01" title=" " alt="" coords="151,107,317,133"/>
+<area shape="rect" id="node5" href="$port_8h.html#ac3c72bfda8c7b1920ef91bcc06c97c7f" title=" " alt="" coords="365,107,469,133"/>
+</map>

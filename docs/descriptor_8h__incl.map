@@ -1,6 +1,6 @@
-<map id="src/arch/x86_64/proc/descriptor.h" name="src/arch/x86_64/proc/descriptor.h">
-<area shape="rect" id="node1" title=" " alt="" coords="33,5,180,47"/>
+<map id="include/kernel/proc/descriptor.h" name="include/kernel/proc/descriptor.h">
+<area shape="rect" id="node1" title=" " alt="" coords="40,5,173,47"/>
 <area shape="rect" id="node2" href="$vfs_8h_source.html" title=" " alt="" coords="5,95,69,121"/>
-<area shape="rect" id="node3" title=" " alt="" coords="39,169,105,196"/>
-<area shape="rect" id="node4" title=" " alt="" coords="145,95,221,121"/>
+<area shape="rect" id="node3" href="$stdint_8h_source.html" title=" " alt="" coords="39,169,105,196"/>
+<area shape="rect" id="node4" href="$stdbool_8h_source.html" title=" " alt="" coords="145,95,221,121"/>
 </map>

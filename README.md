@@ -210,7 +210,7 @@ $ make clean run
 
 The GRUB configuration offers two choices: the normal mode and the kernel mode.
 The normal (or "default") mode will load the
-[`/bin/init`](userland/init/README.md) program in user mode ("ring 3"). The
+[`/bin/init`](src/userland/init/README.md) program in user mode ("ring 3"). The
 kernel mode will load the `kshell` instead and will stay in kernel mode (as its
 name implies).
 

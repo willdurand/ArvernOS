@@ -1,16 +1,9 @@
 var searchData=
 [
-  ['cmos_2eh_14',['cmos.h',['../cmos_8h.html',1,'']]],
-  ['cmos_5fboot_5ftime_15',['cmos_boot_time',['../cmos_8h.html#a075a41918112363e92d77ce1e86d171b',1,'cmos.c']]],
-  ['cmos_5finit_16',['cmos_init',['../cmos_8h.html#ac12282062cbe908153f85e20f13a699b',1,'cmos.c']]],
-  ['cmos_5fread_5frtc_17',['cmos_read_rtc',['../cmos_8h.html#adfa7700f437e353519065098860d64f9',1,'cmos.c']]],
-  ['cmos_5frtc_5ft_18',['cmos_rtc_t',['../structcmos__rtc__t.html',1,'']]],
-  ['console_2eh_19',['console.h',['../console_8h.html',1,'']]],
-  ['console_5ffullscreen_20',['console_fullscreen',['../console_8h.html#a14c7a4113d75bf35aedade2e82565c9f',1,'console.c']]],
-  ['console_5finit_21',['console_init',['../console_8h.html#a7f1237f8348103b7fee42f35e0b34e49',1,'console.c']]],
-  ['console_5fmode_5fis_5fvbe_22',['console_mode_is_vbe',['../console_8h.html#a030af39db3ecd334ca5a8114ad2e156f',1,'console.c']]],
-  ['console_5fputchar_23',['console_putchar',['../console_8h.html#ac156aa97dae8b45e5aea8f6534d38946',1,'console.c']]],
-  ['console_5fwrite_24',['console_write',['../console_8h.html#ae757ada21a608ffb2ffb39e567feb07b',1,'console.c']]],
-  ['create_5ffile_5fdescriptor_25',['create_file_descriptor',['../descriptor_8h.html#a9d772be036ad7ec4e9e926a190b76003',1,'descriptor.c']]],
-  ['create_5fsocket_5fdescriptor_26',['create_socket_descriptor',['../descriptor_8h.html#a04175d4d27dc399e18af7e68aa7e1a3a',1,'descriptor.c']]]
+  ['bitmap_2eh_9',['bitmap.h',['../bitmap_8h.html',1,'']]],
+  ['bitmap_5fclear_10',['bitmap_clear',['../bitmap_8h.html#acbd3f5323acaf517704e69c47396119f',1,'bitmap.c']]],
+  ['bitmap_5fget_11',['bitmap_get',['../bitmap_8h.html#a7ed3c2384b34eafa2aba19aa6e856865',1,'bitmap.c']]],
+  ['bitmap_5fset_12',['bitmap_set',['../bitmap_8h.html#ae60e1e9970fe0c4f68ee27902adbebfa',1,'bitmap.c']]],
+  ['bitmap_5ft_13',['bitmap_t',['../bitmap_8h.html#ae1c22e18a745d7ab1519a37cb77ce1bb',1,'bitmap.h']]],
+  ['bus_5fnumber_14',['bus_number',['../unionpci__device__t.html#aafde757a72a58beeea3767b080b9d4c9',1,'pci_device_t']]]
 ];

@@ -1,8 +1,10 @@
-<map id="src/arch/x86_64/net/ipv4.h" name="src/arch/x86_64/net/ipv4.h">
-<area shape="rect" id="node1" title=" " alt="" coords="83,5,221,47"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,95,91,121"/>
-<area shape="rect" id="node3" href="$net_8h.html" title="This module defines network interfaces and drivers." alt="" coords="115,95,189,121"/>
-<area shape="rect" id="node6" title=" " alt="" coords="213,95,302,121"/>
-<area shape="rect" id="node4" title=" " alt="" coords="66,169,142,196"/>
-<area shape="rect" id="node5" title=" " alt="" coords="166,169,231,196"/>
+<map id="include/kernel/net/ipv4.h" name="include/kernel/net/ipv4.h">
+<area shape="rect" id="node1" title=" " alt="" coords="127,5,254,47"/>
+<area shape="rect" id="node2" href="$inet_8h_source.html" title=" " alt="" coords="68,95,153,121"/>
+<area shape="rect" id="node4" href="$types_8h_source.html" title=" " alt="" coords="93,244,182,271"/>
+<area shape="rect" id="node8" href="$net_8h.html" title="This module defines network interfaces and drivers." alt="" coords="206,244,279,271"/>
+<area shape="rect" id="node3" href="$socket_8h_source.html" title=" " alt="" coords="5,169,101,196"/>
+<area shape="rect" id="node5" href="$stdbool_8h_source.html" title=" " alt="" coords="163,319,239,345"/>
+<area shape="rect" id="node6" href="$stddef_8h_source.html" title=" " alt="" coords="69,319,139,345"/>
+<area shape="rect" id="node7" href="$stdint_8h_source.html" title=" " alt="" coords="158,393,223,420"/>
 </map>

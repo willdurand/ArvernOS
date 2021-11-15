@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>willOS: src/arch/x86_64/fs/vfs.h Source File</title>
+<title>willOS: include/kernel/fs/vfs.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -121,11 +121,11 @@ $(document).ready(function(){initNavTree('vfs_8h_source.html',''); initResizable
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
 <div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="structvfs__driver__t.html">   35</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>vfs_driver</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;{</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  uint64_t (*open)(inode_t inode, uint64_t flags);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  uint64_t (*close)(inode_t inode);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  uint64_t (*read)(inode_t inode, <span class="keywordtype">void</span>* ptr, uint64_t length, uint64_t offset);</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  uint64_t (*write)(inode_t inode, <span class="keywordtype">void</span>* ptr, uint64_t length, uint64_t offset);</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  uint64_t (*stat)(inode_t inode, <a class="code" href="structvfs__stat__t.html">vfs_stat_t</a>* stat);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  uint64_t (*<a class="code" href="syscall_8h.html#ab7c31bf64ff68f61762bda6e72e255d6">open</a>)(inode_t inode, uint64_t flags);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  uint64_t (*<a class="code" href="syscall_8h.html#aafbcde67669a1b96577e735ddebd8634">close</a>)(inode_t inode);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  uint64_t (*<a class="code" href="syscall_8h.html#af32a16ad2dd9e48482f8f790db7dbbd2">read</a>)(inode_t inode, <span class="keywordtype">void</span>* ptr, uint64_t length, uint64_t offset);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  uint64_t (*<a class="code" href="syscall_8h.html#abb39b21888372e95ad3e5c59b166f5c8">write</a>)(inode_t inode, <span class="keywordtype">void</span>* ptr, uint64_t length, uint64_t offset);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  uint64_t (*<a class="code" href="structstat.html">stat</a>)(inode_t inode, <a class="code" href="structvfs__stat__t.html">vfs_stat_t</a>* <a class="code" href="structstat.html">stat</a>);</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  uint64_t (*isatty)(inode_t inode);</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <a class="code" href="structdirent__t.html">dirent_t</a>* (*readdir)(inode_t inode, uint64_t num);</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  inode_t (*finddir)(inode_t inode, <span class="keyword">const</span> <span class="keywordtype">char</span>* name);</div>
@@ -154,7 +154,7 @@ $(document).ready(function(){initNavTree('vfs_8h_source.html',''); initResizable
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;uint64_t vfs_write(inode_t inode, <span class="keywordtype">void</span>* ptr, uint64_t length, uint64_t offset);</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;uint64_t vfs_stat(inode_t inode, <a class="code" href="structvfs__stat__t.html">vfs_stat_t</a>* stat);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;uint64_t vfs_stat(inode_t inode, <a class="code" href="structvfs__stat__t.html">vfs_stat_t</a>* <a class="code" href="structstat.html">stat</a>);</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;uint64_t vfs_isatty(inode_t inode);</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
@@ -180,15 +180,20 @@ $(document).ready(function(){initNavTree('vfs_8h_source.html',''); initResizable
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="astructdirent__t_html"><div class="ttname"><a href="structdirent__t.html">dirent_t</a></div><div class="ttdef"><b>Definition:</b> vfs.h:30</div></div>
+<div class="ttc" id="astructstat_html"><div class="ttname"><a href="structstat.html">stat</a></div><div class="ttdef"><b>Definition:</b> stat.h:12</div></div>
 <div class="ttc" id="astructvfs__driver__t_html"><div class="ttname"><a href="structvfs__driver__t.html">vfs_driver_t</a></div><div class="ttdef"><b>Definition:</b> vfs.h:36</div></div>
 <div class="ttc" id="astructvfs__node__t_html"><div class="ttname"><a href="structvfs__node__t.html">vfs_node_t</a></div><div class="ttdef"><b>Definition:</b> vfs.h:50</div></div>
 <div class="ttc" id="astructvfs__stat__t_html"><div class="ttname"><a href="structvfs__stat__t.html">vfs_stat_t</a></div><div class="ttdef"><b>Definition:</b> vfs.h:24</div></div>
+<div class="ttc" id="asyscall_8h_html_aafbcde67669a1b96577e735ddebd8634"><div class="ttname"><a href="syscall_8h.html#aafbcde67669a1b96577e735ddebd8634">close</a></div><div class="ttdeci">int close(int fd)</div><div class="ttdef"><b>Definition:</b> close.c:3</div></div>
+<div class="ttc" id="asyscall_8h_html_ab7c31bf64ff68f61762bda6e72e255d6"><div class="ttname"><a href="syscall_8h.html#ab7c31bf64ff68f61762bda6e72e255d6">open</a></div><div class="ttdeci">int open(const char *pathname, uint32_t flags)</div><div class="ttdef"><b>Definition:</b> open.c:3</div></div>
+<div class="ttc" id="asyscall_8h_html_abb39b21888372e95ad3e5c59b166f5c8"><div class="ttname"><a href="syscall_8h.html#abb39b21888372e95ad3e5c59b166f5c8">write</a></div><div class="ttdeci">ssize_t write(int fd, const void *buf, size_t count)</div><div class="ttdef"><b>Definition:</b> write.c:3</div></div>
+<div class="ttc" id="asyscall_8h_html_af32a16ad2dd9e48482f8f790db7dbbd2"><div class="ttname"><a href="syscall_8h.html#af32a16ad2dd9e48482f8f790db7dbbd2">read</a></div><div class="ttdeci">ssize_t read(int fd, void *buf, size_t count)</div><div class="ttdef"><b>Definition:</b> read.c:3</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_70d5e250c66d001b18da37689179cade.html">arch</a></li><li class="navelem"><a class="el" href="dir_c8a62bf022585037896c8b78602a08d9.html">x86_64</a></li><li class="navelem"><a class="el" href="dir_2c66945471641524b235dd9ec598fd4a.html">fs</a></li><li class="navelem"><b>vfs.h</b></li>
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_2ae24886e77657f82343b4b0154efdc1.html">kernel</a></li><li class="navelem"><a class="el" href="dir_579f575ab9bb80182679ffc66b079ac5.html">fs</a></li><li class="navelem"><b>vfs.h</b></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>

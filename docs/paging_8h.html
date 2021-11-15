@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>willOS: src/arch/x86_64/mmu/paging.h File Reference</title>
+<title>willOS: src/kernel/arch/x86_64/mmu/paging.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -96,16 +96,17 @@ $(document).ready(function(){initNavTree('paging_8h.html',''); initResizable(); 
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for paging.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="paging_8h__incl.png" border="0" usemap="#asrc_2arch_2x86__64_2mmu_2paging_8h" alt=""/></div>
-<map name="asrc_2arch_2x86__64_2mmu_2paging_8h" id="asrc_2arch_2x86__64_2mmu_2paging_8h">
-<area shape="rect" title=" " alt="" coords="60,5,210,47"/>
-<area shape="rect" href="multiboot_8h.html" title=" " alt="" coords="20,169,138,196"/>
-<area shape="rect" title=" " alt="" coords="20,244,85,271"/>
-<area shape="rect" href="frame_8h.html" title=" " alt="" coords="153,95,253,121"/>
-<area shape="rect" title=" " alt="" coords="293,169,382,196"/>
-<area shape="rect" title=" " alt="" coords="109,244,185,271"/>
-<area shape="rect" href="bitmap_8h.html" title=" " alt="" coords="162,169,268,196"/>
-<area shape="rect" title=" " alt="" coords="210,244,274,271"/>
+<div class="center"><img src="paging_8h__incl.png" border="0" usemap="#asrc_2kernel_2arch_2x86__64_2mmu_2paging_8h" alt=""/></div>
+<map name="asrc_2kernel_2arch_2x86__64_2mmu_2paging_8h" id="asrc_2kernel_2arch_2x86__64_2mmu_2paging_8h">
+<area shape="rect" title=" " alt="" coords="82,5,216,47"/>
+<area shape="rect" href="multiboot_8h.html" title=" " alt="" coords="297,169,414,196"/>
+<area shape="rect" href="stdint_8h_source.html" title=" " alt="" coords="120,319,186,345"/>
+<area shape="rect" href="frame_8h.html" title=" " alt="" coords="160,95,260,121"/>
+<area shape="rect" href="types_8h_source.html" title=" " alt="" coords="52,169,142,196"/>
+<area shape="rect" href="stdbool_8h_source.html" title=" " alt="" coords="126,244,202,271"/>
+<area shape="rect" href="bitmap_8h.html" title=" " alt="" coords="166,169,273,196"/>
+<area shape="rect" href="limits_8h_source.html" title=" " alt="" coords="277,244,341,271"/>
+<area shape="rect" href="stddef_8h_source.html" title=" " alt="" coords="32,244,101,271"/>
 </map>
 </div>
 </div>
@@ -146,9 +147,9 @@ Functions</h2></td></tr>
 <tr class="separator:a4a8869be87726e3c57c4856fc7b3531c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a96f5f0b5adaea47eda3e10c93401b2bf"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="paging_8h.html#a96f5f0b5adaea47eda3e10c93401b2bf">page_start_address</a> (page_number_t page_number)</td></tr>
 <tr class="separator:a96f5f0b5adaea47eda3e10c93401b2bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a93e89a9ca57751d1b04f8d95ccbddb4b"><td class="memItemLeft" align="right" valign="top">opt_uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="paging_8h.html#a93e89a9ca57751d1b04f8d95ccbddb4b">translate_page</a> (page_number_t page_number)</td></tr>
+<tr class="memitem:a93e89a9ca57751d1b04f8d95ccbddb4b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structopt__uint64__t.html">opt_uint64_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="paging_8h.html#a93e89a9ca57751d1b04f8d95ccbddb4b">translate_page</a> (page_number_t page_number)</td></tr>
 <tr class="separator:a93e89a9ca57751d1b04f8d95ccbddb4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1f069c46ac4245771221fc7f0bcfb2e0"><td class="memItemLeft" align="right" valign="top">opt_uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="paging_8h.html#a1f069c46ac4245771221fc7f0bcfb2e0">translate</a> (uint64_t virtual_address)</td></tr>
+<tr class="memitem:a1f069c46ac4245771221fc7f0bcfb2e0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structopt__uint64__t.html">opt_uint64_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="paging_8h.html#a1f069c46ac4245771221fc7f0bcfb2e0">translate</a> (uint64_t virtual_address)</td></tr>
 <tr class="separator:a1f069c46ac4245771221fc7f0bcfb2e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af55681dc6c9ebb94b26ea497afe673f8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="paging_8h.html#af55681dc6c9ebb94b26ea497afe673f8">map</a> (page_number_t page_number, uint64_t flags)</td></tr>
 <tr class="separator:af55681dc6c9ebb94b26ea497afe673f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -459,7 +460,7 @@ Here is the call graph for this function:</div>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">opt_uint64_t translate </td>
+          <td class="memname"><a class="el" href="structopt__uint64__t.html">opt_uint64_t</a> translate </td>
           <td>(</td>
           <td class="paramtype">uint64_t&#160;</td>
           <td class="paramname"><em>virtual_address</em></td><td>)</td>
@@ -505,7 +506,7 @@ Here is the caller graph for this function:</div>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">opt_uint64_t translate_page </td>
+          <td class="memname"><a class="el" href="structopt__uint64__t.html">opt_uint64_t</a> translate_page </td>
           <td>(</td>
           <td class="paramtype">page_number_t&#160;</td>
           <td class="paramname"><em>page_number</em></td><td>)</td>
@@ -635,7 +636,7 @@ Here is the call graph for this function:</div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_70d5e250c66d001b18da37689179cade.html">arch</a></li><li class="navelem"><a class="el" href="dir_c8a62bf022585037896c8b78602a08d9.html">x86_64</a></li><li class="navelem"><a class="el" href="dir_af65503909f1ee97ba767f4cd5e54021.html">mmu</a></li><li class="navelem"><a class="el" href="paging_8h.html">paging.h</a></li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_cbd7f246bdf7dc0a50281a272327e6ed.html">kernel</a></li><li class="navelem"><a class="el" href="dir_76e3dd4d2fa719e8d3b096e9aa563982.html">arch</a></li><li class="navelem"><a class="el" href="dir_7c4c796ec9937bed8074dafcec3d25e4.html">x86_64</a></li><li class="navelem"><a class="el" href="dir_3a646564ec239f35c01425f0e9da2ba2.html">mmu</a></li><li class="navelem"><a class="el" href="paging_8h.html">paging.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>

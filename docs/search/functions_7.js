@@ -1,27 +1,8 @@
 var searchData=
 [
-  ['identity_5fmap_394',['identity_map',['../paging_8h.html#a0fe6ae7a3d76ec54afbc3a0b484f5804',1,'paging.c']]],
-  ['idt_5fload_395',['idt_load',['../idt_8h.html#ac32911224d6d0fd8e287f2e021ee3ba4',1,'idt.c']]],
-  ['idt_5fregister_5fgate_396',['idt_register_gate',['../idt_8h.html#a2715dc490f9a700c8113c62e6a3bfd30',1,'idt.c']]],
-  ['idt_5fregister_5finterrupt_397',['idt_register_interrupt',['../idt_8h.html#ae9b2767929a9d9b6851a7c60cb64e55c',1,'idt.c']]],
-  ['inish_5ffree_398',['inish_free',['../inish_8h.html#a2dd888c965cc5597c8534c529c203256',1,'inish.c']]],
-  ['inish_5fget_5farray_399',['inish_get_array',['../inish_8h.html#a6bdeab0345afbd491f0a56a2d4c1d547',1,'inish.c']]],
-  ['inish_5fget_5fbool_400',['inish_get_bool',['../inish_8h.html#a40db81930c9627ef29d70791e003a8cd',1,'inish.c']]],
-  ['inish_5fget_5fint_401',['inish_get_int',['../inish_8h.html#a48978dc4fe4de1765edba0031a2f1f47',1,'inish.c']]],
-  ['inish_5fget_5fipv4_402',['inish_get_ipv4',['../inish_8h.html#a7149712e2a187c4054c29d94b92470e5',1,'inish.c']]],
-  ['inish_5fget_5fkv_5fpair_403',['inish_get_kv_pair',['../inish_8h.html#ae46d605d07b15a79127e430748f24fd4',1,'inish.c']]],
-  ['inish_5fget_5fsection_404',['inish_get_section',['../inish_8h.html#a4f8dda3126e1754bd8a34ccb756ae39d',1,'inish.c']]],
-  ['inish_5fget_5fstring_405',['inish_get_string',['../inish_8h.html#ab706f97501694e6c47511c510a4953fe',1,'inish.c']]],
-  ['inish_5fload_406',['inish_load',['../inish_8h.html#a3bb9aa17f1cc46b6c5db617a9668b0e8',1,'inish.c']]],
-  ['ipv4_5fchecksum_407',['ipv4_checksum',['../ipv4_8h.html#a70757066dd9950d01c1c5366d1bb36a5',1,'ipv4.c']]],
-  ['ipv4_5fping_408',['ipv4_ping',['../ipv4_8h.html#a6d0ae76907eca011caedbad6fdf8e43e',1,'ipv4.c']]],
-  ['ipv4_5freceive_5fpacket_409',['ipv4_receive_packet',['../ipv4_8h.html#a6c04a1a0613bd9fae6de26f01ba5958b',1,'ipv4.c']]],
-  ['ipv4_5fsend_5fpacket_410',['ipv4_send_packet',['../ipv4_8h.html#a8f913ffc3ba073a5a2018ff80d0e8212',1,'ipv4.c']]],
-  ['is_5fprotocol_5fsupported_411',['is_protocol_supported',['../descriptor_8h.html#aafaf22ccaaa7bdc819da64a0947f9aa1',1,'descriptor.c']]],
-  ['isr_5fdisable_5finterrupts_412',['isr_disable_interrupts',['../isr_8h.html#a48c1ab85abf749224864c1576a186a3b',1,'isr.c']]],
-  ['isr_5fenable_5finterrupts_413',['isr_enable_interrupts',['../isr_8h.html#ab3c2f37893bf0fe6a7efc06e3d908834',1,'isr.c']]],
-  ['isr_5finit_414',['isr_init',['../isr_8h.html#a2ea31f33125954459edbe7f4d7971ffa',1,'isr.c']]],
-  ['isr_5fint_5fhandler_415',['isr_int_handler',['../isr_8h.html#a309e84e00ab6c296809ea2f0167de593',1,'isr.c']]],
-  ['isr_5firq_5fhandler_416',['isr_irq_handler',['../isr_8h.html#a90e538b3202ebb875fa17720d5eb46ba',1,'isr.c']]],
-  ['isr_5fregister_5fhandler_417',['isr_register_handler',['../isr_8h.html#a2cbfff83b3f84b3704ed9ff573fc2b77',1,'isr.c']]]
+  ['get_5fdescriptor_490',['get_descriptor',['../descriptor_8h.html#a1086f8e8b824491e0fb4503ef716ee0b',1,'descriptor.c']]],
+  ['getchar_491',['getchar',['../stdio_8h.html#a0979671914792955a7a68461634ff82d',1,'stdio.h']]],
+  ['gethostbyname2_492',['gethostbyname2',['../syscall_8h.html#aba00a3ed4c69aee0738c259d196779ed',1,'gethostbyname2.c']]],
+  ['getpid_493',['getpid',['../syscall_8h.html#add1dc6545057b7f1c7f91352536fb060',1,'getpid.c']]],
+  ['gettimeofday_494',['gettimeofday',['../syscall_8h.html#a08c6fa45afb77767891dc6fb73d1010f',1,'gettimeofday.c']]]
 ];

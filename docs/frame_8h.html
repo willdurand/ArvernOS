@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>willOS: src/arch/x86_64/mmu/frame.h File Reference</title>
+<title>willOS: src/kernel/arch/x86_64/mmu/frame.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -94,25 +94,26 @@ $(document).ready(function(){initNavTree('frame_8h.html',''); initResizable(); }
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for frame.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="frame_8h__incl.png" border="0" usemap="#asrc_2arch_2x86__64_2mmu_2frame_8h" alt=""/></div>
-<map name="asrc_2arch_2x86__64_2mmu_2frame_8h" id="asrc_2arch_2x86__64_2mmu_2frame_8h">
-<area shape="rect" title=" " alt="" coords="125,5,275,47"/>
-<area shape="rect" href="multiboot_8h.html" title=" " alt="" coords="5,95,123,121"/>
-<area shape="rect" href="bitmap_8h.html" title=" " alt="" coords="147,95,253,121"/>
-<area shape="rect" title=" " alt="" coords="278,95,367,121"/>
-<area shape="rect" title=" " alt="" coords="121,169,197,196"/>
-<area shape="rect" title=" " alt="" coords="31,169,97,196"/>
-<area shape="rect" title=" " alt="" coords="221,169,285,196"/>
+<div class="center"><img src="frame_8h__incl.png" border="0" usemap="#asrc_2kernel_2arch_2x86__64_2mmu_2frame_8h" alt=""/></div>
+<map name="asrc_2kernel_2arch_2x86__64_2mmu_2frame_8h" id="asrc_2kernel_2arch_2x86__64_2mmu_2frame_8h">
+<area shape="rect" title=" " alt="" coords="157,5,291,47"/>
+<area shape="rect" href="multiboot_8h.html" title=" " alt="" coords="293,95,411,121"/>
+<area shape="rect" href="bitmap_8h.html" title=" " alt="" coords="48,95,155,121"/>
+<area shape="rect" href="types_8h_source.html" title=" " alt="" coords="179,95,269,121"/>
+<area shape="rect" href="stdbool_8h_source.html" title=" " alt="" coords="238,169,314,196"/>
+<area shape="rect" href="stdint_8h_source.html" title=" " alt="" coords="146,244,211,271"/>
+<area shape="rect" href="limits_8h_source.html" title=" " alt="" coords="5,169,69,196"/>
+<area shape="rect" href="stddef_8h_source.html" title=" " alt="" coords="144,169,213,196"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><img src="frame_8h__dep__incl.png" border="0" usemap="#asrc_2arch_2x86__64_2mmu_2frame_8hdep" alt=""/></div>
-<map name="asrc_2arch_2x86__64_2mmu_2frame_8hdep" id="asrc_2arch_2x86__64_2mmu_2frame_8hdep">
-<area shape="rect" title=" " alt="" coords="92,5,243,47"/>
-<area shape="rect" href="alloc_8h.html" title=" " alt="" coords="5,95,156,136"/>
-<area shape="rect" href="paging_8h.html" title=" " alt="" coords="180,95,331,136"/>
+<div class="center"><img src="frame_8h__dep__incl.png" border="0" usemap="#asrc_2kernel_2arch_2x86__64_2mmu_2frame_8hdep" alt=""/></div>
+<map name="asrc_2kernel_2arch_2x86__64_2mmu_2frame_8hdep" id="asrc_2kernel_2arch_2x86__64_2mmu_2frame_8hdep">
+<area shape="rect" title=" " alt="" coords="84,5,219,47"/>
+<area shape="rect" href="alloc_8h.html" title=" " alt="" coords="5,95,140,136"/>
+<area shape="rect" href="paging_8h.html" title=" " alt="" coords="164,95,299,136"/>
 </map>
 </div>
 </div>
@@ -129,7 +130,7 @@ Macros</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:ada91ff5ef3ceb241baf359ac078bb2d7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frame_8h.html#ada91ff5ef3ceb241baf359ac078bb2d7">frame_init</a> (<a class="el" href="structmultiboot__info__t.html">multiboot_info_t</a> *mbi)</td></tr>
 <tr class="separator:ada91ff5ef3ceb241baf359ac078bb2d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae2a26cdfa5b475a46dc4e26a21025252"><td class="memItemLeft" align="right" valign="top">opt_uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frame_8h.html#ae2a26cdfa5b475a46dc4e26a21025252">frame_allocate</a> ()</td></tr>
+<tr class="memitem:ae2a26cdfa5b475a46dc4e26a21025252"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structopt__uint64__t.html">opt_uint64_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frame_8h.html#ae2a26cdfa5b475a46dc4e26a21025252">frame_allocate</a> ()</td></tr>
 <tr class="separator:ae2a26cdfa5b475a46dc4e26a21025252"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7241c294c2cae373c0abaa7653faab87"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="frame_8h.html#a7241c294c2cae373c0abaa7653faab87">frame_deallocate</a> (frame_number_t frame_number)</td></tr>
 <tr class="separator:a7241c294c2cae373c0abaa7653faab87"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -150,7 +151,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">opt_uint64_t frame_allocate </td>
+          <td class="memname"><a class="el" href="structopt__uint64__t.html">opt_uint64_t</a> frame_allocate </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -339,7 +340,7 @@ Here is the call graph for this function:</div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_70d5e250c66d001b18da37689179cade.html">arch</a></li><li class="navelem"><a class="el" href="dir_c8a62bf022585037896c8b78602a08d9.html">x86_64</a></li><li class="navelem"><a class="el" href="dir_af65503909f1ee97ba767f4cd5e54021.html">mmu</a></li><li class="navelem"><a class="el" href="frame_8h.html">frame.h</a></li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_cbd7f246bdf7dc0a50281a272327e6ed.html">kernel</a></li><li class="navelem"><a class="el" href="dir_76e3dd4d2fa719e8d3b096e9aa563982.html">arch</a></li><li class="navelem"><a class="el" href="dir_7c4c796ec9937bed8074dafcec3d25e4.html">x86_64</a></li><li class="navelem"><a class="el" href="dir_3a646564ec239f35c01425f0e9da2ba2.html">mmu</a></li><li class="navelem"><a class="el" href="frame_8h.html">frame.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>

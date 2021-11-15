@@ -32,24 +32,25 @@ var NAVTREE =
       [ "Linux", "index.html#autotoc_md4", null ]
     ] ],
     [ "Building willOS", "index.html#autotoc_md5", [
-      [ "Debug", "index.html#autotoc_md6", [
-        [ "Logging", "index.html#autotoc_md7", [
-          [ "Stacktraces", "index.html#autotoc_md8", null ]
+      [ "<tt>willosconfig</tt> files", "index.html#autotoc_md6", null ],
+      [ "Debug", "index.html#autotoc_md7", [
+        [ "Logging", "index.html#autotoc_md8", [
+          [ "Stacktraces", "index.html#autotoc_md9", null ]
         ] ]
       ] ],
-      [ "Release", "index.html#autotoc_md9", null ],
-      [ "Boot options", "index.html#autotoc_md10", null ]
+      [ "Release", "index.html#autotoc_md10", null ],
+      [ "Boot options", "index.html#autotoc_md11", null ]
     ] ],
-    [ "Early boot sequence", "index.html#autotoc_md11", null ],
-    [ "Memory management", "index.html#autotoc_md12", [
-      [ "Memory map", "index.html#autotoc_md13", [
-        [ "Virtual address space", "index.html#autotoc_md14", null ]
+    [ "Early boot sequence", "index.html#autotoc_md12", null ],
+    [ "Memory management", "index.html#autotoc_md13", [
+      [ "Memory map", "index.html#autotoc_md14", [
+        [ "Virtual address space", "index.html#autotoc_md15", null ]
       ] ]
     ] ],
-    [ "License", "index.html#autotoc_md15", null ],
-    [ "init", "md_userland_init__r_e_a_d_m_e.html", null ],
-    [ "userland", "md_userland__r_e_a_d_m_e.html", [
-      [ "Local builds", "md_userland__r_e_a_d_m_e.html#autotoc_md18", null ]
+    [ "License", "index.html#autotoc_md16", null ],
+    [ "init", "md_src_userland_init__r_e_a_d_m_e.html", null ],
+    [ "userland", "md_src_userland__r_e_a_d_m_e.html", [
+      [ "Local builds", "md_src_userland__r_e_a_d_m_e.html#autotoc_md19", null ]
     ] ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
@@ -74,7 +75,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "alloc_8h.html",
-"register_8h.html#a591479e9e26bb3a18a1dd959ab4e5e82"
+"paging_8h.html#a28ff91b933f24d95e25ec5f03a736117"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

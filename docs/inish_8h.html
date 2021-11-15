@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>willOS: src/arch/x86_64/config/inish.h File Reference</title>
+<title>willOS: include/kernel/config/inish.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -95,13 +95,14 @@ $(document).ready(function(){initNavTree('inish_8h.html',''); initResizable(); }
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for inish.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="inish_8h__incl.png" border="0" usemap="#asrc_2arch_2x86__64_2config_2inish_8h" alt=""/></div>
-<map name="asrc_2arch_2x86__64_2config_2inish_8h" id="asrc_2arch_2x86__64_2config_2inish_8h">
-<area shape="rect" title=" " alt="" coords="108,5,264,47"/>
-<area shape="rect" title=" " alt="" coords="5,95,81,121"/>
-<area shape="rect" title=" " alt="" coords="105,95,171,121"/>
-<area shape="rect" title=" " alt="" coords="195,95,273,121"/>
-<area shape="rect" title=" " alt="" coords="297,95,387,121"/>
+<div class="center"><img src="inish_8h__incl.png" border="0" usemap="#ainclude_2kernel_2config_2inish_8h" alt=""/></div>
+<map name="ainclude_2kernel_2config_2inish_8h" id="ainclude_2kernel_2config_2inish_8h">
+<area shape="rect" title=" " alt="" coords="75,5,219,47"/>
+<area shape="rect" href="stdbool_8h_source.html" title=" " alt="" coords="121,244,197,271"/>
+<area shape="rect" href="stdint_8h_source.html" title=" " alt="" coords="116,319,181,345"/>
+<area shape="rect" href="stat_8h_source.html" title=" " alt="" coords="5,95,84,121"/>
+<area shape="rect" href="types_8h_source.html" title=" " alt="" coords="31,169,120,196"/>
+<area shape="rect" href="stddef_8h_source.html" title=" " alt="" coords="27,244,97,271"/>
 </map>
 </div>
 </div>
@@ -132,9 +133,9 @@ Functions</h2></td></tr>
 <tr class="separator:a6bdeab0345afbd491f0a56a2d4c1d547"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab706f97501694e6c47511c510a4953fe"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="inish_8h.html#ab706f97501694e6c47511c510a4953fe">inish_get_string</a> (<a class="el" href="structinish__section__t.html">inish_section_t</a> *section, const char *key)</td></tr>
 <tr class="separator:ab706f97501694e6c47511c510a4953fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a48978dc4fe4de1765edba0031a2f1f47"><td class="memItemLeft" align="right" valign="top">opt_uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="inish_8h.html#a48978dc4fe4de1765edba0031a2f1f47">inish_get_int</a> (<a class="el" href="structinish__section__t.html">inish_section_t</a> *section, const char *key)</td></tr>
+<tr class="memitem:a48978dc4fe4de1765edba0031a2f1f47"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structopt__uint64__t.html">opt_uint64_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="inish_8h.html#a48978dc4fe4de1765edba0031a2f1f47">inish_get_int</a> (<a class="el" href="structinish__section__t.html">inish_section_t</a> *section, const char *key)</td></tr>
 <tr class="separator:a48978dc4fe4de1765edba0031a2f1f47"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a40db81930c9627ef29d70791e003a8cd"><td class="memItemLeft" align="right" valign="top">opt_bool_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="inish_8h.html#a40db81930c9627ef29d70791e003a8cd">inish_get_bool</a> (<a class="el" href="structinish__section__t.html">inish_section_t</a> *section, const char *key)</td></tr>
+<tr class="memitem:a40db81930c9627ef29d70791e003a8cd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structopt__bool__t.html">opt_bool_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="inish_8h.html#a40db81930c9627ef29d70791e003a8cd">inish_get_bool</a> (<a class="el" href="structinish__section__t.html">inish_section_t</a> *section, const char *key)</td></tr>
 <tr class="separator:a40db81930c9627ef29d70791e003a8cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7149712e2a187c4054c29d94b92470e5"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="inish_8h.html#a7149712e2a187c4054c29d94b92470e5">inish_get_ipv4</a> (<a class="el" href="structinish__section__t.html">inish_section_t</a> *section, const char *key, uint8_t ip[4])</td></tr>
 <tr class="separator:a7149712e2a187c4054c29d94b92470e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -211,7 +212,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">opt_bool_t inish_get_bool </td>
+          <td class="memname"><a class="el" href="structopt__bool__t.html">opt_bool_t</a> inish_get_bool </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structinish__section__t.html">inish_section_t</a> *&#160;</td>
           <td class="paramname"><em>section</em>, </td>
@@ -257,7 +258,7 @@ Here is the call graph for this function:</div>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">opt_uint64_t inish_get_int </td>
+          <td class="memname"><a class="el" href="structopt__uint64__t.html">opt_uint64_t</a> inish_get_int </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structinish__section__t.html">inish_section_t</a> *&#160;</td>
           <td class="paramname"><em>section</em>, </td>
@@ -504,6 +505,16 @@ Here is the call graph for this function:</div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a inish configuration or <code>NULL</code> in case of an error </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="inish_8h_a3bb9aa17f1cc46b6c5db617a9668b0e8_cgraph.png" border="0" usemap="#ainish_8h_a3bb9aa17f1cc46b6c5db617a9668b0e8_cgraph" alt=""/></div>
+<map name="ainish_8h_a3bb9aa17f1cc46b6c5db617a9668b0e8_cgraph" id="ainish_8h_a3bb9aa17f1cc46b6c5db617a9668b0e8_cgraph">
+<area shape="rect" title=" " alt="" coords="5,31,88,57"/>
+<area shape="rect" href="syscall_8h.html#aafbcde67669a1b96577e735ddebd8634" title=" " alt="" coords="136,5,189,32"/>
+<area shape="rect" href="syscall_8h.html#ab7c31bf64ff68f61762bda6e72e255d6" title=" " alt="" coords="137,56,189,83"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -512,7 +523,7 @@ Here is the call graph for this function:</div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_70d5e250c66d001b18da37689179cade.html">arch</a></li><li class="navelem"><a class="el" href="dir_c8a62bf022585037896c8b78602a08d9.html">x86_64</a></li><li class="navelem"><a class="el" href="dir_999388d46e7ec0ec98343e8b2ff934aa.html">config</a></li><li class="navelem"><a class="el" href="inish_8h.html">inish.h</a></li>
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_2ae24886e77657f82343b4b0154efdc1.html">kernel</a></li><li class="navelem"><a class="el" href="dir_f5cbd4349b593bd5ea59bf7dffcf375a.html">config</a></li><li class="navelem"><a class="el" href="inish_8h.html">inish.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>

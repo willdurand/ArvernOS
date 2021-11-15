@@ -1,7 +1,7 @@
-<map id="src/arch/x86_64/net/ipv4.h" name="src/arch/x86_64/net/ipv4.h">
-<area shape="rect" id="node1" title=" " alt="" coords="168,5,307,47"/>
-<area shape="rect" id="node2" href="$udp_8h.html" title=" " alt="" coords="168,95,307,136"/>
-<area shape="rect" id="node3" href="$dhcp_8h.html" title=" " alt="" coords="5,184,144,225"/>
-<area shape="rect" id="node4" href="$dns_8h.html" title=" " alt="" coords="168,184,307,225"/>
-<area shape="rect" id="node5" href="$ntp_8h.html" title=" " alt="" coords="331,184,469,225"/>
+<map id="include/kernel/net/ipv4.h" name="include/kernel/net/ipv4.h">
+<area shape="rect" id="node1" title=" " alt="" coords="156,5,283,47"/>
+<area shape="rect" id="node2" href="$udp_8h.html" title=" " alt="" coords="156,95,283,136"/>
+<area shape="rect" id="node3" href="$dhcp_8h.html" title=" " alt="" coords="5,184,132,225"/>
+<area shape="rect" id="node4" href="$dns_8h.html" title=" " alt="" coords="156,184,283,225"/>
+<area shape="rect" id="node5" href="$ntp_8h.html" title=" " alt="" coords="307,184,433,225"/>
 </map>

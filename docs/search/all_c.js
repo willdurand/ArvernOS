@@ -1,12 +1,20 @@
 var searchData=
 [
-  ['name_164',['name',['../structelf__section__header__t.html#ac874b50ab72c734c2b5eb5dfd02d989b',1,'elf_section_header_t']]],
-  ['net_2eh_165',['net.h',['../net_8h.html',1,'']]],
-  ['net_5fdriver_166',['net_driver',['../structnet__driver.html',1,'']]],
-  ['net_5fget_5finterface_167',['net_get_interface',['../net_8h.html#a18a484aee8b80774848889fdcff24496',1,'net.c']]],
-  ['net_5finterface_168',['net_interface',['../structnet__interface.html',1,'']]],
-  ['net_5finterface_5finit_169',['net_interface_init',['../net_8h.html#a5da8d53d480b13e24e293e0ab90a0ac3',1,'net.c']]],
-  ['ntp_2eh_170',['ntp.h',['../ntp_8h.html',1,'']]],
-  ['ntp_5fheader_5ft_171',['ntp_header_t',['../structntp__header__t.html',1,'']]],
-  ['ntp_5ftimestamp_5ft_172',['ntp_timestamp_t',['../structntp__timestamp__t.html',1,'']]]
+  ['map_162',['map',['../paging_8h.html#af55681dc6c9ebb94b26ea497afe673f8',1,'paging.c']]],
+  ['map_5fmultiple_163',['map_multiple',['../paging_8h.html#a623291cd42facbd946e92e5307abe313',1,'paging.c']]],
+  ['max_5fpages_164',['MAX_PAGES',['../alloc_8h.html#a85f89e842475a0305bb474a98d61bdfe',1,'alloc.h']]],
+  ['multiboot_2eh_165',['multiboot.h',['../multiboot_8h.html',1,'']]],
+  ['multiboot_5fcolor_5ft_166',['multiboot_color_t',['../structmultiboot__color__t.html',1,'']]],
+  ['multiboot_5felf_5fsections_5fentry_5ft_167',['multiboot_elf_sections_entry_t',['../structmultiboot__elf__sections__entry__t.html',1,'']]],
+  ['multiboot_5finfo_5ft_168',['multiboot_info_t',['../structmultiboot__info__t.html',1,'']]],
+  ['multiboot_5fmmap_5fentry_5ft_169',['multiboot_mmap_entry_t',['../structmultiboot__mmap__entry__t.html',1,'']]],
+  ['multiboot_5ftag_5fbasic_5fmeminfo_5ft_170',['multiboot_tag_basic_meminfo_t',['../structmultiboot__tag__basic__meminfo__t.html',1,'']]],
+  ['multiboot_5ftag_5fbootdev_5ft_171',['multiboot_tag_bootdev_t',['../structmultiboot__tag__bootdev__t.html',1,'']]],
+  ['multiboot_5ftag_5felf_5fsections_5ft_172',['multiboot_tag_elf_sections_t',['../structmultiboot__tag__elf__sections__t.html',1,'']]],
+  ['multiboot_5ftag_5fframebuffer_5fcommon_5ft_173',['multiboot_tag_framebuffer_common_t',['../structmultiboot__tag__framebuffer__common__t.html',1,'']]],
+  ['multiboot_5ftag_5fframebuffer_5ft_174',['multiboot_tag_framebuffer_t',['../structmultiboot__tag__framebuffer__t.html',1,'']]],
+  ['multiboot_5ftag_5fmmap_5ft_175',['multiboot_tag_mmap_t',['../structmultiboot__tag__mmap__t.html',1,'']]],
+  ['multiboot_5ftag_5fmodule_5ft_176',['multiboot_tag_module_t',['../structmultiboot__tag__module__t.html',1,'']]],
+  ['multiboot_5ftag_5fstring_5ft_177',['multiboot_tag_string_t',['../structmultiboot__tag__string__t.html',1,'']]],
+  ['multiboot_5ftag_5ft_178',['multiboot_tag_t',['../structmultiboot__tag__t.html',1,'']]]
 ];

@@ -1,4 +1,4 @@
-<map id="src/arch/x86_64/core/isr.h" name="src/arch/x86_64/core/isr.h">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,152,47"/>
-<area shape="rect" id="node2" href="$k__syscall_8h.html" title=" " alt="" coords="9,95,149,136"/>
+<map id="src/kernel/arch/x86_64/core/isr.h" name="src/kernel/arch/x86_64/core/isr.h">
+<area shape="rect" id="node1" title=" " alt="" coords="7,5,141,47"/>
+<area shape="rect" id="node2" href="$k__syscall_8h.html" title=" " alt="" coords="5,95,143,136"/>
 </map>

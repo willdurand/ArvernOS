@@ -1,6 +1,6 @@
-<map id="src/arch/x86_64/fs/sock.h" name="src/arch/x86_64/fs/sock.h">
-<area shape="rect" id="node1" title=" " alt="" coords="19,5,150,47"/>
-<area shape="rect" id="node2" href="$vfs_8h_source.html" title=" " alt="" coords="6,95,70,121"/>
-<area shape="rect" id="node4" title=" " alt="" coords="95,95,171,121"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,169,71,196"/>
+<map id="include/kernel/fs/sock.h" name="include/kernel/fs/sock.h">
+<area shape="rect" id="node1" title=" " alt="" coords="5,5,165,32"/>
+<area shape="rect" id="node2" href="$vfs_8h_source.html" title=" " alt="" coords="7,80,71,107"/>
+<area shape="rect" id="node4" href="$stdbool_8h_source.html" title=" " alt="" coords="95,80,171,107"/>
+<area shape="rect" id="node3" href="$stdint_8h_source.html" title=" " alt="" coords="6,155,71,181"/>
 </map>

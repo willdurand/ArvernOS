@@ -1,9 +1,10 @@
-<map id="src/arch/x86_64/mmu/frame.h" name="src/arch/x86_64/mmu/frame.h">
-<area shape="rect" id="node1" title=" " alt="" coords="125,5,275,47"/>
-<area shape="rect" id="node2" href="$multiboot_8h.html" title=" " alt="" coords="5,95,123,121"/>
-<area shape="rect" id="node5" href="$bitmap_8h.html" title=" " alt="" coords="147,95,253,121"/>
-<area shape="rect" id="node7" title=" " alt="" coords="278,95,367,121"/>
-<area shape="rect" id="node3" title=" " alt="" coords="121,169,197,196"/>
-<area shape="rect" id="node4" title=" " alt="" coords="31,169,97,196"/>
-<area shape="rect" id="node6" title=" " alt="" coords="221,169,285,196"/>
+<map id="src/kernel/arch/x86_64/mmu/frame.h" name="src/kernel/arch/x86_64/mmu/frame.h">
+<area shape="rect" id="node1" title=" " alt="" coords="157,5,291,47"/>
+<area shape="rect" id="node2" href="$multiboot_8h.html" title=" " alt="" coords="293,95,411,121"/>
+<area shape="rect" id="node5" href="$bitmap_8h.html" title=" " alt="" coords="48,95,155,121"/>
+<area shape="rect" id="node7" href="$types_8h_source.html" title=" " alt="" coords="179,95,269,121"/>
+<area shape="rect" id="node3" href="$stdbool_8h_source.html" title=" " alt="" coords="238,169,314,196"/>
+<area shape="rect" id="node4" href="$stdint_8h_source.html" title=" " alt="" coords="146,244,211,271"/>
+<area shape="rect" id="node6" href="$limits_8h_source.html" title=" " alt="" coords="5,169,69,196"/>
+<area shape="rect" id="node8" href="$stddef_8h_source.html" title=" " alt="" coords="144,169,213,196"/>
 </map>

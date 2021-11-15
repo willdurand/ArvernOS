@@ -1,10 +1,11 @@
-<map id="src/arch/x86_64/mmu/paging.h" name="src/arch/x86_64/mmu/paging.h">
-<area shape="rect" id="node1" title=" " alt="" coords="60,5,210,47"/>
-<area shape="rect" id="node2" href="$multiboot_8h.html" title=" " alt="" coords="20,169,138,196"/>
-<area shape="rect" id="node4" title=" " alt="" coords="20,244,85,271"/>
-<area shape="rect" id="node5" href="$frame_8h.html" title=" " alt="" coords="153,95,253,121"/>
-<area shape="rect" id="node8" title=" " alt="" coords="293,169,382,196"/>
-<area shape="rect" id="node3" title=" " alt="" coords="109,244,185,271"/>
-<area shape="rect" id="node6" href="$bitmap_8h.html" title=" " alt="" coords="162,169,268,196"/>
-<area shape="rect" id="node7" title=" " alt="" coords="210,244,274,271"/>
+<map id="src/kernel/arch/x86_64/mmu/paging.h" name="src/kernel/arch/x86_64/mmu/paging.h">
+<area shape="rect" id="node1" title=" " alt="" coords="82,5,216,47"/>
+<area shape="rect" id="node2" href="$multiboot_8h.html" title=" " alt="" coords="297,169,414,196"/>
+<area shape="rect" id="node4" href="$stdint_8h_source.html" title=" " alt="" coords="120,319,186,345"/>
+<area shape="rect" id="node5" href="$frame_8h.html" title=" " alt="" coords="160,95,260,121"/>
+<area shape="rect" id="node8" href="$types_8h_source.html" title=" " alt="" coords="52,169,142,196"/>
+<area shape="rect" id="node3" href="$stdbool_8h_source.html" title=" " alt="" coords="126,244,202,271"/>
+<area shape="rect" id="node6" href="$bitmap_8h.html" title=" " alt="" coords="166,169,273,196"/>
+<area shape="rect" id="node7" href="$limits_8h_source.html" title=" " alt="" coords="277,244,341,271"/>
+<area shape="rect" id="node9" href="$stddef_8h_source.html" title=" " alt="" coords="32,244,101,271"/>
 </map>

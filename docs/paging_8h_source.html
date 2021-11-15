@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>willOS: src/arch/x86_64/mmu/paging.h Source File</title>
+<title>willOS: src/kernel/arch/x86_64/mmu/paging.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -153,9 +153,9 @@ $(document).ready(function(){initNavTree('paging_8h_source.html',''); initResiza
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;uint64_t <a class="code" href="paging_8h.html#a96f5f0b5adaea47eda3e10c93401b2bf">page_start_address</a>(page_number_t page_number);</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;opt_uint64_t <a class="code" href="paging_8h.html#a93e89a9ca57751d1b04f8d95ccbddb4b">translate_page</a>(page_number_t page_number);</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<a class="code" href="structopt__uint64__t.html">opt_uint64_t</a> <a class="code" href="paging_8h.html#a93e89a9ca57751d1b04f8d95ccbddb4b">translate_page</a>(page_number_t page_number);</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;opt_uint64_t <a class="code" href="paging_8h.html#a1f069c46ac4245771221fc7f0bcfb2e0">translate</a>(uint64_t virtual_address);</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<a class="code" href="structopt__uint64__t.html">opt_uint64_t</a> <a class="code" href="paging_8h.html#a1f069c46ac4245771221fc7f0bcfb2e0">translate</a>(uint64_t virtual_address);</div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="keywordtype">void</span> <a class="code" href="paging_8h.html#af55681dc6c9ebb94b26ea497afe673f8">map</a>(page_number_t page_number, uint64_t flags);</div>
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160; </div>
@@ -180,7 +180,7 @@ $(document).ready(function(){initNavTree('paging_8h_source.html',''); initResiza
 <div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;uint64_t _p1_index(page_number_t page_number);</div>
 <div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160; </div>
 <div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;<span class="preprocessor">#ifdef TEST_ENV</span></div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;opt_uint64_t test_frame_allocate();</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;<a class="code" href="structopt__uint64__t.html">opt_uint64_t</a> test_frame_allocate();</div>
 <div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;<span class="keywordtype">void</span> test_frame_deallocate(frame_number_t frame_number);</div>
 <div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;<a class="code" href="structpage__table__t.html">page_table_t</a>* test_next_table();</div>
 <div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="keywordtype">void</span> test_frame_mark_as_used(uint64_t address);</div>
@@ -189,18 +189,19 @@ $(document).ready(function(){initNavTree('paging_8h_source.html',''); initResiza
 <div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aframe_8h_html"><div class="ttname"><a href="frame_8h.html">frame.h</a></div></div>
 <div class="ttc" id="amultiboot_8h_html"><div class="ttname"><a href="multiboot_8h.html">multiboot.h</a></div></div>
-<div class="ttc" id="apaging_8h_html_a0fe6ae7a3d76ec54afbc3a0b484f5804"><div class="ttname"><a href="paging_8h.html#a0fe6ae7a3d76ec54afbc3a0b484f5804">identity_map</a></div><div class="ttdeci">void identity_map(uint64_t address, uint64_t flags)</div><div class="ttdef"><b>Definition:</b> paging.c:649</div></div>
-<div class="ttc" id="apaging_8h_html_a1f069c46ac4245771221fc7f0bcfb2e0"><div class="ttname"><a href="paging_8h.html#a1f069c46ac4245771221fc7f0bcfb2e0">translate</a></div><div class="ttdeci">opt_uint64_t translate(uint64_t virtual_address)</div><div class="ttdef"><b>Definition:</b> paging.c:261</div></div>
-<div class="ttc" id="apaging_8h_html_a2556847794baa9bcb9be757f7f67f6b4"><div class="ttname"><a href="paging_8h.html#a2556847794baa9bcb9be757f7f67f6b4">unmap</a></div><div class="ttdeci">void unmap(page_number_t page_number)</div><div class="ttdef"><b>Definition:</b> paging.c:532</div></div>
+<div class="ttc" id="apaging_8h_html_a0fe6ae7a3d76ec54afbc3a0b484f5804"><div class="ttname"><a href="paging_8h.html#a0fe6ae7a3d76ec54afbc3a0b484f5804">identity_map</a></div><div class="ttdeci">void identity_map(uint64_t address, uint64_t flags)</div><div class="ttdef"><b>Definition:</b> paging.c:659</div></div>
+<div class="ttc" id="apaging_8h_html_a1f069c46ac4245771221fc7f0bcfb2e0"><div class="ttname"><a href="paging_8h.html#a1f069c46ac4245771221fc7f0bcfb2e0">translate</a></div><div class="ttdeci">opt_uint64_t translate(uint64_t virtual_address)</div><div class="ttdef"><b>Definition:</b> paging.c:271</div></div>
+<div class="ttc" id="apaging_8h_html_a2556847794baa9bcb9be757f7f67f6b4"><div class="ttname"><a href="paging_8h.html#a2556847794baa9bcb9be757f7f67f6b4">unmap</a></div><div class="ttdeci">void unmap(page_number_t page_number)</div><div class="ttdef"><b>Definition:</b> paging.c:542</div></div>
 <div class="ttc" id="apaging_8h_html_a44fe56c079dc6d3c0d4b29f5b9dab5a5"><div class="ttname"><a href="paging_8h.html#a44fe56c079dc6d3c0d4b29f5b9dab5a5">paging_init</a></div><div class="ttdeci">void paging_init(multiboot_info_t *mbi)</div><div class="ttdoc">Initializes paging to separate virtual and physical memory.</div><div class="ttdef"><b>Definition:</b> paging.c:46</div></div>
-<div class="ttc" id="apaging_8h_html_a4a8869be87726e3c57c4856fc7b3531c"><div class="ttname"><a href="paging_8h.html#a4a8869be87726e3c57c4856fc7b3531c">page_containing_address</a></div><div class="ttdeci">page_number_t page_containing_address(uint64_t virtual_address)</div><div class="ttdef"><b>Definition:</b> paging.c:275</div></div>
-<div class="ttc" id="apaging_8h_html_a623291cd42facbd946e92e5307abe313"><div class="ttname"><a href="paging_8h.html#a623291cd42facbd946e92e5307abe313">map_multiple</a></div><div class="ttdeci">void map_multiple(page_number_t start_page_number, uint32_t number_of_pages, uint64_t flags)</div><div class="ttdef"><b>Definition:</b> paging.c:597</div></div>
-<div class="ttc" id="apaging_8h_html_a93e89a9ca57751d1b04f8d95ccbddb4b"><div class="ttname"><a href="paging_8h.html#a93e89a9ca57751d1b04f8d95ccbddb4b">translate_page</a></div><div class="ttdeci">opt_uint64_t translate_page(page_number_t page_number)</div><div class="ttdef"><b>Definition:</b> paging.c:294</div></div>
-<div class="ttc" id="apaging_8h_html_a96f5f0b5adaea47eda3e10c93401b2bf"><div class="ttname"><a href="paging_8h.html#a96f5f0b5adaea47eda3e10c93401b2bf">page_start_address</a></div><div class="ttdeci">uint64_t page_start_address(page_number_t page_number)</div><div class="ttdef"><b>Definition:</b> paging.c:289</div></div>
-<div class="ttc" id="apaging_8h_html_aaf4d9db68debae8e51bab96105966d07"><div class="ttname"><a href="paging_8h.html#aaf4d9db68debae8e51bab96105966d07">unmap_multiple</a></div><div class="ttdeci">void unmap_multiple(page_number_t start_page_number, uint32_t number_of_pages)</div><div class="ttdef"><b>Definition:</b> paging.c:610</div></div>
-<div class="ttc" id="apaging_8h_html_acd78a6bfbdc7cbbe0e578e52eccad8bf"><div class="ttname"><a href="paging_8h.html#acd78a6bfbdc7cbbe0e578e52eccad8bf">paging_amount_for_byte_size</a></div><div class="ttdeci">uint32_t paging_amount_for_byte_size(uint64_t start_address, uint64_t byte_size)</div><div class="ttdef"><b>Definition:</b> paging.c:621</div></div>
-<div class="ttc" id="apaging_8h_html_af55681dc6c9ebb94b26ea497afe673f8"><div class="ttname"><a href="paging_8h.html#af55681dc6c9ebb94b26ea497afe673f8">map</a></div><div class="ttdeci">void map(page_number_t page_number, uint64_t flags)</div><div class="ttdef"><b>Definition:</b> paging.c:586</div></div>
+<div class="ttc" id="apaging_8h_html_a4a8869be87726e3c57c4856fc7b3531c"><div class="ttname"><a href="paging_8h.html#a4a8869be87726e3c57c4856fc7b3531c">page_containing_address</a></div><div class="ttdeci">page_number_t page_containing_address(uint64_t virtual_address)</div><div class="ttdef"><b>Definition:</b> paging.c:285</div></div>
+<div class="ttc" id="apaging_8h_html_a623291cd42facbd946e92e5307abe313"><div class="ttname"><a href="paging_8h.html#a623291cd42facbd946e92e5307abe313">map_multiple</a></div><div class="ttdeci">void map_multiple(page_number_t start_page_number, uint32_t number_of_pages, uint64_t flags)</div><div class="ttdef"><b>Definition:</b> paging.c:607</div></div>
+<div class="ttc" id="apaging_8h_html_a93e89a9ca57751d1b04f8d95ccbddb4b"><div class="ttname"><a href="paging_8h.html#a93e89a9ca57751d1b04f8d95ccbddb4b">translate_page</a></div><div class="ttdeci">opt_uint64_t translate_page(page_number_t page_number)</div><div class="ttdef"><b>Definition:</b> paging.c:304</div></div>
+<div class="ttc" id="apaging_8h_html_a96f5f0b5adaea47eda3e10c93401b2bf"><div class="ttname"><a href="paging_8h.html#a96f5f0b5adaea47eda3e10c93401b2bf">page_start_address</a></div><div class="ttdeci">uint64_t page_start_address(page_number_t page_number)</div><div class="ttdef"><b>Definition:</b> paging.c:299</div></div>
+<div class="ttc" id="apaging_8h_html_aaf4d9db68debae8e51bab96105966d07"><div class="ttname"><a href="paging_8h.html#aaf4d9db68debae8e51bab96105966d07">unmap_multiple</a></div><div class="ttdeci">void unmap_multiple(page_number_t start_page_number, uint32_t number_of_pages)</div><div class="ttdef"><b>Definition:</b> paging.c:620</div></div>
+<div class="ttc" id="apaging_8h_html_acd78a6bfbdc7cbbe0e578e52eccad8bf"><div class="ttname"><a href="paging_8h.html#acd78a6bfbdc7cbbe0e578e52eccad8bf">paging_amount_for_byte_size</a></div><div class="ttdeci">uint32_t paging_amount_for_byte_size(uint64_t start_address, uint64_t byte_size)</div><div class="ttdef"><b>Definition:</b> paging.c:631</div></div>
+<div class="ttc" id="apaging_8h_html_af55681dc6c9ebb94b26ea497afe673f8"><div class="ttname"><a href="paging_8h.html#af55681dc6c9ebb94b26ea497afe673f8">map</a></div><div class="ttdeci">void map(page_number_t page_number, uint64_t flags)</div><div class="ttdef"><b>Definition:</b> paging.c:596</div></div>
 <div class="ttc" id="astructmultiboot__info__t_html"><div class="ttname"><a href="structmultiboot__info__t.html">multiboot_info_t</a></div><div class="ttdef"><b>Definition:</b> multiboot.h:51</div></div>
+<div class="ttc" id="astructopt__uint64__t_html"><div class="ttname"><a href="structopt__uint64__t.html">opt_uint64_t</a></div><div class="ttdef"><b>Definition:</b> types.h:40</div></div>
 <div class="ttc" id="astructpage__entry__t_html"><div class="ttname"><a href="structpage__entry__t.html">page_entry_t</a></div><div class="ttdef"><b>Definition:</b> paging.h:25</div></div>
 <div class="ttc" id="astructpage__table__t_html"><div class="ttname"><a href="structpage__table__t.html">page_table_t</a></div><div class="ttdef"><b>Definition:</b> paging.h:61</div></div>
 </div><!-- fragment --></div><!-- contents -->
@@ -208,7 +209,7 @@ $(document).ready(function(){initNavTree('paging_8h_source.html',''); initResiza
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_70d5e250c66d001b18da37689179cade.html">arch</a></li><li class="navelem"><a class="el" href="dir_c8a62bf022585037896c8b78602a08d9.html">x86_64</a></li><li class="navelem"><a class="el" href="dir_af65503909f1ee97ba767f4cd5e54021.html">mmu</a></li><li class="navelem"><a class="el" href="paging_8h.html">paging.h</a></li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_cbd7f246bdf7dc0a50281a272327e6ed.html">kernel</a></li><li class="navelem"><a class="el" href="dir_76e3dd4d2fa719e8d3b096e9aa563982.html">arch</a></li><li class="navelem"><a class="el" href="dir_7c4c796ec9937bed8074dafcec3d25e4.html">x86_64</a></li><li class="navelem"><a class="el" href="dir_3a646564ec239f35c01425f0e9da2ba2.html">mmu</a></li><li class="navelem"><a class="el" href="paging_8h.html">paging.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>

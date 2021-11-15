@@ -1,9 +1,17 @@
 var searchData=
 [
-  ['tar_5ffs_5fcreate_456',['tar_fs_create',['../tar_8h.html#a5d450690ddf62f16a707100bb4dc6f3a',1,'tar.c']]],
-  ['timer_5finit_457',['timer_init',['../timer_8h.html#a896a4c37c6ecf8868ef0dc758e5a598c',1,'timer.c']]],
-  ['timer_5ftick_458',['timer_tick',['../timer_8h.html#a0a6f7ad89e8719f445d3beeaf672ed9f',1,'timer.c']]],
-  ['timer_5fuptime_459',['timer_uptime',['../timer_8h.html#ad5df37e1f85cabd9c5d43aa1dfc0e37e',1,'timer.c']]],
-  ['translate_460',['translate',['../paging_8h.html#a1f069c46ac4245771221fc7f0bcfb2e0',1,'paging.c']]],
-  ['translate_5fpage_461',['translate_page',['../paging_8h.html#a93e89a9ca57751d1b04f8d95ccbddb4b',1,'paging.c']]]
+  ['page_5fcontaining_5faddress_533',['page_containing_address',['../paging_8h.html#a4a8869be87726e3c57c4856fc7b3531c',1,'paging.c']]],
+  ['page_5fstart_5faddress_534',['page_start_address',['../paging_8h.html#a96f5f0b5adaea47eda3e10c93401b2bf',1,'paging.c']]],
+  ['paging_5famount_5ffor_5fbyte_5fsize_535',['paging_amount_for_byte_size',['../paging_8h.html#acd78a6bfbdc7cbbe0e578e52eccad8bf',1,'paging.c']]],
+  ['paging_5finit_536',['paging_init',['../paging_8h.html#a44fe56c079dc6d3c0d4b29f5b9dab5a5',1,'paging.c']]],
+  ['pci_5fget_5fdevice_537',['pci_get_device',['../pci_8h.html#ad8515b86d19288e403722e2c9a4dc5dd',1,'pci.c']]],
+  ['pci_5fread_538',['pci_read',['../pci_8h.html#abb0a8e6fa16437a49fe35b85a84feec2',1,'pci.c']]],
+  ['pci_5fwrite_539',['pci_write',['../pci_8h.html#a531322fe5567da0a2705f6131c079f65',1,'pci.c']]],
+  ['port_5fbyte_5fin_540',['port_byte_in',['../port_8h.html#af8b1144eda5e36642ff26d504bf2b3b8',1,'port.c']]],
+  ['port_5fbyte_5fout_541',['port_byte_out',['../port_8h.html#ac3c72bfda8c7b1920ef91bcc06c97c7f',1,'port.c']]],
+  ['port_5fdword_5fin_542',['port_dword_in',['../port_8h.html#aef30b57e8c51c84ba95dc7bb9a3b1750',1,'port.c']]],
+  ['port_5fdword_5fout_543',['port_dword_out',['../port_8h.html#ab4cd5b4635fe2ba28abafebbb1ac6861',1,'port.c']]],
+  ['port_5fword_5fin_544',['port_word_in',['../port_8h.html#ad8d1266775348d5a6428af04f500b8e3',1,'port.c']]],
+  ['port_5fword_5fout_545',['port_word_out',['../port_8h.html#a08d9adffef857f1578d9086615626652',1,'port.c']]],
+  ['putchar_546',['putchar',['../stdio_8h.html#a948b7a0779c308ac5502c57e282e6933',1,'putchar.c']]]
 ];

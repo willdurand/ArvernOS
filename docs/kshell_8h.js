@@ -10,6 +10,6 @@ var kshell_8h =
     [ "KB_TAB", "kshell_8h.html#a6d0663a1794be11a94aee789b2d22925", null ],
     [ "PROMPT", "kshell_8h.html#accdbea14ea06c15e271784368bd993e8", null ],
     [ "READLINE_SIZE", "kshell_8h.html#ac75983952a0074eee55efdb2cc0a5773", null ],
-    [ "kshell_init", "kshell_8h.html#adbee5cb7e06a2eeca4a13060f5713bf9", null ],
+    [ "kshell_init", "kshell_8h.html#a69575bea6cb1d0909c2c0b816ae61cc2", null ],
     [ "kshell_run", "kshell_8h.html#a6c773ce937d0e97008441fd2b5909533", null ]
 ];

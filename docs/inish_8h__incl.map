@@ -1,7 +1,8 @@
-<map id="src/arch/x86_64/config/inish.h" name="src/arch/x86_64/config/inish.h">
-<area shape="rect" id="node1" title=" " alt="" coords="108,5,264,47"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,95,81,121"/>
-<area shape="rect" id="node3" title=" " alt="" coords="105,95,171,121"/>
-<area shape="rect" id="node4" title=" " alt="" coords="195,95,273,121"/>
-<area shape="rect" id="node5" title=" " alt="" coords="297,95,387,121"/>
+<map id="include/kernel/config/inish.h" name="include/kernel/config/inish.h">
+<area shape="rect" id="node1" title=" " alt="" coords="75,5,219,47"/>
+<area shape="rect" id="node2" href="$stdbool_8h_source.html" title=" " alt="" coords="121,244,197,271"/>
+<area shape="rect" id="node3" href="$stdint_8h_source.html" title=" " alt="" coords="116,319,181,345"/>
+<area shape="rect" id="node4" href="$stat_8h_source.html" title=" " alt="" coords="5,95,84,121"/>
+<area shape="rect" id="node5" href="$types_8h_source.html" title=" " alt="" coords="31,169,120,196"/>
+<area shape="rect" id="node6" href="$stddef_8h_source.html" title=" " alt="" coords="27,244,97,271"/>
 </map>

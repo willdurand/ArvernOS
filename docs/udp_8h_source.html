@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>willOS: src/arch/x86_64/net/udp.h Source File</title>
+<title>willOS: include/kernel/net/udp.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -114,7 +114,7 @@ $(document).ready(function(){initNavTree('udp_8h_source.html',''); initResizable
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keywordtype">void</span> <a class="code" href="udp_8h.html#ac78d90d0d505eb6b507d0cf93c7499fb">udp_send_packet</a>(net_interface_t* interface,</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;                     uint16_t src_port,</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                     uint8_t dst_mac[6],</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;                     <span class="keyword">struct</span> sockaddr_in* dst_addr,</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;                     <span class="keyword">struct</span> <a class="code" href="structsockaddr__in.html">sockaddr_in</a>* dst_addr,</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;                     uint8_t* data,</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;                     uint32_t len);</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
@@ -122,15 +122,16 @@ $(document).ready(function(){initNavTree('udp_8h_source.html',''); initResizable
 <div class="ttc" id="aipv4_8h_html"><div class="ttname"><a href="ipv4_8h.html">ipv4.h</a></div></div>
 <div class="ttc" id="anet_8h_html"><div class="ttname"><a href="net_8h.html">net.h</a></div><div class="ttdoc">This module defines network interfaces and drivers.</div></div>
 <div class="ttc" id="astructipv4__header__t_html"><div class="ttname"><a href="structipv4__header__t.html">ipv4_header_t</a></div><div class="ttdef"><b>Definition:</b> ipv4.h:28</div></div>
+<div class="ttc" id="astructsockaddr__in_html"><div class="ttname"><a href="structsockaddr__in.html">sockaddr_in</a></div><div class="ttdef"><b>Definition:</b> inet.h:24</div></div>
 <div class="ttc" id="astructudp__header__t_html"><div class="ttname"><a href="structudp__header__t.html">udp_header_t</a></div><div class="ttdef"><b>Definition:</b> udp.h:19</div></div>
-<div class="ttc" id="audp_8h_html_a1e9dad20351b1ebb8b51196d2563c591"><div class="ttname"><a href="udp_8h.html#a1e9dad20351b1ebb8b51196d2563c591">udp_receive_packet</a></div><div class="ttdeci">void udp_receive_packet(net_interface_t *interface, uint8_t *packet, ipv4_header_t *ipv4_header)</div><div class="ttdef"><b>Definition:</b> udp.c:12</div></div>
-<div class="ttc" id="audp_8h_html_ac78d90d0d505eb6b507d0cf93c7499fb"><div class="ttname"><a href="udp_8h.html#ac78d90d0d505eb6b507d0cf93c7499fb">udp_send_packet</a></div><div class="ttdeci">void udp_send_packet(net_interface_t *interface, uint16_t src_port, uint8_t dst_mac[6], struct sockaddr_in *dst_addr, uint8_t *data, uint32_t len)</div><div class="ttdef"><b>Definition:</b> udp.c:54</div></div>
+<div class="ttc" id="audp_8h_html_a1e9dad20351b1ebb8b51196d2563c591"><div class="ttname"><a href="udp_8h.html#a1e9dad20351b1ebb8b51196d2563c591">udp_receive_packet</a></div><div class="ttdeci">void udp_receive_packet(net_interface_t *interface, uint8_t *packet, ipv4_header_t *ipv4_header)</div><div class="ttdef"><b>Definition:</b> udp.c:13</div></div>
+<div class="ttc" id="audp_8h_html_ac78d90d0d505eb6b507d0cf93c7499fb"><div class="ttname"><a href="udp_8h.html#ac78d90d0d505eb6b507d0cf93c7499fb">udp_send_packet</a></div><div class="ttdeci">void udp_send_packet(net_interface_t *interface, uint16_t src_port, uint8_t dst_mac[6], struct sockaddr_in *dst_addr, uint8_t *data, uint32_t len)</div><div class="ttdef"><b>Definition:</b> udp.c:55</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_70d5e250c66d001b18da37689179cade.html">arch</a></li><li class="navelem"><a class="el" href="dir_c8a62bf022585037896c8b78602a08d9.html">x86_64</a></li><li class="navelem"><a class="el" href="dir_dcc21ee81cbf671191fb5d01ea1f62de.html">net</a></li><li class="navelem"><a class="el" href="udp_8h.html">udp.h</a></li>
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_2ae24886e77657f82343b4b0154efdc1.html">kernel</a></li><li class="navelem"><a class="el" href="dir_0be85e67768b66452391783f935553f6.html">net</a></li><li class="navelem"><a class="el" href="udp_8h.html">udp.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>

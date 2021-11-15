@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>willOS: src/arch/x86_64/kernel/panic.h File Reference</title>
+<title>willOS: src/kernel/arch/x86_64/kernel/panic.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -90,13 +90,17 @@ $(document).ready(function(){initNavTree('panic_8h.html',''); initResizable(); }
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;logging.h&gt;</code><br />
+<code>#include &lt;stdbool.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for panic.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="panic_8h__incl.png" border="0" usemap="#asrc_2arch_2x86__64_2kernel_2panic_8h" alt=""/></div>
-<map name="asrc_2arch_2x86__64_2kernel_2panic_8h" id="asrc_2arch_2x86__64_2kernel_2panic_8h">
-<area shape="rect" title=" " alt="" coords="5,5,163,47"/>
-<area shape="rect" title=" " alt="" coords="46,95,122,121"/>
+<div class="center"><img src="panic_8h__incl.png" border="0" usemap="#asrc_2kernel_2arch_2x86__64_2kernel_2panic_8h" alt=""/></div>
+<map name="asrc_2kernel_2arch_2x86__64_2kernel_2panic_8h" id="asrc_2kernel_2arch_2x86__64_2kernel_2panic_8h">
+<area shape="rect" title=" " alt="" coords="76,5,211,47"/>
+<area shape="rect" title=" " alt="" coords="5,95,81,121"/>
+<area shape="rect" href="stdbool_8h_source.html" title=" " alt="" coords="105,95,181,121"/>
+<area shape="rect" href="stdint_8h_source.html" title=" " alt="" coords="205,95,271,121"/>
 </map>
 </div>
 </div>
@@ -110,18 +114,85 @@ Data Structures</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:a8f54a1e3c548236aa6a60f4596699819"><td class="memItemLeft" align="right" valign="top"><a id="a8f54a1e3c548236aa6a60f4596699819"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="panic_8h.html#a8f54a1e3c548236aa6a60f4596699819">PANIC</a>(...)&#160;&#160;&#160;__PANIC(__VA_ARGS__, &quot;\n&quot;)</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="panic_8h.html#a8f54a1e3c548236aa6a60f4596699819">PANIC</a>(...)&#160;&#160;&#160;__PANIC(true, __VA_ARGS__, &quot;\n&quot;)</td></tr>
 <tr class="memdesc:a8f54a1e3c548236aa6a60f4596699819"><td class="mdescLeft">&#160;</td><td class="mdescRight">This macro should only be used when something goes terribly wrong. <br /></td></tr>
 <tr class="separator:a8f54a1e3c548236aa6a60f4596699819"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:acd2b4a8b19af5b3201990bbdeb5cf5e6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="panic_8h.html#acd2b4a8b19af5b3201990bbdeb5cf5e6">kernel_panic</a> (const char *format,...)</td></tr>
-<tr class="separator:acd2b4a8b19af5b3201990bbdeb5cf5e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af92a4fe8363297fd713910fb044d41a9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="panic_8h.html#af92a4fe8363297fd713910fb044d41a9">kernel_panic</a> (bool dump_stacktrace, const char *format,...)</td></tr>
+<tr class="separator:af92a4fe8363297fd713910fb044d41a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6dffd49fdb25677d45a02d58a71dbec3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="panic_8h.html#a6dffd49fdb25677d45a02d58a71dbec3">kernel_load_symbols</a> (uint64_t addr, uint64_t size)</td></tr>
+<tr class="separator:a6dffd49fdb25677d45a02d58a71dbec3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a714e1c8a23ac88c46756c44ec1a5b7f8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="panic_8h.html#a714e1c8a23ac88c46756c44ec1a5b7f8">kernel_dump_stacktrace</a> ()</td></tr>
+<tr class="separator:a714e1c8a23ac88c46756c44ec1a5b7f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="acd2b4a8b19af5b3201990bbdeb5cf5e6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acd2b4a8b19af5b3201990bbdeb5cf5e6">&#9670;&nbsp;</a></span>kernel_panic()</h2>
+<a id="a714e1c8a23ac88c46756c44ec1a5b7f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a714e1c8a23ac88c46756c44ec1a5b7f8">&#9670;&nbsp;</a></span>kernel_dump_stacktrace()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void kernel_dump_stacktrace </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Prints a stacktrace. </p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="panic_8h_a714e1c8a23ac88c46756c44ec1a5b7f8_icgraph.png" border="0" usemap="#apanic_8h_a714e1c8a23ac88c46756c44ec1a5b7f8_icgraph" alt=""/></div>
+<map name="apanic_8h_a714e1c8a23ac88c46756c44ec1a5b7f8_icgraph" id="apanic_8h_a714e1c8a23ac88c46756c44ec1a5b7f8_icgraph">
+<area shape="rect" title=" " alt="" coords="151,5,317,32"/>
+<area shape="rect" href="panic_8h.html#af92a4fe8363297fd713910fb044d41a9" title=" " alt="" coords="5,5,103,32"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a6dffd49fdb25677d45a02d58a71dbec3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6dffd49fdb25677d45a02d58a71dbec3">&#9670;&nbsp;</a></span>kernel_load_symbols()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void kernel_load_symbols </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Loads symbols used in stacktraces.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">addr</td><td>the address of the symbols data </td></tr>
+    <tr><td class="paramname">size</td><td>the size of the symbols data </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af92a4fe8363297fd713910fb044d41a9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af92a4fe8363297fd713910fb044d41a9">&#9670;&nbsp;</a></span>kernel_panic()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -129,6 +200,12 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">void kernel_panic </td>
           <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>dump_stacktrace</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>format</em>, </td>
         </tr>
@@ -148,10 +225,23 @@ Functions</h2></td></tr>
 <p>Handles a kernel panic.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramname">dump_stacktrace</td><td>whether to dump a stacktrace </td></tr>
     <tr><td class="paramname">format</td><td>the reason for the kernel panic </td></tr>
   </table>
   </dd>
 </dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="panic_8h_af92a4fe8363297fd713910fb044d41a9_cgraph.png" border="0" usemap="#apanic_8h_af92a4fe8363297fd713910fb044d41a9_cgraph" alt=""/></div>
+<map name="apanic_8h_af92a4fe8363297fd713910fb044d41a9_cgraph" id="apanic_8h_af92a4fe8363297fd713910fb044d41a9_cgraph">
+<area shape="rect" title=" " alt="" coords="5,56,103,83"/>
+<area shape="rect" href="isr_8h.html#a48c1ab85abf749224864c1576a186a3b" title=" " alt="" coords="159,5,309,32"/>
+<area shape="rect" href="panic_8h.html#a714e1c8a23ac88c46756c44ec1a5b7f8" title=" " alt="" coords="151,56,317,83"/>
+<area shape="rect" href="vga__text_8h.html#ad1fc59685312d0c91988280ab70f1c01" title=" " alt="" coords="151,107,317,133"/>
+<area shape="rect" href="port_8h.html#ac3c72bfda8c7b1920ef91bcc06c97c7f" title=" " alt="" coords="365,107,469,133"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -160,7 +250,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_70d5e250c66d001b18da37689179cade.html">arch</a></li><li class="navelem"><a class="el" href="dir_c8a62bf022585037896c8b78602a08d9.html">x86_64</a></li><li class="navelem"><a class="el" href="dir_b3fb668ed17c74bf55d22c5454929424.html">kernel</a></li><li class="navelem"><a class="el" href="panic_8h.html">panic.h</a></li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_cbd7f246bdf7dc0a50281a272327e6ed.html">kernel</a></li><li class="navelem"><a class="el" href="dir_76e3dd4d2fa719e8d3b096e9aa563982.html">arch</a></li><li class="navelem"><a class="el" href="dir_7c4c796ec9937bed8074dafcec3d25e4.html">x86_64</a></li><li class="navelem"><a class="el" href="dir_410a426f61943035f4dc5ee0d82b3539.html">kernel</a></li><li class="navelem"><a class="el" href="panic_8h.html">panic.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>

@@ -1,12 +1,6 @@
 var searchData=
 [
-  ['find_5fmultiboot_5ftag_384',['find_multiboot_tag',['../multiboot_8h.html#a62d6a6eaa877711b6b8308030f3f3dc0',1,'multiboot.c']]],
-  ['find_5freserved_5fareas_385',['find_reserved_areas',['../multiboot_8h.html#ae87c8fda1b62f7ace33b2e3ad24292c2',1,'multiboot.c']]],
-  ['frame_5fallocate_386',['frame_allocate',['../frame_8h.html#ae2a26cdfa5b475a46dc4e26a21025252',1,'frame.c']]],
-  ['frame_5fcontaining_5faddress_387',['frame_containing_address',['../frame_8h.html#aed98bfe02b2da161f9bd02d8ff4a3be7',1,'frame.c']]],
-  ['frame_5fdeallocate_388',['frame_deallocate',['../frame_8h.html#a7241c294c2cae373c0abaa7653faab87',1,'frame.c']]],
-  ['frame_5fget_5fmax_5fcount_389',['frame_get_max_count',['../frame_8h.html#a66c86472c34ead88a5cad580925a3dac',1,'frame.c']]],
-  ['frame_5fget_5fused_5fcount_390',['frame_get_used_count',['../frame_8h.html#a5d09b4704202b05347bd92d99a5de64e',1,'frame.c']]],
-  ['frame_5finit_391',['frame_init',['../frame_8h.html#ada91ff5ef3ceb241baf359ac078bb2d7',1,'frame.c']]],
-  ['frame_5fstart_5faddress_392',['frame_start_address',['../frame_8h.html#a95fa44ebd51b61c7603f9798ff35730b',1,'frame.c']]]
+  ['ethernet_5freceive_5fframe_477',['ethernet_receive_frame',['../ethernet_8h.html#aafb24417f47cd11c95b81566e3b7fc78',1,'ethernet.c']]],
+  ['ethernet_5ftransmit_5fframe_478',['ethernet_transmit_frame',['../ethernet_8h.html#ab3a2a334a0e340946317c9f4c39c8a26',1,'ethernet.c']]],
+  ['execv_479',['execv',['../syscall_8h.html#ae1dd6bbd94b0f4e3dd37ecf1c1b832dd',1,'execv.c']]]
 ];

@@ -1,9 +1,0 @@
-var dir_072571b18784e6991e620283adfc8fcc =
-[
-    [ "cmos.h", "cmos_8h.html", "cmos_8h" ],
-    [ "keyboard.h", "keyboard_8h.html", "keyboard_8h" ],
-    [ "rtl8139.h", "rtl8139_8h.html", "rtl8139_8h" ],
-    [ "serial.h", "drivers_2serial_8h.html", "drivers_2serial_8h" ],
-    [ "timer.h", "timer_8h.html", "timer_8h" ],
-    [ "vga_text.h", "vga__text_8h.html", "vga__text_8h" ]
-];

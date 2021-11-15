@@ -1,10 +1,12 @@
-<map id="src/arch/x86_64/sys/k_syscall.h" name="src/arch/x86_64/sys/k_syscall.h">
-<area shape="rect" id="node1" title=" " alt="" coords="250,5,390,47"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,95,91,121"/>
-<area shape="rect" id="node3" href="$isr_8h.html" title=" " alt="" coords="115,95,191,121"/>
-<area shape="rect" id="node5" title=" " alt="" coords="216,95,312,121"/>
-<area shape="rect" id="node6" title=" " alt="" coords="337,95,415,121"/>
-<area shape="rect" id="node7" title=" " alt="" coords="440,95,523,121"/>
-<area shape="rect" id="node8" title=" " alt="" coords="547,95,637,121"/>
-<area shape="rect" id="node4" title=" " alt="" coords="121,169,186,196"/>
+<map id="src/kernel/arch/x86_64/sys/k_syscall.h" name="src/kernel/arch/x86_64/sys/k_syscall.h">
+<area shape="rect" id="node1" title=" " alt="" coords="128,5,265,47"/>
+<area shape="rect" id="node2" href="$inet_8h_source.html" title=" " alt="" coords="273,95,358,121"/>
+<area shape="rect" id="node3" href="$socket_8h_source.html" title=" " alt="" coords="347,169,443,196"/>
+<area shape="rect" id="node4" href="$types_8h_source.html" title=" " alt="" coords="183,244,272,271"/>
+<area shape="rect" id="node8" href="$isr_8h.html" title=" " alt="" coords="5,244,81,271"/>
+<area shape="rect" id="node9" href="$stat_8h_source.html" title=" " alt="" coords="119,95,197,121"/>
+<area shape="rect" id="node10" href="$sys_2time_8h_source.html" title=" " alt="" coords="190,169,273,196"/>
+<area shape="rect" id="node5" href="$stdbool_8h_source.html" title=" " alt="" coords="92,319,168,345"/>
+<area shape="rect" id="node6" href="$stddef_8h_source.html" title=" " alt="" coords="193,319,262,345"/>
+<area shape="rect" id="node7" href="$stdint_8h_source.html" title=" " alt="" coords="104,393,169,420"/>
 </map>
