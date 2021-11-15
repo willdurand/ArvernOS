@@ -1,4 +1,5 @@
-#include "k_syscall.h"
+#include <sys/k_syscall.h>
+
 #include <proc/process.h>
 
 pid_t k_getpid()

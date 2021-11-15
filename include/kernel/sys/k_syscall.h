@@ -3,14 +3,10 @@
 #define SYS_K_SYSCALL_H
 
 #include <arpa/inet.h>
-#include <core/isr.h>
 #include <sys/socket.h>
 #include <sys/stat.h>
 #include <sys/time.h>
 #include <sys/types.h>
-
-// This is defined in `src/arch/x86_64/k_syscall.asm`.
-extern void syscall_handler();
 
 /**
  * Initializes the syscalls management.

@@ -1,4 +1,5 @@
-#include "k_syscall.h"
+#include <sys/k_syscall.h>
+
 #include <core/utils.h>
 #include <errno.h>
 #include <net/net.h>

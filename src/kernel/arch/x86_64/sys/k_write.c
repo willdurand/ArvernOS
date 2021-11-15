@@ -1,4 +1,5 @@
-#include "k_syscall.h"
+#include <sys/k_syscall.h>
+
 #include <errno.h>
 #include <fcntl.h>
 #include <fs/vfs.h>

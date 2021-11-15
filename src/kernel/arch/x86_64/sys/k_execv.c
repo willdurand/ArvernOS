@@ -1,4 +1,5 @@
-#include "k_syscall.h"
+#include <sys/k_syscall.h>
+
 #include <core/elf.h>
 #include <core/isr.h>
 #include <fcntl.h>
