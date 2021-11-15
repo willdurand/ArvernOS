@@ -1,8 +1,6 @@
 /** @file */
-#ifndef KERNEL_KMAIN_H
-#define KERNEL_KMAIN_H
-
-#include <stdint.h>
+#ifndef WILLOS_H
+#define WILLOS_H
 
 #define KERNEL_ASCII                                                           \
   "               _  __\n"                                                     \
@@ -25,12 +23,5 @@
 #ifndef GIT_HASH
 #define GIT_HASH "dirty"
 #endif
-
-/**
- * This is the entrypoint of the kernel (C code).
- *
- * @param addr the multiboot info address
- */
-void kmain(uint64_t addr) __asm__("kmain");
 
 #endif

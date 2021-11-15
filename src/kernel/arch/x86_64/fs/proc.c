@@ -1,12 +1,12 @@
 #include "proc.h"
 #include <drivers/timer.h>
 #include <fs/logging.h>
-#include <kernel/kmain.h>
 #include <mmu/alloc.h>
 #include <mmu/frame.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <willos.h>
 #include <willos/utils.h>
 
 dirent_t* proc_readdir(inode_t inode, uint64_t num);
