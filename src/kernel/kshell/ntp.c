@@ -1,4 +1,5 @@
-#include "kshell.h"
+#include <kshell/kshell.h>
+
 #include <net/net.h>
 #include <net/ntp.h>
 #include <stdio.h>

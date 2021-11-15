@@ -1,4 +1,5 @@
-#include "kshell.h"
+#include <kshell/kshell.h>
+
 #include <sys/reboot.h>
 #include <sys/syscall.h>
 
