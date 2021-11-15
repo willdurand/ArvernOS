@@ -1,9 +1,9 @@
 #include "k_syscall.h"
-#include "logging.h"
 #include <errno.h>
 #include <fcntl.h>
 #include <fs/sock.h>
 #include <proc/descriptor.h>
+#include <sys/logging.h>
 
 int k_socket(int domain, int type, int protocol)
 {

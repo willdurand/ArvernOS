@@ -1,11 +1,11 @@
 #include "k_syscall.h"
-#include "logging.h"
 #include <core/utils.h>
 #include <errno.h>
 #include <net/net.h>
 #include <net/udp.h>
 #include <proc/descriptor.h>
 #include <string.h>
+#include <sys/logging.h>
 
 ssize_t k_sendto(int sockfd,
                  const void* buf,

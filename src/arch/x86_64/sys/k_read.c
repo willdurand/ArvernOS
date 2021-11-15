@@ -1,11 +1,11 @@
 #include "k_syscall.h"
-#include "logging.h"
 #include <drivers/keyboard.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <fs/vfs.h>
 #include <proc/descriptor.h>
 #include <stddef.h>
+#include <sys/logging.h>
 #include <sys/types.h>
 
 ssize_t k_read(int fd, void* buf, size_t count)

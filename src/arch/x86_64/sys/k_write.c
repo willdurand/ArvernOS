@@ -1,11 +1,11 @@
 #include "k_syscall.h"
-#include "logging.h"
 #include <errno.h>
 #include <fcntl.h>
 #include <fs/vfs.h>
 #include <kernel/console.h>
 #include <proc/descriptor.h>
 #include <stddef.h>
+#include <sys/logging.h>
 
 ssize_t k_write(int fd, const void* buf, size_t count)
 {

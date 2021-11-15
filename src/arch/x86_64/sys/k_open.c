@@ -1,9 +1,9 @@
 #include "k_syscall.h"
-#include "logging.h"
 #include <errno.h>
 #include <fs/vfs.h>
 #include <proc/descriptor.h>
 #include <stddef.h>
+#include <sys/logging.h>
 
 int k_open(const char* pathname, uint32_t flags)
 {

@@ -1,10 +1,10 @@
 #include "k_syscall.h"
-#include "logging.h"
 #include <arpa/inet.h>
 #include <core/utils.h>
 #include <errno.h>
 #include <proc/descriptor.h>
 #include <stddef.h>
+#include <sys/logging.h>
 
 ssize_t k_recvfrom(int sockfd,
                    void* buf,

@@ -1,7 +1,7 @@
 #include "k_syscall.h"
-#include "logging.h"
 #include <core/gdt.h>
 #include <core/register.h>
+#include <sys/logging.h>
 #include <sys/syscall.h>
 
 int k_not_implemented();

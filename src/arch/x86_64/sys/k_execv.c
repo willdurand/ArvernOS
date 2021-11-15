@@ -1,5 +1,4 @@
 #include "k_syscall.h"
-#include "logging.h"
 #include <core/elf.h>
 #include <core/isr.h>
 #include <fcntl.h>
@@ -7,6 +6,7 @@
 #include <proc/usermode.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/logging.h>
 #include <sys/stat.h>
 
 int k_execv(const char* path, char* const argv[])
