@@ -30,6 +30,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <sys/k_syscall.h>
+#include <willos.h>
 
 void busywait(uint64_t seconds);
 void check_interrupts();
