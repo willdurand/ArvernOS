@@ -6,7 +6,6 @@
 #include <stdio.h>
 #include <string.h>
 
-void serial_write(uint16_t com, char c);
 bool serial_is_waiting(uint16_t com);
 bool serial_is_transmitting(uint16_t com);
 char serial_read(uint16_t com);
@@ -36,12 +35,6 @@ void serial_print(uint16_t com, const char* str)
   for (size_t i = 0; i < strlen(str); i++) {
     serial_write(com, str[i]);
   }
-}
-
-void serial_stream_output(char c, void* arg)
-{
-  uint16_t com = *(uint16_t*)arg;
-  serial_write(com, c);
 }
 
 bool serial_is_transmitting(uint16_t com)
