@@ -43,6 +43,21 @@ commands:
             TERM: xterm-256color
 
 jobs:
+  build-aarch64:
+    <<: *defaults
+    parameters:
+      target:
+        type: string
+    steps:
+      - build:
+          arch: aarch64
+          target: << parameters.target >>
+      - run:
+          name: build checks
+          command: |
+            test -f build/aarch64/dist/ArvernOS-aarch64.img
+            test -f build/aarch64/dist/kernel-aarch64.bin
+
   build-x86_64:
     <<: *defaults
     parameters:
@@ -113,6 +128,10 @@ jobs:
 workflows:
   default-workflow:
     jobs:
+      - build-aarch64:
+          matrix:
+            parameters:
+              target: [debug, release]
       - build-x86_64:
           matrix:
             parameters:

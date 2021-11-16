@@ -21,7 +21,8 @@ ifeq ($(UBSAN),1)
 	CFLAGS += -fsanitize=undefined
 endif
 
-CC = $(LLVM_PREFIX)clang$(LLVM_SUFFIX)
-LD = $(LLVM_PREFIX)ld.lld$(LLVM_SUFFIX)
-AR = $(LLVM_PREFIX)llvm-ar$(LLVM_SUFFIX)
-NM = $(LLVM_PREFIX)llvm-nm$(LLVM_SUFFIX)
+CC     = $(LLVM_PREFIX)clang$(LLVM_SUFFIX)
+LD     = $(LLVM_PREFIX)ld.lld$(LLVM_SUFFIX)
+AR     = $(LLVM_PREFIX)llvm-ar$(LLVM_SUFFIX)
+NM     = $(LLVM_PREFIX)llvm-nm$(LLVM_SUFFIX)
+OBJCPY = $(LLVM_PREFIX)llvm-objcopy$(LLVM_SUFFIX)

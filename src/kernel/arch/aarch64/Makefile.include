@@ -1,0 +1,43 @@
+LD_TARGET = aarch64elf
+
+KERNEL_IMG = $(DIST_DIR)/$(OS_NAME)-$(ARCH).img
+
+QEMU = qemu-system-aarch64
+
+AARCH64_CFLAGS = --target=aarch64-elf -mcpu=cortex-a53+nosimd
+CFLAGS         += $(AARCH64_CFLAGS)
+
+$(LIBK_ASM_OBJECTS): $(LIBK_OBJS_DIR)/%.o: %.asm
+	$(PROGRESS) "CC" $<
+	mkdir -p $(dir $@)
+	$(CC) $(AARCH64_CFLAGS) -c $< -o $@
+
+$(LIBC_ASM_OBJECTS): $(LIBC_OBJS_DIR)/%.o: %.asm
+	$(PROGRESS) "CC" $<
+	mkdir -p $(dir $@)
+	$(CC) $(AARCH64_CFLAGS) -c $< -o $@
+
+arch-debug: CFLAGS += $(DEBUG_CFLAGS)
+arch-debug: BUILD_MODE = debug
+arch-debug: $(KERNEL_IMG)
+.PHONY: arch-debug
+
+$(KERNEL_IMG): $(KERNEL)
+	$(PROGRESS) "OBJCPY" $@
+	$(OBJCPY) -O binary $< $@
+
+arch-run-debug: debug
+	$(PROGRESS) "RUN" $(KERNEL_IMG)
+	$(QEMU) -M raspi3 -kernel $(KERNEL_IMG) -serial null -serial stdio
+.PHONY: arch-run-debug
+
+arch-release: $(KERNEL_IMG)
+.PHONY: arch-release
+
+arch-run-release: release
+	$(PROGRESS) "RUN" $(KERNEL_IMG)
+	$(QEMU) -M raspi3 -kernel $(KERNEL_IMG) -serial null -serial stdio
+.PHONY: arch-run-release
+
+arch-version:
+.PHONY: arch-version
