@@ -23,7 +23,7 @@ void putchar(char c);
  *
  * @return the character read
  */
-char getchar();
+unsigned char getchar();
 
 #endif
 
