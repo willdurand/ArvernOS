@@ -1,9 +1,9 @@
 #include <sys/k_syscall.h>
 
+#include <console/console.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <fs/vfs.h>
-#include <kernel/console.h>
 #include <proc/descriptor.h>
 #include <stddef.h>
 #include <sys/logging.h>
