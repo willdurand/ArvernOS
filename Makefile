@@ -324,7 +324,6 @@ run-test: ## run the project in test mode
 run-test: BUILD_MODE = test
 run-test: CMDLINE = /bin/userland-testsuite
 run-test: QEMU_OPTIONS += -curses
-run-test: arch-run-test
 .PHONY: run-test
 
 userland: ## compile the userland programs (statically linked to libc)

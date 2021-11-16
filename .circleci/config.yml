@@ -45,18 +45,18 @@ commands:
       - setup:
           arch: << parameters.arch >>
           board: << parameters.board >>
+      - run: make clean << parameters.target >>
       - when:
           condition: << parameters.board >>
           steps:
-            - run: ARCH=<< parameters.arch >> BOARD=<< parameters.board >> make clean << parameters.target >>
             - run:
                 name: ensure the kernel has been built
                 command: test -f build/<< parameters.arch >>/<< parameters.board >>/dist/kernel-<< parameters.arch >>-<< parameters.board >>.bin
       - unless:
           condition: << parameters.board >>
           steps:
-            - run: ARCH=<< parameters.arch >> make clean << parameters.target >>
             - run:
+                name: ensure the kernel has been built
                 command: test -f build/<< parameters.arch >>/dist/kernel-<< parameters.arch >>.bin
 
   run_qemu:
@@ -74,6 +74,40 @@ commands:
             TERM: xterm-256color
 
 jobs:
+  build-aarch32:
+    <<: *defaults
+    parameters:
+      target:
+        type: string
+      board:
+        type: string
+    steps:
+      - build:
+          arch: aarch32
+          board: << parameters.board >>
+          target: << parameters.target >>
+      - run:
+          name: build checks
+          command: |
+            test -f build/aarch32/<< parameters.board >>/dist/ArvernOS-aarch32-<< parameters.board >>.img
+
+  build-aarch64:
+    <<: *defaults
+    parameters:
+      target:
+        type: string
+      board:
+        type: string
+    steps:
+      - build:
+          arch: aarch64
+          board: << parameters.board >>
+          target: << parameters.target >>
+      - run:
+          name: build checks
+          command: |
+            test -f build/aarch64/<< parameters.board >>/dist/ArvernOS-aarch64-<< parameters.board >>.img
+
   build-x86_64:
     <<: *defaults
     parameters:
@@ -92,28 +126,11 @@ jobs:
             test -f build/x86_64/misc/isofiles/boot/grub/grub.cfg
             test -f build/x86_64/misc/isofiles/boot/kernel-x86_64.bin
 
-  build-aarch32:
-    <<: *defaults
-    parameters:
-      target:
-        type: string
-      board:
-        type: string
-    steps:
-      - build:
-          arch: aarch32
-          board: << parameters.board >>
-          target: << parameters.target >>
-      - run:
-          name: build checks
-          command: |
-            test -f build/aarch32/licheepi-nano/dist/ArvernOS-aarch32-licheepi-nano.img
-
   checks:
     <<: *defaults
     steps:
-      - setup:
-          arch: x86_64
+      - checkout
+      - run: git submodule sync && git submodule update --init
       - run:
           name: fmt
           command: |
@@ -127,7 +144,8 @@ jobs:
           arch: x86_64
       - run:
           name: unit tests
-          command: make clean test
+          command: |
+            make clean test
 
   kernel-selftest-dlmalloc:
     <<: *defaults
@@ -136,25 +154,32 @@ jobs:
           arch: x86_64
       - run_qemu:
           title: kernel selftest
-          command: make clean run-test CMDLINE='kshell selftest' CONFIG_USE_DLMALLOC=1
+          command: |
+            make clean run-test CMDLINE='kshell selftest' CONFIG_USE_DLMALLOC=1
 
   kernel-selftest-with-ubsan:
     <<: *defaults
     parameters:
+      arch:
+        type: string
       ubsan:
         type: integer
     steps:
       - setup:
-          arch: x86_64
+          arch: << parameters.arch >>
       - run_qemu:
           title: kernel selftest
-          command: make clean run-test CMDLINE='kshell selftest' UBSAN=<< parameters.ubsan >>
+          command: |
+            make clean run-test CMDLINE='kshell selftest' UBSAN=<< parameters.ubsan >>
 
   kernel-selftest-10-times:
     <<: *defaults
+    parameters:
+      arch:
+        type: string
     steps:
       - setup:
-          arch: x86_64
+          arch: << parameters.arch >>
       - run_qemu:
           title: kernel selftest ran 10 times
           command: |
@@ -163,14 +188,17 @@ jobs:
   userland-test-suite-with-ubsan:
     <<: *defaults
     parameters:
+      arch:
+        type: string
       ubsan:
         type: integer
     steps:
       - setup:
-          arch: x86_64
+          arch: << parameters.arch >>
       - run_qemu:
           title: userland test suite
-          command: make clean run-test UBSAN=<< parameters.ubsan >>
+          command: |
+            make clean run-test UBSAN=<< parameters.ubsan >>
 
 workflows:
   default-workflow:
@@ -179,6 +207,11 @@ workflows:
           matrix:
             parameters:
               board: [licheepi-nano]
+              target: [debug, release]
+      - build-aarch64:
+          matrix:
+            parameters:
+              board: [raspi3]
               target: [debug, release]
       - build-x86_64:
           matrix:
@@ -189,10 +222,15 @@ workflows:
       - kernel-selftest-with-ubsan:
           matrix:
             parameters:
+              arch: [x86_64]
               ubsan: [0, 1]
-      - kernel-selftest-10-times
-      - unit-tests
+      - kernel-selftest-10-times:
+          matrix:
+            parameters:
+              arch: [x86_64]
       - userland-test-suite-with-ubsan:
           matrix:
             parameters:
+              arch: [x86_64]
               ubsan: [0, 1]
+      - unit-tests

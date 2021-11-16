@@ -88,9 +88,6 @@ arch-run-release: release
 	$(QEMU) -cdrom $(iso) $(QEMU_OPTIONS)
 .PHONY: arch-run-release
 
-arch-run-test: run-release
-.PHONY: arch-run-test
-
 arch-test: CFLAGS_WITHOUT_TARGET := $(filter-out --target=x86_64,$(CFLAGS))
 arch-test: CFLAGS = $(CFLAGS_WITHOUT_TARGET)
 arch-test: CFLAGS += -fPIC -g3 -fsanitize=undefined -fsanitize=address
