@@ -1,5 +1,3 @@
-#include <kernel/kmain.h>
-
 #include <config/inish.h>
 #include <core/elf.h>
 #include <core/gdt.h>
@@ -20,6 +18,7 @@
 #include <fs/tar.h>
 #include <fs/vfs.h>
 #include <kernel/console.h>
+#include <kmain.h>
 #include <kshell/kshell.h>
 #include <logging.h>
 #include <mmu/alloc.h>
