@@ -1,4 +1,3 @@
-#include <logging.h>
 #include <string.h>
 
 char* strsep(char** str, const char* sep)
