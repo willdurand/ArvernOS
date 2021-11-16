@@ -1,6 +1,7 @@
+#include <panic.h>
+
 #include <core/isr.h>
 #include <drivers/vga_text.h>
-#include <panic.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
