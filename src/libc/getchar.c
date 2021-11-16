@@ -2,10 +2,9 @@
 
 #ifdef __is_libc
 
-#include <proc/descriptor.h>
 #include <stdbool.h>
 #include <stdint.h>
-#include <sys/syscall.h>
+#include <unistd.h>
 
 /// The scancode for the <kbd>arrow up</kbd> key.
 #define KB_ARROW_UP 72
@@ -62,7 +61,7 @@ char getchar()
 
   while (c == -1) {
     uint8_t scancode;
-    read(STDIN, &scancode, 1);
+    read(STDIN_FILENO, &scancode, 1);
     bool key_was_released = false;
 
     if (scancode > 128) {
