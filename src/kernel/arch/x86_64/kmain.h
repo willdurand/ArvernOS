@@ -1,6 +1,6 @@
 /** @file */
-#ifndef X86_64_KMAIN_H
-#define X86_64_KMAIN_H
+#ifndef KMAIN_H
+#define KMAIN_H
 
 #include <stdint.h>
 
