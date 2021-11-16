@@ -36,7 +36,7 @@ INITRD           := $(ISO_BOOT_DIR)/$(INITRD_TAR)
 GIT_HASH         := $(shell git rev-parse --short HEAD)
 SYMBOLS_TXT      := symbols.txt
 SYMBOLS          := $(ISO_BOOT_DIR)/$(SYMBOLS_TXT)
-LOG_FILE         := $(LOG_DIR)/$(BUILD_MODE).log
+LOG_FILE         = $(LOG_DIR)/$(BUILD_MODE).log
 
 # This should be a bitmap font.
 KERNEL_CONSOLE_FONT_PATH := $(EXTERNAL_DIR)/scalable-font2/fonts/u_vga16.sfn.gz
