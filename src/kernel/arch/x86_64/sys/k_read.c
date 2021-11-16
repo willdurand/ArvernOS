@@ -1,6 +1,6 @@
 #include <sys/k_syscall.h>
 
-#include <drivers/keyboard.h>
+#include <arch.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <fs/vfs.h>
@@ -8,14 +8,15 @@
 #include <stddef.h>
 #include <sys/logging.h>
 #include <sys/types.h>
+#include <unistd.h>
 
 ssize_t k_read(int fd, void* buf, size_t count)
 {
-  if (fd == STDIN) {
-    uint8_t scancode = keyboard_get_scancode();
+  if (fd == STDIN_FILENO) {
+    unsigned char c = arch_getchar(false);
 
-    if (scancode) {
-      ((uint8_t*)buf)[0] = scancode;
+    if (c) {
+      ((uint8_t*)buf)[0] = c;
       return 1;
     }
 

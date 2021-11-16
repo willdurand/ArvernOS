@@ -262,7 +262,7 @@ void load_kshell(int argc, char* argv[])
   kshell_init(argc, argv);
 
   while (1) {
-    kshell_run(keyboard_get_scancode());
+    kshell_run();
     // This allows the CPU to enter a sleep state in which it consumes much
     // less energy. See: https://en.wikipedia.org/wiki/HLT_(x86_instruction)
     __asm__("hlt");

@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
   print_prompt();
 
   while (1) {
-    char c = getchar();
+    unsigned char c = getchar();
 
     switch (c) {
       case 0:
@@ -118,8 +118,10 @@ int main(int argc, char* argv[])
         break;
 
       default:
-        printf("%c", c);
-        readline[readline_index++] = c;
+        if (c < 128) {
+          printf("%c", c);
+          readline[readline_index++] = c;
+        }
     }
   }
 

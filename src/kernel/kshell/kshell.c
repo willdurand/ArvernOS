@@ -1,20 +1,20 @@
 #include <kshell/kshell.h>
 
+#include <arch.h>
+#include <keymap.h>
 #include <logging.h>
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+void help(int argc, char* argv[]);
 void kshell_print_prompt();
+void reset_readline();
+void run_command();
 
 static char readline[READLINE_SIZE] = { 0 };
 static char last_readline[READLINE_SIZE] = { 0 };
 static unsigned int readline_index = 0;
-
-static bool caps_lock_mode = false;
-static bool ctrl_mode = false;
-static bool shift_mode = false;
 
 #define NB_DOCUMENTED_COMMANDS 12
 
@@ -32,44 +32,6 @@ static const char* commands[][NB_DOCUMENTED_COMMANDS] = {
   { "selftest", "run the kernel test suite" },
   { "usermode", "switch to usermode (alias for 'exec /bin/init -s')" },
 };
-
-static unsigned char keymap[][128] = {
-  { 0 },         { 27 },       { '1', '!' }, { '2', '@' },  { '3', '#' },
-  { '4', '$' },  { '5', '%' }, { '6', '^' }, { '7', '&' },  { '8', '*' },
-  { '9', '(' },  { '0', ')' }, { '-', '_' }, { '=', '+' },  { '\b' },
-  { '\t' },      { 'q', 'Q' }, { 'w', 'W' }, { 'e', 'E' },  { 'r', 'R' },
-  { 't', 'T' },  { 'y', 'Y' }, { 'u', 'U' }, { 'i', 'I' },  { 'o', 'O' },
-  { 'p', 'P' },  { '[', '{' }, { ']', '}' }, { '\n' },      { 0 },
-  { 'a', 'A' },  { 's', 'S' }, { 'd', 'D' }, { 'f', 'F' },  { 'g', 'G' },
-  { 'h', 'H' },  { 'j', 'J' }, { 'k', 'K' }, { 'l', 'L' },  { ';', ':' },
-  { '\'', '"' }, { '`', '~' }, { 0 },        { '\\', '|' }, { 'z', 'Z' },
-  { 'x', 'X' },  { 'c', 'C' }, { 'v', 'V' }, { 'b', 'B' },  { 'n', 'N' },
-  { 'm', 'M' },  { ',', '<' }, { '.', '>' }, { '/', '?' },  { 0 },
-  { '*' },       { 0 },        { ' ' },      { 0 },         { 0 },
-  { 0 },         { 0 },        { 0 },        { 0 },         { 0 },
-  { 0 },         { 0 },        { 0 },        { 0 },         { 0 },
-  { 0 },         { 0 },        { 0 },        { 0 },         { '-' },
-  { 0 },         { 0 },        { 0 },        { '+' },       { 0 },
-  { 0 },         { 0 },        { 0 },        { 0 },         { 0 },
-  { 0 },         { 0 },        { 0 },        { 0 },         { 0 },
-  { 0 },         { 0 },        { 0 },        { 0 },         { 0 },
-  { 0 },         { 0 },        { 0 },        { 0 },         { 0 },
-  { 0 },         { 0 },        { 0 },        { 0 },         { 0 },
-  { 0 },         { 0 },        { 0 },        { 0 },         { 0 },
-  { 0 },         { 0 },        { 0 },        { 0 },         { 0 },
-  { 0 },         { 0 },        { 0 },        { 0 },         { 0 },
-  { 0 },         { 0 },        { 0 },        { 0 },         { 0 },
-  { 0 },         { 0 },        { 0 },
-};
-
-unsigned char get_char(uint8_t scancode, bool shift, bool caps_lock)
-{
-  if ((caps_lock || shift) && keymap[scancode][1]) {
-    return keymap[scancode][1];
-  }
-
-  return keymap[scancode][0];
-}
 
 void help(int argc, char* argv[])
 {
@@ -180,29 +142,13 @@ void kshell_init(int argc, char* argv[])
   kshell_print_prompt();
 }
 
-void kshell_run(uint8_t scancode)
+void kshell_run()
 {
-  if (scancode == 0) {
-    return;
-  }
+  unsigned char c = arch_getchar(true);
 
-  bool key_was_released = false;
-
-  if (scancode > 128) {
-    key_was_released = true;
-    scancode -= 128;
-  }
-
-  switch (scancode) {
-    case KB_CAPS_LOCK:
-      if (key_was_released) {
-        caps_lock_mode = !caps_lock_mode;
-      }
-
-      break;
-
-    case KB_ARROW_UP:
-      if (key_was_released && strlen(last_readline) > 0) {
+  switch (c) {
+    case KEY_ARROW_UP:
+      if (strlen(last_readline) > 0) {
         reset_readline();
         strncpy(readline, last_readline, READLINE_SIZE);
         memset(last_readline, 0, READLINE_SIZE);
@@ -212,27 +158,8 @@ void kshell_run(uint8_t scancode)
 
       break;
 
-    case KB_LSHIFT:
-    case KB_RSHIFT:
-      if (key_was_released) {
-        shift_mode = false;
-      } else {
-        shift_mode = true;
-      }
-
-      break;
-
-    case KB_LCTRL:
-      if (key_was_released) {
-        ctrl_mode = false;
-      } else {
-        ctrl_mode = true;
-      }
-
-      break;
-
-    case KB_BACKSPACE:
-      if (key_was_released && readline_index > 0) {
+    case '\b':
+      if (readline_index > 0) {
         // destructive backspace
         printf("\b \b");
         readline_index--;
@@ -241,52 +168,23 @@ void kshell_run(uint8_t scancode)
 
       break;
 
-    case KB_ENTER:
-      if (key_was_released) {
-        printf("\n");
-        strncpy(last_readline, readline, READLINE_SIZE);
-        run_command();
-        reset_readline();
-        kshell_print_prompt();
-      }
-
+    case '\n':
+      printf("\n");
+      strncpy(last_readline, readline, READLINE_SIZE);
+      run_command();
+      reset_readline();
+      kshell_print_prompt();
       break;
 
-    case KB_TAB:
-      if (key_was_released) {
-        printf("  ");
-        readline[readline_index++] = 0;
-        readline[readline_index++] = 0;
-      }
+    case '\t':
+      printf("  ");
+      readline[readline_index++] = 0;
+      readline[readline_index++] = 0;
 
       break;
 
     default:
-      if (key_was_released) {
-        unsigned char c = get_char(scancode, shift_mode, caps_lock_mode);
-
-        if (c) {
-          // Handle keyboard shortcuts.
-          if (ctrl_mode) {
-            switch (c) {
-              case 'c':
-                readline[readline_index++] = '^';
-                readline[readline_index++] = 'C';
-                printf("^C\n");
-                kshell_print_prompt();
-                break;
-
-              case 'l':
-                printf("\033[H\033[2J");
-                reset_readline();
-                kshell_print_prompt();
-                break;
-            }
-          } else {
-            printf("%c", c);
-            readline[readline_index++] = c;
-          }
-        }
-      }
+      printf("%c", c);
+      readline[readline_index++] = c;
   }
 }
