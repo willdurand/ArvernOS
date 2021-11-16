@@ -20,13 +20,13 @@
 #include <fs/tar.h>
 #include <fs/vfs.h>
 #include <kernel/console.h>
-#include <kernel/panic.h>
 #include <kshell/kshell.h>
 #include <logging.h>
 #include <mmu/alloc.h>
 #include <mmu/frame.h>
 #include <mmu/paging.h>
 #include <net/net.h>
+#include <panic.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/k_syscall.h>

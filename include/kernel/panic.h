@@ -1,6 +1,5 @@
-/** @file */
-#ifndef CORE_PANIC_H
-#define CORE_PANIC_H
+#ifndef PANIC_H
+#define PANIC_H
 
 #include <logging.h>
 #include <stdbool.h>
@@ -18,12 +17,6 @@
 #define PANIC(...) __PANIC(true, __VA_ARGS__, "\n")
 
 #define PANIC_NO_STACKTRACE(...) __PANIC(false, __VA_ARGS__, "\n")
-
-typedef struct stack_frame
-{
-  struct stack_frame* rbp;
-  uint64_t rip;
-} stack_frame_t;
 
 /**
  * Handles a kernel panic.

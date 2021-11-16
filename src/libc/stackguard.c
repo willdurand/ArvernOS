@@ -4,7 +4,7 @@
 
 #ifdef __is_libk
 
-#include <kernel/panic.h>
+#include <panic.h>
 
 #endif
 
