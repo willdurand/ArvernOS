@@ -75,9 +75,7 @@ QEMU_OPTIONS += -netdev user,id=u1,ipv6=off,dhcpstart=10.0.2.20
 QEMU_OPTIONS += -device rtl8139,netdev=u1
 QEMU_OPTIONS += -object filter-dump,id=f1,netdev=u1,file=$(LOG_DIR)/traffic-$(BUILD_MODE).pcap
 
-INCLUDES += -I$(INCLUDE_DIR)/kernel/
 INCLUDES += -I$(INCLUDE_DIR)/libc/
-INCLUDES += -I$(ARCH_SRC)/
 INCLUDES += $(addprefix -I$(EXTERNAL_DIR)/,$(EXTERNAL_DEPS))
 INCLUDES += -I$(EXTERNAL_DIR)/scalable-font2/
 
@@ -202,6 +200,7 @@ $(LIBK_ASM_OBJECTS): $(LIBK_OBJS_DIR)/%.o: %.asm
 	$(NASM) $(NASM_OPTIONS) -f elf64 $< -o $@
 
 $(LIBK_OBJECTS): CFLAGS += -D__is_libk
+$(LIBK_OBJECTS): INCLUDES += -I$(INCLUDE_DIR)/kernel/ -I$(ARCH_SRC)/
 $(LIBK_OBJECTS): $(LIBK_OBJS_DIR)/%.o: %.c
 	$(PROGRESS) "CC" $<
 	mkdir -p $(dir $@)
