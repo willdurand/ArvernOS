@@ -1,4 +1,5 @@
 #include <config/inish.h>
+#include <console/console.h>
 #include <core/elf.h>
 #include <core/gdt.h>
 #include <core/isr.h>
@@ -17,7 +18,6 @@
 #include <fs/sock.h>
 #include <fs/tar.h>
 #include <fs/vfs.h>
-#include <kernel/console.h>
 #include <kmain.h>
 #include <kshell/kshell.h>
 #include <logging.h>
