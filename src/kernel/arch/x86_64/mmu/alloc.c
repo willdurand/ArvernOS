@@ -1,8 +1,8 @@
 #include "alloc.h"
-#include <kernel/panic.h>
 #include <mmu/bitmap.h>
 #include <mmu/logging.h>
 #include <mmu/paging.h>
+#include <panic.h>
 #include <string.h>
 #include <sys/types.h>
 

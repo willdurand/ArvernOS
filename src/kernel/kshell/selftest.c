@@ -2,7 +2,7 @@
 
 #include <fs/debug.h>
 #include <fs/vfs.h>
-#include <kernel/panic.h>
+#include <panic.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

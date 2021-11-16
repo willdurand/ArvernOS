@@ -5,8 +5,8 @@
 
 #ifdef __is_libk
 
-#include <kernel/panic.h>
 #include <logging.h>
+#include <panic.h>
 
 #endif
 

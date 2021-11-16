@@ -1,8 +1,8 @@
 #include "paging.h"
 #include <core/register.h>
-#include <kernel/panic.h>
 #include <mmu/bitmap.h>
 #include <mmu/logging.h>
+#include <panic.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

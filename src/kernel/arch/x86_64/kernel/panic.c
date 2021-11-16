@@ -1,9 +1,15 @@
-#include "panic.h"
 #include <core/isr.h>
 #include <drivers/vga_text.h>
+#include <panic.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+typedef struct stack_frame
+{
+  struct stack_frame* rbp;
+  uint64_t rip;
+} stack_frame_t;
 
 char* kernel_find_symbol(uint64_t* addr);
 
