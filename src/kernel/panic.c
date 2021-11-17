@@ -1,9 +1,10 @@
 #include <panic.h>
 
 #include <arch/kernel.h>
+#include <arch/panic.h>
 #include <stdio.h>
 
-void arch_kernel_panic(bool dump_stacktrace, const char* format, ...)
+void kernel_panic(bool dump_stacktrace, const char* format, ...)
 {
   printf("\033[0;31m");
 

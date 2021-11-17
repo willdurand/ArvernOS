@@ -16,7 +16,7 @@ uint8_t next_table_index = 3;
 char fake_frame[NB_FRAMES][PAGE_SIZE];
 uint32_t next_free_frame = 0;
 
-void arch_kernel_panic(const char* format, ...)
+void kernel_panic(const char* format, ...)
 {
   // noop implementation
 }
