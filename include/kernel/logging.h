@@ -24,11 +24,13 @@
 
 #else // ENABLE_LOGS_FOR_TESTS
 
+#include <arch/logging.h>
+
 #ifdef LOGS_WITH_COLORS
 // We use colors because the serial port is bound to a file in debug mode (see
 // qemu config in `Makefile`). That would not work otherwise, I think.
 #define LOG(level, level_color, format, ...)                                   \
-  fctprintf(&logging_stream_output,                                            \
+  fctprintf(&arch_logging_stream_output,                                       \
             NULL,                                                              \
             "%s%-8s%s | %s%s:%" PRIu64 ":%s():%s " format "\n",                \
             level_color,                                                       \
@@ -44,7 +46,7 @@
 #else // LOGS_WITH_COLORS
 
 #define LOG(level, level_color, format, ...)                                   \
-  fctprintf(&logging_stream_output,                                            \
+  fctprintf(&arch_logging_stream_output,                                       \
             NULL,                                                              \
             "%-8s | %s:%" PRIu64 ":%s(): " format "\n",                        \
             level,                                                             \
@@ -65,11 +67,12 @@
   DEBUG("(hexdump) data=%p len=%" PRIu64, data, (uint64_t)len);                \
   for (uint64_t i = 0; i < len; i++) {                                         \
     if (i > 0 && i % 8 == 0) {                                                 \
-      fctprintf(&logging_stream_output, NULL, "\n");                           \
+      fctprintf(&arch_logging_stream_output, NULL, "\n");                      \
     }                                                                          \
-    fctprintf(&logging_stream_output, NULL, "%02x ", (uint8_t)(data + i));     \
+    fctprintf(                                                                 \
+      &arch_logging_stream_output, NULL, "%02x ", (uint8_t)(data + i));        \
   }                                                                            \
-  fctprintf(&logging_stream_output, NULL, "\n");
+  fctprintf(&arch_logging_stream_output, NULL, "\n");
 
 #else // ENABLE_KERNEL_DEBUG || ENABLE_LOGS_FOR_TESTS
 
@@ -86,14 +89,5 @@
 #define INFO(format, ...) LOG("INFO", ANSICOLOR_FG_YELLOW, format, __VA_ARGS__)
 
 #define ERROR(format, ...) LOG("ERROR", ANSICOLOR_FG_RED, format, __VA_ARGS__)
-
-/**
- * Architecture-specific code should implement this function to output logs
- * somewhere. In most cases, a serial line will be used.
- *
- * @param c a character to print
- * @param arg optional arguments. This should be `NULL` all the time.
- */
-void logging_stream_output(char c, void* arg);
 
 #endif

@@ -1,9 +1,9 @@
-#include <logging.h>
+#include <arch/logging.h>
 
 #include <drivers/serial.h>
 #include <willos/utils.h>
 
-void logging_stream_output(char c, void* arg)
+void arch_logging_stream_output(char c, void* arg)
 {
   UNUSED(*arg);
 

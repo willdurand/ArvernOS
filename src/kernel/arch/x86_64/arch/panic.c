@@ -1,7 +1,6 @@
-#include <panic.h>
+#include <arch/panic.h>
 
-#include <core/isr.h>
-#include <drivers/vga_text.h>
+#include <logging.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -16,37 +15,14 @@ char* kernel_find_symbol(uint64_t* addr);
 
 static char* symbols = NULL;
 
-void kernel_load_symbols(uint64_t addr, uint64_t size)
+void arch_kernel_load_symbols(uint64_t addr, uint64_t size)
 {
   symbols = (char*)malloc(sizeof(char) * (size + 1));
   memcpy(symbols, (void*)addr, size);
   symbols[size] = 0;
 }
 
-void kernel_panic(bool dump_stacktrace, const char* format, ...)
-{
-  printf("\033[0;31m");
-
-  va_list arg;
-  va_start(arg, format);
-  vprintf(format, arg);
-  va_end(arg);
-
-  if (dump_stacktrace) {
-    kernel_dump_stacktrace();
-  }
-
-  printf("\n\n%45s\033[0m", "SYSTEM HALTED!");
-
-  vga_text_disable_cursor();
-  isr_disable_interrupts();
-
-  while (1) {
-    __asm__("hlt");
-  }
-}
-
-void kernel_dump_stacktrace()
+void arch_kernel_dump_stacktrace()
 {
   printf("\n  Kernel stacktrace:\n\n");
   DEBUG("%s", "kernel stacktrace:");

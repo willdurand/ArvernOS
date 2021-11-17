@@ -1,5 +1,5 @@
-#ifndef ARCH_H
-#define ARCH_H
+#ifndef ARCH_IO_H
+#define ARCH_IO_H
 
 #include <stdbool.h>
 

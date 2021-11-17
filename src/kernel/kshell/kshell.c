@@ -1,6 +1,6 @@
 #include <kshell/kshell.h>
 
-#include <arch.h>
+#include <arch/io.h>
 #include <keymap.h>
 #include <logging.h>
 #include <stdio.h>
