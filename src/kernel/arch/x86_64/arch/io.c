@@ -1,5 +1,6 @@
 #include <arch/io.h>
 
+#include <console/console.h>
 #include <drivers/keyboard.h>
 #include <keymap.h>
 
@@ -59,4 +60,9 @@ unsigned char arch_getchar(bool blocking)
   }
 
   return c;
+}
+
+void arch_putchar(char c)
+{
+  console_putchar(c);
 }
