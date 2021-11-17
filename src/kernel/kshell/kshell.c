@@ -153,7 +153,6 @@ void kshell(int argc, char* argv[])
           printf("%s", readline);
           readline_index = strlen(readline);
         }
-
         break;
 
       case '\b':
@@ -163,7 +162,6 @@ void kshell(int argc, char* argv[])
           readline_index--;
           readline[readline_index] = 0;
         }
-
         break;
 
       case '\n':
@@ -178,7 +176,6 @@ void kshell(int argc, char* argv[])
         printf("  ");
         readline[readline_index++] = 0;
         readline[readline_index++] = 0;
-
         break;
 
       default:
