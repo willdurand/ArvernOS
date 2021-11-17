@@ -5,4 +5,6 @@
 
 unsigned char arch_getchar(bool blocking);
 
+void arch_putchar(char c);
+
 #endif
