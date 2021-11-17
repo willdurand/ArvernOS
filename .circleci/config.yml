@@ -15,6 +15,19 @@ commands:
           command: |
             cp .circleci/willosconfig willosconfig
 
+  build:
+    parameters:
+      target:
+        type: string
+      arch:
+        type: string
+    steps:
+      - setup
+      - run: ARCH=<<parameters.arch>> make clean << parameters.target >>
+      - run:
+          name: ensure the kernel has been built
+          command: test -f build/<< parameters.arch >>/dist/kernel-<< parameters.arch >>.bin
+
   run_qemu:
     parameters:
       title:
@@ -30,41 +43,22 @@ commands:
             TERM: xterm-256color
 
 jobs:
-  build-debug:
+  build-x86_64:
     <<: *defaults
+    parameters:
+      target:
+        type: string
     steps:
-      - setup
+      - build:
+          arch: x86_64
+          target: << parameters.target >>
       - run:
-          name: build (debug)
+          name: build checks
           command: |
-            make clean debug
             test -f build/x86_64/isofiles/boot/grub/grub.cfg
             test -f build/x86_64/isofiles/boot/initrd.tar
-            test -f build/x86_64/dist/kernel-x86_64.bin
             test -f build/x86_64/dist/libc-willOS-x86_64.a
             test -f build/x86_64/dist/willOS-x86_64.iso
-
-  build-release:
-    <<: *defaults
-    steps:
-      - setup
-      - run:
-          name: build (release)
-          command: |
-            make clean release
-            test -f build/x86_64/isofiles/boot/grub/grub.cfg
-            test -f build/x86_64/isofiles/boot/initrd.tar
-            test -f build/x86_64/dist/kernel-x86_64.bin
-            test -f build/x86_64/dist/libc-willOS-x86_64.a
-            test -f build/x86_64/dist/willOS-x86_64.iso
-
-  unit-tests:
-    <<: *defaults
-    steps:
-      - setup
-      - run:
-          name: unit tests
-          command: make clean test
 
   checks:
     <<: *defaults
@@ -76,37 +70,24 @@ jobs:
             make fmt
             git diff --exit-code || (echo "\n\nPlease run 'make fmt' to format the code and fix the problem(s) above"; false)
 
-  userland-test-suite:
+  unit-tests:
     <<: *defaults
     steps:
       - setup
-      - run_qemu:
-          title: userland test suite
-          command: make clean run-test
+      - run:
+          name: unit tests
+          command: make clean test
 
-  userland-test-suite-ubsan:
+  kernel-selftest-with-ubsan:
     <<: *defaults
-    steps:
-      - setup
-      - run_qemu:
-          title: userland test suite with UBSan enabled
-          command: make clean run-test UBSAN=1
-
-  kernel-selftest:
-    <<: *defaults
+    parameters:
+      ubsan:
+        type: integer
     steps:
       - setup
       - run_qemu:
           title: kernel selftest
-          command: make clean run-test GRUB_KERNEL_CMDLINE='kshell selftest'
-
-  kernel-selftest-ubsan:
-    <<: *defaults
-    steps:
-      - setup
-      - run_qemu:
-          title: kernel selftest with UBSan enabled
-          command: make clean run-test GRUB_KERNEL_CMDLINE='kshell selftest' UBSAN=1
+          command: make clean run-test GRUB_KERNEL_CMDLINE='kshell selftest' UBSAN=<< parameters.ubsan >>
 
   kernel-selftest-10-times:
     <<: *defaults
@@ -117,14 +98,32 @@ jobs:
           command: |
             make clean run-test GRUB_KERNEL_CMDLINE="$(echo "kshell$(printf ' selftest%.0s' {1..10})")"
 
+  userland-test-suite-with-ubsan:
+    <<: *defaults
+    parameters:
+      ubsan:
+        type: integer
+    steps:
+      - setup
+      - run_qemu:
+          title: userland test suite
+          command: make clean run-test UBSAN=<< parameters.ubsan >>
+
 workflows:
   default-workflow:
     jobs:
-      - build-debug
-      - build-release
-      - unit-tests
-      - userland-test-suite
-      - userland-test-suite-ubsan
-      - kernel-selftest
-      - kernel-selftest-ubsan
+      - build-x86_64:
+          matrix:
+            parameters:
+              target: [debug, release]
+      - checks
+      - kernel-selftest-with-ubsan:
+          matrix:
+            parameters:
+              ubsan: [0, 1]
       - kernel-selftest-10-times
+      - unit-tests
+      - userland-test-suite-with-ubsan:
+          matrix:
+            parameters:
+              ubsan: [0, 1]
