@@ -1,11 +1,11 @@
 #include <stdio.h>
 
 #ifdef __is_libk
-#include <console/console.h>
+#include <arch/io.h>
 
 void _putchar(char c)
 {
-  console_putchar(c);
+  arch_putchar(c);
 }
 
 #else
