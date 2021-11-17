@@ -1,5 +1,6 @@
 #include <kshell/kshell.h>
 
+#include <arch/kshell.h>
 #include <fs/debug.h>
 #include <fs/vfs.h>
 #include <panic.h>
@@ -15,50 +16,48 @@ void print_selftest_header(const char* name)
 
 void selftest()
 {
-  print_selftest_header("interrupts");
-  printf("  invoking breakpoint exception\n");
-  __asm__("int3");
-
-  print_selftest_header("syscalls");
-  printf("  syscalling\n");
+  print_selftest_header("kernel syscalls");
   // This does not call the syscall with an interrupt anymore, it directly uses
   // `k_test()` under the hood.
   test("kshell");
 
-  print_selftest_header("stack tracing");
+  print_selftest_header("kernel stacktrace");
   arch_kernel_dump_stacktrace();
 
   print_selftest_header("memory");
-  printf("  simple test with malloc()/free()\n");
+  printf("simple test with malloc()/free(): ");
   char* str = (void*)0x42;
-  printf("  pointer before malloc(): p=%p\n", str);
+  printf("pointer before malloc() = %p\n", str);
   int str_len = 9;
   str = (char*)malloc(str_len * sizeof(char));
 
   if (str == 0) {
-    printf("  failed\n");
+    printf("failed\n");
   } else {
-    printf("  success! p=%p", str);
+    printf("success! p=%p", str);
     strncpy(str, "it works", str_len);
     printf(" and value is: %s\n", str);
     free(str);
   }
 
-  printf("  now allocating a large chunk of memory...\n");
-  printf("  pointer before malloc(): p=%p\n", str);
+  printf("now allocating a large chunk of memory... ");
+  printf("Pointer before malloc() = %p\n", str);
   str = (char*)malloc(1024 * 1024 * 5 * sizeof(char));
 
   if (str == 0) {
-    printf("  failed\n");
+    printf("failed\n");
   } else {
-    printf("  success!\n");
+    printf("success!\n");
     free(str);
   }
 
   print_selftest_header("filesystem");
   inode_t debug = vfs_namei(FS_DEBUG_MOUNTPOINT);
-  const char* message = "  this message should be written to the console\n";
+  const char* message = "This message should be written to the console.\n";
   vfs_write(debug, (void*)message, strlen(message), 0);
+
+  print_selftest_header(ARCH);
+  arch_selftest();
 
   printf("\ndone.\n");
 }
