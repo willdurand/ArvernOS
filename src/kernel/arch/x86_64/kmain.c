@@ -156,7 +156,7 @@ void load_modules(multiboot_info_t* mbi)
 void load_symbols(multiboot_tag_module_t* module, uint64_t size)
 {
   print_step("loading debug symbols");
-  kernel_load_symbols(module->mod_start, size);
+  arch_kernel_load_symbols(module->mod_start, size);
   print_ok();
 }
 

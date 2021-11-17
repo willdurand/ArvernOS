@@ -6,7 +6,7 @@
 
 #define NB_ENTRIES 3
 
-void kernel_panic(const char* format, ...)
+void arch_kernel_panic(const char* format, ...)
 {
   // noop implementation
 }

@@ -1,4 +1,4 @@
-#include <arch.h>
+#include <arch/io.h>
 
 #include <drivers/keyboard.h>
 #include <keymap.h>

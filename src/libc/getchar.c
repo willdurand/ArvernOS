@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 #ifdef __is_libk
-#include <arch.h>
+#include <arch/io.h>
 #else
 #include <unistd.h>
 #endif

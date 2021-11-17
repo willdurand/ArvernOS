@@ -1,6 +1,6 @@
 #include <sys/k_syscall.h>
 
-#include <arch.h>
+#include <arch/io.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <fs/vfs.h>
