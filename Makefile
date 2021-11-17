@@ -89,7 +89,6 @@ WERRORS += -Werror=switch
 CFLAGS += -DKERNEL_NAME=\"$(OS_NAME)\"
 CFLAGS += -DGIT_HASH=\"$(GIT_HASH)\"
 CFLAGS += -DARCH=\"$(ARCH)\"
-CFLAGS += -DLOGS_WITH_COLORS
 CFLAGS += -O2 -std=c11 -ffreestanding -nostdinc -nostdlib -fno-builtin
 # We need to have -fno-omit-frame-pointer or the kernel stack backtrace won't
 # get the stack.
