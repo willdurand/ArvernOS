@@ -1,16 +1,14 @@
+/**
+ * @file
+ *
+ * Architecture-specific implementation to load debug symbols in order to print
+ * stacktraces in case of a kernel panic.
+ */
 #ifndef ARCH_PANIC_H
 #define ARCH_PANIC_H
 
 #include <stdbool.h>
 #include <stdint.h>
-
-/**
- * Handles a kernel panic.
- *
- * @param dump_stacktrace whether to dump a stacktrace
- * @param format the reason for the kernel panic
- */
-void arch_kernel_panic(bool dump_stacktrace, const char* format, ...);
 
 /**
  * Loads symbols used in stacktraces.
