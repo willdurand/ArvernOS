@@ -98,15 +98,6 @@ Include dependency graph for serial.h:</div>
 <area shape="rect" href="stdint_8h_source.html" title=" " alt="" coords="40,95,105,121"/>
 </map>
 </div>
-</div><div class="textblock"><div class="dynheader">
-This graph shows which files directly or indirectly include this file:</div>
-<div class="dyncontent">
-<div class="center"><img src="drivers_2serial_8h__dep__incl.png" border="0" usemap="#asrc_2kernel_2arch_2x86__64_2drivers_2serial_8hdep" alt=""/></div>
-<map name="asrc_2kernel_2arch_2x86__64_2drivers_2serial_8hdep" id="asrc_2kernel_2arch_2x86__64_2drivers_2serial_8hdep">
-<area shape="rect" title=" " alt="" coords="19,5,154,47"/>
-<area shape="rect" href="logging_8h_source.html" title=" " alt="" coords="5,95,168,121"/>
-</map>
-</div>
 </div>
 <p><a href="drivers_2serial_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -135,8 +126,8 @@ Functions</h2></td></tr>
 <tr class="separator:a086a2712ee8de77b7621d922d2b96857"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1e9e38c6dbae13f53e8ed436fef0cd5b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="drivers_2serial_8h.html#a1e9e38c6dbae13f53e8ed436fef0cd5b">serial_print</a> (uint16_t com, const char *str)</td></tr>
 <tr class="separator:a1e9e38c6dbae13f53e8ed436fef0cd5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f5a915bc3e83fd89af8f6dd43c6f205"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="drivers_2serial_8h.html#a0f5a915bc3e83fd89af8f6dd43c6f205">serial_stream_output</a> (char c, void *arg)</td></tr>
-<tr class="separator:a0f5a915bc3e83fd89af8f6dd43c6f205"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25ea2587d38072f4b5a53d59962ca418"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="drivers_2serial_8h.html#a25ea2587d38072f4b5a53d59962ca418">serial_write</a> (uint16_t com, char c)</td></tr>
+<tr class="separator:a25ea2587d38072f4b5a53d59962ca418"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="a7dba27fd7950f6e40269808bd9238aca"></a>
@@ -257,26 +248,36 @@ Here is the caller graph for this function:</div>
   </table>
   </dd>
 </dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="drivers_2serial_8h_a1e9e38c6dbae13f53e8ed436fef0cd5b_cgraph.png" border="0" usemap="#adrivers_2serial_8h_a1e9e38c6dbae13f53e8ed436fef0cd5b_cgraph" alt=""/></div>
+<map name="adrivers_2serial_8h_a1e9e38c6dbae13f53e8ed436fef0cd5b_cgraph" id="adrivers_2serial_8h_a1e9e38c6dbae13f53e8ed436fef0cd5b_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,92,32"/>
+<area shape="rect" href="drivers_2serial_8h.html#a25ea2587d38072f4b5a53d59962ca418" title=" " alt="" coords="140,5,229,32"/>
+<area shape="rect" href="port_8h.html#ac3c72bfda8c7b1920ef91bcc06c97c7f" title=" " alt="" coords="277,5,381,32"/>
+</map>
+</div>
 
 </div>
 </div>
-<a id="a0f5a915bc3e83fd89af8f6dd43c6f205"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0f5a915bc3e83fd89af8f6dd43c6f205">&#9670;&nbsp;</a></span>serial_stream_output()</h2>
+<a id="a25ea2587d38072f4b5a53d59962ca418"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25ea2587d38072f4b5a53d59962ca418">&#9670;&nbsp;</a></span>serial_write()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void serial_stream_output </td>
+          <td class="memname">void serial_write </td>
           <td>(</td>
-          <td class="paramtype">char&#160;</td>
-          <td class="paramname"><em>c</em>, </td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>com</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>arg</em>&#160;</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>c</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -285,7 +286,33 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function is only used when <code>ENABLE_KERNEL_DEBUG</code> is set to <code>true</code> so that the <code>printf</code> lib can relies on the serial debug port to print debug logs. The implementation of this function is designed for the <code>printf</code> external library. </p>
+<p>Prints a character to the serial port.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">com</td><td>a serial port number </td></tr>
+    <tr><td class="paramname">c</td><td>the character to print to the serial port </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="drivers_2serial_8h_a25ea2587d38072f4b5a53d59962ca418_cgraph.png" border="0" usemap="#adrivers_2serial_8h_a25ea2587d38072f4b5a53d59962ca418_cgraph" alt=""/></div>
+<map name="adrivers_2serial_8h_a25ea2587d38072f4b5a53d59962ca418_cgraph" id="adrivers_2serial_8h_a25ea2587d38072f4b5a53d59962ca418_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,95,32"/>
+<area shape="rect" href="port_8h.html#ac3c72bfda8c7b1920ef91bcc06c97c7f" title=" " alt="" coords="143,5,247,32"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="drivers_2serial_8h_a25ea2587d38072f4b5a53d59962ca418_icgraph.png" border="0" usemap="#adrivers_2serial_8h_a25ea2587d38072f4b5a53d59962ca418_icgraph" alt=""/></div>
+<map name="adrivers_2serial_8h_a25ea2587d38072f4b5a53d59962ca418_icgraph" id="adrivers_2serial_8h_a25ea2587d38072f4b5a53d59962ca418_icgraph">
+<area shape="rect" title=" " alt="" coords="200,42,289,69"/>
+<area shape="rect" href="arch_2logging_8h.html#a7312d27f4e0dd0d06f742dfe200c945a" title=" " alt="" coords="5,5,152,47"/>
+<area shape="rect" href="drivers_2serial_8h.html#a1e9e38c6dbae13f53e8ed436fef0cd5b" title=" " alt="" coords="35,71,122,98"/>
+</map>
+</div>
 
 </div>
 </div>

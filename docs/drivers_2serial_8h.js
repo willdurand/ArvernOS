@@ -7,5 +7,5 @@ var drivers_2serial_8h =
     [ "SERIAL_SPEED_57600", "drivers_2serial_8h.html#abc968786733c07230d2d5230cec1e138", null ],
     [ "serial_init", "drivers_2serial_8h.html#a086a2712ee8de77b7621d922d2b96857", null ],
     [ "serial_print", "drivers_2serial_8h.html#a1e9e38c6dbae13f53e8ed436fef0cd5b", null ],
-    [ "serial_stream_output", "drivers_2serial_8h.html#a0f5a915bc3e83fd89af8f6dd43c6f205", null ]
+    [ "serial_write", "drivers_2serial_8h.html#a25ea2587d38072f4b5a53d59962ca418", null ]
 ];

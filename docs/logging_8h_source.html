@@ -91,99 +91,70 @@ $(document).ready(function(){initNavTree('logging_8h_source.html',''); initResiz
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;inttypes.h&gt;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="stdio_8h.html">stdio.h</a>&gt;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">// See: https://github.com/shiena/ansicolor</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#define ANSICOLOR_RESET        &quot;\x1b[0m&quot;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#define ANSICOLOR_FG_CYAN      &quot;\x1b[36m&quot;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#ifdef ENABLE_LOGS_FOR_TESTS</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">// See: https://github.com/shiena/ansicolor</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#define ANSICOLOR_FG_LIGHTGRAY &quot;\x1b[90m&quot;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#define ANSICOLOR_FG_YELLOW    &quot;\x1b[33m&quot;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#define ANSICOLOR_FG_RED       &quot;\x1b[31m&quot;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#ifdef ENABLE_LOGS_FOR_TESTS</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#define LOG(level, level_color, format, ...)                                   \</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">  printf(&quot;%s%s:%&quot;</span> PRIu64 &quot;:%s(): &quot; format &quot;%s\n&quot;,                              \</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;         ANSICOLOR_FG_LIGHTGRAY,                                               \</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;         __FILE__,                                                             \</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;         (uint64_t)__LINE__,                                                   \</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;         __func__,                                                             \</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;         __VA_ARGS__,                                                          \</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;         ANSICOLOR_RESET)</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#else </span><span class="comment">// ENABLE_LOGS_FOR_TESTS</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="drivers_2serial_8h.html">drivers/serial.h</a>&gt;</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> uint16_t serial_com1 = <a class="code" href="drivers_2serial_8h.html#a7dba27fd7950f6e40269808bd9238aca">SERIAL_COM1</a>;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#ifdef LOGS_WITH_COLORS</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment">// We use colors because the serial port is bound to a file in debug mode (see</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment">// qemu config in `Makefile`). That would not work otherwise, I think.</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#define LOG(level, level_color, format, ...)                                   \</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">  fctprintf(&amp;serial_stream_output,                                             \</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">            (void*)&amp;serial_com1,                                               \</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">            &quot;%s%-8s%s | %s%s:%&quot;</span> PRIu64 &quot;:%s():%s &quot; format &quot;\n&quot;,                \</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;            level_color,                                                       \</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            level,                                                             \</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;            ANSICOLOR_RESET,                                                   \</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            ANSICOLOR_FG_LIGHTGRAY,                                            \</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            __FILE__,                                                          \</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            (uint64_t)__LINE__,                                                \</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            __func__,                                                          \</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            ANSICOLOR_RESET,                                                   \</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            __VA_ARGS__)</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#else </span><span class="comment">// LOGS_WITH_COLORS</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#define LOG(level, level_color, format, ...)                                   \</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">  fctprintf(&amp;serial_stream_output,                                             \</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">            (void*)&amp;serial_com1,                                               \</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">            &quot;%-8s | %s:%&quot;</span> PRIu64 &quot;:%s(): &quot; format &quot;\n&quot;,                        \</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            level,                                                             \</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            __FILE__,                                                          \</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;            (uint64_t)__LINE__,                                                \</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            __func__,                                                          \</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            __VA_ARGS__)</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// LOGS_WITH_COLORS</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// ENABLE_LOGS_FOR_TESTS</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">#if defined(ENABLE_KERNEL_DEBUG) || defined(ENABLE_LOGS_FOR_TESTS)</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">#define DEBUG(format, ...) LOG(&quot;DEBUG&quot;</span>, ANSICOLOR_FG_CYAN, format, __VA_ARGS__)</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor">#define HEX_DEBUG(data, len)                                                   \</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">  DEBUG(&quot;(hexdump) data=%p len=%&quot;</span> PRIu64, data, (uint64_t)len);                \</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  for (uint64_t i = 0; i &lt; len; i++) {                                         \</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    if (i &gt; 0 &amp;&amp; i % 8 == 0) {                                                 \</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;      fctprintf(&amp;serial_stream_output, (void*)&amp;serial_com1, &quot;\n&quot;);             \</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    }                                                                          \</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    fctprintf(&amp;serial_stream_output,                                           \</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;              (void*)&amp;serial_com1,                                             \</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;              &quot;%02x &quot;,                                                         \</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;              (uint8_t)(data + i));                                            \</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  }                                                                            \</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  fctprintf(&amp;serial_stream_output, (void*)&amp;serial_com1, &quot;\n&quot;);</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor">#else </span><span class="comment">// ENABLE_KERNEL_DEBUG || ENABLE_LOGS_FOR_TESTS</span></div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="preprocessor">#define DEBUG(format, ...)                                                     \</span></div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="preprocessor">  do {                                                                         \</span></div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="preprocessor">  } while (0)</span></div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="preprocessor">#define HEX_DEBUG(data, len)                                                   \</span></div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="preprocessor">  do {                                                                         \</span></div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="preprocessor">  } while (0)</span></div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// ENABLE_KERNEL_DEBUG || ENABLE_LOGS_FOR_TESTS</span></div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="preprocessor">#define INFO(format, ...) LOG(&quot;INFO&quot;</span>, ANSICOLOR_FG_YELLOW, format, __VA_ARGS__)</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160; </div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="preprocessor">#define ERROR(format, ...) LOG(&quot;ERROR&quot;</span>, ANSICOLOR_FG_RED, format, __VA_ARGS__)</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="adrivers_2serial_8h_html"><div class="ttname"><a href="drivers_2serial_8h.html">serial.h</a></div></div>
-<div class="ttc" id="adrivers_2serial_8h_html_a7dba27fd7950f6e40269808bd9238aca"><div class="ttname"><a href="drivers_2serial_8h.html#a7dba27fd7950f6e40269808bd9238aca">SERIAL_COM1</a></div><div class="ttdeci">#define SERIAL_COM1</div><div class="ttdef"><b>Definition:</b> serial.h:11</div></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#define ANSICOLOR_RESET        &quot;\x1b[0m&quot;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#define LOG(level, format, ...)                                                \</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">  printf(&quot;%s%s:%&quot;</span> PRIu64 &quot;:%s(): &quot; format &quot;%s\n&quot;,                              \</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;         ANSICOLOR_FG_LIGHTGRAY,                                               \</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;         __FILE__,                                                             \</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;         (uint64_t)__LINE__,                                                   \</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;         __func__,                                                             \</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;         __VA_ARGS__,                                                          \</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;         ANSICOLOR_RESET)</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#else </span><span class="comment">// ENABLE_LOGS_FOR_TESTS</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="arch_2logging_8h.html">arch/logging.h</a>&gt;</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#define LOG(level, format, ...)                                                \</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">  fctprintf(&amp;arch_logging_stream_output,                                       \</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">            NULL,                                                              \</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">            &quot;%-8s | %s:%&quot;</span> PRIu64 &quot;:%s(): &quot; format &quot;\n&quot;,                        \</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;            level,                                                             \</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;            __FILE__,                                                          \</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;            (uint64_t)__LINE__,                                                \</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;            __func__,                                                          \</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;            __VA_ARGS__)</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// ENABLE_LOGS_FOR_TESTS</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#if defined(ENABLE_KERNEL_DEBUG) || defined(ENABLE_LOGS_FOR_TESTS)</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#define DEBUG(format, ...) LOG(&quot;DEBUG&quot;</span>, format, __VA_ARGS__)</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#define HEX_DEBUG(data, len)                                                   \</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">  DEBUG(&quot;(hexdump) data=%p len=%&quot;</span> PRIu64, data, (uint64_t)len);                \</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  for (uint64_t i = 0; i &lt; len; i++) {                                         \</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    if (i &gt; 0 &amp;&amp; i % 8 == 0) {                                                 \</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;      fctprintf(&amp;arch_logging_stream_output, NULL, &quot;\n&quot;);                      \</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    }                                                                          \</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    fctprintf(                                                                 \</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;      &amp;arch_logging_stream_output, NULL, &quot;%02x &quot;, (uint8_t)(data + i));        \</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  }                                                                            \</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  fctprintf(&amp;arch_logging_stream_output, NULL, &quot;\n&quot;);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#else </span><span class="comment">// ENABLE_KERNEL_DEBUG || ENABLE_LOGS_FOR_TESTS</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#define DEBUG(format, ...)                                                     \</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">  do {                                                                         \</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">  } while (0)</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#define HEX_DEBUG(data, len)                                                   \</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">  do {                                                                         \</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">  } while (0)</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// ENABLE_KERNEL_DEBUG || ENABLE_LOGS_FOR_TESTS</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">#define INFO(format, ...) LOG(&quot;INFO&quot;</span>, format, __VA_ARGS__)</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">#define ERROR(format, ...) LOG(&quot;ERROR&quot;</span>, format, __VA_ARGS__)</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aarch_2logging_8h_html"><div class="ttname"><a href="arch_2logging_8h.html">logging.h</a></div></div>
 <div class="ttc" id="astdio_8h_html"><div class="ttname"><a href="stdio_8h.html">stdio.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

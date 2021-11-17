@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['multiboot_2eh_429',['multiboot.h',['../multiboot_8h.html',1,'']]]
+  ['logging_2eh_435',['logging.h',['../arch_2logging_8h.html',1,'']]]
 ];

@@ -75,7 +75,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "alloc_8h.html",
-"paging_8h.html#a28ff91b933f24d95e25ec5f03a736117"
+"multiboot_8h.html#ae87c8fda1b62f7ace33b2e3ad24292c2"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

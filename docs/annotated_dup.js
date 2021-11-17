@@ -54,7 +54,6 @@ var annotated_dup =
     [ "sock_entry_t", "structsock__entry__t.html", null ],
     [ "sockaddr", "structsockaddr.html", null ],
     [ "sockaddr_in", "structsockaddr__in.html", null ],
-    [ "stack_frame_t", "structstack__frame__t.html", null ],
     [ "stat", "structstat.html", null ],
     [ "t_cdate", "structs__cdate.html", null ],
     [ "tar_header_t", "structtar__header__t.html", null ],

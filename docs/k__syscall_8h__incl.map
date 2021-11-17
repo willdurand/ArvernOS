@@ -1,12 +1,11 @@
-<map id="src/kernel/arch/x86_64/sys/k_syscall.h" name="src/kernel/arch/x86_64/sys/k_syscall.h">
-<area shape="rect" id="node1" title=" " alt="" coords="128,5,265,47"/>
-<area shape="rect" id="node2" href="$inet_8h_source.html" title=" " alt="" coords="273,95,358,121"/>
-<area shape="rect" id="node3" href="$socket_8h_source.html" title=" " alt="" coords="347,169,443,196"/>
-<area shape="rect" id="node4" href="$types_8h_source.html" title=" " alt="" coords="183,244,272,271"/>
-<area shape="rect" id="node8" href="$isr_8h.html" title=" " alt="" coords="5,244,81,271"/>
-<area shape="rect" id="node9" href="$stat_8h_source.html" title=" " alt="" coords="119,95,197,121"/>
-<area shape="rect" id="node10" href="$sys_2time_8h_source.html" title=" " alt="" coords="190,169,273,196"/>
-<area shape="rect" id="node5" href="$stdbool_8h_source.html" title=" " alt="" coords="92,319,168,345"/>
-<area shape="rect" id="node6" href="$stddef_8h_source.html" title=" " alt="" coords="193,319,262,345"/>
-<area shape="rect" id="node7" href="$stdint_8h_source.html" title=" " alt="" coords="104,393,169,420"/>
+<map id="include/kernel/sys/k_syscall.h" name="include/kernel/sys/k_syscall.h">
+<area shape="rect" id="node1" title=" " alt="" coords="125,5,253,47"/>
+<area shape="rect" id="node2" href="$inet_8h_source.html" title=" " alt="" coords="67,95,152,121"/>
+<area shape="rect" id="node3" href="$socket_8h_source.html" title=" " alt="" coords="5,169,101,196"/>
+<area shape="rect" id="node4" href="$types_8h_source.html" title=" " alt="" coords="145,244,234,271"/>
+<area shape="rect" id="node8" href="$stat_8h_source.html" title=" " alt="" coords="227,95,306,121"/>
+<area shape="rect" id="node9" href="$sys_2time_8h_source.html" title=" " alt="" coords="296,169,379,196"/>
+<area shape="rect" id="node5" href="$stdbool_8h_source.html" title=" " alt="" coords="103,319,179,345"/>
+<area shape="rect" id="node6" href="$stddef_8h_source.html" title=" " alt="" coords="204,319,273,345"/>
+<area shape="rect" id="node7" href="$stdint_8h_source.html" title=" " alt="" coords="206,393,271,420"/>
 </map>

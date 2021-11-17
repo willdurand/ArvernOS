@@ -1,4 +1,5 @@
 <map id="isr_disable_interrupts" name="isr_disable_interrupts">
-<area shape="rect" id="node1" title=" " alt="" coords="151,5,300,32"/>
-<area shape="rect" id="node2" href="$panic_8h.html#af92a4fe8363297fd713910fb044d41a9" title=" " alt="" coords="5,5,103,32"/>
+<area shape="rect" id="node1" title=" " alt="" coords="325,5,475,32"/>
+<area shape="rect" id="node2" href="$kernel_8h.html#accb39562862923d439dca6abd40c9840" title=" " alt="" coords="151,5,277,32"/>
+<area shape="rect" id="node3" href="$panic_8h.html#af92a4fe8363297fd713910fb044d41a9" title=" " alt="" coords="5,5,103,32"/>
 </map>
