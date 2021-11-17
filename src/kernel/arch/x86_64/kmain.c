@@ -259,14 +259,7 @@ void load_kshell(int argc, char* argv[])
   printf("kernel: loading %s...\n", argv[0]);
   INFO("kernel: loading %s...", argv[0]);
 
-  kshell_init(argc, argv);
-
-  while (1) {
-    kshell_run();
-    // This allows the CPU to enter a sleep state in which it consumes much
-    // less energy. See: https://en.wikipedia.org/wiki/HLT_(x86_instruction)
-    __asm__("hlt");
-  }
+  kshell(argc, argv);
 }
 
 void kmain(uint64_t addr)

@@ -10,14 +10,9 @@
 #define PROMPT "kshell> "
 
 /**
- * Initializes the kernel shell.
+ * Starts the kernel shell.
  */
-void kshell_init(int argc, char* argv[]);
-
-/**
- * Runs the kernel shell.
- */
-void kshell_run();
+void kshell(int argc, char* argv[]);
 
 void cat(int argc, char* argv[]);
 void exec(int argc, char* argv[]);

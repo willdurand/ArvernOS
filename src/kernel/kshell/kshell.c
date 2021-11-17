@@ -122,7 +122,7 @@ void reset_readline()
   }
 }
 
-void kshell_init(int argc, char* argv[])
+void kshell(int argc, char* argv[])
 {
   if (argc > 1) {
     for (int i = 1; i < argc; i++) {
@@ -140,51 +140,50 @@ void kshell_init(int argc, char* argv[])
          "Protip: switch to usermode with the 'usermode' command.\n\n");
 
   kshell_print_prompt();
-}
 
-void kshell_run()
-{
-  unsigned char c = arch_getchar(true);
+  while (1) {
+    unsigned char c = arch_getchar(true);
 
-  switch (c) {
-    case KEY_ARROW_UP:
-      if (strlen(last_readline) > 0) {
+    switch (c) {
+      case KEY_ARROW_UP:
+        if (strlen(last_readline) > 0) {
+          reset_readline();
+          strncpy(readline, last_readline, READLINE_SIZE);
+          memset(last_readline, 0, READLINE_SIZE);
+          printf("%s", readline);
+          readline_index = strlen(readline);
+        }
+
+        break;
+
+      case '\b':
+        if (readline_index > 0) {
+          // destructive backspace
+          printf("\b \b");
+          readline_index--;
+          readline[readline_index] = 0;
+        }
+
+        break;
+
+      case '\n':
+        printf("\n");
+        strncpy(last_readline, readline, READLINE_SIZE);
+        run_command();
         reset_readline();
-        strncpy(readline, last_readline, READLINE_SIZE);
-        memset(last_readline, 0, READLINE_SIZE);
-        printf("%s", readline);
-        readline_index = strlen(readline);
-      }
+        kshell_print_prompt();
+        break;
 
-      break;
+      case '\t':
+        printf("  ");
+        readline[readline_index++] = 0;
+        readline[readline_index++] = 0;
 
-    case '\b':
-      if (readline_index > 0) {
-        // destructive backspace
-        printf("\b \b");
-        readline_index--;
-        readline[readline_index] = 0;
-      }
+        break;
 
-      break;
-
-    case '\n':
-      printf("\n");
-      strncpy(last_readline, readline, READLINE_SIZE);
-      run_command();
-      reset_readline();
-      kshell_print_prompt();
-      break;
-
-    case '\t':
-      printf("  ");
-      readline[readline_index++] = 0;
-      readline[readline_index++] = 0;
-
-      break;
-
-    default:
-      printf("%c", c);
-      readline[readline_index++] = c;
+      default:
+        printf("%c", c);
+        readline[readline_index++] = c;
+    }
   }
 }
