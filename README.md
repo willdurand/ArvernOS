@@ -1,23 +1,38 @@
-willOS
-======
+# willOS
 
 [![Gitter](https://badges.gitter.im/willdurand-kernel/community.svg)](https://gitter.im/willdurand-kernel/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) [![CircleCI](https://circleci.com/gh/willdurand/willOS/tree/master.svg?style=svg)](https://circleci.com/gh/willdurand/willOS/tree/master)
 
 willOS is a minimal 64 bits kernel (not really an Operating System because it
 cannot do a lot of things currently). Some screencasts are available in [this
-Twitter thread](https://twitter.com/couac/status/866693418130575361).
+Twitter thread][twitter-thread].
+
+## Goals
+
+The main goal of this project is to learn about operating systems, kernel
+development, different architectures and improve my C skills. willOS is a
+monolithic (and hopefully modular) [kernel](./src/kernel/README.md) with a
+unified homemade [libc/libk](./src/libc/README.md), and
+[userland](./src/userland/README.md) programs.
+
+The roadmap isn't clearly defined yet and it mainly depends on what I'd like to
+work on when I have time to spend on this project.
 
 ## Setting up a development environment
 
 The following dependencies are required to build this project:
 
-* `llvm` (13)
-* `nasm`
-* `grub-mkrescue` (part of `grub2-common`)
-* `xorriso`
-* (optional) `qemu`
+- `llvm` (version 13 currently)
+- `make`
+- (optional) `qemu`
 
-Currently, this project targets `x86_64` architectures.
+Currently, this project targets `x86_64` architectures and requires the
+following extra dependencies:
+
+- `nasm`
+- `grub-mkrescue`
+- `xorriso`
+
+The recommended way to develop on this project is to use Docker (see below).
 
 ### Getting the sources
 
@@ -39,17 +54,18 @@ $ git submodule update --init
 
 Use [Docker](https://docs.docker.com/) with the provided
 [`Dockerfile`](https://github.com/willdurand/willOS/blob/master/Dockerfile).
-Start by building the toolchain image:
+You can either use the [`willdurand/willos-toolchain`
+image from DockerHub][dockerhub-toolchain] or build your own:
 
 ```
-$ docker build -t willos/toolchain .
+$ docker build -t willdurand/willos-toolchain .
 [...]
 ```
 
 You can then use it with `docker run`:
 
 ```
-$ docker run -it --rm -v $(pwd):/app willos/toolchain make help
+$ docker run -it --rm -v $(pwd):/app willdurand/willos-toolchain make help
 make help
 clean                          remove build artifacts
 console-font                   compile the (default) kernel console font
@@ -73,10 +89,7 @@ version                        print tool versions
 Install [Homebrew](https://brew.sh/), then run the following commands:
 
 ```
-$ brew install nasm
-$ brew install xorriso
-$ brew install qemu
-$ brew install llvm
+$ brew install nasm xorriso qemu llvm
 ```
 
 ### Linux
@@ -86,37 +99,18 @@ currently used by both the `Dockerfile` and Circle CI.
 
 ## Building willOS
 
+You first need to install the development dependencies in order to build willOS.
 The different final files are located in the `build/<arch>/dist/` folder.
 
-### `willosconfig` files
+### Debug mode
 
-`willosconfig` files are used to configure how a build works. The content must
-be compatible with `make`. Here is an example:
-
-```
-# LLVM config on MacOS with Homebrew
-LLVM_PREFIX = /usr/local/opt/llvm@13/bin/
-LLVM_SUFFIX =
-
-# Always enable the Undefined Behavior sanitizer
-UBSAN=1
-
-# Sensible logging
-ENABLE_CORE_DEBUG=1
-ENABLE_PROC_DEBUG=1
-ENABLE_SYS_DEBUG=1
-ENABLE_USERLAND_DEBUG=1
-```
-
-### Debug
-
-To build the ISO in debug mode, run:
+To build the image in debug mode, run:
 
 ```
 $ make clean debug
 ```
 
-To compile the OS in debug mode, build the ISO, and start `qemu` with the OS
+To compile the OS in debug mode, build the image, and start `qemu` with the OS
 loaded, run:
 
 ```
@@ -133,7 +127,7 @@ this:
 
 ```
 # Enable the debug logs for the "net" and "fs" modules
-$ make ENABLE_NET_DEBUG=1 ENABLE_FS_DEBUG=1 clean run-debug
+$ make clean run-debug ENABLE_NET_DEBUG=1 ENABLE_FS_DEBUG=1
 ```
 
 The available debug variables are:
@@ -147,8 +141,8 @@ The available debug variables are:
 - `ENABLE_SYS_DEBUG`
 - `ENABLE_USERLAND_DEBUG`
 
-There is also `ENABLE_ALL_DEBUG` to turn all debug logs on (which negatively
-impacts the performances).
+Protip: there is also `ENABLE_ALL_DEBUG` to turn all debug logs on (which
+negatively impacts the performances).
 
 ##### Stacktraces
 
@@ -197,16 +191,38 @@ $ llvm-addr2line-13 -e build/x86_64/dist/kernel-x86_64.bin 01163B3
 /Users/william/projects/willos/src/arch/x86_64/kshell/selftest.c:12
 ```
 
-### Release
+### Release mode
 
-To compile the OS in release mode, build the ISO, and start `qemu` with the OS
+To compile the OS in release mode, build the image, and start `qemu` with the OS
 loaded, run:
 
 ```
 $ make clean run
 ```
 
-### Boot options
+### willosconfig files
+
+`willosconfig` files are used to configure how a build works. The content must
+be compatible with `make`. Here is an example:
+
+```
+# LLVM config on MacOS with Homebrew
+LLVM_PREFIX = /usr/local/opt/llvm@13/bin/
+LLVM_SUFFIX =
+
+# Always enable the Undefined Behavior sanitizer
+UBSAN=1
+
+# Sensible logging
+ENABLE_CORE_DEBUG=1
+ENABLE_PROC_DEBUG=1
+ENABLE_SYS_DEBUG=1
+ENABLE_USERLAND_DEBUG=1
+```
+
+### x86_64 options
+
+#### Boot options
 
 The GRUB configuration offers two choices: the normal mode and the kernel mode.
 The normal (or "default") mode will load the
@@ -218,10 +234,12 @@ It is possible to change the command line by passing the `GRUB_KERNEL_CMDLINE`
 variable to `make` (or add it to your `willosconfig` file):
 
 ```
-$ make clean GRUB_KERNEL_CMDLINE="/bin/init foo bar" run-debug
+$ make clean run-debug GRUB_KERNEL_CMDLINE="/bin/init foo bar"
 ```
 
-## Early boot sequence
+## Some information about the x86_64 implementation
+
+### Early boot sequence
 
 1. The BIOS loads the bootloader (GRUB) from the ISO
 2. The bootloader reads the kernel executable and finds the multiboot header
@@ -236,7 +254,7 @@ $ make clean GRUB_KERNEL_CMDLINE="/bin/init foo bar" run-debug
 10. Call the C `kmain()` function
 11. Eventually switch to user mode and call `/bin/init` by default
 
-## Memory management
+### Memory management
 
 During the early boot sequence, we identity map the first gigabyte of our kernel
 with 512 2MiB pages. When `kmain()` is called, we call `paging_init()` to update
@@ -260,15 +278,15 @@ In addition, `paging_init()` will:
 2. enable the no-execute feature
 3. create a guard page
 
-### Memory map
+#### Memory map
 
-#### Virtual address space
+##### Virtual address space
 
 - `0x00000000` to `0x00100000`: the first 1MiB area is reserved
 - `0x00100000`: the kernel code and data and multiboot modules
 - `0x0020xxxx`: after the end of the previous area (which is computed at runtime
-   using the multiboot information), we allocate some space for the frame
-   allocator
+  using the multiboot information), we allocate some space for the frame
+  allocator
 - `0x10000000`: kernel heap area (we currently have a fixed heap size)
 - `0x40000000`: user space
 
@@ -278,3 +296,6 @@ willOS is released under the MIT License. See the bundled
 [LICENSE](https://github.com/willdurand/willOS/blob/master/LICENSE.md) file for
 details. In addition, some parts of this project have their own licenses
 attached (either in the source files or in a `LICENSE` file next to them).
+
+[twitter-thread]: https://twitter.com/couac/status/866693418130575361
+[dockerhub-toolchain]: https://hub.docker.com/repository/docker/willdurand/willos-toolchain
