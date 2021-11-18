@@ -3,6 +3,7 @@
 #include <arch/io.h>
 #include <keymap.h>
 #include <logging.h>
+#include <osinfo.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -136,7 +137,8 @@ void kshell(int argc, char* argv[])
     power_off();
   }
 
-  printf("\nThis is willOS kernel shell. Type 'help' for more information.\n"
+  printf("\nThis is " KERNEL_NAME " kernel shell. "
+         "Type 'help' for more information.\n"
          "Protip: switch to usermode with the 'usermode' command.\n\n");
 
   kshell_print_prompt();

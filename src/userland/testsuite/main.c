@@ -8,8 +8,8 @@ int main()
 {
   printf("==== userland test suite ====");
 
-#ifndef __willos__
-  printf("This program should be compiled for and executed on willOS\n");
+#ifndef __arvernos__
+  printf("This program should be compiled for and executed on ArvernOS\n");
   return 1;
 #else
   // Invoke some syscalls.

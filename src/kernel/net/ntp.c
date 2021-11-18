@@ -1,12 +1,12 @@
 #include <net/ntp.h>
 
 #include <arpa/inet.h>
+#include <arvern/utils.h>
 #include <net/logging.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/syscall.h>
 #include <time.h>
-#include <willos/utils.h>
 
 int ntp_request(net_interface_t* interface,
                 const char* server,

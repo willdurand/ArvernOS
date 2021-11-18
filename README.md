@@ -1,15 +1,15 @@
-# willOS
+# ArvernOS
 
-[![Gitter](https://badges.gitter.im/willdurand-kernel/community.svg)](https://gitter.im/willdurand-kernel/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) [![CircleCI](https://circleci.com/gh/willdurand/willOS/tree/master.svg?style=svg)](https://circleci.com/gh/willdurand/willOS/tree/master)
+[![Gitter](https://badges.gitter.im/willdurand-kernel/community.svg)](https://gitter.im/willdurand-kernel/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) [![CircleCI](https://circleci.com/gh/willdurand/ArvernOS/tree/master.svg?style=svg)](https://circleci.com/gh/willdurand/ArvernOS/tree/master)
 
-willOS is a minimal 64 bits kernel (not really an Operating System because it
-cannot do a lot of things currently). Some screencasts are available in [this
-Twitter thread][twitter-thread].
+ArvernOS (formerly known as "willOS") is a minimal 64 bits kernel (not really an
+Operating System because it cannot do a lot of things currently). Some
+screencasts are available in [this Twitter thread][twitter-thread].
 
 ## Goals
 
 The main goal of this project is to learn about operating systems, kernel
-development, different architectures and improve my C skills. willOS is a
+development, different architectures and improve my C skills. ArvernOS is a
 monolithic (and hopefully modular) [kernel](./src/kernel/README.md) with a
 unified homemade [libc/libk](./src/libc/README.md), and
 [userland](./src/userland/README.md) programs.
@@ -53,19 +53,19 @@ $ git submodule update --init
 ### Docker (recommended way)
 
 Use [Docker](https://docs.docker.com/) with the provided
-[`Dockerfile`](https://github.com/willdurand/willOS/blob/master/Dockerfile).
-You can either use the [`willdurand/willos-toolchain`
+[`Dockerfile`](https://github.com/willdurand/ArvernOS/blob/master/Dockerfile).
+You can either use the [`willdurand/arvernos-toolchain`
 image from DockerHub][dockerhub-toolchain] or build your own:
 
 ```
-$ docker build -t willdurand/willos-toolchain .
+$ docker build -t willdurand/arvernos-toolchain .
 [...]
 ```
 
 You can then use it with `docker run`:
 
 ```
-$ docker run -it --rm -v $(pwd):/app willdurand/willos-toolchain make help
+$ docker run -it --rm -v $(pwd):/app willdurand/arvernos-toolchain make help
 make help
 clean                          remove build artifacts
 console-font                   compile the (default) kernel console font
@@ -97,9 +97,9 @@ $ brew install nasm xorriso qemu llvm
 The `tools/install-linux-deps` script is used to install the dependencies. It is
 currently used by both the `Dockerfile` and Circle CI.
 
-## Building willOS
+## Building ArvernOS
 
-You first need to install the development dependencies in order to build willOS.
+You first need to install the development dependencies in order to build ArvernOS.
 The different final files are located in the `build/<arch>/dist/` folder.
 
 ### Debug mode
@@ -151,13 +151,13 @@ been loaded via GRUB:
 
 ```
 [...]
-DEBUG    | src/arch/x86_64/kshell/kshell.c:108:run_command(): command='selftest' argc=1
-DEBUG    | src/arch/x86_64/kernel/panic.c:30:kernel_dump_stacktrace(): kernel stacktrace:
-DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 00000000001163B3 - ???+0x0
-DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 0000000000115941 - ???+0x0
-DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 0000000000115BE1 - ???+0x0
-DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 00000000001152BF - ???+0x0
-DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 000000000010935B - ???+0x0
+DEBUG    | src/kernel/arch/x86_64/kshell/kshell.c:108:run_command(): command='selftest' argc=1
+DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:30:kernel_dump_stacktrace(): kernel stacktrace:
+DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 00000000001163B3 - ???+0x0
+DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 0000000000115941 - ???+0x0
+DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 0000000000115BE1 - ???+0x0
+DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 00000000001152BF - ???+0x0
+DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 000000000010935B - ???+0x0
 ```
 
 Use the `tools/fix-stacktrace.py` script to add missing symbol names to the
@@ -166,13 +166,13 @@ output:
 ```
 $ ./tools/fix-stacktrace.py build/x86_64/isofiles/boot/symbols.txt log/debug.log
 [...]
-DEBUG    | src/arch/x86_64/kshell/kshell.c:108:run_command(): command='selftest' argc=1
-DEBUG    | src/arch/x86_64/kernel/panic.c:30:kernel_dump_stacktrace(): kernel stacktrace:
-DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   00000000001163B3 - selftest +0x63
-DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   0000000000115941 - run_command +0x271
-DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   0000000000115BE1 - kshell_run +0x181
-DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   00000000001152BF - kmain +0x107f
-DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   000000000010935B - long_mode_start +0x13
+DEBUG    | src/kernel/arch/x86_64/kshell/kshell.c:108:run_command(): command='selftest' argc=1
+DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:30:kernel_dump_stacktrace(): kernel stacktrace:
+DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   00000000001163B3 - selftest +0x63
+DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   0000000000115941 - run_command +0x271
+DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   0000000000115BE1 - kshell_run +0x181
+DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   00000000001152BF - kmain +0x107f
+DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   000000000010935B - long_mode_start +0x13
 ```
 
 In addition, you might want to find the corresponding line of code in the source
@@ -181,14 +181,14 @@ files by using `llvm-addr2line` or `llvm-symbolizer`:
 ```
 $ llvm-symbolizer-13 --obj=build/x86_64/dist/kernel-x86_64.bin 0x01163B3
 print_selftest_header
-/Users/william/projects/willos/src/arch/x86_64/kshell/selftest.c:12:3
+/path/to/ArvernOS/src/kernel/arch/x86_64/kshell/selftest.c:12:3
 selftest
-/Users/william/projects/willos/src/arch/x86_64/kshell/selftest.c:30:3
+/path/to/ArvernOS/src/kernel/arch/x86_64/kshell/selftest.c:30:3
 ```
 
 ```
 $ llvm-addr2line-13 -e build/x86_64/dist/kernel-x86_64.bin 01163B3
-/Users/william/projects/willos/src/arch/x86_64/kshell/selftest.c:12
+/path/to/ArvernOS/src/kernel/arch/x86_64/kshell/selftest.c:12
 ```
 
 ### Release mode
@@ -200,9 +200,9 @@ loaded, run:
 $ make clean run
 ```
 
-### willosconfig files
+### config files
 
-`willosconfig` files are used to configure how a build works. The content must
+`config` files are used to configure how a build works. The content must
 be compatible with `make`. Here is an example:
 
 ```
@@ -231,7 +231,7 @@ kernel mode will load the `kshell` instead and will stay in kernel mode (as its
 name implies).
 
 It is possible to change the command line by passing the `GRUB_KERNEL_CMDLINE`
-variable to `make` (or add it to your `willosconfig` file):
+variable to `make` (or add it to your `config` file):
 
 ```
 $ make clean run-debug GRUB_KERNEL_CMDLINE="/bin/init foo bar"
@@ -292,10 +292,10 @@ In addition, `paging_init()` will:
 
 ## License
 
-willOS is released under the MIT License. See the bundled
-[LICENSE](https://github.com/willdurand/willOS/blob/master/LICENSE.md) file for
+ArvernOS is released under the MIT License. See the bundled
+[LICENSE](https://github.com/willdurand/ArvernOS/blob/master/LICENSE.md) file for
 details. In addition, some parts of this project have their own licenses
 attached (either in the source files or in a `LICENSE` file next to them).
 
 [twitter-thread]: https://twitter.com/couac/status/866693418130575361
-[dockerhub-toolchain]: https://hub.docker.com/repository/docker/willdurand/willos-toolchain
+[dockerhub-toolchain]: https://hub.docker.com/repository/docker/willdurand/arvernos-toolchain

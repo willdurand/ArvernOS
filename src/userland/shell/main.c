@@ -1,10 +1,10 @@
 #include "shell.h"
+#include <arvern/utils.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <willos/utils.h>
 
 #define READLINE_SIZE          256
 #define PROMPT                 "\033[0;36m$\033[0m "
@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
 
   printf("shell: pid=%d\n", getpid());
   printf("\nWelcome!\n"
-         "This is willOS user shell. Type 'help' for more information.\n\n");
+         "This is ArvernOS user shell. Type 'help' for more information.\n\n");
 
   print_prompt();
 

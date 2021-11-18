@@ -1,7 +1,7 @@
 # The path is relative to the different userland folders.
 ROOT_DIR = ../../..
 
--include $(ROOT_DIR)/willosconfig
+-include $(ROOT_DIR)/config
 include $(ROOT_DIR)/Makefile.include
 
 ARCH         ?= x86_64

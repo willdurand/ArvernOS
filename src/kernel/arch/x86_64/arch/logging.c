@@ -1,7 +1,7 @@
 #include <arch/logging.h>
 
+#include <arvern/utils.h>
 #include <drivers/serial.h>
-#include <willos/utils.h>
 
 void arch_logging_stream_output(char c, void* arg)
 {

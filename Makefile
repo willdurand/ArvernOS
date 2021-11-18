@@ -1,7 +1,7 @@
 include ./Makefile.include
 
 ARCH           ?= x86_64
-OS_NAME        = willOS
+OS_NAME        = ArvernOS
 BUILD_MODE     = release
 # We (more or less) follow the PFL project structure:
 # https://api.csswg.org/bikeshed/?force=1&url=https://raw.githubusercontent.com/vector-of-bool/pitchfork/develop/data/spec.bs#intro.dirs
@@ -86,7 +86,6 @@ WERRORS += -Werror=incompatible-pointer-types
 WERRORS += -Werror=shift-count-overflow
 WERRORS += -Werror=switch
 
-CFLAGS += -DKERNEL_NAME=\"$(OS_NAME)\"
 CFLAGS += -DGIT_HASH=\"$(GIT_HASH)\"
 CFLAGS += -DARCH=\"$(ARCH)\"
 CFLAGS += -O2 -std=c11 -ffreestanding -nostdinc -nostdlib -fno-builtin
@@ -379,7 +378,7 @@ docs: ## build the docs
 .PHONY: docs
 
 build-docker-image-for-circle:
-	docker build . -f .circleci/images/circle/Dockerfile -t willdurand/willos-circle:latest
+	docker build . -f .circleci/images/circle/Dockerfile -t willdurand/arvernos-circle:latest
 .PHONY: build-docker-image-for-circle
 
 help:

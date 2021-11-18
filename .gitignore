@@ -5,9 +5,9 @@
 *.tar
 /.gdb_history
 /build/
+/config
 /data/initrd/bin/
 /data/initrd/info
 /log/
 /src/userland/bin/
 /src/userland/local-build/
-/willosconfig

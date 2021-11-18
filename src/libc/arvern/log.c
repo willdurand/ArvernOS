@@ -1,5 +1,5 @@
-#include <willos/log.h>
-#include <willos/utils.h>
+#include <arvern/log.h>
+#include <arvern/utils.h>
 
 #ifndef __is_libk
 #include <fcntl.h>
@@ -8,7 +8,7 @@
 
 static int com1_fd = 0;
 
-void willos_log_init()
+void arvern_log_init()
 {
   int fd = open("/dev/com1", O_WRONLY);
 
@@ -22,7 +22,7 @@ void willos_log_init()
   com1_fd = fd;
 }
 
-void willos_log_deinit()
+void arvern_log_deinit()
 {
   if (com1_fd < 3) {
     return;
@@ -31,7 +31,7 @@ void willos_log_deinit()
   close(com1_fd);
 }
 
-void willos_log_putchar(char c, void* arg)
+void arvern_log_putchar(char c, void* arg)
 {
   UNUSED(*arg);
 

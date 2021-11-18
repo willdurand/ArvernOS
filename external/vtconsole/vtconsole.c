@@ -2,7 +2,7 @@
 
 /* --- Constructor/Destructor ----------------------------------------------- */
 
-#ifndef COMPILE_FOR_WILLOS
+#ifndef COMPILE_FOR_ARVERNOS
 vtconsole_t* vtconsole(int width,
                        int height,
                        vtc_paint_handler_t on_paint,

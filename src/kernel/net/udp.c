@@ -1,6 +1,7 @@
 #include <net/udp.h>
 
 #include <arpa/inet.h>
+#include <arvern/utils.h>
 #include <net/dhcp.h>
 #include <net/dns.h>
 #include <net/logging.h>
@@ -8,7 +9,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/syscall.h>
-#include <willos/utils.h>
 
 void udp_receive_packet(net_interface_t* interface,
                         uint8_t* packet,

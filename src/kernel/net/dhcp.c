@@ -1,10 +1,10 @@
 #include <net/dhcp.h>
 
 #include <arpa/inet.h>
+#include <arvern/utils.h>
 #include <net/logging.h>
 #include <stdlib.h>
 #include <string.h>
-#include <willos/utils.h>
 
 void dhcp_discover(net_interface_t* interface);
 void dhcp_handle_offer(net_interface_t* interface);

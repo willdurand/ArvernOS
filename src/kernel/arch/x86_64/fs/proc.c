@@ -1,13 +1,13 @@
 #include "proc.h"
+#include <arvern/utils.h>
 #include <drivers/timer.h>
 #include <fs/logging.h>
 #include <mmu/alloc.h>
 #include <mmu/frame.h>
+#include <osinfo.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <willos.h>
-#include <willos/utils.h>
 
 dirent_t* proc_readdir(inode_t inode, uint64_t num);
 inode_t proc_finddir(inode_t inode, const char* name);

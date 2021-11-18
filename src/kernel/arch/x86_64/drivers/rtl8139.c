@@ -1,9 +1,9 @@
 #include "rtl8139.h"
+#include <arvern/utils.h>
 #include <core/isr.h>
 #include <core/pci.h>
 #include <core/port.h>
 #include <mmu/paging.h>
-#include <willos/utils.h>
 // We use the net logger because this driver is for a network card.
 #include <net/logging.h>
 #include <stdint.h>
@@ -28,7 +28,7 @@ static uint8_t transmit_start_registers[4] = { 0x20, 0x24, 0x28, 0x2C };
 static uint8_t transmit_command_registers[4] = { 0x10, 0x14, 0x18, 0x1C };
 static uint8_t current_transmit_pair = 0;
 
-static const char* driver_name = "RealTek RTL8139 (willOS edition)";
+static const char* driver_name = "RealTek RTL8139";
 static uint8_t mac_address[6] = { 0 };
 static net_driver_t driver = {
   .get_name = get_name,

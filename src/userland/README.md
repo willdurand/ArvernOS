@@ -1,9 +1,9 @@
 # userland
 
-This directory contains programs that are compiled using the willOS _libc_ and
+This directory contains programs that are compiled using the ArvernOS _libc_ and
 bundled into the initial RAM disk (`initrd`) when building the ISO.
 
-- `bin/` contains the final binaries for willOS
+- `bin/` contains the final binaries for ArvernOS
 - `local-build/` contains the binaries compiled for a "local environment"
 - the other directories are programs
 

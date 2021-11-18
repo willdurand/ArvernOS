@@ -1,7 +1,7 @@
 boot: cdrom
 
 ata0: enabled=1, ioaddr1=0x1f0, ioaddr2=0x3f0, irq=14
-ata0-master: type=cdrom, path=./build/x86_64/dist/willOS-x86_64.iso, status=inserted
+ata0-master: type=cdrom, path=./build/x86_64/dist/ArvernOS-x86_64.iso, status=inserted
 
 com1: enabled=1, mode=file, dev=./log/bochs-debug.log
 

@@ -1,6 +1,6 @@
 #include "console.h"
+#include <arvern/utils.h>
 #include <drivers/vga_text.h>
-#include <willos/utils.h>
 
 static char colors[] = {
   [VTCOLOR_BLACK] = COLOR_BLACK, [VTCOLOR_RED] = COLOR_RED,
