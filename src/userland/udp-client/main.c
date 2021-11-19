@@ -7,7 +7,7 @@
 #define PORT    22000
 #define BUFSIZE 1024
 
-#ifdef __willos__
+#ifdef __arvernos__
 // In QEMU, the gateway will forward packets to the host.
 #define SERVER_IP "10.0.2.2"
 #else

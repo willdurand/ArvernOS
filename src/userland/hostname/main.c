@@ -4,7 +4,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#ifdef __willos__
+#ifdef __arvernos__
 #define HOSTNAME_FILE "/proc/hostname"
 #else
 #define HOSTNAME_FILE "/proc/sys/kernel/hostname"

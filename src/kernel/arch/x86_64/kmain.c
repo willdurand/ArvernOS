@@ -25,11 +25,11 @@
 #include <mmu/frame.h>
 #include <mmu/paging.h>
 #include <net/net.h>
+#include <osinfo.h>
 #include <panic.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/k_syscall.h>
-#include <willos.h>
 
 void busywait(uint64_t seconds);
 void check_interrupts();

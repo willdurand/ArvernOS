@@ -3,7 +3,7 @@ version: 2.1
 references:
   defaults: &defaults
     docker:
-      - image: willdurand/willos-circle:latest
+      - image: willdurand/arvernos-circle:latest
 
 commands:
   setup:
@@ -11,9 +11,9 @@ commands:
       - checkout
       - run: git submodule sync && git submodule update --init
       - run:
-          name: create willosconfig for Circle CI
+          name: create config for Circle CI
           command: |
-            cp .circleci/willosconfig willosconfig
+            cp .circleci/config config
 
   build:
     parameters:
@@ -57,8 +57,8 @@ jobs:
           command: |
             test -f build/x86_64/isofiles/boot/grub/grub.cfg
             test -f build/x86_64/isofiles/boot/initrd.tar
-            test -f build/x86_64/dist/libc-willOS-x86_64.a
-            test -f build/x86_64/dist/willOS-x86_64.iso
+            test -f build/x86_64/dist/libc-ArvernOS-x86_64.a
+            test -f build/x86_64/dist/ArvernOS-x86_64.iso
 
   checks:
     <<: *defaults

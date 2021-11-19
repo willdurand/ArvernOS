@@ -1,4 +1,5 @@
 #include "paging.h"
+#include <arvern/utils.h>
 #include <core/register.h>
 #include <mmu/bitmap.h>
 #include <mmu/logging.h>
@@ -6,7 +7,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <willos/utils.h>
 
 #define MMU_DEBUG_PAGE_ENTRY(message, e)                                       \
   MMU_DEBUG("%s "                                                              \

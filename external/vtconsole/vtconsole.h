@@ -1,11 +1,11 @@
 #pragma once
 
-// Added for willOS
+// Added for ArvernOS
 #include <ctype.h>
 #include <stdbool.h>
 
 #define min(a, b) ((a) < (b) ? (a) : (b))
-#define COMPILE_FOR_WILLOS
+#define COMPILE_FOR_ARVERNOS
 
 typedef unsigned int uint;
 

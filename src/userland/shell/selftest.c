@@ -14,7 +14,7 @@ void print_selftest_header(const char* name)
 
 void selftest()
 {
-#ifdef __willos__
+#ifdef __arvernos__
   print_selftest_header("syscall");
   printf("  syscalling\n");
   test("usermode");

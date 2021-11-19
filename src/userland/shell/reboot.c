@@ -5,7 +5,7 @@
 
 void _reboot()
 {
-#ifdef __willos__
+#ifdef __arvernos__
   printf("Restarting system now...\n");
   reboot(REBOOT_CMD_RESTART);
 #else

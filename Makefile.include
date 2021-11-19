@@ -1,4 +1,4 @@
--include ./willosconfig
+-include ./config
 
 # By default, we tell `make` to remain silent. We can enable a more verbose
 # output by passing `VERBOSE=1` to `make`.
