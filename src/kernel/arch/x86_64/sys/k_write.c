@@ -1,5 +1,6 @@
 #include <sys/k_syscall.h>
 
+// TODO: remove this include so that this file can be move to `src/kernel/sys/`.
 #include <console/console.h>
 #include <errno.h>
 #include <fcntl.h>
