@@ -19,7 +19,7 @@
 #include <fs/sock.h>
 #include <fs/tar.h>
 #include <fs/vfs.h>
-#include <kshell/kshell.h>
+#include <kmain.h>
 #include <logging.h>
 #include <mmu/alloc.h>
 #include <mmu/frame.h>
@@ -28,24 +28,19 @@
 #include <osinfo.h>
 #include <panic.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <sys/k_syscall.h>
 
 void busywait(uint64_t seconds);
 void check_interrupts();
-void jump_to_usermode(char* argv[]);
 void load_initrd(multiboot_tag_module_t* module);
-void load_kshell(int argc, char* argv[]);
 void load_modules(multiboot_info_t* mbi);
 void load_network_config(inish_config_t* kernel_cfg, net_driver_t* driver);
 void load_symbols(multiboot_tag_module_t* module, uint64_t size);
 void load_system_config(inish_config_t* kernel_cfg);
 void print_debug_gdt();
 void print_debug_tss();
-void print_ok();
-void print_step(const char* msg);
-void print_sub_step(const char* msg);
-void print_welcome_message();
 
 void print_debug_tss()
 {
@@ -89,43 +84,6 @@ void busywait(uint64_t seconds)
   }
 }
 
-void print_welcome_message()
-{
-  printf("\033[1;34m%s\033[0m\n", KERNEL_ASCII);
-  printf("%s %s (%s) / Built on: %s at %s\n\n",
-         KERNEL_NAME,
-         KERNEL_VERSION,
-         GIT_HASH,
-         KERNEL_DATE,
-         KERNEL_TIME);
-}
-
-void print_step(const char* msg)
-{
-  printf("kernel: %-66s", msg);
-  INFO("%s", msg);
-}
-
-void print_sub_step(const char* msg)
-{
-  printf("kernel:   %-64s", msg);
-  INFO("%s", msg);
-}
-
-void print_ok()
-{
-  printf("  [");
-  printf("\033[0;32mOK\033[0m");
-  printf("]");
-}
-
-void print_ko()
-{
-  printf("[");
-  printf("\033[0;31mFAIL\033[0m");
-  printf("]");
-}
-
 void check_interrupts()
 {
   uint64_t tick = timer_tick();
@@ -162,17 +120,17 @@ void load_symbols(multiboot_tag_module_t* module, uint64_t size)
 
 void load_initrd(multiboot_tag_module_t* module)
 {
-  print_sub_step("mounting tarfs (init ramdisk)");
+  print_step("  mounting tarfs (init ramdisk)");
   inode_t initrd = vfs_mount("/", tar_fs_create((uint64_t)module->mod_start));
 
   if (initrd) {
     print_ok();
 
-    print_sub_step("mounting devfs");
+    print_step("  mounting devfs");
     if (dev_fs_init()) {
       print_ok();
 
-      print_sub_step("mounting serial devices");
+      print_step("  mounting serial devices");
       if (serial_fs_init()) {
         print_ok();
       } else {
@@ -182,21 +140,21 @@ void load_initrd(multiboot_tag_module_t* module)
       print_ko();
     }
 
-    print_sub_step("mounting debugfs");
+    print_step("  mounting debugfs");
     if (debug_fs_init()) {
       print_ok();
     } else {
       print_ko();
     }
 
-    print_sub_step("mounting procfs");
+    print_step("  mounting procfs");
     if (proc_fs_init()) {
       print_ok();
     } else {
       print_ko();
     }
 
-    print_sub_step("mounting sockfs");
+    print_step("  mounting sockfs");
     if (sock_fs_init()) {
       print_ok();
     } else {
@@ -214,7 +172,7 @@ void load_system_config(inish_config_t* kernel_cfg)
 
   if (hostname != NULL) {
     if (strlen(hostname) > 0) {
-      print_sub_step("setting hostname from config");
+      print_step("  setting hostname from config");
       DEBUG("updating hostname: %s", hostname);
       proc_update_hostname(hostname, strlen(hostname));
       print_ok();
@@ -247,33 +205,12 @@ void load_network_config(inish_config_t* kernel_cfg, net_driver_t* driver)
                      dns_ip);
 }
 
-void jump_to_usermode(char* argv[])
-{
-  printf("kernel: switching to usermode... (%s)\n", argv[0]);
-  INFO("kernel: switching to usermode... (%s)", argv[0]);
-  k_execv(argv[0], argv);
-}
-
-void load_kshell(int argc, char* argv[])
-{
-  printf("kernel: loading %s...\n", argv[0]);
-  INFO("kernel: loading %s...", argv[0]);
-
-  kshell(argc, argv);
-}
-
 void kmain(uint64_t addr)
 {
   multiboot_info_t* mbi = (multiboot_info_t*)addr;
 
   // enable serial port
   serial_init(SERIAL_COM1, SERIAL_SPEED_115200);
-  INFO("%s %s (%s) / Built on: %s at %s has started",
-       KERNEL_NAME,
-       KERNEL_VERSION,
-       GIT_HASH,
-       KERNEL_DATE,
-       KERNEL_TIME);
 
   // This is required to be able to identity map the framebuffer.
   frame_init(mbi);
@@ -283,7 +220,7 @@ void kmain(uint64_t addr)
       mbi, MULTIBOOT_TAG_TYPE_FRAMEBUFFER);
   console_init(&entry->common);
 
-  print_welcome_message();
+  kmain_print_banner();
 
   print_step("initializing TSS");
   tss_init();
@@ -315,7 +252,7 @@ void kmain(uint64_t addr)
   timer_init();
   print_ok();
 
-  print_sub_step("checking interrupts");
+  print_step("checking interrupts");
   check_interrupts();
   print_ok();
 
@@ -355,10 +292,7 @@ void kmain(uint64_t addr)
 
     if (!console_fullscreen()) {
       print_ko();
-      printf("\n");
     }
-  } else {
-    printf("\n");
   }
 
   // Not needed before so let's initialize it at the end.
@@ -387,11 +321,5 @@ void kmain(uint64_t addr)
   argv[argc] = NULL;
   free(_cmdline);
 
-  if (strcmp(argv[0], "kshell") == 0) {
-    load_kshell(argc, argv);
-  } else {
-    jump_to_usermode(argv);
-  }
-
-  PANIC("unexpectedly reached end of kmain");
+  kmain_start(argc, argv);
 }
