@@ -1,18 +1,28 @@
 #include <sys/k_syscall.h>
 
-// TODO: remove this include so that this file can be move to `src/kernel/sys/`.
-#include <console/console.h>
+#include <arch/io.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <fs/vfs.h>
 #include <proc/descriptor.h>
 #include <stddef.h>
+#include <string.h>
 #include <sys/logging.h>
 
 ssize_t k_write(int fd, const void* buf, size_t count)
 {
   if (fd == STDOUT || fd == STDERR) {
-    return console_write(buf, count);
+    // TODO: make the code in this block better.
+    const char* s = (const char*)buf;
+    if (count > strlen(s)) {
+      count = strlen(s);
+    }
+
+    for (size_t i = 0; i < count; i++) {
+      arch_putchar(s[i]);
+    }
+
+    return count;
   }
 
   if (fd < 3) {
