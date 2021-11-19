@@ -4,5 +4,5 @@
 
 void k_test(const char* s)
 {
-  printf("(syscall_test) hello, %s!\n", s);
+  printf("Hello, %s!\n", s);
 }
