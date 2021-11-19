@@ -1,4 +1,7 @@
 #include <arch/kernel.h>
+#include <stdint.h>
+
+void semihosting_call(uint64_t operation, uint64_t parameters);
 
 void arch_restart()
 {
@@ -7,7 +10,17 @@ void arch_restart()
 
 void arch_poweroff()
 {
-  // TODO:
+#ifdef CONFIG_SEMIHOSTING
+  // See:
+  // https://developer.arm.com/documentation/dui0205/f/semihosting/debug-agent-interaction-swis/angel-swireason-reportexception--0x18-
+  uint64_t operation = 0x18; // angel_SWIreason_ReportException
+  uint64_t parameters[] = {
+    0x20026, // ADP_Stopped_ApplicationExit
+    0        // exit code
+  };
+
+  semihosting_call(operation, (uint64_t)parameters);
+#endif
 }
 
 void arch_halt()
@@ -17,4 +30,12 @@ void arch_halt()
   while (1) {
     ;
   }
+}
+
+void semihosting_call(uint64_t operation, uint64_t parameters)
+{
+  register uint64_t x0 __asm__("x0") = operation;
+  register uint64_t x1 __asm__("x1") = parameters;
+
+  __asm__("hlt #0xF000" ::"r"(x0), "r"(x1));
 }

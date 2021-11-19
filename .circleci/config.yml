@@ -45,7 +45,7 @@ commands:
       - setup:
           arch: << parameters.arch >>
           board: << parameters.board >>
-      - run: make clean << parameters.target >>
+      - run: make << parameters.target >>
       - when:
           condition: << parameters.board >>
           steps:
@@ -73,59 +73,29 @@ commands:
           environment:
             TERM: xterm-256color
 
+  kernel-selftest:
+    parameters:
+      arch:
+        type: string
+      board:
+        type: string
+        default: ""
+      cmdline:
+        type: string
+        default: kshell selftest
+      extra_args:
+        type: string
+        default: ""
+    steps:
+      - setup:
+          arch: << parameters.arch >>
+          board: << parameters.board >>
+      - run_qemu:
+          title: kernel selftest
+          command: |
+            make run-test CMDLINE='<< parameters.cmdline >>' << parameters.extra_args >>
+
 jobs:
-  build-aarch32:
-    <<: *defaults
-    parameters:
-      target:
-        type: string
-      board:
-        type: string
-    steps:
-      - build:
-          arch: aarch32
-          board: << parameters.board >>
-          target: << parameters.target >>
-      - run:
-          name: build checks
-          command: |
-            test -f build/aarch32/<< parameters.board >>/dist/ArvernOS-aarch32-<< parameters.board >>.img
-
-  build-aarch64:
-    <<: *defaults
-    parameters:
-      target:
-        type: string
-      board:
-        type: string
-    steps:
-      - build:
-          arch: aarch64
-          board: << parameters.board >>
-          target: << parameters.target >>
-      - run:
-          name: build checks
-          command: |
-            test -f build/aarch64/<< parameters.board >>/dist/ArvernOS-aarch64-<< parameters.board >>.img
-
-  build-x86_64:
-    <<: *defaults
-    parameters:
-      target:
-        type: string
-    steps:
-      - build:
-          arch: x86_64
-          target: << parameters.target >>
-      - run:
-          name: build checks
-          command: |
-            test -f build/x86_64/dist/ArvernOS-x86_64.iso
-            test -f build/x86_64/dist/libc-ArvernOS-x86_64.a
-            test -f build/x86_64/misc/initrd.tar
-            test -f build/x86_64/misc/isofiles/boot/grub/grub.cfg
-            test -f build/x86_64/misc/isofiles/boot/kernel-x86_64.bin
-
   checks:
     <<: *defaults
     steps:
@@ -145,92 +115,159 @@ jobs:
       - run:
           name: unit tests
           command: |
-            make clean test
+            make test
 
-  kernel-selftest-dlmalloc:
+  aarch32-build:
     <<: *defaults
+    parameters:
+      target:
+        type: string
+      board:
+        type: string
+    steps:
+      - build:
+          arch: aarch32
+          board: << parameters.board >>
+          target: << parameters.target >>
+      - run:
+          name: build checks
+          command: |
+            test -f build/aarch32/<< parameters.board >>/dist/ArvernOS-aarch32-<< parameters.board >>.img
+
+  aarch64-build:
+    <<: *defaults
+    parameters:
+      target:
+        type: string
+      board:
+        type: string
+    steps:
+      - build:
+          arch: aarch64
+          board: << parameters.board >>
+          target: << parameters.target >>
+      - run:
+          name: build checks
+          command: |
+            test -f build/aarch64/<< parameters.board >>/dist/ArvernOS-aarch64-<< parameters.board >>.img
+
+  aarch64-kernel-selftest-ubsan:
+    <<: *defaults
+    parameters:
+      board:
+        type: string
+      ubsan:
+        type: integer
+    steps:
+      - kernel-selftest:
+          arch: aarch64
+          board: << parameters.board >>
+          extra_args: UBSAN=<< parameters.ubsan >>
+
+  aarch64-kernel-selftest-dlmalloc:
+    <<: *defaults
+    parameters:
+      board:
+        type: string
+    steps:
+      - kernel-selftest:
+          arch: aarch64
+          board: << parameters.board >>
+          extra_args: CONFIG_USE_DLMALLOC=1
+
+  x86_64-build:
+    <<: *defaults
+    parameters:
+      target:
+        type: string
+    steps:
+      - build:
+          arch: x86_64
+          target: << parameters.target >>
+      - run:
+          name: build checks
+          command: |
+            test -f build/x86_64/dist/ArvernOS-x86_64.iso
+            test -f build/x86_64/dist/libc-ArvernOS-x86_64.a
+            test -f build/x86_64/misc/initrd.tar
+            test -f build/x86_64/misc/isofiles/boot/grub/grub.cfg
+            test -f build/x86_64/misc/isofiles/boot/kernel-x86_64.bin
+
+  x86_64-kernel-selftest-ubsan:
+    <<: *defaults
+    parameters:
+      ubsan:
+        type: integer
+    steps:
+      - kernel-selftest:
+          arch: x86_64
+          extra_args: UBSAN=<< parameters.ubsan >>
+
+  x86_64-kernel-selftest-dlmalloc:
+    <<: *defaults
+    steps:
+      - kernel-selftest:
+          arch: x86_64
+          extra_args: CONFIG_USE_DLMALLOC=1
+
+  x86_64-userland-test-suite-ubsan:
+    <<: *defaults
+    parameters:
+      ubsan:
+        type: integer
     steps:
       - setup:
           arch: x86_64
       - run_qemu:
-          title: kernel selftest
-          command: |
-            make clean run-test CMDLINE='kshell selftest' CONFIG_USE_DLMALLOC=1
-
-  kernel-selftest-with-ubsan:
-    <<: *defaults
-    parameters:
-      arch:
-        type: string
-      ubsan:
-        type: integer
-    steps:
-      - setup:
-          arch: << parameters.arch >>
-      - run_qemu:
-          title: kernel selftest
-          command: |
-            make clean run-test CMDLINE='kshell selftest' UBSAN=<< parameters.ubsan >>
-
-  kernel-selftest-10-times:
-    <<: *defaults
-    parameters:
-      arch:
-        type: string
-    steps:
-      - setup:
-          arch: << parameters.arch >>
-      - run_qemu:
-          title: kernel selftest ran 10 times
-          command: |
-            make clean run-test CMDLINE="$(echo "kshell$(printf ' selftest%.0s' {1..10})")"
-
-  userland-test-suite-with-ubsan:
-    <<: *defaults
-    parameters:
-      arch:
-        type: string
-      ubsan:
-        type: integer
-    steps:
-      - setup:
-          arch: << parameters.arch >>
-      - run_qemu:
           title: userland test suite
           command: |
-            make clean run-test UBSAN=<< parameters.ubsan >>
+            make run-test UBSAN=<< parameters.ubsan >>
 
 workflows:
   default-workflow:
     jobs:
-      - build-aarch32:
-          matrix:
-            parameters:
-              board: [licheepi-nano]
-              target: [debug, release]
-      - build-aarch64:
-          matrix:
-            parameters:
-              board: [raspi3]
-              target: [debug, release]
-      - build-x86_64:
-          matrix:
-            parameters:
-              target: [debug, release]
+      # use host architecture
       - checks
-      - kernel-selftest-dlmalloc
-      - kernel-selftest-with-ubsan:
-          matrix:
-            parameters:
-              arch: [x86_64]
-              ubsan: [0, 1]
-      - kernel-selftest-10-times:
-          matrix:
-            parameters:
-              arch: [x86_64]
-      - userland-test-suite-with-ubsan:
-          matrix:
-            parameters:
-              arch: [x86_64]
-              ubsan: [0, 1]
       - unit-tests
+
+      # aarch32
+      - aarch32-build:
+          matrix:
+            parameters:
+              target: [debug, release]
+              board:
+                - licheepi-nano
+
+      # aarch64
+      - aarch64-build:
+          matrix:
+            parameters:
+              target: [debug, release]
+              board:
+                - raspi3
+      - aarch64-kernel-selftest-dlmalloc:
+          matrix:
+            parameters:
+              board:
+                - raspi3
+      - aarch64-kernel-selftest-ubsan:
+          matrix:
+            parameters:
+              ubsan: [0, 1]
+              board:
+                - raspi3
+
+      # x86_64
+      - x86_64-build:
+          matrix:
+            parameters:
+              target: [debug, release]
+      - x86_64-kernel-selftest-dlmalloc
+      - x86_64-kernel-selftest-ubsan:
+          matrix:
+            parameters:
+              ubsan: [0, 1]
+      - x86_64-userland-test-suite-ubsan:
+          matrix:
+            parameters:
+              ubsan: [0, 1]

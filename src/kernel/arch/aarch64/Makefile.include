@@ -19,6 +19,13 @@ ASM  = $(CC)
 # Options for the different tools
 ###############################################################################
 
+CONFIG_SEMIHOSTING ?= 0
+
+ifeq ($(CONFIG_SEMIHOSTING), 1)
+	QEMU_OPTIONS  += -semihosting
+	CONFIG_CFLAGS += -DCONFIG_SEMIHOSTING
+endif
+
 ###############################################################################
 # Source files
 ###############################################################################
@@ -42,6 +49,9 @@ LD_TARGET      = aarch64elf
 # Arch-specific targets
 ###############################################################################
 
+arch-debug: $(kernel_img)
+.PHONY: arch-debug
+
 arch-run-debug: debug
 	$(progress) "RUN" $(kernel_img)
 	$(QEMU) -kernel $(kernel_img) $(QEMU_OPTIONS)
@@ -54,11 +64,3 @@ arch-run-release: release
 	$(progress) "RUN" $(kernel_img)
 	$(QEMU) -kernel $(kernel_img) $(QEMU_OPTIONS)
 .PHONY: arch-run-release
-
-###############################################################################
-# Misc.
-###############################################################################
-
-$(kernel_img): $(kernel)
-	$(progress) "OBJCOPY" $@
-	$(OBJCOPY) -O binary $< $@
