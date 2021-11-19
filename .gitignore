@@ -8,6 +8,7 @@
 /config
 /data/initrd/bin/
 /data/initrd/info
+/docs/
 /log/
 /src/userland/bin/
 /src/userland/local-build/
