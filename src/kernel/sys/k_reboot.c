@@ -4,14 +4,10 @@
  */
 #include <sys/k_syscall.h>
 
-#include <core/isr.h>
-#include <core/port.h>
+#include <arch/kernel.h>
 #include <errno.h>
 #include <sys/logging.h>
 #include <sys/reboot.h>
-
-#define KEYBOARD_STATUS_PORT 0x64
-#define RESET_CPU_COMMAND    0xFE
 
 void restart();
 void poweroff();
@@ -38,18 +34,7 @@ void restart()
   SYS_DEBUG("%s", "restarting system");
   printf("Restarting system now...\n");
 
-  isr_disable_interrupts();
-
-  uint8_t status = 0x02;
-  while (status & 0x02) {
-    status = port_byte_in(KEYBOARD_STATUS_PORT);
-  }
-
-  port_byte_out(KEYBOARD_STATUS_PORT, RESET_CPU_COMMAND);
-
-  while (1) {
-    __asm__("hlt");
-  }
+  arch_restart();
 }
 
 void poweroff()
@@ -57,8 +42,5 @@ void poweroff()
   SYS_DEBUG("%s", "powering off system");
   printf("Powering off system now...\n");
 
-  isr_disable_interrupts();
-
-  // Power-off for QEMU, see: https://wiki.osdev.org/Shutdown
-  port_word_out(0x604, 0x2000);
+  arch_poweroff();
 }

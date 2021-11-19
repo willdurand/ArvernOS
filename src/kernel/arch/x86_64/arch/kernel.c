@@ -1,9 +1,13 @@
 #include <arch/kernel.h>
 
 #include <core/isr.h>
+#include <core/port.h>
 #include <drivers/vga_text.h>
 
-void arch_halt_system()
+#define KEYBOARD_STATUS_PORT 0x64
+#define RESET_CPU_COMMAND    0xFE
+
+void arch_halt()
 {
   vga_text_disable_cursor();
   isr_disable_interrupts();
@@ -13,4 +17,28 @@ void arch_halt_system()
     // energy. See: https://en.wikipedia.org/wiki/HLT_(x86_instruction)
     __asm__("hlt");
   }
+}
+
+void arch_restart()
+{
+  isr_disable_interrupts();
+
+  uint8_t status = 0x02;
+  while (status & 0x02) {
+    status = port_byte_in(KEYBOARD_STATUS_PORT);
+  }
+
+  port_byte_out(KEYBOARD_STATUS_PORT, RESET_CPU_COMMAND);
+
+  while (1) {
+    __asm__("hlt");
+  }
+}
+
+void arch_poweroff()
+{
+  isr_disable_interrupts();
+
+  // Power-off for QEMU, see: https://wiki.osdev.org/Shutdown
+  port_word_out(0x604, 0x2000);
 }

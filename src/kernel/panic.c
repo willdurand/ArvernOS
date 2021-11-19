@@ -19,5 +19,5 @@ void kernel_panic(bool dump_stacktrace, const char* format, ...)
 
   printf("\n\n%45s\033[0m", "SYSTEM HALTED!");
 
-  arch_halt_system();
+  arch_halt();
 }
