@@ -20,7 +20,7 @@ void vfs_init()
 
 uint64_t vfs_open(inode_t inode, uint64_t mode)
 {
-  if (inode->driver && inode->driver->open) {
+  if (inode && inode->driver && inode->driver->open) {
     return inode->driver->open(inode, mode);
   }
 
@@ -29,7 +29,7 @@ uint64_t vfs_open(inode_t inode, uint64_t mode)
 
 uint64_t vfs_close(inode_t inode)
 {
-  if (inode->driver && inode->driver->close) {
+  if (inode && inode->driver && inode->driver->close) {
     return inode->driver->close(inode);
   }
 
@@ -38,7 +38,7 @@ uint64_t vfs_close(inode_t inode)
 
 inode_t vfs_create(inode_t parent, const char* name, uint64_t flags)
 {
-  if (parent->driver && parent->driver->create) {
+  if (parent && parent->driver && parent->driver->create) {
     return parent->driver->create(parent, name, flags);
   }
 
@@ -47,7 +47,7 @@ inode_t vfs_create(inode_t parent, const char* name, uint64_t flags)
 
 uint64_t vfs_read(inode_t inode, void* ptr, uint64_t length, uint64_t offset)
 {
-  if (inode->driver && inode->driver->read) {
+  if (inode && inode->driver && inode->driver->read) {
     return inode->driver->read(inode, ptr, length, offset);
   }
 
@@ -56,7 +56,7 @@ uint64_t vfs_read(inode_t inode, void* ptr, uint64_t length, uint64_t offset)
 
 uint64_t vfs_write(inode_t inode, void* ptr, uint64_t length, uint64_t offset)
 {
-  if (inode->driver && inode->driver->write) {
+  if (inode && inode->driver && inode->driver->write) {
     return inode->driver->write(inode, ptr, length, offset);
   }
 
@@ -67,23 +67,25 @@ uint64_t vfs_stat(inode_t inode, vfs_stat_t* stat)
 {
   memset(stat, 0, sizeof(vfs_stat_t));
 
-  switch (vfs_type(inode)) {
-    case FS_FILE:
-      stat->mode = S_IFREG;
-      break;
-    case FS_DIRECTORY:
-      stat->mode = S_IFDIR;
-      break;
-    case FS_CHARDEVICE:
-      stat->mode = S_IFCHR;
-      break;
-  }
+  if (inode) {
+    switch (vfs_type(inode)) {
+      case FS_FILE:
+        stat->mode = S_IFREG;
+        break;
+      case FS_DIRECTORY:
+        stat->mode = S_IFDIR;
+        break;
+      case FS_CHARDEVICE:
+        stat->mode = S_IFCHR;
+        break;
+    }
 
-  if (inode->driver && inode->driver->stat) {
-    uint64_t ret = inode->driver->stat(inode, stat);
-    stat->size += inode->n_children;
+    if (inode->driver && inode->driver->stat) {
+      uint64_t ret = inode->driver->stat(inode, stat);
+      stat->size += inode->n_children;
 
-    return ret;
+      return ret;
+    }
   }
 
   return 0;
@@ -91,7 +93,7 @@ uint64_t vfs_stat(inode_t inode, vfs_stat_t* stat)
 
 uint64_t vfs_isatty(inode_t inode)
 {
-  if (inode->driver && inode->driver->isatty) {
+  if (inode && inode->driver && inode->driver->isatty) {
     return inode->driver->isatty(inode);
   }
 
@@ -148,7 +150,7 @@ dirent_t* vfs_readdir(inode_t inode, uint64_t num)
 
 inode_t vfs_finddir(inode_t inode, const char* name)
 {
-  if (vfs_type(inode) == FS_DIRECTORY) {
+  if (inode && vfs_type(inode) == FS_DIRECTORY) {
     if (!strcmp(name, ".")) {
       return inode;
     }
@@ -168,6 +170,11 @@ inode_t vfs_finddir(inode_t inode, const char* name)
 inode_t vfs_find_root(char** path)
 {
   inode_t current = vfs_root;
+
+  if (!current) {
+    return NULL;
+  }
+
   inode_t mount = current;
 
   char* name = NULL;
@@ -278,7 +285,7 @@ inode_t vfs_namei_mount(const char* path, inode_t root)
     free(root);
   }
 
-  FS_DEBUG("returning current node: %s", current->name);
+  FS_DEBUG("returning current node: %s", current ? current->name : "(null)");
 
   return current;
 }
