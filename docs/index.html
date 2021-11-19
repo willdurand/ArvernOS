@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>willOS: willOS</title>
+<title>ArvernOS: ArvernOS</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -25,7 +25,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">willOS
+   <div id="projectname">ArvernOS
    </div>
   </td>
  </tr>
@@ -82,36 +82,43 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 
 <div class="PageDoc"><div class="header">
   <div class="headertitle">
-<div class="title">willOS </div>  </div>
+<div class="title">ArvernOS </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md_README"></a></p>
-<p><a href="https://gitter.im/willdurand-kernel/community?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge"><img src="https://badges.gitter.im/willdurand-kernel/community.svg" alt="Gitter" style="pointer-events: none;" class="inline"/></a> <a href="https://circleci.com/gh/willdurand/willOS/tree/master"><img src="https://circleci.com/gh/willdurand/willOS/tree/master.svg?style=svg" alt="CircleCI" style="pointer-events: none;" class="inline"/></a></p>
-<p>willOS is a minimal 64 bits kernel (not really an Operating System because it cannot do a lot of things currently). Some screencasts are available in <a href="https://twitter.com/couac/status/866693418130575361">this Twitter thread</a>.</p>
-<h1><a class="anchor" id="autotoc_md0"></a>
+<div class="textblock"><p><a class="anchor" id="md_README"></a> <a href="https://gitter.im/willdurand-kernel/community?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge"><img src="https://badges.gitter.im/willdurand-kernel/community.svg" alt="Gitter" style="pointer-events: none;" class="inline"/></a> <a href="https://circleci.com/gh/willdurand/ArvernOS/tree/master"><img src="https://circleci.com/gh/willdurand/ArvernOS/tree/master.svg?style=svg" alt="CircleCI" style="pointer-events: none;" class="inline"/></a></p>
+<p>ArvernOS (formerly known as "willOS") is a minimal 64 bits kernel (not really an Operating System because it cannot do a lot of things currently). Some screencasts are available in <a href="https://twitter.com/couac/status/866693418130575361">this Twitter thread</a>.</p>
+<h1><a class="anchor" id="autotoc_md1"></a>
+Goals</h1>
+<p>The main goal of this project is to learn about operating systems, kernel development, different architectures and improve my C skills. ArvernOS is a monolithic (and hopefully modular) <a class="el" href="md_src_kernel__r_e_a_d_m_e.html">kernel</a> with a unified homemade <a class="el" href="md_src_libc__r_e_a_d_m_e.html">libc/libk</a>, and <a class="el" href="md_src_userland__r_e_a_d_m_e.html">userland</a> programs.</p>
+<p>The roadmap isn't clearly defined yet and it mainly depends on what I'd like to work on when I have time to spend on this project.</p>
+<h1><a class="anchor" id="autotoc_md2"></a>
 Setting up a development environment</h1>
 <p>The following dependencies are required to build this project:</p>
 <ul>
-<li><code>llvm</code> (13)</li>
-<li><code>nasm</code></li>
-<li><code>grub-mkrescue</code> (part of <code>grub2-common</code>)</li>
-<li><code>xorriso</code></li>
+<li><code>llvm</code> (version 13 currently)</li>
+<li><code>make</code></li>
 <li>(optional) <code>qemu</code></li>
 </ul>
-<p>Currently, this project targets <code>x86_64</code> architectures.</p>
-<h2><a class="anchor" id="autotoc_md1"></a>
+<p>Currently, this project targets <code>x86_64</code> architectures and requires the following extra dependencies:</p>
+<ul>
+<li><code>nasm</code></li>
+<li><code>grub-mkrescue</code></li>
+<li><code>xorriso</code></li>
+</ul>
+<p>The recommended way to develop on this project is to use Docker (see below).</p>
+<h2><a class="anchor" id="autotoc_md3"></a>
 Getting the sources</h2>
 <p>This project contains <a href="https://git-scm.com/book/en/v2/Git-Tools-Submodules">git submodules</a>. You have to clone the main project as well as the submodules, either by using this command:</p>
 <div class="fragment"><div class="line">$ git clone --recurse-submodules &lt;url pointing to this repo&gt;</div>
 </div><!-- fragment --><p>or by using this command if you already have a copy of this git repository:</p>
 <div class="fragment"><div class="line">$ git submodule update --init</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md4"></a>
 Docker (recommended way)</h2>
-<p>Use <a href="https://docs.docker.com/">Docker</a> with the provided <a href="https://github.com/willdurand/willOS/blob/master/Dockerfile"><code>Dockerfile</code></a>. Start by building the toolchain image:</p>
-<div class="fragment"><div class="line">$ docker build -t willos/toolchain .</div>
+<p>Use <a href="https://docs.docker.com/">Docker</a> with the provided <a href="https://github.com/willdurand/ArvernOS/blob/master/Dockerfile"><code>Dockerfile</code></a>. You can either use the <a href="https://hub.docker.com/repository/docker/willdurand/arvernos-toolchain"><code>willdurand/arvernos-toolchain</code> image from DockerHub</a> or build your own:</p>
+<div class="fragment"><div class="line">$ docker build -t willdurand/arvernos-toolchain .</div>
 <div class="line">[...]</div>
 </div><!-- fragment --><p>You can then use it with <code>docker run</code>:</p>
-<div class="fragment"><div class="line">$ docker run -it --rm -v $(pwd):/app willos/toolchain make help</div>
+<div class="fragment"><div class="line">$ docker run -it --rm -v $(pwd):/app willdurand/arvernos-toolchain make help</div>
 <div class="line">make help</div>
 <div class="line">clean                          remove build artifacts</div>
 <div class="line">console-font                   compile the (default) kernel console font</div>
@@ -128,22 +135,75 @@ Docker (recommended way)</h2>
 <div class="line">test                           run unit tests</div>
 <div class="line">userland                       compile the userland programs (statically linked to libc)</div>
 <div class="line">version                        print tool versions</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md5"></a>
 MacOS</h2>
 <p>Install <a href="https://brew.sh/">Homebrew</a>, then run the following commands:</p>
-<div class="fragment"><div class="line">$ brew install nasm</div>
-<div class="line">$ brew install xorriso</div>
-<div class="line">$ brew install qemu</div>
-<div class="line">$ brew install llvm</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md4"></a>
+<div class="fragment"><div class="line">$ brew install nasm xorriso qemu llvm</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md6"></a>
 Linux</h2>
 <p>The <code>tools/install-linux-deps</code> script is used to install the dependencies. It is currently used by both the <code>Dockerfile</code> and Circle CI.</p>
-<h1><a class="anchor" id="autotoc_md5"></a>
-Building willOS</h1>
-<p>The different final files are located in the <code>build/&lt;arch&gt;/dist/</code> folder.</p>
-<h2><a class="anchor" id="autotoc_md6"></a>
-&lt;tt&gt;willosconfig&lt;/tt&gt; files</h2>
-<p><code>willosconfig</code> files are used to configure how a build works. The content must be compatible with <code>make</code>. Here is an example:</p>
+<h1><a class="anchor" id="autotoc_md7"></a>
+Building ArvernOS</h1>
+<p>You first need to install the development dependencies in order to build ArvernOS. The different final files are located in the <code>build/&lt;arch&gt;/dist/</code> folder.</p>
+<h2><a class="anchor" id="autotoc_md8"></a>
+Debug mode</h2>
+<p>To build the image in debug mode, run:</p>
+<div class="fragment"><div class="line">$ make clean debug</div>
+</div><!-- fragment --><p>To compile the OS in debug mode, build the image, and start <code>qemu</code> with the OS loaded, run:</p>
+<div class="fragment"><div class="line">$ make clean run-debug</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md9"></a>
+Logging</h3>
+<p>In DEBUG mode, logging uses the serial port <code>COM1</code> to write various debugging information. <code>qemu</code> is configured to write the output of this serial port to <code>./log/debug.log</code>. <code>DEBUG</code> level logs are not necessarily written by default, though, and it is possible to enable <code>DEBUG</code> logs for specific modules like this:</p>
+<div class="fragment"><div class="line"># Enable the debug logs for the &quot;net&quot; and &quot;fs&quot; modules</div>
+<div class="line">$ make clean run-debug ENABLE_NET_DEBUG=1 ENABLE_FS_DEBUG=1</div>
+</div><!-- fragment --><p>The available debug variables are:</p>
+<ul>
+<li><code>ENABLE_CONFIG_DEBUG</code></li>
+<li><code>ENABLE_CORE_DEBUG</code></li>
+<li><code>ENABLE_FS_DEBUG</code></li>
+<li><code>ENABLE_MMU_DEBUG</code></li>
+<li><code>ENABLE_NET_DEBUG</code></li>
+<li><code>ENABLE_PROC_DEBUG</code></li>
+<li><code>ENABLE_SYS_DEBUG</code></li>
+<li><code>ENABLE_USERLAND_DEBUG</code></li>
+</ul>
+<p>Protip: there is also <code>ENABLE_ALL_DEBUG</code> to turn all debug logs on (which negatively impacts the performances).</p>
+<h4><a class="anchor" id="autotoc_md10"></a>
+Stacktraces</h4>
+<p>Log files may contain stacktraces without debug symbols if the symbols haven't been loaded via GRUB:</p>
+<div class="fragment"><div class="line">[...]</div>
+<div class="line">DEBUG    | src/kernel/arch/x86_64/kshell/kshell.c:108:run_command(): command=&#39;selftest&#39; argc=1</div>
+<div class="line">DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:30:kernel_dump_stacktrace(): kernel stacktrace:</div>
+<div class="line">DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 00000000001163B3 - ???+0x0</div>
+<div class="line">DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 0000000000115941 - ???+0x0</div>
+<div class="line">DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 0000000000115BE1 - ???+0x0</div>
+<div class="line">DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 00000000001152BF - ???+0x0</div>
+<div class="line">DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 000000000010935B - ???+0x0</div>
+</div><!-- fragment --><p>Use the <code>tools/fix-stacktrace.py</code> script to add missing symbol names to the output:</p>
+<div class="fragment"><div class="line">$ ./tools/fix-stacktrace.py build/x86_64/isofiles/boot/symbols.txt log/debug.log</div>
+<div class="line">[...]</div>
+<div class="line">DEBUG    | src/kernel/arch/x86_64/kshell/kshell.c:108:run_command(): command=&#39;selftest&#39; argc=1</div>
+<div class="line">DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:30:kernel_dump_stacktrace(): kernel stacktrace:</div>
+<div class="line">DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   00000000001163B3 - selftest +0x63</div>
+<div class="line">DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   0000000000115941 - run_command +0x271</div>
+<div class="line">DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   0000000000115BE1 - kshell_run +0x181</div>
+<div class="line">DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   00000000001152BF - kmain +0x107f</div>
+<div class="line">DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   000000000010935B - long_mode_start +0x13</div>
+</div><!-- fragment --><p>In addition, you might want to find the corresponding line of code in the source files by using <code>llvm-addr2line</code> or <code>llvm-symbolizer</code>:</p>
+<div class="fragment"><div class="line">$ llvm-symbolizer-13 --obj=build/x86_64/dist/kernel-x86_64.bin 0x01163B3</div>
+<div class="line">print_selftest_header</div>
+<div class="line">/path/to/ArvernOS/src/kernel/arch/x86_64/kshell/selftest.c:12:3</div>
+<div class="line">selftest</div>
+<div class="line">/path/to/ArvernOS/src/kernel/arch/x86_64/kshell/selftest.c:30:3</div>
+</div><!-- fragment --><div class="fragment"><div class="line">$ llvm-addr2line-13 -e build/x86_64/dist/kernel-x86_64.bin 01163B3</div>
+<div class="line">/path/to/ArvernOS/src/kernel/arch/x86_64/kshell/selftest.c:12</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md11"></a>
+Release mode</h2>
+<p>To compile the OS in release mode, build the image, and start <code>qemu</code> with the OS loaded, run:</p>
+<div class="fragment"><div class="line">$ make clean run</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md12"></a>
+config files</h2>
+<p><code>config</code> files are used to configure how a build works. The content must be compatible with <code>make</code>. Here is an example:</p>
 <div class="fragment"><div class="line"># LLVM config on MacOS with Homebrew</div>
 <div class="line">LLVM_PREFIX = /usr/local/opt/llvm@13/bin/</div>
 <div class="line">LLVM_SUFFIX =</div>
@@ -156,69 +216,17 @@ Building willOS</h1>
 <div class="line">ENABLE_PROC_DEBUG=1</div>
 <div class="line">ENABLE_SYS_DEBUG=1</div>
 <div class="line">ENABLE_USERLAND_DEBUG=1</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md7"></a>
-Debug</h2>
-<p>To build the ISO in debug mode, run:</p>
-<div class="fragment"><div class="line">$ make clean debug</div>
-</div><!-- fragment --><p>To compile the OS in debug mode, build the ISO, and start <code>qemu</code> with the OS loaded, run:</p>
-<div class="fragment"><div class="line">$ make clean run-debug</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md8"></a>
-Logging</h3>
-<p>In DEBUG mode, logging uses the serial port <code>COM1</code> to write various debugging information. <code>qemu</code> is configured to write the output of this serial port to <code>./log/debug.log</code>. <code>DEBUG</code> level logs are not necessarily written by default, though, and it is possible to enable <code>DEBUG</code> logs for specific modules like this:</p>
-<div class="fragment"><div class="line"># Enable the debug logs for the &quot;net&quot; and &quot;fs&quot; modules</div>
-<div class="line">$ make ENABLE_NET_DEBUG=1 ENABLE_FS_DEBUG=1 clean run-debug</div>
-</div><!-- fragment --><p>The available debug variables are:</p>
-<ul>
-<li><code>ENABLE_CONFIG_DEBUG</code></li>
-<li><code>ENABLE_CORE_DEBUG</code></li>
-<li><code>ENABLE_FS_DEBUG</code></li>
-<li><code>ENABLE_MMU_DEBUG</code></li>
-<li><code>ENABLE_NET_DEBUG</code></li>
-<li><code>ENABLE_PROC_DEBUG</code></li>
-<li><code>ENABLE_SYS_DEBUG</code></li>
-<li><code>ENABLE_USERLAND_DEBUG</code></li>
-</ul>
-<p>There is also <code>ENABLE_ALL_DEBUG</code> to turn all debug logs on (which negatively impacts the performances).</p>
-<h4><a class="anchor" id="autotoc_md9"></a>
-Stacktraces</h4>
-<p>Log files may contain stacktraces without debug symbols if the symbols haven't been loaded via GRUB:</p>
-<div class="fragment"><div class="line">[...]</div>
-<div class="line">DEBUG    | src/arch/x86_64/kshell/kshell.c:108:run_command(): command=&#39;selftest&#39; argc=1</div>
-<div class="line">DEBUG    | src/arch/x86_64/kernel/panic.c:30:kernel_dump_stacktrace(): kernel stacktrace:</div>
-<div class="line">DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 00000000001163B3 - ???+0x0</div>
-<div class="line">DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 0000000000115941 - ???+0x0</div>
-<div class="line">DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 0000000000115BE1 - ???+0x0</div>
-<div class="line">DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 00000000001152BF - ???+0x0</div>
-<div class="line">DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 000000000010935B - ???+0x0</div>
-</div><!-- fragment --><p>Use the <code>tools/fix-stacktrace.py</code> script to add missing symbol names to the output:</p>
-<div class="fragment"><div class="line">$ ./tools/fix-stacktrace.py build/x86_64/isofiles/boot/symbols.txt log/debug.log</div>
-<div class="line">[...]</div>
-<div class="line">DEBUG    | src/arch/x86_64/kshell/kshell.c:108:run_command(): command=&#39;selftest&#39; argc=1</div>
-<div class="line">DEBUG    | src/arch/x86_64/kernel/panic.c:30:kernel_dump_stacktrace(): kernel stacktrace:</div>
-<div class="line">DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   00000000001163B3 - selftest +0x63</div>
-<div class="line">DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   0000000000115941 - run_command +0x271</div>
-<div class="line">DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   0000000000115BE1 - kshell_run +0x181</div>
-<div class="line">DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   00000000001152BF - kmain +0x107f</div>
-<div class="line">DEBUG    | src/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   000000000010935B - long_mode_start +0x13</div>
-</div><!-- fragment --><p>In addition, you might want to find the corresponding line of code in the source files by using <code>llvm-addr2line</code> or <code>llvm-symbolizer</code>:</p>
-<div class="fragment"><div class="line">$ llvm-symbolizer-13 --obj=build/x86_64/dist/kernel-x86_64.bin 0x01163B3</div>
-<div class="line">print_selftest_header</div>
-<div class="line">/Users/william/projects/willos/src/arch/x86_64/kshell/selftest.c:12:3</div>
-<div class="line">selftest</div>
-<div class="line">/Users/william/projects/willos/src/arch/x86_64/kshell/selftest.c:30:3</div>
-</div><!-- fragment --><div class="fragment"><div class="line">$ llvm-addr2line-13 -e build/x86_64/dist/kernel-x86_64.bin 01163B3</div>
-<div class="line">/Users/william/projects/willos/src/arch/x86_64/kshell/selftest.c:12</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md10"></a>
-Release</h2>
-<p>To compile the OS in release mode, build the ISO, and start <code>qemu</code> with the OS loaded, run:</p>
-<div class="fragment"><div class="line">$ make clean run</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md11"></a>
-Boot options</h2>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md13"></a>
+x86_64 options</h2>
+<h3><a class="anchor" id="autotoc_md14"></a>
+Boot options</h3>
 <p>The GRUB configuration offers two choices: the normal mode and the kernel mode. The normal (or "default") mode will load the <a class="el" href="md_src_userland_init__r_e_a_d_m_e.html">`/bin/init`</a> program in user mode ("ring 3"). The kernel mode will load the <code>kshell</code> instead and will stay in kernel mode (as its name implies).</p>
-<p>It is possible to change the command line by passing the <code>GRUB_KERNEL_CMDLINE</code> variable to <code>make</code> (or add it to your <code>willosconfig</code> file):</p>
-<div class="fragment"><div class="line">$ make clean GRUB_KERNEL_CMDLINE=&quot;/bin/init foo bar&quot; run-debug</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md12"></a>
-Early boot sequence</h1>
+<p>It is possible to change the command line by passing the <code>GRUB_KERNEL_CMDLINE</code> variable to <code>make</code> (or add it to your <code>config</code> file):</p>
+<div class="fragment"><div class="line">$ make clean run-debug GRUB_KERNEL_CMDLINE=&quot;/bin/init foo bar&quot;</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md15"></a>
+Some information about the x86_64 implementation</h1>
+<h2><a class="anchor" id="autotoc_md16"></a>
+Early boot sequence</h2>
 <ol type="1">
 <li>The BIOS loads the bootloader (GRUB) from the ISO</li>
 <li>The bootloader reads the kernel executable and finds the multiboot header</li>
@@ -232,8 +240,8 @@ Early boot sequence</h1>
 <li>Call the C <code><a class="el" href="kmain_8h.html#a3a723148ea74ca575865f61d277c0657">kmain()</a></code> function</li>
 <li>Eventually switch to user mode and call <code>/bin/init</code> by default</li>
 </ol>
-<h1><a class="anchor" id="autotoc_md13"></a>
-Memory management</h1>
+<h2><a class="anchor" id="autotoc_md17"></a>
+Memory management</h2>
 <p>During the early boot sequence, we identity map the first gigabyte of our kernel with 512 2MiB pages. When <code><a class="el" href="kmain_8h.html#a3a723148ea74ca575865f61d277c0657">kmain()</a></code> is called, we call <code><a class="el" href="paging_8h.html#a44fe56c079dc6d3c0d4b29f5b9dab5a5" title="Initializes paging to separate virtual and physical memory.">paging_init()</a></code> to update the mapping:</p>
 <ol type="1">
 <li>Memory from <code>0x00000000</code> to <code>0x000A0000</code> is identity mapped (present)</li>
@@ -250,10 +258,10 @@ Memory management</h1>
 <li>enable the no-execute feature</li>
 <li>create a guard page</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md14"></a>
-Memory map</h2>
-<h3><a class="anchor" id="autotoc_md15"></a>
-Virtual address space</h3>
+<h3><a class="anchor" id="autotoc_md18"></a>
+Memory map</h3>
+<h4><a class="anchor" id="autotoc_md19"></a>
+Virtual address space</h4>
 <ul>
 <li><code>0x00000000</code> to <code>0x00100000</code>: the first 1MiB area is reserved</li>
 <li><code>0x00100000</code>: the kernel code and data and multiboot modules</li>
@@ -261,9 +269,9 @@ Virtual address space</h3>
 <li><code>0x10000000</code>: kernel heap area (we currently have a fixed heap size)</li>
 <li><code>0x40000000</code>: user space</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md16"></a>
+<h1><a class="anchor" id="autotoc_md20"></a>
 License</h1>
-<p>willOS is released under the MIT License. See the bundled <a href="https://github.com/willdurand/willOS/blob/master/LICENSE.md">LICENSE</a> file for details. In addition, some parts of this project have their own licenses attached (either in the source files or in a <code>LICENSE</code> file next to them). </p>
+<p>ArvernOS is released under the MIT License. See the bundled <a href="https://github.com/willdurand/ArvernOS/blob/master/LICENSE.md">LICENSE</a> file for details. In addition, some parts of this project have their own licenses attached (either in the source files or in a <code>LICENSE</code> file next to them). </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->

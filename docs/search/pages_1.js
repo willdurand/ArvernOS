@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['userland_670',['userland',['../md_src_userland__r_e_a_d_m_e.html',1,'']]]
+  ['init_672',['init',['../md_src_userland_init__r_e_a_d_m_e.html',1,'']]]
 ];

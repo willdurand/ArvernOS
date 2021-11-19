@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['reboot_2eh_443',['reboot.h',['../reboot_8h.html',1,'']]],
-  ['register_2eh_444',['register.h',['../register_8h.html',1,'']]],
-  ['rtl8139_2eh_445',['rtl8139.h',['../rtl8139_8h.html',1,'']]]
+  ['paging_2eh_442',['paging.h',['../paging_8h.html',1,'']]],
+  ['panic_2eh_443',['panic.h',['../arch_2panic_8h.html',1,'(Global Namespace)'],['../panic_8h.html',1,'(Global Namespace)']]],
+  ['pci_2eh_444',['pci.h',['../pci_8h.html',1,'']]],
+  ['port_2eh_445',['port.h',['../port_8h.html',1,'']]]
 ];

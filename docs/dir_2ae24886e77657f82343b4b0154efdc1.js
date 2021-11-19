@@ -11,6 +11,6 @@ var dir_2ae24886e77657f82343b4b0154efdc1 =
     [ "sys", "dir_a0ffd90eda9fe9d19fd364f796da6911.html", "dir_a0ffd90eda9fe9d19fd364f796da6911" ],
     [ "keymap.h", "keymap_8h_source.html", null ],
     [ "logging.h", "logging_8h_source.html", null ],
-    [ "panic.h", "panic_8h.html", "panic_8h" ],
-    [ "willos.h", "willos_8h.html", null ]
+    [ "osinfo.h", "osinfo_8h.html", null ],
+    [ "panic.h", "panic_8h.html", "panic_8h" ]
 ];

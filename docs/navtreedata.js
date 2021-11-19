@@ -24,33 +24,40 @@
 */
 var NAVTREE =
 [
-  [ "willOS", "index.html", [
-    [ "Setting up a development environment", "index.html#autotoc_md0", [
-      [ "Getting the sources", "index.html#autotoc_md1", null ],
-      [ "Docker (recommended way)", "index.html#autotoc_md2", null ],
-      [ "MacOS", "index.html#autotoc_md3", null ],
-      [ "Linux", "index.html#autotoc_md4", null ]
+  [ "ArvernOS", "index.html", [
+    [ "Goals", "index.html#autotoc_md1", null ],
+    [ "Setting up a development environment", "index.html#autotoc_md2", [
+      [ "Getting the sources", "index.html#autotoc_md3", null ],
+      [ "Docker (recommended way)", "index.html#autotoc_md4", null ],
+      [ "MacOS", "index.html#autotoc_md5", null ],
+      [ "Linux", "index.html#autotoc_md6", null ]
     ] ],
-    [ "Building willOS", "index.html#autotoc_md5", [
-      [ "<tt>willosconfig</tt> files", "index.html#autotoc_md6", null ],
-      [ "Debug", "index.html#autotoc_md7", [
-        [ "Logging", "index.html#autotoc_md8", [
-          [ "Stacktraces", "index.html#autotoc_md9", null ]
+    [ "Building ArvernOS", "index.html#autotoc_md7", [
+      [ "Debug mode", "index.html#autotoc_md8", [
+        [ "Logging", "index.html#autotoc_md9", [
+          [ "Stacktraces", "index.html#autotoc_md10", null ]
         ] ]
       ] ],
-      [ "Release", "index.html#autotoc_md10", null ],
-      [ "Boot options", "index.html#autotoc_md11", null ]
-    ] ],
-    [ "Early boot sequence", "index.html#autotoc_md12", null ],
-    [ "Memory management", "index.html#autotoc_md13", [
-      [ "Memory map", "index.html#autotoc_md14", [
-        [ "Virtual address space", "index.html#autotoc_md15", null ]
+      [ "Release mode", "index.html#autotoc_md11", null ],
+      [ "config files", "index.html#autotoc_md12", null ],
+      [ "x86_64 options", "index.html#autotoc_md13", [
+        [ "Boot options", "index.html#autotoc_md14", null ]
       ] ]
     ] ],
-    [ "License", "index.html#autotoc_md16", null ],
+    [ "Some information about the x86_64 implementation", "index.html#autotoc_md15", [
+      [ "Early boot sequence", "index.html#autotoc_md16", null ],
+      [ "Memory management", "index.html#autotoc_md17", [
+        [ "Memory map", "index.html#autotoc_md18", [
+          [ "Virtual address space", "index.html#autotoc_md19", null ]
+        ] ]
+      ] ]
+    ] ],
+    [ "License", "index.html#autotoc_md20", null ],
+    [ "kernel", "md_src_kernel__r_e_a_d_m_e.html", null ],
+    [ "lib(k|c)", "md_src_libc__r_e_a_d_m_e.html", null ],
     [ "init", "md_src_userland_init__r_e_a_d_m_e.html", null ],
     [ "userland", "md_src_userland__r_e_a_d_m_e.html", [
-      [ "Local builds", "md_src_userland__r_e_a_d_m_e.html#autotoc_md19", null ]
+      [ "Local builds", "md_src_userland__r_e_a_d_m_e.html#autotoc_md25", null ]
     ] ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
@@ -75,7 +82,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "alloc_8h.html",
-"multiboot_8h.html#ae87c8fda1b62f7ace33b2e3ad24292c2"
+"md_src_userland__r_e_a_d_m_e.html#autotoc_md25"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
