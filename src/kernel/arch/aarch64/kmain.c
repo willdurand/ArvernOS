@@ -5,10 +5,14 @@
 #include <fs/debug.h>
 #include <fs/dev.h>
 #include <fs/sock.h>
+#include <fs/tar.h>
 #include <fs/vfs.h>
 #include <kmain.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <sys/k_syscall.h>
+
+extern unsigned char _binary___initrd_tar_start;
 
 void kmain()
 {
@@ -27,11 +31,19 @@ void kmain()
   vfs_init();
   print_ok();
 
-  // TODO: mount initrd at /
+  print_step("mounting tarfs (init ramdisk)");
+  inode_t initrd =
+    vfs_mount("/", tar_fs_create((uintptr_t)&_binary___initrd_tar_start));
 
-  print_step("  mounting devfs");
-  if (dev_fs_init()) {
+  if (initrd) {
     print_ok();
+
+    print_step("  mounting devfs");
+    if (dev_fs_init()) {
+      print_ok();
+    } else {
+      print_ko();
+    }
 
     print_step("  mounting debugfs");
     if (debug_fs_init()) {

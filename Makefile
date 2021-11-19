@@ -155,9 +155,8 @@ $(LIBC): $(DIST_DIR) $(LIBC_ASM_OBJECTS) $(LIBC_OBJECTS)
 	$(PROGRESS) "AR" $@
 	$(AR) rcs $@ $(LIBC_ASM_OBJECTS) $(LIBC_OBJECTS)
 
-$(INITRD): userland
+$(INITRD): $(MISC_DIR)
 	$(PROGRESS) "TAR" $@
-	cp -R $(USERLAND_SRC_DIR)/bin $(INITRD_DIR)
 	echo "$(OS_NAME) ($(ARCH)) build info" > $(INITRD_DIR)/info
 	echo "" >> $(INITRD_DIR)/info
 	echo "hash: $(GIT_HASH)" >> $(INITRD_DIR)/info

@@ -90,9 +90,10 @@ arch-kernel: LINK_TO_KERNEL += $(KERNEL_CONSOLE_FONT)
 arch-kernel: $(KERNEL_CONSOLE_FONT) $(KERNEL)
 .PHONY: arch-kernel
 
-$(ISO): arch-kernel $(INITRD) $(GRUB_CFG)
+$(ISO): arch-kernel userland $(INITRD) $(GRUB_CFG)
 	$(PROGRESS) "GRUB" $@
 	mkdir -p $(ISO_BOOT_DIR)
+	cp -R $(USERLAND_SRC_DIR)/bin $(INITRD_DIR)
 	cp $(KERNEL) $(ISO_BOOT_DIR)
 	cp $(INITRD) $(ISO_BOOT_DIR)
 	cp $(SYMBOLS) $(ISO_BOOT_DIR)
