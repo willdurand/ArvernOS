@@ -1,55 +1,46 @@
+ARCH       ?= x86_64
+OS_NAME    ?= ArvernOS
+BUILD_MODE ?= release
+GIT_HASH   := $(shell git rev-parse --short HEAD)
+
 include ./Makefile.include
 
-ARCH           ?= x86_64
-OS_NAME        = ArvernOS
-BUILD_MODE     = release
 # We (more or less) follow the PFL project structure:
 # https://api.csswg.org/bikeshed/?force=1&url=https://raw.githubusercontent.com/vector-of-bool/pitchfork/develop/data/spec.bs#intro.dirs
-BUILD_DIR        := build
-DATA_DIR         := data
-EXTERNAL_DIR     := external
-INCLUDE_DIR      := include
-LOG_DIR          := log
-SRC_DIR          := src
-TESTS_DIR        := tests
-TOOLS_DIR        := tools
-KERNEL_SRC_DIR   := $(SRC_DIR)/kernel
-KERNEL_TESTS_DIR := $(TESTS_DIR)/kernel
-USERLAND_DIR     := $(SRC_DIR)/userland
-ARCH_BUILD_DIR   := $(BUILD_DIR)/$(ARCH)
-DIST_DIR         := $(ARCH_BUILD_DIR)/dist
-ISO_DIR          := $(ARCH_BUILD_DIR)/isofiles
-ISO_BOOT_DIR     := $(ISO_DIR)/boot
-GRUB_DIR         := $(ISO_BOOT_DIR)/grub
-GRUB_CFG         := $(GRUB_DIR)/grub.cfg
-ARCH_SRC         := $(KERNEL_SRC_DIR)/arch/$(ARCH)
-LINKER           := $(ARCH_SRC)/linker.ld
-KERNEL_BIN       := kernel-$(ARCH).bin
-KERNEL           := $(ISO_BOOT_DIR)/$(KERNEL_BIN)
-ISO              := $(DIST_DIR)/$(OS_NAME)-$(ARCH).iso
-LIBC             := $(DIST_DIR)/libc-$(OS_NAME)-$(ARCH).a
-LIBC_OBJS_DIR    := $(ARCH_BUILD_DIR)/libc-objects
-LIBK_OBJS_DIR    := $(ARCH_BUILD_DIR)/libk-objects
-INITRD_DIR       := $(DATA_DIR)/initrd
-INITRD_TAR       := initrd.tar
-INITRD           := $(ISO_BOOT_DIR)/$(INITRD_TAR)
-GIT_HASH         := $(shell git rev-parse --short HEAD)
-SYMBOLS_TXT      := symbols.txt
-SYMBOLS          := $(ISO_BOOT_DIR)/$(SYMBOLS_TXT)
-LOG_FILE         = $(LOG_DIR)/$(BUILD_MODE).log
+BUILD_DIR    = build
+DATA_DIR     = data
+EXTERNAL_DIR = external
+INCLUDE_DIR  = include
+LOG_DIR      = log
+SRC_DIR      = src
+TESTS_DIR    = tests
+TOOLS_DIR    = tools
 
-# This should be a bitmap font.
-KERNEL_CONSOLE_FONT_PATH := $(EXTERNAL_DIR)/scalable-font2/fonts/u_vga16.sfn.gz
-KERNEL_CONSOLE_FONT      := $(ARCH_BUILD_DIR)/font.o
-# This is used in `src/kernel/arch/x86_64/asm/multiboot_header.asm`.
-VBE_WIDTH  = 1024
-VBE_HEIGHT = 768
-VBE_BPP    = 32
+# Source directories.
+KERNEL_SRC_DIR   = $(SRC_DIR)/kernel
+KERNEL_TESTS_DIR = $(TESTS_DIR)/kernel
+USERLAND_SRC_DIR = $(SRC_DIR)/userland
+ARCH_SRC         = $(KERNEL_SRC_DIR)/arch/$(ARCH)
+INITRD_DIR       = $(DATA_DIR)/initrd
+# Build directories.
+ARCH_BUILD_DIR   = $(BUILD_DIR)/$(ARCH)
+DIST_DIR         = $(ARCH_BUILD_DIR)/dist
+MISC_DIR         = $(ARCH_BUILD_DIR)/misc
+LIBC_OBJS_DIR    = $(ARCH_BUILD_DIR)/libc-objects
+LIBK_OBJS_DIR    = $(ARCH_BUILD_DIR)/libk-objects
+# Files.
+INITRD_TAR       = initrd.tar
+KERNEL_BIN       = kernel-$(ARCH).bin
+LINKER_LD        = $(ARCH_SRC)/linker.ld
+SYMBOLS_TXT      = symbols.txt
+KERNEL           = $(DIST_DIR)/$(KERNEL_BIN)
+LIBC             = $(DIST_DIR)/libc-$(OS_NAME)-$(ARCH).a
+SYMBOLS          = $(DIST_DIR)/$(SYMBOLS_TXT)
+INITRD           = $(MISC_DIR)/$(INITRD_TAR)
+LOG_FILE         = $(LOG_DIR)/$(ARCH)-$(BUILD_MODE).log
 
 # More tools.
-NASM = nasm
-QEMU = qemu-system-x86_64
-TAR  = tar
+TAR = tar
 
 # This is the list of external libraries we use and need to build for the
 # kernel (libk) and the libc.
@@ -59,21 +50,13 @@ EXTERNAL_DIRS := $(addprefix $(EXTERNAL_DIR)/,$(EXTERNAL_DEPS))
 # First, we gather the files for the architecture, then all the other files in
 # `src/` but without the arch files.
 LIBK_C_FILES := $(shell find $(ARCH_SRC) -name '*.c')
-LIBK_C_FILES += $(shell find $(KERNEL_SRC_DIR) src/libc $(EXTERNAL_DIRS) -not -path "$(ARCH_SRC)/*" -name '*.c')
+LIBK_C_FILES += $(shell find $(KERNEL_SRC_DIR) src/libc $(EXTERNAL_DIRS) -not -path "src/kernel/arch/*" -name '*.c')
 
 LIBK_OBJECTS     := $(patsubst %.c, $(LIBK_OBJS_DIR)/%.o, $(LIBK_C_FILES))
 LIBK_ASM_OBJECTS := $(patsubst %.asm, $(LIBK_OBJS_DIR)/%.o, $(shell find $(ARCH_SRC)/asm -name '*.asm'))
 LIBC_OBJECTS     := $(patsubst %.c, $(LIBC_OBJS_DIR)/%.o, $(shell find src/libc $(EXTERNAL_DIRS) -name '*.c'))
 LIBC_ASM_OBJECTS := $(patsubst %.asm, $(LIBC_OBJS_DIR)/%.o, $(shell find src/libc/asm -name '*.asm'))
 LIBC_TEST_FILES  := $(patsubst $(TESTS_DIR)/%.c, %, $(shell find $(TESTS_DIR)/libc -name '*.c'))
-
-NASM_OPTIONS := -dVBE_WIDTH=$(VBE_WIDTH) -dVBE_HEIGHT=$(VBE_HEIGHT) -dVBE_BPP=$(VBE_BPP)
-
-QEMU_OPTIONS += -serial file:$(LOG_FILE)
-QEMU_OPTIONS += -m 512M
-QEMU_OPTIONS += -netdev user,id=u1,ipv6=off,dhcpstart=10.0.2.20
-QEMU_OPTIONS += -device rtl8139,netdev=u1
-QEMU_OPTIONS += -object filter-dump,id=f1,netdev=u1,file=$(LOG_DIR)/traffic-$(BUILD_MODE).pcap
 
 INCLUDES += -I$(INCLUDE_DIR)/libc/
 INCLUDES += $(addprefix -I$(EXTERNAL_DIR)/,$(EXTERNAL_DEPS))
@@ -89,10 +72,6 @@ WERRORS += -Werror=switch
 CFLAGS += -DGIT_HASH=\"$(GIT_HASH)\"
 CFLAGS += -DARCH=\"$(ARCH)\"
 CFLAGS += -O2 -std=c11 -ffreestanding -nostdinc -nostdlib -fno-builtin
-# We need to have -fno-omit-frame-pointer or the kernel stack backtrace won't
-# get the stack.
-CFLAGS += --target=x86_64 -fno-omit-frame-pointer -fstack-protector-strong
-CFLAGS += -mno-red-zone -mno-mmx -mno-sse -mno-sse2 -mno-avx -mno-avx2
 CFLAGS += $(WERRORS)
 
 DEBUG_CFLAGS = -g3 -DENABLE_KERNEL_DEBUG
@@ -130,38 +109,15 @@ ifeq ($(ENABLE_USERLAND_DEBUG), 1)
 endif
 
 ifeq ($(ENABLE_ALL_DEBUG), 1)
-	DEBUG_CFLAGS += -DENABLE_CONFIG_DEBUG -DENABLE_CORE_DEBUG -DENABLE_FS_DEBUG -DENABLE_MMU_DEBUG -DENABLE_NET_DEBUG -DENABLE_PROC_DEBUG -DENABLE_SYS_DEBUG -DENABLE_USERLAND_DEBUG
+	DEBUG_CFLAGS += -DENABLE_CONFIG_DEBUG
+	DEBUG_CFLAGS += -DENABLE_CORE_DEBUG
+	DEBUG_CFLAGS += -DENABLE_FS_DEBUG
+	DEBUG_CFLAGS += -DENABLE_MMU_DEBUG
+	DEBUG_CFLAGS += -DENABLE_NET_DEBUG
+	DEBUG_CFLAGS += -DENABLE_PROC_DEBUG
+	DEBUG_CFLAGS += -DENABLE_SYS_DEBUG
+	DEBUG_CFLAGS += -DENABLE_USERLAND_DEBUG
 endif
-
-ifeq ($(ENABLE_FRAMEBUFFER), 1)
-	CFLAGS += -DENABLE_FRAMEBUFFER
-	NASM_OPTIONS += -dENABLE_FRAMEBUFFER
-endif
-
-GRUB_KERNEL_CMDLINE ?= /bin/init -s
-GRUB_DEFAULT ?= 0
-
-# See: https://stackoverflow.com/questions/649246/is-it-possible-to-create-a-multi-line-string-variable-in-a-makefile/649462#649462
-define GRUB_CFG_BODY
-set timeout=1
-set default=$(GRUB_DEFAULT)
-
-menuentry "$(OS_NAME) $(BUILD_MODE)" {
-	multiboot2 /boot/$(KERNEL_BIN) $(GRUB_KERNEL_CMDLINE)
-	module2 /boot/$(INITRD_TAR) initrd
-	module2 /boot/$(SYMBOLS_TXT) symbols
-	boot
-}
-
-menuentry "$(OS_NAME) $(BUILD_MODE) (kernel mode)" {
-	multiboot2 /boot/$(KERNEL_BIN) kshell
-	module2 /boot/$(INITRD_TAR) initrd
-	module2 /boot/$(SYMBOLS_TXT) symbols
-	boot
-}
-endef
-
-export GRUB_CFG_BODY
 
 default: help
 
@@ -174,29 +130,13 @@ $(ARCH_BUILD_DIR): $(BUILD_DIR)
 $(DIST_DIR): $(ARCH_BUILD_DIR)
 	mkdir -p $@
 
-$(ISO_DIR): $(ARCH_BUILD_DIR)
+$(MISC_DIR): $(ARCH_BUILD_DIR)
 	mkdir -p $@
 
-$(ISO_BOOT_DIR): $(ISO_DIR)
-	mkdir -p $@
-
-$(GRUB_DIR): $(ISO_BOOT_DIR)
-	mkdir -p $@
-
-$(KERNEL): $(ISO_BOOT_DIR) $(DIST_DIR) $(LIBK_ASM_OBJECTS) $(LIBK_OBJECTS) $(KERNEL_CONSOLE_FONT)
+$(KERNEL): $(DIST_DIR) $(LIBK_ASM_OBJECTS) $(LIBK_OBJECTS)
 	$(PROGRESS) "LD" $@
-	$(LD) --nmagic --output=$@ --script=$(LINKER) $(LIBK_ASM_OBJECTS) $(LIBK_OBJECTS) $(KERNEL_CONSOLE_FONT)
+	$(LD) --nmagic --output=$@ --script=$(LINKER_LD) $(LIBK_ASM_OBJECTS) $(LIBK_OBJECTS) $(LINK_TO_KERNEL)
 	$(NM) $@ | awk '{ print $$1, $$3 }' | sort > $(SYMBOLS)
-	cp $@ $(DIST_DIR)
-
-kernel: ## compile the kernel
-kernel: $(KERNEL)
-.PHONY: kernel
-
-$(LIBK_ASM_OBJECTS): $(LIBK_OBJS_DIR)/%.o: %.asm
-	$(PROGRESS) "NASM" $<
-	mkdir -p $(dir $@)
-	$(NASM) $(NASM_OPTIONS) -f elf64 $< -o $@
 
 $(LIBK_OBJECTS): CFLAGS += -D__is_libk
 $(LIBK_OBJECTS): INCLUDES += -I$(INCLUDE_DIR)/kernel/ -I$(ARCH_SRC)/
@@ -204,11 +144,6 @@ $(LIBK_OBJECTS): $(LIBK_OBJS_DIR)/%.o: %.c
 	$(PROGRESS) "CC" $<
 	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
-
-$(LIBC_ASM_OBJECTS): $(LIBC_OBJS_DIR)/%.o: %.asm
-	$(PROGRESS) "NASM" $<
-	mkdir -p $(dir $@)
-	$(NASM) $(NASM_OPTIONS) -f elf64 $< -o $@
 
 $(LIBC_OBJECTS): CFLAGS += -D__is_libc
 $(LIBC_OBJECTS): $(LIBC_OBJS_DIR)/%.o: %.c
@@ -220,25 +155,9 @@ $(LIBC): $(DIST_DIR) $(LIBC_ASM_OBJECTS) $(LIBC_OBJECTS)
 	$(PROGRESS) "AR" $@
 	$(AR) rcs $@ $(LIBC_ASM_OBJECTS) $(LIBC_OBJECTS)
 
-libc: ## build the libc (userland)
-libc: $(LIBC)
-.PHONY: libc
-
-$(KERNEL_CONSOLE_FONT): $(ARCH_BUILD_DIR)
-	$(PROGRESS) "LD" $@
-	cp $(KERNEL_CONSOLE_FONT_PATH) $(ARCH_BUILD_DIR)/console.sfn.gz
-	gunzip -f $(ARCH_BUILD_DIR)/console.sfn.gz
-	# We have to do this because we cannot control the symbol name generated by
-	# `ld`. We get a pretty nice name by cd'ing into the build directory.
-	cd $(ARCH_BUILD_DIR) && $(LD) -m elf_x86_64 -r -b binary -o ../../$@ console.sfn
-
-console-font: ## compile the (default) kernel console font
-console-font: $(KERNEL_CONSOLE_FONT)
-.PHONY: console-font
-
 $(INITRD): userland
 	$(PROGRESS) "TAR" $@
-	cp -R $(USERLAND_DIR)/bin $(INITRD_DIR)
+	cp -R $(USERLAND_SRC_DIR)/bin $(INITRD_DIR)
 	echo "$(OS_NAME) ($(ARCH)) build info" > $(INITRD_DIR)/info
 	echo "" >> $(INITRD_DIR)/info
 	echo "hash: $(GIT_HASH)" >> $(INITRD_DIR)/info
@@ -251,124 +170,55 @@ $(INITRD): userland
 	echo "INCLUDES: $(INCLUDES)" >> $(INITRD_DIR)/info
 	cd $(INITRD_DIR) && $(TAR) -cf ../../$@ *
 
-# We mark this target as .PHONY to write the file every time.
-$(GRUB_CFG): $(GRUB_DIR)
-	echo "$$GRUB_CFG_BODY" > $@
-.PHONY: $(GRUB_CFG)
-
-$(ISO): $(DIST_DIR) $(KERNEL) $(INITRD) $(GRUB_CFG)
-	$(PROGRESS) GRUB $@
-	$(TOOLS_DIR)/grub-mkrescue -o $@ $(ISO_DIR)
+libc: ## build the libc (userland)
+libc: $(LIBC)
+.PHONY: libc
 
 release: ## build the OS in release mode
-release: $(ISO)
+release: arch-release
 .PHONY: release
 
-run: ## run the OS in release mode
-run: release
-	$(PROGRESS) "RUN" $(ISO)
-	$(QEMU) -cdrom $(ISO) $(QEMU_OPTIONS)
-.PHONY: run
+run-release: ## run the OS in release mode
+run-release: arch-run-release
+.PHONY: run-release
 
 debug: ## build the OS in debug mode
-debug: CFLAGS += $(DEBUG_CFLAGS)
-debug: BUILD_MODE = debug
-debug: GRUB_DEFAULT = 1
-debug: $(ISO)
+debug: arch-debug
 .PHONY: debug
 
 run-debug: ## run the OS in debug mode
-run-debug: BUILD_MODE = debug
-run-debug: QEMU_OPTIONS += -d guest_errors,unimp --no-reboot
-run-debug: debug
-	$(PROGRESS) "RUN" $(ISO)
-	$(QEMU) -cdrom $(ISO) $(QEMU_OPTIONS)
+run-debug: arch-run-debug
 .PHONY: run-debug
 
+gdb: ## build, run the OS in debug mode and enable GDB
+gdb: QEMU_OPTIONS += -s -S
+gdb: run-debug
+.PHONY: gdb
+
 run-test: ## run the OS in test mode
-run-test: BUILD_MODE = test
-run-test: QEMU_OPTIONS += -curses
-run-test: GRUB_KERNEL_CMDLINE = /bin/userland-testsuite
-run-test: run
+run-test: arch-run-test
 .PHONY: run-test
 
-clean: ## remove build artifacts
-	$(PROGRESS) "CLEAN"
-	rm -rf $(ARCH_BUILD_DIR) $(INITRD_DIR)/info $(INITRD_DIR)/bin/ $(USERLAND_DIR)/bin/ $(USERLAND_DIR)/local-build/
-.PHONY: clean
+userland: ## compile the userland programs (statically linked to libc)
+userland: libc
+	@for userland_program in $(shell find $(USERLAND_SRC_DIR)/* -type d -not \( -path $(USERLAND_SRC_DIR)/bin -o -path $(USERLAND_SRC_DIR)/local-build \)); do \
+	    $(MAKE) -C $$userland_program OS_NAME="$(OS_NAME)" ARCH="$(ARCH)" ENABLE_USERLAND_DEBUG=$(ENABLE_USERLAND_DEBUG) ; \
+	done
+.PHONY: userland
 
 fmt: ## automatically format the code with clang-format
 	find . -path ./external -prune -false -o -type f \( -name '*.c' -o -name '*.h' \) -exec clang-format$(LLVM_SUFFIX) -style=file -i "{}" ";"
 .PHONY: fmt
 
-gdb: ## build, run the OS in debug mode and enable GDB
-gdb: BUILD_MODE = debug
-gdb: QEMU_OPTIONS += -s -S --no-reboot
-gdb: debug run
-.PHONY: gdb
-
-userland: ## compile the userland programs (statically linked to libc)
-userland: libc
-	@for userland_program in $(shell find $(USERLAND_DIR)/* -type d -not \( -path $(USERLAND_DIR)/bin -o -path $(USERLAND_DIR)/local-build \)); do \
-	    $(MAKE) -C $$userland_program OS_NAME="$(OS_NAME)" ARCH="$(ARCH)" ENABLE_USERLAND_DEBUG=$(ENABLE_USERLAND_DEBUG) ; \
-	done
-.PHONY: userland
-
 test: ## run unit tests
-test: CFLAGS_WITHOUT_TARGET := $(filter-out --target=x86_64,$(CFLAGS))
-test: CFLAGS = $(CFLAGS_WITHOUT_TARGET)
-test: CFLAGS += -fPIC -g3 -fsanitize=undefined -fsanitize=address
-test: CFLAGS_FOR_TESTS += -g3 -fsanitize=undefined -fsanitize=address
-test: CFLAGS_FOR_TESTS += -DENABLE_LOGS_FOR_TESTS -DTEST_ENV
-test: CFLAGS_FOR_TESTS += -I$(TESTS_DIR)/ -I$(INCLUDE_DIR)/kernel/ -I$(ARCH_SRC)/
-test: libc
-	# libc
-	mkdir -p $(ARCH_BUILD_DIR)/libc/string
-	for file in $(LIBC_TEST_FILES); do \
-		echo ; \
-		$(CC) -shared $(LIBC_OBJS_DIR)/src/$$file.o -o $(ARCH_BUILD_DIR)/$$file.so ; \
-		$(CC) -g3 -fsanitize=undefined -fsanitize=address -I$(TESTS_DIR)/ $(TESTS_DIR)/$$file.c -o $(ARCH_BUILD_DIR)/$$file ; \
-		LD_PRELOAD=./$(ARCH_BUILD_DIR)/$$file.so ./$(ARCH_BUILD_DIR)/$$file || exit 1 ; \
-	done
-	# fs/vfs
-	$(CC) $(CFLAGS_FOR_TESTS) -I$(TESTS_DIR)/proxies/ -o $(ARCH_BUILD_DIR)/vfs \
-		$(KERNEL_TESTS_DIR)/fs/vfs.c $(KERNEL_SRC_DIR)/fs/vfs.c
-	./$(ARCH_BUILD_DIR)/vfs
-	# fs/tar
-	$(CC) $(CFLAGS_FOR_TESTS) -I$(TESTS_DIR)/proxies/ -o $(ARCH_BUILD_DIR)/tar \
-		$(KERNEL_TESTS_DIR)/fs/tar.c $(KERNEL_SRC_DIR)/fs/tar.c $(KERNEL_SRC_DIR)/fs/vfs.c
-	./$(ARCH_BUILD_DIR)/tar
-	# fs/proc
-	$(CC) $(CFLAGS_FOR_TESTS) -I$(TESTS_DIR)/proxies/ -o $(ARCH_BUILD_DIR)/proc \
-		$(KERNEL_TESTS_DIR)/fs/proc.c $(ARCH_SRC)/fs/proc.c $(KERNEL_SRC_DIR)/fs/vfs.c
-	./$(ARCH_BUILD_DIR)/proc
-	# fs/sock
-	$(CC) $(CFLAGS_FOR_TESTS) -I$(TESTS_DIR)/proxies/ -o $(ARCH_BUILD_DIR)/sock \
-		$(KERNEL_TESTS_DIR)/fs/sock.c $(KERNEL_SRC_DIR)/fs/sock.c $(KERNEL_SRC_DIR)/fs/vfs.c
-	./$(ARCH_BUILD_DIR)/sock
-	# mmu/frame
-	$(CC) $(CFLAGS_FOR_TESTS) -Wformat=0 -I$(TESTS_DIR)/proxies/ -o $(ARCH_BUILD_DIR)/frame \
-		$(KERNEL_TESTS_DIR)/mmu/frame.c $(ARCH_SRC)/mmu/frame.c $(ARCH_SRC)/core/multiboot.c $(KERNEL_SRC_DIR)/mmu/bitmap.c
-	./$(ARCH_BUILD_DIR)/frame
-	# config/inish
-	$(CC) $(CFLAGS_FOR_TESTS) -I$(TESTS_DIR)/proxies/ -o $(ARCH_BUILD_DIR)/inish \
-		$(KERNEL_TESTS_DIR)/config/inish.c $(KERNEL_SRC_DIR)/config/inish.c
-	./$(ARCH_BUILD_DIR)/inish
-	# mmu/bitmap
-	$(CC) $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/bitmap \
-		$(KERNEL_TESTS_DIR)/mmu/bitmap.c $(KERNEL_SRC_DIR)/mmu/bitmap.c
-	./$(ARCH_BUILD_DIR)/bitmap
-	# mmu/paging
-	$(CC) $(CFLAGS_FOR_TESTS) -Wformat=0 -I$(TESTS_DIR)/proxies/ -o $(ARCH_BUILD_DIR)/paging \
-		$(KERNEL_TESTS_DIR)/mmu/paging.c $(ARCH_SRC)/mmu/paging.c $(ARCH_SRC)/core/multiboot.c $(ARCH_SRC)/mmu/frame.c $(KERNEL_SRC_DIR)/mmu/bitmap.c $(ARCH_SRC)/core/register.c
-	./$(ARCH_BUILD_DIR)/paging
+test: arch-test
 .PHONY: test
 
 version: ## print tool versions
+version: arch-version
 	$(CC) --version
 	$(LD) --version
 	$(AR) --version
-	$(NASM) --version
 	$(QEMU) --version
 .PHONY: version
 
@@ -381,6 +231,15 @@ build-docker-image-for-circle:
 	docker build . -f .circleci/images/circle/Dockerfile -t willdurand/arvernos-circle:latest
 .PHONY: build-docker-image-for-circle
 
+clean: ## remove build artifacts
+	$(PROGRESS) "CLEAN"
+	rm -rf $(ARCH_BUILD_DIR) $(INITRD_DIR)/info $(INITRD_DIR)/bin/ $(USERLAND_SRC_DIR)/bin/ $(USERLAND_SRC_DIR)/local-build/
+.PHONY: clean
+
+# Include architecture-specific makefile.
+include $(ARCH_SRC)/Makefile.include
+
 help:
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' Makefile* | awk '{line = gensub(/^Makefile(-(.+)\.include)?:/, "ARCH=\\2 ", "g", $$0); gsub(/^ARCH= /, "", line); print line}' | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+	@echo "ArvernOS - available commands for arch=$(ARCH)\n"
+	@grep -hE '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 .PHONY: help

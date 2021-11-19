@@ -66,19 +66,18 @@ You can then use it with `docker run`:
 
 ```
 $ docker run -it --rm -v $(pwd):/app willdurand/arvernos-toolchain make help
-make help
+ArvernOS - available commands for arch=x86_64
+
 clean                          remove build artifacts
-console-font                   compile the (default) kernel console font
 debug                          build the OS in debug mode
 docs                           build the docs
 fmt                            automatically format the code with clang-format
 gdb                            build, run the OS in debug mode and enable GDB
-kernel                         compile the kernel
 libc                           build the libc (userland)
 release                        build the OS in release mode
 run-debug                      run the OS in debug mode
+run-release                    run the OS in release mode
 run-test                       run the OS in test mode
-run                            run the OS in release mode
 test                           run unit tests
 userland                       compile the userland programs (statically linked to libc)
 version                        print tool versions
@@ -197,7 +196,7 @@ To compile the OS in release mode, build the image, and start `qemu` with the OS
 loaded, run:
 
 ```
-$ make clean run
+$ make clean run-release
 ```
 
 ### config files
