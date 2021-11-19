@@ -3,8 +3,18 @@
 #define ARCH_KERNEL_H
 
 /**
- * Halt the system, e.g., because of a kernel panic.
+ * Shutdown everything and perform a clean reboot.
  */
-void arch_halt_system();
+void arch_restart();
+
+/**
+ * Shutdown everything and perform a clean system power_off.
+ */
+void arch_poweroff();
+
+/**
+ * hutdown everything and perform a clean system halt.
+ */
+void arch_halt();
 
 #endif
