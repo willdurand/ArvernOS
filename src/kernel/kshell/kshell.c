@@ -157,7 +157,8 @@ void kshell(int argc, char* argv[])
         }
         break;
 
-      case '\b':
+      case 0x08:
+      case 0x7f:
         if (readline_index > 0) {
           // destructive backspace
           printf("\b \b");
