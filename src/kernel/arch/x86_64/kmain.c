@@ -165,25 +165,6 @@ void load_initrd(multiboot_tag_module_t* module)
   }
 }
 
-void load_system_config(inish_config_t* kernel_cfg)
-{
-  inish_section_t* system = inish_get_section(kernel_cfg, "system");
-  char* hostname = inish_get_string(system, "hostname");
-
-  if (hostname != NULL) {
-    if (strlen(hostname) > 0) {
-      print_step("  setting hostname from config");
-      DEBUG("updating hostname: %s", hostname);
-      proc_update_hostname(hostname, strlen(hostname));
-      print_ok();
-    } else {
-      DEBUG("%s", "not updating hostname because value is empty");
-    }
-  } else {
-    DEBUG("%s", "could not find system/hostname in kernel.inish");
-  }
-}
-
 void load_network_config(inish_config_t* kernel_cfg, net_driver_t* driver)
 {
   uint8_t ip[4] = { 0 };
@@ -270,8 +251,6 @@ void kmain(uint64_t addr)
   } else {
     print_ok();
   }
-
-  load_system_config(kernel_cfg);
 
   print_step("initializing network");
   if (rtl8139_init()) {
