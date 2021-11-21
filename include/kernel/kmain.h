@@ -4,7 +4,7 @@
 
 void kmain_print_banner();
 
-void kmain_start(int argc, char* argv[]);
+void kmain_start(const char* cmdline);
 
 // utils
 void print_ko();

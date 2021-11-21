@@ -303,23 +303,5 @@ void kmain(uint64_t addr)
   multiboot_tag_string_t* cmdline = (multiboot_tag_string_t*)find_multiboot_tag(
     mbi, MULTIBOOT_TAG_TYPE_CMDLINE);
 
-  int argc = 1;
-  char* _cmdline = strdup(cmdline->string);
-  strtok(_cmdline, " ");
-  while (strtok(NULL, " ") != NULL) {
-    argc++;
-  }
-  free(_cmdline);
-
-  char** argv = (char**)malloc(sizeof(char*) * (argc + 1));
-  _cmdline = strdup(cmdline->string);
-  argv[0] = strdup(strtok(_cmdline, " "));
-
-  for (int i = 1; i < argc; i++) {
-    argv[i] = strdup(strtok(NULL, " "));
-  }
-  argv[argc] = NULL;
-  free(_cmdline);
-
-  kmain_start(argc, argv);
+  kmain_start(cmdline->string);
 }
