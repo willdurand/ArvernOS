@@ -1,5 +1,6 @@
 #include <kmain.h>
 
+#include <init.h>
 #include <kshell/kshell.h>
 #include <logging.h>
 #include <osinfo.h>
@@ -7,6 +8,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <sys/k_syscall.h>
+
+void run_initcalls();
 
 char* saved_cmdline = NULL;
 
@@ -50,8 +53,28 @@ void kmain_print_banner()
          KERNEL_TIME);
 }
 
+void run_initcalls()
+{
+  DEBUG("initcalls: __initcall_start=%p __initcall_end=%p",
+        &__initcall_start,
+        &__initcall_end);
+
+  if (__initcall_start == 0) {
+    return;
+  }
+
+  initcall_t* call_fn = &__initcall_start;
+
+  do {
+    (*call_fn)();
+    call_fn++;
+  } while (call_fn < &__initcall_end);
+}
+
 void kmain_start(const char* cmdline)
 {
+  run_initcalls();
+
   if (cmdline == NULL) {
     PANIC("invalid cmdline passed to kmain_start()");
   }
