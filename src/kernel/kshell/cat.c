@@ -19,8 +19,8 @@ void cat(int argc, char* argv[])
       continue;
     }
 
-    if (f->type != FS_FILE) {
-      printf("'%s' is not a printable file\n", f->name);
+    if (vfs_type(f) != FS_FILE) {
+      printf("'%s' is not a printable file (type=%X)\n", f->name, vfs_type(f));
       vfs_free(f);
       continue;
     }
