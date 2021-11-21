@@ -14,12 +14,22 @@ SECTIONS {
         . = ALIGN(4K);
     }
 
+    /* next we put the .text section */
     .text :
     {
-        /* next we put the .text section */
         *(.text. .text.*)
         . = ALIGN(4K);
     }
+
+    /* this section contains initcall functions as defined in
+     * `include/kernel/init.h`. */
+    .initcalls :
+    {
+        __initcall_start = .;
+        *(.initcall_functions)
+        __initcall_end = .;
+    }
+
 
     /* read-write data (initialized) */
     .data :
