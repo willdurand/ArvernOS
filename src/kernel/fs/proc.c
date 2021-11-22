@@ -6,6 +6,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define BUFSIZE 1024
+
 inode_t proc_fs_create();
 uint64_t proc_read(inode_t inode, void* buffer, uint64_t size, uint64_t offset);
 
@@ -58,9 +60,9 @@ uint64_t proc_read(inode_t inode, void* buffer, uint64_t size, uint64_t offset)
   strcpy(buffer, "");
 
   if (inode->data) {
-    char buf[256];
+    char buf[BUFSIZE];
 
-    if (((proc_read_t*)(inode->data))(buf, 256) != 0) {
+    if (((proc_read_t*)(inode->data))(buf, BUFSIZE) != 0) {
       return 0;
     }
 
