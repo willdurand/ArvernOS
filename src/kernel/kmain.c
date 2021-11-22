@@ -78,8 +78,11 @@ void run_initcalls()
 void kmain_init_fs()
 {
   print_step("initializing virtual file system");
-  vfs_init();
-  print_ok();
+  if (vfs_init()) {
+    print_ok();
+  } else {
+    print_ko();
+  }
 
   print_step("mounting devfs");
   if (dev_fs_init()) {
