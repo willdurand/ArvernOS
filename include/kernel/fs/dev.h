@@ -6,12 +6,20 @@
 #include <stdbool.h>
 #include <sys/types.h>
 
+#define FS_DEV_MOUNTPOINT "/dev"
+
 /**
  * Initializes the "dev" filesystem.
- *
- * This FS is a bit different than the other existing ones as it creates a set
- * of character devices instead of managing a single file or directory.
  */
 bool dev_fs_init();
+
+/**
+ * Creates a new devfs character device.
+ *
+ * @param name the name of the character device
+ * @param driver the driver of the character device
+ * @return the inode of the pseudo-file
+ */
+inode_t dev_fs_create(const char* name, vfs_driver_t* driver);
 
 #endif

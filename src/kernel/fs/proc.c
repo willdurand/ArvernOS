@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+inode_t proc_fs_create();
 uint64_t proc_read(inode_t inode, void* buffer, uint64_t size, uint64_t offset);
 
 static vfs_driver_t proc_driver = {
