@@ -25,11 +25,8 @@ typedef struct sock_entry
  */
 bool sock_fs_init();
 
-/**
- * Creates the "sock" file system root node.
- *
- * @return the root inode of the sock file system
- */
+#ifdef TEST_ENV
 inode_t sock_fs_create();
+#endif
 
 #endif
