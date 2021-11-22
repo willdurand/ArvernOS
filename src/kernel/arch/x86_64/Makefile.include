@@ -36,7 +36,6 @@ ifeq ($(ENABLE_FRAMEBUFFER), 1)
 	NASM_OPTIONS += -dENABLE_FRAMEBUFFER
 endif
 
-GRUB_KERNEL_CMDLINE ?= /bin/init -s
 GRUB_DEFAULT ?= 0
 
 # See: https://stackoverflow.com/questions/649246/is-it-possible-to-create-a-multi-line-string-variable-in-a-makefile/649462#649462
@@ -45,14 +44,14 @@ set timeout=1
 set default=$(GRUB_DEFAULT)
 
 menuentry "$(OS_NAME) $(BUILD_MODE)" {
-	multiboot2 /boot/$(KERNEL_BIN) $(GRUB_KERNEL_CMDLINE)
+	multiboot2 /boot/$(KERNEL_BIN) $(CMDLINE)
 	module2 /boot/$(INITRD_TAR) initrd
 	module2 /boot/$(SYMBOLS_TXT) symbols
 	boot
 }
 
 menuentry "$(OS_NAME) $(BUILD_MODE) (kernel mode)" {
-	multiboot2 /boot/$(KERNEL_BIN) kshell
+	multiboot2 /boot/$(KERNEL_BIN) $(KERNEL_CMDLINE)
 	module2 /boot/$(INITRD_TAR) initrd
 	module2 /boot/$(SYMBOLS_TXT) symbols
 	boot
@@ -129,7 +128,7 @@ arch-run-release: release
 
 arch-run-test: BUILD_MODE = test
 arch-run-test: QEMU_OPTIONS += -curses
-arch-run-test: GRUB_KERNEL_CMDLINE = /bin/userland-testsuite
+arch-run-test: CMDLINE = /bin/userland-testsuite
 arch-run-test: run-release
 .PHONY: arch-run-test
 
