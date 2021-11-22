@@ -30,7 +30,6 @@ SECTIONS {
         __initcall_end = .;
     }
 
-
     /* read-write data (initialized) */
     .data :
     {
