@@ -4,6 +4,8 @@
 
 void kmain_print_banner();
 
+void kmain_init_fs();
+
 void kmain_start(const char* cmdline);
 
 // utils

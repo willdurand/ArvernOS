@@ -12,11 +12,7 @@
 #include <drivers/rtl8139.h>
 #include <drivers/serial.h>
 #include <drivers/timer.h>
-#include <fs/dev.h>
-#include <fs/proc.h>
-#include <fs/sock.h>
 #include <fs/tar.h>
-#include <fs/vfs.h>
 #include <kmain.h>
 #include <logging.h>
 #include <mmu/alloc.h>
@@ -118,32 +114,11 @@ void load_symbols(multiboot_tag_module_t* module, uint64_t size)
 
 void load_initrd(multiboot_tag_module_t* module)
 {
-  print_step("  mounting tarfs (init ramdisk)");
+  print_step("mounting tarfs (init ramdisk)");
   inode_t initrd = vfs_mount("/", tar_fs_create((uint64_t)module->mod_start));
 
   if (initrd) {
     print_ok();
-
-    print_step("  mounting devfs");
-    if (dev_fs_init()) {
-      print_ok();
-    } else {
-      print_ko();
-    }
-
-    print_step("  mounting procfs");
-    if (proc_fs_init()) {
-      print_ok();
-    } else {
-      print_ko();
-    }
-
-    print_step("  mounting sockfs");
-    if (sock_fs_init()) {
-      print_ok();
-    } else {
-      print_ko();
-    }
   } else {
     print_ko();
   }
@@ -221,9 +196,7 @@ void kmain(uint64_t addr)
   check_interrupts();
   print_ok();
 
-  print_step("initializing virtual file system");
-  vfs_init();
-  print_ok();
+  kmain_init_fs();
 
   load_modules(mbi);
 
