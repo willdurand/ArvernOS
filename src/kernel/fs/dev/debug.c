@@ -7,7 +7,7 @@
 #include <string.h>
 #include <sys/stat.h>
 
-inode_t debug_fs_create();
+inode_t debug_create();
 uint64_t debug_stat(inode_t node, vfs_stat_t* st);
 uint64_t debug_write(inode_t node,
                      void* buffer,
@@ -28,7 +28,7 @@ static vfs_driver_t debug_driver = {
   NULL,         // create
 };
 
-inode_t debug_fs_create()
+inode_t debug_create()
 {
   inode_t node = calloc(1, sizeof(vfs_node_t));
 
@@ -72,7 +72,7 @@ uint64_t debug_isatty(inode_t inode)
 
 int dev_debug_init()
 {
-  if (!vfs_mount(FS_DEV_MOUNTPOINT "/debug", debug_fs_create())) {
+  if (!vfs_mount(FS_DEV_MOUNTPOINT "/debug", debug_create())) {
     return 1;
   }
 
