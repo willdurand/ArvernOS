@@ -28,13 +28,14 @@
 
 void busywait(uint64_t seconds);
 void check_interrupts();
-void load_initrd(multiboot_tag_module_t* module);
 void load_modules(multiboot_info_t* mbi);
 void load_network_config(inish_config_t* kernel_cfg, net_driver_t* driver);
 void load_symbols(multiboot_tag_module_t* module, uint64_t size);
 void load_system_config(inish_config_t* kernel_cfg);
 void print_debug_gdt();
 void print_debug_tss();
+
+static uintptr_t initrd_addr = 0;
 
 void print_debug_tss()
 {
@@ -97,7 +98,7 @@ void load_modules(multiboot_info_t* mbi)
       uint64_t size = module->mod_end - module->mod_start;
 
       if (strcmp(module->cmdline, "initrd") == 0) {
-        load_initrd(module);
+        initrd_addr = (uintptr_t)module->mod_start;
       } else if (strcmp(module->cmdline, "symbols") == 0) {
         load_symbols(module, size);
       }
@@ -110,18 +111,6 @@ void load_symbols(multiboot_tag_module_t* module, uint64_t size)
   print_step("loading debug symbols");
   arch_kernel_load_symbols(module->mod_start, size);
   print_ok();
-}
-
-void load_initrd(multiboot_tag_module_t* module)
-{
-  print_step("mounting tarfs (init ramdisk)");
-  inode_t initrd = vfs_mount("/", tar_fs_create((uint64_t)module->mod_start));
-
-  if (initrd) {
-    print_ok();
-  } else {
-    print_ko();
-  }
 }
 
 void load_network_config(inish_config_t* kernel_cfg, net_driver_t* driver)
@@ -196,9 +185,9 @@ void kmain(uint64_t addr)
   check_interrupts();
   print_ok();
 
-  kmain_init_fs();
-
   load_modules(mbi);
+
+  kmain_init_fs(initrd_addr);
 
   print_step("loading kernel.inish configuration");
   inish_config_t* kernel_cfg = inish_load("/etc/kernel.inish");
