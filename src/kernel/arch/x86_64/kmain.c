@@ -12,7 +12,6 @@
 #include <drivers/rtl8139.h>
 #include <drivers/serial.h>
 #include <drivers/timer.h>
-#include <fs/debug.h>
 #include <fs/dev.h>
 #include <fs/proc.h>
 #include <fs/serial.h>
@@ -136,13 +135,6 @@ void load_initrd(multiboot_tag_module_t* module)
       } else {
         print_ko();
       }
-    } else {
-      print_ko();
-    }
-
-    print_step("  mounting debugfs");
-    if (debug_fs_init()) {
-      print_ok();
     } else {
       print_ko();
     }
