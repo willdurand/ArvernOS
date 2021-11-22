@@ -84,7 +84,11 @@ int main()
   assert(bytes_read == 0, "returns no bytes read when offset is too big");
   end_describe();
 
-  vfs_free(root);
+  describe("vfs_free()");
+  // Without this, `vfs_free()` won't do anything.
+  root->parent = NULL;
+  assert(vfs_free(root) == 0, "frees the root node");
+  end_describe();
 
   return test_summary();
 }

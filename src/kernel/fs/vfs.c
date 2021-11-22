@@ -360,10 +360,6 @@ int vfs_umount(const char* path)
 
 int vfs_free(inode_t inode)
 {
-  if ((inode->type & FS_MOUNTPOINT) == FS_MOUNTPOINT) {
-    inode->parent = NULL;
-  }
-
   if (inode->parent != NULL) {
     DEBUG("%s", "cannot free a node with a parent");
     return FS_ERR_HASPARENT;
