@@ -10,16 +10,14 @@ dirent_t* test_readdir(inode_t inode, uint64_t num);
 
 inode_t nodes_for_testfs[NB_NODES];
 
-static vfs_driver_t test_driver = {
-  NULL,         // open
-  NULL,         // close
-  test_read,    // read
-  NULL,         // write
-  NULL,         // stat
-  NULL,         // isatty
-  test_readdir, // readdir
-  NULL          // finddir
-};
+static vfs_driver_t test_driver = { .open = NULL,
+                                    .close = NULL,
+                                    .read = test_read,
+                                    .write = NULL,
+                                    .stat = NULL,
+                                    .isatty = NULL,
+                                    .readdir = test_readdir,
+                                    .finddir = NULL };
 
 inode_t test_fs_create(const char* name)
 {

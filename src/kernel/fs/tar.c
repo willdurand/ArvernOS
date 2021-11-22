@@ -24,16 +24,16 @@ static uint64_t nb_entries = 0;
 static inode_t* nodes = NULL;
 
 static vfs_driver_t tar_driver = {
-  NULL,        // open
-  NULL,        // close
-  tar_read,    // read
-  NULL,        // write
-  tar_stat,    // stat
-  tar_isatty,  // isatty
-  tar_readdir, // readdir
-  tar_finddir, // finddir
-  tar_cleanup, // cleanup
-  NULL,        // create
+  .open = NULL,
+  .close = NULL,
+  .read = tar_read,
+  .write = NULL,
+  .stat = tar_stat,
+  .isatty = tar_isatty,
+  .readdir = tar_readdir,
+  .finddir = tar_finddir,
+  .cleanup = tar_cleanup,
+  .create = NULL,
 };
 
 inode_t tar_fs_create(uint64_t address)

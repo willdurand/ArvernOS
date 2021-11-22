@@ -7,16 +7,16 @@ uint64_t null_read(inode_t node, void* buffer, uint64_t size, uint64_t offset);
 uint64_t null_write(inode_t node, void* buffer, uint64_t size, uint64_t offset);
 
 static vfs_driver_t dev_null_driver = {
-  NULL,       // open
-  NULL,       // close
-  null_read,  // read
-  null_write, // write
-  NULL,       // stat
-  NULL,       // isatty
-  NULL,       // readdir
-  NULL,       // finddir
-  NULL,       // cleanup
-  NULL,       // create
+  .open = NULL,
+  .close = NULL,
+  .read = null_read,
+  .write = null_write,
+  .stat = NULL,
+  .isatty = NULL,
+  .readdir = NULL,
+  .finddir = NULL,
+  .cleanup = NULL,
+  .create = NULL,
 };
 
 uint64_t null_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
