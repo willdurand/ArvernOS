@@ -9,6 +9,7 @@
 #include <string.h>
 #include <sys/stat.h>
 
+inode_t sock_fs_create();
 uint64_t sock_open(inode_t inode, uint64_t flags);
 uint64_t sock_close(inode_t inode);
 inode_t sock_create(inode_t parent, const char* name, uint64_t flags);
