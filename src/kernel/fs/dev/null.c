@@ -1,7 +1,7 @@
 #include <fs/dev.h>
-#include <init.h>
 
 #include <arvern/utils.h>
+#include <init.h>
 
 uint64_t null_read(inode_t node, void* buffer, uint64_t size, uint64_t offset);
 uint64_t null_write(inode_t node, void* buffer, uint64_t size, uint64_t offset);

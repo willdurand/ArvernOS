@@ -1,6 +1,6 @@
 #include <fs/proc.h>
-#include <init.h>
 
+#include <init.h>
 #include <stdio.h>
 
 // This variable is defined in `src/kernel/kmain.c`.
