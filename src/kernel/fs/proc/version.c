@@ -1,6 +1,6 @@
 #include <fs/proc.h>
-#include <init.h>
 
+#include <init.h>
 #include <osinfo.h>
 #include <stdio.h>
 

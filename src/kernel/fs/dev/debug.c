@@ -1,7 +1,7 @@
 #include <fs/dev.h>
-#include <init.h>
 
 #include <arvern/utils.h>
+#include <init.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
