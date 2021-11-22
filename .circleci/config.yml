@@ -88,7 +88,7 @@ jobs:
       - setup
       - run_qemu:
           title: kernel selftest
-          command: make clean run-test GRUB_KERNEL_CMDLINE='kshell selftest' UBSAN=<< parameters.ubsan >>
+          command: make clean run-test CMDLINE='kshell selftest' UBSAN=<< parameters.ubsan >>
 
   kernel-selftest-10-times:
     <<: *defaults
@@ -97,7 +97,7 @@ jobs:
       - run_qemu:
           title: kernel selftest ran 10 times
           command: |
-            make clean run-test GRUB_KERNEL_CMDLINE="$(echo "kshell$(printf ' selftest%.0s' {1..10})")"
+            make clean run-test CMDLINE="$(echo "kshell$(printf ' selftest%.0s' {1..10})")"
 
   userland-test-suite-with-ubsan:
     <<: *defaults

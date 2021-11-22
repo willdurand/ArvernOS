@@ -229,12 +229,15 @@ The normal (or "default") mode will load the
 kernel mode will load the `kshell` instead and will stay in kernel mode (as its
 name implies).
 
-It is possible to change the command line by passing the `GRUB_KERNEL_CMDLINE`
-variable to `make` (or add it to your `config` file):
+It is possible to change the command line by passing the `CMDLINE` variable to
+`make` (or add it to your `config` file):
 
 ```
-$ make clean run-debug GRUB_KERNEL_CMDLINE="/bin/init foo bar"
+$ make clean run-debug CMDLINE="/bin/init foo bar"
 ```
+
+Note: it is also possible to set `KERNEL_CMDLINE`, which is passed to the kernel
+in... kernel mode.
 
 ## Some information about the x86_64 implementation
 
