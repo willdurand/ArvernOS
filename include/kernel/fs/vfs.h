@@ -1,6 +1,7 @@
 #ifndef FS_VFS_H
 #define FS_VFS_H
 
+#include <stdbool.h>
 #include <stdint.h>
 
 #define VFS_NAME_MAX_SIZE 256
@@ -57,7 +58,7 @@ typedef struct vfs_node
   int64_t data;
 } vfs_node_t;
 
-void vfs_init();
+bool vfs_init();
 
 uint64_t vfs_open(inode_t inode, uint64_t flags);
 

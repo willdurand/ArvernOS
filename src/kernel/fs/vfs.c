@@ -11,11 +11,18 @@ inode_t vfs_namei_mount(const char* path, inode_t root);
 
 static vfs_node_t* vfs_root = NULL;
 
-void vfs_init()
+bool vfs_init()
 {
   vfs_root = vfs_make_directory("/");
+
+  if (!vfs_root) {
+    return false;
+  }
+
   vfs_root->parent = vfs_root;
   vfs_root->type |= FS_MOUNTPOINT;
+
+  return true;
 }
 
 uint64_t vfs_open(inode_t inode, uint64_t mode)
@@ -395,6 +402,10 @@ int vfs_type(inode_t inode)
 inode_t vfs_make_directory(const char* name)
 {
   inode_t node = calloc(1, sizeof(vfs_node_t));
+
+  if (!node) {
+    return NULL;
+  }
 
   strcpy(node->name, name);
   node->type = FS_DIRECTORY;
