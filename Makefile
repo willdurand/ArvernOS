@@ -1,9 +1,9 @@
-ARCH           = x86_64
+ARCH           ?= x86_64
 OS_NAME        = ArvernOS
 BUILD_MODE     = release
 GIT_HASH       := $(shell git rev-parse --short HEAD)
-CMDLINE        = /bin/init -s
-KERNEL_CMDLINE = kshell
+CMDLINE        ?= /bin/init -s
+KERNEL_CMDLINE ?= kshell
 
 include ./Makefile.include
 
