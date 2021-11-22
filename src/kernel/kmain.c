@@ -1,5 +1,9 @@
 #include <kmain.h>
 
+#include <fs/dev.h>
+#include <fs/proc.h>
+#include <fs/sock.h>
+#include <fs/vfs.h>
 #include <init.h>
 #include <kshell/kshell.h>
 #include <logging.h>
@@ -69,6 +73,34 @@ void run_initcalls()
     (*call_fn)();
     call_fn++;
   } while (call_fn < &__initcall_end);
+}
+
+void kmain_init_fs()
+{
+  print_step("initializing virtual file system");
+  vfs_init();
+  print_ok();
+
+  print_step("mounting devfs");
+  if (dev_fs_init()) {
+    print_ok();
+  } else {
+    print_ko();
+  }
+
+  print_step("mounting procfs");
+  if (proc_fs_init()) {
+    print_ok();
+  } else {
+    print_ko();
+  }
+
+  print_step("mounting sockfs");
+  if (sock_fs_init()) {
+    print_ok();
+  } else {
+    print_ko();
+  }
 }
 
 void kmain_start(const char* cmdline)
