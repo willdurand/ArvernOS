@@ -156,7 +156,9 @@ int main()
   end_describe();
 
   describe("vfs_free()");
-  assert(vfs_free(root) == 0, "frees a node");
+  // Without this, `vfs_free()` won't do anything.
+  root->parent = NULL;
+  assert(vfs_free(root) == 0, "frees the root node");
   end_describe();
 
   for (uint8_t i = 0; i < NB_NODES; i++) {
