@@ -44,6 +44,9 @@ LOG_FILE         = $(LOG_DIR)/$(ARCH)-$(BUILD_MODE).log
 # More tools.
 TAR = tar
 
+CONFIG_CFLAGS += -DGIT_HASH=\"$(GIT_HASH)\"
+CONFIG_CFLAGS += -DARCH=\"$(ARCH)\"
+
 # This is the list of external libraries we use and need to build for the
 # kernel (libk) and the libc.
 EXTERNAL_DEPS = liballoc printf vtconsole
@@ -65,16 +68,11 @@ INCLUDES += $(addprefix -I$(EXTERNAL_DIR)/,$(EXTERNAL_DEPS))
 INCLUDES += -I$(EXTERNAL_DIR)/scalable-font2/
 
 WERRORS += -Wall -Wextra -Werror
-WERRORS += -Werror=implicit-function-declaration
-WERRORS += -Werror=int-conversion
-WERRORS += -Werror=incompatible-pointer-types
-WERRORS += -Werror=shift-count-overflow
-WERRORS += -Werror=switch
+WERRORS += -Wno-null-pointer-arithmetic
 
-CFLAGS += -DGIT_HASH=\"$(GIT_HASH)\"
-CFLAGS += -DARCH=\"$(ARCH)\"
 CFLAGS += -O2 -std=c11 -ffreestanding -nostdinc -nostdlib -fno-builtin
 CFLAGS += $(WERRORS)
+CFLAGS += $(CONFIG_CFLAGS)
 
 DEBUG_CFLAGS = -g3 -DENABLE_KERNEL_DEBUG
 
