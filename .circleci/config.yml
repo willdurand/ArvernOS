@@ -7,13 +7,16 @@ references:
 
 commands:
   setup:
+    parameters:
+      arch:
+        type: string
     steps:
       - checkout
       - run: git submodule sync && git submodule update --init
       - run:
           name: create config for Circle CI
           command: |
-            cp .circleci/config config
+            cp .circleci/config-<< parameters.arch >> config
 
   build:
     parameters:
@@ -22,8 +25,9 @@ commands:
       arch:
         type: string
     steps:
-      - setup
-      - run: ARCH=<<parameters.arch>> make clean << parameters.target >>
+      - setup:
+          arch: << parameters.arch >>
+      - run: ARCH=<< parameters.arch >> make clean << parameters.target >>
       - run:
           name: ensure the kernel has been built
           command: test -f build/<< parameters.arch >>/dist/kernel-<< parameters.arch >>.bin
@@ -64,7 +68,8 @@ jobs:
   checks:
     <<: *defaults
     steps:
-      - setup
+      - setup:
+          arch: x86_64
       - run:
           name: fmt
           command: |
@@ -74,7 +79,8 @@ jobs:
   unit-tests:
     <<: *defaults
     steps:
-      - setup
+      - setup:
+          arch: x86_64
       - run:
           name: unit tests
           command: make clean test
@@ -85,7 +91,8 @@ jobs:
       ubsan:
         type: integer
     steps:
-      - setup
+      - setup:
+          arch: x86_64
       - run_qemu:
           title: kernel selftest
           command: make clean run-test CMDLINE='kshell selftest' UBSAN=<< parameters.ubsan >>
@@ -93,7 +100,8 @@ jobs:
   kernel-selftest-10-times:
     <<: *defaults
     steps:
-      - setup
+      - setup:
+          arch: x86_64
       - run_qemu:
           title: kernel selftest ran 10 times
           command: |
@@ -105,7 +113,8 @@ jobs:
       ubsan:
         type: integer
     steps:
-      - setup
+      - setup:
+          arch: x86_64
       - run_qemu:
           title: userland test suite
           command: make clean run-test UBSAN=<< parameters.ubsan >>
