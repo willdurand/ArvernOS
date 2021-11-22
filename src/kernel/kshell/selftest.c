@@ -1,7 +1,6 @@
 #include <kshell/kshell.h>
 
 #include <arch/kshell.h>
-#include <fs/debug.h>
 #include <fs/vfs.h>
 #include <panic.h>
 #include <stdio.h>
@@ -52,7 +51,7 @@ void selftest()
   }
 
   print_selftest_header("filesystem");
-  inode_t debug = vfs_namei(FS_DEBUG_MOUNTPOINT);
+  inode_t debug = vfs_namei("/dev/debug");
   const char* message = "This message should be written to the console.\n";
   vfs_write(debug, (void*)message, strlen(message), 0);
 

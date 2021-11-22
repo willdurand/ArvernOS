@@ -1,4 +1,5 @@
-#include <fs/debug.h>
+#include <fs/dev.h>
+#include <init.h>
 
 #include <arvern/utils.h>
 #include <stdio.h>
@@ -6,6 +7,7 @@
 #include <string.h>
 #include <sys/stat.h>
 
+inode_t debug_fs_create();
 uint64_t debug_stat(inode_t node, vfs_stat_t* st);
 uint64_t debug_write(inode_t node,
                      void* buffer,
@@ -25,11 +27,6 @@ static vfs_driver_t debug_driver = {
   NULL,         // cleanup
   NULL,         // create
 };
-
-bool debug_fs_init()
-{
-  return (bool)vfs_mount(FS_DEBUG_MOUNTPOINT, debug_fs_create());
-}
 
 inode_t debug_fs_create()
 {
@@ -72,3 +69,14 @@ uint64_t debug_isatty(inode_t inode)
 
   return 1;
 }
+
+int dev_debug_init()
+{
+  if (!vfs_mount(FS_DEV_MOUNTPOINT "/debug", debug_fs_create())) {
+    return 1;
+  }
+
+  return 0;
+}
+
+init_register(dev_debug_init);
