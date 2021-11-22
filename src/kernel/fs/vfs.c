@@ -235,18 +235,20 @@ inode_t vfs_namei_mount(const char* path, inode_t root)
       }
 
       if (root) {
-        if (!next) {
+        if (next == NULL) {
           if (pth != NULL) {
             FS_DEBUG("cannot create a node because pth=%s", pth);
             free(npath);
             return NULL;
           }
 
-          next = calloc(1, sizeof(vfs_node_t));
-          next->n_children = 0;
-          next->children = (inode_t*)calloc(0, sizeof(inode_t));
-          next->type = FS_DIRECTORY;
-          strcpy(next->name, name);
+          next = vfs_make_directory(name);
+
+          if (next == NULL) {
+            FS_DEBUG("%s", "next is null after a call to vfs_make_directory()");
+            free(npath);
+            return NULL;
+          }
 
           FS_DEBUG("created node: %s", next->name);
         }
@@ -404,6 +406,7 @@ inode_t vfs_make_directory(const char* name)
   inode_t node = calloc(1, sizeof(vfs_node_t));
 
   if (!node) {
+    FS_DEBUG("failed to allocate memory for directory: name=%s", name);
     return NULL;
   }
 
