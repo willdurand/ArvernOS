@@ -36,6 +36,6 @@ typedef struct tar_header
  * @param address the memory address where the TAR archive is located
  * @return the root inode of the tar file system
  */
-inode_t tar_fs_create(uint64_t address);
+inode_t tar_fs_create(uintptr_t address);
 
 #endif

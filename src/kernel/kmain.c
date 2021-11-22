@@ -3,6 +3,7 @@
 #include <fs/dev.h>
 #include <fs/proc.h>
 #include <fs/sock.h>
+#include <fs/tar.h>
 #include <fs/vfs.h>
 #include <init.h>
 #include <kshell/kshell.h>
@@ -75,13 +76,24 @@ void run_initcalls()
   } while (call_fn < &__initcall_end);
 }
 
-void kmain_init_fs()
+void kmain_init_fs(uintptr_t initrd_addr)
 {
   print_step("initializing virtual file system");
   if (vfs_init()) {
     print_ok();
   } else {
     print_ko();
+  }
+
+  if (initrd_addr) {
+    print_step("mounting tarfs (init ramdisk)");
+    inode_t initrd = vfs_mount("/", tar_fs_create(initrd_addr));
+
+    if (initrd) {
+      print_ok();
+    } else {
+      print_ko();
+    }
   }
 
   print_step("mounting devfs");
@@ -108,14 +120,14 @@ void kmain_init_fs()
 
 void kmain_start(const char* cmdline)
 {
-  run_initcalls();
-
   if (cmdline == NULL) {
     PANIC("invalid cmdline passed to kmain_start()");
   }
   DEBUG("cmdline=%s", cmdline);
   // Keep a copy of the original command line.
   saved_cmdline = strdup(cmdline);
+
+  run_initcalls();
 
   int argc = 0;
   char* _cmdline = strdup(cmdline);
