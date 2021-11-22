@@ -12,16 +12,16 @@ inode_t proc_fs_create();
 uint64_t proc_read(inode_t inode, void* buffer, uint64_t size, uint64_t offset);
 
 static vfs_driver_t proc_driver = {
-  NULL,      // open
-  NULL,      // close
-  proc_read, // read
-  NULL,      // write
-  NULL,      // stat
-  NULL,      // isatty
-  NULL,      // readdir
-  NULL,      // finddir
-  NULL,      // cleanup
-  NULL,      // create
+  .open = NULL,
+  .close = NULL,
+  .read = proc_read,
+  .write = NULL,
+  .stat = NULL,
+  .isatty = NULL,
+  .readdir = NULL,
+  .finddir = NULL,
+  .cleanup = NULL,
+  .create = NULL,
 };
 
 bool proc_fs_init()

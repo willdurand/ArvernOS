@@ -21,16 +21,16 @@ static sock_entry_t entries[MAX_ENTRIES] = { 0 };
 static uint64_t nb_used_entries = 0;
 
 static vfs_driver_t sock_driver = {
-  NULL,         // open
-  sock_close,   // close
-  sock_read,    // read
-  sock_write,   // write
-  sock_stat,    // stat
-  NULL,         // isatty
-  sock_readdir, // readdir
-  NULL,         // finddir
-  NULL,         // cleanup
-  sock_create   // create
+  .open = NULL,
+  .close = sock_close,
+  .read = sock_read,
+  .write = sock_write,
+  .stat = sock_stat,
+  .isatty = NULL,
+  .readdir = sock_readdir,
+  .finddir = NULL,
+  .cleanup = NULL,
+  .create = sock_create,
 };
 
 bool sock_fs_init()

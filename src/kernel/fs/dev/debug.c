@@ -16,16 +16,16 @@ uint64_t debug_write(inode_t node,
 uint64_t debug_isatty(inode_t inode);
 
 static vfs_driver_t debug_driver = {
-  NULL,         // open
-  NULL,         // close
-  NULL,         // read
-  debug_write,  // write
-  debug_stat,   // stat
-  debug_isatty, // isatty
-  NULL,         // readdir
-  NULL,         // finddir
-  NULL,         // cleanup
-  NULL,         // create
+  .open = NULL,
+  .close = NULL,
+  .read = NULL,
+  .write = debug_write,
+  .stat = debug_stat,
+  .isatty = debug_isatty,
+  .readdir = NULL,
+  .finddir = NULL,
+  .cleanup = NULL,
+  .create = NULL,
 };
 
 inode_t debug_create()

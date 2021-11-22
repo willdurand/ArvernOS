@@ -17,16 +17,16 @@ uint64_t dev_serial_write(inode_t node,
 uint64_t dev_serial_isatty(inode_t inode);
 
 static vfs_driver_t serial_driver = {
-  NULL,              // open
-  NULL,              // close
-  NULL,              // read
-  dev_serial_write,  // write
-  dev_serial_stat,   // stat
-  dev_serial_isatty, // isatty
-  NULL,              // readdir
-  NULL,              // finddir
-  NULL,              // cleanup
-  NULL,              // create
+  .open = NULL,
+  .close = NULL,
+  .read = NULL,
+  .write = dev_serial_write,
+  .stat = dev_serial_stat,
+  .isatty = dev_serial_isatty,
+  .readdir = NULL,
+  .finddir = NULL,
+  .cleanup = NULL,
+  .create = NULL,
 };
 
 inode_t dev_serial_create(uint16_t serial_port)
