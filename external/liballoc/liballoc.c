@@ -63,7 +63,7 @@ struct liballoc_major
   unsigned int usage;          ///< The number of bytes used in the block.
   struct liballoc_minor*
     first; ///< A pointer to the first allocated memory in the block.
-};
+} __attribute__((packed));
 
 /** This is a structure found at the beginning of all
  * sections in a major block which were allocated by a
@@ -79,7 +79,7 @@ struct liballoc_minor
   unsigned int
     size; ///< The size of the memory allocated. Could be 1 byte or more.
   unsigned int req_size; ///< The size of memory requested.
-};
+} __attribute__((packed));
 
 static struct liballoc_major* l_memRoot =
   NULL; ///< The root memory block acquired from the system.
@@ -230,7 +230,7 @@ static struct liballoc_major* allocate_new_page(unsigned int size)
   return maj;
 }
 
-__attribute__((no_sanitize("undefined"))) void* PREFIX(malloc)(size_t req_size)
+void* PREFIX(malloc)(size_t req_size)
 {
   int startedBet = 0;
   unsigned long long bestSize = 0;
@@ -558,7 +558,7 @@ __attribute__((no_sanitize("undefined"))) void* PREFIX(malloc)(size_t req_size)
   return NULL;
 }
 
-__attribute__((no_sanitize("undefined"))) void PREFIX(free)(void* ptr)
+void PREFIX(free)(void* ptr)
 {
   struct liballoc_minor* min;
   struct liballoc_major* maj;
@@ -700,8 +700,7 @@ void* PREFIX(calloc)(size_t nobj, size_t size)
   return p;
 }
 
-__attribute__((no_sanitize("undefined"))) void* PREFIX(realloc)(void* p,
-                                                                size_t size)
+void* PREFIX(realloc)(void* p, size_t size)
 {
   void* ptr;
   struct liballoc_minor* min;
