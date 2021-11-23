@@ -1,6 +1,7 @@
 #include <fs/proc.h>
 
 #include <init.h>
+#include <inttypes.h>
 #include <mmu/alloc.h>
 #include <mmu/frame.h>
 #include <stdio.h>
@@ -14,7 +15,8 @@ int proc_read_meminfo(char* buf, size_t size)
 
   snprintf(buf,
            size,
-           "frames: %6llu/%llu\nheap  : %6llu/%llu KiB [%llu/%llu]\n",
+           "frames: %6" PRIu64 "/%" PRIu64 "\n"
+           "heap  : %6" PRIu64 "/%" PRIu64 " KiB [%" PRIu64 "/%" PRIu64 "]\n",
            used_frames,
            max_frames,
            (used_heap * PAGE_SIZE) / 1024,
