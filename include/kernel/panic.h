@@ -16,7 +16,7 @@
 #define __PANIC(dump_stacktrace, format, ...)                                  \
   DEBUG(format "%s", __VA_ARGS__);                                             \
   kernel_panic(dump_stacktrace,                                                \
-               "PANIC in %s() (line %d): " format "%s",                        \
+               "\nPANIC in %s() (line %d): " format "%s",                      \
                __func__,                                                       \
                __LINE__,                                                       \
                __VA_ARGS__);
