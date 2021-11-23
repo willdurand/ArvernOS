@@ -36,6 +36,7 @@ bool dhcp_negotiate(net_interface_t* interface)
 
   dhcp_handle_offer(interface);
   free(dhcp_offer);
+  dhcp_offer = NULL;
 
   elapsed = 0;
   while (dhcp_offer == NULL && elapsed++ < 10000) {
@@ -48,6 +49,7 @@ bool dhcp_negotiate(net_interface_t* interface)
 
   dhcp_handle_offer(interface);
   free(dhcp_offer);
+  dhcp_offer = NULL;
 
   return true;
 }
