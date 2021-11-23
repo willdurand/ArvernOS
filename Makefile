@@ -49,7 +49,15 @@ CONFIG_CFLAGS += -DARCH=\"$(ARCH)\"
 
 # This is the list of external libraries we use and need to build for the
 # kernel (libk) and the libc.
-EXTERNAL_DEPS = liballoc printf vtconsole
+EXTERNAL_DEPS = printf vtconsole
+
+ifeq ($(CONFIG_USE_DLMALLOC), 1)
+	EXTERNAL_DEPS += dlmalloc
+	CONFIG_CFLAGS += -DCONFIG_USE_DLMALLOC
+else
+	EXTERNAL_DEPS += liballoc
+endif
+
 EXTERNAL_DIRS := $(addprefix $(EXTERNAL_DIR)/,$(EXTERNAL_DEPS))
 
 # First, we gather the files for the architecture, then all the other files in
@@ -59,7 +67,7 @@ LIBK_C_FILES += $(shell find $(KERNEL_SRC_DIR) src/libc $(EXTERNAL_DIRS) -not -p
 
 LIBK_OBJECTS     := $(patsubst %.c, $(LIBK_OBJS_DIR)/%.o, $(LIBK_C_FILES))
 LIBK_ASM_OBJECTS := $(patsubst %.asm, $(LIBK_OBJS_DIR)/%.o, $(shell find $(ARCH_SRC)/asm -name '*.asm'))
-LIBC_OBJECTS     := $(patsubst %.c, $(LIBC_OBJS_DIR)/%.o, $(shell find src/libc $(EXTERNAL_DIRS) -name '*.c'))
+LIBC_OBJECTS     := $(patsubst %.c, $(LIBC_OBJS_DIR)/%.o, $(shell find src/libc $(EXTERNAL_DIRS) -not -path "$(EXTERNAL_DIR)/dlmalloc/*" -name '*.c'))
 LIBC_ASM_OBJECTS := $(patsubst %.asm, $(LIBC_OBJS_DIR)/%.o, $(shell find src/libc/asm -name '*.asm'))
 LIBC_TEST_FILES  := $(patsubst $(TESTS_DIR)/%.c, %, $(shell find $(TESTS_DIR)/libc -name '*.c'))
 

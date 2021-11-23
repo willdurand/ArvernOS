@@ -2489,7 +2489,7 @@ static void init_bins(mstate m) {
 
 /* default corruption action */
 static void reset_on_error(mstate m) {
-  int i;
+  unsigned int i;
   ++malloc_corruption_error_count;
   /* Reinitialize fields to forget about all memory */
   m->smallmap = m->treemap = 0;
@@ -3929,7 +3929,7 @@ size_t dlmalloc_set_footprint_limit(size_t bytes) {
   if (bytes == MAX_SIZE_T)
     result = 0;                    /* disable */
   else
-    result = granularity_align(bytes);
+    result = bytes; // granularity_align(bytes);
   return gm->footprint_limit = result;
 }
 

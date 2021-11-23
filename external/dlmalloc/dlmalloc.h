@@ -521,6 +521,40 @@ MAX_RELEASE_CHECK_RATE   default: 4095 unless not HAVE_MMAP
   improvement at the expense of carrying around more memory.
 */
 
+// BEGIN: ArvernOS configuration
+#include <panic.h>
+
+extern void* libk_sbrk(intptr_t size);
+
+#define ABORT_ON_ASSERT_FAILURE 1
+#define HAVE_MMAP               0
+#define LACKS_SYS_PARAM_H       1
+#define LACKS_STDLIB_H          1
+#define MORECORE                libk_sbrk
+#define MORECORE_CANNOT_TRIM    1
+#define MORECORE_CONTIGUOUS     1
+#define NO_MALLINFO             1
+#define NO_MALLOC_STATS         1
+#define USE_LOCKS               0
+
+#define ABORT                                                                  \
+  do {                                                                         \
+    PANIC("%s", "dlmalloc aborted");                                           \
+  } while (0)
+
+#ifndef PROCEED_ON_ERROR
+#define CORRUPTION_ERROR_ACTION(m)                                             \
+  do {                                                                         \
+    PANIC("dlmalloc corruption error: least_addr=%p", m->least_addr);          \
+  } while (0)
+#define USAGE_ERROR_ACTION(m, p)                                               \
+  do {                                                                         \
+    PANIC(                                                                     \
+      "dlmalloc usage error:\n  m->least_addr=%p\n  p=%p", m->least_addr, p);  \
+  } while (0)
+#endif
+// END: ArvernOS configuration
+
 /* Version identifier to allow people to support multiple versions */
 #ifndef DLMALLOC_VERSION
 #define DLMALLOC_VERSION 20806

@@ -1,9 +1,63 @@
 #include "alloc.h"
-#include <mmu/bitmap.h>
+#include <arvern/utils.h>
+#include <inttypes.h>
 #include <mmu/logging.h>
 #include <mmu/paging.h>
-#include <panic.h>
+#include <stdint.h>
 #include <string.h>
+
+#ifdef CONFIG_USE_DLMALLOC
+
+#include <stdlib.h>
+
+static uintptr_t heap_addr = HEAP_START;
+
+void alloc_init()
+{
+  dlmalloc_set_footprint_limit(HEAP_SIZE);
+}
+
+void* libk_sbrk(intptr_t size)
+{
+  DEBUG("heap_addr=%p size=%" PRIi64, heap_addr, size);
+
+  if (size == 0) {
+    return (void*)heap_addr;
+  } else if (size > 0) {
+    map_multiple(page_containing_address(heap_addr),
+                 size / PAGE_SIZE,
+                 PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
+    memset((void*)heap_addr, 0, size);
+  }
+
+  uintptr_t old = heap_addr;
+  uintptr_t new = heap_addr + size;
+
+  // This cannot happen in theory because `size` cannot be negative due to
+  // `MORECORE_CANNOT_TRIM` being set to `1` in `dlmalloc.h`.
+  if (new < HEAP_START) {
+    return NULL;
+  }
+
+  heap_addr = new;
+
+  return (void*)old;
+}
+
+uint64_t alloc_get_used_count()
+{
+  return dlmalloc_footprint() / PAGE_SIZE;
+}
+
+uint64_t alloc_get_max_count()
+{
+  return dlmalloc_footprint_limit() / PAGE_SIZE;
+}
+
+#else // CONFIG_USE_DLMALLOC
+
+#include <mmu/bitmap.h>
+#include <panic.h>
 #include <sys/types.h>
 
 static uint64_t heap_end_page = 0;
@@ -109,3 +163,5 @@ uint64_t alloc_get_max_count()
 {
   return MAX_PAGES;
 }
+
+#endif // CONFIG_USE_DLMALLOC
