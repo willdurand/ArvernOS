@@ -152,6 +152,11 @@ void __ubsan_handle_vla_bound_not_positive(ubsan_vla_bound_data_t* data,
   ubsan_panic_at(&data->location, "vla bound not positive");
 }
 
+void __ubsan_handle_invalid_builtin(ubsan_invalid_builtin_data_t* data)
+{
+  ubsan_panic_at(&data->location, "invalid built-in");
+}
+
 void ubsan_panic_at(ubsan_source_location_t* location, const char* error)
 {
 #ifdef __is_libk
