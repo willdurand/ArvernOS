@@ -85,6 +85,15 @@ jobs:
           name: unit tests
           command: make clean test
 
+  kernel-selftest-dlmalloc:
+    <<: *defaults
+    steps:
+      - setup:
+          arch: x86_64
+      - run_qemu:
+          title: kernel selftest
+          command: make clean run-test CMDLINE='kshell selftest' CONFIG_USE_DLMALLOC=1
+
   kernel-selftest-with-ubsan:
     <<: *defaults
     parameters:
@@ -127,6 +136,7 @@ workflows:
             parameters:
               target: [debug, release]
       - checks
+      - kernel-selftest-dlmalloc
       - kernel-selftest-with-ubsan:
           matrix:
             parameters:

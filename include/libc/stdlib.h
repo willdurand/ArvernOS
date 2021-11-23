@@ -7,10 +7,18 @@
 
 #ifdef __is_libk
 
+#ifdef CONFIG_USE_DLMALLOC
+
+#include <dlmalloc.h>
+
+#else // CONFIG_USE_DLMALLOC
+
 #define _HAVE_SIZE_T
 #define _HAVE_UINTPTR_T
 
 #include <liballoc.h>
+
+#endif // CONFIG_USE_DLMALLOC
 
 #else
 
