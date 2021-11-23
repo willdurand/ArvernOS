@@ -49,6 +49,7 @@ token_t* inish_lex_identifier(int fd, token_t* t);
 token_t* inish_lex_string(int fd, token_t* t);
 token_t* inish_lex_number(int fd, token_t* t);
 void inish_add_char_to_token_value(token_t* t, char c);
+void inish_free_token(token_t* t);
 
 static token_t* next_token;
 static uint64_t line;
@@ -70,8 +71,7 @@ token_t* inish_get_next_token(int fd)
 
   // discard rule
   while (next_token->type == WHITESPACE || next_token->type == COMMENT) {
-    free(next_token->value);
-    free(next_token);
+    inish_free_token(next_token);
     next_token = inish_lex_token(fd);
   }
 
@@ -492,18 +492,15 @@ inish_config_t* inish_load(const char* filename)
       t = inish_get_next_token(fd);
 
       if (t->type != OPEN_BRACE) {
-        free(t->value);
-        free(t);
+        inish_free_token(t);
         SYNTAX_ERROR("expected open brace", line);
       }
 
-      free(t->value);
-      free(t);
+      inish_free_token(t);
       t = inish_get_next_token(fd);
 
       if (t->type != IDENTIFIER) {
-        free(t->value);
-        free(t);
+        inish_free_token(t);
         SYNTAX_ERROR("expected identifier", line);
       }
 
@@ -520,59 +517,48 @@ inish_config_t* inish_load(const char* filename)
         conf->sections, (conf->n_sections + 1) * sizeof(inish_section_t*));
       conf->sections[conf->n_sections++] = section;
 
-      free(t->value);
-      free(t);
+      inish_free_token(t);
       t = inish_get_next_token(fd);
 
       if (t->type != CLOSE_BRACE) {
-        free(t->value);
-        free(t);
+        inish_free_token(t);
         SYNTAX_ERROR("expected close brace", line);
       }
 
-      free(t->value);
-      free(t);
+      inish_free_token(t);
       t = inish_get_next_token(fd);
 
       if (t->type != NEWLINE && t->type != FILE_END) {
-        free(t->value);
-        free(t);
+        inish_free_token(t);
         SYNTAX_ERROR("expected newline", line);
       }
 
       // Parse section values.
       while (next_token->type == IDENTIFIER || next_token->type == NEWLINE) {
-        free(t->value);
-        free(t);
+        inish_free_token(t);
         t = inish_get_next_token(fd);
 
         if (t->type == NEWLINE) {
-          free(t->value);
-          free(t);
           continue;
         }
 
         if (t->type != IDENTIFIER) {
-          free(t->value);
-          free(t);
+          inish_free_token(t);
           SYNTAX_ERROR("expected identifier", line);
         }
 
         char* key = (char*)calloc(1, sizeof(char) * (t->len + 1));
         memcpy(key, t->value, t->len);
 
-        free(t->value);
-        free(t);
+        inish_free_token(t);
         t = inish_get_next_token(fd);
 
         if (t->type != EQUALS_SIGN) {
-          free(t->value);
-          free(t);
+          inish_free_token(t);
           SYNTAX_ERROR("expected equals sign", line);
         }
 
-        free(t->value);
-        free(t);
+        inish_free_token(t);
         t = inish_get_next_token(fd);
 
         if (t->type == OPEN_BRACE) {
@@ -586,14 +572,12 @@ inish_config_t* inish_load(const char* filename)
 
           while (next_token->type == IDENTIFIER || next_token->type == STRING ||
                  next_token->type == NUMBER) {
-            free(t->value);
-            free(t);
+            inish_free_token(t);
             t = inish_get_next_token(fd);
 
             if (t->type != IDENTIFIER && t->type != STRING &&
                 t->type != NUMBER) {
-              free(t->value);
-              free(t);
+              inish_free_token(t);
               SYNTAX_ERROR("expected identifier, string or number", line);
             }
 
@@ -604,13 +588,11 @@ inish_config_t* inish_load(const char* filename)
               array->values, (array->n_values + 1) * sizeof(char*));
             array->values[array->n_values++] = value;
 
-            free(t->value);
-            free(t);
+            inish_free_token(t);
             t = inish_get_next_token(fd);
 
             if (t->type != COMMA && t->type != CLOSE_BRACE) {
-              free(t->value);
-              free(t);
+              inish_free_token(t);
               SYNTAX_ERROR("expected comma or close brace", line);
             }
           }
@@ -621,8 +603,7 @@ inish_config_t* inish_load(const char* filename)
         } else {
           // Parse value.
           if (t->type != IDENTIFIER && t->type != STRING && t->type != NUMBER) {
-            free(t->value);
-            free(t);
+            inish_free_token(t);
             SYNTAX_ERROR("expected identifier, string or number", line);
           }
 
@@ -642,21 +623,18 @@ inish_config_t* inish_load(const char* filename)
 
         free(key);
 
-        free(t->value);
-        free(t);
+        inish_free_token(t);
         t = inish_get_next_token(fd);
 
         if (t->type != NEWLINE && t->type != FILE_END) {
-          free(t->value);
-          free(t);
+          inish_free_token(t);
           SYNTAX_ERROR("expected newline", line);
         }
       }
     }
 
     if (t) {
-      free(t->value);
-      free(t);
+      inish_free_token(t);
     }
   }
 
@@ -774,4 +752,13 @@ uint8_t inish_get_ipv4(inish_section_t* section, const char* key, uint8_t ip[4])
   }
 
   return i;
+}
+
+void inish_free_token(token_t* t)
+{
+  free(t->value);
+  t->value = NULL;
+
+  free(t);
+  t = NULL;
 }
