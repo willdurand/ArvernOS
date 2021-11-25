@@ -1,5 +1,6 @@
 #include "shell.h"
 #include <arvern/utils.h>
+#include <inttypes.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -35,7 +36,7 @@ int main(int argc, char* argv[])
   putenv("USER=user");
   putenv("SHELL=/bin/shell");
 
-  printf("shell: pid=%d\n", getpid());
+  printf("shell: pid=%" PRId64 "\n", getpid());
   printf("\nWelcome!\n"
          "This is ArvernOS user shell. Type 'help' for more information.\n\n");
 

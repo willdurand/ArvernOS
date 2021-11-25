@@ -69,12 +69,12 @@ void alloc_init()
   heap_end_page = page_containing_address(HEAP_START + HEAP_SIZE - 1);
   heap_start_page = page_containing_address(HEAP_START);
 
-  INFO(
-    "initialized heap allocator with heap_start_page=%llu heap_end_page=%llu "
-    "used_count=%llu",
-    heap_start_page,
-    heap_end_page,
-    alloc_get_used_count());
+  INFO("initialized heap allocator with heap_start_page=%" PRIu64
+       " heap_end_page=%" PRIu64 " "
+       "used_count=%" PRIu64 "",
+       heap_start_page,
+       heap_end_page,
+       alloc_get_used_count());
 }
 
 int liballoc_lock()
