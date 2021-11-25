@@ -1,9 +1,9 @@
 [submodule "libs/scalable-font2"]
 	path = external/scalable-font2
 	url = https://gitlab.com/bztsrc/scalable-font2.git
-[submodule "external/printf"]
-	path = external/printf
-	url = https://github.com/mpaland/printf.git
 [submodule "external/parg"]
 	path = external/parg
 	url = https://github.com/jibsen/parg.git
+[submodule "external/printf"]
+	path = external/printf
+	url = https://github.com/ArvernOS/printf.git
