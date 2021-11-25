@@ -2,6 +2,7 @@
 
 #include <drivers/timer.h>
 #include <init.h>
+#include <inttypes.h>
 #include <stdio.h>
 
 int proc_read_uptime(char* buf, size_t size)
@@ -14,7 +15,7 @@ int proc_read_uptime(char* buf, size_t size)
   // spent in the idle process.
   //
   // We do not have the notion of process yet so there is only one value.
-  snprintf(buf, size, "%lu\n", timer_uptime());
+  snprintf(buf, size, "%" PRIu64 "\n", timer_uptime());
 
   return 0;
 }
