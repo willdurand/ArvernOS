@@ -27,11 +27,11 @@ void port_word_out(uint16_t port, uint16_t value)
 uint32_t port_dword_in(uint16_t port)
 {
   uint32_t result = 0;
-  __asm__("inl %1, %0" : "=a"(result) : "Nd"(port));
+  __asm__("inl %%dx, %%eax" : "=a"(result) : "Nd"(port));
   return result;
 }
 
 void port_dword_out(uint16_t port, uint32_t value)
 {
-  __asm__("outl %0, %1" : : "a"(value), "Nd"(port));
+  __asm__("outl %%eax, %%dx" : : "a"(value), "Nd"(port));
 }
