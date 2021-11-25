@@ -3,6 +3,7 @@
 #include <arvern/utils.h>
 #include <fcntl.h>
 #include <fs/logging.h>
+#include <inttypes.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -55,7 +56,7 @@ inode_t sock_create(inode_t parent, const char* name, uint64_t flags)
   for (uint64_t i = 0; i < MAX_ENTRIES; i++) {
     if (!entries[i].inode) {
       inode_t inode = calloc(1, sizeof(vfs_node_t));
-      sprintf(inode->name, "%lu.sock", i + 1);
+      sprintf(inode->name, "%" PRIu64 ".sock", i + 1);
       inode->driver = &sock_driver;
       inode->type = FS_FILE;
       inode->parent = parent;
