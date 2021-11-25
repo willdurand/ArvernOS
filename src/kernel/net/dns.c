@@ -1,6 +1,7 @@
 #include <net/dns.h>
 
 #include <arpa/inet.h>
+#include <inttypes.h>
 #include <net/logging.h>
 #include <stdio.h>
 #include <stdlib.h>

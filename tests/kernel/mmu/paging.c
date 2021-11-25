@@ -68,12 +68,6 @@ int main()
   fake_p2 = malloc(sizeof(page_table_t));
   fake_p1 = malloc(sizeof(page_table_t));
 
-  printf("fake_p4=%p fake_p3=%p fake_p2=%p fake_p1=%p\n",
-         fake_p4,
-         fake_p3,
-         fake_p2,
-         fake_p1);
-
   uint64_t addr = 42 * 512 * 512 * 4096L; // 42th P3 entry
   uint64_t page = page_containing_address(addr);
 

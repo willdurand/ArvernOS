@@ -21,7 +21,6 @@ char* saved_cmdline = NULL;
 void print_step(const char* msg)
 {
   printf("kernel: %-66s", msg);
-  INFO("%s", msg);
 }
 
 void print_ok()

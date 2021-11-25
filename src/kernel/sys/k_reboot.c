@@ -6,6 +6,7 @@
 
 #include <arch/kernel.h>
 #include <errno.h>
+#include <stdio.h>
 #include <sys/logging.h>
 #include <sys/reboot.h>
 

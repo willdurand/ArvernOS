@@ -138,7 +138,7 @@ int main()
       break;
     }
 
-    printf("%s\n", de->name);
+    printf("   %s\n", de->name);
     free(de);
   }
 
