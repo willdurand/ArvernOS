@@ -3,6 +3,7 @@
 #include <core/logging.h>
 #include <core/port.h>
 #include <core/register.h>
+#include <inttypes.h>
 #include <panic.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -210,10 +211,10 @@ void breakpoint_handler(isr_stack_t* stack)
 {
   printf("Exception: BREAKPOINT\n"
          "  instruction_pointer = %p\n"
-         "  code_segment        = %x\n"
-         "  cpu_flags           = %#x\n"
+         "  code_segment        = %" PRIx64 "\n"
+         "  cpu_flags           = %#" PRIx64 "\n"
          "  stack_pointer       = %p\n"
-         "  stack_segment       = %x\n",
+         "  stack_segment       = %" PRIx64 "\n",
          stack->instruction_pointer,
          stack->code_segment,
          stack->cpu_flags,

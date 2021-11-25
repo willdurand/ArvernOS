@@ -5,7 +5,7 @@
 #include <printf.h>
 
 /**
- * This function is needed for the `printf/printf.h` lib.
+ * This function is needed for the `external/printf` lib.
  */
 void _putchar(char c);
 
