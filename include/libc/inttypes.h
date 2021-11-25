@@ -9,4 +9,12 @@
 #define PRIu64 "llu"
 #endif
 
+#ifndef PRIx64
+#define PRIx64 "llx"
+#endif
+
+#ifndef PRId64
+#define PRId64 "lld"
+#endif
+
 #endif
