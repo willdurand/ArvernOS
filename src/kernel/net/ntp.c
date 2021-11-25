@@ -2,6 +2,7 @@
 
 #include <arpa/inet.h>
 #include <arvern/utils.h>
+#include <inttypes.h>
 #include <net/logging.h>
 #include <stdlib.h>
 #include <string.h>
@@ -63,7 +64,7 @@ int ntp_request(net_interface_t* interface,
   close(sockfd);
 
   if (bytes_received < (ssize_t)sizeof(ntp_header_t)) {
-    NET_DEBUG("bytes_received=%lld", bytes_received);
+    NET_DEBUG("bytes_received=%" PRId64, bytes_received);
     return NTP_ERR_RECV;
   }
 

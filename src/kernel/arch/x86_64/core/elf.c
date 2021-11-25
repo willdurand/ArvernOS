@@ -1,5 +1,6 @@
 #include "elf.h"
 #include <core/logging.h>
+#include <inttypes.h>
 #include <mmu/paging.h>
 #include <string.h>
 
@@ -16,9 +17,9 @@ elf_header_t* elf_load(uint8_t* data)
   }
 
   CORE_DEBUG(
-    "file header: machine=%#x version=%#x type=%d entry=%p header_size=%u "
-    "ph_size=%u ph_num=%d ph_offset=%llu sh_size=%u sh_num=%d sh_offset=%llu "
-    "strtab_index=%d",
+    "file header: machine=%#x version=%#x type=%d entry=%p header_size=%u"
+    " ph_size=%u ph_num=%d ph_offset=%" PRIu64 " sh_size=%u sh_num=%d"
+    " sh_offset=%" PRIu64 " strtab_index=%d",
     elf->machine,
     elf->version,
     elf->type,

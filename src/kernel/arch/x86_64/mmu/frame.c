@@ -1,4 +1,5 @@
 #include "frame.h"
+#include <inttypes.h>
 #include <mmu/logging.h>
 #include <panic.h>
 #include <string.h>
@@ -24,8 +25,8 @@ void frame_init(multiboot_info_t* mbi)
   _frame_init(&reserved_areas, _mmap);
 
   INFO("initialized frame allocator with start=%p end=%p "
-       "max_allocatable_frames=%llu allocated_frames=%p used_count=%llu "
-       "first_request=%llu",
+       "max_allocatable_frames=%" PRIu64
+       " allocated_frames=%p used_count=%" PRIu64 " first_request=%" PRIu64,
        reserved_areas.start,
        reserved_areas.end,
        max_allocatable_frames,
@@ -53,7 +54,7 @@ void _frame_init(reserved_areas_t* reserved_areas, multiboot_tag_mmap_t* _mmap)
   uint64_t bitmap_address =
     frame_start_address(frame_containing_address(reserved_areas->end) + 1);
   uint64_t bitmap_size = frames_for_bitmap * PAGE_SIZE;
-  MMU_DEBUG("bitmap: address=%p size=%llu (%llu pages)",
+  MMU_DEBUG("bitmap: address=%p size=%" PRIu64 " (%" PRIu64 " pages)",
             bitmap_address,
             bitmap_size,
             bitmap_size / PAGE_SIZE);
@@ -96,10 +97,11 @@ opt_uint64_t frame_allocate()
   opt_uint64_t frame = read_mmap(request);
 
   if (frame.has_value) {
-    MMU_DEBUG("allocated frame: addr=%p request=%llu ", frame.value, request);
+    MMU_DEBUG(
+      "allocated frame: addr=%p request=%" PRIu64, frame.value, request);
     bitmap_set(allocated_frames, request);
   } else {
-    MMU_DEBUG("could not allocate frame: request=%llu", request);
+    MMU_DEBUG("could not allocate frame: request=%" PRIu64, request);
   }
 
   return frame;
@@ -108,10 +110,12 @@ opt_uint64_t frame_allocate()
 void frame_deallocate(frame_number_t frame_number)
 {
   uint64_t request = frame_number_to_request(frame_number);
-  MMU_DEBUG("deallocating frame=%llu request=%llu", frame_number, request);
+  MMU_DEBUG(
+    "deallocating frame=%" PRIu64 " request=%" PRIu64, frame_number, request);
 
   if (request == 0) {
-    DEBUG("failed to deallocate frame=%llu because request=%llu, which it is "
+    DEBUG("failed to deallocate frame=%" PRIu64 " because request=%" PRIu64
+          ", which it is "
           "very suspicious",
           frame_number,
           request);

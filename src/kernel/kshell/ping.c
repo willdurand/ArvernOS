@@ -38,7 +38,7 @@ void ping(int argc, char* argv[])
     case 0:
       inet_itoa(reply.src_ip, buf, 16);
       printf(
-        "PONG from %s (ttl=%d sequence=%ld)\n", buf, reply.ttl, reply.sequence);
+        "PONG from %s (ttl=%d sequence=%hu)\n", buf, reply.ttl, reply.sequence);
       break;
     default:
       printf("Ping failed (%d)\n", retval);

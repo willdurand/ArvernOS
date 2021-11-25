@@ -110,7 +110,8 @@ int dns_lookup(net_interface_t* interface, const char* domain, uint8_t ip[4])
   close(sockfd);
 
   if (bytes_received < (ssize_t)sizeof(dns_header_t)) {
-    NET_DEBUG("not received enough data: bytes_received=%lld", bytes_received);
+    NET_DEBUG("not received enough data: bytes_received=%" PRId64,
+              bytes_received);
     return DNS_ERR_RECV;
   }
 
@@ -123,12 +124,12 @@ int dns_lookup(net_interface_t* interface, const char* domain, uint8_t ip[4])
   dns_header.nscount = ntohs(dns_header.nscount);
   dns_header.arcount = ntohs(dns_header.arcount);
 
-  NET_DEBUG(
-    "dns packet received: id=0x%04x qdcount=%d ancount=%d bytes_received=%lld",
-    dns_header.id,
-    dns_header.qdcount,
-    dns_header.ancount,
-    bytes_received);
+  NET_DEBUG("dns packet received: id=0x%04x qdcount=%d ancount=%d "
+            "bytes_received=%" PRId64,
+            dns_header.id,
+            dns_header.qdcount,
+            dns_header.ancount,
+            bytes_received);
 
   uint8_t* dns_data = buf + sizeof(dns_header_t);
 
