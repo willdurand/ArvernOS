@@ -1,69 +1,71 @@
 #ifndef LOGGING_H
 #define LOGGING_H
 
-#include <inttypes.h>
-#include <stdio.h>
+#include <stdint.h>
 
-#ifdef ENABLE_LOGS_FOR_TESTS
+#define LOG_LEVEL_FATAL 60
+#define LOG_LEVEL_ERROR 50
+#define LOG_LEVEL_WARN  40
+#define LOG_LEVEL_INFO  30
+#define LOG_LEVEL_DEBUG 20
+#define LOG_LEVEL_TRACE 10
 
-// See: https://github.com/shiena/ansicolor
-#define ANSICOLOR_FG_LIGHTGRAY "\x1b[90m"
-#define ANSICOLOR_RESET        "\x1b[0m"
+#define CURRENT_SOURCE_LOCATION                                                \
+  (source_location_t) { .file = __FILE__, .func = __func__, .line = __LINE__ }
 
-#define LOG(level, format, ...)                                                \
-  printf("%s%s:%" PRIu64 ":%s(): " format "%s\n",                              \
-         ANSICOLOR_FG_LIGHTGRAY,                                               \
-         __FILE__,                                                             \
-         (uint64_t)__LINE__,                                                   \
-         __func__,                                                             \
-         __VA_ARGS__,                                                          \
-         ANSICOLOR_RESET)
+#define FATAL(format, ...)                                                     \
+  logging_impl(LOG_LEVEL_FATAL,                                                \
+               LOGGING_LEVEL,                                                  \
+               CURRENT_SOURCE_LOCATION,                                        \
+               format,                                                         \
+               __VA_ARGS__)
 
-#else // ENABLE_LOGS_FOR_TESTS
+#define ERROR(format, ...)                                                     \
+  logging_impl(LOG_LEVEL_ERROR,                                                \
+               LOGGING_LEVEL,                                                  \
+               CURRENT_SOURCE_LOCATION,                                        \
+               format,                                                         \
+               __VA_ARGS__)
 
-#include <arch/logging.h>
+#define WARN(format, ...)                                                      \
+  logging_impl(LOG_LEVEL_WARN,                                                 \
+               LOGGING_LEVEL,                                                  \
+               CURRENT_SOURCE_LOCATION,                                        \
+               format,                                                         \
+               __VA_ARGS__)
 
-#define LOG(level, format, ...)                                                \
-  fctprintf(&arch_logging_stream_output,                                       \
-            NULL,                                                              \
-            "%-8s | %s:%" PRIu64 ":%s(): " format "\n",                        \
-            level,                                                             \
-            __FILE__,                                                          \
-            (uint64_t)__LINE__,                                                \
-            __func__,                                                          \
-            __VA_ARGS__)
-
-#endif // ENABLE_LOGS_FOR_TESTS
-
-#if defined(ENABLE_KERNEL_DEBUG) || defined(ENABLE_LOGS_FOR_TESTS)
-
-#define DEBUG(format, ...) LOG("DEBUG", format, __VA_ARGS__)
-
-#define HEX_DEBUG(data, len)                                                   \
-  DEBUG("(hexdump) data=%p len=%" PRIu64, data, (uint64_t)len);                \
-  for (uint64_t i = 0; i < len; i++) {                                         \
-    if (i > 0 && i % 8 == 0) {                                                 \
-      fctprintf(&arch_logging_stream_output, NULL, "\n");                      \
-    }                                                                          \
-    fctprintf(                                                                 \
-      &arch_logging_stream_output, NULL, "%02x ", (uint8_t)(data + i));        \
-  }                                                                            \
-  fctprintf(&arch_logging_stream_output, NULL, "\n");
-
-#else // ENABLE_KERNEL_DEBUG || ENABLE_LOGS_FOR_TESTS
+#define INFO(format, ...)                                                      \
+  logging_impl(LOG_LEVEL_INFO,                                                 \
+               LOGGING_LEVEL,                                                  \
+               CURRENT_SOURCE_LOCATION,                                        \
+               format,                                                         \
+               __VA_ARGS__)
 
 #define DEBUG(format, ...)                                                     \
-  do {                                                                         \
-  } while (0)
+  logging_impl(LOG_LEVEL_DEBUG,                                                \
+               LOGGING_LEVEL,                                                  \
+               CURRENT_SOURCE_LOCATION,                                        \
+               format,                                                         \
+               __VA_ARGS__)
 
-#define HEX_DEBUG(data, len)                                                   \
-  do {                                                                         \
-  } while (0)
+#define TRACE(format, ...)                                                     \
+  logging_impl(LOG_LEVEL_TRACE,                                                \
+               LOGGING_LEVEL,                                                  \
+               CURRENT_SOURCE_LOCATION,                                        \
+               format,                                                         \
+               __VA_ARGS__)
 
-#endif // ENABLE_KERNEL_DEBUG || ENABLE_LOGS_FOR_TESTS
+typedef struct source_location
+{
+  const char* file;
+  const char* func;
+  uint64_t line;
+} source_location_t;
 
-#define INFO(format, ...) LOG("INFO", format, __VA_ARGS__)
-
-#define ERROR(format, ...) LOG("ERROR", format, __VA_ARGS__)
+void logging_impl(uint8_t level,
+                  uint8_t minimum_level,
+                  source_location_t loc,
+                  const char* format,
+                  ...);
 
 #endif

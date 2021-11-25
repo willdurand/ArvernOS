@@ -1,5 +1,6 @@
 #include <arch/panic.h>
 
+#include <inttypes.h>
 #include <logging.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -25,7 +26,7 @@ void arch_kernel_load_symbols(uint64_t addr, uint64_t size)
 void arch_kernel_dump_stacktrace()
 {
   printf("\n  Kernel stacktrace:\n\n");
-  DEBUG("%s", "kernel stacktrace:");
+  FATAL("%s", "kernel stacktrace:");
 
   stack_frame_t* stackframe = NULL;
   __asm__("movq %%rbp, %0" : "=r"(stackframe));
@@ -38,8 +39,8 @@ void arch_kernel_dump_stacktrace()
     char* name = symbol ? symbol : "???";
     uint64_t offset = symbol ? (address - symbol_addr) : 0;
 
-    printf("     %p - %s+0x%x\n", address, name, offset);
-    DEBUG("  %p - %s+0x%x", address, name, offset);
+    printf("     %p - %s+0x%" PRIx64 "\n", (void*)address, name, offset);
+    FATAL("%p - %s+0x%" PRIx64, (void*)address, name, offset);
 
     if (symbol) {
       free(symbol);

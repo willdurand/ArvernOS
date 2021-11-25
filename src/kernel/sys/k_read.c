@@ -28,7 +28,7 @@ ssize_t k_read(int fd, void* buf, size_t count)
     return -EPERM;
   }
 
-  SYS_DEBUG("fd=%d buf=%p count=%d", fd, buf, count);
+  SYS_TRACE("fd=%d buf=%p count=%d", fd, buf, count);
 
   descriptor_t* desc = get_descriptor(fd);
 

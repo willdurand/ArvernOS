@@ -116,63 +116,71 @@ loaded, run:
 $ make clean run-debug
 ```
 
-#### Logging
+### Release mode
 
-In DEBUG mode, logging uses the serial port `COM1` to write various debugging
-information. `qemu` is configured to write the output of this serial port to
-`./log/debug.log`. `DEBUG` level logs are not necessarily written by default,
-though, and it is possible to enable `DEBUG` logs for specific modules like
-this:
+To compile the OS in release mode, build the image, and start `qemu` with the OS
+loaded, run:
 
 ```
-# Enable the debug logs for the "net" and "fs" modules
-$ make clean run-debug ENABLE_NET_DEBUG=1 ENABLE_FS_DEBUG=1
+$ make clean run-release
 ```
 
-The available debug variables are:
+## Configuration
 
-- `ENABLE_CONFIG_DEBUG`
-- `ENABLE_CORE_DEBUG`
-- `ENABLE_FS_DEBUG`
-- `ENABLE_MMU_DEBUG`
-- `ENABLE_NET_DEBUG`
-- `ENABLE_PROC_DEBUG`
-- `ENABLE_SYS_DEBUG`
-- `ENABLE_USERLAND_DEBUG`
+### config files
 
-Protip: there is also `ENABLE_ALL_DEBUG` to turn all debug logs on (which
-negatively impacts the performances).
-
-##### Stacktraces
-
-Log files may contain stacktraces without debug symbols if the symbols haven't
-been loaded via GRUB:
+`config` files are used to configure how a build works. The content must
+be compatible with `make`. Here is an example:
 
 ```
-[...]
-DEBUG    | src/kernel/arch/x86_64/kshell/kshell.c:108:run_command(): command='selftest' argc=1
-DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:30:kernel_dump_stacktrace(): kernel stacktrace:
-DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 00000000001163B3 - ???+0x0
-DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 0000000000115941 - ???+0x0
-DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 0000000000115BE1 - ???+0x0
-DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 00000000001152BF - ???+0x0
-DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace(): 000000000010935B - ???+0x0
+# LLVM config on MacOS with Homebrew
+LLVM_PREFIX = /usr/local/opt/llvm@13/bin/
+LLVM_SUFFIX =
+
+# Always enable the Undefined Behavior sanitizer
+UBSAN = 1
 ```
 
-Use the `tools/fix-stacktrace.py` script to add missing symbol names to the
-output:
+### Logging
+
+The logging layer outputs kernel logs using the [ndjson][ndjson] format. Tools
+such as [pino-pretty][] can parse those logs in order to format them in a more
+human friendly manner.  Logs are sent to a serial port.
+
+QEMU is configured to redirect these logs to file in the `log/` folder. One can
+use the following command in a different terminal to follow the logs when the
+kernel is running in QEMU:
 
 ```
-$ ./tools/fix-stacktrace.py build/x86_64/isofiles/boot/symbols.txt log/debug.log
-[...]
-DEBUG    | src/kernel/arch/x86_64/kshell/kshell.c:108:run_command(): command='selftest' argc=1
-DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:30:kernel_dump_stacktrace(): kernel stacktrace:
-DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   00000000001163B3 - selftest +0x63
-DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   0000000000115941 - run_command +0x271
-DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   0000000000115BE1 - kshell_run +0x181
-DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   00000000001152BF - kmain +0x107f
-DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   000000000010935B - long_mode_start +0x13
+$ tail -f log/x86_64-debug.log | pino-pretty
 ```
+
+There is a global configuration option for the verbosity of the kernel:
+`LOGGING_LEVEL`. In addition, the different components of the kernel can be
+configured separately as well:
+
+- `LOGGING_LEVEL_CONFIG`
+- `LOGGING_LEVEL_CORE`
+- `LOGGING_LEVEL_FS`
+- `LOGGING_LEVEL_MMU`
+- `LOGGING_LEVEL_NET`
+- `LOGGING_LEVEL_PROC`
+- `LOGGING_LEVEL_SYS`
+- `LOGGING_LEVEL_USERLAND`
+
+The possible _level_ values are:
+
+|            |       |       |      |      |       |       |          |
+|:-----------|-------|-------|------|------|-------|-------|---------:|
+| **Level:** | trace | debug | info | warn | error | fatal | silent   |
+| **Value:** | 10    | 20    | 30   | 40   | 50    | 60    | Infinity |
+
+
+#### Stack traces
+
+The kernel might dump a stack trace when a panic error has occurred. There is a
+script to fix the stack trace is the symbols are not attached:
+`tools/fix-stacktrace.py`.
 
 In addition, you might want to find the corresponding line of code in the source
 files by using `llvm-addr2line` or `llvm-symbolizer`:
@@ -188,35 +196,6 @@ selftest
 ```
 $ llvm-addr2line-13 -e build/x86_64/dist/kernel-x86_64.bin 01163B3
 /path/to/ArvernOS/src/kernel/arch/x86_64/kshell/selftest.c:12
-```
-
-### Release mode
-
-To compile the OS in release mode, build the image, and start `qemu` with the OS
-loaded, run:
-
-```
-$ make clean run-release
-```
-
-### config files
-
-`config` files are used to configure how a build works. The content must
-be compatible with `make`. Here is an example:
-
-```
-# LLVM config on MacOS with Homebrew
-LLVM_PREFIX = /usr/local/opt/llvm@13/bin/
-LLVM_SUFFIX =
-
-# Always enable the Undefined Behavior sanitizer
-UBSAN=1
-
-# Sensible logging
-ENABLE_CORE_DEBUG=1
-ENABLE_PROC_DEBUG=1
-ENABLE_SYS_DEBUG=1
-ENABLE_USERLAND_DEBUG=1
 ```
 
 ### x86_64 options
@@ -301,3 +280,5 @@ attached (either in the source files or in a `LICENSE` file next to them).
 
 [twitter-thread]: https://twitter.com/couac/status/866693418130575361
 [dockerhub-toolchain]: https://hub.docker.com/repository/docker/willdurand/arvernos-toolchain
+[pino-pretty]: https://github.com/pinojs/pino-pretty
+[ndjson]: http://ndjson.org/

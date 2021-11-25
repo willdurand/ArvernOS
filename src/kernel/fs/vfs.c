@@ -2,6 +2,7 @@
 
 #include <fs/logging.h>
 #include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
@@ -205,7 +206,7 @@ inode_t vfs_find_root(char** path)
     }
   }
 
-  FS_DEBUG("found root node: %s", mount->name);
+  FS_TRACE("found root node: %s", mount->name);
 
   return mount;
 }
@@ -220,7 +221,7 @@ inode_t vfs_namei_mount(const char* path, inode_t root)
   if (strcmp(path, "/") != 0) {
     char* name = NULL;
     while (current && (name = strsep(&pth, "/")) != 0) {
-      FS_DEBUG("current node is: %s", current->name);
+      FS_TRACE("current node is: %s", current->name);
 
       inode_t next = vfs_finddir(current, name);
 
@@ -237,7 +238,7 @@ inode_t vfs_namei_mount(const char* path, inode_t root)
       if (root) {
         if (next == NULL) {
           if (pth != NULL) {
-            FS_DEBUG("cannot create a node because pth=%s", pth);
+            FS_TRACE("cannot create a node because pth=%s", pth);
             free(npath);
             return NULL;
           }
@@ -245,17 +246,17 @@ inode_t vfs_namei_mount(const char* path, inode_t root)
           next = vfs_make_directory(name);
 
           if (next == NULL) {
-            FS_DEBUG("%s", "next is null after a call to vfs_make_directory()");
+            FS_TRACE("%s", "next is null after a call to vfs_make_directory()");
             free(npath);
             return NULL;
           }
 
-          FS_DEBUG("created node: %s", next->name);
+          FS_TRACE("created node: %s", next->name);
         }
 
         next->parent = current;
 
-        FS_DEBUG("adding child #%lu to current node: %s",
+        FS_TRACE("adding child #%lu to current node: %s",
                  current->n_children + 1,
                  current->name);
         current->children = (inode_t*)realloc(
@@ -264,7 +265,7 @@ inode_t vfs_namei_mount(const char* path, inode_t root)
       }
 
       if (next == NULL) {
-        FS_DEBUG("%s", "next is NULL, returning NULL");
+        FS_TRACE("%s", "next is NULL, returning NULL");
         free(npath);
         return NULL;
       }
@@ -276,7 +277,7 @@ inode_t vfs_namei_mount(const char* path, inode_t root)
   free(npath);
 
   if (root != NULL && vfs_type(current) == FS_DIRECTORY) {
-    FS_DEBUG(
+    FS_TRACE(
       "attempting to mount root_fs=%s (type=0x%x) at node=%s (parent=%s)",
       root->name,
       vfs_type(root),
@@ -294,7 +295,7 @@ inode_t vfs_namei_mount(const char* path, inode_t root)
     free(root);
   }
 
-  FS_DEBUG("returning current node: %s", current ? current->name : "(null)");
+  FS_TRACE("returning current node: %s", current ? current->name : "(null)");
 
   return current;
 }

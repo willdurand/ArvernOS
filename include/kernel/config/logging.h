@@ -3,12 +3,18 @@
 
 #include <logging.h>
 
-#ifdef ENABLE_CONFIG_DEBUG
-#define CONFIG_DEBUG(format, ...) DEBUG(format, __VA_ARGS__)
-#else
 #define CONFIG_DEBUG(format, ...)                                              \
-  do {                                                                         \
-  } while (0)
-#endif
+  logging_impl(LOG_LEVEL_DEBUG,                                                \
+               LOGGING_LEVEL_CONFIG,                                           \
+               CURRENT_SOURCE_LOCATION,                                        \
+               format,                                                         \
+               __VA_ARGS__)
+
+#define CONFIG_TRACE(format, ...)                                              \
+  logging_impl(LOG_LEVEL_TRACE,                                                \
+               LOGGING_LEVEL_CONFIG,                                           \
+               CURRENT_SOURCE_LOCATION,                                        \
+               format,                                                         \
+               __VA_ARGS__)
 
 #endif

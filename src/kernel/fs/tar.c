@@ -51,7 +51,7 @@ inode_t tar_fs_create(uintptr_t address)
 
 uint64_t tar_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
 {
-  FS_DEBUG("name=%s type=%d size=%lu offset=%lu",
+  FS_TRACE("name=%s type=%d size=%" PRIu64 " offset=%" PRIu64,
            node->name,
            vfs_type(node),
            size,
@@ -75,7 +75,7 @@ uint64_t tar_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
       size = header_size - offset;
     }
 
-    FS_DEBUG("copying %ld bytes (offset=%lu header_size=%ld) to buffer=%p",
+    FS_TRACE("copying %ld bytes (offset=%lu header_size=%ld) to buffer=%p",
              size,
              offset,
              header_size,
@@ -93,7 +93,7 @@ uint64_t tar_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
 
 inode_t tar_finddir(inode_t inode, const char* name)
 {
-  FS_DEBUG("trying to find: %s", name);
+  FS_TRACE("trying to find: %s", name);
 
   inode_t node = calloc(1, sizeof(vfs_node_t));
 
@@ -132,7 +132,7 @@ inode_t tar_finddir(inode_t inode, const char* name)
   free(fullpath);
 
   if (!header) {
-    FS_DEBUG("did not find name=%s", name);
+    FS_TRACE("did not find name=%s", name);
     free(node);
     return NULL;
   }

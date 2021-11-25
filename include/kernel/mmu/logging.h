@@ -3,12 +3,18 @@
 
 #include <logging.h>
 
-#if defined(ENABLE_MMU_DEBUG) || defined(ENABLE_LOGS_FOR_TESTS)
-#define MMU_DEBUG(format, ...) DEBUG(format, __VA_ARGS__)
-#else
 #define MMU_DEBUG(format, ...)                                                 \
-  do {                                                                         \
-  } while (0)
-#endif
+  logging_impl(LOG_LEVEL_DEBUG,                                                \
+               LOGGING_LEVEL_MMU,                                              \
+               CURRENT_SOURCE_LOCATION,                                        \
+               format,                                                         \
+               __VA_ARGS__)
+
+#define MMU_TRACE(format, ...)                                                 \
+  logging_impl(LOG_LEVEL_TRACE,                                                \
+               LOGGING_LEVEL_MMU,                                              \
+               CURRENT_SOURCE_LOCATION,                                        \
+               format,                                                         \
+               __VA_ARGS__)
 
 #endif

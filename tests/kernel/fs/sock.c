@@ -1,10 +1,18 @@
 #include <fs/sock.h>
 #include <fs/vfs.h>
+#include <logging.h>
 #include <stdlib.h>
 #include <string.h>
 #include <test.h>
 
 #define BUF_SIZE 128
+
+void logging_impl(uint8_t level,
+                  uint8_t minimum_level,
+                  source_location_t loc,
+                  const char* format,
+                  ...)
+{}
 
 int main()
 {

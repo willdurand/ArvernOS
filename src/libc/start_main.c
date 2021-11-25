@@ -11,10 +11,8 @@ int start_main(int (*main)(int, char**, char**),
                char* argv[],
                char* envp[])
 {
-#ifdef ENABLE_USERLAND_DEBUG
   arvern_log_init();
   ARVERN_LOG("main=%p argc=%d argv=%p envp=%p", main, argc, argv, envp);
-#endif
 
   // TODO: add the entries in `envp` to `environ`.
 
@@ -22,9 +20,7 @@ int start_main(int (*main)(int, char**, char**),
 
   ARVERN_LOG("retval=%d", retval);
 
-#ifdef ENABLE_USERLAND_DEBUG
   arvern_log_deinit();
-#endif
 
   // TODO: call `exit()`
   return retval;

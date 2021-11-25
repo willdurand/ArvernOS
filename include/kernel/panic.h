@@ -10,11 +10,9 @@
 #define PANIC_H
 
 #include <arch/panic.h>
-#include <logging.h>
 #include <stdbool.h>
 
 #define __PANIC(dump_stacktrace, format, ...)                                  \
-  DEBUG(format "%s", __VA_ARGS__);                                             \
   kernel_panic(dump_stacktrace,                                                \
                "\nPANIC in %s() (line %d): " format "%s",                      \
                __func__,                                                       \

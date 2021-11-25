@@ -107,6 +107,7 @@ $(KERNEL_CONSOLE_FONT): $(MISC_DIR) $(KERNEL_CONSOLE_FONT_GZ)
 
 arch-debug: CFLAGS += $(DEBUG_CFLAGS)
 arch-debug: BUILD_MODE = debug
+arch-debug: LOGGING_LEVEL = 20
 arch-debug: GRUB_DEFAULT = 1
 arch-debug: $(ISO)
 .PHONY: arch-debug
@@ -136,7 +137,12 @@ arch-test: CFLAGS_WITHOUT_TARGET := $(filter-out --target=x86_64,$(CFLAGS))
 arch-test: CFLAGS = $(CFLAGS_WITHOUT_TARGET)
 arch-test: CFLAGS += -fPIC -g3 -fsanitize=undefined -fsanitize=address
 arch-test: CFLAGS_FOR_TESTS += -g3 -fsanitize=undefined -fsanitize=address
-arch-test: CFLAGS_FOR_TESTS += -DENABLE_LOGS_FOR_TESTS -DTEST_ENV
+arch-test: CFLAGS_FOR_TESTS += -DTEST_ENV
+arch-test: CFLAGS_FOR_TESTS += -DLOGGING_LEVEL
+arch-test: CFLAGS_FOR_TESTS += -DLOGGING_LEVEL_CONFIG
+arch-test: CFLAGS_FOR_TESTS += -DLOGGING_LEVEL_CORE
+arch-test: CFLAGS_FOR_TESTS += -DLOGGING_LEVEL_FS
+arch-test: CFLAGS_FOR_TESTS += -DLOGGING_LEVEL_MMU
 arch-test: CFLAGS_FOR_TESTS += -I$(TESTS_DIR)/ -I$(INCLUDE_DIR)/kernel/ -I$(ARCH_SRC)/
 arch-test: libc
 	# libc

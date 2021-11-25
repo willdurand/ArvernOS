@@ -1,3 +1,4 @@
+#include <logging.h>
 #include <mmu/bitmap.h>
 #include <mmu/frame.h>
 #include <stdlib.h>
@@ -5,6 +6,13 @@
 #include <test.h>
 
 #define NB_ENTRIES 3
+
+void logging_impl(uint8_t level,
+                  uint8_t minimum_level,
+                  source_location_t loc,
+                  const char* format,
+                  ...)
+{}
 
 void kernel_panic(const char* format, ...)
 {

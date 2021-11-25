@@ -54,7 +54,7 @@ void _frame_init(reserved_areas_t* reserved_areas, multiboot_tag_mmap_t* _mmap)
   uint64_t bitmap_address =
     frame_start_address(frame_containing_address(reserved_areas->end) + 1);
   uint64_t bitmap_size = frames_for_bitmap * PAGE_SIZE;
-  MMU_DEBUG("bitmap: address=%p size=%" PRIu64 " (%" PRIu64 " pages)",
+  MMU_TRACE("bitmap: address=%p size=%" PRIu64 " (%" PRIu64 " pages)",
             bitmap_address,
             bitmap_size,
             bitmap_size / PAGE_SIZE);
@@ -97,11 +97,11 @@ opt_uint64_t frame_allocate()
   opt_uint64_t frame = read_mmap(request);
 
   if (frame.has_value) {
-    MMU_DEBUG(
+    MMU_TRACE(
       "allocated frame: addr=%p request=%" PRIu64, frame.value, request);
     bitmap_set(allocated_frames, request);
   } else {
-    MMU_DEBUG("could not allocate frame: request=%" PRIu64, request);
+    MMU_TRACE("could not allocate frame: request=%" PRIu64, request);
   }
 
   return frame;
@@ -110,7 +110,7 @@ opt_uint64_t frame_allocate()
 void frame_deallocate(frame_number_t frame_number)
 {
   uint64_t request = frame_number_to_request(frame_number);
-  MMU_DEBUG(
+  MMU_TRACE(
     "deallocating frame=%" PRIu64 " request=%" PRIu64, frame_number, request);
 
   if (request == 0) {
