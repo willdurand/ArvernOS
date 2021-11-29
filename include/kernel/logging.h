@@ -11,10 +11,10 @@
 #define ANSICOLOR_RESET        "\x1b[0m"
 
 #define LOG(level, format, ...)                                                \
-  printf("%s%s:%" PRIu64 ":%s(): " format "%s\n",                              \
+  printf("%s%s:%d:%s(): " format "%s\n",                                       \
          ANSICOLOR_FG_LIGHTGRAY,                                               \
          __FILE__,                                                             \
-         (uint64_t)__LINE__,                                                   \
+         __LINE__,                                                             \
          __func__,                                                             \
          __VA_ARGS__,                                                          \
          ANSICOLOR_RESET)
@@ -26,10 +26,10 @@
 #define LOG(level, format, ...)                                                \
   fctprintf(&arch_logging_stream_output,                                       \
             NULL,                                                              \
-            "%-8s | %s:%" PRIu64 ":%s(): " format "\n",                        \
+            "%-8s | %s:%d:%s(): " format "\n",                                 \
             level,                                                             \
             __FILE__,                                                          \
-            (uint64_t)__LINE__,                                                \
+            __LINE__,                                                          \
             __func__,                                                          \
             __VA_ARGS__)
 
