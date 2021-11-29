@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include <sys/types.h>
 
 #define VFS_NAME_MAX_SIZE 256
 
@@ -23,7 +24,7 @@ typedef struct vfs_node* inode_t;
 
 typedef struct vfs_stat
 {
-  uint64_t size;
+  off_t size;
   uint16_t mode;
 } vfs_stat_t;
 
