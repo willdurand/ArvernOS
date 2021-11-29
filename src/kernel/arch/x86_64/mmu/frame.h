@@ -14,7 +14,7 @@ typedef uint64_t frame_number_t;
 /**
  * Initializes the frame allocator (physical memory management).
  */
-void frame_init(multiboot_info_t* mbi);
+void frame_init();
 
 /**
  * Allocates a frame and returns its physical address.

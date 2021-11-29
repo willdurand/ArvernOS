@@ -134,19 +134,18 @@ void load_network_config(inish_config_t* kernel_cfg, net_driver_t* driver)
                      dns_ip);
 }
 
-void kmain(uint64_t addr)
+void kmain(uintptr_t addr)
 {
   multiboot_info_t* mbi = (multiboot_info_t*)addr;
+  multiboot_init(mbi);
 
   // enable serial port
   serial_init(SERIAL_COM1, SERIAL_SPEED_115200);
 
   // This is required to be able to identity map the framebuffer.
-  frame_init(mbi);
+  frame_init();
 
-  multiboot_tag_framebuffer_t* entry =
-    (multiboot_tag_framebuffer_t*)find_multiboot_tag(
-      mbi, MULTIBOOT_TAG_TYPE_FRAMEBUFFER);
+  multiboot_tag_framebuffer_t* entry = multiboot_get_framebuffer();
   console_init(&entry->common);
 
   kmain_print_banner();
@@ -162,7 +161,7 @@ void kmain(uint64_t addr)
   print_ok();
 
   print_step("initializing paging");
-  paging_init(mbi);
+  paging_init();
   print_ok();
 
   print_step("initializing heap allocator");
@@ -225,8 +224,5 @@ void kmain(uint64_t addr)
   keyboard_init();
   print_ok();
 
-  multiboot_tag_string_t* cmdline = (multiboot_tag_string_t*)find_multiboot_tag(
-    mbi, MULTIBOOT_TAG_TYPE_CMDLINE);
-
-  kmain_start(cmdline->string);
+  kmain_start(multiboot_get_cmdline());
 }
