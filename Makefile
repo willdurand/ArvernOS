@@ -83,6 +83,8 @@ CFLAGS += -O2 -std=c11 -ffreestanding -nostdinc -nostdlib -fno-builtin
 CFLAGS += $(WERRORS)
 CFLAGS += $(CONFIG_CFLAGS)
 
+LD_FLAGS += --nmagic -nostdlib --gc-sections
+
 DEBUG_CFLAGS = -g3 -DENABLE_KERNEL_DEBUG
 
 ifeq ($(ENABLE_CONFIG_DEBUG), 1)
@@ -142,9 +144,9 @@ $(DIST_DIR): $(ARCH_BUILD_DIR)
 $(MISC_DIR): $(ARCH_BUILD_DIR)
 	mkdir -p $@
 
-$(KERNEL): $(DIST_DIR) $(LIBK_ASM_OBJECTS) $(LIBK_OBJECTS)
+$(KERNEL): $(DIST_DIR) $(LIBK_ASM_OBJECTS) $(LIBK_OBJECTS) $(LINKER_LD)
 	$(PROGRESS) "LD" $@
-	$(LD) --nmagic --output=$@ --script=$(LINKER_LD) $(LIBK_ASM_OBJECTS) $(LIBK_OBJECTS) $(LINK_TO_KERNEL)
+	$(LD) --output=$@ --script=$(LINKER_LD) $(LD_FLAGS) $(LIBK_ASM_OBJECTS) $(LIBK_OBJECTS) $(LINK_TO_KERNEL)
 	$(NM) $@ | awk '{ print $$1, $$3 }' | sort > $(SYMBOLS)
 
 $(LIBK_OBJECTS): CFLAGS += -D__is_libk
