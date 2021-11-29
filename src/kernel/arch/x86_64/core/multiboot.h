@@ -1,6 +1,6 @@
 /**
  * @file
- * @see https://www.uclibc.org/docs/elf-64-gen.pdf
+ * @see https://www.gnu.org/software/grub/manual/multiboot2/multiboot.html
  */
 #ifndef CORE_MULTIBOOT_H
 #define CORE_MULTIBOOT_H
