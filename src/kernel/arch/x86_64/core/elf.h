@@ -1,4 +1,7 @@
-/** @file */
+/**
+ * @file
+ * @see https://www.uclibc.org/docs/elf-64-gen.pdf
+ */
 #ifndef CORE_ELF_H
 #define CORE_ELF_H
 
