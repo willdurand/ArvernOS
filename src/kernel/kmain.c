@@ -127,6 +127,10 @@ void kmain_start(const char* cmdline)
   // Keep a copy of the original command line.
   saved_cmdline = strdup(cmdline);
 
+  if (saved_cmdline == NULL) {
+    PANIC("failed to copy cmdline, is heap memory available?");
+  }
+
   run_initcalls();
 
   int argc = 0;
