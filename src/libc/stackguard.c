@@ -9,7 +9,11 @@
 #endif
 
 #ifndef STACK_CHK_GUARD
-#define STACK_CHK_GUARD 0xdeadbeefa55a857
+#ifdef __arm__
+#define STACK_CHK_GUARD 0xbaadc0de
+#else
+#define STACK_CHK_GUARD 0xbaadc0debaadc0de
+#endif
 #endif
 
 uintptr_t __stack_chk_guard = STACK_CHK_GUARD;
