@@ -5,6 +5,7 @@
 #include <fs/vfs.h>
 #include <stdbool.h>
 #include <stdint.h>
+#include <sys/types.h>
 
 #define STDIN  0
 #define STDOUT 1
@@ -15,7 +16,7 @@ typedef struct descriptor
   bool used;
   inode_t inode;
   // for file descriptors
-  uint32_t offset;
+  off_t offset;
   uint32_t flags;
   // for socket descriptors
   uint32_t domain;
