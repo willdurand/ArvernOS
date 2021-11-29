@@ -16,11 +16,10 @@ static multiboot_tag_mmap_t* mmap = NULL;
 static uint64_t max_allocatable_frames = 0;
 static uint64_t first_request = 0;
 
-void frame_init(multiboot_info_t* mbi)
+void frame_init()
 {
-  reserved_areas_t reserved_areas = find_reserved_areas(mbi);
-  multiboot_tag_mmap_t* _mmap =
-    (multiboot_tag_mmap_t*)find_multiboot_tag(mbi, MULTIBOOT_TAG_TYPE_MMAP);
+  reserved_areas_t reserved_areas = multiboot_get_reserved_areas();
+  multiboot_tag_mmap_t* _mmap = multiboot_get_mmap();
 
   _frame_init(&reserved_areas, _mmap);
 

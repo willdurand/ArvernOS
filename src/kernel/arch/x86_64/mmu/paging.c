@@ -1,5 +1,6 @@
 #include "paging.h"
 #include <arvern/utils.h>
+#include <core/multiboot.h>
 #include <core/register.h>
 #include <inttypes.h>
 #include <mmu/bitmap.h>
@@ -26,7 +27,7 @@ void map_page_to_frame(page_number_t page_number,
                        uint64_t flags);
 void enable_nxe_bit();
 void enable_write_protection();
-void remap_kernel(multiboot_info_t* mbi);
+void remap_kernel();
 void zero_table(page_table_t* table);
 page_table_t* next_table_address(page_table_t* table, uint64_t index);
 opt_uint64_t pointed_frame(page_entry_t entry);
@@ -44,14 +45,14 @@ extern void load_p4(uint64_t addr);
 static page_table_t* active_p4_table = (page_table_t*)P4_TABLE;
 static bool can_deallocate_frames = false;
 
-void paging_init(multiboot_info_t* mbi)
+void paging_init()
 {
   enable_nxe_bit();
   enable_write_protection();
-  remap_kernel(mbi);
+  remap_kernel();
 }
 
-void remap_kernel(multiboot_info_t* mbi)
+void remap_kernel()
 {
   uint64_t inactive_page_table_frame = paging_frame_allocate().value;
   page_number_t temporary_page = 0xcafec000;
@@ -100,10 +101,7 @@ void remap_kernel(multiboot_info_t* mbi)
   }
   MMU_DEBUG("%s", "mapped first 1MB!");
 
-  multiboot_tag_framebuffer_t* entry =
-    (multiboot_tag_framebuffer_t*)find_multiboot_tag(
-      mbi, MULTIBOOT_TAG_TYPE_FRAMEBUFFER);
-
+  multiboot_tag_framebuffer_t* entry = multiboot_get_framebuffer();
   if (entry->common.framebuffer_addr != 0xB8000) {
     uint64_t pages_for_fb =
       (entry->common.framebuffer_pitch * entry->common.framebuffer_height) /
@@ -116,7 +114,7 @@ void remap_kernel(multiboot_info_t* mbi)
     MMU_DEBUG("%s", "mapped VBE framebuffer!");
   }
 
-  reserved_areas_t reserved = find_reserved_areas(mbi);
+  reserved_areas_t reserved = multiboot_get_reserved_areas();
   frame_number_t multiboot_start_frame =
     frame_containing_address(reserved.multiboot_start);
   frame_number_t multiboot_end_frame =
@@ -124,8 +122,8 @@ void remap_kernel(multiboot_info_t* mbi)
 
   MMU_DEBUG("%s", "mapping kernel sections");
   multiboot_tag_elf_sections_t* tag =
-    (multiboot_tag_elf_sections_t*)find_multiboot_tag(
-      mbi, MULTIBOOT_TAG_TYPE_ELF_SECTIONS);
+    (multiboot_tag_elf_sections_t*)multiboot_find(
+      MULTIBOOT_TAG_TYPE_ELF_SECTIONS);
 
   uint64_t i = 0;
   multiboot_elf_sections_entry_t* elf = NULL;
@@ -171,13 +169,13 @@ void remap_kernel(multiboot_info_t* mbi)
 
   // Find the first module.
   multiboot_tag_module_t* module =
-    (multiboot_tag_module_t*)find_multiboot_tag(mbi, MULTIBOOT_TAG_TYPE_MODULE);
+    (multiboot_tag_module_t*)multiboot_find(MULTIBOOT_TAG_TYPE_MODULE);
   frame_number_t modules_start_frame =
     frame_containing_address((uint64_t)module->mod_start);
 
   // Find the last frame of the last module.
   frame_number_t modules_end_frame;
-  for (multiboot_tag_t* tag = (multiboot_tag_t*)mbi->tags;
+  for (multiboot_tag_t* tag = (multiboot_tag_t*)multiboot_get_info()->tags;
        tag->type != MULTIBOOT_TAG_TYPE_END;
        tag = (multiboot_tag_t*)((uint8_t*)tag + ((tag->size + 7) & ~7))) {
     if (tag->type == MULTIBOOT_TAG_TYPE_MODULE) {

@@ -186,23 +186,25 @@ typedef struct multiboot_tag_framebuffer
   };
 } multiboot_tag_framebuffer_t;
 
+void multiboot_init(multiboot_info_t* mbi);
+
+reserved_areas_t multiboot_get_reserved_areas();
+
+multiboot_tag_framebuffer_t* multiboot_get_framebuffer();
+
+const char* multiboot_get_cmdline();
+
+multiboot_info_t* multiboot_get_info();
+
+multiboot_tag_mmap_t* multiboot_get_mmap();
+
 /**
  * Finds and returns a pointer to a specific "tag" in the multiboot
  * information.
  *
- * @param mbi a pointer to the multiboot info
  * @param type the type of the tag to find
  * @return a pointer to a multiboot tag structure or `0`
  */
-void* find_multiboot_tag(multiboot_info_t* mbi, uint16_t type);
-
-/**
- * Returns the memory areas reserved for the kernel and the multiboot
- * information.
- *
- * @param mbi a pointer to the multiboot info
- * @return the memory areas (start/end) that are reserved
- */
-reserved_areas_t find_reserved_areas(multiboot_info_t* mbi);
+void* multiboot_find(uint16_t type);
 
 #endif

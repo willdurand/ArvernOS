@@ -2,7 +2,6 @@
 #ifndef MMU_PAGING_H
 #define MMU_PAGING_H
 
-#include <core/multiboot.h>
 #include <mmu/frame.h>
 #include <stdint.h>
 #include <sys/types.h>
@@ -86,7 +85,7 @@ typedef uint64_t page_number_t;
  * This allows us to make everything safer. Memory is still identity mapped,
  * which isn't great but it works for now.
  */
-void paging_init(multiboot_info_t* mbi);
+void paging_init();
 
 /**
  * Returns a page number given a virtual address.

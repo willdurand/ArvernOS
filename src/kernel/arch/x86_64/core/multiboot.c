@@ -2,11 +2,58 @@
 #include <core/logging.h>
 #include <stdio.h>
 
-void* find_multiboot_tag(multiboot_info_t* mbi, uint16_t type)
+reserved_areas_t build_reserved_areas();
+
+static multiboot_info_t* saved_mbi = NULL;
+
+static reserved_areas_t reserved_areas = { .kernel_start = 0,
+                                           .kernel_end = 0,
+                                           .multiboot_start = 0,
+                                           .multiboot_end = 0,
+                                           .start = 0,
+                                           .end = 0 };
+
+static const char* cmdline = NULL;
+static multiboot_tag_framebuffer_t* framebuffer = NULL;
+static multiboot_tag_mmap_t* mmap = NULL;
+
+void multiboot_init(multiboot_info_t* mbi)
+{
+  saved_mbi = mbi;
+  reserved_areas = build_reserved_areas();
+}
+
+multiboot_tag_framebuffer_t* multiboot_get_framebuffer()
+{
+  return framebuffer;
+}
+
+const char* multiboot_get_cmdline()
+{
+  return cmdline;
+}
+
+reserved_areas_t multiboot_get_reserved_areas()
+{
+  return reserved_areas;
+}
+
+multiboot_info_t* multiboot_get_info()
+{
+  return saved_mbi;
+}
+
+multiboot_tag_mmap_t* multiboot_get_mmap()
+{
+  return mmap;
+}
+
+void* multiboot_find(uint16_t type)
 {
   multiboot_tag_t* tag = NULL;
   // `*tag` points to the first tag of the multiboot_info_t struct
-  for (tag = (multiboot_tag_t*)mbi->tags; tag->type != MULTIBOOT_TAG_TYPE_END;
+  for (tag = (multiboot_tag_t*)saved_mbi->tags;
+       tag->type != MULTIBOOT_TAG_TYPE_END;
        tag = (multiboot_tag_t*)((uint8_t*)tag + ((tag->size + 7) & ~7))) {
     CORE_DEBUG("found tag with type=%d", tag->type);
     if (tag->type == type) {
@@ -19,26 +66,29 @@ void* find_multiboot_tag(multiboot_info_t* mbi, uint16_t type)
   return NULL;
 }
 
-reserved_areas_t find_reserved_areas(multiboot_info_t* mbi)
+reserved_areas_t build_reserved_areas()
 {
   multiboot_tag_t* tag = NULL;
   reserved_areas_t reserved = { .kernel_start = 0,
                                 .kernel_end = 0,
-                                .multiboot_start = (uint64_t)mbi,
+                                .multiboot_start = (uint64_t)saved_mbi,
                                 .multiboot_end = 0,
                                 .start = 0,
                                 .end = 0 };
 
-  CORE_DEBUG("announced MBI size %#x", mbi->size);
+  CORE_DEBUG("announced MBI size %#x", saved_mbi->size);
 
-  for (tag = (multiboot_tag_t*)mbi->tags; tag->type != MULTIBOOT_TAG_TYPE_END;
+  for (tag = (multiboot_tag_t*)saved_mbi->tags;
+       tag->type != MULTIBOOT_TAG_TYPE_END;
        tag = (multiboot_tag_t*)((uint8_t*)tag + ((tag->size + 7) & ~7))) {
     CORE_DEBUG("found tag with type=%d", tag->type);
 
     switch (tag->type) {
-      case MULTIBOOT_TAG_TYPE_CMDLINE:
-        CORE_DEBUG("command line=%s", ((multiboot_tag_string_t*)tag)->string);
+      case MULTIBOOT_TAG_TYPE_CMDLINE: {
+        cmdline = ((multiboot_tag_string_t*)tag)->string;
+        CORE_DEBUG("command line=%s", cmdline);
         break;
+      }
 
       case MULTIBOOT_TAG_TYPE_BOOT_LOADER_NAME:
         CORE_DEBUG("boot loader name=%s",
@@ -67,22 +117,22 @@ reserved_areas_t find_reserved_areas(multiboot_info_t* mbi)
         break;
 
       case MULTIBOOT_TAG_TYPE_MMAP: {
-        multiboot_mmap_entry_t* mmap = NULL;
-
-        for (mmap = ((multiboot_tag_mmap_t*)tag)->entries;
-             (uint8_t*)mmap < (uint8_t*)tag + tag->size;
-             mmap = (multiboot_mmap_entry_t*)((uint64_t)mmap +
-                                              ((multiboot_tag_mmap_t*)tag)
-                                                ->entry_size)) {
-          CORE_DEBUG("mmap base_addr = %p, length = %#x, type = %#x",
-                     mmap->addr,
-                     mmap->len,
-                     mmap->type);
+        mmap = (multiboot_tag_mmap_t*)tag;
+        for (multiboot_mmap_entry_t* entry = mmap->entries;
+             (uint8_t*)entry < (uint8_t*)tag + tag->size;
+             entry = (multiboot_mmap_entry_t*)((uint64_t)entry +
+                                               ((multiboot_tag_mmap_t*)tag)
+                                                 ->entry_size)) {
+          CORE_DEBUG("mmap entry: base_addr = %p, length = %#x, type = %#x",
+                     entry->addr,
+                     entry->len,
+                     entry->type);
         }
         break;
       }
 
       case MULTIBOOT_TAG_TYPE_FRAMEBUFFER: {
+        framebuffer = (multiboot_tag_framebuffer_t*)tag;
         CORE_DEBUG(
           "framebuffer framebuffer_addr=%p",
           ((multiboot_tag_framebuffer_t*)tag)->common.framebuffer_addr);
@@ -154,7 +204,7 @@ reserved_areas_t find_reserved_areas(multiboot_info_t* mbi)
   tag = (multiboot_tag_t*)((uint8_t*)tag + ((tag->size + 7) & ~7));
   reserved.multiboot_end = (uint64_t)tag;
 
-  CORE_DEBUG("total MBI size %#x", (uint64_t)tag - (uint64_t)mbi);
+  CORE_DEBUG("total MBI size %#x", (uint64_t)tag - (uint64_t)saved_mbi);
 
   reserved.start = reserved.kernel_start;
 
