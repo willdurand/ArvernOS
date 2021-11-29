@@ -1,7 +1,6 @@
 #include <kshell/kshell.h>
 
 #include <fs/vfs.h>
-#include <inttypes.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
@@ -41,7 +40,7 @@ void ls(int argc, char* argv[])
       indicator = '%';
     }
 
-    printf("%6" PRIu64 " %s%c\n", stat.size, de->name, indicator);
+    printf("%6jd %s%c\n", (intmax_t)stat.size, de->name, indicator);
 
     free(de);
   }
