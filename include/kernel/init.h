@@ -6,8 +6,8 @@
 
 typedef int (*initcall_t)(void);
 
-extern initcall_t __initcall_start;
-extern initcall_t __initcall_end;
+extern unsigned char __initcall_start;
+extern unsigned char __initcall_end;
 
 // TODO: we should ideally declare these declarations `static`, however LLVM
 // strips them out because they are unused and despite `unused` being set.

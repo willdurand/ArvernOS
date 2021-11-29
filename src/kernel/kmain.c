@@ -60,19 +60,20 @@ void kmain_print_banner()
 void run_initcalls()
 {
   DEBUG("initcalls: __initcall_start=%p __initcall_end=%p",
-        &__initcall_start,
-        &__initcall_end);
+        (void*)&__initcall_start,
+        (void*)&__initcall_end);
 
-  if (__initcall_start == 0) {
+  if ((void*)&__initcall_start == NULL) {
+    DEBUG("%s", "initcalls: nothing to initialize");
     return;
   }
 
-  initcall_t* call_fn = &__initcall_start;
+  initcall_t* call_fn = (initcall_t*)&__initcall_start;
 
   do {
     (*call_fn)();
     call_fn++;
-  } while (call_fn < &__initcall_end);
+  } while (call_fn < (initcall_t*)&__initcall_end);
 }
 
 void kmain_init_fs(uintptr_t initrd_addr)
