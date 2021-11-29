@@ -76,6 +76,7 @@ INCLUDES += $(addprefix -I$(EXTERNAL_DIR)/,$(EXTERNAL_DEPS))
 INCLUDES += -I$(EXTERNAL_DIR)/scalable-font2/
 
 WERRORS += -Wall -Wextra -Werror
+WERRORS += -Wformat=2
 WERRORS += -Wno-null-pointer-arithmetic
 
 CFLAGS += -O2 -std=c11 -ffreestanding -nostdinc -nostdlib -fno-builtin
