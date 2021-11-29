@@ -40,7 +40,7 @@ COMMON_CFLAGS += $(addprefix -I$(EXTERNAL_DIR)/,$(EXTERNAL_DEPS))
 
 CFLAGS += $(COMMON_CFLAGS)
 CFLAGS += --target=x86_64 -fstack-protector-strong
-CFLAGS += -ffreestanding -nostdinc -nostdlib -fno-builtin
+CFLAGS += -ffreestanding -nostdlib -fno-builtin
 CFLAGS += -mno-mmx -mno-sse -mno-sse2 -mno-avx -mno-avx2
 # Add `-no-pie` to disable the PIE feature that causes `gcc` to not create an
 # executable if needed, see: https://access.redhat.com/blogs/766093/posts/1975793

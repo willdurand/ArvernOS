@@ -3,13 +3,14 @@
 
 #include <stdbool.h>
 #include <stddef.h>
+#include <stdint.h>
 
-typedef int64_t time_t;
-typedef int64_t suseconds_t;
-typedef int64_t off_t;
+typedef intmax_t time_t;
+typedef intmax_t suseconds_t;
+typedef intmax_t off_t;
 
 #ifndef __pid_t_defined
-typedef int64_t pid_t;
+typedef intmax_t pid_t;
 #define __pid_t_defined
 #endif
 
@@ -17,6 +18,8 @@ typedef int64_t pid_t;
 typedef uint16_t mode_t;
 #define __mode_t_defined
 #endif
+
+typedef intmax_t ssize_t;
 
 typedef struct opt_uint8
 {

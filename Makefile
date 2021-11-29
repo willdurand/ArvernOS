@@ -79,7 +79,8 @@ WERRORS += -Wall -Wextra -Werror
 WERRORS += -Wformat=2
 WERRORS += -Wno-null-pointer-arithmetic
 
-CFLAGS += -O2 -std=c11 -ffreestanding -nostdinc -nostdlib -fno-builtin
+CFLAGS += -O2 -std=c11 -ffreestanding -nostdlib -fno-builtin
+CFLAGS += -ffunction-sections -fdata-sections
 CFLAGS += $(WERRORS)
 CFLAGS += $(CONFIG_CFLAGS)
 
