@@ -52,8 +52,12 @@ void selftest()
 
   print_selftest_header("filesystem");
   inode_t debug = vfs_namei("/dev/debug");
-  const char* message = "This message should be written to the console.\n";
-  vfs_write(debug, (void*)message, strlen(message), 0);
+  if (debug == NULL) {
+    printf("/dev/debug not found\n");
+  } else {
+    const char* message = "This message should be written to the console.\n";
+    vfs_write(debug, (void*)message, strlen(message), 0);
+  }
 
   print_selftest_header(ARCH);
   arch_selftest();
