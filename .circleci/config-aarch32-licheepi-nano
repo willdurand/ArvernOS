@@ -1,0 +1,8 @@
+# Configuration file for aarch32/licheepi nano
+LLVM_PREFIX =
+LLVM_SUFFIX = -13
+
+ARCH  = aarch32
+BOARD = licheepi-nano
+
+CONFIG_USE_DLMALLOC = 1
