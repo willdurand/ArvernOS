@@ -296,10 +296,6 @@ libc: ## build the libc
 libc: $(libc)
 .PHONY: libc
 
-libc: ## build the libc
-libc: $(libc)
-.PHONY: libc
-
 release: ## build the project in release mode
 release: arch-release
 .PHONY: release

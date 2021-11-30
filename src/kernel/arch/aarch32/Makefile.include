@@ -1,0 +1,75 @@
+###############################################################################
+# Configuration
+###############################################################################
+
+target_build_dir = $(build_dir)/$(ARCH)/$(BOARD)
+kernel_bin       = kernel-$(ARCH)-$(BOARD).bin
+linker_ld        = $(board_src)/linker.ld
+kernel_img       = $(dist_dir)/$(OS_NAME)-$(ARCH)-$(BOARD).img
+log_file         = $(log_dir)/$(ARCH)-$(BOARD)-$(BUILD_MODE).log
+
+###############################################################################
+# Tools
+###############################################################################
+
+QEMU    = qemu-system-arm
+ARM_GCC = arm-none-eabi-gcc
+ASM     = $(CC)
+
+###############################################################################
+# Options for the different tools
+###############################################################################
+
+QEMU_OPTIONS = -M versatilepb -serial stdio
+
+###############################################################################
+# Source files
+###############################################################################
+
+libk_c_files += $(wildcard $(arch_src)/*.c)
+libk_c_files += $(wildcard $(arch_src)/core/*.c)
+libk_c_files += $(wildcard $(arch_src)/mmu/*.c)
+
+###############################################################################
+# Flags
+###############################################################################
+
+AARCH32_CFLAGS += --target=arm-none-eabi
+ASM_FLAGS      += -c $(AARCH32_CFLAGS)
+CFLAGS         += $(AARCH32_CFLAGS)
+LD_FLAGS       += $(shell $(ARM_GCC) -print-libgcc-file-name)
+INCLUDES       += -I$(board_src)/
+
+###############################################################################
+# Arch-specific targets
+###############################################################################
+
+arch-debug: $(kernel_img)
+.PHONY: arch-debug
+
+arch-run-debug:
+	echo "This command isn't supported yet"
+.PHONY: arch-run-debug
+
+arch-release: $(kernel_img)
+.PHONY: arch-release
+
+arch-run-release:
+	echo "This command isn't supported yet"
+.PHONY: arch-run-release
+
+arch-run-test:
+	echo "This command isn't supported yet"
+.PHONY: arch-run-test
+
+arch-test:
+	echo "This command isn't supported yet"
+.PHONY: arch-test
+
+###############################################################################
+# Misc.
+###############################################################################
+
+$(kernel_img): $(kernel)
+	$(progress) "OBJCOPY" $@
+	$(OBJCOPY) -O binary $< $@
