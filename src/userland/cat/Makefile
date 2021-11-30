@@ -1,3 +1,3 @@
-BIN_NAME = cat
+bin_name = cat
 
 include ../Makefile.include

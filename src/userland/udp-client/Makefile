@@ -1,3 +1,3 @@
-BIN_NAME = udp-client
+bin_name = udp-client
 
 include ../Makefile.include

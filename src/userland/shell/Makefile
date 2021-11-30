@@ -1,3 +1,3 @@
-BIN_NAME = shell
+bin_name = shell
 
 include ../Makefile.include

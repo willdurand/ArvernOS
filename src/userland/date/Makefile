@@ -1,3 +1,3 @@
-BIN_NAME = date
+bin_name = date
 
 include ../Makefile.include

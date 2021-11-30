@@ -1,3 +1,3 @@
-BIN_NAME = meminfo
+bin_name = meminfo
 
 include ../Makefile.include

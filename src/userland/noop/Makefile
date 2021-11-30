@@ -1,3 +1,3 @@
-BIN_NAME = noop
+bin_name = noop
 
 include ../Makefile.include

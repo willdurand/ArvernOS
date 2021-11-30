@@ -1,6 +1,6 @@
-BIN_NAME = init
+bin_name = init
 
-EXTERNAL_DEPS := parg
-EXTERNAL_OBJS := parg/parg.o
+external_deps += parg
+external_objs += parg/parg.o
 
 include ../Makefile.include

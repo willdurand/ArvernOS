@@ -69,16 +69,18 @@ $ docker run -it --rm -v $(pwd):/app willdurand/arvernos-toolchain make help
 ArvernOS - available commands for arch=x86_64
 
 clean                          remove build artifacts
-debug                          build the OS in debug mode
+debug                          build the project in debug mode
 docs                           build the docs
 fmt                            automatically format the code with clang-format
-gdb                            build, run the OS in debug mode and enable GDB
-libc                           build the libc (userland)
-release                        build the OS in release mode
-run-debug                      run the OS in debug mode
-run-release                    run the OS in release mode
-run-test                       run the OS in test mode
-test                           run unit tests
+gdb                            build, run the project in debug mode and enable GDB
+help                           show this help message
+libc                           build the libc
+libc                           build the libc
+release                        build the project in release mode
+run-debug                      run the project in debug mode
+run-release                    run the project in release mode
+run-test                       run the project in test mode
+test                           run the unit tests
 userland                       compile the userland programs (statically linked to libc)
 version                        print tool versions
 ```
@@ -210,13 +212,13 @@ LLVM_PREFIX = /usr/local/opt/llvm@13/bin/
 LLVM_SUFFIX =
 
 # Always enable the Undefined Behavior sanitizer
-UBSAN=1
+UBSAN = 1
 
 # Sensible logging
-ENABLE_CORE_DEBUG=1
-ENABLE_PROC_DEBUG=1
-ENABLE_SYS_DEBUG=1
-ENABLE_USERLAND_DEBUG=1
+ENABLE_CORE_DEBUG     = 1
+ENABLE_PROC_DEBUG     = 1
+ENABLE_SYS_DEBUG      = 1
+ENABLE_USERLAND_DEBUG = 1
 ```
 
 ### x86_64 options
