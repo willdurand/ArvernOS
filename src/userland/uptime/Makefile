@@ -1,3 +1,3 @@
-BIN_NAME = uptime
+bin_name = uptime
 
 include ../Makefile.include

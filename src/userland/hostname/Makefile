@@ -1,3 +1,3 @@
-BIN_NAME = hostname
+bin_name = hostname
 
 include ../Makefile.include

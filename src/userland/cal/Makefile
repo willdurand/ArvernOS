@@ -1,3 +1,3 @@
-BIN_NAME = cal
+bin_name = cal
 
 include ../Makefile.include

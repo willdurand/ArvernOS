@@ -1,3 +1,3 @@
-BIN_NAME = clear
+bin_name = clear
 
 include ../Makefile.include

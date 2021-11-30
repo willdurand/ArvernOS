@@ -1,134 +1,93 @@
-LD_TARGET = elf_x86_64
+###############################################################################
+# Configuration
+###############################################################################
 
-ISO                    = $(DIST_DIR)/$(OS_NAME)-$(ARCH).iso
+iso                    = $(dist_dir)/$(OS_NAME)-$(ARCH).iso
 # This should be a bitmap font.
-KERNEL_CONSOLE_FONT_GZ = $(EXTERNAL_DIR)/scalable-font2/fonts/u_vga16.sfn.gz
-KERNEL_CONSOLE_FONT    = $(MISC_DIR)/font.o
+kernel_console_font_gz = $(external_dir)/scalable-font2/fonts/u_vga16.sfn.gz
+kernel_console_font    = $(misc_dir)/font.o
 # GRUB stuff.
-ISO_DIR                = $(MISC_DIR)/isofiles
-ISO_BOOT_DIR           = $(ISO_DIR)/boot
-GRUB_DIR               = $(ISO_BOOT_DIR)/grub
-GRUB_CFG               = $(GRUB_DIR)/grub.cfg
-
+iso_dir                = $(misc_dir)/isofiles
+iso_boot_dir           = $(iso_dir)/boot
+grub_dir               = $(iso_boot_dir)/grub
+grub_cfg               = $(grub_dir)/grub.cfg
 # This is used in `src/kernel/arch/x86_64/asm/multiboot_header.asm`.
-VBE_WIDTH  = 1024
-VBE_HEIGHT = 768
-VBE_BPP    = 32
+vbe_width              = 1024
+vbe_height             = 768
+vbe_bpp                = 32
 
-NASM = nasm
-NASM_OPTIONS = -dVBE_WIDTH=$(VBE_WIDTH) -dVBE_HEIGHT=$(VBE_HEIGHT) -dVBE_BPP=$(VBE_BPP)
+###############################################################################
+# Tools
+###############################################################################
+
+ASM  = nasm
+QEMU = qemu-system-x86_64
+
+###############################################################################
+# Options for the different tools
+###############################################################################
+
+LD_TARGET    = elf_x86_64
+
+ASM_FLAGS    += -f elf64
+ASM_FLAGS    += -dVBE_WIDTH=$(vbe_width) -dVBE_HEIGHT=$(vbe_height) -dVBE_BPP=$(vbe_bpp)
+
+QEMU_OPTIONS += -m 512M
+QEMU_OPTIONS += -serial file:$(log_file)
+QEMU_OPTIONS += -netdev user,id=u1,ipv6=off,dhcpstart=10.0.2.20
+QEMU_OPTIONS += -device rtl8139,netdev=u1
+QEMU_OPTIONS += -object filter-dump,id=f1,netdev=u1,file=$(log_dir)/traffic-$(BUILD_MODE).pcap
+
+###############################################################################
+# Source files
+###############################################################################
+
+libk_c_files    += $(wildcard $(arch_src)/*.c)
+libk_c_files    += $(wildcard $(arch_src)/arch/*.c)
+libk_c_files    += $(wildcard $(arch_src)/console/*.c)
+libk_c_files    += $(wildcard $(arch_src)/core/*.c)
+libk_c_files    += $(wildcard $(arch_src)/drivers/*.c)
+libk_c_files    += $(wildcard $(arch_src)/fs/dev/*.c)
+libk_c_files    += $(wildcard $(arch_src)/fs/proc/*.c)
+libk_c_files    += $(wildcard $(arch_src)/mmu/*.c)
+libk_c_files    += $(wildcard $(arch_src)/proc/*.c)
+libk_c_files    += $(wildcard $(arch_src)/sys/*.c)
+libk_asm_files  += $(wildcard $(arch_src)/asm/*.asm)
+libc_test_files += $(patsubst $(tests_dir)/%.c, %, $(shell find $(tests_dir)/libc -name '*.c'))
+
+###############################################################################
+# Flags
+###############################################################################
 
 # We need to have -fno-omit-frame-pointer or the kernel stack backtrace won't
 # get the stack.
 CFLAGS += --target=x86_64 -fno-omit-frame-pointer -fstack-protector-strong
 CFLAGS += -mno-red-zone -mno-mmx -mno-sse -mno-sse2 -mno-avx -mno-avx2
 
-QEMU = qemu-system-x86_64
+INCLUDES += -I$(external_dir)/scalable-font2/
 
-QEMU_OPTIONS += -m 512M
-QEMU_OPTIONS += -serial file:$(LOG_FILE)
-QEMU_OPTIONS += -netdev user,id=u1,ipv6=off,dhcpstart=10.0.2.20
-QEMU_OPTIONS += -device rtl8139,netdev=u1
-QEMU_OPTIONS += -object filter-dump,id=f1,netdev=u1,file=$(LOG_DIR)/traffic-$(BUILD_MODE).pcap
+###############################################################################
+# Arch-specific targets
+###############################################################################
 
-ifeq ($(ENABLE_FRAMEBUFFER), 1)
-	CFLAGS += -DENABLE_FRAMEBUFFER
-	NASM_OPTIONS += -dENABLE_FRAMEBUFFER
-endif
-
-GRUB_DEFAULT ?= 0
-
-# See: https://stackoverflow.com/questions/649246/is-it-possible-to-create-a-multi-line-string-variable-in-a-makefile/649462#649462
-define GRUB_CFG_BODY
-set timeout=1
-set default=$(GRUB_DEFAULT)
-
-menuentry "$(OS_NAME) $(BUILD_MODE)" {
-	multiboot2 /boot/$(KERNEL_BIN) $(CMDLINE)
-	module2 /boot/$(INITRD_TAR) initrd
-	module2 /boot/$(SYMBOLS_TXT) symbols
-	boot
-}
-
-menuentry "$(OS_NAME) $(BUILD_MODE) (kernel mode)" {
-	multiboot2 /boot/$(KERNEL_BIN) $(KERNEL_CMDLINE)
-	module2 /boot/$(INITRD_TAR) initrd
-	module2 /boot/$(SYMBOLS_TXT) symbols
-	boot
-}
-endef
-
-export GRUB_CFG_BODY
-
-$(ISO_DIR): $(ARCH_BUILD_DIR)
-	mkdir -p $@
-
-$(ISO_BOOT_DIR): $(ISO_DIR)
-	mkdir -p $@
-
-
-$(GRUB_DIR): $(ISO_BOOT_DIR)
-	mkdir -p $@
-
-# We mark this target as .PHONY to write the file every time.
-$(GRUB_CFG): $(GRUB_DIR)
-	echo "$$GRUB_CFG_BODY" > $@
-.PHONY: $(GRUB_CFG)
-
-$(LIBK_ASM_OBJECTS): $(LIBK_OBJS_DIR)/%.o: %.asm
-	$(PROGRESS) "NASM" $<
-	mkdir -p $(dir $@)
-	$(NASM) $(NASM_OPTIONS) -f elf64 $< -o $@
-
-$(LIBC_ASM_OBJECTS): $(LIBC_OBJS_DIR)/%.o: %.asm
-	$(PROGRESS) "NASM" $<
-	mkdir -p $(dir $@)
-	$(NASM) $(NASM_OPTIONS) -f elf64 $< -o $@
-
-arch-kernel: LINK_TO_KERNEL += $(KERNEL_CONSOLE_FONT)
-arch-kernel: $(KERNEL_CONSOLE_FONT) $(KERNEL)
-.PHONY: arch-kernel
-
-$(ISO): arch-kernel $(INITRD) $(GRUB_CFG)
-	$(PROGRESS) "GRUB" $@
-	mkdir -p $(ISO_BOOT_DIR)
-	cp $(KERNEL) $(ISO_BOOT_DIR)
-	cp $(INITRD) $(ISO_BOOT_DIR)
-	cp $(SYMBOLS) $(ISO_BOOT_DIR)
-	$(TOOLS_DIR)/grub-mkrescue -o $@ $(ISO_DIR)
-
-$(KERNEL_CONSOLE_FONT): $(MISC_DIR) $(KERNEL_CONSOLE_FONT_GZ)
-	$(PROGRESS) "LD" $@
-	cp $(KERNEL_CONSOLE_FONT_GZ) $(MISC_DIR)/console.sfn.gz
-	gunzip -f $(MISC_DIR)/console.sfn.gz
-	# We have to do this because we cannot control the symbol name generated by
-	# `ld`. We get a pretty nice name by cd'ing into the build directory.
-	cd $(MISC_DIR) && $(LD) -m $(LD_TARGET) -r -b binary -o ../../../$@ console.sfn
-
-arch-debug: CFLAGS += $(DEBUG_CFLAGS)
-arch-debug: BUILD_MODE = debug
-arch-debug: GRUB_DEFAULT = 1
-arch-debug: $(ISO)
+arch-debug: grub_default = 1
+arch-debug: $(iso)
 .PHONY: arch-debug
 
-arch-run-debug: BUILD_MODE = debug
 arch-run-debug: QEMU_OPTIONS += -d guest_errors,unimp --no-reboot
 arch-run-debug: debug
-	$(PROGRESS) "RUN" $(ISO)
-	$(QEMU) -cdrom $(ISO) $(QEMU_OPTIONS)
+	$(progress) "RUN" $(iso)
+	$(QEMU) -cdrom $(iso) $(QEMU_OPTIONS)
 .PHONY: arch-run-debug
 
-arch-release: $(ISO)
+arch-release: $(iso)
 .PHONY: arch-release
 
 arch-run-release: release
-	$(PROGRESS) "RUN" $(ISO)
-	$(QEMU) -cdrom $(ISO) $(QEMU_OPTIONS)
+	$(progress) "RUN" $(iso)
+	$(QEMU) -cdrom $(iso) $(QEMU_OPTIONS)
 .PHONY: arch-run-release
 
-arch-run-test: BUILD_MODE = test
-arch-run-test: QEMU_OPTIONS += -curses
-arch-run-test: CMDLINE = /bin/userland-testsuite
 arch-run-test: run-release
 .PHONY: arch-run-test
 
@@ -137,50 +96,113 @@ arch-test: CFLAGS = $(CFLAGS_WITHOUT_TARGET)
 arch-test: CFLAGS += -fPIC -g3 -fsanitize=undefined -fsanitize=address
 arch-test: CFLAGS_FOR_TESTS += -g3 -fsanitize=undefined -fsanitize=address
 arch-test: CFLAGS_FOR_TESTS += -DENABLE_LOGS_FOR_TESTS -DTEST_ENV
-arch-test: CFLAGS_FOR_TESTS += -I$(TESTS_DIR)/ -I$(INCLUDE_DIR)/kernel/ -I$(ARCH_SRC)/
+arch-test: CFLAGS_FOR_TESTS += -I$(tests_dir)/ -I$(include_dir)/kernel/ -I$(arch_src)/
 arch-test: libc
 	# libc
-	mkdir -p $(ARCH_BUILD_DIR)/libc/string
-	for file in $(LIBC_TEST_FILES); do \
+	mkdir -p $(target_build_dir)/libc/string
+	for file in $(libc_test_files); do \
 		echo ; \
-		$(CC) -shared $(LIBC_OBJS_DIR)/src/$$file.o -o $(ARCH_BUILD_DIR)/$$file.so ; \
-		$(CC) -g3 -fsanitize=undefined -fsanitize=address -I$(TESTS_DIR)/ $(TESTS_DIR)/$$file.c -o $(ARCH_BUILD_DIR)/$$file ; \
-		LD_PRELOAD=./$(ARCH_BUILD_DIR)/$$file.so ./$(ARCH_BUILD_DIR)/$$file || exit 1 ; \
+		$(CC) -shared $(lib_objs_dir)/src/$$file.o -o $(target_build_dir)/$$file.so ; \
+		$(CC) -g3 -fsanitize=undefined -fsanitize=address -I$(tests_dir)/ $(tests_dir)/$$file.c -o $(target_build_dir)/$$file ; \
+		LD_PRELOAD=./$(target_build_dir)/$$file.so ./$(target_build_dir)/$$file || exit 1 ; \
 	done
 	# fs/vfs
-	$(CC) $(CFLAGS_FOR_TESTS) -I$(TESTS_DIR)/proxies/ -o $(ARCH_BUILD_DIR)/vfs \
-		$(KERNEL_TESTS_DIR)/fs/vfs.c $(KERNEL_SRC_DIR)/fs/vfs.c
-	./$(ARCH_BUILD_DIR)/vfs
+	$(CC) $(CFLAGS_FOR_TESTS) -I$(tests_dir)/proxies/ -o $(target_build_dir)/vfs \
+		$(kernel_tests_dir)/fs/vfs.c $(kernel_src_dir)/fs/vfs.c
+	./$(target_build_dir)/vfs
 	# fs/tar
-	$(CC) $(CFLAGS_FOR_TESTS) -I$(TESTS_DIR)/proxies/ -o $(ARCH_BUILD_DIR)/tar \
-		$(KERNEL_TESTS_DIR)/fs/tar.c $(KERNEL_SRC_DIR)/fs/tar.c $(KERNEL_SRC_DIR)/fs/vfs.c
-	./$(ARCH_BUILD_DIR)/tar
+	$(CC) $(CFLAGS_FOR_TESTS) -I$(tests_dir)/proxies/ -o $(target_build_dir)/tar \
+		$(kernel_tests_dir)/fs/tar.c $(kernel_src_dir)/fs/tar.c $(kernel_src_dir)/fs/vfs.c
+	./$(target_build_dir)/tar
 	# fs/proc
-	$(CC) $(CFLAGS_FOR_TESTS) -I$(TESTS_DIR)/proxies/ -o $(ARCH_BUILD_DIR)/proc \
-		$(KERNEL_TESTS_DIR)/fs/proc.c $(KERNEL_SRC_DIR)/fs/proc.c $(KERNEL_SRC_DIR)/fs/vfs.c
-	./$(ARCH_BUILD_DIR)/proc
+	$(CC) $(CFLAGS_FOR_TESTS) -I$(tests_dir)/proxies/ -o $(target_build_dir)/proc \
+		$(kernel_tests_dir)/fs/proc.c $(kernel_src_dir)/fs/proc.c $(kernel_src_dir)/fs/vfs.c
+	./$(target_build_dir)/proc
 	# fs/sock
-	$(CC) $(CFLAGS_FOR_TESTS) -I$(TESTS_DIR)/proxies/ -o $(ARCH_BUILD_DIR)/sock \
-		$(KERNEL_TESTS_DIR)/fs/sock.c $(KERNEL_SRC_DIR)/fs/sock.c $(KERNEL_SRC_DIR)/fs/vfs.c
-	./$(ARCH_BUILD_DIR)/sock
+	$(CC) $(CFLAGS_FOR_TESTS) -I$(tests_dir)/proxies/ -o $(target_build_dir)/sock \
+		$(kernel_tests_dir)/fs/sock.c $(kernel_src_dir)/fs/sock.c $(kernel_src_dir)/fs/vfs.c
+	./$(target_build_dir)/sock
 	# mmu/frame
-	$(CC) $(CFLAGS_FOR_TESTS) -Wformat=0 -I$(TESTS_DIR)/proxies/ -o $(ARCH_BUILD_DIR)/frame \
-		$(KERNEL_TESTS_DIR)/mmu/frame.c $(ARCH_SRC)/mmu/frame.c $(ARCH_SRC)/core/multiboot.c $(KERNEL_SRC_DIR)/mmu/bitmap.c
-	./$(ARCH_BUILD_DIR)/frame
+	$(CC) $(CFLAGS_FOR_TESTS) -Wformat=0 -I$(tests_dir)/proxies/ -o $(target_build_dir)/frame \
+		$(kernel_tests_dir)/mmu/frame.c $(arch_src)/mmu/frame.c $(arch_src)/core/multiboot.c $(kernel_src_dir)/mmu/bitmap.c
+	./$(target_build_dir)/frame
 	# config/inish
-	$(CC) $(CFLAGS_FOR_TESTS) -I$(TESTS_DIR)/proxies/ -o $(ARCH_BUILD_DIR)/inish \
-		$(KERNEL_TESTS_DIR)/config/inish.c $(KERNEL_SRC_DIR)/config/inish.c
-	./$(ARCH_BUILD_DIR)/inish
+	$(CC) $(CFLAGS_FOR_TESTS) -I$(tests_dir)/proxies/ -o $(target_build_dir)/inish \
+		$(kernel_tests_dir)/config/inish.c $(kernel_src_dir)/config/inish.c
+	./$(target_build_dir)/inish
 	# mmu/bitmap
-	$(CC) $(CFLAGS_FOR_TESTS) -o $(ARCH_BUILD_DIR)/bitmap \
-		$(KERNEL_TESTS_DIR)/mmu/bitmap.c $(KERNEL_SRC_DIR)/mmu/bitmap.c
-	./$(ARCH_BUILD_DIR)/bitmap
+	$(CC) $(CFLAGS_FOR_TESTS) -o $(target_build_dir)/bitmap \
+		$(kernel_tests_dir)/mmu/bitmap.c $(kernel_src_dir)/mmu/bitmap.c
+	./$(target_build_dir)/bitmap
 	# mmu/paging
-	$(CC) $(CFLAGS_FOR_TESTS) -Wformat=0 -I$(TESTS_DIR)/proxies/ -o $(ARCH_BUILD_DIR)/paging \
-		$(KERNEL_TESTS_DIR)/mmu/paging.c $(ARCH_SRC)/mmu/paging.c $(ARCH_SRC)/core/multiboot.c $(ARCH_SRC)/mmu/frame.c $(KERNEL_SRC_DIR)/mmu/bitmap.c $(ARCH_SRC)/core/register.c
-	./$(ARCH_BUILD_DIR)/paging
+	$(CC) $(CFLAGS_FOR_TESTS) -Wformat=0 -I$(tests_dir)/proxies/ -o $(target_build_dir)/paging \
+		$(kernel_tests_dir)/mmu/paging.c $(arch_src)/mmu/paging.c $(arch_src)/core/multiboot.c $(arch_src)/mmu/frame.c $(kernel_src_dir)/mmu/bitmap.c $(arch_src)/core/register.c
+	./$(target_build_dir)/paging
 .PHONY: arch-test
 
-arch-version:
-	$(NASM) --version
-.PHONY: arch-version
+###############################################################################
+# Misc.
+###############################################################################
+
+ifeq ($(ENABLE_FRAMEBUFFER), 1)
+	CFLAGS += -DENABLE_FRAMEBUFFER
+	ASM_FLAGS += -dENABLE_FRAMEBUFFER
+endif
+
+grub_default ?= 0
+
+# See: https://stackoverflow.com/questions/649246/is-it-possible-to-create-a-multi-line-string-variable-in-a-makefile/649462#649462
+define grub_cfg_body
+set timeout=1
+set default=$(grub_default)
+
+menuentry "$(OS_NAME) $(BUILD_MODE)" {
+	multiboot2 /boot/$(kernel_bin) $(CMDLINE)
+	module2 /boot/$(initrd_tar) initrd
+	module2 /boot/$(symbols_txt) symbols
+	boot
+}
+
+menuentry "$(OS_NAME) $(BUILD_MODE) (kernel mode)" {
+	multiboot2 /boot/$(kernel_bin) $(KERNEL_CMDLINE)
+	module2 /boot/$(initrd_tar) initrd
+	module2 /boot/$(symbols_txt) symbols
+	boot
+}
+endef
+
+export grub_cfg_body
+
+$(iso_dir): | $(target_build_dir)
+	mkdir $@
+
+$(iso_boot_dir): | $(iso_dir)
+	mkdir $@
+
+$(grub_dir): | $(iso_boot_dir)
+	mkdir $@
+
+# We mark this target as .PHONY to write the file every time.
+$(grub_cfg): $(grub_dir)
+	echo "$$grub_cfg_body" > $@
+.PHONY: $(grub_cfg)
+
+arch-kernel: libk_extra_objects += $(kernel_console_font)
+arch-kernel: $(kernel_console_font) $(kernel)
+.PHONY: arch-kernel
+
+$(iso): arch-kernel $(initrd) $(grub_cfg)
+	$(progress) "GRUB" $@
+	mkdir -p $(iso_boot_dir)
+	cp $(kernel) $(iso_boot_dir)
+	cp $(initrd) $(iso_boot_dir)
+	cp $(symbols) $(iso_boot_dir)
+	$(tools_dir)/grub-mkrescue -o $@ $(iso_dir)
+
+$(kernel_console_font): $(misc_dir) $(kernel_console_font_gz)
+	$(progress) "LD" $@
+	cp $(kernel_console_font_gz) $(misc_dir)/console.sfn.gz
+	gunzip -f $(misc_dir)/console.sfn.gz
+	# We have to do this because we cannot control the symbol name generated by
+	# `ld`. We get a pretty nice name by cd'ing into the build directory.
+	cd $(misc_dir) && $(LD) -m $(LD_TARGET) -r -b binary -o ../../../$@ console.sfn

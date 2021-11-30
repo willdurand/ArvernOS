@@ -1,3 +1,3 @@
-BIN_NAME = userland-testsuite
+bin_name = userland-testsuite
 
 include ../Makefile.include
