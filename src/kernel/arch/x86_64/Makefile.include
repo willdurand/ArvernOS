@@ -77,7 +77,7 @@ arch-debug: $(iso)
 arch-run-debug: QEMU_OPTIONS += -d guest_errors,unimp --no-reboot
 arch-run-debug: debug
 	$(progress) "RUN" $(iso)
-	$(QEMU) -cdrom $(iso) $(QEMU_OPTIONS)
+	$(QEMU) -cdrom $(iso) $(filter-out -semihosting, $(QEMU_OPTIONS))
 .PHONY: arch-run-debug
 
 arch-release: $(iso)
@@ -85,7 +85,7 @@ arch-release: $(iso)
 
 arch-run-release: release
 	$(progress) "RUN" $(iso)
-	$(QEMU) -cdrom $(iso) $(QEMU_OPTIONS)
+	$(QEMU) -cdrom $(iso) $(filter-out -semihosting, $(QEMU_OPTIONS))
 .PHONY: arch-run-release
 
 arch-test: CFLAGS_WITHOUT_TARGET := $(filter-out --target=x86_64,$(CFLAGS))
