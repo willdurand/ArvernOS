@@ -19,13 +19,6 @@ ASM  = $(CC)
 # Options for the different tools
 ###############################################################################
 
-CONFIG_SEMIHOSTING ?= 0
-
-ifeq ($(CONFIG_SEMIHOSTING), 1)
-	QEMU_OPTIONS  += -semihosting
-	CONFIG_CFLAGS += -DCONFIG_SEMIHOSTING
-endif
-
 ###############################################################################
 # Source files
 ###############################################################################
