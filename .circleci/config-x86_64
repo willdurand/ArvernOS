@@ -1,3 +1,5 @@
 # Configuration file for x86_64
 LLVM_PREFIX =
 LLVM_SUFFIX = -13
+
+CONFIG_SEMIHOSTING = 1
