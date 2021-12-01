@@ -32,7 +32,6 @@ endif
 
 libk_c_files   += $(wildcard $(arch_src)/*.c)
 libk_c_files   += $(wildcard $(arch_src)/arch/*.c)
-libk_c_files   += $(wildcard $(arch_src)/core/*.c)
 libk_c_files   += $(wildcard $(arch_src)/sys/*.c)
 
 ###############################################################################
