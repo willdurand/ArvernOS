@@ -1,5 +1,5 @@
-#ifndef CORE_ATAG_H
-#define CORE_ATAG_H
+#ifndef CORE_ARM_ATAG_H
+#define CORE_ARM_ATAG_H
 
 #include <stdint.h>
 

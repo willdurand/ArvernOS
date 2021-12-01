@@ -1,5 +1,5 @@
 #include "kmain.h"
-#include <core/atag.h>
+#include <core/arm/atag.h>
 #include <drivers/miniuart.h>
 #include <fs/tar.h>
 #include <fs/vfs.h>
