@@ -381,7 +381,10 @@ clean: ## remove build artifacts
 .PHONY: clean
 
 help: ## show this help message
-	@echo "$(OS_NAME) - available commands for arch=$(ARCH)\n"
+help: BOARD ?=
+help:
+	@/bin/echo -n "$(OS_NAME) - available commands for arch=$(ARCH)"
+	@if [ -n "$(BOARD)" ]; then echo " board=$(BOARD)\n"; else echo "\n"; fi
 	@grep -hE '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 .PHONY: help
 
