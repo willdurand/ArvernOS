@@ -142,6 +142,11 @@ else
 	external_deps += liballoc
 endif
 
+ifeq ($(CONFIG_SEMIHOSTING), 1)
+	QEMU_OPTIONS  += -semihosting
+	CONFIG_CFLAGS += -DCONFIG_SEMIHOSTING
+endif
+
 # This file exists in a Docker container because we copy it in `Dockerfile`.
 in_docker = $(wildcard /tmp/install-linux-deps)
 ifneq ($(in_docker),)
