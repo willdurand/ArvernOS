@@ -231,6 +231,19 @@ ifneq ($(BOARD),)
 endif
 
 ###############################################################################
+# Dependencies
+###############################################################################
+
+libk_deps = $(libk_c_objects:%.o=%.d)
+libk_deps += $(libk_extra_objects:%.o=%.d)
+
+-include $(libk_deps)
+
+libc_deps = $(libc_c_objects:%.o=%.d)
+
+-include $(libc_deps)
+
+###############################################################################
 # Rules and targets
 ###############################################################################
 
@@ -261,13 +274,13 @@ $(libk_c_objects): INCLUDES += -I$(include_dir)/kernel/ -I$(arch_src)/
 $(libk_c_objects): $(libk_objs_dir)/%.o: %.c
 	$(progress) "CC" $<
 	$(MKDIR) -p $(dir $@)
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	$(CC) -MMD $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(libc_c_objects): CFLAGS += -D__is_libc
 $(libc_c_objects): $(lib_objs_dir)/%.o: %.c
 	$(progress) "CC" $<
 	$(MKDIR) -p $(dir $@)
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	$(CC) -MMD  $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(libc_asm_objects): $(lib_objs_dir)/%.o: %.asm
 	$(progress) "CC" $<
