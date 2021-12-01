@@ -1,0 +1,64 @@
+###############################################################################
+# Configuration
+###############################################################################
+
+target_build_dir = $(build_dir)/$(ARCH)/$(BOARD)
+kernel_bin       = kernel-$(ARCH)-$(BOARD).bin
+kernel_img       = $(dist_dir)/$(OS_NAME)-$(ARCH)-$(BOARD).img
+linker_ld        = $(board_src)/linker.ld
+log_file         = $(log_dir)/$(ARCH)-$(BOARD)-$(BUILD_MODE).log
+
+###############################################################################
+# Tools
+###############################################################################
+
+QEMU = qemu-system-aarch64
+ASM  = $(CC)
+
+###############################################################################
+# Options for the different tools
+###############################################################################
+
+###############################################################################
+# Source files
+###############################################################################
+
+libk_c_files   += $(wildcard $(arch_src)/*.c)
+libk_c_files   += $(wildcard $(arch_src)/arch/*.c)
+libk_c_files   += $(wildcard $(arch_src)/core/*.c)
+libk_c_files   += $(wildcard $(arch_src)/sys/*.c)
+
+###############################################################################
+# Flags
+###############################################################################
+
+AARCH64_CFLAGS = --target=aarch64-elf
+ASM_FLAGS      += -c $(AARCH64_CFLAGS)
+CFLAGS         += $(AARCH64_CFLAGS)
+INCLUDES       += -I$(board_src)/
+LD_TARGET      = aarch64elf
+
+###############################################################################
+# Arch-specific targets
+###############################################################################
+
+arch-run-debug: debug
+	$(progress) "RUN" $(kernel_img)
+	$(QEMU) -kernel $(kernel_img) $(QEMU_OPTIONS)
+.PHONY: arch-run-debug
+
+arch-release: $(kernel_img)
+.PHONY: arch-release
+
+arch-run-release: release
+	$(progress) "RUN" $(kernel_img)
+	$(QEMU) -kernel $(kernel_img) $(QEMU_OPTIONS)
+.PHONY: arch-run-release
+
+###############################################################################
+# Misc.
+###############################################################################
+
+$(kernel_img): $(kernel)
+	$(progress) "OBJCOPY" $@
+	$(OBJCOPY) -O binary $< $@
