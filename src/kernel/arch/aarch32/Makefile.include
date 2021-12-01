@@ -26,6 +26,7 @@ QEMU_OPTIONS = -M versatilepb -serial stdio
 # Source files
 ###############################################################################
 
+libk_c_files += $(wildcard $(kernel_src_dir)/core/arm/*.c)
 libk_c_files += $(wildcard $(arch_src)/*.c)
 libk_c_files += $(wildcard $(arch_src)/core/*.c)
 libk_c_files += $(wildcard $(arch_src)/mmu/*.c)
