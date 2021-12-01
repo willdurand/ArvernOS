@@ -188,7 +188,7 @@ arch-kernel: libk_extra_objects += $(kernel_console_font)
 arch-kernel: $(kernel_console_font) $(kernel)
 .PHONY: arch-kernel
 
-$(iso): arch-kernel $(initrd) $(grub_cfg)
+$(iso): arch-kernel userland $(initrd) $(grub_cfg)
 	$(progress) "GRUB" $@
 	mkdir -p $(iso_boot_dir)
 	cp $(kernel) $(iso_boot_dir)

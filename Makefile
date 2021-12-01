@@ -65,7 +65,7 @@ log_file         = $(log_dir)/$(ARCH)-$(BUILD_MODE).log
 # This is the list of external libraries we use and need to build for the
 # kernel (libk) and the libc.
 external_deps = printf vtconsole
-external_dirS = $(addprefix $(external_dir)/,$(external_deps))
+external_dirs = $(addprefix $(external_dir)/,$(external_deps))
 
 ###############################################################################
 # Tools
@@ -113,7 +113,7 @@ libk_c_files       += $(wildcard $(kernel_src_dir)/net/*.c)
 libk_c_files       += $(wildcard $(kernel_src_dir)/proc/*.c)
 libk_c_files       += $(wildcard $(kernel_src_dir)/sys/*.c)
 libk_c_files       += $(libc_c_files)
-libk_c_files       += $(shell find $(external_dirS) -name '*.c')
+libk_c_files       += $(shell find $(external_dirs) -name '*.c')
 libk_asm_files     +=
 # libk: object files
 libk_c_objects     = $(patsubst %.c, $(libk_objs_dir)/%.o, $(libk_c_files))
@@ -277,9 +277,9 @@ $(libc): $(dist_dir) $(libc_asm_objects) $(libc_c_objects)
 	$(progress) "AR" $@
 	$(AR) rcs $@ $(libc_asm_objects) $(libc_c_objects)
 
-$(initrd): userland
+$(initrd): $(misc_dir)
 	$(progress) "TAR" $@
-	cp -R $(userland_src_dir)/bin $(initrd_dir)
+	if [ -d "$(userland_src_dir)/bin" ]; then cp -R $(userland_src_dir)/bin $(initrd_dir); fi
 	echo "$(OS_NAME) ($(ARCH)) build info" > $(initrd_dir)/info
 	echo "" >> $(initrd_dir)/info
 	echo "hash: $(git_hash)" >> $(initrd_dir)/info
@@ -324,6 +324,7 @@ run-test: ## run the project in test mode
 run-test: BUILD_MODE = test
 run-test: CMDLINE = /bin/userland-testsuite
 run-test: QEMU_OPTIONS += -curses
+run-test: run-release
 .PHONY: run-test
 
 userland: ## compile the userland programs (statically linked to libc)

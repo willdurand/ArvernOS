@@ -1,10 +1,15 @@
 #include "kmain.h"
 #include <core/atag.h>
 #include <drivers/miniuart.h>
+#include <fs/tar.h>
+#include <fs/vfs.h>
 #include <kmain.h>
 #include <logging.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <sys/k_syscall.h>
+
+extern unsigned char _binary___initrd_tar_start;
 
 void kmain(uintptr_t w0)
 {
@@ -28,7 +33,7 @@ void kmain(uintptr_t w0)
   syscall_init();
   print_ok();
 
-  kmain_init_fs((uintptr_t)NULL);
+  kmain_init_fs((uintptr_t)&_binary___initrd_tar_start);
 
   kmain_start(atag_get_cmdline());
 }
