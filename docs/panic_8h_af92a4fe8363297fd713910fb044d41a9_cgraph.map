@@ -1,8 +1,5 @@
 <map id="kernel_panic" name="kernel_panic">
-<area shape="rect" id="node1" title=" " alt="" coords="5,56,103,83"/>
-<area shape="rect" id="node2" href="$kernel_8h.html#accb39562862923d439dca6abd40c9840" title=" " alt="" coords="187,31,314,57"/>
-<area shape="rect" id="node6" href="$arch_2panic_8h.html#a9643e195acfe8004833ed7ea8ee42f1c" title=" " alt="" coords="151,81,351,108"/>
-<area shape="rect" id="node3" href="$isr_8h.html#a48c1ab85abf749224864c1576a186a3b" title=" " alt="" coords="407,5,557,32"/>
-<area shape="rect" id="node4" href="$vga__text_8h.html#ad1fc59685312d0c91988280ab70f1c01" title=" " alt="" coords="399,56,565,83"/>
-<area shape="rect" id="node5" href="$port_8h.html#ac3c72bfda8c7b1920ef91bcc06c97c7f" title=" " alt="" coords="613,56,717,83"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,31,103,57"/>
+<area shape="rect" id="node2" href="$kernel_8h.html#afa8a138b0f00d1bb5d26f79378caa530" title=" " alt="" coords="212,5,289,32"/>
+<area shape="rect" id="node3" href="$arch_2panic_8h.html#a9643e195acfe8004833ed7ea8ee42f1c" title=" " alt="" coords="151,56,351,83"/>
 </map>

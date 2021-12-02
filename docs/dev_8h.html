@@ -17,6 +17,8 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -87,31 +89,61 @@ $(document).ready(function(){initNavTree('dev_8h.html',''); initResizable(); });
 <div class="title">dev.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;fs/vfs.h&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="vfs_8h.html">fs/vfs.h</a>&gt;</code><br />
 <code>#include &lt;stdbool.h&gt;</code><br />
 <code>#include &lt;sys/types.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for dev.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="dev_8h__incl.png" border="0" usemap="#ainclude_2kernel_2fs_2dev_8h" alt=""/></div>
-<map name="ainclude_2kernel_2fs_2dev_8h" id="ainclude_2kernel_2fs_2dev_8h">
-<area shape="rect" title=" " alt="" coords="31,5,185,32"/>
-<area shape="rect" href="vfs_8h_source.html" title=" " alt="" coords="5,80,69,107"/>
-<area shape="rect" href="stdbool_8h_source.html" title=" " alt="" coords="73,155,149,181"/>
-<area shape="rect" href="types_8h_source.html" title=" " alt="" coords="146,80,235,107"/>
-<area shape="rect" href="stdint_8h_source.html" title=" " alt="" coords="89,229,154,256"/>
-<area shape="rect" href="stddef_8h_source.html" title=" " alt="" coords="173,155,243,181"/>
-</map>
+<div class="center"><iframe scrolling="no" frameborder="0" src="dev_8h__incl.svg" width="180" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
-<p><a href="dev_8h_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a0dbadb87fe40e866f57cbab98239c224"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dev_8h.html#a0dbadb87fe40e866f57cbab98239c224">dev_fs_init</a> ()</td></tr>
 <tr class="separator:a0dbadb87fe40e866f57cbab98239c224"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19cbd7433414e04cc8c0beb82f397c21"><td class="memItemLeft" align="right" valign="top">inode_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dev_8h.html#a19cbd7433414e04cc8c0beb82f397c21">dev_fs_create</a> (const char *name, <a class="el" href="structvfs__driver__t.html">vfs_driver_t</a> *driver)</td></tr>
+<tr class="separator:a19cbd7433414e04cc8c0beb82f397c21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a19cbd7433414e04cc8c0beb82f397c21"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19cbd7433414e04cc8c0beb82f397c21">&#9670;&nbsp;</a></span>dev_fs_create()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">inode_t dev_fs_create </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structvfs__driver__t.html">vfs_driver_t</a> *&#160;</td>
+          <td class="paramname"><em>driver</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Creates a new devfs character device.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>the name of the character device </td></tr>
+    <tr><td class="paramname">driver</td><td>the driver of the character device </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the inode of the pseudo-file </dd></dl>
+
+</div>
+</div>
 <a id="a0dbadb87fe40e866f57cbab98239c224"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0dbadb87fe40e866f57cbab98239c224">&#9670;&nbsp;</a></span>dev_fs_init()</h2>
 
@@ -126,8 +158,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initializes the "dev" filesystem.</p>
-<p>This FS is a bit different than the other existing ones as it creates a set of character devices instead of managing a single file or directory. </p>
+<p>Initializes the "dev" filesystem. </p>
 
 </div>
 </div>

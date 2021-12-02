@@ -17,6 +17,8 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -87,50 +89,74 @@ $(document).ready(function(){initNavTree('kernel_8h.html',''); initResizable(); 
 <div class="title">kernel.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p><a href="kernel_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:accb39562862923d439dca6abd40c9840"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="kernel_8h.html#accb39562862923d439dca6abd40c9840">arch_halt_system</a> ()</td></tr>
-<tr class="separator:accb39562862923d439dca6abd40c9840"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5fe1791c207cc3de3931c333ac05fbf7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="kernel_8h.html#a5fe1791c207cc3de3931c333ac05fbf7">arch_restart</a> ()</td></tr>
+<tr class="separator:a5fe1791c207cc3de3931c333ac05fbf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b8e58711c3352cdce92a7694c553c35"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="kernel_8h.html#a5b8e58711c3352cdce92a7694c553c35">arch_poweroff</a> ()</td></tr>
+<tr class="separator:a5b8e58711c3352cdce92a7694c553c35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa8a138b0f00d1bb5d26f79378caa530"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="kernel_8h.html#afa8a138b0f00d1bb5d26f79378caa530">arch_halt</a> ()</td></tr>
+<tr class="separator:afa8a138b0f00d1bb5d26f79378caa530"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="accb39562862923d439dca6abd40c9840"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#accb39562862923d439dca6abd40c9840">&#9670;&nbsp;</a></span>arch_halt_system()</h2>
+<a id="afa8a138b0f00d1bb5d26f79378caa530"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa8a138b0f00d1bb5d26f79378caa530">&#9670;&nbsp;</a></span>arch_halt()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void arch_halt_system </td>
+          <td class="memname">void arch_halt </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Halt the system, e.g., because of a kernel panic. </p>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="kernel_8h_accb39562862923d439dca6abd40c9840_cgraph.png" border="0" usemap="#akernel_8h_accb39562862923d439dca6abd40c9840_cgraph" alt=""/></div>
-<map name="akernel_8h_accb39562862923d439dca6abd40c9840_cgraph" id="akernel_8h_accb39562862923d439dca6abd40c9840_cgraph">
-<area shape="rect" title=" " alt="" coords="5,31,132,57"/>
-<area shape="rect" href="isr_8h.html#a48c1ab85abf749224864c1576a186a3b" title=" " alt="" coords="189,5,338,32"/>
-<area shape="rect" href="vga__text_8h.html#ad1fc59685312d0c91988280ab70f1c01" title=" " alt="" coords="180,56,347,83"/>
-<area shape="rect" href="port_8h.html#ac3c72bfda8c7b1920ef91bcc06c97c7f" title=" " alt="" coords="395,56,499,83"/>
-</map>
-</div>
+<p>hutdown everything and perform a clean system halt. </p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="kernel_8h_accb39562862923d439dca6abd40c9840_icgraph.png" border="0" usemap="#akernel_8h_accb39562862923d439dca6abd40c9840_icgraph" alt=""/></div>
-<map name="akernel_8h_accb39562862923d439dca6abd40c9840_icgraph" id="akernel_8h_accb39562862923d439dca6abd40c9840_icgraph">
-<area shape="rect" title=" " alt="" coords="151,5,277,32"/>
-<area shape="rect" href="panic_8h.html#af92a4fe8363297fd713910fb044d41a9" title=" " alt="" coords="5,5,103,32"/>
-</map>
+<div class="center"><iframe scrolling="no" frameborder="0" src="kernel_8h_afa8a138b0f00d1bb5d26f79378caa530_icgraph.svg" width="234" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
+</div>
+
+</div>
+</div>
+<a id="a5b8e58711c3352cdce92a7694c553c35"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b8e58711c3352cdce92a7694c553c35">&#9670;&nbsp;</a></span>arch_poweroff()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arch_poweroff </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Shutdown everything and perform a clean system power off. </p>
+
+</div>
+</div>
+<a id="a5fe1791c207cc3de3931c333ac05fbf7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5fe1791c207cc3de3931c333ac05fbf7">&#9670;&nbsp;</a></span>arch_restart()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arch_restart </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Shutdown everything and perform a clean reboot. </p>
 
 </div>
 </div>

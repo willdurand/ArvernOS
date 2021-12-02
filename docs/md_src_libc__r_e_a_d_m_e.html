@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ArvernOS: lib(k|c)</title>
+<title>ArvernOS: Component: lib(k|c)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -17,6 +17,8 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -82,18 +84,22 @@ $(document).ready(function(){initNavTree('md_src_libc__r_e_a_d_m_e.html',''); in
 
 <div class="PageDoc"><div class="header">
   <div class="headertitle">
-<div class="title">lib(k|c) </div>  </div>
+<div class="title">Component: lib(k|c) </div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p>This directory contains both the kernel C library (<em>libk</em>) and the standard C library (<em>libc</em>), which share pretty much the same implementation. Some Makefile-fu and C macros help separate the two libraries.</p>
 <p>When adding new code, the general idea is to write a unified implementation, from a standard C library perspective, and that should be enough to work in the kernel. That being said:</p>
 <ul>
-<li><p class="startli">if a function requires a different implementation in the kernel, we can use directives for conditional compilation:</p>
-<p class="startli">```c #ifdef __is_libk // libk code #else // libc code #endif ```</p>
-</li>
-<li><p class="startli">if a function only exists in the standard C library (<em>libc</em>), it should be excluded from the <em>libk</em> entirely with directives. This creates empty modules during compilation (and some compilers don't like that) but that is an acceptable (and accepted) trade-off at the moment.</p>
-<p class="startli">```c #ifndef __is_libk // libc only code #endif ``` </p>
-</li>
+<li>if a function requires a different implementation in the kernel, we can use directives for conditional compilation: <pre class="fragment">#ifdef __is_libk
+// libk code
+#else
+// libc code
+#endif
+</pre></li>
+<li>if a function only exists in the standard C library (<em>libc</em>), it should be excluded from the <em>libk</em> entirely with directives. This creates empty modules during compilation (and some compilers don't like that) but that is an acceptable (and accepted) trade-off at the moment. <pre class="fragment">#ifndef __is_libk
+// libc only code
+#endif
+</pre> </li>
 </ul>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->

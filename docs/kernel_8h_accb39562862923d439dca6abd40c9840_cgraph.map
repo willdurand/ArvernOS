@@ -1,6 +1,0 @@
-<map id="arch_halt_system" name="arch_halt_system">
-<area shape="rect" id="node1" title=" " alt="" coords="5,31,132,57"/>
-<area shape="rect" id="node2" href="$isr_8h.html#a48c1ab85abf749224864c1576a186a3b" title=" " alt="" coords="189,5,338,32"/>
-<area shape="rect" id="node3" href="$vga__text_8h.html#ad1fc59685312d0c91988280ab70f1c01" title=" " alt="" coords="180,56,347,83"/>
-<area shape="rect" id="node4" href="$port_8h.html#ac3c72bfda8c7b1920ef91bcc06c97c7f" title=" " alt="" coords="395,56,499,83"/>
-</map>

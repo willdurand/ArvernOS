@@ -9,8 +9,9 @@ var dir_2ae24886e77657f82343b4b0154efdc1 =
     [ "net", "dir_0be85e67768b66452391783f935553f6.html", "dir_0be85e67768b66452391783f935553f6" ],
     [ "proc", "dir_b74c2997ee101869ac325e0e63322356.html", "dir_b74c2997ee101869ac325e0e63322356" ],
     [ "sys", "dir_a0ffd90eda9fe9d19fd364f796da6911.html", "dir_a0ffd90eda9fe9d19fd364f796da6911" ],
-    [ "keymap.h", "keymap_8h_source.html", null ],
-    [ "logging.h", "logging_8h_source.html", null ],
+    [ "init.h", "init_8h.html", "init_8h" ],
+    [ "kmain.h", "include_2kernel_2kmain_8h.html", "include_2kernel_2kmain_8h" ],
+    [ "logging.h", "logging_8h.html", null ],
     [ "osinfo.h", "osinfo_8h.html", null ],
     [ "panic.h", "panic_8h.html", "panic_8h" ]
 ];

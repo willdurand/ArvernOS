@@ -1,5 +1,6 @@
 <map id="include/kernel/fs/tar.h" name="include/kernel/fs/tar.h">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,153,32"/>
-<area shape="rect" id="node2" href="$vfs_8h_source.html" title=" " alt="" coords="47,80,111,107"/>
-<area shape="rect" id="node3" href="$stdint_8h_source.html" title=" " alt="" coords="47,155,112,181"/>
+<area shape="rect" id="node1" title=" " alt="" coords="16,5,164,32"/>
+<area shape="rect" id="node2" href="$vfs_8h.html" title=" " alt="" coords="58,80,122,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,155,81,181"/>
+<area shape="rect" id="node4" title=" " alt="" coords="105,155,171,181"/>
 </map>

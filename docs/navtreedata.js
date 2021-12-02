@@ -25,43 +25,40 @@
 var NAVTREE =
 [
   [ "ArvernOS", "index.html", [
-    [ "Goals", "index.html#autotoc_md1", null ],
-    [ "Setting up a development environment", "index.html#autotoc_md2", [
-      [ "Getting the sources", "index.html#autotoc_md3", null ],
-      [ "Docker (recommended way)", "index.html#autotoc_md4", null ],
-      [ "MacOS", "index.html#autotoc_md5", null ],
-      [ "Linux", "index.html#autotoc_md6", null ]
-    ] ],
-    [ "Building ArvernOS", "index.html#autotoc_md7", [
-      [ "Debug mode", "index.html#autotoc_md8", [
-        [ "Logging", "index.html#autotoc_md9", [
-          [ "Stacktraces", "index.html#autotoc_md10", null ]
-        ] ]
-      ] ],
-      [ "Release mode", "index.html#autotoc_md11", null ],
-      [ "config files", "index.html#autotoc_md12", null ],
-      [ "x86_64 options", "index.html#autotoc_md13", [
-        [ "Boot options", "index.html#autotoc_md14", null ]
+    [ "Introduction", "index.html", [
+      [ "ArvernOS", "index.html#autotoc_md0", [
+        [ "Goals", "index.html#autotoc_md1", null ],
+        [ "Architectures, boards and tiers", "index.html#autotoc_md2", [
+          [ "Tier 1", "index.html#autotoc_md3", null ],
+          [ "Tier 2", "index.html#autotoc_md4", null ]
+        ] ],
+        [ "Hacking on ArvernOS", "index.html#autotoc_md5", [
+          [ "Setting up a development environment", "index.html#autotoc_md6", [
+            [ "Getting the sources", "index.html#autotoc_md7", null ],
+            [ "Docker (recommended way)", "index.html#autotoc_md8", null ],
+            [ "MacOS", "index.html#autotoc_md9", null ],
+            [ "Linux", "index.html#autotoc_md10", null ]
+          ] ],
+          [ "Building ArvernOS", "index.html#autotoc_md11", [
+            [ "Debug mode", "index.html#autotoc_md12", null ],
+            [ "Release mode", "index.html#autotoc_md15", null ],
+            [ "config files", "index.html#autotoc_md16", null ]
+          ] ],
+          [ "About x86_64", "index.html#autotoc_md17", [
+            [ "Boot options", "index.html#autotoc_md18", null ],
+            [ "Early boot sequence", "index.html#autotoc_md19", null ],
+            [ "Memory management", "index.html#autotoc_md20", null ],
+            [ "Memory map", "index.html#autotoc_md21", null ]
+          ] ]
+        ] ],
+        [ "License", "index.html#autotoc_md23", null ]
       ] ]
     ] ],
-    [ "Some information about the x86_64 implementation", "index.html#autotoc_md15", [
-      [ "Early boot sequence", "index.html#autotoc_md16", null ],
-      [ "Memory management", "index.html#autotoc_md17", [
-        [ "Memory map", "index.html#autotoc_md18", [
-          [ "Virtual address space", "index.html#autotoc_md19", null ]
-        ] ]
-      ] ]
-    ] ],
-    [ "License", "index.html#autotoc_md20", null ],
-    [ "kernel", "md_src_kernel__r_e_a_d_m_e.html", null ],
-    [ "lib(k|c)", "md_src_libc__r_e_a_d_m_e.html", null ],
-    [ "init", "md_src_userland_init__r_e_a_d_m_e.html", null ],
-    [ "userland", "md_src_userland__r_e_a_d_m_e.html", [
-      [ "Local builds", "md_src_userland__r_e_a_d_m_e.html#autotoc_md25", null ]
-    ] ],
+    [ "Component: kernel", "md_src_kernel__r_e_a_d_m_e.html", "md_src_kernel__r_e_a_d_m_e" ],
+    [ "Component: lib(k|c)", "md_src_libc__r_e_a_d_m_e.html", null ],
+    [ "Component: userland", "md_src_userland__r_e_a_d_m_e.html", "md_src_userland__r_e_a_d_m_e" ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
-      [ "Data Structure Index", "classes.html", null ],
       [ "Data Fields", "functions.html", [
         [ "All", "functions.html", null ],
         [ "Variables", "functions_vars.html", null ]
@@ -70,7 +67,7 @@ var NAVTREE =
     [ "Files", "files.html", [
       [ "File List", "files.html", "files_dup" ],
       [ "Globals", "globals.html", [
-        [ "All", "globals.html", null ],
+        [ "All", "globals.html", "globals_dup" ],
         [ "Functions", "globals_func.html", null ],
         [ "Typedefs", "globals_type.html", null ],
         [ "Macros", "globals_defs.html", null ]
@@ -81,8 +78,8 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"alloc_8h.html",
-"md_src_userland__r_e_a_d_m_e.html#autotoc_md25"
+"aarch32_2mmu_2alloc_8h.html",
+"panic_8h.html#a036282a28f9cb2ca0fd41b4ebc49adb2"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

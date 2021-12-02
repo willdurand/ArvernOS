@@ -17,6 +17,8 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -88,22 +90,15 @@ $(document).ready(function(){initNavTree('sock_8h.html',''); initResizable(); })
 <div class="title">sock.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;fs/vfs.h&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="vfs_8h.html">fs/vfs.h</a>&gt;</code><br />
 <code>#include &lt;stdbool.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for sock.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="sock_8h__incl.png" border="0" usemap="#ainclude_2kernel_2fs_2sock_8h" alt=""/></div>
-<map name="ainclude_2kernel_2fs_2sock_8h" id="ainclude_2kernel_2fs_2sock_8h">
-<area shape="rect" title=" " alt="" coords="5,5,165,32"/>
-<area shape="rect" href="vfs_8h_source.html" title=" " alt="" coords="7,80,71,107"/>
-<area shape="rect" href="stdbool_8h_source.html" title=" " alt="" coords="95,80,171,107"/>
-<area shape="rect" href="stdint_8h_source.html" title=" " alt="" coords="6,155,71,181"/>
-</map>
+<div class="center"><iframe scrolling="no" frameborder="0" src="sock_8h__incl.svg" width="184" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
-<p><a href="sock_8h_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsock__entry__t.html">sock_entry_t</a></td></tr>
@@ -113,29 +108,8 @@ Data Structures</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:a844da9b1f4552399a6d2d947c13ad25b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sock_8h.html#a844da9b1f4552399a6d2d947c13ad25b">sock_fs_init</a> ()</td></tr>
 <tr class="separator:a844da9b1f4552399a6d2d947c13ad25b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a336c08ca4dd1da64656f6368ab9c488a"><td class="memItemLeft" align="right" valign="top">inode_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sock_8h.html#a336c08ca4dd1da64656f6368ab9c488a">sock_fs_create</a> ()</td></tr>
-<tr class="separator:a336c08ca4dd1da64656f6368ab9c488a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a336c08ca4dd1da64656f6368ab9c488a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a336c08ca4dd1da64656f6368ab9c488a">&#9670;&nbsp;</a></span>sock_fs_create()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">inode_t sock_fs_create </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Creates the "sock" file system root node.</p>
-<dl class="section return"><dt>Returns</dt><dd>the root inode of the sock file system </dd></dl>
-
-</div>
-</div>
 <a id="a844da9b1f4552399a6d2d947c13ad25b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a844da9b1f4552399a6d2d947c13ad25b">&#9670;&nbsp;</a></span>sock_fs_init()</h2>
 

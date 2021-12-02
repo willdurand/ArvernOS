@@ -1,8 +1,8 @@
 <map id="src/kernel/arch/x86_64/console/console.h" name="src/kernel/arch/x86_64/console/console.h">
-<area shape="rect" id="node1" title=" " alt="" coords="73,5,227,47"/>
-<area shape="rect" id="node2" href="$multiboot_8h.html" title=" " alt="" coords="33,95,150,121"/>
-<area shape="rect" id="node3" href="$stdbool_8h_source.html" title=" " alt="" coords="5,169,81,196"/>
-<area shape="rect" id="node5" href="$stddef_8h_source.html" title=" " alt="" coords="174,95,243,121"/>
-<area shape="rect" id="node6" title=" " alt="" coords="268,95,357,121"/>
-<area shape="rect" id="node4" href="$stdint_8h_source.html" title=" " alt="" coords="105,169,171,196"/>
+<area shape="rect" id="node1" title=" " alt="" coords="119,5,274,47"/>
+<area shape="rect" id="node2" href="$multiboot_8h.html" title=" " alt="" coords="79,95,197,121"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,169,81,196"/>
+<area shape="rect" id="node5" title=" " alt="" coords="221,95,290,121"/>
+<area shape="rect" id="node6" title=" " alt="" coords="315,95,404,121"/>
+<area shape="rect" id="node4" title=" " alt="" coords="105,169,171,196"/>
 </map>

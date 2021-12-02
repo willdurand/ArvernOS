@@ -17,6 +17,8 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -88,20 +90,14 @@ $(document).ready(function(){initNavTree('tar_8h.html',''); initResizable(); });
 <div class="title">tar.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;fs/vfs.h&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="vfs_8h.html">fs/vfs.h</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for tar.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="tar_8h__incl.png" border="0" usemap="#ainclude_2kernel_2fs_2tar_8h" alt=""/></div>
-<map name="ainclude_2kernel_2fs_2tar_8h" id="ainclude_2kernel_2fs_2tar_8h">
-<area shape="rect" title=" " alt="" coords="5,5,153,32"/>
-<area shape="rect" href="vfs_8h_source.html" title=" " alt="" coords="47,80,111,107"/>
-<area shape="rect" href="stdint_8h_source.html" title=" " alt="" coords="47,155,112,181"/>
-</map>
+<div class="center"><iframe scrolling="no" frameborder="0" src="tar_8h__incl.svg" width="176" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
-<p><a href="tar_8h_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtar__header__t.html">tar_header_t</a></td></tr>
@@ -109,14 +105,14 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a5d450690ddf62f16a707100bb4dc6f3a"><td class="memItemLeft" align="right" valign="top">inode_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tar_8h.html#a5d450690ddf62f16a707100bb4dc6f3a">tar_fs_create</a> (uint64_t address)</td></tr>
-<tr class="separator:a5d450690ddf62f16a707100bb4dc6f3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a591d90d6b7cf5c472a1740f065178017"><td class="memItemLeft" align="right" valign="top">inode_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tar_8h.html#a591d90d6b7cf5c472a1740f065178017">tar_fs_create</a> (uintptr_t address)</td></tr>
+<tr class="separator:a591d90d6b7cf5c472a1740f065178017"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Tar works by concatenating all files together in one big file where each file gets a header that is padded up to 512 bytes. The headers are each aligned on a 512 byte boundry and the content follows directly afterwards. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a5d450690ddf62f16a707100bb4dc6f3a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5d450690ddf62f16a707100bb4dc6f3a">&#9670;&nbsp;</a></span>tar_fs_create()</h2>
+<a id="a591d90d6b7cf5c472a1740f065178017"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a591d90d6b7cf5c472a1740f065178017">&#9670;&nbsp;</a></span>tar_fs_create()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -124,7 +120,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">inode_t tar_fs_create </td>
           <td>(</td>
-          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramtype">uintptr_t&#160;</td>
           <td class="paramname"><em>address</em></td><td>)</td>
           <td></td>
         </tr>
@@ -139,6 +135,12 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the root inode of the tar file system </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="tar_8h_a591d90d6b7cf5c472a1740f065178017_cgraph.svg" width="296" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
 
 </div>
 </div>

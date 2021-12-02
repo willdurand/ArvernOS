@@ -1,6 +1,6 @@
 <map id="src/kernel/arch/x86_64/drivers/rtl8139.h" name="src/kernel/arch/x86_64/drivers/rtl8139.h">
 <area shape="rect" id="node1" title=" " alt="" coords="9,5,153,47"/>
 <area shape="rect" id="node2" href="$net_8h.html" title="This module defines network interfaces and drivers." alt="" coords="81,95,155,121"/>
-<area shape="rect" id="node3" href="$stdbool_8h_source.html" title=" " alt="" coords="5,169,81,196"/>
-<area shape="rect" id="node4" href="$stdint_8h_source.html" title=" " alt="" coords="105,169,171,196"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,169,81,196"/>
+<area shape="rect" id="node4" title=" " alt="" coords="105,169,171,196"/>
 </map>

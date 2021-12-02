@@ -9,5 +9,6 @@ var ubsan_8h =
     [ "ubsan_invalid_value_data_t", "structubsan__invalid__value__data__t.html", null ],
     [ "ubsan_float_cast_overflow_data_t", "structubsan__float__cast__overflow__data__t.html", null ],
     [ "ubsan_pointer_overflow_data_t", "structubsan__pointer__overflow__data__t.html", null ],
-    [ "ubsan_vla_bound_data_t", "structubsan__vla__bound__data__t.html", null ]
+    [ "ubsan_vla_bound_data_t", "structubsan__vla__bound__data__t.html", null ],
+    [ "ubsan_invalid_builtin_data_t", "structubsan__invalid__builtin__data__t.html", null ]
 ];

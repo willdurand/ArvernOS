@@ -1,6 +1,9 @@
 var annotated_dup =
 [
     [ "arp_packet_t", "structarp__packet__t.html", null ],
+    [ "atag_cmdline_t", "structatag__cmdline__t.html", null ],
+    [ "atag_header_t", "structatag__header__t.html", null ],
+    [ "atag_mem_t", "structatag__mem__t.html", null ],
     [ "cmos_rtc_t", "structcmos__rtc__t.html", null ],
     [ "descriptor_t", "structdescriptor__t.html", null ],
     [ "dhcp_header_t", "structdhcp__header__t.html", null ],
@@ -62,6 +65,7 @@ var annotated_dup =
     [ "tm", "structtm.html", null ],
     [ "tss_t", "structtss__t.html", null ],
     [ "ubsan_float_cast_overflow_data_t", "structubsan__float__cast__overflow__data__t.html", null ],
+    [ "ubsan_invalid_builtin_data_t", "structubsan__invalid__builtin__data__t.html", null ],
     [ "ubsan_invalid_value_data_t", "structubsan__invalid__value__data__t.html", null ],
     [ "ubsan_mismatch_v1_data_t", "structubsan__mismatch__v1__data__t.html", null ],
     [ "ubsan_out_of_bounds_data_t", "structubsan__out__of__bounds__data__t.html", null ],

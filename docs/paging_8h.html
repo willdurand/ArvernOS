@@ -17,6 +17,8 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -89,29 +91,16 @@ $(document).ready(function(){initNavTree('paging_8h.html',''); initResizable(); 
 <div class="title">paging.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="multiboot_8h_source.html">core/multiboot.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="frame_8h_source.html">mmu/frame.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="frame_8h.html">mmu/frame.h</a>&gt;</code><br />
 <code>#include &lt;stdint.h&gt;</code><br />
 <code>#include &lt;sys/types.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for paging.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="paging_8h__incl.png" border="0" usemap="#asrc_2kernel_2arch_2x86__64_2mmu_2paging_8h" alt=""/></div>
-<map name="asrc_2kernel_2arch_2x86__64_2mmu_2paging_8h" id="asrc_2kernel_2arch_2x86__64_2mmu_2paging_8h">
-<area shape="rect" title=" " alt="" coords="82,5,216,47"/>
-<area shape="rect" href="multiboot_8h.html" title=" " alt="" coords="297,169,414,196"/>
-<area shape="rect" href="stdint_8h_source.html" title=" " alt="" coords="120,319,186,345"/>
-<area shape="rect" href="frame_8h.html" title=" " alt="" coords="160,95,260,121"/>
-<area shape="rect" href="types_8h_source.html" title=" " alt="" coords="52,169,142,196"/>
-<area shape="rect" href="stdbool_8h_source.html" title=" " alt="" coords="126,244,202,271"/>
-<area shape="rect" href="bitmap_8h.html" title=" " alt="" coords="166,169,273,196"/>
-<area shape="rect" href="limits_8h_source.html" title=" " alt="" coords="277,244,341,271"/>
-<area shape="rect" href="stddef_8h_source.html" title=" " alt="" coords="32,244,101,271"/>
-</map>
+<div class="center"><iframe scrolling="no" frameborder="0" src="paging_8h__incl.svg" width="319" height="276"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
-<p><a href="paging_8h_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpage__entry__t.html">page_entry_t</a></td></tr>
@@ -140,9 +129,9 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a44fe56c079dc6d3c0d4b29f5b9dab5a5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="paging_8h.html#a44fe56c079dc6d3c0d4b29f5b9dab5a5">paging_init</a> (<a class="el" href="structmultiboot__info__t.html">multiboot_info_t</a> *mbi)</td></tr>
-<tr class="memdesc:a44fe56c079dc6d3c0d4b29f5b9dab5a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes paging to separate virtual and physical memory.  <a href="paging_8h.html#a44fe56c079dc6d3c0d4b29f5b9dab5a5">More...</a><br /></td></tr>
-<tr class="separator:a44fe56c079dc6d3c0d4b29f5b9dab5a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a569adfd13ea3c63741f64108821b1712"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="paging_8h.html#a569adfd13ea3c63741f64108821b1712">paging_init</a> ()</td></tr>
+<tr class="memdesc:a569adfd13ea3c63741f64108821b1712"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes paging to separate virtual and physical memory.  <a href="paging_8h.html#a569adfd13ea3c63741f64108821b1712">More...</a><br /></td></tr>
+<tr class="separator:a569adfd13ea3c63741f64108821b1712"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4a8869be87726e3c57c4856fc7b3531c"><td class="memItemLeft" align="right" valign="top">page_number_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="paging_8h.html#a4a8869be87726e3c57c4856fc7b3531c">page_containing_address</a> (uint64_t virtual_address)</td></tr>
 <tr class="separator:a4a8869be87726e3c57c4856fc7b3531c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a96f5f0b5adaea47eda3e10c93401b2bf"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="paging_8h.html#a96f5f0b5adaea47eda3e10c93401b2bf">page_start_address</a> (page_number_t page_number)</td></tr>
@@ -201,11 +190,8 @@ Functions</h2></td></tr>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="paging_8h_a0fe6ae7a3d76ec54afbc3a0b484f5804_cgraph.png" border="0" usemap="#apaging_8h_a0fe6ae7a3d76ec54afbc3a0b484f5804_cgraph" alt=""/></div>
-<map name="apaging_8h_a0fe6ae7a3d76ec54afbc3a0b484f5804_cgraph" id="apaging_8h_a0fe6ae7a3d76ec54afbc3a0b484f5804_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,103,32"/>
-<area shape="rect" href="paging_8h.html#a4a8869be87726e3c57c4856fc7b3531c" title=" " alt="" coords="151,5,325,32"/>
-</map>
+<div class="center"><iframe scrolling="no" frameborder="0" src="paging_8h_a0fe6ae7a3d76ec54afbc3a0b484f5804_cgraph.svg" width="331" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
 </div>
 
 </div>
@@ -246,11 +232,8 @@ Here is the call graph for this function:</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="paging_8h_af55681dc6c9ebb94b26ea497afe673f8_icgraph.png" border="0" usemap="#apaging_8h_af55681dc6c9ebb94b26ea497afe673f8_icgraph" alt=""/></div>
-<map name="apaging_8h_af55681dc6c9ebb94b26ea497afe673f8_icgraph" id="apaging_8h_af55681dc6c9ebb94b26ea497afe673f8_icgraph">
-<area shape="rect" title=" " alt="" coords="155,5,203,32"/>
-<area shape="rect" href="paging_8h.html#a623291cd42facbd946e92e5307abe313" title=" " alt="" coords="5,5,107,32"/>
-</map>
+<div class="center"><iframe scrolling="no" frameborder="0" src="paging_8h_af55681dc6c9ebb94b26ea497afe673f8_icgraph.svg" width="208" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
 </div>
 
 </div>
@@ -298,11 +281,8 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="paging_8h_a623291cd42facbd946e92e5307abe313_cgraph.png" border="0" usemap="#apaging_8h_a623291cd42facbd946e92e5307abe313_cgraph" alt=""/></div>
-<map name="apaging_8h_a623291cd42facbd946e92e5307abe313_cgraph" id="apaging_8h_a623291cd42facbd946e92e5307abe313_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,107,32"/>
-<area shape="rect" href="paging_8h.html#af55681dc6c9ebb94b26ea497afe673f8" title=" " alt="" coords="155,5,203,32"/>
-</map>
+<div class="center"><iframe scrolling="no" frameborder="0" src="paging_8h_a623291cd42facbd946e92e5307abe313_cgraph.svg" width="208" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
 </div>
 
 </div>
@@ -333,16 +313,8 @@ Here is the call graph for this function:</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="paging_8h_a4a8869be87726e3c57c4856fc7b3531c_icgraph.png" border="0" usemap="#apaging_8h_a4a8869be87726e3c57c4856fc7b3531c_icgraph" alt=""/></div>
-<map name="apaging_8h_a4a8869be87726e3c57c4856fc7b3531c_icgraph" id="apaging_8h_a4a8869be87726e3c57c4856fc7b3531c_icgraph">
-<area shape="rect" title=" " alt="" coords="528,81,703,108"/>
-<area shape="rect" href="alloc_8h.html#a0de47e42c61353f53c07a4274b87f864" title=" " alt="" coords="343,5,417,32"/>
-<area shape="rect" href="paging_8h.html#a0fe6ae7a3d76ec54afbc3a0b484f5804" title=" " alt="" coords="331,56,429,83"/>
-<area shape="rect" href="paging_8h.html#acd78a6bfbdc7cbbe0e578e52eccad8bf" title=" " alt="" coords="280,107,480,133"/>
-<area shape="rect" href="paging_8h.html#a1f069c46ac4245771221fc7f0bcfb2e0" title=" " alt="" coords="343,157,417,184"/>
-<area shape="rect" href="paging_8h.html#a2556847794baa9bcb9be757f7f67f6b4" title=" " alt="" coords="169,157,232,184"/>
-<area shape="rect" href="paging_8h.html#aaf4d9db68debae8e51bab96105966d07" title=" " alt="" coords="5,157,121,184"/>
-</map>
+<div class="center"><iframe scrolling="no" frameborder="0" src="paging_8h_a4a8869be87726e3c57c4856fc7b3531c_icgraph.svg" width="708" height="139"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
 </div>
 
 </div>
@@ -373,12 +345,8 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="paging_8h_a96f5f0b5adaea47eda3e10c93401b2bf_icgraph.png" border="0" usemap="#apaging_8h_a96f5f0b5adaea47eda3e10c93401b2bf_icgraph" alt=""/></div>
-<map name="apaging_8h_a96f5f0b5adaea47eda3e10c93401b2bf_icgraph" id="apaging_8h_a96f5f0b5adaea47eda3e10c93401b2bf_icgraph">
-<area shape="rect" title=" " alt="" coords="280,5,420,32"/>
-<area shape="rect" href="paging_8h.html#a2556847794baa9bcb9be757f7f67f6b4" title=" " alt="" coords="169,5,232,32"/>
-<area shape="rect" href="paging_8h.html#aaf4d9db68debae8e51bab96105966d07" title=" " alt="" coords="5,5,121,32"/>
-</map>
+<div class="center"><iframe scrolling="no" frameborder="0" src="paging_8h_a96f5f0b5adaea47eda3e10c93401b2bf_icgraph.svg" width="426" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
 </div>
 
 </div>
@@ -420,17 +388,14 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="paging_8h_acd78a6bfbdc7cbbe0e578e52eccad8bf_cgraph.png" border="0" usemap="#apaging_8h_acd78a6bfbdc7cbbe0e578e52eccad8bf_cgraph" alt=""/></div>
-<map name="apaging_8h_acd78a6bfbdc7cbbe0e578e52eccad8bf_cgraph" id="apaging_8h_acd78a6bfbdc7cbbe0e578e52eccad8bf_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,205,32"/>
-<area shape="rect" href="paging_8h.html#a4a8869be87726e3c57c4856fc7b3531c" title=" " alt="" coords="253,5,428,32"/>
-</map>
+<div class="center"><iframe scrolling="no" frameborder="0" src="paging_8h_acd78a6bfbdc7cbbe0e578e52eccad8bf_cgraph.svg" width="434" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
 </div>
 
 </div>
 </div>
-<a id="a44fe56c079dc6d3c0d4b29f5b9dab5a5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a44fe56c079dc6d3c0d4b29f5b9dab5a5">&#9670;&nbsp;</a></span>paging_init()</h2>
+<a id="a569adfd13ea3c63741f64108821b1712"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a569adfd13ea3c63741f64108821b1712">&#9670;&nbsp;</a></span>paging_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -438,8 +403,7 @@ Here is the call graph for this function:</div>
         <tr>
           <td class="memname">void paging_init </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structmultiboot__info__t.html">multiboot_info_t</a> *&#160;</td>
-          <td class="paramname"><em>mbi</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -479,22 +443,14 @@ Here is the call graph for this function:</div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="paging_8h_a1f069c46ac4245771221fc7f0bcfb2e0_cgraph.png" border="0" usemap="#apaging_8h_a1f069c46ac4245771221fc7f0bcfb2e0_cgraph" alt=""/></div>
-<map name="apaging_8h_a1f069c46ac4245771221fc7f0bcfb2e0_cgraph" id="apaging_8h_a1f069c46ac4245771221fc7f0bcfb2e0_cgraph">
-<area shape="rect" title=" " alt="" coords="5,31,79,57"/>
-<area shape="rect" href="paging_8h.html#a4a8869be87726e3c57c4856fc7b3531c" title=" " alt="" coords="127,5,301,32"/>
-<area shape="rect" href="paging_8h.html#a93e89a9ca57751d1b04f8d95ccbddb4b" title=" " alt="" coords="159,56,269,83"/>
-</map>
+<div class="center"><iframe scrolling="no" frameborder="0" src="paging_8h_a1f069c46ac4245771221fc7f0bcfb2e0_cgraph.svg" width="307" height="88"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
 </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="paging_8h_a1f069c46ac4245771221fc7f0bcfb2e0_icgraph.png" border="0" usemap="#apaging_8h_a1f069c46ac4245771221fc7f0bcfb2e0_icgraph" alt=""/></div>
-<map name="apaging_8h_a1f069c46ac4245771221fc7f0bcfb2e0_icgraph" id="apaging_8h_a1f069c46ac4245771221fc7f0bcfb2e0_icgraph">
-<area shape="rect" title=" " alt="" coords="280,5,353,32"/>
-<area shape="rect" href="paging_8h.html#a2556847794baa9bcb9be757f7f67f6b4" title=" " alt="" coords="169,5,232,32"/>
-<area shape="rect" href="paging_8h.html#aaf4d9db68debae8e51bab96105966d07" title=" " alt="" coords="5,5,121,32"/>
-</map>
+<div class="center"><iframe scrolling="no" frameborder="0" src="paging_8h_a1f069c46ac4245771221fc7f0bcfb2e0_icgraph.svg" width="359" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
 </div>
 
 </div>
@@ -525,13 +481,8 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="paging_8h_a93e89a9ca57751d1b04f8d95ccbddb4b_icgraph.png" border="0" usemap="#apaging_8h_a93e89a9ca57751d1b04f8d95ccbddb4b_icgraph" alt=""/></div>
-<map name="apaging_8h_a93e89a9ca57751d1b04f8d95ccbddb4b_icgraph" id="apaging_8h_a93e89a9ca57751d1b04f8d95ccbddb4b_icgraph">
-<area shape="rect" title=" " alt="" coords="401,5,512,32"/>
-<area shape="rect" href="paging_8h.html#a1f069c46ac4245771221fc7f0bcfb2e0" title=" " alt="" coords="280,5,353,32"/>
-<area shape="rect" href="paging_8h.html#a2556847794baa9bcb9be757f7f67f6b4" title=" " alt="" coords="169,5,232,32"/>
-<area shape="rect" href="paging_8h.html#aaf4d9db68debae8e51bab96105966d07" title=" " alt="" coords="5,5,121,32"/>
-</map>
+<div class="center"><iframe scrolling="no" frameborder="0" src="paging_8h_a93e89a9ca57751d1b04f8d95ccbddb4b_icgraph.svg" width="518" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
 </div>
 
 </div>
@@ -561,23 +512,14 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="paging_8h_a2556847794baa9bcb9be757f7f67f6b4_cgraph.png" border="0" usemap="#apaging_8h_a2556847794baa9bcb9be757f7f67f6b4_cgraph" alt=""/></div>
-<map name="apaging_8h_a2556847794baa9bcb9be757f7f67f6b4_cgraph" id="apaging_8h_a2556847794baa9bcb9be757f7f67f6b4_cgraph">
-<area shape="rect" title=" " alt="" coords="5,31,68,57"/>
-<area shape="rect" href="paging_8h.html#a96f5f0b5adaea47eda3e10c93401b2bf" title=" " alt="" coords="116,5,256,32"/>
-<area shape="rect" href="paging_8h.html#a1f069c46ac4245771221fc7f0bcfb2e0" title=" " alt="" coords="149,56,223,83"/>
-<area shape="rect" href="paging_8h.html#a4a8869be87726e3c57c4856fc7b3531c" title=" " alt="" coords="304,31,479,57"/>
-<area shape="rect" href="paging_8h.html#a93e89a9ca57751d1b04f8d95ccbddb4b" title=" " alt="" coords="336,81,447,108"/>
-</map>
+<div class="center"><iframe scrolling="no" frameborder="0" src="paging_8h_a2556847794baa9bcb9be757f7f67f6b4_cgraph.svg" width="484" height="114"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
 </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="paging_8h_a2556847794baa9bcb9be757f7f67f6b4_icgraph.png" border="0" usemap="#apaging_8h_a2556847794baa9bcb9be757f7f67f6b4_icgraph" alt=""/></div>
-<map name="apaging_8h_a2556847794baa9bcb9be757f7f67f6b4_icgraph" id="apaging_8h_a2556847794baa9bcb9be757f7f67f6b4_icgraph">
-<area shape="rect" title=" " alt="" coords="169,5,232,32"/>
-<area shape="rect" href="paging_8h.html#aaf4d9db68debae8e51bab96105966d07" title=" " alt="" coords="5,5,121,32"/>
-</map>
+<div class="center"><iframe scrolling="no" frameborder="0" src="paging_8h_a2556847794baa9bcb9be757f7f67f6b4_icgraph.svg" width="238" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
 </div>
 
 </div>
@@ -618,15 +560,8 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="paging_8h_aaf4d9db68debae8e51bab96105966d07_cgraph.png" border="0" usemap="#apaging_8h_aaf4d9db68debae8e51bab96105966d07_cgraph" alt=""/></div>
-<map name="apaging_8h_aaf4d9db68debae8e51bab96105966d07_cgraph" id="apaging_8h_aaf4d9db68debae8e51bab96105966d07_cgraph">
-<area shape="rect" title=" " alt="" coords="5,31,121,57"/>
-<area shape="rect" href="paging_8h.html#a2556847794baa9bcb9be757f7f67f6b4" title=" " alt="" coords="169,31,232,57"/>
-<area shape="rect" href="paging_8h.html#a96f5f0b5adaea47eda3e10c93401b2bf" title=" " alt="" coords="280,5,420,32"/>
-<area shape="rect" href="paging_8h.html#a1f069c46ac4245771221fc7f0bcfb2e0" title=" " alt="" coords="313,56,387,83"/>
-<area shape="rect" href="paging_8h.html#a4a8869be87726e3c57c4856fc7b3531c" title=" " alt="" coords="468,31,643,57"/>
-<area shape="rect" href="paging_8h.html#a93e89a9ca57751d1b04f8d95ccbddb4b" title=" " alt="" coords="500,81,611,108"/>
-</map>
+<div class="center"><iframe scrolling="no" frameborder="0" src="paging_8h_aaf4d9db68debae8e51bab96105966d07_cgraph.svg" width="648" height="114"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
 </div>
 
 </div>
