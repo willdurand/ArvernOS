@@ -21,7 +21,8 @@ apt-get install -y \
 	bzip2 \
 	bison \
 	flex \
-	bc
+	bc \
+	u-boot-tools
 
 wget https://apt.llvm.org/llvm.sh
 chmod +x llvm.sh
