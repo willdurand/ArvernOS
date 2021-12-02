@@ -8,7 +8,7 @@
 void arch_restart();
 
 /**
- * Shutdown everything and perform a clean system power_off.
+ * Shutdown everything and perform a clean system power off.
  */
 void arch_poweroff();
 

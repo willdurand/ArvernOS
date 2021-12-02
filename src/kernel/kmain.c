@@ -39,20 +39,20 @@ void print_ko()
 
 void kmain_print_banner()
 {
-  INFO("%s %s - %s (%s) / Built on: %s at %s has started",
+  INFO("%s %s (%s) / %s / Built on: %s at %s has started",
        KERNEL_NAME,
        KERNEL_VERSION,
-       ARCH,
        GIT_HASH,
+       KERNEL_TARGET,
        KERNEL_DATE,
        KERNEL_TIME);
 
   printf("\033[1;34m%s\033[0m\n", KERNEL_ASCII);
-  printf("%s %s - %s (%s) / Built on: %s at %s\n\n",
+  printf("%s %s (%s) / %s / Built on: %s at %s\n\n",
          KERNEL_NAME,
          KERNEL_VERSION,
-         ARCH,
          GIT_HASH,
+         KERNEL_TARGET,
          KERNEL_DATE,
          KERNEL_TIME);
 }

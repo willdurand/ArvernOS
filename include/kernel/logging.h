@@ -1,3 +1,14 @@
+/**
+ * @file
+ *
+ * This is the general kernel logging module. It supports several logging
+ * levels such as DEBUG, INFO and ERROR. Logging can be disabled by setting
+ * `ENABLE_KERNEL_DEBUG=0` in config.
+ *
+ * Each kernel module should ideally have its own logging header that depends
+ * on this one. The main use case is to have more configurable loggers that can
+ * be enabled/disabled depending on the needs.
+ */
 #ifndef LOGGING_H
 #define LOGGING_H
 

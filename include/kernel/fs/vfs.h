@@ -1,3 +1,4 @@
+/** @file */
 #ifndef FS_VFS_H
 #define FS_VFS_H
 

@@ -231,6 +231,9 @@ include $(arch_src)/Makefile.include
 
 ifneq ($(BOARD),)
 	board_src = $(arch_src)/board/$(BOARD)
+
+	CONFIG_CFLAGS += -DBOARD=\"$(BOARD)\"
+
 	# Include board-specific makefile when BOARD is defined.
 	include $(board_src)/Makefile.include
 endif

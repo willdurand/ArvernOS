@@ -6,7 +6,13 @@
 
 int proc_read_version(char* buf, size_t size)
 {
-  snprintf(buf, size, "%s %s (%s)\n", KERNEL_NAME, KERNEL_VERSION, GIT_HASH);
+  snprintf(buf,
+           size,
+           "%s %s (%s) %s\n",
+           KERNEL_NAME,
+           KERNEL_VERSION,
+           GIT_HASH,
+           KERNEL_TARGET);
 
   return 0;
 }
