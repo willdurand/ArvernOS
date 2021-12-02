@@ -1,3 +1,11 @@
+/**
+ * @file
+ * @see http://www.simtec.co.uk/products/SWLINUX/files/booting_article.html
+ *
+ * ARM tags are used to pass information from the bootloader to the kernel. It
+ * is kind of legacy now because Linux uses Device Trees, but it is easier to
+ * implement in a project like ArvernOS.
+ */
 #ifndef CORE_ARM_ATAG_H
 #define CORE_ARM_ATAG_H
 
@@ -33,8 +41,19 @@ typedef struct atag_cmdline
   char cmdline[];
 } atag_cmdline_t;
 
+/**
+ * Initializes the ATAGs module, which essentially parses the ATAGs and store
+ * information that can be queried later.
+ *
+ * @param ptr a pointer to the first ATAG header
+ */
 void atag_init(atag_header_t* ptr);
 
+/**
+ * Returns the command line found in the ATAGS.
+ *
+ * @return a string containing the command line found in the ATAGS or `NULL`
+ */
 const char* atag_get_cmdline();
 
 #endif

@@ -4,6 +4,9 @@
 
 #include <stdint.h>
 
+/// This type defines an initcall function, which is a function automatically
+/// called when the kernel is started. Ue `init_register()` to register such a
+/// function.
 typedef int (*initcall_t)(void);
 
 extern unsigned char __initcall_start;

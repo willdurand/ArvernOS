@@ -24,6 +24,8 @@
 /// This macro should only be used when something goes terribly wrong.
 #define PANIC(...) __PANIC(true, __VA_ARGS__, "\n")
 
+/// This macro is similar to `PANIC()` but it won't attempt to print a
+/// stacktrace.
 #define PANIC_NO_STACKTRACE(...) __PANIC(false, __VA_ARGS__, "\n")
 
 /**

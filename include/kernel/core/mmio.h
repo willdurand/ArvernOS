@@ -1,3 +1,7 @@
+/**
+ * @file
+ * @see https://en.wikipedia.org/wiki/Memory-mapped_I/O
+ */
 #ifndef CORE_MMIO_H
 #define CORE_MMIO_H
 
