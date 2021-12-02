@@ -1,3 +1,5 @@
+<!-- doxygen: \mainpage Introduction -->
+
 # ArvernOS
 
 [![Gitter](https://badges.gitter.im/willdurand-kernel/community.svg)](https://gitter.im/willdurand-kernel/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) [![CircleCI](https://circleci.com/gh/willdurand/ArvernOS/tree/master.svg?style=svg)](https://circleci.com/gh/willdurand/ArvernOS/tree/master)
@@ -74,7 +76,7 @@ the following extra dependencies:
 - `gcc-arm-none-eabi`
 - `u-boot-tools`
 
-Note: the recommended way to work on this project is to use Docker.
+Note: The recommended way to work on this project is to use Docker.
 
 #### Getting the sources
 
@@ -159,7 +161,7 @@ loaded, run:
 $ make clean run-debug
 ```
 
-Note: some boards aren't supported in QEMU.
+Note: Some boards aren't supported in QEMU.
 
 ##### Logging
 
@@ -185,7 +187,7 @@ The available debug variables are:
 - `ENABLE_SYS_DEBUG`
 - `ENABLE_USERLAND_DEBUG`
 
-Note: there is also `ENABLE_ALL_DEBUG` to turn all debug logs on (which
+Note: There is also `ENABLE_ALL_DEBUG` to turn all debug logs on (which
 negatively impacts the performances).
 
 ##### Stacktraces
@@ -283,7 +285,7 @@ It is possible to change the command line by passing the `CMDLINE` variable to
 $ make clean run-debug CMDLINE="/bin/init foo bar"
 ```
 
-Note: it is also possible to set `KERNEL_CMDLINE`, which is passed to the kernel
+Note: It is also possible to set `KERNEL_CMDLINE`, which is passed to the kernel
 in... kernel mode.
 
 #### Early boot sequence
@@ -346,6 +348,6 @@ attached (either in the source files or in a `LICENSE` file next to them).
 
 [git-submodules]: https://git-scm.com/book/en/v2/Git-Tools-Submodules
 [twitter-thread]: https://twitter.com/couac/status/866693418130575361
-[dockerfile]: https://github.com/willdurand/ArvernOS/blob/master/Dockerfile
 [dockerhub-toolchain]: https://hub.docker.com/repository/docker/willdurand/arvernos-toolchain
+[dockerfile]: https://github.com/willdurand/ArvernOS/blob/master/Dockerfile
 [license]: https://github.com/willdurand/ArvernOS/blob/master/LICENSE.md

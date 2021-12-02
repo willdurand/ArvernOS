@@ -7,3 +7,6 @@
 [submodule "external/printf"]
 	path = external/printf
 	url = https://github.com/ArvernOS/printf.git
+[submodule "docs/doxygen-awesome-css"]
+	path = docs/doxygen-awesome-css
+	url = https://github.com/jothepro/doxygen-awesome-css.git

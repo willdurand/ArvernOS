@@ -1,3 +1,5 @@
+<!-- doxygen: \page refInit init -->
+
 # init
 
 The `init` program is designed to be the first program to be executed in user
