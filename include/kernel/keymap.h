@@ -1,3 +1,4 @@
+/** @file */
 #ifndef KEYMAP_H
 #define KEYMAP_H
 
@@ -6,7 +7,7 @@ enum special_keys
   KEY_ARROW_UP = 0x80,
 };
 
-/// This is the keymap for EN-US.
+/// This is the keymap for en-US.
 static unsigned char keymap[][128] = {
   { 0 },         { 27 },       { '1', '!' }, { '2', '@' },  { '3', '#' },
   { '4', '$' },  { '5', '%' }, { '6', '^' }, { '7', '&' },  { '8', '*' },

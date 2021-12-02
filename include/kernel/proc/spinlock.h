@@ -1,3 +1,4 @@
+/** @file */
 #ifndef PROC_SPINLOCK_H
 #define PROC_SPINLOCK_H
 
