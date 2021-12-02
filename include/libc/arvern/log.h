@@ -1,3 +1,4 @@
+/** @file */
 #ifndef ARVERN_LOG_H
 #define ARVERN_LOG_H
 
