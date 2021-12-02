@@ -1,0 +1,12 @@
+<map id="include/libc/sys/socket.h" name="include/libc/sys/socket.h">
+<area shape="rect" id="node1" title=" " alt="" coords="165,5,331,32"/>
+<area shape="rect" id="node2" href="$k__syscall_8h.html" title=" " alt="" coords="5,155,133,196"/>
+<area shape="rect" id="node3" href="$inet_8h.html" title=" " alt="" coords="171,80,325,107"/>
+<area shape="rect" id="node9" href="$syscall_8h.html" title=" " alt="" coords="361,162,527,189"/>
+<area shape="rect" id="node4" href="$ipv4_8h.html" title=" " alt="" coords="158,155,285,196"/>
+<area shape="rect" id="node5" href="$udp_8h.html" title=" " alt="" coords="191,244,318,285"/>
+<area shape="rect" id="node6" href="$dhcp_8h.html" title=" " alt="" coords="41,333,167,375"/>
+<area shape="rect" id="node7" href="$dns_8h.html" title=" " alt="" coords="191,333,318,375"/>
+<area shape="rect" id="node8" href="$ntp_8h.html" title=" " alt="" coords="342,333,469,375"/>
+<area shape="rect" id="node10" href="$unistd_8h.html" title=" " alt="" coords="375,251,513,278"/>
+</map>

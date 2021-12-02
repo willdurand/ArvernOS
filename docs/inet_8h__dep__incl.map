@@ -1,0 +1,11 @@
+<map id="include/libc/arpa/inet.h" name="include/libc/arpa/inet.h">
+<area shape="rect" id="node1" title=" " alt="" coords="243,5,398,32"/>
+<area shape="rect" id="node2" href="$ipv4_8h.html" title=" " alt="" coords="105,80,232,121"/>
+<area shape="rect" id="node3" href="$udp_8h.html" title=" " alt="" coords="156,169,283,211"/>
+<area shape="rect" id="node7" href="$k__syscall_8h.html" title=" " alt="" coords="307,80,435,121"/>
+<area shape="rect" id="node8" href="$syscall_8h.html" title=" " alt="" coords="460,87,627,114"/>
+<area shape="rect" id="node4" href="$dhcp_8h.html" title=" " alt="" coords="5,259,132,300"/>
+<area shape="rect" id="node5" href="$dns_8h.html" title=" " alt="" coords="156,259,283,300"/>
+<area shape="rect" id="node6" href="$ntp_8h.html" title=" " alt="" coords="307,259,433,300"/>
+<area shape="rect" id="node9" href="$unistd_8h.html" title=" " alt="" coords="474,177,613,203"/>
+</map>

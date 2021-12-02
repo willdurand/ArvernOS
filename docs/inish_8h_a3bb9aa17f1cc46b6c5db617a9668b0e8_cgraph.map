@@ -1,5 +1,4 @@
 <map id="inish_load" name="inish_load">
-<area shape="rect" id="node1" title=" " alt="" coords="5,31,88,57"/>
-<area shape="rect" id="node2" href="$syscall_8h.html#aafbcde67669a1b96577e735ddebd8634" title=" " alt="" coords="136,5,189,32"/>
-<area shape="rect" id="node3" href="$syscall_8h.html#ab7c31bf64ff68f61762bda6e72e255d6" title=" " alt="" coords="137,56,189,83"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,5,88,32"/>
+<area shape="rect" id="node2" href="$syscall_8h.html#ab7c31bf64ff68f61762bda6e72e255d6" title=" " alt="" coords="136,5,188,32"/>
 </map>
