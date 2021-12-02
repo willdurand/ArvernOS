@@ -374,7 +374,7 @@ version: ## print tool versions
 .PHONY: version
 
 docs: ## build the docs
-	rm -rf docs/*
+	rm -rf docs/*.* docs/search/
 	doxygen ./Doxyfile
 .PHONY: docs
 
