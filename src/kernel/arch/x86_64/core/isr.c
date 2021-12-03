@@ -60,7 +60,7 @@ void isr_init()
   port_byte_out(PIC1_DATA, IRQ_BASE);
   port_byte_out(PIC2_DATA, IRQ_BASE + 8);
 
-  // use IRQ number 2 to relay IRQs from the slave PIC
+  // use IRQ number 2 to relay IRQs from the secondary PIC
   port_byte_out(PIC1_DATA, 0x04);
   port_byte_out(PIC2_DATA, 0x02);
 
