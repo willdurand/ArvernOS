@@ -1,7 +1,7 @@
 #include "kmain.h"
 #include <arvern/utils.h>
 #include <core/arm/atag.h>
-#include <drivers/clock.h>
+#include <drivers/ccu.h>
 #include <drivers/uart0.h>
 #include <kmain.h>
 #include <mmu/alloc.h>
@@ -12,7 +12,7 @@ void kmain(uint32_t r0, uint32_t r1, uint32_t r2)
   UNUSED(r0);
   UNUSED(r1);
 
-  clock_init();
+  ccu_init();
   uart0_init();
   kmain_print_banner();
 
