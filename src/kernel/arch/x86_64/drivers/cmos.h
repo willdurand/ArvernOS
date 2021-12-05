@@ -50,4 +50,11 @@ cmos_rtc_t cmos_read_rtc();
  */
 uint64_t cmos_boot_time();
 
+/**
+ * Returns the current time in seconds.
+ *
+ * @return the current time in seconds
+ */
+uint64_t cmos_current_time();
+
 #endif
