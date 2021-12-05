@@ -8,4 +8,4 @@ with open(sys.argv[1], 'r') as file:
     content = re.sub('<\!-- doxygen:(.+)-->', '\g<1>', content, flags=re.S)
     # Replace `Note:` with `\note` so that Doxygen can generate a nice card.
     content = content.replace('Note:', '\\note')
-    print(content)
+    print(content, end='')
