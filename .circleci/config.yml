@@ -105,7 +105,7 @@ jobs:
           name: fmt
           command: |
             make fmt
-            git diff --exit-code || (echo "\n\nPlease run 'make fmt' to format the code and fix the problem(s) above"; false)
+            git diff --exit-code || (echo ""; echo "Please run 'make fmt' to format the code and fix the problem(s) above"; false)
 
   unit-tests:
     <<: *defaults
