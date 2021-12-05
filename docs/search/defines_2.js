@@ -1,9 +1,6 @@
 var searchData=
 [
-  ['ia32_5fefer_696',['IA32_EFER',['../register_8h.html#a781940174888ffe44a60eac2cef0c9ff',1,'register.h']]],
-  ['ia32_5flstar_697',['IA32_LSTAR',['../register_8h.html#a591479e9e26bb3a18a1dd959ab4e5e82',1,'register.h']]],
-  ['ia32_5fsfmask_698',['IA32_SFMASK',['../register_8h.html#a5de164a8c8e809ef57afad3c12024521',1,'register.h']]],
-  ['ia32_5fstar_699',['IA32_STAR',['../register_8h.html#ac177c522e3e9cf4ff3143d9e9b4057e3',1,'register.h']]],
-  ['idt_5fentries_700',['IDT_ENTRIES',['../idt_8h.html#a2a59a505aa55f15c152f30f811fbd310',1,'idt.h']]],
-  ['init_5fregister_701',['init_register',['../init_8h.html#a13d1aaf1c7c52d6d14d4f413ebee39da',1,'init.h']]]
+  ['heap_5fsize_718',['HEAP_SIZE',['../x86__64_2mmu_2alloc_8h.html#a1b45302695680930829cac31d65e41e1',1,'alloc.h']]],
+  ['heap_5fstart_719',['HEAP_START',['../x86__64_2mmu_2alloc_8h.html#ae9739bcecd10d5962cc10c12bf01594f',1,'alloc.h']]],
+  ['htons_720',['HTONS',['../inet_8h.html#a69a7a4951ff21b302267532c21ee78fc',1,'inet.h']]]
 ];

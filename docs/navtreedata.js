@@ -57,6 +57,7 @@ var NAVTREE =
     [ "Component: kernel", "md_src_kernel__r_e_a_d_m_e.html", "md_src_kernel__r_e_a_d_m_e" ],
     [ "Component: lib(k|c)", "md_src_libc__r_e_a_d_m_e.html", null ],
     [ "Component: userland", "md_src_userland__r_e_a_d_m_e.html", "md_src_userland__r_e_a_d_m_e" ],
+    [ "Todo List", "todo.html", null ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
       [ "Data Fields", "functions.html", [
@@ -69,6 +70,7 @@ var NAVTREE =
       [ "Globals", "globals.html", [
         [ "All", "globals.html", "globals_dup" ],
         [ "Functions", "globals_func.html", null ],
+        [ "Variables", "globals_vars.html", null ],
         [ "Typedefs", "globals_type.html", null ],
         [ "Macros", "globals_defs.html", null ]
       ] ]
@@ -79,7 +81,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "aarch32_2mmu_2alloc_8h.html",
-"paging_8h.html#a569adfd13ea3c63741f64108821b1712"
+"paging_8h.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

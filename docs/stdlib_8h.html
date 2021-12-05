@@ -83,6 +83,8 @@ $(document).ready(function(){initNavTree('stdlib_8h.html',''); initResizable(); 
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">stdlib.h File Reference</div>  </div>
 </div><!--header-->
@@ -101,7 +103,96 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="center"><iframe scrolling="no" frameborder="0" src="stdlib_8h__dep__incl.svg" width="154" height="127"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
-</div></div><!-- contents -->
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:aba146acbba01116cafaa55f720913ed8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stdlib_8h.html#aba146acbba01116cafaa55f720913ed8">atoi</a> (char *s)</td></tr>
+<tr class="separator:aba146acbba01116cafaa55f720913ed8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4902276982810f15128af3faa1f3e938"><td class="memItemLeft" align="right" valign="top">long int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stdlib_8h.html#a4902276982810f15128af3faa1f3e938">strtol_wip</a> (const char *str, char **end, int base)</td></tr>
+<tr class="separator:a4902276982810f15128af3faa1f3e938"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac54f53dc342019e8db34f4aa581a5792"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="stdlib_8h.html#ac54f53dc342019e8db34f4aa581a5792">abort</a> ()</td></tr>
+<tr class="separator:ac54f53dc342019e8db34f4aa581a5792"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ac54f53dc342019e8db34f4aa581a5792"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac54f53dc342019e8db34f4aa581a5792">&#9670;&nbsp;</a></span>abort()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void abort </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000024">Todo:</a></b></dt><dd>abnormally terminate the process as if by SIGABRT. </dd></dl>
+
+</div>
+</div>
+<a id="aba146acbba01116cafaa55f720913ed8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba146acbba01116cafaa55f720913ed8">&#9670;&nbsp;</a></span>atoi()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int atoi </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000025">Todo:</a></b></dt><dd>handle min/max values </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="stdlib_8h_aba146acbba01116cafaa55f720913ed8_icgraph.svg" width="200" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
+
+</div>
+</div>
+<a id="a4902276982810f15128af3faa1f3e938"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4902276982810f15128af3faa1f3e938">&#9670;&nbsp;</a></span>strtol_wip()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">long int strtol_wip </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>str</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char **&#160;</td>
+          <td class="paramname"><em>end</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>base</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000028">Todo:</a></b></dt><dd>this function is supposed to implement <code>strtol()</code> but it has been written for the kernel stacktrace and does not behave like it should (e.g., it does not skip spaces and does not support a <code>base</code> different than <code>16</code>). </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

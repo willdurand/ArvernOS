@@ -100,7 +100,9 @@ Include dependency graph for init.h:</div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a13d1aaf1c7c52d6d14d4f413ebee39da"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="init_8h.html#a13d1aaf1c7c52d6d14d4f413ebee39da">init_register</a>(func)&#160;&#160;&#160;__initcall(func)</td></tr>
+<tr class="memitem:a30871efacc071147ff50ab8eedbcf89a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="init_8h.html#a30871efacc071147ff50ab8eedbcf89a">__initcall</a>(func)</td></tr>
+<tr class="separator:a30871efacc071147ff50ab8eedbcf89a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13d1aaf1c7c52d6d14d4f413ebee39da"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="init_8h.html#a13d1aaf1c7c52d6d14d4f413ebee39da">init_register</a>(func)&#160;&#160;&#160;<a class="el" href="init_8h.html#a30871efacc071147ff50ab8eedbcf89a">__initcall</a>(func)</td></tr>
 <tr class="separator:a13d1aaf1c7c52d6d14d4f413ebee39da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
@@ -109,6 +111,28 @@ Typedefs</h2></td></tr>
 <tr class="separator:a0821395e195df874becf8262c87d9deb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a30871efacc071147ff50ab8eedbcf89a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a30871efacc071147ff50ab8eedbcf89a">&#9670;&nbsp;</a></span>__initcall</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define __initcall</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">func</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">  <a class="code" href="init_8h.html#a0821395e195df874becf8262c87d9deb">initcall_t</a> __initcall_##func                                                 \</div>
+<div class="line">    __attribute__((unused, __section__(<span class="stringliteral">&quot;.initcall_functions&quot;</span>))) = func</div>
+<div class="ttc" id="ainit_8h_html_a0821395e195df874becf8262c87d9deb"><div class="ttname"><a href="init_8h.html#a0821395e195df874becf8262c87d9deb">initcall_t</a></div><div class="ttdeci">int(* initcall_t)(void)</div><div class="ttdef"><b>Definition:</b> init.h:10</div></div>
+</div><!-- fragment --><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>we should ideally declare these declarations <code>static</code>, however LLVM strips them out because they are unused and despite <code>unused</code> being set. </dd></dl>
+
+</div>
+</div>
 <a id="a13d1aaf1c7c52d6d14d4f413ebee39da"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a13d1aaf1c7c52d6d14d4f413ebee39da">&#9670;&nbsp;</a></span>init_register</h2>
 
@@ -120,7 +144,7 @@ Typedefs</h2></td></tr>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">func</td><td>)</td>
-          <td>&#160;&#160;&#160;__initcall(func)</td>
+          <td>&#160;&#160;&#160;<a class="el" href="init_8h.html#a30871efacc071147ff50ab8eedbcf89a">__initcall</a>(func)</td>
         </tr>
       </table>
 </div><div class="memdoc">

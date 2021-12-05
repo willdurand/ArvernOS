@@ -105,8 +105,133 @@ Include dependency graph for k_syscall.h:</div>
 Functions</h2></td></tr>
 <tr class="memitem:a581ed37968ead91b6d3a0b3b7a71da9d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="k__syscall_8h.html#a581ed37968ead91b6d3a0b3b7a71da9d">syscall_init</a> ()</td></tr>
 <tr class="separator:a581ed37968ead91b6d3a0b3b7a71da9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8665b78926682de513294b0733aa72e4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="k__syscall_8h.html#a8665b78926682de513294b0733aa72e4">k_open</a> (const char *pathname, uint32_t flags)</td></tr>
+<tr class="separator:a8665b78926682de513294b0733aa72e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca2b074f62174df41781abb400ac6c67"><td class="memItemLeft" align="right" valign="top">off_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="k__syscall_8h.html#aca2b074f62174df41781abb400ac6c67">k_lseek</a> (int fd, off_t offset, int whence)</td></tr>
+<tr class="separator:aca2b074f62174df41781abb400ac6c67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae80abe069ae7128caf6c98035b032776"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="k__syscall_8h.html#ae80abe069ae7128caf6c98035b032776">k_write</a> (int fd, const void *buf, size_t count)</td></tr>
+<tr class="separator:ae80abe069ae7128caf6c98035b032776"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="aca2b074f62174df41781abb400ac6c67"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca2b074f62174df41781abb400ac6c67">&#9670;&nbsp;</a></span>k_lseek()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">off_t k_lseek </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>fd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">off_t&#160;</td>
+          <td class="paramname"><em>offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>whence</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000021">Todo:</a></b></dt><dd>implement me </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="k__syscall_8h_aca2b074f62174df41781abb400ac6c67_icgraph.svg" width="179" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
+
+</div>
+</div>
+<a id="a8665b78926682de513294b0733aa72e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8665b78926682de513294b0733aa72e4">&#9670;&nbsp;</a></span>k_open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int k_open </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>pathname</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>flags</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000022">Todo:</a></b></dt><dd>check flags </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="k__syscall_8h_a8665b78926682de513294b0733aa72e4_icgraph.svg" width="307" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
+
+</div>
+</div>
+<a id="ae80abe069ae7128caf6c98035b032776"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae80abe069ae7128caf6c98035b032776">&#9670;&nbsp;</a></span>k_write()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ssize_t k_write </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>fd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const void *&#160;</td>
+          <td class="paramname"><em>buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000023">Todo:</a></b></dt><dd>make the code in this block better. </dd></dl>
+<p>This would conflict with the userland message being written.</p>
+<p>Socket descriptors.</p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="k__syscall_8h_ae80abe069ae7128caf6c98035b032776_icgraph.svg" width="410" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
+
+</div>
+</div>
 <a id="a581ed37968ead91b6d3a0b3b7a71da9d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a581ed37968ead91b6d3a0b3b7a71da9d">&#9670;&nbsp;</a></span>syscall_init()</h2>
 

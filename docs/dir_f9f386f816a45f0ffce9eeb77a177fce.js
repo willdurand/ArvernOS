@@ -9,9 +9,9 @@ var dir_f9f386f816a45f0ffce9eeb77a177fce =
     [ "fcntl.h", "fcntl_8h.html", "fcntl_8h" ],
     [ "inttypes.h", "inttypes_8h.html", null ],
     [ "stdio.h", "stdio_8h.html", "stdio_8h" ],
-    [ "stdlib.h", "stdlib_8h.html", null ],
+    [ "stdlib.h", "stdlib_8h.html", "stdlib_8h" ],
     [ "string.h", "string_8h.html", "string_8h" ],
     [ "time.h", "libc_2time_8h.html", "libc_2time_8h" ],
     [ "ubsan.h", "ubsan_8h.html", "ubsan_8h" ],
-    [ "unistd.h", "unistd_8h.html", null ]
+    [ "unistd.h", "unistd_8h.html", "unistd_8h" ]
 ];

@@ -103,8 +103,39 @@ Include dependency graph for proc.h:</div>
 Functions</h2></td></tr>
 <tr class="memitem:aa8135d8245a646e0bf2920be16d9c9bb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="proc_8h.html#aa8135d8245a646e0bf2920be16d9c9bb">proc_fs_init</a> ()</td></tr>
 <tr class="separator:aa8135d8245a646e0bf2920be16d9c9bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a261677ec59fe52476936fdf45585742f"><td class="memItemLeft" align="right" valign="top">inode_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="proc_8h.html#a261677ec59fe52476936fdf45585742f">proc_fs_create_readonly_file</a> (const char *name, proc_read_t *read_fn)</td></tr>
+<tr class="separator:a261677ec59fe52476936fdf45585742f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a261677ec59fe52476936fdf45585742f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a261677ec59fe52476936fdf45585742f">&#9670;&nbsp;</a></span>proc_fs_create_readonly_file()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">inode_t proc_fs_create_readonly_file </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">proc_read_t *&#160;</td>
+          <td class="paramname"><em>read_fn</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000018">Todo:</a></b></dt><dd>we probably want a specific driver for read-only pseudo-files. </dd></dl>
+
+</div>
+</div>
 <a id="aa8135d8245a646e0bf2920be16d9c9bb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa8135d8245a646e0bf2920be16d9c9bb">&#9670;&nbsp;</a></span>proc_fs_init()</h2>
 

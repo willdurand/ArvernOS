@@ -84,7 +84,8 @@ $(document).ready(function(){initNavTree('inet_8h.html',''); initResizable(); })
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a>  </div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
 <div class="title">inet.h File Reference</div>  </div>
 </div><!--header-->
@@ -110,7 +111,32 @@ Data Structures</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsockaddr__in.html">sockaddr_in</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a69a7a4951ff21b302267532c21ee78fc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="inet_8h.html#a69a7a4951ff21b302267532c21ee78fc">HTONS</a>(n)&#160;&#160;&#160;((((n)&amp;0xFF) &lt;&lt; 8) | (((n)&amp;0xFF00) &gt;&gt; 8))</td></tr>
+<tr class="separator:a69a7a4951ff21b302267532c21ee78fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a69a7a4951ff21b302267532c21ee78fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a69a7a4951ff21b302267532c21ee78fc">&#9670;&nbsp;</a></span>HTONS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define HTONS</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">n</td><td>)</td>
+          <td>&#160;&#160;&#160;((((n)&amp;0xFF) &lt;&lt; 8) | (((n)&amp;0xFF00) &gt;&gt; 8))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000004">Todo:</a></b></dt><dd>ideally, we'd check the endianness of the system but this project is for x86_64 only (i.e. it's little endian and we have to use those macros). </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

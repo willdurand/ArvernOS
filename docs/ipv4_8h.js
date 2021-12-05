@@ -1,6 +1,6 @@
 var ipv4_8h =
 [
-    [ "ipv4_header_t", "structipv4__header__t.html", null ],
+    [ "ipv4_header_t", "structipv4__header__t.html", "structipv4__header__t" ],
     [ "icmpv4_echo_t", "structicmpv4__echo__t.html", null ],
     [ "icmpv4_reply_t", "structicmpv4__reply__t.html", null ],
     [ "ipv4_checksum", "ipv4_8h.html#a70757066dd9950d01c1c5366d1bb36a5", null ],
