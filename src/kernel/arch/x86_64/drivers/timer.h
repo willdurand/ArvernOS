@@ -5,7 +5,7 @@
 #include <stdint.h>
 
 /// The timer frequency.
-#define TIMER_HZ 50
+#define TIMER_HZ 100
 
 /**
  * Initializes the timer (clock).
