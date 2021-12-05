@@ -7,10 +7,12 @@
 
 void arch_gettimeofday(struct timeval* p, void* z)
 {
-  UNUSED(*p);
   UNUSED(*z);
 
   // TODO:
+
+  p->tv_sec = 0;
+  p->tv_usec = 0;
 }
 
 void arch_kernel_load_symbols(uint64_t addr, uint64_t size)

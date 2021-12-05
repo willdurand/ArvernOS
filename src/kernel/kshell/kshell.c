@@ -20,6 +20,7 @@ static unsigned int readline_index = 0;
 
 static const char* commands[][NB_DOCUMENTED_COMMANDS] = {
   { "cat", "print on the standard output" },
+  { "date", "print the current date and time" },
   { "exec", "execute a program in user mode" },
   { "help", "print this help message" },
   { "host", "perform a DNS lookup" },
@@ -82,6 +83,8 @@ void run_command()
     ls(argc, argv);
   } else if (strcmp(argv[0], "cat") == 0) {
     cat(argc, argv);
+  } else if (strcmp(argv[0], "date") == 0) {
+    date();
   } else if (strcmp(argv[0], "selftest") == 0) {
     selftest();
   } else if (strcmp(argv[0], "overflow") == 0) {
