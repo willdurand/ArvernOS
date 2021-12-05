@@ -8,7 +8,9 @@
 ARCH  = aarch64
 BOARD = raspi3
 
-CONFIG_USE_DLMALLOC = 1
+CONFIG_USE_DLMALLOC   = 1
+# This board does not have a hardware clock (RTC).
+CONFIG_USE_FAKE_CLOCK = 1
 ```
 
 ## Usage on real hardware

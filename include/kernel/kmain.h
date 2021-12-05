@@ -11,9 +11,9 @@
 #include <stdint.h>
 
 /**
- * Prints the kernel banner.
+ * Early starts the kernel.
  */
-void kmain_print_banner();
+void kmain_early_start();
 
 /**
  * Initializes the common filesystem code. The first argument (`addr`) should
