@@ -1,8 +1,8 @@
-#include "clock.h"
+#include "ccu.h"
 #include <board.h>
 #include <core/mmio.h>
 
-void clock_init()
+void ccu_init()
 {
   // PLL_PERIPH = 600MHz
   //
