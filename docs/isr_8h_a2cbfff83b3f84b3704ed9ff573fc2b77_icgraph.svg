@@ -35,16 +35,16 @@
 <!-- Node3 -->
 <g id="node3" class="node">
 <title>Node3</title>
-<g id="a_node3"><a xlink:href="timer_8h.html#a896a4c37c6ecf8868ef0dc758e5a598c" target="_top" xlink:title=" ">
-<polygon fill="none" stroke="black" points="9.5,-0.5 9.5,-19.5 66.5,-19.5 66.5,-0.5 9.5,-0.5"/>
-<text text-anchor="middle" x="38" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">timer_init</text>
+<g id="a_node3"><a xlink:href="pit_8h.html#a57da715e73b49d6a3606d1fa1d1a115f" target="_top" xlink:title=" ">
+<polygon fill="none" stroke="black" points="15.5,-0.5 15.5,-19.5 60.5,-19.5 60.5,-0.5 15.5,-0.5"/>
+<text text-anchor="middle" x="38" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">pit_init</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node3 -->
 <g id="edge2" class="edge">
 <title>Node1&#45;&gt;Node3</title>
-<path fill="none" stroke="midnightblue" d="M101.89,-19.6C89.5,-17.71 77.08,-15.81 66.59,-14.21"/>
+<path fill="none" stroke="midnightblue" d="M101.63,-19.56C86.89,-17.31 72.12,-15.06 60.64,-13.3"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="101.37,-23.06 111.78,-21.11 102.42,-16.14 101.37,-23.06"/>
 </g>
 </g>

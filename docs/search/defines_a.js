@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['timer_5fhz_759',['TIMER_HZ',['../timer_8h.html#a429afe1773b2b1b37429368dc2691c40',1,'timer.h']]]
+  ['unused_791',['UNUSED',['../utils_8h.html#a86d500a34c624c2cae56bc25a31b12f3',1,'utils.h']]]
 ];

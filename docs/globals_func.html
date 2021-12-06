@@ -99,11 +99,14 @@ $(document).ready(function(){initNavTree('globals_func.html',''); initResizable(
 <li>alloc_init()
 : <a class="el" href="aarch32_2mmu_2alloc_8h.html#a0de47e42c61353f53c07a4274b87f864">alloc.h</a>
 </li>
+<li>arch_clock_get_current_microseconds()
+: <a class="el" href="kernel_2arch_2time_8h.html#ab4bc50190a5180744036f0962b00c364">time.h</a>
+</li>
+<li>arch_clock_init()
+: <a class="el" href="kernel_2arch_2time_8h.html#a6a77f2fd7f917b183c433543789a542b">time.h</a>
+</li>
 <li>arch_getchar()
 : <a class="el" href="io_8h.html#a34512cf4b7563b16dab78467797aa5d8">io.h</a>
-</li>
-<li>arch_gettimeofday()
-: <a class="el" href="kernel_2arch_2time_8h.html#a07c7c273a1257915aa9de1346d709a73">time.h</a>
 </li>
 <li>arch_halt()
 : <a class="el" href="kernel_8h.html#afa8a138b0f00d1bb5d26f79378caa530">kernel.h</a>
@@ -128,6 +131,12 @@ $(document).ready(function(){initNavTree('globals_func.html',''); initResizable(
 </li>
 <li>arch_selftest()
 : <a class="el" href="include_2kernel_2arch_2kshell_8h.html#a4e72622d8e244cc55209fb4e1ecb49d8">kshell.h</a>
+</li>
+<li>arch_timer_init()
+: <a class="el" href="kernel_2arch_2time_8h.html#a92a37cf9da6c3705b6ef829f1978ab54">time.h</a>
+</li>
+<li>arch_timer_uptime_microseconds()
+: <a class="el" href="kernel_2arch_2time_8h.html#af8e08f88e4ec6768891cfce52318c3d3">time.h</a>
 </li>
 <li>arp_receive_packet()
 : <a class="el" href="arp_8h.html#af8fccdaff0afb0830351393a2ec87df6">arp.h</a>
@@ -164,11 +173,20 @@ $(document).ready(function(){initNavTree('globals_func.html',''); initResizable(
 
 
 <h3><a id="index_c"></a>- c -</h3><ul>
+<li>clock_get_current_microseconds()
+: <a class="el" href="clock_8h.html#add4ef47919811f366e7c7561c71088fb">clock.h</a>
+</li>
+<li>clock_init()
+: <a class="el" href="clock_8h.html#ae9cc0a879e88eea28e4e8b57318ef8e5">clock.h</a>
+</li>
 <li>close()
 : <a class="el" href="syscall_8h.html#aafbcde67669a1b96577e735ddebd8634">syscall.h</a>
 </li>
 <li>cmos_boot_time()
 : <a class="el" href="cmos_8h.html#a075a41918112363e92d77ce1e86d171b">cmos.h</a>
+</li>
+<li>cmos_current_time()
+: <a class="el" href="cmos_8h.html#a47a3c085ee4471f77246a440b5a6aba9">cmos.h</a>
 </li>
 <li>cmos_init()
 : <a class="el" href="cmos_8h.html#ac12282062cbe908153f85e20f13a699b">cmos.h</a>
@@ -239,6 +257,12 @@ $(document).ready(function(){initNavTree('globals_func.html',''); initResizable(
 
 
 <h3><a id="index_f"></a>- f -</h3><ul>
+<li>fake_clock_get_current_microseconds()
+: <a class="el" href="fake__clock_8h.html#ab4458e5c11135bbbaec3b6f2ee47e9d6">fake_clock.h</a>
+</li>
+<li>fake_clock_init()
+: <a class="el" href="fake__clock_8h.html#ae57838590d8d0853b8a6036fbdd0b0d0">fake_clock.h</a>
+</li>
 <li>frame_allocate()
 : <a class="el" href="frame_8h.html#ae2a26cdfa5b475a46dc4e26a21025252">frame.h</a>
 </li>
@@ -383,11 +407,11 @@ $(document).ready(function(){initNavTree('globals_func.html',''); initResizable(
 <li>kmain()
 : <a class="el" href="src_2kernel_2arch_2aarch32_2kmain_8h.html#af2771f04874bac550209cafd61dd4a57">kmain.h</a>
 </li>
+<li>kmain_early_start()
+: <a class="el" href="include_2kernel_2kmain_8h.html#a39b048730ab06513b29030aed1b5d8f4">kmain.h</a>
+</li>
 <li>kmain_init_fs()
 : <a class="el" href="include_2kernel_2kmain_8h.html#a1a6603660c266149bde275f465b94bf7">kmain.h</a>
-</li>
-<li>kmain_print_banner()
-: <a class="el" href="include_2kernel_2kmain_8h.html#ab17683bf1771e7e114c5139cbeeee722">kmain.h</a>
 </li>
 <li>kmain_start()
 : <a class="el" href="include_2kernel_2kmain_8h.html#ab016e32f2cb5199fe025e90724bfb588">kmain.h</a>
@@ -456,6 +480,15 @@ $(document).ready(function(){initNavTree('globals_func.html',''); initResizable(
 </li>
 <li>pci_write()
 : <a class="el" href="pci_8h.html#a531322fe5567da0a2705f6131c079f65">pci.h</a>
+</li>
+<li>pit_init()
+: <a class="el" href="pit_8h.html#a57da715e73b49d6a3606d1fa1d1a115f">pit.h</a>
+</li>
+<li>pit_tick()
+: <a class="el" href="pit_8h.html#a709098350baf9717fd879915fae3f32b">pit.h</a>
+</li>
+<li>pit_uptime()
+: <a class="el" href="pit_8h.html#aed111fa9cbd45edf5a11ccb2fae1cc89">pit.h</a>
 </li>
 <li>port_byte_in()
 : <a class="el" href="port_8h.html#af8b1144eda5e36642ff26d504bf2b3b8">port.h</a>
@@ -562,11 +595,11 @@ $(document).ready(function(){initNavTree('globals_func.html',''); initResizable(
 <li>timer_init()
 : <a class="el" href="timer_8h.html#a896a4c37c6ecf8868ef0dc758e5a598c">timer.h</a>
 </li>
-<li>timer_tick()
-: <a class="el" href="timer_8h.html#a0a6f7ad89e8719f445d3beeaf672ed9f">timer.h</a>
-</li>
 <li>timer_uptime()
 : <a class="el" href="timer_8h.html#ad5df37e1f85cabd9c5d43aa1dfc0e37e">timer.h</a>
+</li>
+<li>timer_uptime_microseconds()
+: <a class="el" href="timer_8h.html#a9e237401e78bbceb0c0070ef2ecb4569">timer.h</a>
 </li>
 <li>translate()
 : <a class="el" href="paging_8h.html#a1f069c46ac4245771221fc7f0bcfb2e0">paging.h</a>

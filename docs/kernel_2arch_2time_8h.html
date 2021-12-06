@@ -89,11 +89,12 @@ $(document).ready(function(){initNavTree('kernel_2arch_2time_8h.html',''); initR
 <div class="title">time.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="kernel_2arch_2time_8h.html">time.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &lt;<a class="el" href="kernel_2arch_2time_8h.html">time.h</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for time.h:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="kernel_2arch_2time_8h__incl.svg" width="168" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="kernel_2arch_2time_8h__incl.svg" width="168" height="127"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -105,41 +106,126 @@ This graph shows which files directly or indirectly include this file:</div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a07c7c273a1257915aa9de1346d709a73"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="kernel_2arch_2time_8h.html#a07c7c273a1257915aa9de1346d709a73">arch_gettimeofday</a> (struct <a class="el" href="structtimeval.html">timeval</a> *p, void *z)</td></tr>
-<tr class="separator:a07c7c273a1257915aa9de1346d709a73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92a37cf9da6c3705b6ef829f1978ab54"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="kernel_2arch_2time_8h.html#a92a37cf9da6c3705b6ef829f1978ab54">arch_timer_init</a> ()</td></tr>
+<tr class="separator:a92a37cf9da6c3705b6ef829f1978ab54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8e08f88e4ec6768891cfce52318c3d3"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="kernel_2arch_2time_8h.html#af8e08f88e4ec6768891cfce52318c3d3">arch_timer_uptime_microseconds</a> ()</td></tr>
+<tr class="separator:af8e08f88e4ec6768891cfce52318c3d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a77f2fd7f917b183c433543789a542b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="kernel_2arch_2time_8h.html#a6a77f2fd7f917b183c433543789a542b">arch_clock_init</a> ()</td></tr>
+<tr class="separator:a6a77f2fd7f917b183c433543789a542b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4bc50190a5180744036f0962b00c364"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="kernel_2arch_2time_8h.html#ab4bc50190a5180744036f0962b00c364">arch_clock_get_current_microseconds</a> ()</td></tr>
+<tr class="separator:ab4bc50190a5180744036f0962b00c364"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Architecture-specific code for time management. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a07c7c273a1257915aa9de1346d709a73"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a07c7c273a1257915aa9de1346d709a73">&#9670;&nbsp;</a></span>arch_gettimeofday()</h2>
+<a id="ab4bc50190a5180744036f0962b00c364"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4bc50190a5180744036f0962b00c364">&#9670;&nbsp;</a></span>arch_clock_get_current_microseconds()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void arch_gettimeofday </td>
+          <td class="memname">uint64_t arch_clock_get_current_microseconds </td>
           <td>(</td>
-          <td class="paramtype">struct <a class="el" href="structtimeval.html">timeval</a> *&#160;</td>
-          <td class="paramname"><em>p</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>z</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Returns the time of day. </p>
+<p>Returns the current time in microseconds. </p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="kernel_2arch_2time_8h_ab4bc50190a5180744036f0962b00c364_cgraph.svg" width="887" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="kernel_2arch_2time_8h_ab4bc50190a5180744036f0962b00c364_icgraph.svg" width="436" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
+
+</div>
+</div>
+<a id="a6a77f2fd7f917b183c433543789a542b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a77f2fd7f917b183c433543789a542b">&#9670;&nbsp;</a></span>arch_clock_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arch_clock_init </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Initializes the system clock. </p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="kernel_2arch_2time_8h_a6a77f2fd7f917b183c433543789a542b_cgraph.svg" width="279" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="kernel_2arch_2time_8h_a6a77f2fd7f917b183c433543789a542b_icgraph.svg" width="247" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
+
+</div>
+</div>
+<a id="a92a37cf9da6c3705b6ef829f1978ab54"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92a37cf9da6c3705b6ef829f1978ab54">&#9670;&nbsp;</a></span>arch_timer_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arch_timer_init </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Initializes the system timer. </p>
 <dl class="todo"><dt><b><a class="el" href="todo.html#_todo000008">Todo:</a></b></dt><dd></dd></dl>
 <dl class="todo"><dt><b><a class="el" href="todo.html#_todo000011">Todo:</a></b></dt><dd></dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000012">Todo:</a></b></dt><dd>set a correct value, see: <a href="https://www.gnu.org/software/libc/manual/html_node/Elapsed-Time.html">https://www.gnu.org/software/libc/manual/html_node/Elapsed-Time.html</a> </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="kernel_2arch_2time_8h_a92a37cf9da6c3705b6ef829f1978ab54_icgraph.svg" width="244" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
+
+</div>
+</div>
+<a id="af8e08f88e4ec6768891cfce52318c3d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8e08f88e4ec6768891cfce52318c3d3">&#9670;&nbsp;</a></span>arch_timer_uptime_microseconds()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint64_t arch_timer_uptime_microseconds </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns the number of microseconds since the timer has been initialized.</p>
+<dl class="section return"><dt>Returns</dt><dd>the number of microseconds since the timer has been initialized </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="kernel_2arch_2time_8h_af8e08f88e4ec6768891cfce52318c3d3_icgraph.svg" width="1152" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
 
 </div>
 </div>

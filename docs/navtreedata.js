@@ -43,15 +43,9 @@ var NAVTREE =
             [ "Debug mode", "index.html#autotoc_md12", null ],
             [ "Release mode", "index.html#autotoc_md15", null ],
             [ "config files", "index.html#autotoc_md16", null ]
-          ] ],
-          [ "About x86_64", "index.html#autotoc_md17", [
-            [ "Boot options", "index.html#autotoc_md18", null ],
-            [ "Early boot sequence", "index.html#autotoc_md19", null ],
-            [ "Memory management", "index.html#autotoc_md20", null ],
-            [ "Memory map", "index.html#autotoc_md21", null ]
           ] ]
         ] ],
-        [ "License", "index.html#autotoc_md23", null ]
+        [ "License", "index.html#autotoc_md17", null ]
       ] ]
     ] ],
     [ "Component: kernel", "md_src_kernel__r_e_a_d_m_e.html", "md_src_kernel__r_e_a_d_m_e" ],
@@ -81,7 +75,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "aarch32_2mmu_2alloc_8h.html",
-"paging_8h.html"
+"net_8h.html",
+"vga__text_8h.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

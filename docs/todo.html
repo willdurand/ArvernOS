@@ -91,12 +91,7 @@ $(document).ready(function(){initNavTree('todo.html',''); initResizable(); });
 <dt>Global <a class="el" href="init_8h.html#a30871efacc071147ff50ab8eedbcf89a">__initcall</a>  (func)</dt>
 <dd><a class="anchor" id="_todo000001"></a>we should ideally declare these declarations <code>static</code>, however LLVM strips them out because they are unused and despite <code>unused</code> being set.  </dd>
 <dt>Global <a class="el" href="stdlib_8h.html#ac54f53dc342019e8db34f4aa581a5792">abort</a>  ()</dt>
-<dd><a class="anchor" id="_todo000024"></a>abnormally terminate the process as if by SIGABRT.  </dd>
-<dt>Global <a class="el" href="kernel_2arch_2time_8h.html#a07c7c273a1257915aa9de1346d709a73">arch_gettimeofday</a>  (struct timeval *p, void *z)</dt>
-<dd><p class="startdd"><a class="anchor" id="_todo000011"></a> </p>
-<p class="interdd"><a class="anchor" id="_todo000012"></a>set a correct value, see: <a href="https://www.gnu.org/software/libc/manual/html_node/Elapsed-Time.html">https://www.gnu.org/software/libc/manual/html_node/Elapsed-Time.html</a> </p>
-<p class="enddd"><a class="anchor" id="_todo000008"></a>  </p>
-</dd>
+<dd><a class="anchor" id="_todo000023"></a>abnormally terminate the process as if by SIGABRT.  </dd>
 <dt>Global <a class="el" href="arch_2panic_8h.html#af8d6829e40f2b716caa7370c9e3d98ac">arch_kernel_load_symbols</a>  (uint64_t addr, uint64_t size)</dt>
 <dd><a class="anchor" id="_todo000007"></a>  </dd>
 <dt>Global <a class="el" href="kernel_8h.html#a5fe1791c207cc3de3931c333ac05fbf7">arch_restart</a>  ()</dt>
@@ -105,28 +100,32 @@ $(document).ready(function(){initNavTree('todo.html',''); initResizable(); });
 </dd>
 <dt>Global <a class="el" href="include_2kernel_2arch_2kshell_8h.html#a4e72622d8e244cc55209fb4e1ecb49d8">arch_selftest</a>  ()</dt>
 <dd><a class="anchor" id="_todo000006"></a>  </dd>
+<dt>Global <a class="el" href="kernel_2arch_2time_8h.html#a92a37cf9da6c3705b6ef829f1978ab54">arch_timer_init</a>  ()</dt>
+<dd><p class="startdd"><a class="anchor" id="_todo000008"></a> </p>
+<p class="enddd"><a class="anchor" id="_todo000011"></a>  </p>
+</dd>
 <dt>Global <a class="el" href="stdlib_8h.html#aba146acbba01116cafaa55f720913ed8">atoi</a>  (char *s)</dt>
-<dd><a class="anchor" id="_todo000025"></a>handle min/max values  </dd>
+<dd><a class="anchor" id="_todo000024"></a>handle min/max values  </dd>
 <dt>Global <a class="el" href="structdhcp__header__t.html#a734798cfe1e826aa09e2a40b65f30ff1">dhcp_header_t::options</a>  [1024]</dt>
 <dd><a class="anchor" id="_todo000002"></a>it could be larger but then there is a problem with the ethernet and/or physical layers. The packet is transmitted correctly but the next received packet seems corrupted.  </dd>
 <dt>Global <a class="el" href="unistd_8h.html#a631de38822d3fe422dce124e7967edc3">environ</a>  []</dt>
-<dd><a class="anchor" id="_todo000027"></a>use malloc() when it becomes possible  </dd>
+<dd><a class="anchor" id="_todo000026"></a>use malloc() when it becomes possible  </dd>
 <dt>Global <a class="el" href="inet_8h.html#a69a7a4951ff21b302267532c21ee78fc">HTONS</a>  (n)</dt>
 <dd><a class="anchor" id="_todo000004"></a>ideally, we'd check the endianness of the system but this project is for x86_64 only (i.e. it's little endian and we have to use those macros).  </dd>
 <dt>Global <a class="el" href="structipv4__header__t.html#a1ebada57c22c5cb245aa284b326d4e71">ipv4_header_t::ihl</a>  </dt>
 <dd><a class="anchor" id="_todo000003"></a><code>ihl</code> and <code>version</code> are inverted to "deal" with endianness. It's not the right thing to do but it works so we'll fix that later.  </dd>
 <dt>Global <a class="el" href="k__syscall_8h.html#aca2b074f62174df41781abb400ac6c67">k_lseek</a>  (int fd, off_t offset, int whence)</dt>
-<dd><a class="anchor" id="_todo000021"></a>implement me  </dd>
+<dd><a class="anchor" id="_todo000020"></a>implement me  </dd>
 <dt>Global <a class="el" href="k__syscall_8h.html#a8665b78926682de513294b0733aa72e4">k_open</a>  (const char *pathname, uint32_t flags)</dt>
-<dd><a class="anchor" id="_todo000022"></a>check flags  </dd>
+<dd><a class="anchor" id="_todo000021"></a>check flags  </dd>
 <dt>Global <a class="el" href="k__syscall_8h.html#ae80abe069ae7128caf6c98035b032776">k_write</a>  (int fd, const void *buf, size_t count)</dt>
-<dd><a class="anchor" id="_todo000023"></a>make the code in this block better.  </dd>
+<dd><a class="anchor" id="_todo000022"></a>make the code in this block better.  </dd>
 <dt>Global <a class="el" href="pci_8h.html#ad8515b86d19288e403722e2c9a4dc5dd">pci_get_device</a>  (uint16_t vendor_id, uint16_t device_id)</dt>
-<dd><a class="anchor" id="_todo000014"></a>this is the minimal amount of code to retrieve a PCI device when there is only one with the same vendor and device IDs and no function.  </dd>
+<dd><a class="anchor" id="_todo000013"></a>this is the minimal amount of code to retrieve a PCI device when there is only one with the same vendor and device IDs and no function.  </dd>
 <dt>Global <a class="el" href="proc_8h.html#a261677ec59fe52476936fdf45585742f">proc_fs_create_readonly_file</a>  (const char *name, proc_read_t *read_fn)</dt>
-<dd><a class="anchor" id="_todo000018"></a>we probably want a specific driver for read-only pseudo-files.  </dd>
+<dd><a class="anchor" id="_todo000017"></a>we probably want a specific driver for read-only pseudo-files.  </dd>
 <dt>Global <a class="el" href="stdlib_8h.html#a4902276982810f15128af3faa1f3e938">strtol_wip</a>  (const char *str, char **end, int base)</dt>
-<dd><a class="anchor" id="_todo000028"></a>this function is supposed to implement <code>strtol()</code> but it has been written for the kernel stacktrace and does not behave like it should (e.g., it does not skip spaces and does not support a <code>base</code> different than <code>16</code>). </dd>
+<dd><a class="anchor" id="_todo000027"></a>this function is supposed to implement <code>strtol()</code> but it has been written for the kernel stacktrace and does not behave like it should (e.g., it does not skip spaces and does not support a <code>base</code> different than <code>16</code>). </dd>
 </dl>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->

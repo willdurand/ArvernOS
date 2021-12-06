@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['cmos_2eh_469',['cmos.h',['../cmos_8h.html',1,'']]],
-  ['console_2eh_470',['console.h',['../console_8h.html',1,'']]],
-  ['ctype_2eh_471',['ctype.h',['../ctype_8h.html',1,'']]]
+  ['clock_2eh_486',['clock.h',['../clock_8h.html',1,'']]],
+  ['cmos_2eh_487',['cmos.h',['../cmos_8h.html',1,'']]],
+  ['console_2eh_488',['console.h',['../console_8h.html',1,'']]],
+  ['ctype_2eh_489',['ctype.h',['../ctype_8h.html',1,'']]]
 ];

@@ -99,8 +99,8 @@ Include dependency graph for kmain.h:</div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ab17683bf1771e7e114c5139cbeeee722"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2kernel_2kmain_8h.html#ab17683bf1771e7e114c5139cbeeee722">kmain_print_banner</a> ()</td></tr>
-<tr class="separator:ab17683bf1771e7e114c5139cbeeee722"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39b048730ab06513b29030aed1b5d8f4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2kernel_2kmain_8h.html#a39b048730ab06513b29030aed1b5d8f4">kmain_early_start</a> ()</td></tr>
+<tr class="separator:a39b048730ab06513b29030aed1b5d8f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a6603660c266149bde275f465b94bf7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2kernel_2kmain_8h.html#a1a6603660c266149bde275f465b94bf7">kmain_init_fs</a> (uintptr_t addr)</td></tr>
 <tr class="separator:a1a6603660c266149bde275f465b94bf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab016e32f2cb5199fe025e90724bfb588"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2kernel_2kmain_8h.html#ab016e32f2cb5199fe025e90724bfb588">kmain_start</a> (const char *cmdline)</td></tr>
@@ -109,6 +109,30 @@ Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This file contains the functions shared by all arch- and/or board-specific <code><a class="el" href="src_2kernel_2arch_2aarch32_2kmain_8h.html#af2771f04874bac550209cafd61dd4a57">kmain()</a></code> functions, which are the kernel entry point functions in ArvernOS. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
+<a id="a39b048730ab06513b29030aed1b5d8f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39b048730ab06513b29030aed1b5d8f4">&#9670;&nbsp;</a></span>kmain_early_start()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void kmain_early_start </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Early starts the kernel. </p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="include_2kernel_2kmain_8h_a39b048730ab06513b29030aed1b5d8f4_icgraph.svg" width="243" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
+
+</div>
+</div>
 <a id="a1a6603660c266149bde275f465b94bf7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1a6603660c266149bde275f465b94bf7">&#9670;&nbsp;</a></span>kmain_init_fs()</h2>
 
@@ -131,30 +155,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a id="ab17683bf1771e7e114c5139cbeeee722"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab17683bf1771e7e114c5139cbeeee722">&#9670;&nbsp;</a></span>kmain_print_banner()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void kmain_print_banner </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Prints the kernel banner. </p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="include_2kernel_2kmain_8h_ab17683bf1771e7e114c5139cbeeee722_icgraph.svg" width="256" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
-</div>
 
 </div>
 </div>

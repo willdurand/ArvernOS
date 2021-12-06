@@ -254,59 +254,7 @@ config files</h4>
 <div class="line">ENABLE_PROC_DEBUG     = 1</div>
 <div class="line">ENABLE_SYS_DEBUG      = 1</div>
 <div class="line">ENABLE_USERLAND_DEBUG = 1</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md17"></a>
-About x86_64</h3>
-<p>The <code>x86_64</code> implementation uses GRUB as bootloader.</p>
-<h4><a class="anchor" id="autotoc_md18"></a>
-Boot options</h4>
-<p>The GRUB configuration offers two choices: the normal mode and the kernel mode. The normal (or "default") mode will load the `/bin/init` program in user mode ("ring 3"). The kernel mode will load the <code>kshell</code> instead and will stay in kernel mode (as its name implies).</p>
-<p>It is possible to change the command line by passing the <code>CMDLINE</code> variable to <code>make</code> (or add it to your <code>config</code> file):</p>
-<div class="fragment"><div class="line">$ make clean run-debug CMDLINE=&quot;/bin/init foo bar&quot;</div>
-</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>It is also possible to set <code>KERNEL_CMDLINE</code>, which is passed to the kernel in... kernel mode.</dd></dl>
-<h4><a class="anchor" id="autotoc_md19"></a>
-Early boot sequence</h4>
-<ol type="1">
-<li>The BIOS loads the bootloader (GRUB) from the ISO</li>
-<li>The bootloader reads the kernel executable and finds the multiboot header</li>
-<li>The bootloader copies the <code>.boot</code> and <code>.text</code> sections to memory (to addresses <code>0x100000</code> and <code>0x100020</code>)</li>
-<li>The bootloader jumps to the entry point (at <code>0x100020</code>)</li>
-<li>Various checks are performed to make sure we can continue the boot process</li>
-<li>Page table and paging are configured and enabled</li>
-<li>Load a 64-bit Global Descriptor Table</li>
-<li>Load a Task State Segment</li>
-<li>Reload all the data segment registers</li>
-<li>Call the C <code><a class="el" href="src_2kernel_2arch_2aarch32_2kmain_8h.html#af2771f04874bac550209cafd61dd4a57">kmain()</a></code> function</li>
-<li>Eventually switch to user mode and call <code>/bin/init</code> by default</li>
-</ol>
-<h4><a class="anchor" id="autotoc_md20"></a>
-Memory management</h4>
-<p>During the early boot sequence, we identity map the first gigabyte of our kernel with 512 2MiB pages. When <code><a class="el" href="src_2kernel_2arch_2aarch32_2kmain_8h.html#af2771f04874bac550209cafd61dd4a57">kmain()</a></code> is called, we call <code><a class="el" href="paging_8h.html#a569adfd13ea3c63741f64108821b1712" title="Initializes paging to separate virtual and physical memory.">paging_init()</a></code> to update the mapping:</p>
-<ol type="1">
-<li>Memory from <code>0x00000000</code> to <code>0x000A0000</code> is identity mapped (present)</li>
-<li>Memory from <code>0x000A0000</code> to <code>0x00100000</code> is identity mapped (present + writable)</li>
-<li>The VBE framebuffer might be identity mapped as well (present + writable, and only if <code>ENABLE_FRAMEBUFFER=1</code> is passed to <code>make</code>)</li>
-<li>The kernel sections are identity mapped with the correct flags for each section</li>
-<li>The multiboot information is identity mapped</li>
-<li>The multiboot modules are identity mapped with the correct flags (in our case, it is the init ramdisk)</li>
-<li>The memory allocated for the frame allocator is then identity mapped</li>
-</ol>
-<p>In addition, <code><a class="el" href="paging_8h.html#a569adfd13ea3c63741f64108821b1712" title="Initializes paging to separate virtual and physical memory.">paging_init()</a></code> will:</p>
-<ol type="1">
-<li>enable the write protection</li>
-<li>enable the no-execute feature</li>
-<li>create a guard page</li>
-</ol>
-<h4><a class="anchor" id="autotoc_md21"></a>
-Memory map</h4>
-<p><a class="anchor" id="autotoc_md22"></a> </p><h5>Virtual address space</h5>
-<ul>
-<li><code>0x00000000</code> to <code>0x00100000</code>: the first 1MiB area is reserved</li>
-<li><code>0x00100000</code>: the kernel code and data and multiboot modules</li>
-<li><code>0x0020xxxx</code>: after the end of the previous area (which is computed at runtime using the multiboot information), we allocate some space for the frame allocator</li>
-<li><code>0x10000000</code>: kernel heap area (we currently have a fixed heap size)</li>
-<li><code>0x40000000</code>: user space</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md23"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md17"></a>
 License</h2>
 <p>ArvernOS is released under the MIT License. See the bundled <a href="https://github.com/willdurand/ArvernOS/blob/master/LICENSE.md">LICENSE</a> file for details. In addition, some parts of this project have their own licenses attached (either in the source files or in a <code>LICENSE</code> file next to them). </p>
 </div></div><!-- PageDoc -->
