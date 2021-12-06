@@ -12,7 +12,7 @@ void net();
 void ntp(int argc, char* argv[]);
 void overflow();
 void ping(int argc, char* argv[]);
-void power_off();
-void selftest();
+void power_off(int cmd);
+int selftest();
 
 #endif

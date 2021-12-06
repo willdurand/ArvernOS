@@ -10,14 +10,14 @@ void arch_restart()
   // TODO:
 }
 
-void arch_poweroff()
+void arch_poweroff(int exit_code)
 {
 #ifdef CONFIG_SEMIHOSTING
   // See:
   // https://developer.arm.com/documentation/dui0205/f/semihosting/debug-agent-interaction-swis/angel-swireason-reportexception--0x18-
   uint64_t parameters[] = {
-    0x20026, // ADP_Stopped_ApplicationExit
-    0        // exit code
+    0x20026,  // ADP_Stopped_ApplicationExit
+    exit_code // exit code
   };
 
   semihosting_call(SYS_EXIT, (uint64_t)parameters);

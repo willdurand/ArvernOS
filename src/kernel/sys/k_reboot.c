@@ -11,7 +11,7 @@
 #include <sys/reboot.h>
 
 void restart();
-void poweroff();
+void poweroff(int exit_code);
 
 int k_reboot(int command)
 {
@@ -22,7 +22,12 @@ int k_reboot(int command)
       restart();
       break;
     case REBOOT_CMD_POWER_OFF:
-      poweroff();
+    case REBOOT_CMD_POWER_OFF_EXIT_CODE_0:
+      poweroff(0);
+      break;
+    case REBOOT_CMD_POWER_OFF_EXIT_CODE_1:
+      poweroff(1);
+      break;
     default:
       return -EINVAL;
   }
@@ -38,10 +43,10 @@ void restart()
   arch_restart();
 }
 
-void poweroff()
+void poweroff(int exit_code)
 {
-  SYS_DEBUG("%s", "powering off system");
+  INFO("powering off system: exit_code=%d", exit_code);
   printf("Powering off system now...\n");
 
-  arch_poweroff();
+  arch_poweroff(exit_code);
 }
