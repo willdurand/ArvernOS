@@ -14,7 +14,7 @@ void kmain(uint32_t r0, uint32_t r1, uint32_t r2)
 
   ccu_init();
   uart0_init();
-  kmain_print_banner();
+  kmain_early_start();
 
   atag_init((atag_header_t*)r2);
 

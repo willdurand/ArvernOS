@@ -113,6 +113,8 @@ libk_c_files       += $(wildcard $(kernel_src_dir)/mmu/*.c)
 libk_c_files       += $(wildcard $(kernel_src_dir)/net/*.c)
 libk_c_files       += $(wildcard $(kernel_src_dir)/proc/*.c)
 libk_c_files       += $(wildcard $(kernel_src_dir)/sys/*.c)
+libk_c_files       += $(kernel_src_dir)/time/clock.c
+libk_c_files       += $(kernel_src_dir)/time/timer.c
 libk_c_files       += $(libc_c_files)
 libk_c_files       += $(shell find $(external_dirs) -name '*.c')
 libk_asm_files     +=
@@ -145,6 +147,11 @@ endif
 ifeq ($(CONFIG_SEMIHOSTING), 1)
 	QEMU_OPTIONS  += -semihosting
 	CONFIG_CFLAGS += -DCONFIG_SEMIHOSTING
+endif
+
+ifeq ($(CONFIG_USE_FAKE_CLOCK), 1)
+	CONFIG_CFLAGS += -DBUILD_TIME_IN_NANOSECONDS=$(shell date +%s%N)
+	libk_c_files += $(kernel_src_dir)/time/fake_clock.c
 endif
 
 # This file exists in a Docker container because we copy it in `Dockerfile`.

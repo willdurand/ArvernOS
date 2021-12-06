@@ -7,7 +7,6 @@
 #include <core/multiboot.h>
 #include <core/port.h>
 #include <core/tss.h>
-#include <drivers/cmos.h>
 #include <drivers/keyboard.h>
 #include <drivers/pit.h>
 #include <drivers/rtl8139.h>
@@ -27,7 +26,6 @@
 #include <sys/k_syscall.h>
 
 void busywait(uint64_t seconds);
-void check_interrupts();
 void load_modules(multiboot_info_t* mbi);
 void load_network_config(inish_config_t* kernel_cfg, net_driver_t* driver);
 void load_symbols(multiboot_tag_module_t* module, uint64_t size);
@@ -76,15 +74,6 @@ void busywait(uint64_t seconds)
   uint64_t uptime = pit_uptime();
   while (pit_uptime() < (uptime + seconds)) {
     __asm__("hlt");
-  }
-}
-
-void check_interrupts()
-{
-  uint64_t tick = pit_tick();
-
-  while (tick == pit_tick()) {
-    ;
   }
 }
 
@@ -148,7 +137,7 @@ void kmain(uintptr_t addr)
   multiboot_tag_framebuffer_t* entry = multiboot_get_framebuffer();
   console_init(&entry->common);
 
-  kmain_print_banner();
+  kmain_early_start();
 
   print_step("initializing TSS");
   tss_init();
@@ -170,18 +159,6 @@ void kmain(uintptr_t addr)
 
   print_step("initializing syscalls");
   syscall_init();
-  print_ok();
-
-  print_step("initializing cmos (real time clock)");
-  cmos_init();
-  print_ok();
-
-  print_step("initializing PIT (timer)");
-  pit_init();
-  print_ok();
-
-  print_step("checking interrupts");
-  check_interrupts();
   print_ok();
 
   load_modules(mbi);

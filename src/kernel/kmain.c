@@ -13,6 +13,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <sys/k_syscall.h>
+#include <time/clock.h>
+#include <time/timer.h>
 
 void run_initcalls();
 
@@ -37,7 +39,7 @@ void print_ko()
   printf("]\n");
 }
 
-void kmain_print_banner()
+void kmain_early_start()
 {
   INFO("%s %s (%s) / %s / Built on: %s at %s has started",
        KERNEL_NAME,
@@ -130,6 +132,14 @@ void kmain_start(const char* cmdline)
   if (saved_cmdline == NULL) {
     PANIC("failed to copy cmdline, is heap memory available?");
   }
+
+  print_step("initializing timer");
+  timer_init();
+  print_ok();
+
+  print_step("initializing clock");
+  clock_init();
+  print_ok();
 
   run_initcalls();
 

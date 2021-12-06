@@ -1,13 +1,24 @@
 #include <arch/time.h>
 
-#include <arvern/utils.h>
+#include <time/fake_clock.h>
 
-void arch_gettimeofday(struct timeval* p, void* z)
+void arch_timer_init()
 {
-  UNUSED(*z);
-
   // TODO:
+}
 
-  p->tv_sec = 0;
-  p->tv_usec = 0;
+uint64_t arch_timer_uptime_microseconds()
+{
+  // TODO:
+  return 0;
+}
+
+void arch_clock_init()
+{
+  fake_clock_init();
+}
+
+uint64_t arch_clock_get_current_microseconds()
+{
+  return fake_clock_get_current_microseconds();
 }

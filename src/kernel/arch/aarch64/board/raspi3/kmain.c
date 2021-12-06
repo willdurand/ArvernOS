@@ -14,7 +14,7 @@ extern unsigned char _binary___initrd_tar_start;
 void kmain(uintptr_t w0)
 {
   miniuart_init();
-  kmain_print_banner();
+  kmain_early_start();
 
   // 0 = on real hardware, w0 should be 0 when device trees are used (the
   // default) but QEMU sets w0 to 0x100 and passes ATAGs when we use `-append`
