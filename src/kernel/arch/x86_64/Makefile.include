@@ -38,6 +38,10 @@ QEMU_OPTIONS += -netdev user,id=u1,ipv6=off,dhcpstart=10.0.2.20
 QEMU_OPTIONS += -device rtl8139,netdev=u1
 QEMU_OPTIONS += -object filter-dump,id=f1,netdev=u1,file=$(log_dir)/traffic-$(BUILD_MODE).pcap
 
+ifeq ($(CONFIG_SEMIHOSTING), 1)
+	QEMU_OPTIONS += -device isa-debug-exit
+endif
+
 ###############################################################################
 # Source files
 ###############################################################################

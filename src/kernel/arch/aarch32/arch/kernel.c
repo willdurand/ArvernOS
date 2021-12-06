@@ -1,13 +1,16 @@
 #include <arch/kernel.h>
 
+#include <arvern/utils.h>
+
 void arch_restart()
 {
-  // TODO:
+  // TODO: Implement this function for aarch32.
 }
 
-void arch_poweroff()
+void arch_poweroff(int exit_code)
 {
-  // TODO:
+  UNUSED(exit_code);
+  // TODO: Implement this function for aarch32.
 }
 
 void arch_halt()

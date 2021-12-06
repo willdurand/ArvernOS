@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/reboot.h>
 
 void help(int argc, char* argv[]);
 void kshell_print_prompt();
@@ -103,7 +104,7 @@ void run_command()
     char* args[] = { "exec", "/bin/init", "-s" };
     exec(3, args);
   } else if (strcmp(argv[0], "poweroff") == 0) {
-    power_off();
+    power_off(REBOOT_CMD_POWER_OFF);
   } else {
     printf("invalid kshell command\n");
   }
@@ -130,8 +131,10 @@ void kshell(int argc, char* argv[])
   if (argc > 1) {
     for (int i = 1; i < argc; i++) {
       if (strcmp(argv[i], "selftest") == 0) {
-        selftest();
-        power_off();
+        int retval = selftest();
+
+        power_off(retval == 0 ? REBOOT_CMD_POWER_OFF_EXIT_CODE_0
+                              : REBOOT_CMD_POWER_OFF_EXIT_CODE_1);
       } else {
         printf("kshell: unsupported argument: %s\n", argv[i]);
       }

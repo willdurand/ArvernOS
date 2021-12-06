@@ -1,9 +1,8 @@
 #include <kshell/kshell.h>
 
-#include <sys/reboot.h>
 #include <sys/syscall.h>
 
-void power_off()
+void power_off(int cmd)
 {
-  reboot(REBOOT_CMD_POWER_OFF);
+  reboot(cmd);
 }

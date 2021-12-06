@@ -1,6 +1,7 @@
 #include <arch/kshell.h>
 
-void arch_selftest()
+int arch_selftest()
 {
-  // TODO:
+  // TODO: Implement this function for aarch32.
+  return 0;
 }

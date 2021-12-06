@@ -35,12 +35,16 @@ void arch_restart()
   }
 }
 
-void arch_poweroff()
+void arch_poweroff(int exit_code)
 {
   isr_disable_interrupts();
 
 #ifdef CONFIG_SEMIHOSTING
-  // Power-off for QEMU, see: https://wiki.osdev.org/Shutdown
-  port_word_out(0x604, 0x2000);
+  if (exit_code == 0) {
+    // Power-off for QEMU, see: https://wiki.osdev.org/Shutdown
+    port_word_out(0x604, 0x2000);
+  } else {
+    port_byte_out(0x501, exit_code);
+  }
 #endif
 }
