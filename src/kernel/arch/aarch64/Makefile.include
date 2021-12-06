@@ -23,10 +23,11 @@ ASM  = $(CC)
 # Source files
 ###############################################################################
 
-libk_c_files += $(wildcard $(kernel_src_dir)/core/arm/*.c)
-libk_c_files += $(wildcard $(arch_src)/*.c)
-libk_c_files += $(wildcard $(arch_src)/arch/*.c)
-libk_c_files += $(wildcard $(arch_src)/sys/*.c)
+libk_c_files   += $(wildcard $(kernel_src_dir)/core/arm/*.c)
+libk_c_files   += $(wildcard $(arch_src)/*.c)
+libk_c_files   += $(wildcard $(arch_src)/arch/*.c)
+libk_c_files   += $(wildcard $(arch_src)/sys/*.c)
+libk_asm_files += $(wildcard $(arch_src)/asm/*.asm)
 
 ###############################################################################
 # Flags

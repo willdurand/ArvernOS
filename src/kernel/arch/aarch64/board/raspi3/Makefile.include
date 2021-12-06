@@ -32,6 +32,9 @@ libk_asm_files += $(wildcard $(board_src)/asm/*.asm)
 BOARD_CFLAGS = -mcpu=cortex-a53+nosimd
 CFLAGS       += $(BOARD_CFLAGS)
 ASM_FLAGS    += $(BOARD_CFLAGS)
+# We include a C header file in `asm/boot.asm` so we need to tell the compiler
+# that assembly files may contain C code to preprocess first.
+ASM_FLAGS    += -x assembler-with-cpp -I$(arch_src)
 
 ###############################################################################
 # Arch-specific targets
