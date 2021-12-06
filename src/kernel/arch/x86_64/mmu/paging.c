@@ -38,7 +38,7 @@ void paging_set_entry(page_entry_t* entry, uint64_t addr, uint64_t flags);
 opt_uint64_t paging_frame_allocate();
 void paging_frame_deallocate(frame_number_t frame_number);
 
-extern uint64_t frames_for_bitmap;
+extern uint8_t frames_for_bitmap;
 extern bitmap_t* allocated_frames;
 extern void load_p4(uint64_t addr);
 
@@ -195,8 +195,7 @@ void remap_kernel()
   MMU_DEBUG("%s", "mapped multiboot modules!");
 
   // Bitmap for allocated frames.
-  MMU_DEBUG("mapping %" PRIu64
-            " pages for frame allocator, starting at addr=%p",
+  MMU_DEBUG("mapping %d pages for frame allocator, starting at addr=%p",
             frames_for_bitmap,
             allocated_frames);
   for (uint8_t i = 0; i < frames_for_bitmap; i++) {
