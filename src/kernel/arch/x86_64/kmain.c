@@ -9,9 +9,9 @@
 #include <core/tss.h>
 #include <drivers/cmos.h>
 #include <drivers/keyboard.h>
+#include <drivers/pit.h>
 #include <drivers/rtl8139.h>
 #include <drivers/serial.h>
-#include <drivers/timer.h>
 #include <fs/tar.h>
 #include <kmain.h>
 #include <logging.h>
@@ -73,17 +73,17 @@ void print_debug_gdt()
 
 void busywait(uint64_t seconds)
 {
-  uint64_t uptime = timer_uptime();
-  while (timer_uptime() < (uptime + seconds)) {
+  uint64_t uptime = pit_uptime();
+  while (pit_uptime() < (uptime + seconds)) {
     __asm__("hlt");
   }
 }
 
 void check_interrupts()
 {
-  uint64_t tick = timer_tick();
+  uint64_t tick = pit_tick();
 
-  while (tick == timer_tick()) {
+  while (tick == pit_tick()) {
     ;
   }
 }
@@ -176,8 +176,8 @@ void kmain(uintptr_t addr)
   cmos_init();
   print_ok();
 
-  print_step("initializing timer");
-  timer_init();
+  print_step("initializing PIT (timer)");
+  pit_init();
   print_ok();
 
   print_step("checking interrupts");
