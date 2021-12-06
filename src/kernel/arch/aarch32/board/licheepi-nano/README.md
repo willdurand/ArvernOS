@@ -1,4 +1,4 @@
-<!-- doxygen: \page refLicheePiNano Board: Lichee Pi Nano -->
+<!-- doxygen: \page refLicheePiNano Lichee Pi Nano -->
 
 # Lichee Pi Nano
 

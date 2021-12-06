@@ -7,6 +7,7 @@ architecture-specific code, with a sub-folder per supported architecture.
 <!-- doxygen:
 ## Related pages
 
-* \subpage refLicheePiNano
-* \subpage refRaspi3
+* \subpage refArch_aarch32
+* \subpage refArch_aarch64
+* \subpage refArch_x86_64
 -->
