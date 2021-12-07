@@ -82,8 +82,8 @@
 
 int_common_stub:
   save_registers
-  extern int_handler
-  call int_handler
+  extern isr_int_handler
+  call isr_int_handler
   restore_registers
   add rsp, 16
   sti
@@ -91,8 +91,8 @@ int_common_stub:
 
 irq_common_stub:
   save_registers
-  extern irq_handler
-  call irq_handler
+  extern isr_irq_handler
+  call isr_irq_handler
   restore_registers
   add rsp, 16
   sti

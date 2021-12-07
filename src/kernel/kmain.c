@@ -1,5 +1,6 @@
 #include <kmain.h>
 
+#include <core/isr.h>
 #include <fs/dev.h>
 #include <fs/proc.h>
 #include <fs/sock.h>
@@ -132,6 +133,10 @@ void kmain_start(const char* cmdline)
   if (saved_cmdline == NULL) {
     PANIC("failed to copy cmdline, is heap memory available?");
   }
+
+  print_step("initializing interrupt service routine");
+  isr_init();
+  print_ok();
 
   print_step("initializing timer");
   timer_init();

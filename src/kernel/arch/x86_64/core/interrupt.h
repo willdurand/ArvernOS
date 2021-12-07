@@ -1,6 +1,6 @@
 /** @file */
-#ifndef CORE_ISR_H
-#define CORE_ISR_H
+#ifndef CORE_INTERRUPT_H
+#define CORE_INTERRUPT_H
 
 #include <stdint.h>
 
@@ -94,7 +94,7 @@ extern void irq11();
 extern void irq12();
 
 /// This structure represents the interrupt stack.
-typedef struct _stack
+typedef struct isr_stack
 {
   uint64_t r15;
   uint64_t r14;
@@ -119,58 +119,5 @@ typedef struct _stack
   uint64_t stack_pointer;
   uint64_t stack_segment;
 } __attribute__((packed)) isr_stack_t;
-
-/// This type represents an interrupt handler.
-typedef void (*isr_handler_t)(isr_stack_t* stack);
-
-/**
- * Initializes the _Interrupt Service Routine_ (ISR).
- */
-void isr_init();
-
-/**
- * Enables hardware interrupts.
- */
-void isr_enable_interrupts();
-
-/**
- * Disables hardware interrupts.
- */
-void isr_disable_interrupts();
-
-/**
- * This is the handler for software interrupts and exceptions.
- *
- * - Exceptions: These are generated internally by the CPU and used to alert
- *   the running kernel of an event or situation which requires its attention.
- *   On x86 CPUs, these include exception conditions such as Double Fault, Page
- *   Fault, General Protection Fault, etc.
- * - Software Interrupt: This is an interrupt signalled by software running on
- *   a CPU to indicate that it needs the kernel's attention. These types of
- *   interrupts are generally used for System Calls.
- *
- * @param s the interrupt stack
- */
-void isr_int_handler(isr_stack_t s) __asm__("int_handler");
-
-/**
- * This is the handler for hardware interrupts.
- *
- * Interrupt Request (IRQ) or Hardware Interrupt are a type of interrupt that
- * is generated externally by the chipset, and it is signalled by latching onto
- * the INTR pin or equivalent signal of the CPU in question.
- *
- * @param s the interrupt stack
- */
-void isr_irq_handler(isr_stack_t s) __asm__("irq_handler");
-
-/**
- * Registers a handler for a given interrupt. It does not matter whether the
- * interrupt is an exception, a hardware or software interrupt.
- *
- * @param id an interrupt id
- * @param handler the handler to attach to the interrupt
- */
-void isr_register_handler(uint64_t id, isr_handler_t handler);
 
 #endif

@@ -1,10 +1,14 @@
-#include "isr.h"
+#include <arch/core.h>
+
 #include <core/idt.h>
+#include <core/interrupt.h>
+#include <core/isr.h>
 #include <core/logging.h>
 #include <core/port.h>
 #include <core/register.h>
 #include <inttypes.h>
 #include <panic.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -48,9 +52,7 @@ static const char* exception_messages[] = { "Division By Zero",
                                             "Reserved",
                                             "Reserved" };
 
-static isr_handler_t handlers[256] = { 0 };
-
-void isr_init()
+void arch_isr_init()
 {
   // start initialization
   port_byte_out(PIC1, 0x11);
@@ -126,23 +128,21 @@ void isr_init()
   isr_register_handler(EXCEPTION_PF, page_fault_handler);
 
   idt_load();
-
-  isr_enable_interrupts();
 }
 
-void isr_enable_interrupts()
+void arch_isr_enable_interrupts()
 {
   __asm__("sti");
 }
 
-void isr_disable_interrupts()
+void arch_isr_disable_interrupts()
 {
   __asm__("cli");
 }
 
 void isr_int_handler(isr_stack_t stack)
 {
-  isr_handler_t handler = handlers[stack.id];
+  isr_handler_t handler = isr_get_handler(stack.id);
 
   if (handler != 0) {
     handler(&stack);
@@ -190,8 +190,9 @@ void isr_int_handler(isr_stack_t stack)
 
 void isr_irq_handler(isr_stack_t stack)
 {
-  if (handlers[stack.id] != 0) {
-    isr_handler_t handler = handlers[stack.id];
+  isr_handler_t handler = isr_get_handler(stack.id);
+
+  if (handler != 0) {
     handler(&stack);
   }
 
@@ -200,11 +201,6 @@ void isr_irq_handler(isr_stack_t stack)
   }
 
   port_byte_out(PIC1, PIC_EOI);
-}
-
-void isr_register_handler(uint64_t id, isr_handler_t handler)
-{
-  handlers[id] = handler;
 }
 
 void breakpoint_handler(isr_stack_t* stack)
