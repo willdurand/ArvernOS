@@ -1,5 +1,6 @@
 #include "kmain.h"
 #include <core/arm/atag.h>
+#include <core/isr.h>
 #include <drivers/miniuart.h>
 #include <fs/tar.h>
 #include <fs/vfs.h>
@@ -24,6 +25,10 @@ void kmain(uintptr_t w0)
   } else {
     DEBUG("w0=%p but we do not support DTB", w0);
   }
+
+  print_step("initializing interrupt service routine");
+  isr_init();
+  print_ok();
 
   print_step("initializing heap allocator");
   // nothing to do for now
