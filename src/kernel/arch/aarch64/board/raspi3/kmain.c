@@ -33,7 +33,5 @@ void kmain(uintptr_t w0)
   syscall_init();
   print_ok();
 
-  kmain_init_fs((uintptr_t)&_binary___initrd_tar_start);
-
-  kmain_start(atag_get_cmdline());
+  kmain_start((uintptr_t)&_binary___initrd_tar_start, atag_get_cmdline());
 }
