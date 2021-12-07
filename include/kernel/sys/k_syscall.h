@@ -13,6 +13,13 @@
  */
 void syscall_init();
 
+/**
+ * This is a no-op syscall that should be used when an actual syscall is not
+ * implemented (in most cases, that's because the syscall requires some arch or
+ * board specific code that hasn't been written yet).
+ */
+int k_not_implemented();
+
 int k_open(const char* pathname, uint32_t flags);
 int k_close(int fd);
 ssize_t k_read(int fd, void* buf, size_t count);

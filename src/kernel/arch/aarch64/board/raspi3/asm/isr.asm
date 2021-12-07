@@ -15,6 +15,12 @@
   b call_irq_handler
 .endm
 
+.macro ventry_sys type
+  .align 7
+  // This is defined in `src/kernel/arch/aarch64/asm/k_syscall.asm`.
+  b syscall_handler
+.endm
+
 .macro kernel_entry
   sub	sp, sp, #256
   stp	x0, x1, [sp, #16 * 0]
@@ -78,7 +84,7 @@ vectors:
   ventry_exc #3
 
   // EL1h: synchronous
-  ventry_exc #4
+  ventry_sys #4
   // EL1h: IRQ
   ventry_irq #5
   // EL1h: FIQ
