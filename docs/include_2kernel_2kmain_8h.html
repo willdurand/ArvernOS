@@ -101,10 +101,8 @@ Include dependency graph for kmain.h:</div>
 Functions</h2></td></tr>
 <tr class="memitem:a39b048730ab06513b29030aed1b5d8f4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2kernel_2kmain_8h.html#a39b048730ab06513b29030aed1b5d8f4">kmain_early_start</a> ()</td></tr>
 <tr class="separator:a39b048730ab06513b29030aed1b5d8f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1a6603660c266149bde275f465b94bf7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2kernel_2kmain_8h.html#a1a6603660c266149bde275f465b94bf7">kmain_init_fs</a> (uintptr_t addr)</td></tr>
-<tr class="separator:a1a6603660c266149bde275f465b94bf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab016e32f2cb5199fe025e90724bfb588"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2kernel_2kmain_8h.html#ab016e32f2cb5199fe025e90724bfb588">kmain_start</a> (const char *cmdline)</td></tr>
-<tr class="separator:ab016e32f2cb5199fe025e90724bfb588"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a666c17b307920a60e50fcf56312f9500"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2kernel_2kmain_8h.html#a666c17b307920a60e50fcf56312f9500">kmain_start</a> (uintptr_t initrd_addr, const char *cmdline)</td></tr>
+<tr class="separator:a666c17b307920a60e50fcf56312f9500"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This file contains the functions shared by all arch- and/or board-specific <code><a class="el" href="src_2kernel_2arch_2aarch32_2kmain_8h.html#af2771f04874bac550209cafd61dd4a57">kmain()</a></code> functions, which are the kernel entry point functions in ArvernOS. </p>
@@ -133,33 +131,8 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="a1a6603660c266149bde275f465b94bf7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1a6603660c266149bde275f465b94bf7">&#9670;&nbsp;</a></span>kmain_init_fs()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void kmain_init_fs </td>
-          <td>(</td>
-          <td class="paramtype">uintptr_t&#160;</td>
-          <td class="paramname"><em>addr</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Initializes the common filesystem code. The first argument (<code>addr</code>) should point to an init ramdisk (or be <code>NULL</code> when there is no ramdisk available).</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">addr</td><td>the address of the init ramdisk (or <code>NULL</code>) </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ab016e32f2cb5199fe025e90724bfb588"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab016e32f2cb5199fe025e90724bfb588">&#9670;&nbsp;</a></span>kmain_start()</h2>
+<a id="a666c17b307920a60e50fcf56312f9500"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a666c17b307920a60e50fcf56312f9500">&#9670;&nbsp;</a></span>kmain_start()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -167,15 +140,26 @@ Here is the caller graph for this function:</div>
         <tr>
           <td class="memname">void kmain_start </td>
           <td>(</td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>cmdline</em></td><td>)</td>
+          <td class="paramtype">uintptr_t&#160;</td>
+          <td class="paramname"><em>initrd_addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>cmdline</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Starts the kernel. This function should be called once the arch- and/or board-specific initialization code has been executed.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramname">initrd_addr</td><td>the address of the init ramdisk (or <code>NULL</code>) </td></tr>
     <tr><td class="paramname">cmdline</td><td>the kernel command line, usually passed by the bootloader somehow </td></tr>
   </table>
   </dd>

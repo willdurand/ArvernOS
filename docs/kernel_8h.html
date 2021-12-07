@@ -94,8 +94,8 @@ $(document).ready(function(){initNavTree('kernel_8h.html',''); initResizable(); 
 Functions</h2></td></tr>
 <tr class="memitem:a5fe1791c207cc3de3931c333ac05fbf7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="kernel_8h.html#a5fe1791c207cc3de3931c333ac05fbf7">arch_restart</a> ()</td></tr>
 <tr class="separator:a5fe1791c207cc3de3931c333ac05fbf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b8e58711c3352cdce92a7694c553c35"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="kernel_8h.html#a5b8e58711c3352cdce92a7694c553c35">arch_poweroff</a> ()</td></tr>
-<tr class="separator:a5b8e58711c3352cdce92a7694c553c35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ffd13670c5c0bedb76b1e31cc3dd59d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="kernel_8h.html#a0ffd13670c5c0bedb76b1e31cc3dd59d">arch_poweroff</a> (int exit_code)</td></tr>
+<tr class="separator:a0ffd13670c5c0bedb76b1e31cc3dd59d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afa8a138b0f00d1bb5d26f79378caa530"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="kernel_8h.html#afa8a138b0f00d1bb5d26f79378caa530">arch_halt</a> ()</td></tr>
 <tr class="separator:afa8a138b0f00d1bb5d26f79378caa530"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -124,8 +124,8 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="a5b8e58711c3352cdce92a7694c553c35"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5b8e58711c3352cdce92a7694c553c35">&#9670;&nbsp;</a></span>arch_poweroff()</h2>
+<a id="a0ffd13670c5c0bedb76b1e31cc3dd59d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ffd13670c5c0bedb76b1e31cc3dd59d">&#9670;&nbsp;</a></span>arch_poweroff()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -133,12 +133,19 @@ Here is the caller graph for this function:</div>
         <tr>
           <td class="memname">void arch_poweroff </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>exit_code</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Shutdown everything and perform a clean system power off. </p>
+<p>Shutdown everything and perform a clean system power off.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">exit_code</td><td>when <code>CONFIG_SEMIHOSTING</code> is set to <code>1</code>, this value is returned to the emulator. Otherwise, this value is ignored </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -157,8 +164,8 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 <p>Shutdown everything and perform a clean reboot. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000005">Todo:</a></b></dt><dd></dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000010">Todo:</a></b></dt><dd></dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000006">Todo:</a></b></dt><dd>Implement this function for aarch32. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000012">Todo:</a></b></dt><dd></dd></dl>
 
 </div>
 </div>

@@ -111,6 +111,15 @@ $(document).ready(function(){initNavTree('globals_func.html',''); initResizable(
 <li>arch_halt()
 : <a class="el" href="kernel_8h.html#afa8a138b0f00d1bb5d26f79378caa530">kernel.h</a>
 </li>
+<li>arch_isr_disable_interrupts()
+: <a class="el" href="core_8h.html#adb9ece40fe28bd1eea16ae8088b6a7bd">core.h</a>
+</li>
+<li>arch_isr_enable_interrupts()
+: <a class="el" href="core_8h.html#aa7731a0b3790e18502b0a7b0ea779e4d">core.h</a>
+</li>
+<li>arch_isr_init()
+: <a class="el" href="core_8h.html#a47cab1ce00bd311c9d2bffeda438fb3f">core.h</a>
+</li>
 <li>arch_kernel_dump_stacktrace()
 : <a class="el" href="arch_2panic_8h.html#a9643e195acfe8004833ed7ea8ee42f1c">panic.h</a>
 </li>
@@ -121,7 +130,7 @@ $(document).ready(function(){initNavTree('globals_func.html',''); initResizable(
 : <a class="el" href="arch_2logging_8h.html#a7312d27f4e0dd0d06f742dfe200c945a">logging.h</a>
 </li>
 <li>arch_poweroff()
-: <a class="el" href="kernel_8h.html#a5b8e58711c3352cdce92a7694c553c35">kernel.h</a>
+: <a class="el" href="kernel_8h.html#a0ffd13670c5c0bedb76b1e31cc3dd59d">kernel.h</a>
 </li>
 <li>arch_putchar()
 : <a class="el" href="io_8h.html#aa14df9de71a783c32a3f9b7bfd56701d">io.h</a>
@@ -130,7 +139,10 @@ $(document).ready(function(){initNavTree('globals_func.html',''); initResizable(
 : <a class="el" href="kernel_8h.html#a5fe1791c207cc3de3931c333ac05fbf7">kernel.h</a>
 </li>
 <li>arch_selftest()
-: <a class="el" href="include_2kernel_2arch_2kshell_8h.html#a4e72622d8e244cc55209fb4e1ecb49d8">kshell.h</a>
+: <a class="el" href="include_2kernel_2arch_2kshell_8h.html#af446e8db2ebf355bf190506aa6ea2ead">kshell.h</a>
+</li>
+<li>arch_syscall_init()
+: <a class="el" href="sys_8h.html#aa375add58c700abbcaa8c54dcab6eea0">sys.h</a>
 </li>
 <li>arch_timer_init()
 : <a class="el" href="kernel_2arch_2time_8h.html#a92a37cf9da6c3705b6ef829f1978ab54">time.h</a>
@@ -370,17 +382,14 @@ $(document).ready(function(){initNavTree('globals_func.html',''); initResizable(
 <li>isr_enable_interrupts()
 : <a class="el" href="isr_8h.html#ab3c2f37893bf0fe6a7efc06e3d908834">isr.h</a>
 </li>
+<li>isr_get_handler()
+: <a class="el" href="isr_8h.html#a8581b64cb81739390a6edb5d2dd39040">isr.h</a>
+</li>
 <li>isr_init()
 : <a class="el" href="isr_8h.html#a2ea31f33125954459edbe7f4d7971ffa">isr.h</a>
 </li>
-<li>isr_int_handler()
-: <a class="el" href="isr_8h.html#a309e84e00ab6c296809ea2f0167de593">isr.h</a>
-</li>
-<li>isr_irq_handler()
-: <a class="el" href="isr_8h.html#a90e538b3202ebb875fa17720d5eb46ba">isr.h</a>
-</li>
 <li>isr_register_handler()
-: <a class="el" href="isr_8h.html#a2cbfff83b3f84b3704ed9ff573fc2b77">isr.h</a>
+: <a class="el" href="isr_8h.html#a919e035afe984042c7fb8672b16aaf1e">isr.h</a>
 </li>
 </ul>
 
@@ -388,6 +397,9 @@ $(document).ready(function(){initNavTree('globals_func.html',''); initResizable(
 <h3><a id="index_k"></a>- k -</h3><ul>
 <li>k_lseek()
 : <a class="el" href="k__syscall_8h.html#aca2b074f62174df41781abb400ac6c67">k_syscall.h</a>
+</li>
+<li>k_not_implemented()
+: <a class="el" href="k__syscall_8h.html#ab00cee6f8989d02ef590480844291cf9">k_syscall.h</a>
 </li>
 <li>k_open()
 : <a class="el" href="k__syscall_8h.html#a8665b78926682de513294b0733aa72e4">k_syscall.h</a>
@@ -410,11 +422,8 @@ $(document).ready(function(){initNavTree('globals_func.html',''); initResizable(
 <li>kmain_early_start()
 : <a class="el" href="include_2kernel_2kmain_8h.html#a39b048730ab06513b29030aed1b5d8f4">kmain.h</a>
 </li>
-<li>kmain_init_fs()
-: <a class="el" href="include_2kernel_2kmain_8h.html#a1a6603660c266149bde275f465b94bf7">kmain.h</a>
-</li>
 <li>kmain_start()
-: <a class="el" href="include_2kernel_2kmain_8h.html#ab016e32f2cb5199fe025e90724bfb588">kmain.h</a>
+: <a class="el" href="include_2kernel_2kmain_8h.html#a666c17b307920a60e50fcf56312f9500">kmain.h</a>
 </li>
 <li>kshell()
 : <a class="el" href="include_2kernel_2kshell_2kshell_8h.html#aad18a222bff0651aa52eec3b29218d9a">kshell.h</a>
@@ -525,19 +534,19 @@ $(document).ready(function(){initNavTree('globals_func.html',''); initResizable(
 : <a class="el" href="syscall_8h.html#af32a16ad2dd9e48482f8f790db7dbbd2">syscall.h</a>
 </li>
 <li>read_cr0()
-: <a class="el" href="register_8h.html#a89763d209b83a61f0f2c9a01022f7f88">register.h</a>
+: <a class="el" href="x86__64_2core_2register_8h.html#a89763d209b83a61f0f2c9a01022f7f88">register.h</a>
 </li>
 <li>read_cr2()
-: <a class="el" href="register_8h.html#a7b2de5d97ae8b57fd726fa100087f2b9">register.h</a>
+: <a class="el" href="x86__64_2core_2register_8h.html#a7b2de5d97ae8b57fd726fa100087f2b9">register.h</a>
 </li>
 <li>read_cr3()
-: <a class="el" href="register_8h.html#a37758a1d9dd7aa158743e035016ea79b">register.h</a>
+: <a class="el" href="x86__64_2core_2register_8h.html#a37758a1d9dd7aa158743e035016ea79b">register.h</a>
 </li>
 <li>read_msr()
-: <a class="el" href="register_8h.html#af21f5b42b403d57093c91fc8f27a3ddd">register.h</a>
+: <a class="el" href="x86__64_2core_2register_8h.html#af21f5b42b403d57093c91fc8f27a3ddd">register.h</a>
 </li>
 <li>read_rsp()
-: <a class="el" href="register_8h.html#a49c84f561ab5000417e1c3fdbbe323bf">register.h</a>
+: <a class="el" href="x86__64_2core_2register_8h.html#a49c84f561ab5000417e1c3fdbbe323bf">register.h</a>
 </li>
 <li>reboot()
 : <a class="el" href="syscall_8h.html#a3e048601df87806f1bb72a84a6ff81e3">syscall.h</a>
@@ -650,13 +659,13 @@ $(document).ready(function(){initNavTree('globals_func.html',''); initResizable(
 : <a class="el" href="syscall_8h.html#abb39b21888372e95ad3e5c59b166f5c8">syscall.h</a>
 </li>
 <li>write_cr0()
-: <a class="el" href="register_8h.html#a92cb192d651acbfd554a2967b181c9c7">register.h</a>
+: <a class="el" href="x86__64_2core_2register_8h.html#a92cb192d651acbfd554a2967b181c9c7">register.h</a>
 </li>
 <li>write_cr3()
-: <a class="el" href="register_8h.html#ab9c808b3703f96bb87dd67b0db9142e5">register.h</a>
+: <a class="el" href="x86__64_2core_2register_8h.html#ab9c808b3703f96bb87dd67b0db9142e5">register.h</a>
 </li>
 <li>write_msr()
-: <a class="el" href="register_8h.html#ac3e2bceb28a2f9ed020739e145654935">register.h</a>
+: <a class="el" href="x86__64_2core_2register_8h.html#ac3e2bceb28a2f9ed020739e145654935">register.h</a>
 </li>
 </ul>
 </div><!-- contents -->

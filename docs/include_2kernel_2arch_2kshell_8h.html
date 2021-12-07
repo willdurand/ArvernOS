@@ -92,26 +92,27 @@ $(document).ready(function(){initNavTree('include_2kernel_2arch_2kshell_8h.html'
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a4e72622d8e244cc55209fb4e1ecb49d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2kernel_2arch_2kshell_8h.html#a4e72622d8e244cc55209fb4e1ecb49d8">arch_selftest</a> ()</td></tr>
-<tr class="separator:a4e72622d8e244cc55209fb4e1ecb49d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af446e8db2ebf355bf190506aa6ea2ead"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2kernel_2arch_2kshell_8h.html#af446e8db2ebf355bf190506aa6ea2ead">arch_selftest</a> ()</td></tr>
+<tr class="separator:af446e8db2ebf355bf190506aa6ea2ead"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a4e72622d8e244cc55209fb4e1ecb49d8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4e72622d8e244cc55209fb4e1ecb49d8">&#9670;&nbsp;</a></span>arch_selftest()</h2>
+<a id="af446e8db2ebf355bf190506aa6ea2ead"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af446e8db2ebf355bf190506aa6ea2ead">&#9670;&nbsp;</a></span>arch_selftest()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void arch_selftest </td>
+          <td class="memname">int arch_selftest </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function is called by the <code>selftest</code> built-in command in <code>kshell</code>. Architecture-specific runtime checks can be implemented in this function. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000006">Todo:</a></b></dt><dd></dd></dl>
+<p>This function is called by the <code>selftest</code> built-in command in <code>kshell</code>. Architecture-specific runtime checks can be implemented in this function.</p>
+<dl class="section return"><dt>Returns</dt><dd><code>0</code> on success, a non-zero exit code otherwise </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000007">Todo:</a></b></dt><dd>Implement this function for aarch32. </dd></dl>
 
 </div>
 </div>

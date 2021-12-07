@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ArvernOS: src/kernel/arch/x86_64/core/isr.h File Reference</title>
+<title>ArvernOS: include/kernel/core/isr.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -84,7 +84,6 @@ $(document).ready(function(){initNavTree('isr_8h.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
@@ -95,16 +94,10 @@ $(document).ready(function(){initNavTree('isr_8h.html',''); initResizable(); });
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for isr.h:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="isr_8h__incl.svg" width="146" height="127"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="isr_8h__incl.svg" width="144" height="127"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 </div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structisr__stack__t.html">isr_stack_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This structure represents the interrupt stack.  <a href="structisr__stack__t.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr class="memitem:aa471c2795f33fab83cb9301c27577a20"><td class="memItemLeft" align="right" valign="top"><a id="aa471c2795f33fab83cb9301c27577a20"></a>
@@ -120,12 +113,10 @@ Functions</h2></td></tr>
 <tr class="separator:ab3c2f37893bf0fe6a7efc06e3d908834"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a48c1ab85abf749224864c1576a186a3b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="isr_8h.html#a48c1ab85abf749224864c1576a186a3b">isr_disable_interrupts</a> ()</td></tr>
 <tr class="separator:a48c1ab85abf749224864c1576a186a3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a309e84e00ab6c296809ea2f0167de593"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="isr_8h.html#a309e84e00ab6c296809ea2f0167de593">isr_int_handler</a> (<a class="el" href="structisr__stack__t.html">isr_stack_t</a> s) __asm__(&quot;int_handler&quot;)</td></tr>
-<tr class="separator:a309e84e00ab6c296809ea2f0167de593"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90e538b3202ebb875fa17720d5eb46ba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="isr_8h.html#a90e538b3202ebb875fa17720d5eb46ba">isr_irq_handler</a> (<a class="el" href="structisr__stack__t.html">isr_stack_t</a> s) __asm__(&quot;irq_handler&quot;)</td></tr>
-<tr class="separator:a90e538b3202ebb875fa17720d5eb46ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2cbfff83b3f84b3704ed9ff573fc2b77"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="isr_8h.html#a2cbfff83b3f84b3704ed9ff573fc2b77">isr_register_handler</a> (uint64_t id, <a class="el" href="isr_8h.html#aa471c2795f33fab83cb9301c27577a20">isr_handler_t</a> handler)</td></tr>
-<tr class="separator:a2cbfff83b3f84b3704ed9ff573fc2b77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a919e035afe984042c7fb8672b16aaf1e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="isr_8h.html#a919e035afe984042c7fb8672b16aaf1e">isr_register_handler</a> (uint32_t id, <a class="el" href="isr_8h.html#aa471c2795f33fab83cb9301c27577a20">isr_handler_t</a> handler)</td></tr>
+<tr class="separator:a919e035afe984042c7fb8672b16aaf1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8581b64cb81739390a6edb5d2dd39040"><td class="memItemLeft" align="right" valign="top"><a class="el" href="isr_8h.html#aa471c2795f33fab83cb9301c27577a20">isr_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="isr_8h.html#a8581b64cb81739390a6edb5d2dd39040">isr_get_handler</a> (uint32_t id)</td></tr>
+<tr class="separator:a8581b64cb81739390a6edb5d2dd39040"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a48c1ab85abf749224864c1576a186a3b"></a>
@@ -142,7 +133,13 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Disables hardware interrupts. </p>
+<p>Disables interrupts. </p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="isr_8h_a48c1ab85abf749224864c1576a186a3b_cgraph.svg" width="391" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
 
 </div>
 </div>
@@ -160,7 +157,45 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Enables hardware interrupts. </p>
+<p>Enables interrupts. </p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="isr_8h_ab3c2f37893bf0fe6a7efc06e3d908834_cgraph.svg" width="386" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="isr_8h_ab3c2f37893bf0fe6a7efc06e3d908834_icgraph.svg" width="266" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
+
+</div>
+</div>
+<a id="a8581b64cb81739390a6edb5d2dd39040"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8581b64cb81739390a6edb5d2dd39040">&#9670;&nbsp;</a></span>isr_get_handler()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="isr_8h.html#aa471c2795f33fab83cb9301c27577a20">isr_handler_t</a> isr_get_handler </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns the handler corresponding to the interrupt id passed as first argument.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>an interrupt id </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the handler attached to the interrupt or <code>0</code> </dd></dl>
 
 </div>
 </div>
@@ -182,75 +217,14 @@ Functions</h2></td></tr>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="isr_8h_a2ea31f33125954459edbe7f4d7971ffa_cgraph.svg" width="223" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="isr_8h_a2ea31f33125954459edbe7f4d7971ffa_cgraph.svg" width="494" height="88"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 
 </div>
 </div>
-<a id="a309e84e00ab6c296809ea2f0167de593"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a309e84e00ab6c296809ea2f0167de593">&#9670;&nbsp;</a></span>isr_int_handler()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void isr_int_handler </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structisr__stack__t.html">isr_stack_t</a>&#160;</td>
-          <td class="paramname"><em>s</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This is the handler for software interrupts and exceptions.</p>
-<ul>
-<li>Exceptions: These are generated internally by the CPU and used to alert the running kernel of an event or situation which requires its attention. On x86 CPUs, these include exception conditions such as Double Fault, Page Fault, General Protection Fault, etc.</li>
-<li>Software Interrupt: This is an interrupt signalled by software running on a CPU to indicate that it needs the kernel's attention. These types of interrupts are generally used for System Calls.</li>
-</ul>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">s</td><td>the interrupt stack </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a90e538b3202ebb875fa17720d5eb46ba"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a90e538b3202ebb875fa17720d5eb46ba">&#9670;&nbsp;</a></span>isr_irq_handler()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void isr_irq_handler </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structisr__stack__t.html">isr_stack_t</a>&#160;</td>
-          <td class="paramname"><em>s</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This is the handler for hardware interrupts.</p>
-<p>Interrupt Request (IRQ) or Hardware Interrupt are a type of interrupt that is generated externally by the chipset, and it is signalled by latching onto the INTR pin or equivalent signal of the CPU in question.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">s</td><td>the interrupt stack </td></tr>
-  </table>
-  </dd>
-</dl>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="isr_8h_a90e538b3202ebb875fa17720d5eb46ba_cgraph.svg" width="274" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
-</div>
-
-</div>
-</div>
-<a id="a2cbfff83b3f84b3704ed9ff573fc2b77"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2cbfff83b3f84b3704ed9ff573fc2b77">&#9670;&nbsp;</a></span>isr_register_handler()</h2>
+<a id="a919e035afe984042c7fb8672b16aaf1e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a919e035afe984042c7fb8672b16aaf1e">&#9670;&nbsp;</a></span>isr_register_handler()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -258,7 +232,7 @@ Here is the call graph for this function:</div>
         <tr>
           <td class="memname">void isr_register_handler </td>
           <td>(</td>
-          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
           <td class="paramname"><em>id</em>, </td>
         </tr>
         <tr>
@@ -285,7 +259,7 @@ Here is the call graph for this function:</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="isr_8h_a2cbfff83b3f84b3704ed9ff573fc2b77_icgraph.svg" width="300" height="88"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="isr_8h_a919e035afe984042c7fb8672b16aaf1e_icgraph.svg" width="300" height="88"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 
@@ -296,7 +270,7 @@ Here is the caller graph for this function:</div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_cbd7f246bdf7dc0a50281a272327e6ed.html">kernel</a></li><li class="navelem"><a class="el" href="dir_76e3dd4d2fa719e8d3b096e9aa563982.html">arch</a></li><li class="navelem"><a class="el" href="dir_7c4c796ec9937bed8074dafcec3d25e4.html">x86_64</a></li><li class="navelem"><a class="el" href="dir_1dc53930709e46457d0e1484ec309f4d.html">core</a></li><li class="navelem"><a class="el" href="isr_8h.html">isr.h</a></li>
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_2ae24886e77657f82343b4b0154efdc1.html">kernel</a></li><li class="navelem"><a class="el" href="dir_5dcd48ca9f40364899464cc3f89e860e.html">core</a></li><li class="navelem"><a class="el" href="isr_8h.html">isr.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>

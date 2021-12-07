@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="isr_8h.html#a2cbfff83b3f84b3704ed9ff573fc2b77" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="isr_8h.html#a919e035afe984042c7fb8672b16aaf1e" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="112,-0.5 112,-19.5 217,-19.5 217,-0.5 112,-0.5"/>
 <text text-anchor="middle" x="164.5" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">isr_register_handler</text>
 </a>

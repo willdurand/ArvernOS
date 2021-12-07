@@ -105,6 +105,8 @@ Include dependency graph for k_syscall.h:</div>
 Functions</h2></td></tr>
 <tr class="memitem:a581ed37968ead91b6d3a0b3b7a71da9d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="k__syscall_8h.html#a581ed37968ead91b6d3a0b3b7a71da9d">syscall_init</a> ()</td></tr>
 <tr class="separator:a581ed37968ead91b6d3a0b3b7a71da9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab00cee6f8989d02ef590480844291cf9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="k__syscall_8h.html#ab00cee6f8989d02ef590480844291cf9">k_not_implemented</a> ()</td></tr>
+<tr class="separator:ab00cee6f8989d02ef590480844291cf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8665b78926682de513294b0733aa72e4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="k__syscall_8h.html#a8665b78926682de513294b0733aa72e4">k_open</a> (const char *pathname, uint32_t flags)</td></tr>
 <tr class="separator:a8665b78926682de513294b0733aa72e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aca2b074f62174df41781abb400ac6c67"><td class="memItemLeft" align="right" valign="top">off_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="k__syscall_8h.html#aca2b074f62174df41781abb400ac6c67">k_lseek</a> (int fd, off_t offset, int whence)</td></tr>
@@ -144,13 +146,31 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000020">Todo:</a></b></dt><dd>implement me </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000022">Todo:</a></b></dt><dd>implement me </dd></dl>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><iframe scrolling="no" frameborder="0" src="k__syscall_8h_aca2b074f62174df41781abb400ac6c67_icgraph.svg" width="179" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
+
+</div>
+</div>
+<a id="ab00cee6f8989d02ef590480844291cf9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab00cee6f8989d02ef590480844291cf9">&#9670;&nbsp;</a></span>k_not_implemented()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int k_not_implemented </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This is a no-op syscall that should be used when an actual syscall is not implemented (in most cases, that's because the syscall requires some arch or board specific code that hasn't been written yet). </p>
 
 </div>
 </div>
@@ -179,7 +199,7 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000021">Todo:</a></b></dt><dd>check flags </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000023">Todo:</a></b></dt><dd>check flags </dd></dl>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -220,7 +240,7 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000022">Todo:</a></b></dt><dd>make the code in this block better. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000024">Todo:</a></b></dt><dd>make the code in this block better. </dd></dl>
 <p>This would conflict with the userland message being written.</p>
 <p>Socket descriptors.</p>
 <div class="dynheader">
@@ -247,6 +267,12 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 <p>Initializes the syscalls management. </p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="k__syscall_8h_a581ed37968ead91b6d3a0b3b7a71da9d_cgraph.svg" width="266" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
 
 </div>
 </div>
