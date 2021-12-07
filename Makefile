@@ -97,7 +97,7 @@ libc_c_files       += $(wildcard $(libc_src_dir)/arvern/*.c)
 libc_c_files       += $(wildcard $(libc_src_dir)/string/*.c)
 libc_c_files       += $(wildcard $(libc_src_dir)/sys/*.c)
 libc_c_files       += $(wildcard $(libc_src_dir)/time/*.c)
-libc_asm_files     += $(wildcard $(libc_src_dir)/asm/*.asm)
+libc_asm_files     += $(wildcard $(libc_src_dir)/asm/$(ARCH)/*.asm)
 # libc: object files
 libc_c_objects     = $(patsubst %.c, $(lib_objs_dir)/%.o, $(libc_c_files))
 libc_asm_objects   = $(patsubst %.asm, $(lib_objs_dir)/%.o, $(libc_asm_files))
