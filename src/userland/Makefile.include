@@ -20,16 +20,24 @@ MAKEFLAGS += --warn-undefined-variables
 
 # The path is relative to the different userland folders.
 ARCH                  ?= x86_64
+BOARD                 ?=
 OS_NAME               ?=
 ENABLE_USERLAND_DEBUG ?= 0
 bin_name              ?=
+platform              := $(shell echo __$(OS_NAME)__ | tr '[:upper:]' '[:lower:]')
 
 root_dir     = ../../..
 bin_dir      = ../bin
-build_dir    = $(root_dir)/build/$(ARCH)/userland-objects/src/userland/$(bin_name)
-target       = $(bin_dir)/$(bin_name)
-platform     = $(shell echo __$(OS_NAME)__ | tr '[:upper:]' '[:lower:]')
 external_dir = $(root_dir)/external
+
+ifeq ($(BOARD),)
+	base_build_dir = $(root_dir)/build/$(ARCH)
+else
+	base_build_dir = $(root_dir)/build/$(ARCH)/$(BOARD)
+endif
+
+build_dir    = $(base_build_dir)/userland-objects/src/userland/$(bin_name)
+target       = $(bin_dir)/$(bin_name)
 
 local_build_dir    = ../local-build
 local_build_target = $(local_build_dir)/$(bin_name)
@@ -94,6 +102,20 @@ endif
 # Flags
 ###############################################################################
 
+ifeq ($(ARCH), aarch64)
+	CFLAGS += --target=aarch64-elf -mcpu=cortex-a53+nosimd
+else
+	CFLAGS += --target=x86_64 -fstack-protector-strong
+	CFLAGS += -mno-mmx -mno-sse -mno-sse2 -mno-avx -mno-avx2
+	# Add `-no-pie` to disable the PIE feature that causes `gcc` to not create an
+	# executable if needed, see:
+	# https://access.redhat.com/blogs/766093/posts/1975793
+	CFLAGS += -fno-pie
+
+	LDFLAGS += --image-base=0x40000000
+	LDFLAGS += -nostdlib -no-pie
+endif
+
 WERRORS += -Wall -Wextra -Werror
 WERRORS += -Werror=implicit-function-declaration
 WERRORS += -Werror=int-conversion
@@ -101,27 +123,20 @@ WERRORS += -Werror=incompatible-pointer-types
 WERRORS += -Werror=shift-count-overflow
 WERRORS += -Werror=switch
 
-COMMON_CFLAGS += $(WERRORS)
 COMMON_CFLAGS += -O2 -std=c11
+COMMON_CFLAGS += $(WERRORS)
 COMMON_CFLAGS += $(addprefix -I$(external_dir)/, $(external_deps))
 
-CFLAGS += $(COMMON_CFLAGS)
-CFLAGS += --target=x86_64 -fstack-protector-strong
 CFLAGS += -ffreestanding -nostdlib -fno-builtin
-CFLAGS += -mno-mmx -mno-sse -mno-sse2 -mno-avx -mno-avx2
-# Add `-no-pie` to disable the PIE feature that causes `gcc` to not create an
-# executable if needed, see: https://access.redhat.com/blogs/766093/posts/1975793
-CFLAGS += -fno-pie
-CFLAGS += -D$(platform)
+CFLAGS += $(COMMON_CFLAGS)
 CFLAGS += -I$(root_dir)/include/libc/
+CFLAGS += -D$(platform)
 
 ifeq ($(ENABLE_USERLAND_DEBUG), 1)
 	CFLAGS += -DENABLE_USERLAND_DEBUG
 endif
 
-LDFLAGS += --image-base=0x40000000
-LDFLAGS += -nostdlib -no-pie
-LDFLAGS += $(root_dir)/build/$(ARCH)/dist/libc-$(OS_NAME)-$(ARCH).a
+LDFLAGS += $(base_build_dir)/dist/libc-$(OS_NAME)-$(ARCH).a
 
 ###############################################################################
 # Rules and targets

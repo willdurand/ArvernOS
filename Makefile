@@ -358,9 +358,10 @@ run-test: run-release
 
 userland: ## compile the userland programs (statically linked to libc)
 userland: ENABLE_USERLAND_DEBUG ?= 0
+userland: BOARD ?=
 userland: libc
 	@for userland_program in $(shell find $(userland_src_dir)/* -type d -not \( -path $(userland_src_dir)/bin -o -path $(userland_src_dir)/local-build \)); do \
-		$(MAKE) -C $$userland_program OS_NAME="$(OS_NAME)" ARCH="$(ARCH)" ENABLE_USERLAND_DEBUG=$(ENABLE_USERLAND_DEBUG) ; \
+		$(MAKE) -C $$userland_program OS_NAME="$(OS_NAME)" ARCH="$(ARCH)" BOARD="$(BOARD)" ENABLE_USERLAND_DEBUG=$(ENABLE_USERLAND_DEBUG) ; \
 	done
 .PHONY: userland
 

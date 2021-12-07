@@ -55,6 +55,6 @@ $(initrd_o): $(initrd)
 	cd $(misc_dir) && $(LD) -m $(LD_TARGET) -r -b binary -o ../../../../$@ ./$(initrd_tar)
 
 $(kernel_img): libk_extra_objects += $(initrd_o)
-$(kernel_img): $(cmdline_txt) $(initrd_o) $(kernel)
+$(kernel_img): $(cmdline_txt) userland $(initrd_o) $(kernel)
 	$(progress) "OBJCOPY" $@
 	$(OBJCOPY) -O binary $(kernel) $@
