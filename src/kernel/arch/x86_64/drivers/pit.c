@@ -1,5 +1,6 @@
 #include "pit.h"
 #include <arvern/utils.h>
+#include <core/interrupt.h>
 #include <core/isr.h>
 #include <core/port.h>
 #include <stdlib.h>

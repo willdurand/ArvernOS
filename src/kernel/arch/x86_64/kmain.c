@@ -3,7 +3,6 @@
 #include <console/console.h>
 #include <core/elf.h>
 #include <core/gdt.h>
-#include <core/isr.h>
 #include <core/multiboot.h>
 #include <core/port.h>
 #include <core/tss.h>
@@ -143,10 +142,6 @@ void kmain(uintptr_t addr)
   tss_init();
   print_debug_gdt();
   print_debug_tss();
-  print_ok();
-
-  print_step("initializing interrupt service routine");
-  isr_init();
   print_ok();
 
   print_step("initializing paging");
