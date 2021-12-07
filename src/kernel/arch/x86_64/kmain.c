@@ -22,7 +22,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/k_syscall.h>
 
 void busywait(uint64_t seconds);
 void load_modules(multiboot_info_t* mbi);
@@ -150,10 +149,6 @@ void kmain(uintptr_t addr)
 
   print_step("initializing heap allocator");
   alloc_init();
-  print_ok();
-
-  print_step("initializing syscalls");
-  syscall_init();
   print_ok();
 
   load_modules(mbi);

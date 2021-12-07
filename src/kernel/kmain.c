@@ -146,6 +146,10 @@ void kmain_start(const char* cmdline)
   clock_init();
   print_ok();
 
+  print_step("initializing syscalls");
+  syscall_init();
+  print_ok();
+
   run_initcalls();
 
   int argc = 0;
