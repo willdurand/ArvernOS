@@ -18,6 +18,7 @@
 #include <time/timer.h>
 
 void run_initcalls();
+void init_fs(uintptr_t initrd_addr);
 
 char* saved_cmdline = NULL;
 
@@ -79,7 +80,7 @@ void run_initcalls()
   } while (call_fn < (initcall_t*)&__initcall_end);
 }
 
-void kmain_init_fs(uintptr_t initrd_addr)
+void init_fs(uintptr_t initrd_addr)
 {
   print_step("initializing virtual file system");
   if (vfs_init()) {
@@ -121,7 +122,7 @@ void kmain_init_fs(uintptr_t initrd_addr)
   }
 }
 
-void kmain_start(const char* cmdline)
+void kmain_start(uintptr_t initrd_addr, const char* cmdline)
 {
   if (cmdline == NULL) {
     PANIC("invalid cmdline passed to kmain_start()");
@@ -149,6 +150,8 @@ void kmain_start(const char* cmdline)
   print_step("initializing syscalls");
   syscall_init();
   print_ok();
+
+  init_fs(initrd_addr);
 
   run_initcalls();
 

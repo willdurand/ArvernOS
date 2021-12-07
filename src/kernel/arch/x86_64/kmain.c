@@ -7,10 +7,10 @@
 #include <core/port.h>
 #include <core/tss.h>
 #include <drivers/keyboard.h>
-#include <drivers/pit.h>
 #include <drivers/rtl8139.h>
 #include <drivers/serial.h>
 #include <fs/tar.h>
+#include <init.h>
 #include <kmain.h>
 #include <logging.h>
 #include <mmu/alloc.h>
@@ -23,7 +23,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-void busywait(uint64_t seconds);
 void load_modules(multiboot_info_t* mbi);
 void load_network_config(inish_config_t* kernel_cfg, net_driver_t* driver);
 void load_symbols(multiboot_tag_module_t* module, uint64_t size);
@@ -65,14 +64,6 @@ void print_debug_gdt()
   DEBUG("gdt64.tss_high   : type=0x%02x limit19_16_and_flags=0x%02x",
         gdt64.tss_high.type,
         gdt64.tss_high.limit19_16_and_flags);
-}
-
-void busywait(uint64_t seconds)
-{
-  uint64_t uptime = pit_uptime();
-  while (pit_uptime() < (uptime + seconds)) {
-    __asm__("hlt");
-  }
 }
 
 void load_modules(multiboot_info_t* mbi)
@@ -121,6 +112,35 @@ void load_network_config(inish_config_t* kernel_cfg, net_driver_t* driver)
                      dns_ip);
 }
 
+int init_network()
+{
+  print_step("loading kernel.inish configuration");
+  inish_config_t* kernel_cfg = inish_load("/etc/kernel.inish");
+
+  if (kernel_cfg == NULL) {
+    print_ko();
+  } else {
+    print_ok();
+  }
+
+  print_step("initializing network");
+  if (rtl8139_init()) {
+    net_driver_t* rtl8139 = rtl8139_driver();
+    load_network_config(kernel_cfg, rtl8139);
+    print_ok();
+  } else {
+    print_ko();
+  }
+
+  if (kernel_cfg != NULL) {
+    inish_free(kernel_cfg);
+  }
+
+  return 0;
+}
+
+init_register(init_network);
+
 void kmain(uintptr_t addr)
 {
   multiboot_info_t* mbi = (multiboot_info_t*)addr;
@@ -151,45 +171,19 @@ void kmain(uintptr_t addr)
   alloc_init();
   print_ok();
 
+  print_step("initializing keyboard");
+  keyboard_init();
+  print_ok();
+
   load_modules(mbi);
-
-  kmain_init_fs(initrd_addr);
-
-  print_step("loading kernel.inish configuration");
-  inish_config_t* kernel_cfg = inish_load("/etc/kernel.inish");
-
-  if (kernel_cfg == NULL) {
-    print_ko();
-  } else {
-    print_ok();
-  }
-
-  print_step("initializing network");
-  if (rtl8139_init()) {
-    net_driver_t* rtl8139 = rtl8139_driver();
-    load_network_config(kernel_cfg, rtl8139);
-    print_ok();
-  } else {
-    print_ko();
-  }
-
-  if (kernel_cfg != NULL) {
-    inish_free(kernel_cfg);
-  }
 
   if (console_mode_is_vbe()) {
     print_step("switching to fullscreen mode");
-    busywait(1);
 
     if (!console_fullscreen()) {
       print_ko();
     }
   }
 
-  // Not needed before so let's initialize it at the end.
-  print_step("initializing keyboard");
-  keyboard_init();
-  print_ok();
-
-  kmain_start(multiboot_get_cmdline());
+  kmain_start(initrd_addr, multiboot_get_cmdline());
 }

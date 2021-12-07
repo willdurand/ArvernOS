@@ -26,7 +26,5 @@ void kmain(uint32_t r0, uint32_t r1, uint32_t r2)
   syscall_init();
   print_ok();
 
-  kmain_init_fs((uintptr_t)NULL);
-
-  kmain_start(atag_get_cmdline());
+  kmain_start((uintptr_t)NULL, atag_get_cmdline());
 }
