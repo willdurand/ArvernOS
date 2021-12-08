@@ -27,11 +27,11 @@ QEMU_OPTIONS = -M versatilepb -serial stdio
 ###############################################################################
 
 libk_c_files += $(wildcard $(kernel_src_dir)/core/arm/*.c)
-libk_c_files += $(wildcard $(arch_src)/*.c)
 libk_c_files += $(wildcard $(arch_src)/arch/*.c)
 libk_c_files += $(wildcard $(arch_src)/core/*.c)
 libk_c_files += $(wildcard $(arch_src)/mmu/*.c)
 libk_c_files += $(wildcard $(arch_src)/sys/*.c)
+libc_c_files += $(wildcard $(arch_src)/aeabi.c)
 
 ###############################################################################
 # Flags
@@ -74,6 +74,6 @@ arch-test:
 # Misc.
 ###############################################################################
 
-$(kernel_img): $(kernel)
+$(kernel_img): $(kernel) $(initrd)
 	$(progress) "OBJCOPY" $@
 	$(OBJCOPY) -O binary $< $@

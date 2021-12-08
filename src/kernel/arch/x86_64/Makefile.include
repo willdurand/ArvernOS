@@ -60,14 +60,13 @@ libc_test_files += $(patsubst $(tests_dir)/%.c, %, $(shell find $(tests_dir)/lib
 
 LD_TARGET        = elf_x86_64
 LIBC_ASM_FLAGS   += -f elf64
-LIBC_CFLAGS      += --target=x86_64
-LIBC_CFLAGS      += -fstack-protector-strong
-# We need to have -fno-omit-frame-pointer or the kernel stack backtrace won't
-# get the stack.
-LIBC_CFLAGS      += -fno-omit-frame-pointer
-LIBC_CFLAGS      += -mno-red-zone -mno-mmx -mno-sse -mno-sse2 -mno-avx -mno-avx2
+LIBC_CFLAGS      += --target=x86_64 -fstack-protector-strong
+LIBC_CFLAGS      += -mno-mmx -mno-sse -mno-sse2 -mno-avx -mno-avx2
 KERNEL_ASM_FLAGS += -f elf64
 KERNEL_ASM_FLAGS += -dVBE_WIDTH=$(vbe_width) -dVBE_HEIGHT=$(vbe_height) -dVBE_BPP=$(vbe_bpp)
+# We need to have -fno-omit-frame-pointer or the kernel stack backtrace won't
+# get the stack.
+KERNEL_CFLAGS    += -mno-red-zone -fno-omit-frame-pointer
 KERNEL_INCLUDES  += -I$(external_dir)/scalable-font2/
 
 ###############################################################################
@@ -192,7 +191,7 @@ arch-kernel: libk_extra_objects += $(kernel_console_font)
 arch-kernel: $(kernel_console_font) $(kernel)
 .PHONY: arch-kernel
 
-$(iso): arch-kernel userland $(initrd) $(grub_cfg)
+$(iso): arch-kernel $(initrd) $(grub_cfg)
 	$(progress) "GRUB" $@
 	mkdir -p $(iso_boot_dir)
 	cp $(kernel) $(iso_boot_dir)
