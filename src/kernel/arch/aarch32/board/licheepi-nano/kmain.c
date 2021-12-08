@@ -5,7 +5,7 @@
 #include <drivers/uart0.h>
 #include <kmain.h>
 #include <mmu/alloc.h>
-#include <sys/k_syscall.h>
+#include <stdlib.h>
 
 void kmain(uint32_t r0, uint32_t r1, uint32_t r2)
 {
@@ -20,10 +20,6 @@ void kmain(uint32_t r0, uint32_t r1, uint32_t r2)
 
   print_step("initializing heap allocator");
   alloc_init();
-  print_ok();
-
-  print_step("initializing syscalls");
-  syscall_init();
   print_ok();
 
   kmain_start((uintptr_t)NULL, atag_get_cmdline());
