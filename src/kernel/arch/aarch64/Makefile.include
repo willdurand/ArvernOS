@@ -33,11 +33,12 @@ libk_asm_files += $(wildcard $(arch_src)/asm/*.asm)
 # Flags
 ###############################################################################
 
-AARCH64_CFLAGS = --target=aarch64-elf
-ASM_FLAGS      += -c $(AARCH64_CFLAGS)
-CFLAGS         += $(AARCH64_CFLAGS)
-INCLUDES       += -I$(board_src)/
-LD_TARGET      = aarch64elf
+AARCH64_CFLAGS   += --target=aarch64-elf
+LIBC_CFLAGS      += $(AARCH64_CFLAGS)
+LIBC_ASM_FLAGS   += -c $(AARCH64_CFLAGS)
+KERNEL_ASM_FLAGS += -c $(AARCH64_CFLAGS)
+KERNEL_INCLUDES  += -I$(board_src)/
+LD_TARGET        = aarch64elf
 
 ###############################################################################
 # Arch-specific targets

@@ -26,6 +26,7 @@ OS_NAME        = ArvernOS
 BUILD_MODE     = release
 CMDLINE        = /bin/init -s
 KERNEL_CMDLINE = kshell
+BOARD          ?=
 
 git_hash         := $(shell git rev-parse --short HEAD)
 # We (more or less) follow the PFL project structure:
@@ -134,7 +135,7 @@ LLVM_PREFIX ?=
 LLVM_SUFFIX ?=
 
 ifeq ($(UBSAN), 1)
-	CFLAGS += -fsanitize=undefined
+	KERNEL_CFLAGS += -fsanitize=undefined
 endif
 
 ifeq ($(CONFIG_USE_DLMALLOC), 1)
@@ -165,21 +166,31 @@ endif
 # Flags
 ###############################################################################
 
+LD_FLAGS += --nmagic -nostdlib --gc-sections
+
+# Common error flags
+WERRORS  += -Wall -Wextra -Werror
+WERRORS  += -Wformat=2
+WERRORS  += -Wno-null-pointer-arithmetic
+
 # Includes shared between libc and libk
 INCLUDES += -I$(include_dir)/libc/
 INCLUDES += $(addprefix -I$(external_dir)/,$(addsuffix /, $(external_deps)))
 
-WERRORS += -Wall -Wextra -Werror
-WERRORS += -Wformat=2
-WERRORS += -Wno-null-pointer-arithmetic
+# libc flags
+LIBC_INCLUDES  += $(INCLUDES)
+LIBC_ASM_FLAGS +=
+LIBC_CFLAGS    += -O2 -std=c11 -ffreestanding -nostdlib -fno-builtin
+LIBC_CFLAGS    += $(WERRORS)
 
-CFLAGS += -O2 -std=c11 -ffreestanding -nostdlib -fno-builtin
-CFLAGS += -ffunction-sections -fdata-sections
-CFLAGS += $(WERRORS)
-CFLAGS += $(CONFIG_CFLAGS)
-
-ASM_FLAGS +=
-LD_FLAGS  += --nmagic -nostdlib --gc-sections
+# Kernel flags
+KERNEL_INCLUDES  += $(INCLUDES)
+KERNEL_INCLUDES  += -I$(include_dir)/kernel/ -I$(arch_src)/
+KERNEL_ASM_FLAGS +=
+KERNEL_CFLAGS    += $(LIBC_CFLAGS)
+KERNEL_CFLAGS    += -ffunction-sections -fdata-sections
+KERNEL_CFLAGS    += $(WERRORS)
+KERNEL_CFLAGS    += $(CONFIG_CFLAGS)
 
 CONFIG_CFLAGS += -DGIT_HASH=\"$(git_hash)\"
 CONFIG_CFLAGS += -DARCH=\"$(ARCH)\"
@@ -282,25 +293,22 @@ $(kernel): $(dist_dir) $(libk_asm_objects) $(libk_c_objects) $(linker_ld)
 $(libk_asm_objects): $(libk_objs_dir)/%.o: %.asm
 	$(progress) "CC" $<
 	$(MKDIR) -p $(dir $@)
-	$(ASM) $(ASM_FLAGS) $< -o $@
+	$(ASM) $(KERNEL_ASM_FLAGS) $< -o $@
 
-$(libk_c_objects): CFLAGS += -D__is_libk
-$(libk_c_objects): INCLUDES += -I$(include_dir)/kernel/ -I$(arch_src)/
 $(libk_c_objects): $(libk_objs_dir)/%.o: %.c
 	$(progress) "CC" $<
 	$(MKDIR) -p $(dir $@)
-	$(CC) -MMD $(CFLAGS) $(INCLUDES) -c $< -o $@
+	$(CC) -MMD -D__is_libk $(KERNEL_CFLAGS) $(KERNEL_INCLUDES) -c $< -o $@
 
-$(libc_c_objects): CFLAGS += -D__is_libc
 $(libc_c_objects): $(lib_objs_dir)/%.o: %.c
 	$(progress) "CC" $<
 	$(MKDIR) -p $(dir $@)
-	$(CC) -MMD  $(CFLAGS) $(INCLUDES) -c $< -o $@
+	$(CC) -MMD -D__is_libc $(LIBC_CFLAGS) $(LIBC_INCLUDES) -c $< -o $@
 
 $(libc_asm_objects): $(lib_objs_dir)/%.o: %.asm
 	$(progress) "CC" $<
 	$(MKDIR) -p $(dir $@)
-	$(ASM) $(ASM_FLAGS) $< -o $@
+	$(ASM) $(LIBC_ASM_FLAGS) $< -o $@
 
 $(libc): $(dist_dir) $(libc_asm_objects) $(libc_c_objects)
 	$(progress) "AR" $@
@@ -317,8 +325,8 @@ $(initrd): $(misc_dir)
 	echo "" >> $(initrd_dir)/info
 	echo "compiler: $(shell $(CC) --version | head -n 1)" >> $(initrd_dir)/info
 	echo "" >> $(initrd_dir)/info
-	echo "CFLAGS: $(CFLAGS)" >> $(initrd_dir)/info
-	echo "INCLUDES: $(INCLUDES)" >> $(initrd_dir)/info
+	echo "CFLAGS: $(KERNEL_CFLAGS)" >> $(initrd_dir)/info
+	echo "INCLUDES: $(KERNEL_INCLUDES)" >> $(initrd_dir)/info
 	cd $(initrd_dir) && $(TAR) -cf ../../$@ *
 
 libc: ## build the libc
@@ -334,7 +342,7 @@ run-release: arch-run-release
 .PHONY: run-release
 
 debug: ## build the project in debug mode
-debug: CFLAGS += $(DEBUG_CFLAGS)
+debug: KERNEL_CFLAGS += $(DEBUG_CFLAGS)
 debug: BUILD_MODE = debug
 debug: arch-debug
 .PHONY: debug
@@ -358,7 +366,6 @@ run-test: run-release
 
 userland: ## compile the userland programs (statically linked to libc)
 userland: ENABLE_USERLAND_DEBUG ?= 0
-userland: BOARD ?=
 userland: libc
 	@for userland_program in $(shell find $(userland_src_dir)/* -type d -not \( -path $(userland_src_dir)/bin -o -path $(userland_src_dir)/local-build \)); do \
 		$(MAKE) -C $$userland_program OS_NAME="$(OS_NAME)" ARCH="$(ARCH)" BOARD="$(BOARD)" ENABLE_USERLAND_DEBUG=$(ENABLE_USERLAND_DEBUG) ; \
@@ -392,7 +399,6 @@ clean: ## remove build artifacts
 .PHONY: clean
 
 help: ## show this help message
-help: BOARD ?=
 help:
 	@/bin/echo -n "$(OS_NAME) - available commands for arch=$(ARCH)"
 	@if [ -n "$(BOARD)" ]; then echo " board=$(BOARD)\n"; else echo "\n"; fi

@@ -26,9 +26,9 @@ libk_asm_files += $(wildcard $(board_src)/asm/*.asm)
 # Flags
 ###############################################################################
 
-BOARD_CFLAGS = -mcpu=arm926ej-s -march=armv5te
-CFLAGS       += $(BOARD_CFLAGS)
-ASM_FLAGS    += $(BOARD_CFLAGS)
+BOARD_CFLAGS     += -mcpu=arm926ej-s -march=armv5te
+KERNEL_CFLAGS    += $(BOARD_CFLAGS)
+KERNEL_ASM_FLAGS += $(BOARD_CFLAGS)
 
 ###############################################################################
 # Arch-specific targets
