@@ -91,13 +91,20 @@ arch-run-release: release
 	$(QEMU) -cdrom $(iso) $(filter-out -semihosting, $(QEMU_OPTIONS))
 .PHONY: arch-run-release
 
-arch-test: CFLAGS_WITHOUT_TARGET := $(filter-out --target=x86_64,$(KERNEL_CFLAGS))
-arch-test: LIBC_CFLAGS = $(CFLAGS_WITHOUT_TARGET)
-arch-test: LIBC_CFLAGS += -fPIC -g3 -fsanitize=undefined -fsanitize=address
-arch-test: CFLAGS_FOR_TESTS += -g3 -fsanitize=undefined -fsanitize=address
-arch-test: CFLAGS_FOR_TESTS += -DENABLE_LOGS_FOR_TESTS -DTEST_ENV
-arch-test: CFLAGS_FOR_TESTS += -I$(tests_dir)/ -I$(include_dir)/kernel/ -I$(arch_src)/
-arch-test: libc
+
+gdb: ## build, run the project in debug mode and enable GDB
+gdb: QEMU_OPTIONS += -s -S
+gdb: run-debug
+.PHONY: gdb
+
+test: ## run the unit tests
+test: CFLAGS_WITHOUT_TARGET := $(filter-out --target=x86_64,$(KERNEL_CFLAGS))
+test: LIBC_CFLAGS = $(CFLAGS_WITHOUT_TARGET)
+test: LIBC_CFLAGS += -fPIC -g3 -fsanitize=undefined -fsanitize=address
+test: CFLAGS_FOR_TESTS += -g3 -fsanitize=undefined -fsanitize=address
+test: CFLAGS_FOR_TESTS += -DENABLE_LOGS_FOR_TESTS -DTEST_ENV
+test: CFLAGS_FOR_TESTS += -I$(tests_dir)/ -I$(include_dir)/kernel/ -I$(arch_src)/
+test: libc
 	# libc
 	mkdir -p $(target_build_dir)/libc/string
 	for file in $(libc_test_files); do \
@@ -187,11 +194,11 @@ $(grub_cfg): $(grub_dir)
 	echo "$$grub_cfg_body" > $@
 .PHONY: $(grub_cfg)
 
-arch-kernel: libk_extra_objects += $(kernel_console_font)
-arch-kernel: $(kernel_console_font) $(kernel)
-.PHONY: arch-kernel
+kernel-with-font: libk_extra_objects += $(kernel_console_font)
+kernel-with-font: $(kernel_console_font) $(kernel)
+.PHONY: kernel-with-font
 
-$(iso): arch-kernel $(initrd) $(grub_cfg)
+$(iso): kernel-with-font $(initrd) $(grub_cfg)
 	$(progress) "GRUB" $@
 	mkdir -p $(iso_boot_dir)
 	cp $(kernel) $(iso_boot_dir)

@@ -353,11 +353,6 @@ run-debug: BUILD_MODE = debug
 run-debug: arch-run-debug
 .PHONY: run-debug
 
-gdb: ## build, run the project in debug mode and enable GDB
-gdb: QEMU_OPTIONS += -s -S
-gdb: run-debug
-.PHONY: gdb
-
 run-test: ## run the project in test mode
 run-test: BUILD_MODE = test
 run-test: CMDLINE = /bin/userland-testsuite
@@ -376,10 +371,6 @@ userland: libc
 fmt: ## automatically format the code with clang-format
 	find . -path ./external -prune -false -o -type f \( -name '*.c' -o -name '*.h' \) -exec clang-format$(LLVM_SUFFIX) -style=file -i "{}" ";"
 .PHONY: fmt
-
-test: ## run the unit tests
-test: arch-test
-.PHONY: test
 
 version: ## print tool versions
 	$(CC) --version
