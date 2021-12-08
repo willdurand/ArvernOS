@@ -27,11 +27,6 @@ QEMU = qemu-system-x86_64
 # Options for the different tools
 ###############################################################################
 
-LD_TARGET    = elf_x86_64
-
-ASM_FLAGS    += -f elf64
-ASM_FLAGS    += -dVBE_WIDTH=$(vbe_width) -dVBE_HEIGHT=$(vbe_height) -dVBE_BPP=$(vbe_bpp)
-
 QEMU_OPTIONS += -m 512M
 QEMU_OPTIONS += -serial file:$(log_file)
 QEMU_OPTIONS += -netdev user,id=u1,ipv6=off,dhcpstart=10.0.2.20
@@ -63,12 +58,17 @@ libc_test_files += $(patsubst $(tests_dir)/%.c, %, $(shell find $(tests_dir)/lib
 # Flags
 ###############################################################################
 
+LD_TARGET        = elf_x86_64
+LIBC_ASM_FLAGS   += -f elf64
+LIBC_CFLAGS      += --target=x86_64
+LIBC_CFLAGS      += -fstack-protector-strong
 # We need to have -fno-omit-frame-pointer or the kernel stack backtrace won't
 # get the stack.
-CFLAGS += --target=x86_64 -fno-omit-frame-pointer -fstack-protector-strong
-CFLAGS += -mno-red-zone -mno-mmx -mno-sse -mno-sse2 -mno-avx -mno-avx2
-
-INCLUDES += -I$(external_dir)/scalable-font2/
+LIBC_CFLAGS      += -fno-omit-frame-pointer
+LIBC_CFLAGS      += -mno-red-zone -mno-mmx -mno-sse -mno-sse2 -mno-avx -mno-avx2
+KERNEL_ASM_FLAGS += -f elf64
+KERNEL_ASM_FLAGS += -dVBE_WIDTH=$(vbe_width) -dVBE_HEIGHT=$(vbe_height) -dVBE_BPP=$(vbe_bpp)
+KERNEL_INCLUDES  += -I$(external_dir)/scalable-font2/
 
 ###############################################################################
 # Arch-specific targets
@@ -92,9 +92,9 @@ arch-run-release: release
 	$(QEMU) -cdrom $(iso) $(filter-out -semihosting, $(QEMU_OPTIONS))
 .PHONY: arch-run-release
 
-arch-test: CFLAGS_WITHOUT_TARGET := $(filter-out --target=x86_64,$(CFLAGS))
-arch-test: CFLAGS = $(CFLAGS_WITHOUT_TARGET)
-arch-test: CFLAGS += -fPIC -g3 -fsanitize=undefined -fsanitize=address
+arch-test: CFLAGS_WITHOUT_TARGET := $(filter-out --target=x86_64,$(KERNEL_CFLAGS))
+arch-test: LIBC_CFLAGS = $(CFLAGS_WITHOUT_TARGET)
+arch-test: LIBC_CFLAGS += -fPIC -g3 -fsanitize=undefined -fsanitize=address
 arch-test: CFLAGS_FOR_TESTS += -g3 -fsanitize=undefined -fsanitize=address
 arch-test: CFLAGS_FOR_TESTS += -DENABLE_LOGS_FOR_TESTS -DTEST_ENV
 arch-test: CFLAGS_FOR_TESTS += -I$(tests_dir)/ -I$(include_dir)/kernel/ -I$(arch_src)/
@@ -146,8 +146,8 @@ arch-test: libc
 ###############################################################################
 
 ifeq ($(ENABLE_FRAMEBUFFER), 1)
-	CFLAGS += -DENABLE_FRAMEBUFFER
-	ASM_FLAGS += -dENABLE_FRAMEBUFFER
+	KERNEL_CFLAGS    += -DENABLE_FRAMEBUFFER
+	KERNEL_ASM_FLAGS += -dENABLE_FRAMEBUFFER
 endif
 
 grub_default ?= 0

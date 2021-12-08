@@ -37,11 +37,12 @@ libk_c_files += $(wildcard $(arch_src)/sys/*.c)
 # Flags
 ###############################################################################
 
-AARCH32_CFLAGS += --target=arm-none-eabi
-ASM_FLAGS      += -c $(AARCH32_CFLAGS)
-CFLAGS         += $(AARCH32_CFLAGS)
-LD_FLAGS       += $(shell $(ARM_GCC) -print-libgcc-file-name)
-INCLUDES       += -I$(board_src)/
+AARCH32_CFLAGS   += --target=arm-none-eabi
+LIBC_CFLAGS      += $(AARCH32_CFLAGS)
+LIBC_ASM_FLAGS   += -c $(AARCH32_CFLAGS)
+KERNEL_ASM_FLAGS += -c $(AARCH32_CFLAGS)
+KERNEL_INCLUDES  += -I$(board_src)/
+LD_FLAGS         += $(shell $(ARM_GCC) -print-libgcc-file-name)
 
 ###############################################################################
 # Arch-specific targets
