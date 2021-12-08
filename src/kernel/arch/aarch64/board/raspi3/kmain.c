@@ -7,7 +7,6 @@
 #include <logging.h>
 #include <stdint.h>
 #include <stdio.h>
-#include <sys/k_syscall.h>
 
 extern unsigned char _binary___initrd_tar_start;
 
@@ -27,10 +26,6 @@ void kmain(uintptr_t w0)
 
   print_step("initializing heap allocator");
   // nothing to do for now
-  print_ok();
-
-  print_step("initializing syscalls");
-  syscall_init();
   print_ok();
 
   kmain_start((uintptr_t)&_binary___initrd_tar_start, atag_get_cmdline());
