@@ -109,7 +109,7 @@ You can then use it with `docker run`:
 
 ```
 $ docker run -it --rm -v $(pwd):/app willdurand/arvernos-toolchain make help
-ArvernOS - available commands for arch=aarch64 board=raspi3
+ArvernOS - available commands for arch=x86_64
 
 clean                          remove build artifacts
 debug                          build the project in debug mode
@@ -126,6 +126,9 @@ test                           run the unit tests
 userland                       compile the userland programs (statically linked to libc)
 version                        print tool versions
 ```
+
+Note: The output of the `make help` command may contain different commands
+depending on the architecture and board configured.
 
 #### MacOS
 
