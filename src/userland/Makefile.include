@@ -16,8 +16,6 @@ MAKEFLAGS += --warn-undefined-variables
 # Configuration
 ###############################################################################
 
-# TODO: add support for $(BOARD)
-
 # The path is relative to the different userland folders.
 ARCH                  ?= x86_64
 BOARD                 ?=
@@ -56,10 +54,10 @@ LD       = $(LLVM_PREFIX)ld.lld$(LLVM_SUFFIX)
 AR       = $(LLVM_PREFIX)llvm-ar$(LLVM_SUFFIX)
 NM       = $(LLVM_PREFIX)llvm-nm$(LLVM_SUFFIX)
 OBJCOPY  = $(LLVM_PREFIX)llvm-objcopy$(LLVM_SUFFIX)
+ARM_GCC  = arm-none-eabi-gcc
 # This is from: https://github.com/nuta and it allows to print nice progress
 # messages.
 progress := printf "  \\033[1;96m%8s\\033[0m  \\033[1;m%s\\033[0m\\n"
-
 
 ###############################################################################
 # Options for the different tools
@@ -68,11 +66,6 @@ progress := printf "  \\033[1;96m%8s\\033[0m  \\033[1;m%s\\033[0m\\n"
 ###############################################################################
 # Source files
 ###############################################################################
-
-ifdef OS_NAME
-	external_objs += printf/printf.o
-	external_deps += printf
-endif
 
 objs += $(patsubst %.c, $(build_dir)/%.o, $(shell find . -name '*.c'))
 objs += $(addprefix $(build_dir)/$(external_dir)/, $(external_objs))
@@ -102,9 +95,20 @@ endif
 # Flags
 ###############################################################################
 
+LD_FLAGS += -nostdlib
+
+ifeq ($(ARCH), aarch32)
+	# We need -march to avoid the following error: "lld uses blx instruction, no
+	# object with architecture supporting feature detected".
+	CFLAGS   += --target=arm-none-eabi -march=armv5te
+	LD_FLAGS += $(shell $(ARM_GCC) -print-libgcc-file-name)
+endif
+
 ifeq ($(ARCH), aarch64)
-	CFLAGS += --target=aarch64-elf -mcpu=cortex-a53+nosimd
-else
+	CFLAGS += --target=aarch64-elf
+endif
+
+ifeq ($(ARCH), x86_64)
 	CFLAGS += --target=x86_64 -fstack-protector-strong
 	CFLAGS += -mno-mmx -mno-sse -mno-sse2 -mno-avx -mno-avx2
 	# Add `-no-pie` to disable the PIE feature that causes `gcc` to not create an
@@ -112,8 +116,8 @@ else
 	# https://access.redhat.com/blogs/766093/posts/1975793
 	CFLAGS += -fno-pie
 
-	LDFLAGS += --image-base=0x40000000
-	LDFLAGS += -nostdlib -no-pie
+	LD_FLAGS += --image-base=0x40000000
+	LD_FLAGS += -no-pie
 endif
 
 WERRORS += -Wall -Wextra -Werror
@@ -129,14 +133,14 @@ COMMON_CFLAGS += $(addprefix -I$(external_dir)/, $(external_deps))
 
 CFLAGS += -ffreestanding -nostdlib -fno-builtin
 CFLAGS += $(COMMON_CFLAGS)
-CFLAGS += -I$(root_dir)/include/libc/
+CFLAGS += -I$(root_dir)/include/libc/ -I$(external_dir)/printf/
 CFLAGS += -D$(platform)
 
 ifeq ($(ENABLE_USERLAND_DEBUG), 1)
 	CFLAGS += -DENABLE_USERLAND_DEBUG
 endif
 
-LDFLAGS += $(base_build_dir)/dist/libc-$(OS_NAME)-$(ARCH).a
+LD_FLAGS += $(base_build_dir)/dist/libc-$(OS_NAME)-$(ARCH).a
 
 ###############################################################################
 # Rules and targets
@@ -148,7 +152,7 @@ all: $(target)
 $(target): $(objs)
 	$(progress) "LD" $@
 	mkdir -p $(bin_dir)
-	$(LD) -o $@ $^ $(LDFLAGS)
+	$(LD) -o $@ $^ $(LD_FLAGS)
 
 $(objs): $(build_dir)/%.o : %.c
 	$(progress) "CC" $<
@@ -156,11 +160,11 @@ $(objs): $(build_dir)/%.o : %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 local: CFLAGS  = $(COMMON_CFLAGS)
-local: LDFLAGS = -fuse-ld=lld
+local: LD_FLAGS = -fuse-ld=lld
 local: $(objs)
 	$(progress) "LD" $(local_build_target)
 	mkdir -p $(local_build_dir)
-	$(CC) $(LDFLAGS) -o $(local_build_target) $^
+	$(CC) $(LD_FLAGS) -o $(local_build_target) $^
 .PHONY: local
 
 clean:

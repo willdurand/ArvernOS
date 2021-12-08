@@ -64,8 +64,8 @@ initrd           = $(misc_dir)/$(initrd_tar)
 log_file         = $(log_dir)/$(ARCH)-$(BUILD_MODE).log
 
 # This is the list of external libraries we use and need to build for the
-# kernel (libk) and the libc.
-external_deps = printf vtconsole
+# kernel (libk).
+external_deps = vtconsole
 external_dirs = $(addprefix $(external_dir)/,$(external_deps))
 
 ###############################################################################
@@ -98,6 +98,7 @@ libc_c_files       += $(wildcard $(libc_src_dir)/arvern/*.c)
 libc_c_files       += $(wildcard $(libc_src_dir)/string/*.c)
 libc_c_files       += $(wildcard $(libc_src_dir)/sys/*.c)
 libc_c_files       += $(wildcard $(libc_src_dir)/time/*.c)
+libc_c_files       += $(wildcard $(external_dir)/printf/printf.c)
 libc_asm_files     += $(wildcard $(libc_src_dir)/asm/$(ARCH)/*.asm)
 # libc: object files
 libc_c_objects     = $(patsubst %.c, $(lib_objs_dir)/%.o, $(libc_c_files))
@@ -174,8 +175,7 @@ WERRORS  += -Wformat=2
 WERRORS  += -Wno-null-pointer-arithmetic
 
 # Includes shared between libc and libk
-INCLUDES += -I$(include_dir)/libc/
-INCLUDES += $(addprefix -I$(external_dir)/,$(addsuffix /, $(external_deps)))
+INCLUDES += -I$(include_dir)/libc/ -I$(external_dir)/printf/
 
 # libc flags
 LIBC_INCLUDES  += $(INCLUDES)
@@ -186,6 +186,7 @@ LIBC_CFLAGS    += $(WERRORS)
 # Kernel flags
 KERNEL_INCLUDES  += $(INCLUDES)
 KERNEL_INCLUDES  += -I$(include_dir)/kernel/ -I$(arch_src)/
+KERNEL_INCLUDES  += $(addprefix -I$(external_dir)/,$(addsuffix /, $(external_deps)))
 KERNEL_ASM_FLAGS +=
 KERNEL_CFLAGS    += $(LIBC_CFLAGS)
 KERNEL_CFLAGS    += -ffunction-sections -fdata-sections
@@ -314,9 +315,9 @@ $(libc): $(dist_dir) $(libc_asm_objects) $(libc_c_objects)
 	$(progress) "AR" $@
 	$(AR) rcs $@ $(libc_asm_objects) $(libc_c_objects)
 
-$(initrd): $(misc_dir)
+$(initrd): $(misc_dir) userland
 	$(progress) "TAR" $@
-	if [ -d "$(userland_src_dir)/bin" ]; then cp -R $(userland_src_dir)/bin $(initrd_dir); fi
+	cp -R $(userland_src_dir)/bin $(initrd_dir)
 	echo "$(OS_NAME) ($(ARCH)) build info" > $(initrd_dir)/info
 	echo "" >> $(initrd_dir)/info
 	echo "hash: $(git_hash)" >> $(initrd_dir)/info
