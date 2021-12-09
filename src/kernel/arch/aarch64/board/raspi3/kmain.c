@@ -18,10 +18,11 @@ void kmain(uintptr_t w0)
   // 0 = on real hardware, w0 should be 0 when device trees are used (the
   // default) but QEMU sets w0 to 0x100 and passes ATAGs when we use `-append`
   // so we have to deal with that, too.
-  if (w0 == 0 || w0 == 0x100) {
+  uint32_t dtb_or_atags = (uint32_t)w0 & 0xFFFFFFFF;
+  if (dtb_or_atags == 0 || dtb_or_atags == 0x100) {
     atag_init((atag_header_t*)0x100);
   } else {
-    DEBUG("w0=%p but we do not support DTB", w0);
+    DEBUG("dtb_or_atags=%p but we do not support DTB", dtb_or_atags);
   }
 
   print_step("initializing heap allocator");
