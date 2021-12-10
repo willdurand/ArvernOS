@@ -20,8 +20,6 @@ ASM     = $(CC)
 # Options for the different tools
 ###############################################################################
 
-QEMU_OPTIONS = -M versatilepb -serial stdio
-
 ###############################################################################
 # Source files
 ###############################################################################
@@ -51,29 +49,5 @@ LD_FLAGS         += $(shell $(ARM_GCC) -print-libgcc-file-name)
 arch-debug: $(kernel_img)
 .PHONY: arch-debug
 
-arch-run-debug:
-	echo "This command isn't supported yet"
-.PHONY: arch-run-debug
-
 arch-release: $(kernel_img)
 .PHONY: arch-release
-
-arch-run-release:
-	echo "This command isn't supported yet"
-.PHONY: arch-run-release
-
-arch-run-test:
-	echo "This command isn't supported yet"
-.PHONY: arch-run-test
-
-arch-test:
-	echo "This command isn't supported yet"
-.PHONY: arch-test
-
-###############################################################################
-# Misc.
-###############################################################################
-
-$(kernel_img): $(kernel) $(initrd)
-	$(progress) "OBJCOPY" $@
-	$(OBJCOPY) -O binary $< $@
