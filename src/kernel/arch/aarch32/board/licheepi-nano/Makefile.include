@@ -34,9 +34,23 @@ KERNEL_ASM_FLAGS += $(BOARD_CFLAGS)
 # Arch-specific targets
 ###############################################################################
 
+arch-run-debug: debug
+	echo "This command isn't supported yet"
+	exit 1
+.PHONY: arch-run-debug
+
+arch-run-release: release
+	echo "This command isn't supported yet"
+	exit 1
+.PHONY: arch-run-release
+
 ###############################################################################
 # Board-specific targets
 ###############################################################################
+
+$(kernel_img): $(kernel) $(initrd)
+	$(progress) "OBJCOPY" $@
+	$(OBJCOPY) -O binary $< $@
 
 $(dist_dir)/boot.scr: $(board_src)/boot.cmd
 	$(MKIMAGE) -n "$(OS_NAME)/$(BOARD) u-boot configuration" $(MKIMAGE_OPTIONS) -T script -d $< $@
