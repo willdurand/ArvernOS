@@ -1,4 +1,4 @@
-#include "kmain.h"
+#include "../../kmain.h"
 #include <arvern/utils.h>
 #include <core/arm/atag.h>
 #include <drivers/ccu.h>
