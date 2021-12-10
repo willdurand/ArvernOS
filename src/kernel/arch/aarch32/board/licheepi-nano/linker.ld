@@ -29,12 +29,12 @@ SECTIONS
 
     .ARM.exidx :
     {
-        *(.ARM.extab* .gnu.linkonce.armextab.*)
+        *(.ARM.exidx*)
     }
 
     .ARM.extab :
     {
-        *(.ARM.extab*)
+        *(.ARM.extab* .gnu.linkonce.armextab.*)
     }
 
     .data :
@@ -61,7 +61,7 @@ SECTIONS
         __stack_top = .;
     }
 
-    __heap_start = . ;
+    __heap_start = .;
 
     /* get rid of unnecessary gcc bits */
     /DISCARD/ :
