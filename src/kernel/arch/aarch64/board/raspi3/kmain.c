@@ -1,4 +1,4 @@
-#include "kmain.h"
+#include "../../kmain.h"
 #include <core/arm/atag.h>
 #include <drivers/miniuart.h>
 #include <fs/tar.h>
