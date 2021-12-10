@@ -17,7 +17,7 @@ static char readline[READLINE_SIZE] = { 0 };
 static char last_readline[READLINE_SIZE] = { 0 };
 static unsigned int readline_index = 0;
 
-#define NB_DOCUMENTED_COMMANDS 12
+#define NB_DOCUMENTED_COMMANDS 13
 
 static const char* commands[][NB_DOCUMENTED_COMMANDS] = {
   { "cat", "print on the standard output" },
