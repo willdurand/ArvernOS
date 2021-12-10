@@ -10,7 +10,7 @@ void alloc_init()
   cur_brk = (void*)&__heap_start;
 }
 
-void* libk_sbrk(intptr_t size)
+void* libk_sbrk(ptrdiff_t size)
 {
   if (size == 0) {
     return cur_brk;
