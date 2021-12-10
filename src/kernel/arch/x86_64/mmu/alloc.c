@@ -17,9 +17,9 @@ void alloc_init()
   dlmalloc_set_footprint_limit(HEAP_SIZE);
 }
 
-void* libk_sbrk(intptr_t size)
+void* libk_sbrk(ptrdiff_t size)
 {
-  DEBUG("heap_addr=%p size=%" PRIi64, heap_addr, size);
+  DEBUG("heap_addr=%p size=%td", heap_addr, size);
 
   if (size == 0) {
     return (void*)heap_addr;

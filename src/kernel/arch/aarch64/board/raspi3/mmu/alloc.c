@@ -1,13 +1,12 @@
-#include <inttypes.h>
 #include <mmu/logging.h>
 #include <stdint.h>
 #include <string.h>
 
 static uint64_t memtop = 0x400000;
 
-void* libk_sbrk(intptr_t size)
+void* libk_sbrk(ptrdiff_t size)
 {
-  MMU_DEBUG("size=%" PRIi64, size);
+  MMU_DEBUG("size=%td", size);
 
   if (size == 0) {
     return (void*)memtop;

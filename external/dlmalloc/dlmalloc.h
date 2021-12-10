@@ -524,7 +524,7 @@ MAX_RELEASE_CHECK_RATE   default: 4095 unless not HAVE_MMAP
 // BEGIN: ArvernOS configuration
 #include <panic.h>
 
-extern void* libk_sbrk(intptr_t size);
+extern void* libk_sbrk(ptrdiff_t size);
 
 #define ABORT_ON_ASSERT_FAILURE 1
 #define HAVE_MMAP               0
