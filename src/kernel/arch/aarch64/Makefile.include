@@ -38,6 +38,7 @@ AARCH64_CFLAGS   += --target=aarch64-elf
 LIBC_CFLAGS      += $(AARCH64_CFLAGS)
 LIBC_ASM_FLAGS   += -c $(AARCH64_CFLAGS)
 KERNEL_ASM_FLAGS += -c $(AARCH64_CFLAGS)
+KERNEL_ASM_FLAGS += -I$(arch_src)/asm/
 KERNEL_INCLUDES  += -I$(board_src)/
 LD_TARGET        = aarch64elf
 

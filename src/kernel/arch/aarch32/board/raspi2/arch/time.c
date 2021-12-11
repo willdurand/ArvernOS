@@ -2,6 +2,7 @@
 
 #include <board.h>
 #include <drivers/bcm2835_timer.h>
+#include <proc/task.h>
 
 void arch_timer_callback();
 
@@ -12,7 +13,7 @@ void arch_timer_init()
 
 void arch_timer_callback()
 {
-  // TODO: Maybe implement this fucntion for AArch32/raspi2.
+  task_schedule_on_timer_tick();
 }
 
 uint64_t arch_timer_uptime_microseconds()

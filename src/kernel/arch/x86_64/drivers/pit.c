@@ -4,15 +4,18 @@
 #include <core/isr.h>
 #include <core/logging.h>
 #include <core/port.h>
+#include <proc/task.h>
 #include <stdlib.h>
 
 static uint64_t tick = 0;
 
 static void pit_callback(isr_stack_t* stack)
 {
+  UNUSED(*stack);
+
   tick++;
 
-  UNUSED(*stack);
+  task_schedule_on_timer_tick();
 }
 
 uint64_t pit_tick()

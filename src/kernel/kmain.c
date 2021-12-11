@@ -11,6 +11,7 @@
 #include <logging.h>
 #include <osinfo.h>
 #include <panic.h>
+#include <proc/task.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/k_syscall.h>
@@ -80,6 +81,49 @@ void init_fs(uintptr_t initrd_addr)
   }
 }
 
+void kinit()
+{
+  int argc = 0;
+  char* _cmdline = strdup(saved_cmdline);
+  char* curr = strtok(_cmdline, " ");
+  while (curr != NULL) {
+    // We exclude command line arguments that contain a dot like
+    // `module.param=value`.
+    if (strchr(curr, '.') == 0) {
+      argc++;
+    }
+    curr = strtok(NULL, " ");
+  }
+  free(_cmdline);
+
+  char** argv = (char**)malloc(sizeof(char*) * (argc + 1));
+
+  int _argc = 0;
+  _cmdline = strdup(saved_cmdline);
+  curr = strtok(_cmdline, " ");
+  while (curr != NULL) {
+    if (strchr(curr, '.') == 0) {
+      argv[_argc++] = strdup(curr);
+    }
+    curr = strtok(NULL, " ");
+  }
+  argv[_argc] = NULL;
+  free(_cmdline);
+
+  if (strcmp(argv[0], "kshell") == 0) {
+    INFO("kmain: loading %s...", argv[0]);
+    kshell(argc, argv);
+  } else {
+    // TODO: create task
+
+    // INFO("kmain: switching to usermode... (%s)", argv[0]);
+    //
+    // k_execv(argv[0], argv);
+  }
+
+  k_exit(EXIT_FAILURE);
+}
+
 void kmain_start(uintptr_t initrd_addr, const char* cmdline)
 {
   if (cmdline == NULL) {
@@ -102,41 +146,15 @@ void kmain_start(uintptr_t initrd_addr, const char* cmdline)
 
   run_initcalls();
 
-  int argc = 0;
-  char* _cmdline = strdup(cmdline);
-  char* curr = strtok(_cmdline, " ");
-  while (curr != NULL) {
-    // We exclude command line arguments that contain a dot like
-    // `module.param=value`.
-    if (strchr(curr, '.') == 0) {
-      argc++;
-    }
-    curr = strtok(NULL, " ");
+  task_init("idle");
+
+  int res = task_create("kinit", PT_KTHREAD, (uintptr_t)&kinit);
+  if (res < 0) {
+    printf("kernel: error while starting kinit task\n");
   }
-  free(_cmdline);
 
-  char** argv = (char**)malloc(sizeof(char*) * (argc + 1));
-
-  int _argc = 0;
-  _cmdline = strdup(cmdline);
-  curr = strtok(_cmdline, " ");
-  while (curr != NULL) {
-    if (strchr(curr, '.') == 0) {
-      argv[_argc++] = strdup(curr);
-    }
-    curr = strtok(NULL, " ");
-  }
-  argv[_argc] = NULL;
-  free(_cmdline);
-
-  if (strcmp(argv[0], "kshell") == 0) {
-    INFO("kmain: loading %s...", argv[0]);
-
-    kshell(argc, argv);
-  } else {
-    INFO("kmain: switching to usermode... (%s)", argv[0]);
-
-    k_execv(argv[0], argv);
+  while (1) {
+    task_schedule();
   }
 
   PANIC("unexpectedly reached end of kmain_start()");
