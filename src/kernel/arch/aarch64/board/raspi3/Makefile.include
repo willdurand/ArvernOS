@@ -34,7 +34,7 @@ KERNEL_CFLAGS    += $(BOARD_CFLAGS)
 KERNEL_ASM_FLAGS += $(BOARD_CFLAGS)
 # We include a C header file in `asm/boot.asm` so we need to tell the compiler
 # that assembly files may contain C code to preprocess first.
-KERNEL_ASM_FLAGS += -x assembler-with-cpp -I$(arch_src)
+KERNEL_ASM_FLAGS += -x assembler-with-cpp -I$(board_src)
 
 ###############################################################################
 # Arch-specific targets
