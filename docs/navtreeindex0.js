@@ -248,6 +248,6 @@ var NAVTREEINDEX0 =
 "log_8h.html":[6,0,0,1,1,0],
 "logging_8h.html":[6,0,0,0,13],
 "md_src_kernel__r_e_a_d_m_e.html":[1],
-"md_src_kernel__r_e_a_d_m_e.html#autotoc_md35":[1,0],
+"md_src_kernel__r_e_a_d_m_e.html#autotoc_md37":[1,0],
 "md_src_libc__r_e_a_d_m_e.html":[2]
 };

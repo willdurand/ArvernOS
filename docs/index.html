@@ -115,6 +115,7 @@ Tier 2</h3>
 <ul>
 <li><b>aarch32</b><ul>
 <li>Lichee Pi Nano</li>
+<li>Raspberry Pi 2</li>
 </ul>
 </li>
 <li><b>aarch64</b><ul>
@@ -158,7 +159,7 @@ Docker (recommended way)</h4>
 <div class="line">[...]</div>
 </div><!-- fragment --><p>You can then use it with <code>docker run</code>:</p>
 <div class="fragment"><div class="line">$ docker run -it --rm -v $(pwd):/app willdurand/arvernos-toolchain make help</div>
-<div class="line">ArvernOS - available commands for arch=aarch64 board=raspi3</div>
+<div class="line">ArvernOS - available commands for arch=x86_64</div>
 <div class="line"> </div>
 <div class="line">clean                          remove build artifacts</div>
 <div class="line">debug                          build the project in debug mode</div>
@@ -174,7 +175,8 @@ Docker (recommended way)</h4>
 <div class="line">test                           run the unit tests</div>
 <div class="line">userland                       compile the userland programs (statically linked to libc)</div>
 <div class="line">version                        print tool versions</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md9"></a>
+</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>The output of the <code>make help</code> command may contain different commands depending on the architecture and board configured.</dd></dl>
+<h4><a class="anchor" id="autotoc_md9"></a>
 MacOS</h4>
 <p>Install <a href="https://brew.sh/">Homebrew</a>, then run the following commands:</p>
 <div class="fragment"><div class="line">$ brew install nasm xorriso qemu llvm u-boot-tools</div>

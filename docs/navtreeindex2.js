@@ -1,5 +1,8 @@
 var NAVTREEINDEX2 =
 {
+"vga__text_8h.html#ad1fc59685312d0c91988280ab70f1c01":[6,0,1,0,0,2,2,5,1],
+"vga__text_8h.html#af7e7957c30423a3a10d2843f7c10415e":[6,0,1,0,0,2,2,5,3],
+"x86__64_2core_2register_8h.html":[6,0,1,0,0,2,1,6],
 "x86__64_2core_2register_8h.html#a37758a1d9dd7aa158743e035016ea79b":[6,0,1,0,0,2,1,6,6],
 "x86__64_2core_2register_8h.html#a49c84f561ab5000417e1c3fdbbe323bf":[6,0,1,0,0,2,1,6,8],
 "x86__64_2core_2register_8h.html#a591479e9e26bb3a18a1dd959ab4e5e82":[6,0,1,0,0,2,1,6,1],
