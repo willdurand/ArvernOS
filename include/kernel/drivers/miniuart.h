@@ -1,7 +1,9 @@
 #ifndef DRIVERS_MINIUART_H
 #define DRIVERS_MINIUART_H
 
-void miniuart_init();
+#include <stdint.h>
+
+void miniuart_init(uint32_t gpio_base_addr);
 
 char miniuart_getc();
 

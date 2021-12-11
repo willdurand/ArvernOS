@@ -134,6 +134,30 @@ jobs:
           command: |
             test -f build/aarch32/<< parameters.board >>/dist/ArvernOS-aarch32-<< parameters.board >>.img
 
+  aarch32-kernel-selftest-ubsan:
+    <<: *defaults
+    parameters:
+      board:
+        type: string
+      ubsan:
+        type: integer
+    steps:
+      - kernel-selftest:
+          arch: aarch32
+          board: << parameters.board >>
+          extra_args: UBSAN=<< parameters.ubsan >>
+
+  aarch32-kernel-selftest-dlmalloc:
+    <<: *defaults
+    parameters:
+      board:
+        type: string
+    steps:
+      - kernel-selftest:
+          arch: aarch32
+          board: << parameters.board >>
+          extra_args: CONFIG_USE_DLMALLOC=1
+
   aarch64-build:
     <<: *defaults
     parameters:
@@ -237,6 +261,18 @@ workflows:
               target: [debug, release]
               board:
                 - licheepi-nano
+                - raspi2
+      - aarch32-kernel-selftest-dlmalloc:
+          matrix:
+            parameters:
+              board:
+                - raspi2
+      - aarch32-kernel-selftest-ubsan:
+          matrix:
+            parameters:
+              ubsan: [0, 1]
+              board:
+                - raspi2
 
       # aarch64
       - aarch64-build:

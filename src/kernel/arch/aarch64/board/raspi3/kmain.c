@@ -1,4 +1,5 @@
 #include "../../kmain.h"
+#include <board.h>
 #include <core/arm/atag.h>
 #include <drivers/miniuart.h>
 #include <fs/tar.h>
@@ -12,7 +13,7 @@ extern unsigned char _binary___initrd_tar_start;
 
 void kmain(uintptr_t w0)
 {
-  miniuart_init();
+  miniuart_init(GPIO_BASE);
   kmain_early_start();
 
   // 0 = on real hardware, w0 should be 0 when device trees are used (the

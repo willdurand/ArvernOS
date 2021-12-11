@@ -1,0 +1,10 @@
+# Configuration file for aarch32/raspi2
+LLVM_PREFIX =
+LLVM_SUFFIX = -13
+
+ARCH  = aarch32
+BOARD = raspi2
+
+CONFIG_USE_DLMALLOC   = 1
+CONFIG_USE_FAKE_CLOCK = 1
+CONFIG_SEMIHOSTING    = 1

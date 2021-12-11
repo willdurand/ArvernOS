@@ -47,6 +47,7 @@ Current Tier 2 archs/boards:
 
 - **aarch32**
   - [Lichee Pi Nano](./src/kernel/arch/aarch32/board/licheepi-nano/README.md)
+  - [Raspberry Pi 2](./src/kernel/arch/aarch32/board/raspi2/README.md)
 - **aarch64**
   - [Raspberry Pi 3](./src/kernel/arch/aarch64/board/raspi3/README.md)
 

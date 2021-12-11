@@ -8,4 +8,5 @@ AArch32 is the 32-bit instruction set architecture defined by ARM.
 ## Boards
 
 * \subpage refLicheePiNano
+* \subpage ref_raspi2
 -->
