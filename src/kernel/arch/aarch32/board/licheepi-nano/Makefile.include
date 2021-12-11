@@ -20,6 +20,7 @@ MKIMAGE_OPTIONS = -A arm -C none
 
 libk_c_files   += $(wildcard $(board_src)/*.c)
 libk_c_files   += $(wildcard $(board_src)/arch/*.c)
+libk_c_files   += $(wildcard $(board_src)/core/*.c)
 libk_c_files   += $(wildcard $(board_src)/drivers/*.c)
 libk_asm_files += $(wildcard $(board_src)/asm/*.asm)
 
