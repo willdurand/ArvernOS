@@ -255,7 +255,7 @@ inode_t vfs_namei_mount(const char* path, inode_t root)
 
         next->parent = current;
 
-        FS_DEBUG("adding child #%lu to current node: %s",
+        FS_DEBUG("adding child #%" PRIu64 " to current node: %s",
                  current->n_children + 1,
                  current->name);
         current->children = (inode_t*)realloc(
