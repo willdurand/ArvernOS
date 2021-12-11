@@ -2,7 +2,7 @@
 #ifndef INTTYPES_H
 #define INTTYPES_H
 
-#ifdef __arm__
+#if __WORDSIZE == 64
 #define PRI_PREFIX "l"
 #else
 #define PRI_PREFIX "ll"
