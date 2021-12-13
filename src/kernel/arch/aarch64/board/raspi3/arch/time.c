@@ -3,12 +3,12 @@
 #include <board.h>
 #include <core/isr.h>
 #include <core/mmio.h>
-#include <stdio.h>
 #include <time/fake_clock.h>
+
+#define FREQ_1MHZ 1000000
 
 void arch_timer_callback();
 
-static uint32_t interval_1 = 100000;
 static uint32_t current_value_1 = 0;
 
 void arch_timer_init()
@@ -17,20 +17,20 @@ void arch_timer_init()
   mmio_write(ENABLE_IRQS_1, SYSTEM_TIMER_IRQ_1);
 
   current_value_1 = mmio_read(TIMER_CLO);
-  current_value_1 += interval_1;
+  current_value_1 += FREQ_1MHZ / 1000;
 
+  mmio_write(TIMER_CS, TIMER_CS_M1);
   mmio_write(TIMER_C1, current_value_1);
 }
 
 void arch_timer_callback()
 {
-  current_value_1 += interval_1;
-
   // TODO: It would probably be a good idea to handle overflows because we are
   // using a uint32_t for the current value.
+  current_value_1 += FREQ_1MHZ / 1000;
 
-  mmio_write(TIMER_C1, current_value_1);
   mmio_write(TIMER_CS, TIMER_CS_M1);
+  mmio_write(TIMER_C1, current_value_1);
 }
 
 uint64_t arch_timer_uptime_microseconds()
