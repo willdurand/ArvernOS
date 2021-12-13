@@ -45,4 +45,9 @@
 #define CCU_PLL_PERIPH_CTRL (CCU_BASE + 0x028)
 #define CCU_AHB_APB_CFG     (CCU_BASE + 0x054)
 
+// Interrupts
+// TODO: This is needed to allow the AArch32 to compile (for raspi2) but the
+// licheepi-nano board does not support interrupts yet.
+#define IRQ_PENDING_1 0
+
 #endif
