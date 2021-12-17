@@ -96,17 +96,25 @@
 
 #define WARN(format, ...)                                                      \
   LOG_WARN(format, __VA_ARGS__);                                               \
-  printf("[%3d.%03d] " format "\n",                                            \
-         (int)timer_uptime(),                                                  \
-         (int)timer_uptime_microseconds(),                                     \
-         __VA_ARGS__)
+  {                                                                            \
+    uint64_t time_us = timer_uptime_microseconds();                            \
+    printf("[%3" PRIu64 ".%03" PRIu64 "%03" PRIu64 "] " format "\n",           \
+           time_us / 1000000,                                                  \
+           time_us / 1000,                                                     \
+           time_us % 1000,                                                     \
+           __VA_ARGS__);                                                       \
+  }
 
 #define INFO(format, ...)                                                      \
   LOG_INFO(format, __VA_ARGS__);                                               \
-  printf("[%3d.%03d] " format "\n",                                            \
-         (int)timer_uptime(),                                                  \
-         (int)timer_uptime_microseconds() % 1000,                              \
-         __VA_ARGS__)
+  {                                                                            \
+    uint64_t time_us = timer_uptime_microseconds();                            \
+    printf("[%3" PRIu64 ".%03" PRIu64 "%03" PRIu64 "] " format "\n",           \
+           time_us / 1000000,                                                  \
+           time_us / 1000,                                                     \
+           time_us % 1000,                                                     \
+           __VA_ARGS__);                                                       \
+  }
 
 #ifdef ENABLE_KERNEL_TRACE
 
