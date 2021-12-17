@@ -19,8 +19,9 @@ void ccu_init()
   }
 
   // PLL_PERIPH = 24MHz * 25 = 600MHz
-  // AHB_CLK    = PLL_PERIPH / (AHB_PRE_DIV * AHB_CLK_DIV_RATIO) = 600MHz / (3 *
-  // 1) = 200MHz APB_CLK    = AHB_CLK / APB_CLK_RATIO = 200MHz / 2 = 100MHz
+  // AHB_CLK    = PLL_PERIPH / (AHB_PRE_DIV * AHB_CLK_DIV_RATIO)
+  //            = 600MHz / (3 * 1) = 200MHz
+  // APB_CLK    = AHB_CLK / APB_CLK_RATIO = 200MHz / 2 = 100MHz
   //
   // 0x00003180:
   //  AHB_PRE_DIV       = 3
