@@ -47,6 +47,8 @@ static bool can_deallocate_frames = false;
 
 void paging_init()
 {
+  INFO("%s", "mmu: initialize paging");
+
   enable_nxe_bit();
   enable_write_protection();
   remap_kernel();

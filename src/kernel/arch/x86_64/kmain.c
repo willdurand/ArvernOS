@@ -2,7 +2,6 @@
 #include <config/inish.h>
 #include <console/console.h>
 #include <core/elf.h>
-#include <core/gdt.h>
 #include <core/multiboot.h>
 #include <core/port.h>
 #include <core/tss.h>
@@ -27,44 +26,8 @@ void load_modules(multiboot_info_t* mbi);
 void load_network_config(inish_config_t* kernel_cfg, net_driver_t* driver);
 void load_symbols(multiboot_tag_module_t* module, uint64_t size);
 void load_system_config(inish_config_t* kernel_cfg);
-void print_debug_gdt();
-void print_debug_tss();
 
 static uintptr_t initrd_addr = 0;
-
-void print_debug_tss()
-{
-  // From `src/kernel/arch/x86_64/asm/boot.asm`.
-  extern tss_t tss;
-
-  DEBUG(
-    "tss: rsp0=0x%02x rsp1=0x%02x rsp2=0x%02x", tss.rsp0, tss.rsp1, tss.rsp2);
-}
-
-void print_debug_gdt()
-{
-  // From `src/kernel/arch/x86_64/asm/boot.asm`.
-  extern gdt_table_t gdt64;
-
-  DEBUG("gdt64.kernel_code: type=0x%02x limit19_16_and_flags=0x%02x",
-        gdt64.kernel_code.type,
-        gdt64.kernel_code.limit19_16_and_flags);
-  DEBUG("gdt64.kernel_data: type=0x%02x limit19_16_and_flags=0x%02x",
-        gdt64.kernel_data.type,
-        gdt64.kernel_data.limit19_16_and_flags);
-  DEBUG("gdt64.user_code  : type=0x%02x limit19_16_and_flags=0x%02x",
-        gdt64.user_code.type,
-        gdt64.user_code.limit19_16_and_flags);
-  DEBUG("gdt64.user_data  : type=0x%02x limit19_16_and_flags=0x%02x",
-        gdt64.user_data.type,
-        gdt64.user_data.limit19_16_and_flags);
-  DEBUG("gdt64.tss_low    : type=0x%02x limit19_16_and_flags=0x%02x",
-        gdt64.tss_low.type,
-        gdt64.tss_low.limit19_16_and_flags);
-  DEBUG("gdt64.tss_high   : type=0x%02x limit19_16_and_flags=0x%02x",
-        gdt64.tss_high.type,
-        gdt64.tss_high.limit19_16_and_flags);
-}
 
 void load_modules(multiboot_info_t* mbi)
 {
@@ -86,9 +49,7 @@ void load_modules(multiboot_info_t* mbi)
 
 void load_symbols(multiboot_tag_module_t* module, uint64_t size)
 {
-  print_step("loading debug symbols");
   arch_kernel_load_symbols(module->mod_start, size);
-  print_ok();
 }
 
 void load_network_config(inish_config_t* kernel_cfg, net_driver_t* driver)
@@ -114,22 +75,15 @@ void load_network_config(inish_config_t* kernel_cfg, net_driver_t* driver)
 
 int init_network()
 {
-  print_step("loading kernel.inish configuration");
   inish_config_t* kernel_cfg = inish_load("/etc/kernel.inish");
 
-  if (kernel_cfg == NULL) {
-    print_ko();
-  } else {
-    print_ok();
+  if (kernel_cfg != NULL) {
+    INFO("%s", "net: loaded /etc/kernel.inish configuration");
   }
 
-  print_step("initializing network");
   if (rtl8139_init()) {
     net_driver_t* rtl8139 = rtl8139_driver();
     load_network_config(kernel_cfg, rtl8139);
-    print_ok();
-  } else {
-    print_ko();
   }
 
   if (kernel_cfg != NULL) {
@@ -157,31 +111,18 @@ void kmain(uintptr_t addr)
 
   kmain_early_start();
 
-  print_step("initializing TSS");
   tss_init();
-  print_debug_gdt();
-  print_debug_tss();
-  print_ok();
-
-  print_step("initializing paging");
   paging_init();
-  print_ok();
-
-  print_step("initializing heap allocator");
   alloc_init();
-  print_ok();
-
-  print_step("initializing keyboard");
   keyboard_init();
-  print_ok();
 
   load_modules(mbi);
 
   if (console_mode_is_vbe()) {
-    print_step("switching to fullscreen mode");
+    INFO("%s", "console: switching to fullscreen mode");
 
     if (!console_fullscreen()) {
-      print_ko();
+      WARN("%s", "console: failed to switch to fullscreen mode");
     }
   }
 

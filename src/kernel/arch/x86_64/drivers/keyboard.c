@@ -38,6 +38,8 @@ static void keyboard_callback(isr_stack_t* stack)
 
 void keyboard_init()
 {
+  INFO("%s", "drivers: initialize keyboard");
+
   isr_register_handler(IRQ1, keyboard_callback);
 }
 

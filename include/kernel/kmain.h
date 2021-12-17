@@ -25,9 +25,4 @@ void kmain_early_start();
  */
 void kmain_start(uintptr_t initrd_addr, const char* cmdline);
 
-// utils
-void print_ko();
-void print_ok();
-void print_step(const char* msg);
-
 #endif

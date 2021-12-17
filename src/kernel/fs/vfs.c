@@ -13,9 +13,12 @@ static vfs_node_t* vfs_root = NULL;
 
 bool vfs_init()
 {
+  INFO("%s", "fs: initialize virtual file system");
+
   vfs_root = vfs_make_directory("/");
 
   if (!vfs_root) {
+    WARN("%s", "fs: failed to initialize virtual file system");
     return false;
   }
 

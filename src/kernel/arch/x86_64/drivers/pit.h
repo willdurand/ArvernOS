@@ -1,6 +1,8 @@
 /**
  * @file
  * @see http://www.osdever.net/bkerndev/Docs/pit.htm
+ * @see https://wiki.osdev.org/Programmable_Interval_Timer
+ * @see https://ethv.net/workshops/osdev/notes/notes-4.html
  *
  * Programmable Interval Timer (PIT).
  */

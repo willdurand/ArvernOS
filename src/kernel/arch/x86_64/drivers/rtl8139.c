@@ -41,12 +41,10 @@ static net_driver_t driver = {
 
 bool rtl8139_init()
 {
-  INFO("initializing %s", driver_name);
-
   device = pci_get_device(RTL8139_VENDOR_ID, RTL8139_DEVICE_ID);
 
   if (device.packed == 0) {
-    NET_DEBUG("%s", "PCI device not found");
+    WARN("%s", "net: rtl8139: PCI device not found");
     return false;
   }
 
@@ -106,7 +104,7 @@ bool rtl8139_init()
   mac_address[4] = mac_part2 >> 0;
   mac_address[5] = mac_part2 >> 8;
 
-  INFO("MAC address is: %02x:%02x:%02x:%02x:%02x:%02x",
+  INFO("net: rtl8139: MAC address is: %02x:%02x:%02x:%02x:%02x:%02x",
        mac_address[0],
        mac_address[1],
        mac_address[2],

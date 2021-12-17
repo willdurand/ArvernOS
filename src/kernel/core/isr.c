@@ -1,11 +1,14 @@
 #include <core/isr.h>
 
 #include <arch/core.h>
+#include <core/logging.h>
 
 static isr_handler_t handlers[MAX_HANDLERS] = { 0 };
 
 void isr_init()
 {
+  INFO("%s", "core: initialize interrupt service routine");
+
   arch_isr_init();
 
   isr_enable_interrupts();
