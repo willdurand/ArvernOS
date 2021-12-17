@@ -29,7 +29,7 @@ libk_asm_files += $(wildcard $(board_src)/asm/*.asm)
 ###############################################################################
 
 BOARD_CFLAGS     += -mcpu=arm926ej-s -march=armv5te
-KERNEL_CFLAGS    += $(BOARD_CFLAGS)
+KERNEL_CFLAGS    += $(BOARD_CFLAGS) -DARMv5
 KERNEL_ASM_FLAGS += $(BOARD_CFLAGS)
 
 ###############################################################################

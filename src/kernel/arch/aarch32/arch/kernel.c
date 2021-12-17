@@ -3,6 +3,12 @@
 #include <arvern/utils.h>
 #include <sys/k_semihosting.h>
 
+#ifdef ARMv5
+#define WFI "nop"
+#else
+#define WFI "wfi"
+#endif
+
 void arch_restart()
 {
   // TODO: Implement this function for aarch32.
@@ -27,6 +33,6 @@ void arch_poweroff(int exit_code)
 void arch_halt()
 {
   while (1) {
-    __asm__("nop");
+    __asm__(WFI);
   }
 }
