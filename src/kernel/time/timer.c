@@ -1,12 +1,15 @@
 #include <time/timer.h>
 
 #include <arch/time.h>
+#include <logging.h>
 #include <stdbool.h>
 
 static bool initialized = false;
 
 void timer_init()
 {
+  INFO("%s", "time: initialize timer");
+
   arch_timer_init();
 
   initialized = true;

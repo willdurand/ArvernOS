@@ -34,7 +34,7 @@ void isr_irq_handler()
 
 void isr_exception_handler(uint8_t type)
 {
-  ERROR("exception handler invoked: type=%d", type);
+  WARN("exception handler invoked: type=%d", type);
 
   while (1) {
     ;

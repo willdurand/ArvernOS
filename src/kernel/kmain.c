@@ -22,43 +22,14 @@ void init_fs(uintptr_t initrd_addr);
 
 char* saved_cmdline = NULL;
 
-void print_step(const char* msg)
-{
-  printf("kernel: %-66s", msg);
-}
-
-void print_ok()
-{
-  printf("  [");
-  printf("\033[0;32mOK\033[0m");
-  printf("]\n");
-}
-
-void print_ko()
-{
-  printf("[");
-  printf("\033[0;31mFAIL\033[0m");
-  printf("]\n");
-}
-
 void kmain_early_start()
 {
-  INFO("%s %s (%s) / %s / Built on: %s at %s has started",
+  INFO("\n\033[1;34m%s\033[0m\n", KERNEL_ASCII);
+  INFO("%s %s (%s) for %s has started",
        KERNEL_NAME,
        KERNEL_VERSION,
        GIT_HASH,
-       KERNEL_TARGET,
-       KERNEL_DATE,
-       KERNEL_TIME);
-
-  printf("\033[1;34m%s\033[0m\n", KERNEL_ASCII);
-  printf("%s %s (%s) / %s / Built on: %s at %s\n\n",
-         KERNEL_NAME,
-         KERNEL_VERSION,
-         GIT_HASH,
-         KERNEL_TARGET,
-         KERNEL_DATE,
-         KERNEL_TIME);
+       KERNEL_TARGET);
 }
 
 void run_initcalls()
@@ -82,43 +53,30 @@ void run_initcalls()
 
 void init_fs(uintptr_t initrd_addr)
 {
-  print_step("initializing virtual file system");
-  if (vfs_init()) {
-    print_ok();
-  } else {
-    print_ko();
-  }
+  vfs_init();
 
   if (initrd_addr) {
-    print_step("mounting tarfs (init ramdisk)");
+    INFO("%s", "fs: mount tarfs (init ramdisk)");
     inode_t initrd = vfs_mount("/", tar_fs_create(initrd_addr));
 
-    if (initrd) {
-      print_ok();
-    } else {
-      print_ko();
+    if (!initrd) {
+      WARN("%s", "fs: failed to mount tarfs (init ramdisk)");
     }
   }
 
-  print_step("mounting devfs");
-  if (dev_fs_init()) {
-    print_ok();
-  } else {
-    print_ko();
+  INFO("%s", "fs: mount devfs");
+  if (!dev_fs_init()) {
+    WARN("%s", "fs: failed to mount devfs");
   }
 
-  print_step("mounting procfs");
-  if (proc_fs_init()) {
-    print_ok();
-  } else {
-    print_ko();
+  INFO("%s", "fs: mount devfs");
+  if (!proc_fs_init()) {
+    WARN("%s", "fs: failed to mount devfs");
   }
 
-  print_step("mounting sockfs");
-  if (sock_fs_init()) {
-    print_ok();
-  } else {
-    print_ko();
+  INFO("%s", "fs: mount sockfs");
+  if (!sock_fs_init()) {
+    WARN("%s", "fs: failed to mount sockfs");
   }
 }
 
@@ -127,7 +85,7 @@ void kmain_start(uintptr_t initrd_addr, const char* cmdline)
   if (cmdline == NULL) {
     PANIC("invalid cmdline passed to kmain_start()");
   }
-  DEBUG("cmdline=%s", cmdline);
+  INFO("kmain: cmdline is '%s'", cmdline);
   // Keep a copy of the original command line.
   saved_cmdline = strdup(cmdline);
 
@@ -135,21 +93,10 @@ void kmain_start(uintptr_t initrd_addr, const char* cmdline)
     PANIC("failed to copy cmdline, is heap memory available?");
   }
 
-  print_step("initializing interrupt service routine");
   isr_init();
-  print_ok();
-
-  print_step("initializing timer");
   timer_init();
-  print_ok();
-
-  print_step("initializing clock");
   clock_init();
-  print_ok();
-
-  print_step("initializing syscalls");
   syscall_init();
-  print_ok();
 
   init_fs(initrd_addr);
 
@@ -183,13 +130,11 @@ void kmain_start(uintptr_t initrd_addr, const char* cmdline)
   free(_cmdline);
 
   if (strcmp(argv[0], "kshell") == 0) {
-    printf("kernel: loading %s...\n", argv[0]);
-    INFO("kernel: loading %s...", argv[0]);
+    INFO("kmain: loading %s...", argv[0]);
 
     kshell(argc, argv);
   } else {
-    printf("kernel: switching to usermode... (%s)\n", argv[0]);
-    INFO("kernel: switching to usermode... (%s)", argv[0]);
+    INFO("kmain: switching to usermode... (%s)", argv[0]);
 
     k_execv(argv[0], argv);
   }

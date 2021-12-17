@@ -14,6 +14,8 @@ static uintptr_t heap_addr = HEAP_START;
 
 void alloc_init()
 {
+  INFO("%s", "mmu: initialize heap allocator");
+
   dlmalloc_set_footprint_limit(HEAP_SIZE);
 }
 
@@ -66,15 +68,16 @@ static bitmap_t allocated_pages[(MAX_PAGES / BITS_PER_WORD) + 1] = { 0 };
 
 void alloc_init()
 {
+  INFO("%s", "mmu: initialize heap allocator");
+
   heap_end_page = page_containing_address(HEAP_START + HEAP_SIZE - 1);
   heap_start_page = page_containing_address(HEAP_START);
 
-  INFO("initialized heap allocator with heap_start_page=%" PRIu64
-       " heap_end_page=%" PRIu64 " "
-       "used_count=%" PRIu64 "",
-       heap_start_page,
-       heap_end_page,
-       alloc_get_used_count());
+  DEBUG("heap_start_page=%" PRIu64 " heap_end_page=%" PRIu64 " "
+        "used_count=%" PRIu64 "",
+        heap_start_page,
+        heap_end_page,
+        alloc_get_used_count());
 }
 
 int liballoc_lock()

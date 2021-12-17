@@ -1,9 +1,13 @@
 /**
  * @file
+ * @brief This is the general kernel logging module.
  *
- * This is the general kernel logging module. It supports several logging
- * levels such as DEBUG, INFO and ERROR. Logging can be disabled by setting
- * `ENABLE_KERNEL_DEBUG=0` in config.
+ * It supports several logging levels such as INFO, DEBUG, and TRACE:
+ *
+ * - DEBUG logs are not enabled by default. They can be enabled by setting
+ *   `ENABLE_KERNEL_DEBUG=0` in config.
+ * - TRACE logs are not enabled by default. They can be enabled by setting
+ *   `ENABLE_KERNEL_TRACE=1` in config.
  *
  * Each kernel module should ideally have its own logging header that depends
  * on this one. The main use case is to have more configurable loggers that can
@@ -12,27 +16,34 @@
 #ifndef LOGGING_H
 #define LOGGING_H
 
-#include <inttypes.h>
-#include <stdio.h>
+#ifdef TEST_ENV
 
-#ifdef ENABLE_LOGS_FOR_TESTS
+#define TRACE(format, ...)                                                     \
+  do {                                                                         \
+  } while (0)
 
-// See: https://github.com/shiena/ansicolor
-#define ANSICOLOR_FG_LIGHTGRAY "\x1b[90m"
-#define ANSICOLOR_RESET        "\x1b[0m"
+#define DEBUG(format, ...)                                                     \
+  do {                                                                         \
+  } while (0)
 
-#define LOG(level, format, ...)                                                \
-  printf("%s%s:%d:%s(): " format "%s\n",                                       \
-         ANSICOLOR_FG_LIGHTGRAY,                                               \
-         __FILE__,                                                             \
-         __LINE__,                                                             \
-         __func__,                                                             \
-         __VA_ARGS__,                                                          \
-         ANSICOLOR_RESET)
+#define HEX_DEBUG(data, len)                                                   \
+  do {                                                                         \
+  } while (0)
 
-#else // ENABLE_LOGS_FOR_TESTS
+#define WARN(format, ...)                                                      \
+  do {                                                                         \
+  } while (0)
+
+#define INFO(format, ...)                                                      \
+  do {                                                                         \
+  } while (0)
+
+#else // TEST_ENV
 
 #include <arch/logging.h>
+#include <inttypes.h>
+#include <stdio.h>
+#include <time/timer.h>
 
 #define LOG(level, format, ...)                                                \
   fctprintf(&arch_logging_stream_output,                                       \
@@ -44,9 +55,7 @@
             __func__,                                                          \
             __VA_ARGS__)
 
-#endif // ENABLE_LOGS_FOR_TESTS
-
-#if defined(ENABLE_KERNEL_DEBUG) || defined(ENABLE_LOGS_FOR_TESTS)
+#ifdef ENABLE_KERNEL_DEBUG
 
 #define DEBUG(format, ...) LOG("DEBUG", format, __VA_ARGS__)
 
@@ -61,7 +70,11 @@
   }                                                                            \
   fctprintf(&arch_logging_stream_output, NULL, "\n");
 
-#else // ENABLE_KERNEL_DEBUG || ENABLE_LOGS_FOR_TESTS
+#define LOG_WARN(format, ...) LOG("WARN", format, __VA_ARGS__)
+
+#define LOG_INFO(format, ...) LOG("INFO", format, __VA_ARGS__)
+
+#else // ENABLE_KERNEL_DEBUG
 
 #define DEBUG(format, ...)                                                     \
   do {                                                                         \
@@ -71,10 +84,42 @@
   do {                                                                         \
   } while (0)
 
-#endif // ENABLE_KERNEL_DEBUG || ENABLE_LOGS_FOR_TESTS
+#define LOG_WARN(format, ...)                                                  \
+  do {                                                                         \
+  } while (0)
 
-#define INFO(format, ...) LOG("INFO", format, __VA_ARGS__)
+#define LOG_INFO(format, ...)                                                  \
+  do {                                                                         \
+  } while (0)
 
-#define ERROR(format, ...) LOG("ERROR", format, __VA_ARGS__)
+#endif // ENABLE_KERNEL_DEBUG
+
+#define WARN(format, ...)                                                      \
+  LOG_WARN(format, __VA_ARGS__);                                               \
+  printf("[%3d.%03d] " format "\n",                                            \
+         (int)timer_uptime(),                                                  \
+         (int)timer_uptime_microseconds(),                                     \
+         __VA_ARGS__)
+
+#define INFO(format, ...)                                                      \
+  LOG_INFO(format, __VA_ARGS__);                                               \
+  printf("[%3d.%03d] " format "\n",                                            \
+         (int)timer_uptime(),                                                  \
+         (int)timer_uptime_microseconds() % 1000,                              \
+         __VA_ARGS__)
+
+#ifdef ENABLE_KERNEL_TRACE
+
+#define TRACE(format, ...) LOG("TRACE", format, __VA_ARGS__)
+
+#else // ENABLE_KERNEL_TRACE
+
+#define TRACE(format, ...)                                                     \
+  do {                                                                         \
+  } while (0)
+
+#endif // ENABLE_KERNEL_TRACE
+
+#endif // TEST_ENV
 
 #endif

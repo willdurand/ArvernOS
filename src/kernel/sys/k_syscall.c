@@ -1,6 +1,7 @@
 #include <sys/k_syscall.h>
 
 #include <arch/sys.h>
+#include <sys/logging.h>
 #include <sys/syscall.h>
 
 typedef void (*syscall_ptr_t)(void);
@@ -26,6 +27,8 @@ syscall_ptr_t syscall_handlers[] = {
 
 void syscall_init()
 {
+  INFO("%s", "sys: initialize syscalls");
+
   arch_syscall_init();
 }
 

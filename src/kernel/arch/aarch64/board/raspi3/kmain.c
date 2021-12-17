@@ -26,9 +26,5 @@ void kmain(uintptr_t w0)
     DEBUG("dtb_or_atags=%p but we do not support DTB", dtb_or_atags);
   }
 
-  print_step("initializing heap allocator");
-  // nothing to do for now
-  print_ok();
-
   kmain_start((uintptr_t)&_binary___initrd_tar_start, atag_get_cmdline());
 }

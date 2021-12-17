@@ -17,10 +17,7 @@ void kmain(uint32_t r0, uint32_t r1, uint32_t r2)
   kmain_early_start();
 
   atag_init((atag_header_t*)r2);
-
-  print_step("initializing heap allocator");
   alloc_init();
-  print_ok();
 
   kmain_start((uintptr_t)NULL, atag_get_cmdline());
 }

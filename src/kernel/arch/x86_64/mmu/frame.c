@@ -18,20 +18,21 @@ static uint64_t first_request = 0;
 
 void frame_init()
 {
+  INFO("%s", "mmu: initialize frame allocator");
+
   reserved_areas_t reserved_areas = multiboot_get_reserved_areas();
   multiboot_tag_mmap_t* _mmap = multiboot_get_mmap();
 
   _frame_init(&reserved_areas, _mmap);
 
-  INFO("initialized frame allocator with start=%p end=%p "
-       "max_allocatable_frames=%" PRIu64
-       " allocated_frames=%p used_count=%" PRIu64 " first_request=%" PRIu64,
-       reserved_areas.start,
-       reserved_areas.end,
-       max_allocatable_frames,
-       allocated_frames,
-       frame_get_used_count(),
-       first_request);
+  DEBUG("start=%p end=%p max_allocatable_frames=%" PRIu64
+        " allocated_frames=%p used_count=%" PRIu64 " first_request=%" PRIu64,
+        reserved_areas.start,
+        reserved_areas.end,
+        max_allocatable_frames,
+        allocated_frames,
+        frame_get_used_count(),
+        first_request);
 }
 
 void _frame_init(reserved_areas_t* reserved_areas, multiboot_tag_mmap_t* _mmap)
@@ -89,7 +90,7 @@ opt_uint64_t frame_allocate()
 
   if (request == 0) {
     // Should we PANIC instead?
-    ERROR("%s", "no more allocatable frames");
+    WARN("%s", "no more allocatable frames");
     return (opt_uint64_t){ .has_value = false, .value = 0 };
   }
 

@@ -1,3 +1,4 @@
+#include <mmu/logging.h>
 #include <stdint.h>
 #include <string.h>
 
@@ -7,6 +8,8 @@ static void* cur_brk = NULL;
 
 void alloc_init()
 {
+  INFO("%s", "mmu: initialize heap allocator");
+
   cur_brk = (void*)&__heap_start;
 }
 

@@ -1,12 +1,15 @@
 #include <time/clock.h>
 
 #include <arch/time.h>
+#include <logging.h>
 #include <stdbool.h>
 
 static bool initialized = false;
 
 void clock_init()
 {
+  INFO("%s", "time: initialize clock");
+
   arch_clock_init();
 
   initialized = true;
