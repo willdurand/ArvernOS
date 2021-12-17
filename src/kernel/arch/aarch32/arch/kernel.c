@@ -5,7 +5,7 @@
 
 void arch_restart()
 {
-  // TODO: Implement this function for aarch32.
+  // TODO: Implement this function for AArch32.
 }
 
 void arch_poweroff(int exit_code)

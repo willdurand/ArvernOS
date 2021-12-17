@@ -4,12 +4,12 @@
 
 void arch_timer_init()
 {
-  // TODO:
+  // TODO: Implement this function for AArch32.
 }
 
 uint64_t arch_timer_uptime_microseconds()
 {
-  // TODO:
+  // TODO: Implement this function for AArch32.
   return 0;
 }
 
