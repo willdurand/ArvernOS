@@ -7,7 +7,7 @@
 #define GPIO_BASE (MMIO_BASE + 0x200000)
 
 // interrupts
-#define IRQ_PENDING_1      (MMIO_BASE + 0x0000B204)
-#define ENABLE_IRQS_1      (MMIO_BASE + 0x0000B210)
+ #define IRQ_PENDING_1 (MMIO_BASE + 0x0000B204)
+ #define ENABLE_IRQS_1 (MMIO_BASE + 0x0000B210)
 
 #endif
