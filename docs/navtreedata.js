@@ -75,8 +75,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "aarch32_2mmu_2alloc_8h.html",
-"md_src_userland__r_e_a_d_m_e.html",
-"vga__text_8h.html#ad1fc59685312d0c91988280ab70f1c01"
+"logging_8h.html",
+"vga__text_8h.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
