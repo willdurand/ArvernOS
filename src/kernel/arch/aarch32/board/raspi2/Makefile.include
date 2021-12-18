@@ -12,7 +12,7 @@ cmdline_txt = $(dist_dir)/cmdline.txt
 # Options for the different tools
 ###############################################################################
 
-QEMU_OPTIONS += -M raspi2 -append "$(shell cat $(cmdline_txt))" -serial null -serial stdio
+QEMU_OPTIONS += -M raspi2b -append "$(shell cat $(cmdline_txt))" -serial null -serial stdio
 
 ###############################################################################
 # Source files

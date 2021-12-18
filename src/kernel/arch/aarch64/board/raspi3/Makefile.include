@@ -13,7 +13,7 @@ initrd_o    = $(misc_dir)/initrd.o
 # Options for the different tools
 ###############################################################################
 
-QEMU_OPTIONS += -M raspi3 -append "$(shell cat $(cmdline_txt))" -serial null -serial stdio
+QEMU_OPTIONS += -M raspi3b -append "$(shell cat $(cmdline_txt))" -serial null -serial stdio
 
 ###############################################################################
 # Source files
