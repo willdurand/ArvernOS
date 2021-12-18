@@ -37,6 +37,18 @@ clear_bss:
   cmp r4, r9
   blo zero_bss
 
+  // backup important registers that need to be passed to `kmain()` later
+  push {r0, r1, r2}
+
+  // load vector table
+  ldr r0, =vectors
+  dsb
+  mcr p15, 0, r0, c12, c0, 0
+  isb
+
+  // restore important registers
+  pop {r0, r1, r2}
+
   bl kmain
   b hang
 
