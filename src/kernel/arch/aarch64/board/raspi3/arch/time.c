@@ -13,7 +13,7 @@ void arch_timer_init()
 
 void arch_timer_callback()
 {
-  // TODO: Maybe implement this fucntion for AArch64/raspi3.
+  // TODO: Maybe implement this function for AArch64/raspi3.
 }
 
 uint64_t arch_timer_uptime_microseconds()
