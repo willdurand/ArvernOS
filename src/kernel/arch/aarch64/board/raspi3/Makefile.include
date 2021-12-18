@@ -13,7 +13,7 @@ config_txt  = $(dist_dir)/config.txt
 # Options for the different tools
 ###############################################################################
 
-QEMU_OPTIONS += -M raspi3 -serial null -serial stdio
+QEMU_OPTIONS += -M raspi3b -serial null -serial stdio
 QEMU_OPTIONS += -append "$(shell cat $(cmdline_txt))"
 QEMU_OPTIONS += -initrd $(initrd)
 
