@@ -29,10 +29,6 @@ void arch_restart()
   }
 
   port_byte_out(KEYBOARD_STATUS_PORT, RESET_CPU_COMMAND);
-
-  while (1) {
-    __asm__("hlt");
-  }
 }
 
 void arch_poweroff(int exit_code)
