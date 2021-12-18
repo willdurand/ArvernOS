@@ -1,5 +1,6 @@
 #include <arch/core.h>
 
+#include <arch/kernel.h>
 #include <board.h>
 #include <core/isr.h>
 #include <core/logging.h>
@@ -36,7 +37,5 @@ void isr_exception_handler(uint8_t type)
 {
   WARN("exception handler invoked: type=%d", type);
 
-  while (1) {
-    ;
-  }
+  arch_halt();
 }

@@ -19,6 +19,7 @@ QEMU_OPTIONS += -M raspi3 -append "$(shell cat $(cmdline_txt))" -serial null -se
 # Source files
 ###############################################################################
 
+libk_c_files   += $(wildcard $(kernel_src_dir)/drivers/bcm2835_timer.c)
 libk_c_files   += $(wildcard $(kernel_src_dir)/drivers/miniuart.c)
 libk_c_files   += $(wildcard $(board_src)/*.c)
 libk_c_files   += $(wildcard $(board_src)/arch/*.c)
