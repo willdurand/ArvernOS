@@ -38,9 +38,9 @@
 #include <sys/k_syscall.h>
 #else
 // This is defined in src/libc/syscall.asm. The maximum number of syscall
-// arguments is 5. Other arguments should be put on the stack. We use `int`
-// types to be arch-specific, which isn't usually a good thing except when we
-// want that, like... here.
+// arguments is 5. Other arguments should be put on the stack. We use `int` to
+// be arch-dependent, which isn't usually a good thing except when we want
+// that, like... here.
 extern int syscall(int id, ...);
 #endif
 
