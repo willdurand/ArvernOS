@@ -2,8 +2,10 @@
 
 #include <arvern/utils.h>
 #include <core/logging.h>
+#include <stdint.h>
 
 static const char* cmdline = NULL;
+static uintptr_t initrd2_start_addr = 0;
 
 void atag_init(atag_header_t* ptr)
 {
@@ -25,9 +27,15 @@ void atag_init(atag_header_t* ptr)
       case ATAG_RAMDISK:
         CORE_DEBUG("atag: ramdisk: %s", "???");
         break;
-      case ATAG_INITRD2:
-        CORE_DEBUG("atag: initrd2: %s", "???");
+      case ATAG_INITRD2: {
+        atag_initrd2_t* initrd2 = (atag_initrd2_t*)curr;
+        initrd2_start_addr = initrd2->start;
+
+        CORE_DEBUG("atag: initrd2: start=%p size=%#010lx",
+                   initrd2_start_addr,
+                   initrd2->size);
         break;
+      }
       case ATAG_SERIAL:
         CORE_DEBUG("atag: serial: %s", "???");
         break;
@@ -54,4 +62,9 @@ void atag_init(atag_header_t* ptr)
 const char* atag_get_cmdline()
 {
   return cmdline;
+}
+
+uintptr_t atag_get_initrd2_start_addr()
+{
+  return initrd2_start_addr;
 }

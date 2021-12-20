@@ -213,7 +213,7 @@ jobs:
           command: |
             test -f build/x86_64/dist/ArvernOS-x86_64.iso
             test -f build/x86_64/dist/libc-ArvernOS-x86_64.a
-            test -f build/x86_64/misc/initrd.tar
+            test -f build/x86_64/dist/initrd.tar
             test -f build/x86_64/misc/isofiles/boot/grub/grub.cfg
             test -f build/x86_64/misc/isofiles/boot/kernel-x86_64.bin
 

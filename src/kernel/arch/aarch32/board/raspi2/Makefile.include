@@ -3,6 +3,7 @@
 ###############################################################################
 
 cmdline_txt = $(dist_dir)/cmdline.txt
+config_txt  = $(dist_dir)/config.txt
 
 ###############################################################################
 # Tools
@@ -12,7 +13,9 @@ cmdline_txt = $(dist_dir)/cmdline.txt
 # Options for the different tools
 ###############################################################################
 
-QEMU_OPTIONS += -M raspi2 -append "$(shell cat $(cmdline_txt))" -serial null -serial stdio
+QEMU_OPTIONS += -M raspi2 -serial null -serial stdio
+QEMU_OPTIONS += -append "$(shell cat $(cmdline_txt))"
+QEMU_OPTIONS += -initrd $(initrd)
 
 ###############################################################################
 # Source files
@@ -33,7 +36,7 @@ KERNEL_CFLAGS    += $(BOARD_CFLAGS)
 KERNEL_ASM_FLAGS += $(BOARD_CFLAGS)
 
 ifeq ($(CONFIG_SEMIHOSTING), 1)
-	LD_FLAGS += -Ttext=010000
+	LD_FLAGS += -Ttext=0x10000
 else
 	LD_FLAGS += -Ttext=0x8000
 endif
@@ -60,6 +63,10 @@ $(cmdline_txt): $(dist_dir)
 	$(progress) "TXT" $@
 	echo $(CMDLINE) > $@
 
-$(kernel_img): $(kernel) $(cmdline_txt) $(initrd)
+$(config_txt): $(dist_dir)
+	$(progress) "TXT" $@
+	echo "ramfsfile $(initrd_tar)" > $@
+
+$(kernel_img): $(kernel) $(initrd) $(cmdline_txt) $(config_txt)
 	$(progress) "OBJCOPY" $@
 	$(OBJCOPY) -O binary $< $@

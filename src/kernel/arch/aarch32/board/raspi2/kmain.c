@@ -18,5 +18,5 @@ void kmain(uint32_t r0, uint32_t r1, uint32_t r2)
   atag_init((atag_header_t*)r2);
   alloc_init();
 
-  kmain_start((uintptr_t)NULL, atag_get_cmdline());
+  kmain_start(atag_get_initrd2_start_addr(), atag_get_cmdline());
 }

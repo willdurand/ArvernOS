@@ -9,8 +9,6 @@
 #include <stdint.h>
 #include <stdio.h>
 
-extern unsigned char _binary___initrd_tar_start;
-
 void kmain(uintptr_t w0)
 {
   miniuart_init(GPIO_BASE);
@@ -26,5 +24,5 @@ void kmain(uintptr_t w0)
     DEBUG("dtb_or_atags=%p but we do not support DTB", dtb_or_atags);
   }
 
-  kmain_start((uintptr_t)&_binary___initrd_tar_start, atag_get_cmdline());
+  kmain_start(atag_get_initrd2_start_addr(), atag_get_cmdline());
 }

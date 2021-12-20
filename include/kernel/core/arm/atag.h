@@ -41,6 +41,13 @@ typedef struct atag_cmdline
   char cmdline[];
 } atag_cmdline_t;
 
+typedef struct atag_initrd2
+{
+  atag_header_t header;
+  uint32_t start;
+  uint32_t size;
+} atag_initrd2_t;
+
 /**
  * Initializes the ATAGs module, which essentially parses the ATAGs and store
  * information that can be queried later.
@@ -50,10 +57,17 @@ typedef struct atag_cmdline
 void atag_init(atag_header_t* ptr);
 
 /**
- * Returns the command line found in the ATAGS.
+ * Returns the command line found in the ATAGs.
  *
  * @return a string containing the command line found in the ATAGS or `NULL`
  */
 const char* atag_get_cmdline();
+
+/**
+ * Returns the initrd2 start address found in the ATAGs.
+ *
+ * @return the initrd2 start address or `0` if not found
+ */
+uintptr_t atag_get_initrd2_start_addr();
 
 #endif
