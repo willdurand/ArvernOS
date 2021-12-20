@@ -49,8 +49,9 @@ extern int syscall(int id, ...);
  * and prints it to the screen.
  *
  * @param s a string to print on the screen
+ * @return the return value should always be `42`
  */
-void test(const char* s);
+int test(const char* s);
 
 /**
  * Implements the write syscall.

@@ -17,7 +17,10 @@ void selftest()
 #ifdef __arvernos__
   print_selftest_header("syscall");
   printf("  syscalling\n");
-  test("usermode");
+  int retval = test("usermode");
+  if (retval != 42) {
+    printf("Got unexpected syscall return value: %d (expected: 42)\n", retval);
+  }
 #endif
 
   print_selftest_header("filesystem");
