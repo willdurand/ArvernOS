@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="stdio_8h.html#a948b7a0779c308ac5502c57e282e6933" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="putchar_8c.html#a948b7a0779c308ac5502c57e282e6933" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="91,-0.5 91,-19.5 141,-19.5 141,-0.5 91,-0.5"/>
 <text text-anchor="middle" x="116" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">putchar</text>
 </a>
@@ -35,7 +35,7 @@
 <!-- Node3 -->
 <g id="node3" class="node">
 <title>Node3</title>
-<g id="a_node3"><a xlink:href="syscall_8h.html#abb39b21888372e95ad3e5c59b166f5c8" target="_top" xlink:title=" ">
+<g id="a_node3"><a xlink:href="write_8c.html#abb39b21888372e95ad3e5c59b166f5c8" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="177,-0.5 177,-19.5 215,-19.5 215,-0.5 177,-0.5"/>
 <text text-anchor="middle" x="196" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">write</text>
 </a>
@@ -50,7 +50,7 @@
 <!-- Node4 -->
 <g id="node4" class="node">
 <title>Node4</title>
-<g id="a_node4"><a xlink:href="k__syscall_8h.html#ae80abe069ae7128caf6c98035b032776" target="_top" xlink:title=" ">
+<g id="a_node4"><a xlink:href="k__write_8c.html#ae80abe069ae7128caf6c98035b032776" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="251,-0.5 251,-19.5 299,-19.5 299,-0.5 251,-0.5"/>
 <text text-anchor="middle" x="275" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">k_write</text>
 </a>

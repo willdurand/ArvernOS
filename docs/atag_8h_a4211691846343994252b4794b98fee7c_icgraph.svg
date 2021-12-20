@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="src_2kernel_2arch_2aarch32_2kmain_8h.html#af2771f04874bac550209cafd61dd4a57" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="arch_2aarch32_2board_2raspi2_2kmain_8c.html#a798325fe646ee31fccf3f735f9bbaf60" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="0,-0.5 0,-19.5 43,-19.5 43,-0.5 0,-0.5"/>
 <text text-anchor="middle" x="21.5" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">kmain</text>
 </a>

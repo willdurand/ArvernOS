@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="aarch32_2mmu_2alloc_8h.html#a0de47e42c61353f53c07a4274b87f864" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="x86__64_2mmu_2alloc_8c.html#a0de47e42c61353f53c07a4274b87f864" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="99,-152.5 99,-171.5 154,-171.5 154,-152.5 99,-152.5"/>
 <text text-anchor="middle" x="126.5" y="-159.5" font-family="Helvetica,sans-Serif" font-size="10.00">alloc_init</text>
 </a>
@@ -35,7 +35,7 @@
 <!-- Node3 -->
 <g id="node3" class="node">
 <title>Node3</title>
-<g id="a_node3"><a xlink:href="atag_8h.html#ae95465de95acc7aa329a2539a7e829fb" target="_top" xlink:title=" ">
+<g id="a_node3"><a xlink:href="atag_8c.html#aea5073c4d6bcc47bcf16c68dae9e640b" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="79,-114.5 79,-133.5 174,-133.5 174,-114.5 79,-114.5"/>
 <text text-anchor="middle" x="126.5" y="-121.5" font-family="Helvetica,sans-Serif" font-size="10.00">atag_get_cmdline</text>
 </a>
@@ -50,7 +50,7 @@
 <!-- Node4 -->
 <g id="node4" class="node">
 <title>Node4</title>
-<g id="a_node4"><a xlink:href="atag_8h.html#a4211691846343994252b4794b98fee7c" target="_top" xlink:title=" ">
+<g id="a_node4"><a xlink:href="atag_8c.html#a4211691846343994252b4794b98fee7c" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="99.5,-76.5 99.5,-95.5 153.5,-95.5 153.5,-76.5 99.5,-76.5"/>
 <text text-anchor="middle" x="126.5" y="-83.5" font-family="Helvetica,sans-Serif" font-size="10.00">atag_init</text>
 </a>
@@ -65,7 +65,7 @@
 <!-- Node5 -->
 <g id="node5" class="node">
 <title>Node5</title>
-<g id="a_node5"><a xlink:href="include_2kernel_2kmain_8h.html#a39b048730ab06513b29030aed1b5d8f4" target="_top" xlink:title=" ">
+<g id="a_node5"><a xlink:href="kmain_8c.html#a39b048730ab06513b29030aed1b5d8f4" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="79,-38.5 79,-57.5 174,-57.5 174,-38.5 79,-38.5"/>
 <text text-anchor="middle" x="126.5" y="-45.5" font-family="Helvetica,sans-Serif" font-size="10.00">kmain_early_start</text>
 </a>
@@ -80,7 +80,7 @@
 <!-- Node6 -->
 <g id="node6" class="node">
 <title>Node6</title>
-<g id="a_node6"><a xlink:href="include_2kernel_2kmain_8h.html#a666c17b307920a60e50fcf56312f9500" target="_top" xlink:title=" ">
+<g id="a_node6"><a xlink:href="kmain_8c.html#a666c17b307920a60e50fcf56312f9500" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="92.5,-0.5 92.5,-19.5 160.5,-19.5 160.5,-0.5 92.5,-0.5"/>
 <text text-anchor="middle" x="126.5" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">kmain_start</text>
 </a>

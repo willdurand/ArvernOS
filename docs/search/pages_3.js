@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['lichee_20pi_20nano_820',['Lichee Pi Nano',['../ref_lichee_pi_nano.html',1,'refArch_aarch32']]]
+  ['lichee_20pi_20nano_0',['Lichee Pi Nano',['../ref_lichee_pi_nano.html',1,'refArch_aarch32']]]
 ];

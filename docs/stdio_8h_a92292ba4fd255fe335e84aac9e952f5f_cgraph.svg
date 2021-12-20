@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="io_8h.html#a34512cf4b7563b16dab78467797aa5d8" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="x86__64_2arch_2io_8c.html#a34512cf4b7563b16dab78467797aa5d8" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="86,-38.5 86,-57.5 161,-57.5 161,-38.5 86,-38.5"/>
 <text text-anchor="middle" x="123.5" y="-45.5" font-family="Helvetica,sans-Serif" font-size="10.00">arch_getchar</text>
 </a>
@@ -35,7 +35,7 @@
 <!-- Node3 -->
 <g id="node3" class="node">
 <title>Node3</title>
-<g id="a_node3"><a xlink:href="syscall_8h.html#af32a16ad2dd9e48482f8f790db7dbbd2" target="_top" xlink:title=" ">
+<g id="a_node3"><a xlink:href="read_8c.html#af32a16ad2dd9e48482f8f790db7dbbd2" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="105,-0.5 105,-19.5 142,-19.5 142,-0.5 105,-0.5"/>
 <text text-anchor="middle" x="123.5" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">read</text>
 </a>

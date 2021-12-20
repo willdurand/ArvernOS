@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="paging_8h.html#a4a8869be87726e3c57c4856fc7b3531c" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="paging_8c.html#a4a8869be87726e3c57c4856fc7b3531c" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="91,-38.5 91,-57.5 222,-57.5 222,-38.5 91,-38.5"/>
 <text text-anchor="middle" x="156.5" y="-45.5" font-family="Helvetica,sans-Serif" font-size="10.00">page_containing_address</text>
 </a>
@@ -35,7 +35,7 @@
 <!-- Node3 -->
 <g id="node3" class="node">
 <title>Node3</title>
-<g id="a_node3"><a xlink:href="paging_8h.html#a93e89a9ca57751d1b04f8d95ccbddb4b" target="_top" xlink:title=" ">
+<g id="a_node3"><a xlink:href="paging_8c.html#a93e89a9ca57751d1b04f8d95ccbddb4b" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="115,-0.5 115,-19.5 198,-19.5 198,-0.5 115,-0.5"/>
 <text text-anchor="middle" x="156.5" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">translate_page</text>
 </a>

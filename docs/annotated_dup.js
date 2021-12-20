@@ -3,6 +3,7 @@ var annotated_dup =
     [ "arp_packet_t", "structarp__packet__t.html", null ],
     [ "atag_cmdline_t", "structatag__cmdline__t.html", null ],
     [ "atag_header_t", "structatag__header__t.html", null ],
+    [ "atag_initrd2_t", "structatag__initrd2__t.html", null ],
     [ "atag_mem_t", "structatag__mem__t.html", null ],
     [ "cmos_rtc_t", "structcmos__rtc__t.html", null ],
     [ "descriptor_t", "structdescriptor__t.html", null ],

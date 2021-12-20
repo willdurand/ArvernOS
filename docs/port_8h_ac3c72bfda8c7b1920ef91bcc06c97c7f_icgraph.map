@@ -1,6 +1,6 @@
 <map id="port_byte_out" name="port_byte_out">
 <area shape="rect" id="node1" title=" " alt="" coords="220,56,324,83"/>
-<area shape="rect" id="node2" href="$serial_8h.html#a086a2712ee8de77b7621d922d2b96857" title=" " alt="" coords="49,5,128,32"/>
-<area shape="rect" id="node3" href="$serial_8h.html#a25ea2587d38072f4b5a53d59962ca418" title=" " alt="" coords="44,56,133,83"/>
-<area shape="rect" id="node4" href="$vga__text_8h.html#ad1fc59685312d0c91988280ab70f1c01" title=" " alt="" coords="5,107,172,133"/>
+<area shape="rect" id="node2" href="$serial_8c.html#a086a2712ee8de77b7621d922d2b96857" title=" " alt="" coords="49,5,128,32"/>
+<area shape="rect" id="node3" href="$serial_8c.html#a25ea2587d38072f4b5a53d59962ca418" title=" " alt="" coords="44,56,133,83"/>
+<area shape="rect" id="node4" href="$vga__text_8c.html#ad1fc59685312d0c91988280ab70f1c01" title=" " alt="" coords="5,107,172,133"/>
 </map>

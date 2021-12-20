@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="kernel_2arch_2time_8h.html#af8e08f88e4ec6768891cfce52318c3d3" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="kernel_2arch_2x86__64_2arch_2time_8c.html#af8e08f88e4ec6768891cfce52318c3d3" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="178,-0.5 178,-19.5 345,-19.5 345,-0.5 178,-0.5"/>
 <text text-anchor="middle" x="261.5" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">arch_timer_uptime_microseconds</text>
 </a>

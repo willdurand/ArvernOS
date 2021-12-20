@@ -14,5 +14,5 @@ var multiboot_8h =
     [ "multiboot_color_t", "structmultiboot__color__t.html", null ],
     [ "multiboot_tag_framebuffer_common_t", "structmultiboot__tag__framebuffer__common__t.html", null ],
     [ "multiboot_tag_framebuffer_t", "structmultiboot__tag__framebuffer__t.html", null ],
-    [ "multiboot_find", "multiboot_8h.html#ada889cbfb4e24dd92f413f6a8dd899d1", null ]
+    [ "multiboot_find", "multiboot_8h.html#a531ddb1c49012191e43cfa192bd607ba", null ]
 ];

@@ -1,7 +1,7 @@
 <map id="arch_timer_uptime_microseconds" name="arch_timer_uptime_microseconds">
 <area shape="rect" id="node1" title=" " alt="" coords="924,13,1147,39"/>
-<area shape="rect" id="node2" href="$timer_8h.html#a9e237401e78bbceb0c0070ef2ecb4569" title=" " alt="" coords="687,13,876,39"/>
-<area shape="rect" id="node3" href="$fake__clock_8h.html#ab4458e5c11135bbbaec3b6f2ee47e9d6" title=" " alt="" coords="479,5,639,47"/>
-<area shape="rect" id="node4" href="$kernel_2arch_2time_8h.html#ab4bc50190a5180744036f0962b00c364" title=" " alt="" coords="271,5,431,47"/>
-<area shape="rect" id="node5" href="$clock_8h.html#add4ef47919811f366e7c7561c71088fb" title=" " alt="" coords="5,13,223,39"/>
+<area shape="rect" id="node2" href="$timer_8c.html#a9e237401e78bbceb0c0070ef2ecb4569" title=" " alt="" coords="687,13,876,39"/>
+<area shape="rect" id="node3" href="$fake__clock_8c.html#ab4458e5c11135bbbaec3b6f2ee47e9d6" title=" " alt="" coords="479,5,639,47"/>
+<area shape="rect" id="node4" href="$kernel_2arch_2x86__64_2arch_2time_8c.html#ab4bc50190a5180744036f0962b00c364" title=" " alt="" coords="271,5,431,47"/>
+<area shape="rect" id="node5" href="$clock_8c.html#add4ef47919811f366e7c7561c71088fb" title=" " alt="" coords="5,13,223,39"/>
 </map>

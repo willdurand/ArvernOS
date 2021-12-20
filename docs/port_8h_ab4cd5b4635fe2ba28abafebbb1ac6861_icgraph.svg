@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="pci_8h.html#abb0a8e6fa16437a49fe35b85a84feec2" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="pci_8c.html#abb0a8e6fa16437a49fe35b85a84feec2" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="0.5,-38.5 0.5,-57.5 55.5,-57.5 55.5,-38.5 0.5,-38.5"/>
 <text text-anchor="middle" x="28" y="-45.5" font-family="Helvetica,sans-Serif" font-size="10.00">pci_read</text>
 </a>
@@ -35,7 +35,7 @@
 <!-- Node3 -->
 <g id="node3" class="node">
 <title>Node3</title>
-<g id="a_node3"><a xlink:href="pci_8h.html#a531322fe5567da0a2705f6131c079f65" target="_top" xlink:title=" ">
+<g id="a_node3"><a xlink:href="pci_8c.html#a531322fe5567da0a2705f6131c079f65" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="0,-0.5 0,-19.5 56,-19.5 56,-0.5 0,-0.5"/>
 <text text-anchor="middle" x="28" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">pci_write</text>
 </a>

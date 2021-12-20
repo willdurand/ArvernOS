@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="frame_8h.html#ae2a26cdfa5b475a46dc4e26a21025252" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="frame_8c.html#ae2a26cdfa5b475a46dc4e26a21025252" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="18.5,-38.5 18.5,-57.5 100.5,-57.5 100.5,-38.5 18.5,-38.5"/>
 <text text-anchor="middle" x="59.5" y="-45.5" font-family="Helvetica,sans-Serif" font-size="10.00">frame_allocate</text>
 </a>
@@ -35,7 +35,7 @@
 <!-- Node3 -->
 <g id="node3" class="node">
 <title>Node3</title>
-<g id="a_node3"><a xlink:href="frame_8h.html#a5d09b4704202b05347bd92d99a5de64e" target="_top" xlink:title=" ">
+<g id="a_node3"><a xlink:href="frame_8c.html#a5d09b4704202b05347bd92d99a5de64e" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="0,-0.5 0,-19.5 119,-19.5 119,-0.5 0,-0.5"/>
 <text text-anchor="middle" x="59.5" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">frame_get_used_count</text>
 </a>

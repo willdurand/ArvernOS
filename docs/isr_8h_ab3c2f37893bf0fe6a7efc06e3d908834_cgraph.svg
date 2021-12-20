@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="core_8h.html#aa7731a0b3790e18502b0a7b0ea779e4d" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="x86__64_2arch_2core_8c.html#aa7731a0b3790e18502b0a7b0ea779e4d" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="146,-0.5 146,-19.5 281,-19.5 281,-0.5 146,-0.5"/>
 <text text-anchor="middle" x="213.5" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">arch_isr_enable_interrupts</text>
 </a>

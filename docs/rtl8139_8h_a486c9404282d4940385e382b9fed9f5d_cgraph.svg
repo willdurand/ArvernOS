@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="pci_8h.html#ad8515b86d19288e403722e2c9a4dc5dd" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="pci_8c.html#ad8515b86d19288e403722e2c9a4dc5dd" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="101,-0.5 101,-19.5 184,-19.5 184,-0.5 101,-0.5"/>
 <text text-anchor="middle" x="142.5" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">pci_get_device</text>
 </a>

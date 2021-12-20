@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="console_8h.html#a030af39db3ecd334ca5a8114ad2e156f" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="console_8c.html#a030af39db3ecd334ca5a8114ad2e156f" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="105,-0.5 105,-19.5 221,-19.5 221,-0.5 105,-0.5"/>
 <text text-anchor="middle" x="163" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">console_mode_is_vbe</text>
 </a>

@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="serial_8h.html#a086a2712ee8de77b7621d922d2b96857" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="serial_8c.html#a086a2712ee8de77b7621d922d2b96857" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="33,-76.5 33,-95.5 92,-95.5 92,-76.5 33,-76.5"/>
 <text text-anchor="middle" x="62.5" y="-83.5" font-family="Helvetica,sans-Serif" font-size="10.00">serial_init</text>
 </a>
@@ -35,7 +35,7 @@
 <!-- Node3 -->
 <g id="node3" class="node">
 <title>Node3</title>
-<g id="a_node3"><a xlink:href="serial_8h.html#a25ea2587d38072f4b5a53d59962ca418" target="_top" xlink:title=" ">
+<g id="a_node3"><a xlink:href="serial_8c.html#a25ea2587d38072f4b5a53d59962ca418" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="29,-38.5 29,-57.5 96,-57.5 96,-38.5 29,-38.5"/>
 <text text-anchor="middle" x="62.5" y="-45.5" font-family="Helvetica,sans-Serif" font-size="10.00">serial_write</text>
 </a>
@@ -50,7 +50,7 @@
 <!-- Node4 -->
 <g id="node4" class="node">
 <title>Node4</title>
-<g id="a_node4"><a xlink:href="vga__text_8h.html#ad1fc59685312d0c91988280ab70f1c01" target="_top" xlink:title=" ">
+<g id="a_node4"><a xlink:href="vga__text_8c.html#ad1fc59685312d0c91988280ab70f1c01" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="0,-0.5 0,-19.5 125,-19.5 125,-0.5 0,-0.5"/>
 <text text-anchor="middle" x="62.5" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">vga_text_disable_cursor</text>
 </a>

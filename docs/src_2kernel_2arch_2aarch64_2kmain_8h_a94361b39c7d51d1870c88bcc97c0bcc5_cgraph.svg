@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="atag_8h.html#a4211691846343994252b4794b98fee7c" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="atag_8c.html#a4211691846343994252b4794b98fee7c" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="99.5,-38.5 99.5,-57.5 153.5,-57.5 153.5,-38.5 99.5,-38.5"/>
 <text text-anchor="middle" x="126.5" y="-45.5" font-family="Helvetica,sans-Serif" font-size="10.00">atag_init</text>
 </a>
@@ -35,7 +35,7 @@
 <!-- Node3 -->
 <g id="node3" class="node">
 <title>Node3</title>
-<g id="a_node3"><a xlink:href="include_2kernel_2kmain_8h.html#a39b048730ab06513b29030aed1b5d8f4" target="_top" xlink:title=" ">
+<g id="a_node3"><a xlink:href="kmain_8c.html#a39b048730ab06513b29030aed1b5d8f4" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="79,-0.5 79,-19.5 174,-19.5 174,-0.5 79,-0.5"/>
 <text text-anchor="middle" x="126.5" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">kmain_early_start</text>
 </a>

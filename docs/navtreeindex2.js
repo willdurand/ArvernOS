@@ -1,5 +1,7 @@
 var NAVTREEINDEX2 =
 {
+"vfs_8h.html":[6,0,0,0,4,4],
+"vfs_8h.html#a30d3a3836c75f9fcfc1a7eb389d2f3f9":[6,0,0,0,4,4,4],
 "vga__text_8h.html":[6,0,1,0,0,2,2,5],
 "vga__text_8h.html#a1b47282282147d894d75584ed77cced0":[6,0,1,0,0,2,2,5,4],
 "vga__text_8h.html#a2087a1fae709cd6218098eac37f610a3":[6,0,1,0,0,2,2,5,2],

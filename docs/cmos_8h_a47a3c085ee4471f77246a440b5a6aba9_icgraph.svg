@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="cmos_8h.html#ac12282062cbe908153f85e20f13a699b" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="cmos_8c.html#ac12282062cbe908153f85e20f13a699b" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="0,-0.5 0,-19.5 59,-19.5 59,-0.5 0,-0.5"/>
 <text text-anchor="middle" x="29.5" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">cmos_init</text>
 </a>

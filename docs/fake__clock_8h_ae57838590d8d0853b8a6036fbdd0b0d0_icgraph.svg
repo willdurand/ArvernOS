@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="kernel_2arch_2time_8h.html#a6a77f2fd7f917b183c433543789a542b" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="kernel_2arch_2x86__64_2arch_2time_8c.html#a6a77f2fd7f917b183c433543789a542b" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="0,-0.5 0,-19.5 83,-19.5 83,-0.5 0,-0.5"/>
 <text text-anchor="middle" x="41.5" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">arch_clock_init</text>
 </a>

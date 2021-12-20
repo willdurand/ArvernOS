@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="k__syscall_8h.html#ae80abe069ae7128caf6c98035b032776" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="k__write_8c.html#ae80abe069ae7128caf6c98035b032776" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="74,-0.5 74,-19.5 122,-19.5 122,-0.5 74,-0.5"/>
 <text text-anchor="middle" x="98" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">k_write</text>
 </a>

@@ -1,5 +1,5 @@
 <map id="inish_get_int" name="inish_get_int">
 <area shape="rect" id="node1" title=" " alt="" coords="5,31,103,57"/>
-<area shape="rect" id="node2" href="$stdlib_8h.html#aba146acbba01116cafaa55f720913ed8" title=" " alt="" coords="191,5,235,32"/>
-<area shape="rect" id="node3" href="$inish_8h.html#ae46d605d07b15a79127e430748f24fd4" title=" " alt="" coords="151,56,276,83"/>
+<area shape="rect" id="node2" href="$atoi_8c.html#aba146acbba01116cafaa55f720913ed8" title=" " alt="" coords="191,5,235,32"/>
+<area shape="rect" id="node3" href="$inish_8c.html#ab82e6fa9e31051b59219a253d556f5fa" title=" " alt="" coords="151,56,276,83"/>
 </map>

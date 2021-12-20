@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="bcm2835__timer_8h.html#af1c06e30d4cc124b212c408dceaadbd0" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="bcm2835__timer_8c.html#af1c06e30d4cc124b212c408dceaadbd0" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="0,-0.5 0,-19.5 104,-19.5 104,-0.5 0,-0.5"/>
 <text text-anchor="middle" x="52" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">bcm2835_timer_init</text>
 </a>

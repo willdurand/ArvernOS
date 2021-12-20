@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="stdlib_8h.html#aba146acbba01116cafaa55f720913ed8" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="atoi_8c.html#aba146acbba01116cafaa55f720913ed8" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="139.5,-38.5 139.5,-57.5 172.5,-57.5 172.5,-38.5 139.5,-38.5"/>
 <text text-anchor="middle" x="156" y="-45.5" font-family="Helvetica,sans-Serif" font-size="10.00">atoi</text>
 </a>
@@ -35,7 +35,7 @@
 <!-- Node3 -->
 <g id="node3" class="node">
 <title>Node3</title>
-<g id="a_node3"><a xlink:href="inish_8h.html#ae46d605d07b15a79127e430748f24fd4" target="_top" xlink:title=" ">
+<g id="a_node3"><a xlink:href="inish_8c.html#ab82e6fa9e31051b59219a253d556f5fa" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="109,-0.5 109,-19.5 203,-19.5 203,-0.5 109,-0.5"/>
 <text text-anchor="middle" x="156" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">inish_get_kv_pair</text>
 </a>

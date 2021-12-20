@@ -21,7 +21,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="kernel_2arch_2time_8h.html#ab4bc50190a5180744036f0962b00c364" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="kernel_2arch_2x86__64_2arch_2time_8c.html#ab4bc50190a5180744036f0962b00c364" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="199,-0.5 199,-30.5 319,-30.5 319,-0.5 199,-0.5"/>
 <text text-anchor="start" x="207" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">arch_clock_get_current</text>
 <text text-anchor="middle" x="259" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">_microseconds</text>
@@ -37,7 +37,7 @@
 <!-- Node3 -->
 <g id="node3" class="node">
 <title>Node3</title>
-<g id="a_node3"><a xlink:href="clock_8h.html#add4ef47919811f366e7c7561c71088fb" target="_top" xlink:title=" ">
+<g id="a_node3"><a xlink:href="clock_8c.html#add4ef47919811f366e7c7561c71088fb" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="0,-6 0,-25 163,-25 163,-6 0,-6"/>
 <text text-anchor="middle" x="81.5" y="-13" font-family="Helvetica,sans-Serif" font-size="10.00">clock_get_current_microseconds</text>
 </a>

@@ -13,6 +13,6 @@ var syscall_8h =
     [ "recvfrom", "syscall_8h.html#ad144bb8d4119d5fa0ee5b6c4d06bc645", null ],
     [ "sendto", "syscall_8h.html#ae19bbc8361e8a64914e6d5d5d2258748", null ],
     [ "socket", "syscall_8h.html#af4e0711877c45a41168ac677b0670ccd", null ],
-    [ "test", "syscall_8h.html#afc62fdd40cdd010568045694291ee7d1", null ],
+    [ "test", "syscall_8h.html#a83e57b3c4cec0806723c6ddf9a6e4a00", null ],
     [ "write", "syscall_8h.html#abb39b21888372e95ad3e5c59b166f5c8", null ]
 ];

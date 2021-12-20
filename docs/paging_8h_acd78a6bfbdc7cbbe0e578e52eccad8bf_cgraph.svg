@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="paging_8h.html#a4a8869be87726e3c57c4856fc7b3531c" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="paging_8c.html#a4a8869be87726e3c57c4856fc7b3531c" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="186,-0.5 186,-19.5 317,-19.5 317,-0.5 186,-0.5"/>
 <text text-anchor="middle" x="251.5" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">page_containing_address</text>
 </a>

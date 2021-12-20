@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="console_8h.html#a14c7a4113d75bf35aedade2e82565c9f" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="console_8c.html#a14c7a4113d75bf35aedade2e82565c9f" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="0,-38.5 0,-57.5 99,-57.5 99,-38.5 0,-38.5"/>
 <text text-anchor="middle" x="49.5" y="-45.5" font-family="Helvetica,sans-Serif" font-size="10.00">console_fullscreen</text>
 </a>
@@ -35,7 +35,7 @@
 <!-- Node3 -->
 <g id="node3" class="node">
 <title>Node3</title>
-<g id="a_node3"><a xlink:href="console_8h.html#a7f1237f8348103b7fee42f35e0b34e49" target="_top" xlink:title=" ">
+<g id="a_node3"><a xlink:href="console_8c.html#a7f1237f8348103b7fee42f35e0b34e49" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="15,-0.5 15,-19.5 84,-19.5 84,-0.5 15,-0.5"/>
 <text text-anchor="middle" x="49.5" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">console_init</text>
 </a>

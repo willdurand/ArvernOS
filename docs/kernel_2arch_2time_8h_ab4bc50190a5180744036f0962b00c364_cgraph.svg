@@ -21,7 +21,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="fake__clock_8h.html#ab4458e5c11135bbbaec3b6f2ee47e9d6" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="fake__clock_8c.html#ab4458e5c11135bbbaec3b6f2ee47e9d6" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="156,-0.5 156,-30.5 276,-30.5 276,-0.5 156,-0.5"/>
 <text text-anchor="start" x="164" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">fake_clock_get_current</text>
 <text text-anchor="middle" x="216" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">_microseconds</text>
@@ -37,7 +37,7 @@
 <!-- Node3 -->
 <g id="node3" class="node">
 <title>Node3</title>
-<g id="a_node3"><a xlink:href="timer_8h.html#a9e237401e78bbceb0c0070ef2ecb4569" target="_top" xlink:title=" ">
+<g id="a_node3"><a xlink:href="timer_8c.html#a9e237401e78bbceb0c0070ef2ecb4569" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="312,-6 312,-25 454,-25 454,-6 312,-6"/>
 <text text-anchor="middle" x="383" y="-13" font-family="Helvetica,sans-Serif" font-size="10.00">timer_uptime_microseconds</text>
 </a>
@@ -52,7 +52,7 @@
 <!-- Node4 -->
 <g id="node4" class="node">
 <title>Node4</title>
-<g id="a_node4"><a xlink:href="kernel_2arch_2time_8h.html#af8e08f88e4ec6768891cfce52318c3d3" target="_top" xlink:title=" ">
+<g id="a_node4"><a xlink:href="kernel_2arch_2x86__64_2arch_2time_8c.html#af8e08f88e4ec6768891cfce52318c3d3" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="490,-6 490,-25 657,-25 657,-6 490,-6"/>
 <text text-anchor="middle" x="573.5" y="-13" font-family="Helvetica,sans-Serif" font-size="10.00">arch_timer_uptime_microseconds</text>
 </a>

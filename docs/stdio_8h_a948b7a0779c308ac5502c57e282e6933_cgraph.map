@@ -1,5 +1,5 @@
 <map id="putchar" name="putchar">
 <area shape="rect" id="node1" title=" " alt="" coords="5,5,72,32"/>
-<area shape="rect" id="node2" href="$syscall_8h.html#abb39b21888372e95ad3e5c59b166f5c8" title=" " alt="" coords="120,5,171,32"/>
-<area shape="rect" id="node3" href="$k__syscall_8h.html#ae80abe069ae7128caf6c98035b032776" title=" " alt="" coords="219,5,283,32"/>
+<area shape="rect" id="node2" href="$write_8c.html#abb39b21888372e95ad3e5c59b166f5c8" title=" " alt="" coords="120,5,171,32"/>
+<area shape="rect" id="node3" href="$k__write_8c.html#ae80abe069ae7128caf6c98035b032776" title=" " alt="" coords="219,5,283,32"/>
 </map>
