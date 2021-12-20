@@ -39,6 +39,7 @@ AARCH32_CFLAGS   += --target=arm-none-eabi
 LIBC_CFLAGS      += $(AARCH32_CFLAGS)
 LIBC_ASM_FLAGS   += -c $(AARCH32_CFLAGS)
 KERNEL_ASM_FLAGS += -c $(AARCH32_CFLAGS)
+KERNEL_ASM_FLAGS += -I$(arch_src)/asm/
 KERNEL_INCLUDES  += -I$(board_src)/
 LD_FLAGS         += $(shell $(ARM_GCC) -print-libgcc-file-name)
 
