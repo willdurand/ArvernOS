@@ -1,6 +1,6 @@
 .global syscall_handler
 
-.include "src/kernel/arch/aarch32/asm/macro-defs.asm"
+.include "macro-defs.asm"
 
 syscall_handler:
   kernel_entry swi
@@ -16,7 +16,7 @@ syscall_handler:
   ldr r8, [r6, r7, lsl #2]  // r7 contains the syscall number
   blx r8
   bl isr_disable_interrupts
-  str r0, [sp, #12]         // overwrite the value of r0 (with r0 a.k.a. the
+  str r0, [sp, #12]         // overwrite the value of r0 with r0) (a.k.a. the
                             // return value coming from the syscall) in the
                             // stack. It is currently #12 because we push {r2,
                             // r3} in `kernel_entry`.

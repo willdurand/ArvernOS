@@ -1,6 +1,6 @@
 .global vectors
 
-.include "src/kernel/arch/aarch32/asm/macro-defs.asm"
+.include "macro-defs.asm"
 
 .macro exc_handler type
 exc_handler_\type:
