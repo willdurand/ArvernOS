@@ -1,9 +1,9 @@
 #include <arch/kernel.h>
+
 #include <stdint.h>
+#include <sys/k_semihosting.h>
 
 #define SYS_EXIT 0x18
-
-void semihosting_call(uint64_t operation, uint64_t parameters);
 
 void arch_restart()
 {
@@ -20,7 +20,7 @@ void arch_poweroff(int exit_code)
     exit_code // exit code
   };
 
-  semihosting_call(SYS_EXIT, (uint64_t)parameters);
+  k_semihosting(SYS_EXIT, (uint64_t)parameters);
 #endif
 }
 
@@ -31,12 +31,4 @@ void arch_halt()
   while (1) {
     ;
   }
-}
-
-void semihosting_call(uint64_t operation, uint64_t parameters)
-{
-  register uint64_t x0 __asm__("x0") = operation;
-  register uint64_t x1 __asm__("x1") = parameters;
-
-  __asm__("hlt #0xF000" ::"r"(x0), "r"(x1));
 }
