@@ -1,8 +1,10 @@
 .global vectors
 
+.include "src/kernel/arch/aarch32/asm/macro-defs.asm"
+
 .macro exc_handler type
 exc_handler_\type:
-  kernel_entry
+  kernel_entry exc
   mov r0, #\type
   bl isr_exception_handler
   b hang
@@ -10,26 +12,9 @@ exc_handler_\type:
 
 .macro irq_handler type
 irq_handler_\type:
-  kernel_entry
+  kernel_entry irq
   bl isr_irq_handler
   kernel_exit
-.endm
-
-.macro kernel_entry
-  sub lr, lr, #4
-  srsdb sp!, #0x13
-  cpsid if, #0x13
-  push {r0-r3, r12, lr}
-  and r1, sp, #4
-  sub sp, sp, r1
-  push {r1}
-.endm
-
-.macro kernel_exit
-  pop {r1}
-  add sp, sp, r1
-  pop {r0-r3, r12, lr}
-  rfeia sp!
 .endm
 
 .align 5
@@ -45,7 +30,7 @@ vectors:
 
 ventry_addr_0: .word start
 ventry_addr_1: .word exc_handler_1
-ventry_addr_2: .word exc_handler_2
+ventry_addr_2: .word syscall_handler
 ventry_addr_3: .word exc_handler_3
 ventry_addr_4: .word exc_handler_4
 ventry_addr_5: .word exc_handler_5
@@ -53,7 +38,6 @@ ventry_addr_6: .word irq_handler_6
 ventry_addr_7: .word exc_handler_7
 
 exc_handler 1
-exc_handler 2
 exc_handler 3
 exc_handler 4
 exc_handler 5
