@@ -60,7 +60,7 @@ linker_ld        = $(arch_src)/linker.ld
 kernel           = $(dist_dir)/$(kernel_bin)
 libc             = $(dist_dir)/libc-$(OS_NAME)-$(ARCH).a
 symbols          = $(dist_dir)/$(symbols_txt)
-initrd           = $(misc_dir)/$(initrd_tar)
+initrd           = $(dist_dir)/$(initrd_tar)
 log_file         = $(log_dir)/$(ARCH)-$(BUILD_MODE).log
 
 # This is the list of external libraries we use and need to build for the

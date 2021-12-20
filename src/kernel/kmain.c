@@ -56,7 +56,7 @@ void init_fs(uintptr_t initrd_addr)
   vfs_init();
 
   if (initrd_addr) {
-    INFO("%s", "fs: mount tarfs (init ramdisk)");
+    INFO("fs: mount tarfs (init ramdisk) - addr=%#10lx", initrd_addr);
     inode_t initrd = vfs_mount("/", tar_fs_create(initrd_addr));
 
     if (!initrd) {
