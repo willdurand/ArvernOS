@@ -2,7 +2,9 @@
 
 #include <stdio.h>
 
-void k_test(const char* s)
+int k_test(const char* s)
 {
   printf("Hello, %s!\n", s);
+
+  return 42;
 }

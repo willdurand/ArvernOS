@@ -19,7 +19,14 @@ int arch_selftest()
   // because `syscall()` won't be available.
   extern int syscall(int id, ...);
   const char* s = "syscall";
-  syscall(1, s);
+  int retval = syscall(1, s);
+
+  if (retval == 42) {
+    printf("Got expected syscall return value: %d\n", retval);
+  } else {
+    printf("Got unexpected syscall return value: %d (expected: 42)\n", retval);
+    return 1;
+  }
 
   return 0;
 }

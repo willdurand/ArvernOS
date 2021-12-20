@@ -1,10 +1,10 @@
 #include <sys/syscall.h>
 
-void test(const char* s)
+int test(const char* s)
 {
 #ifdef __is_libk
-  k_test(s);
+  return k_test(s);
 #else
-  syscall(SYSCALL_TEST, s);
+  return syscall(SYSCALL_TEST, s);
 #endif
 }
