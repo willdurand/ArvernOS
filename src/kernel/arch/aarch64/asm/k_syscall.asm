@@ -59,14 +59,14 @@ syscall_handler:
   cmp x24, #0x15              // SVC in 64-bit state
 
   adr x27, syscall_handlers   // load syscall table pointer
-  uxtw x26, w8                // syscall number in w8
-  msr daifclr, #2
+  uxtw x26, x8                // syscall number
+  bl isr_enable_interrupts
   ldr x16, [x27, x26, lsl #3] // address in the syscall table
   blr x16                     // call syscall
   b ret_from_syscall
 
 ret_from_syscall:
-  msr daifset, #2
+  bl isr_disable_interrupts
   str x0, [sp, #0]            // returned x0
   kernel_exit
 
