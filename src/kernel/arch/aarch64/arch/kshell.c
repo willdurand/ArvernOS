@@ -18,7 +18,7 @@ int arch_selftest()
 
   // This is for testing purposes, it shouldn't work when we have usermode
   // because `syscall()` won't be available.
-  extern int64_t syscall(uint64_t id, ...);
+  extern int syscall(int id, ...);
   const char* s = "syscall";
   syscall(1, s);
 
