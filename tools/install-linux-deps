@@ -10,7 +10,6 @@ apt-get install -y \
 	software-properties-common \
 	lsb-release \
 	build-essential \
-	nasm \
 	xorriso \
 	grub2-common \
 	grub-pc-bin \

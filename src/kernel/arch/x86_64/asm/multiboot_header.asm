@@ -1,39 +1,41 @@
-; This is a Multiboot-compliant header file in assembly code, based on Philipp
-; Oppermann's OS [1], which was released under the MIT License - Copyright (c)
-; 2019 Philipp Oppermann.
-;
-; [1]: https://os.phil-opp.com/edition-1/
+// This is a Multiboot-compliant header file in assembly code, based on Philipp
+// Oppermann's OS [1], which was released under the MIT License - Copyright (c)
+// 2019 Philipp Oppermann.
+//
+// [1]: https://os.phil-opp.com/edition-1/
 
-section .multiboot_header
-align 8
+.intel_syntax noprefix
 
-%define MULTIBOOT2_MAGIC_NUMBER  0xe85250d6
-%define PROTECTED_MODE_CODE      0 ; architecture 0 (protected mode i386)
-                                   ; architecture 4 (MIPS)
+.section ".multiboot_header"
+.align 8
+
+.equ MULTIBOOT2_MAGIC_NUMBER, 0xe85250d6
+.equ PROTECTED_MODE_CODE,     0 // architecture 0 (protected mode i386)
+                                // architecture 4 (MIPS)
 
 header_start:
-  ; `dd` means 'define double word'
-  dd MULTIBOOT2_MAGIC_NUMBER   ; magic number
-  dd PROTECTED_MODE_CODE       ; architecture
-  dd header_end - header_start ; header length
+  // long = double word
+  .long MULTIBOOT2_MAGIC_NUMBER   // magic number
+  .long PROTECTED_MODE_CODE       // architecture
+  .long header_end - header_start // header length
 
-  ; checksum
-  dd 0x100000000 - (MULTIBOOT2_MAGIC_NUMBER + 0 + (header_end - header_start))
+  // checksum
+  .long 0x100000000 - (MULTIBOOT2_MAGIC_NUMBER + 0 + (header_end - header_start))
 
-%ifdef ENABLE_FRAMEBUFFER
-  ; framebuffer
-  dw 5
-  dw 0
-  dd 20
-  dd VBE_WIDTH
-  dd VBE_HEIGHT
-  dd VBE_BPP
-  dd 0
-%endif
+.ifdef ENABLE_FRAMEBUFFER
+  // framebuffer
+  .word 5
+  .word 0
+  .long 20
+  .long VBE_WIDTH
+  .long VBE_HEIGHT
+  .long VBE_BPP
+  .long 0
+.endif
 
-  ; required end tag
-  ; `dw` means 'define word' (word = 16 bits on x86_64)
-  dw 0  ; type
-  dw 0  ; flags
-  dd 8  ; size
+  // required end tag
+  // word = 16 bits on x86_64
+  .word 0  // type
+  .word 0  // flags
+  .long 8  // size
 header_end:

@@ -1,13 +1,12 @@
-global _start
+.intel_syntax noprefix
 
-extern main
+.section ".text"
 
-section .text
+.global _start
+
 _start:
-  ; Prepare the arguments for `start_main()`.
-  mov rdi, main ; `main()`
-  pop rsi       ; argc
-  mov rdx, rsp  ; argv
-
-  extern start_main
+  // Prepare the arguments for `start_main()`.
+  mov rdi, offset main // `main()`
+  pop rsi              // `argc`
+  pop rdx              // `argv`
   call start_main
