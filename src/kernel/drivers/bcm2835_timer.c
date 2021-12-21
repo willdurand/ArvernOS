@@ -53,10 +53,12 @@ void bcm2835_timer_callback()
 {
   mmio_write(TIMER_CS, TIMER_CS_M1);
 
-  _callback();
-
   uint32_t value = mmio_read(TIMER_CLO);
 
   mmio_write(TIMER_CS, TIMER_CS_M1);
   mmio_write(TIMER_C1, value + (FREQ_1MHZ / 100));
+
+  // Call this function after we have rearmed the timer to make sure it will
+  // fire again.
+  _callback();
 }
