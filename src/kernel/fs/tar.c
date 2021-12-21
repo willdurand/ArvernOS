@@ -86,7 +86,7 @@ uint64_t tar_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
     return size;
   }
 
-  // TODO: add support for other types like symlinks (at least)
+  // TODO: Add support for other types like symlinks (at least).
 
   return 0;
 }
@@ -266,7 +266,7 @@ dirent_t* tar_readdir(inode_t inode, uint64_t num)
 
 uint64_t tar_stat(inode_t inode, vfs_stat_t* st)
 {
-  // TODO: add support for directories
+  // TODO: Add support for directories.
 
   if (vfs_type(inode) == FS_FILE) {
     st->size = oct_to_int(headers[inode->data]->size);

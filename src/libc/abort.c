@@ -4,7 +4,7 @@
 
 __attribute__((__noreturn__)) void abort()
 {
-  // TODO: abnormally terminate the process as if by SIGABRT.
+  // TODO: Abnormally terminate the process as if by SIGABRT.
   printf("abort() was called\n");
 
   while (1) {

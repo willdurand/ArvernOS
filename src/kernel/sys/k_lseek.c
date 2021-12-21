@@ -41,7 +41,7 @@ off_t k_lseek(int fd, off_t offset, int whence)
       desc->offset += offset;
       break;
     case SEEK_END:
-      // TODO: implement me
+      // TODO: Implement `SEEK_END`.
     default:
       return -EINVAL;
   }

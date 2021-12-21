@@ -1,6 +1,6 @@
 #include <stdlib.h>
 
-// TODO: this function is supposed to implement `strtol()` but it has been
+// TODO: This function is supposed to implement `strtol()` but it has been
 // written for the kernel stacktrace and does not behave like it should (e.g.,
 // it does not skip spaces and does not support a `base` different than `16`).
 long int strtol_wip(const char* str, char** end, int base)

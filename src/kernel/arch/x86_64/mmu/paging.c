@@ -534,7 +534,7 @@ void paging_set_entry(page_entry_t* entry, uint64_t addr, uint64_t flags)
     entry->user_accessible = 1;
   }
 
-  // TODO: change that once we have a P4 for usermode
+  // TODO: Change that once we have a P4 for usermode.
   entry->user_accessible = 1;
 
   MMU_DEBUG_PAGE_ENTRY("set", (*entry));
@@ -593,7 +593,7 @@ void unmap(page_number_t page_number)
   __asm__("invlpg (%0)" : /* no output */ : "r"(addr) : "memory");
 #endif
 
-  // TODO: free p(1,2,3) table if empty
+  // TODO: Free p(1,2,3) table if empty.
 
 #ifdef TEST_ENV
   can_deallocate_frames = true;

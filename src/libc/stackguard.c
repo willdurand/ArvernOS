@@ -3,9 +3,7 @@
 #include <stdlib.h>
 
 #ifdef __is_libk
-
 #include <panic.h>
-
 #endif
 
 #ifndef STACK_CHK_GUARD
@@ -28,6 +26,6 @@ void __stack_chk_fail(void)
   PANIC_NO_STACKTRACE("Stack smashing detected");
 #else
   printf("Stack smashing detected! Aborting program.\n");
-  // TODO: use `abort()`
+  abort();
 #endif
 }

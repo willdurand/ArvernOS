@@ -7,7 +7,7 @@
 
 void arch_restart()
 {
-  // TODO:
+  // TODO: Implement this function for AArch64.
 }
 
 void arch_poweroff(int exit_code)
@@ -26,9 +26,7 @@ void arch_poweroff(int exit_code)
 
 void arch_halt()
 {
-  // TODO:
-
   while (1) {
-    ;
+    __asm__("wfi");
   }
 }

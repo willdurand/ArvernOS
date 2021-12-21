@@ -4,7 +4,7 @@
 
 pci_device_t pci_get_device(uint16_t vendor_id, uint16_t device_id)
 {
-  // TODO: this is the minimal amount of code to retrieve a PCI device when
+  // TODO: This is the minimal amount of code to retrieve a PCI device when
   // there is only one with the same vendor and device IDs and no function.
 
   for (uint8_t num = 0; num < pci_deviceICES_PER_BUS; num++) {

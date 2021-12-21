@@ -44,7 +44,7 @@ inode_t proc_fs_create_readonly_file(const char* name, proc_read_t* read_fn)
   strcpy(node->name, name);
   node->type = FS_FILE;
   node->data = (uintptr_t)read_fn;
-  // TODO: we probably want a specific driver for read-only pseudo-files.
+  // TODO: We probably want a specific driver for read-only pseudo-files.
   node->driver = &proc_driver;
 
   return node;

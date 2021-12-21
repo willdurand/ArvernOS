@@ -15,7 +15,7 @@ typedef struct process
   char** envp;
   uint64_t user_stack[USER_STACK_SIZE];
   uint64_t user_rsp;
-  // TODO: we should probably retain the file descriptors that are opened by
+  // TODO: We should probably retain the file descriptors that are opened by
   // the process so that we can close them.
 } process_t;
 
