@@ -106,7 +106,7 @@ libc_asm_objects   = $(patsubst %.asm, $(lib_objs_dir)/%.o, $(libc_asm_files))
 # libk
 libk_c_files       += $(wildcard $(kernel_src_dir)/*.c)
 libk_c_files       += $(wildcard $(kernel_src_dir)/config/*.c)
-libk_c_files       += $(wildcard $(kernel_src_dir)/core/*.c)
+libk_c_files       += $(wildcard $(kernel_src_dir)/core/isr.c)
 libk_c_files       += $(wildcard $(kernel_src_dir)/fs/*.c)
 libk_c_files       += $(wildcard $(kernel_src_dir)/fs/dev/*.c)
 libk_c_files       += $(wildcard $(kernel_src_dir)/fs/proc/*.c)

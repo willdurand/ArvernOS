@@ -5,6 +5,7 @@
 #ifndef DRIVERS_RTL8139_H
 #define DRIVERS_RTL8139_H
 
+#include <core/pci.h>
 #include <net/net.h>
 #include <stdbool.h>
 
@@ -31,9 +32,10 @@
 /**
  * Initializes the RTL8139 driver.
  *
- * @return true when initialization has succeeded, false otherwise.
+ * @param the PCI device corresponding to a RTL8139 ethernet card
+ * @return true when initialization has succeeded, false otherwise
  */
-bool rtl8139_init();
+bool rtl8139_init(pci_device_t device);
 
 /**
  * Returns a network driver.

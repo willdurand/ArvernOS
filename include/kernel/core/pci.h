@@ -9,7 +9,7 @@
 
 #include <stdint.h>
 
-#define pci_deviceICES_PER_BUS 32
+#define PCI_DEVICES_PER_BUS 32
 
 // I/O locations
 #define PCI_CONFIG_ADDR 0xCF8
