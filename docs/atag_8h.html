@@ -94,8 +94,7 @@ $(document).ready(function(){initNavTree('atag_8h.html',''); initResizable(); })
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for atag.h:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="atag_8h__incl.svg" width="144" height="127"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="atag_8h__incl.svg" width="144" height="127"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
@@ -115,8 +114,8 @@ Functions</h2></td></tr>
 <tr class="separator:a4211691846343994252b4794b98fee7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aea5073c4d6bcc47bcf16c68dae9e640b"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="atag_8h.html#aea5073c4d6bcc47bcf16c68dae9e640b">atag_get_cmdline</a> ()</td></tr>
 <tr class="separator:aea5073c4d6bcc47bcf16c68dae9e640b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4110b5b30ac345926b4704dcc954717c"><td class="memItemLeft" align="right" valign="top">uintptr_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="atag_8h.html#a4110b5b30ac345926b4704dcc954717c">atag_get_initrd2_start_addr</a> ()</td></tr>
-<tr class="separator:a4110b5b30ac345926b4704dcc954717c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fe6491ab4b334fbbc628611703a6562"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structatag__initrd2__t.html">atag_initrd2_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="atag_8h.html#a3fe6491ab4b334fbbc628611703a6562">atag_get_initrd2_at</a> (uint8_t index)</td></tr>
+<tr class="separator:a3fe6491ab4b334fbbc628611703a6562"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section see"><dt>See also</dt><dd><a href="http://www.simtec.co.uk/products/SWLINUX/files/booting_article.html">http://www.simtec.co.uk/products/SWLINUX/files/booting_article.html</a></dd></dl>
@@ -141,28 +140,34 @@ Functions</h2></td></tr>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="atag_8h_aea5073c4d6bcc47bcf16c68dae9e640b_icgraph.svg" width="243" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="atag_8h_aea5073c4d6bcc47bcf16c68dae9e640b_icgraph.svg" width="243" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
 </div>
-<a id="a4110b5b30ac345926b4704dcc954717c" name="a4110b5b30ac345926b4704dcc954717c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4110b5b30ac345926b4704dcc954717c">&#9670;&nbsp;</a></span>atag_get_initrd2_start_addr()</h2>
+<a id="a3fe6491ab4b334fbbc628611703a6562" name="a3fe6491ab4b334fbbc628611703a6562"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3fe6491ab4b334fbbc628611703a6562">&#9670;&nbsp;</a></span>atag_get_initrd2_at()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uintptr_t atag_get_initrd2_start_addr </td>
+          <td class="memname"><a class="el" href="structatag__initrd2__t.html">atag_initrd2_t</a> * atag_get_initrd2_at </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>index</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Returns the initrd2 start address found in the ATAGs.</p>
-<dl class="section return"><dt>Returns</dt><dd>the initrd2 start address or <code>0</code> if not found </dd></dl>
+<p >Returns the initrd2 entry at a specific index found in the ATAGs.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">index</td><td>the index of the initrd2 entry to retrieve </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the initrd2 entry or <code>NULL</code> if not found (or <code>index</code> is invalid) </dd></dl>
 
 </div>
 </div>
@@ -191,8 +196,7 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="atag_8h_a4211691846343994252b4794b98fee7c_icgraph.svg" width="188" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="atag_8h_a4211691846343994252b4794b98fee7c_icgraph.svg" width="188" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>

@@ -5,8 +5,8 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 
-// TODO: ideally, we'd check the endianness of the system but this project is
-// for x86_64 only (i.e. it's little endian and we have to use those macros).
+// TODO: Ideally, we'd check the endianness of the system but this project only
+// deals with little endian system so far...
 #define HTONS(n) ((((n)&0xFF) << 8) | (((n)&0xFF00) >> 8))
 #define NTOHS(n) HTONS(n)
 #define HTONL(n)                                                               \

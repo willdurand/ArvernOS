@@ -12,7 +12,7 @@ typedef int (*initcall_t)(void);
 extern unsigned char __initcall_start;
 extern unsigned char __initcall_end;
 
-// TODO: we should ideally declare these declarations `static`, however LLVM
+// TODO: We should ideally declare these declarations `static`, however LLVM
 // strips them out because they are unused and despite `unused` being set.
 #define __initcall(func)                                                       \
   initcall_t __initcall_##func                                                 \

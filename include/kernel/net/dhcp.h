@@ -39,7 +39,7 @@ typedef struct dhcp_header
   uint8_t chaddr[16];
   uint8_t zero[192];
   uint32_t magic_cookie;
-  // TODO: it could be larger but then there is a problem with the ethernet
+  // TODO: It could be larger but then there is a problem with the ethernet
   // and/or physical layers. The packet is transmitted correctly but the next
   // received packet seems corrupted.
   uint8_t options[1024];
