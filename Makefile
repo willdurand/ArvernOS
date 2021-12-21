@@ -395,6 +395,10 @@ docs: ## build the docs
 	doxygen ./Doxyfile
 .PHONY: docs
 
+docs-fast: ## build the docs in fast mode (does not remove previous docs)
+	doxygen ./Doxyfile
+.PHONY: docs-fast
+
 clean: ## remove build artifacts
 	$(progress) "CLEAN"
 	rm -rf $(target_build_dir) $(initrd_dir)/info $(initrd_dir)/bin/ $(userland_src_dir)/bin/ $(userland_src_dir)/local-build/
