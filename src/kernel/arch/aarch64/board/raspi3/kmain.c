@@ -24,5 +24,6 @@ void kmain(uintptr_t w0)
     DEBUG("dtb_or_atags=%p but we do not support DTB", dtb_or_atags);
   }
 
-  kmain_start(atag_get_initrd2_start_addr(), atag_get_cmdline());
+  // We load the init ramdisk as the first (and only) initrd2 entry.
+  kmain_start(atag_get_initrd2_at(0)->start, atag_get_cmdline());
 }
