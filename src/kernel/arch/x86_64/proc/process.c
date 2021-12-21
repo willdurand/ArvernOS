@@ -67,7 +67,7 @@ process_t* process_exec(uint8_t* image, const char* name, char* const argv[])
   _argv[argc] = NULL;
   current_process->argv = _argv;
 
-  // TODO: do not use a fixed size.
+  // TODO: Do not use a fixed size.
   char** envp = (char**)calloc(1, sizeof(char*) * 10);
   current_process->envp = envp;
 

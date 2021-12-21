@@ -1,7 +1,7 @@
 #include <arvern/log.h>
 #include <stdio.h>
 
-// TODO: use malloc() when it becomes possible
+// TODO: Use malloc() when it becomes possible.
 char* environ[10] = { NULL };
 
 #ifndef __is_libk
@@ -16,7 +16,7 @@ int start_main(int (*main)(int, char**, char**),
   ARVERN_LOG("main=%p argc=%d argv=%p envp=%p", main, argc, argv, envp);
 #endif
 
-  // TODO: add the entries in `envp` to `environ`.
+  // TODO: Add the entries in `envp` to `environ`.
 
   int retval = main(argc, argv, envp);
 
@@ -26,7 +26,7 @@ int start_main(int (*main)(int, char**, char**),
   arvern_log_deinit();
 #endif
 
-  // TODO: call `exit()`
+  // TODO: Call `exit()` syscall.
   return retval;
 }
 

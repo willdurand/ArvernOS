@@ -18,7 +18,7 @@
 #define F1C100S_SOFT_RST_REG2   (CCU_BASE + 0x02D0)
 #define F1C100S_UART0_BASE      (CCU_BASE + 0x5000)
 
-// TODO: change the UART0 constants to be offsets so that we can use different
+// TODO: Change the UART0 constants to be offsets so that we can use different
 // UART base addresses, without having 1 constant for 1 register name per UART.
 
 // UART0

@@ -110,7 +110,7 @@ void load_segment(uint8_t* data, elf_program_header_t* program_header)
   memcpy((void*)addr, data + offset, file_size);
   memset((void*)(addr + file_size), 0, mem_size - file_size);
 
-  // TODO: we probably need to drop the WRITABLE flag if the segment isn't
+  // TODO: We probably need to drop the WRITABLE flag if the segment isn't
   // supposed to be writable.
 }
 

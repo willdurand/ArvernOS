@@ -28,7 +28,7 @@ int atoi(char* s)
     i++;
   }
 
-  // TODO: handle min/max values
+  // TODO: Handle min/max values.
 
   return sign * value;
 }

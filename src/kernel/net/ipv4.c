@@ -17,7 +17,7 @@ void icmpv4_receive_packet(net_interface_t* interface,
                            uint8_t* packet,
                            ipv4_header_t* header);
 
-// TODO: find a better approach to generate such IDs.
+// TODO: Find a better approach to generate such IDs.
 static uint16_t ipv4_id = 1;
 static uint16_t icmpv4_id = 1;
 

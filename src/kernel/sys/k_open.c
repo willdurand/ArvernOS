@@ -8,7 +8,7 @@
 
 int k_open(const char* pathname, uint32_t flags)
 {
-  // TODO: check flags
+  // TODO: Check flags.
 
   inode_t inode = vfs_namei(pathname);
 
