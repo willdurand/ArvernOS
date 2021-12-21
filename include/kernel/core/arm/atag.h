@@ -64,10 +64,11 @@ void atag_init(atag_header_t* ptr);
 const char* atag_get_cmdline();
 
 /**
- * Returns the initrd2 start address found in the ATAGs.
+ * Returns the initrd2 entry at a specific index found in the ATAGs.
  *
- * @return the initrd2 start address or `0` if not found
+ * @param index the index of the initrd2 entry to retrieve
+ * @return the initrd2 entry or `NULL` if not found (or `index` is invalid)
  */
-uintptr_t atag_get_initrd2_start_addr();
+atag_initrd2_t* atag_get_initrd2_at(uint8_t index);
 
 #endif

@@ -4,8 +4,11 @@
 #include <core/logging.h>
 #include <stdint.h>
 
+#define MAX_INITRD2 2
+
 static const char* cmdline = NULL;
-static uintptr_t initrd2_start_addr = 0;
+static uint8_t next_initrd2_entry = 0;
+static atag_initrd2_t* initrd2_entries[MAX_INITRD2] = { NULL };
 
 void atag_init(atag_header_t* ptr)
 {
@@ -29,10 +32,13 @@ void atag_init(atag_header_t* ptr)
         break;
       case ATAG_INITRD2: {
         atag_initrd2_t* initrd2 = (atag_initrd2_t*)curr;
-        initrd2_start_addr = initrd2->start;
+
+        if (next_initrd2_entry < MAX_INITRD2) {
+          initrd2_entries[next_initrd2_entry++] = initrd2;
+        }
 
         CORE_DEBUG("atag: initrd2: start=%p size=%#010lx",
-                   initrd2_start_addr,
+                   initrd2->start,
                    initrd2->size);
         break;
       }
@@ -64,7 +70,11 @@ const char* atag_get_cmdline()
   return cmdline;
 }
 
-uintptr_t atag_get_initrd2_start_addr()
+atag_initrd2_t* atag_get_initrd2_at(uint8_t index)
 {
-  return initrd2_start_addr;
+  if (index < 0 || index >= next_initrd2_entry) {
+    return NULL;
+  }
+
+  return initrd2_entries[index];
 }
