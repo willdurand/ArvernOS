@@ -203,7 +203,7 @@ ifeq ($(ENABLE_KERNEL_TRACE), 1)
 	TRACE_CFLAGS += -DENABLE_KERNEL_TRACE
 endif
 
-ENABLE_KERNEL_DEBUG ?= 0
+ENABLE_KERNEL_DEBUG ?= 1
 ifeq ($(ENABLE_KERNEL_DEBUG), 1)
 	DEBUG_CFLAGS += -DENABLE_KERNEL_DEBUG
 endif
@@ -359,7 +359,6 @@ debug: arch-debug
 .PHONY: debug
 
 run-debug: ## run the project in debug mode
-run-debug: BUILD_MODE = debug
 run-debug: arch-run-debug
 .PHONY: run-debug
 
