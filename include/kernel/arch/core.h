@@ -3,7 +3,7 @@
 #define ARCH_CORE_H
 
 /**
- * Initializes the Interrupt Service Routine (ISR).
+ * Initializes the Interrupt Service Routines (ISR).
  */
 void arch_isr_init();
 

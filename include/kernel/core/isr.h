@@ -13,7 +13,7 @@ typedef struct isr_stack isr_stack_t;
 typedef void (*isr_handler_t)(isr_stack_t* stack);
 
 /**
- * Initializes the _Interrupt Service Routine_ (ISR).
+ * Initializes the Interrupt Service Routines (ISR).
  */
 void isr_init();
 
