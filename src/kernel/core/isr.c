@@ -7,7 +7,7 @@ static isr_handler_t handlers[MAX_HANDLERS] = { 0 };
 
 void isr_init()
 {
-  INFO("%s", "core: initialize interrupt service routine");
+  INFO("%s", "core: initialize interrupt service routines");
 
   arch_isr_init();
 
