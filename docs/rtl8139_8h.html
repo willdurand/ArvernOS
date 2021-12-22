@@ -89,18 +89,20 @@ $(document).ready(function(){initNavTree('rtl8139_8h.html',''); initResizable();
   <div class="headertitle"><div class="title">rtl8139.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="net_8h.html">net/net.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="pci_8h.html">core/pci.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="net_8h.html">net/net.h</a>&gt;</code><br />
 <code>#include &lt;stdbool.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for rtl8139.h:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="rtl8139_8h__incl.svg" width="176" height="202"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="rtl8139_8h__incl.svg" width="228" height="202"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a486c9404282d4940385e382b9fed9f5d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtl8139_8h.html#a486c9404282d4940385e382b9fed9f5d">rtl8139_init</a> ()</td></tr>
-<tr class="separator:a486c9404282d4940385e382b9fed9f5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24e07ef25a2b1581bca67bbb213a0931"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtl8139_8h.html#a24e07ef25a2b1581bca67bbb213a0931">rtl8139_init</a> (<a class="el" href="unionpci__device__t.html">pci_device_t</a> device)</td></tr>
+<tr class="separator:a24e07ef25a2b1581bca67bbb213a0931"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aedaac9701166b358589fdcfefd0f702e"><td class="memItemLeft" align="right" valign="top">net_driver_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rtl8139_8h.html#aedaac9701166b358589fdcfefd0f702e">rtl8139_driver</a> ()</td></tr>
 <tr class="separator:aedaac9701166b358589fdcfefd0f702e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -125,8 +127,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a486c9404282d4940385e382b9fed9f5d" name="a486c9404282d4940385e382b9fed9f5d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a486c9404282d4940385e382b9fed9f5d">&#9670;&nbsp;</a></span>rtl8139_init()</h2>
+<a id="a24e07ef25a2b1581bca67bbb213a0931" name="a24e07ef25a2b1581bca67bbb213a0931"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24e07ef25a2b1581bca67bbb213a0931">&#9670;&nbsp;</a></span>rtl8139_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -134,17 +136,25 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">bool rtl8139_init </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype"><a class="el" href="unionpci__device__t.html">pci_device_t</a>&#160;</td>
+          <td class="paramname"><em>device</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p >Initializes the RTL8139 driver.</p>
-<dl class="section return"><dt>Returns</dt><dd>true when initialization has succeeded, false otherwise. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">the</td><td>PCI device corresponding to a RTL8139 ethernet card </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true when initialization has succeeded, false otherwise </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="rtl8139_8h_a486c9404282d4940385e382b9fed9f5d_cgraph.svg" width="256" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="rtl8139_8h_a24e07ef25a2b1581bca67bbb213a0931_cgraph.svg" width="382" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
 </div>
 
 </div>
