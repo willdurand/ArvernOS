@@ -25,6 +25,7 @@ ASM     = $(CC)
 ###############################################################################
 
 libk_c_files   += $(wildcard $(kernel_src_dir)/core/arm/*.c)
+libk_c_files   += $(wildcard $(kernel_src_dir)/core/mmio.c)
 libk_c_files   += $(wildcard $(arch_src)/arch/*.c)
 libk_c_files   += $(wildcard $(arch_src)/mmu/*.c)
 libk_c_files   += $(wildcard $(arch_src)/sys/*.c)

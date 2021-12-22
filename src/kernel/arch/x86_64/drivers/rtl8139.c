@@ -2,7 +2,6 @@
 #include <arvern/utils.h>
 #include <core/interrupt.h>
 #include <core/isr.h>
-#include <core/pci.h>
 #include <core/port.h>
 #include <mmu/paging.h>
 // We use the net logger because this driver is for a network card.
@@ -17,7 +16,6 @@ void rtl8139_transmit_frame(void* data, uint32_t len);
 void rtl8139_receive_frame();
 static void rtl8139_callback(isr_stack_t* stack);
 
-static pci_device_t device = { 0 };
 static uint32_t ioaddr = 0;
 
 static uint8_t* tx_buffer = NULL;
@@ -39,15 +37,8 @@ static net_driver_t driver = {
   .interface = NULL,     // will be set in `net_interface_init()`.
 };
 
-bool rtl8139_init()
+bool rtl8139_init(pci_device_t device)
 {
-  device = pci_get_device(RTL8139_VENDOR_ID, RTL8139_DEVICE_ID);
-
-  if (device.packed == 0) {
-    WARN("%s", "net: rtl8139: PCI device not found");
-    return false;
-  }
-
   uint32_t ret = pci_read(device, PCI_BASE_ADDR_0, 4);
   ioaddr = ret & (~0x3);
 

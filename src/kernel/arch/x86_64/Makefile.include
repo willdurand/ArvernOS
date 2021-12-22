@@ -41,6 +41,8 @@ endif
 # Source files
 ###############################################################################
 
+libk_c_files    += $(wildcard $(kernel_src_dir)/core/pci.c)
+libk_c_files    += $(wildcard $(kernel_src_dir)/core/port.c)
 libk_c_files    += $(wildcard $(arch_src)/*.c)
 libk_c_files    += $(wildcard $(arch_src)/arch/*.c)
 libk_c_files    += $(wildcard $(arch_src)/console/*.c)

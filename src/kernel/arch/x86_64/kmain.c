@@ -3,6 +3,7 @@
 #include <console/console.h>
 #include <core/elf.h>
 #include <core/multiboot.h>
+#include <core/pci.h>
 #include <core/port.h>
 #include <core/tss.h>
 #include <drivers/keyboard.h>
@@ -75,16 +76,30 @@ void load_network_config(inish_config_t* kernel_cfg, net_driver_t* driver)
 
 int init_network()
 {
+  pci_device_t device = pci_get_device(RTL8139_VENDOR_ID, RTL8139_DEVICE_ID);
+
+  if (device.packed == 0) {
+    WARN("%s", "net: rtl8139: PCI device not found");
+    return -1;
+  }
+
+  net_driver_t* net_driver = NULL;
+
+  if (rtl8139_init(device)) {
+    net_driver = rtl8139_driver();
+  }
+
+  if (net_driver == NULL) {
+    return -2;
+  }
+
   inish_config_t* kernel_cfg = inish_load("/etc/kernel.inish");
 
   if (kernel_cfg != NULL) {
-    INFO("%s", "net: loaded /etc/kernel.inish configuration");
+    INFO("%s", "net: load /etc/kernel.inish configuration");
   }
 
-  if (rtl8139_init()) {
-    net_driver_t* rtl8139 = rtl8139_driver();
-    load_network_config(kernel_cfg, rtl8139);
-  }
+  load_network_config(kernel_cfg, net_driver);
 
   if (kernel_cfg != NULL) {
     inish_free(kernel_cfg);

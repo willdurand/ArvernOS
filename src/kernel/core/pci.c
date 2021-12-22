@@ -1,4 +1,5 @@
-#include "pci.h"
+#include <core/pci.h>
+
 #include <core/logging.h>
 #include <core/port.h>
 
@@ -7,7 +8,7 @@ pci_device_t pci_get_device(uint16_t vendor_id, uint16_t device_id)
   // TODO: This is the minimal amount of code to retrieve a PCI device when
   // there is only one with the same vendor and device IDs and no function.
 
-  for (uint8_t num = 0; num < pci_deviceICES_PER_BUS; num++) {
+  for (uint8_t num = 0; num < PCI_DEVICES_PER_BUS; num++) {
     pci_device_t device = { 0 };
     device.bus_number = 0;
     device.device_number = num;
