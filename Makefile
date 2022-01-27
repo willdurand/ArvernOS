@@ -49,7 +49,7 @@ arch_src         = $(kernel_src_dir)/arch/$(ARCH)
 # Build directories.
 target_build_dir = $(build_dir)/$(ARCH)
 dist_dir         = $(target_build_dir)/dist
-lib_objs_dir    = $(target_build_dir)/libc-objects
+lib_objs_dir     = $(target_build_dir)/libc-objects
 libk_objs_dir    = $(target_build_dir)/libk-objects
 misc_dir         = $(target_build_dir)/misc
 # Files.
