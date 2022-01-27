@@ -1,5 +1,6 @@
 #include <arch/kernel.h>
 
+#include <arvern/utils.h>
 #include <core/isr.h>
 #include <core/port.h>
 #include <drivers/vga_text.h>
@@ -42,5 +43,7 @@ void arch_poweroff(int exit_code)
   } else {
     port_byte_out(0x501, exit_code);
   }
+#else
+  UNUSED(exit_code);
 #endif
 }
