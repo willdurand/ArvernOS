@@ -403,6 +403,12 @@ clean: ## remove build artifacts
 	rm -rf $(target_build_dir) $(initrd_dir)/info $(initrd_dir)/bin/ $(userland_src_dir)/bin/ $(userland_src_dir)/local-build/
 .PHONY: clean
 
+what: ## display some information about the current configuration
+	echo "OS_NAME    : $(OS_NAME)"
+	echo "ARCH       : $(ARCH)"
+	echo "BUILD_MODE : $(BUILD_MODE)"
+.PHONY: what
+
 help: ## show this help message
 help:
 	@/bin/echo -n "$(OS_NAME) - available commands for arch=$(ARCH)"
