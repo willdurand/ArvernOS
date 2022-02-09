@@ -66,6 +66,7 @@ commands:
       command:
         type: string
     steps:
+      - run: make version
       - run:
           name: << parameters.title >>
           command: << parameters.command >>
