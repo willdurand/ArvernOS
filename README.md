@@ -62,7 +62,7 @@ The following dependencies are required to build this project:
 
 - `llvm` (version 13 currently)
 - `make`
-- `qemu`
+- `qemu` (version >= 5)
 
 If you want to work on the `x86_64` architecture, you'll need the following
 extra dependencies:
