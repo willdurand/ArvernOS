@@ -1,5 +1,5 @@
 # This image should only be used for ArvernOS on Circle CI.
-FROM cimg/base:2021.10
+FROM cimg/base:2022.02
 
 COPY tools/install-linux-deps /tmp/
 RUN  sudo /tmp/install-linux-deps
