@@ -1,6 +1,6 @@
 #include <fs/proc.h>
 
-#include <init.h>
+#include <initcall.h>
 #include <osinfo.h>
 #include <stdio.h>
 
@@ -24,4 +24,4 @@ int proc_version_init()
   return 0;
 }
 
-init_register(proc_version_init);
+initcall_fs_register(proc_version_init);

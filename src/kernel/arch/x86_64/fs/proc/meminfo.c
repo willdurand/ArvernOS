@@ -1,6 +1,6 @@
 #include <fs/proc.h>
 
-#include <init.h>
+#include <initcall.h>
 #include <inttypes.h>
 #include <mmu/alloc.h>
 #include <mmu/frame.h>
@@ -34,4 +34,4 @@ int proc_meminfo_init()
   return 0;
 }
 
-init_register(proc_meminfo_init);
+initcall_fs_register(proc_meminfo_init);

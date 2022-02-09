@@ -1,7 +1,7 @@
 #include <fs/dev.h>
 
 #include <arvern/utils.h>
-#include <init.h>
+#include <initcall.h>
 
 uint64_t null_read(inode_t node, void* buffer, uint64_t size, uint64_t offset);
 uint64_t null_write(inode_t node, void* buffer, uint64_t size, uint64_t offset);
@@ -48,4 +48,4 @@ int dev_null_init()
   return 0;
 }
 
-init_register(dev_null_init);
+initcall_fs_register(dev_null_init);

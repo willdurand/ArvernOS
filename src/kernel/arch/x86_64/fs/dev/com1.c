@@ -2,7 +2,7 @@
 
 #include <arvern/utils.h>
 #include <drivers/serial.h>
-#include <init.h>
+#include <initcall.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -79,4 +79,4 @@ int dev_serial_com1_init()
   return 0;
 }
 
-init_register(dev_serial_com1_init);
+initcall_fs_register(dev_serial_com1_init);

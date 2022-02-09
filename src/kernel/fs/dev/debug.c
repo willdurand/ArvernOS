@@ -1,7 +1,7 @@
 #include <fs/dev.h>
 
 #include <arvern/utils.h>
-#include <init.h>
+#include <initcall.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -79,4 +79,4 @@ int dev_debug_init()
   return 0;
 }
 
-init_register(dev_debug_init);
+initcall_fs_register(dev_debug_init);

@@ -1,6 +1,6 @@
 #include <fs/proc.h>
 
-#include <init.h>
+#include <initcall.h>
 #include <stdio.h>
 
 // This variable is defined in `src/kernel/kmain.c`.
@@ -20,4 +20,4 @@ int proc_cmdline_init()
   return 0;
 }
 
-init_register(proc_cmdline_init);
+initcall_fs_register(proc_cmdline_init);
