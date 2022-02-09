@@ -81,7 +81,7 @@ TAR      = tar
 MKDIR    = mkdir
 # This is from: https://github.com/nuta and it allows to print nice progress
 # messages.
-progress := printf "  \\033[1;96m%8s\\033[0m  \\033[1;m%s\\033[0m\\n"
+progress := printf "  \\033[1;96m%-8s\\033[0m  \\033[1;m%s\\033[0m\\n"
 
 ###############################################################################
 # Options for the different tools
