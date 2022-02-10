@@ -5,6 +5,9 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#define EXIT_SUCCESS 0
+#define EXIT_FAILURE 1
+
 #ifdef __is_libk
 
 #ifdef CONFIG_USE_DLMALLOC

@@ -1,15 +1,16 @@
 #include <arvern/log.h>
 #include <stdio.h>
+#include <sys/syscall.h>
 
 // TODO: Use malloc() when it becomes possible.
 char* environ[10] = { NULL };
 
 #ifndef __is_libk
 
-int start_main(int (*main)(int, char**, char**),
-               int argc,
-               char* argv[],
-               char* envp[])
+void start_main(int (*main)(int, char**, char**),
+                int argc,
+                char* argv[],
+                char* envp[])
 {
 #ifdef ENABLE_USERLAND_DEBUG
   arvern_log_init();
@@ -20,14 +21,12 @@ int start_main(int (*main)(int, char**, char**),
 
   int retval = main(argc, argv, envp);
 
-  ARVERN_LOG("retval=%d", retval);
-
 #ifdef ENABLE_USERLAND_DEBUG
+  ARVERN_LOG("retval=%d", retval);
   arvern_log_deinit();
 #endif
 
-  // TODO: Call `exit()` syscall.
-  return retval;
+  exit(retval);
 }
 
 #endif
