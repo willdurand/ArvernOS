@@ -34,7 +34,7 @@ void udp_receive_packet(net_interface_t* interface,
   int sockfd = descriptor_udp_lookup(udp_header.dst_port);
   NET_DEBUG("got sockfd=%d for dst_port=%d", sockfd, udp_header.dst_port);
 
-  if (sockfd > 0) {
+  if (sockfd >= 0) {
     write(sockfd, udp_data, udp_header.len - sizeof(udp_header_t));
     return;
   }

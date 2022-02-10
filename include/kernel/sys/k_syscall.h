@@ -8,6 +8,14 @@
 #include <sys/time.h>
 #include <sys/types.h>
 
+#ifdef CONFIG_LINUX_COMPAT
+
+#include <sys/poll.h>
+#include <sys/uio.h>
+#include <sys/utsname.h>
+
+#endif
+
 /**
  * Initializes the syscalls management.
  */
@@ -47,5 +55,28 @@ int k_execv(const char* path, char* const argv[]);
 pid_t k_getpid();
 void k_exit(int code);
 int k_openat(int dirfd, const char* pathname, int flags);
+
+#ifdef CONFIG_LINUX_COMPAT
+
+int k_poll(struct pollfd* fds, nfds_t nfds, int timeout);
+int k_writev(int fd, struct iovec* iov, int iovcnt);
+int k_uname(struct utsname* buf);
+int k_getsockname(int sockfd,
+                  struct sockaddr* restrict addr,
+                  socklen_t* restrict addrlen);
+int k_connect(int sockfd, const struct sockaddr* addr, socklen_t addrlen);
+int k_dup2(int oldfd, int newfd);
+int k_ioctl(int fd, int request, void* ptr);
+char* k_getcwd(char* buf, size_t size);
+void* k_mmap(void* addr,
+             size_t length,
+             int prot,
+             int flags,
+             int fd,
+             off_t offset);
+uintptr_t k_brk(uintptr_t addr);
+int k_arch_prctl(int code, uintptr_t addr);
+
+#endif // CONFIG_LINUX_COMPAT
 
 #endif

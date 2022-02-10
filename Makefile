@@ -161,6 +161,12 @@ ifeq ($(CONFIG_USE_FAKE_CLOCK), 1)
 	libk_c_files  += $(kernel_src_dir)/time/fake_clock.c
 endif
 
+ifeq ($(CONFIG_LINUX_COMPAT), 1)
+	KERNEL_CONFIG += -DCONFIG_LINUX_COMPAT
+	LIBC_CONFIG   += -DCONFIG_LINUX_COMPAT
+	libk_c_files  += $(wildcard $(kernel_src_dir)/sys/linux/*.c)
+endif
+
 # This file exists in a Docker container because we copy it in `Dockerfile`.
 in_docker = $(wildcard /tmp/install-linux-deps)
 ifneq ($(in_docker),)
@@ -435,6 +441,7 @@ what: ## display some information about the current configuration
 	echo "OS_NAME : $(OS_NAME)"
 	echo "ARCH    : $(ARCH)"
 	echo ""
+	echo "CONFIG_LINUX_COMPAT   = $(CONFIG_LINUX_COMPAT)"
 	echo "CONFIG_SEMIHOSTING    = $(CONFIG_SEMIHOSTING)"
 	echo "CONFIG_USE_DLMALLOC   = $(CONFIG_USE_DLMALLOC)"
 	echo "CONFIG_USE_FAKE_CLOCK = $(CONFIG_USE_FAKE_CLOCK)"

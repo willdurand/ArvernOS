@@ -2,9 +2,11 @@
 #ifndef PROC_DESCRIPTOR_H
 #define PROC_DESCRIPTOR_H
 
+#include <arpa/inet.h>
 #include <fs/vfs.h>
 #include <stdbool.h>
 #include <stdint.h>
+#include <sys/socket.h>
 #include <sys/types.h>
 
 #define STDIN  0
@@ -23,6 +25,8 @@ typedef struct descriptor
   uint32_t type;
   uint32_t protocol;
   uint16_t port;
+  struct sockaddr_in addr;
+  socklen_t addr_len;
 } descriptor_t;
 
 /**
@@ -81,5 +85,9 @@ int descriptor_udp_lookup(uint16_t port);
  * @return `true` when the protocol is supported, `false` otherwise
  */
 bool is_protocol_supported(uint32_t type, uint32_t protocol);
+
+void duplicate_descriptor(int oldfd, int newfd);
+
+int descriptor_raw_lookup(uint32_t protocol, in_addr_t src_addr);
 
 #endif

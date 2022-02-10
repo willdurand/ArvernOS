@@ -5,9 +5,11 @@
 #include <net/icmpv4.h>
 #include <net/logging.h>
 #include <net/udp.h>
+#include <proc/descriptor.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/syscall.h>
 
 ipv4_header_t ipv4_create_header(uint8_t src_ip[4],
                                  in_addr_t dst_addr,
@@ -35,6 +37,13 @@ void ipv4_receive_packet(net_interface_t* interface,
             src_ip[2],
             src_ip[3],
             interface->id);
+
+  int sockfd = descriptor_raw_lookup(header.proto, header.src_addr);
+  if (sockfd >= 0) {
+    // Handle SOCK_RAW.
+    write(sockfd, data, len);
+    return;
+  }
 
   switch (header.proto) {
     case IPV4_PROTO_ICMP:

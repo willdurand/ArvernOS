@@ -5,6 +5,7 @@
 #include <errno.h>
 #include <proc/descriptor.h>
 #include <stddef.h>
+#include <string.h>
 #include <sys/logging.h>
 
 ssize_t k_recvfrom(int sockfd,
@@ -14,14 +15,7 @@ ssize_t k_recvfrom(int sockfd,
                    struct sockaddr* src_addr,
                    socklen_t* addrlen)
 {
-  UNUSED(addrlen);
-  UNUSED(src_addr);
   UNUSED(flags);
-
-  if (sockfd < 3) {
-    SYS_DEBUG("invalid socket descriptor sd=%d", sockfd);
-    return -ENOTSOCK;
-  }
 
   descriptor_t* desc = get_descriptor(sockfd);
 
@@ -30,11 +24,27 @@ ssize_t k_recvfrom(int sockfd,
     return -EBADF;
   }
 
-  if (desc->domain != AF_INET || desc->type != SOCK_DGRAM ||
-      !is_protocol_supported(desc->type, desc->protocol)) {
-    SYS_DEBUG("invalid sockfd=%d", sockfd);
+  if (desc->domain != AF_INET) {
+    SYS_DEBUG("invalid domain for sockfd=%d", sockfd);
     return -EINVAL;
   }
+
+  switch (desc->type) {
+    case SOCK_DGRAM:
+    case SOCK_RAW:
+      break;
+    default:
+      SYS_DEBUG("invalid type for sockfd=%d", sockfd);
+      return -EINVAL;
+  }
+
+  if (!is_protocol_supported(desc->type, desc->protocol)) {
+    SYS_DEBUG("unsupported protocol for sockfd=%d", sockfd);
+    return -EINVAL;
+  }
+
+  memcpy(src_addr, &desc->addr, desc->addr_len);
+  *addrlen = desc->addr_len;
 
   return vfs_read(desc->inode, buf, len, 0);
 }

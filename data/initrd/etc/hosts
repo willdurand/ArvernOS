@@ -1,0 +1,3 @@
+# Mainly needed because `KERNEL_CMDLINE` skips arguments with a dot so we
+# cannot use `KERNEL_CMDLINE='/bin/busybox ping github.com'` for instance.
+140.82.121.4 github

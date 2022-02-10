@@ -30,3 +30,11 @@ ret_from_fork:
   call task_schedule_tail
 
   call r12
+
+%ifdef CONFIG_LINUX_COMPAT
+global linux_compat_start
+
+linux_compat_start:
+  mov rsp, rsi
+  jmp rdi
+%endif
