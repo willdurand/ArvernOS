@@ -26,6 +26,7 @@
 #define SYSCALL_GETHOSTBYNAME2 13
 #define SYSCALL_EXECV          14
 #define SYSCALL_GETPID         15
+#define SYSCALL_EXIT           16
 
 #define SYSCALL_SET_ERRNO()                                                    \
   if (retval < 0) {                                                            \
@@ -197,5 +198,12 @@ int execv(const char* path, char* const argv[]);
  * @return the process ID (PID) of the calling process
  */
 pid_t getpid();
+
+/**
+ * Implements the exit syscall.
+ *
+ * @param code the status code
+ */
+void exit(int code);
 
 #endif
