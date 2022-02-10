@@ -6,7 +6,7 @@
 
 int main()
 {
-  printf("==== userland test suite ====");
+  printf("==== userland test suite ====\n");
 
 #ifndef __arvernos__
   printf("This program should be compiled for and executed on ArvernOS\n");
