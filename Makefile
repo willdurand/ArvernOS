@@ -359,6 +359,7 @@ debug: arch-debug
 .PHONY: debug
 
 run-debug: ## run the project in debug mode
+run-debug: BUILD_MODE = debug
 run-debug: arch-run-debug
 .PHONY: run-debug
 
