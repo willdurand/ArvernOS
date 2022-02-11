@@ -409,9 +409,12 @@ clean: ## remove build artifacts
 .PHONY: clean
 
 what: ## display some information about the current configuration
-	echo "OS_NAME    : $(OS_NAME)"
-	echo "ARCH       : $(ARCH)"
-	echo "BUILD_MODE : $(BUILD_MODE)"
+	echo "OS_NAME : $(OS_NAME)"
+	echo "ARCH    : $(ARCH)"
+	echo ""
+	echo "CONFIG_SEMIHOSTING    = $(CONFIG_SEMIHOSTING)"
+	echo "CONFIG_USE_DLMALLOC   = $(CONFIG_USE_DLMALLOC)"
+	echo "CONFIG_USE_FAKE_CLOCK = $(CONFIG_USE_FAKE_CLOCK)"
 .PHONY: what
 
 help: ## show this help message
