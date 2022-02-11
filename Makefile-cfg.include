@@ -1,0 +1,15 @@
+# This file describes the available (custom) configuration options.
+
+# LLVM tools configuration.
+LLVM_PREFIX ?=
+LLVM_SUFFIX ?=
+
+# When set to 1, enable the Undefined Behavior SANitizer.
+UBSAN                 ?=
+# When set to 1, enable semi-hosting mode (QEMU, mainly).
+CONFIG_SEMIHOSTING    ?=
+# When set to 1, use dlmalloc for malloc/free/realloc (instead of liballoc).
+CONFIG_USE_DLMALLOC   ?=
+# When set to 1, enable fake clock for targets that don't have a real-time
+# clock (RTC).
+CONFIG_USE_FAKE_CLOCK ?=

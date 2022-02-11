@@ -129,11 +129,14 @@ libk_extra_objects =
 # Custom configuration
 ###############################################################################
 
--include ./config
+# Variables that may be affected by the custom configuration.
+KERNEL_CFLAGS ?=
+KERNEL_CONFIG ?=
+LIBC_CONFIG   ?=
+QEMU_OPTIONS  ?=
 
-UBSAN       ?=
-LLVM_PREFIX ?=
-LLVM_SUFFIX ?=
+-include ./config
+include ./Makefile-cfg.include
 
 ifeq ($(UBSAN), 1)
 	KERNEL_CFLAGS += -fsanitize=undefined
@@ -141,19 +144,19 @@ endif
 
 ifeq ($(CONFIG_USE_DLMALLOC), 1)
 	external_deps += dlmalloc
-	CONFIG_CFLAGS += -DCONFIG_USE_DLMALLOC
+	KERNEL_CONFIG += -DCONFIG_USE_DLMALLOC
 else
 	external_deps += liballoc
 endif
 
 ifeq ($(CONFIG_SEMIHOSTING), 1)
 	QEMU_OPTIONS  += -semihosting
-	CONFIG_CFLAGS += -DCONFIG_SEMIHOSTING
+	KERNEL_CONFIG += -DCONFIG_SEMIHOSTING
 endif
 
 ifeq ($(CONFIG_USE_FAKE_CLOCK), 1)
-	CONFIG_CFLAGS += -DBUILD_TIME_IN_NANOSECONDS=$(shell date +%s%N)
-	libk_c_files += $(kernel_src_dir)/time/fake_clock.c
+	KERNEL_CONFIG += -DBUILD_TIME_IN_NANOSECONDS=$(shell date +%s%N)
+	libk_c_files  += $(kernel_src_dir)/time/fake_clock.c
 endif
 
 # This file exists in a Docker container because we copy it in `Dockerfile`.
@@ -182,6 +185,7 @@ LIBC_INCLUDES  += $(INCLUDES)
 LIBC_ASM_FLAGS +=
 LIBC_CFLAGS    += -O2 -std=c11 -ffreestanding -nostdlib -fno-builtin
 LIBC_CFLAGS    += $(WERRORS)
+LIBC_CFLAGS    += $(LIBC_CONFIG)
 
 # Kernel flags
 KERNEL_INCLUDES  += $(INCLUDES)
@@ -191,10 +195,10 @@ KERNEL_ASM_FLAGS +=
 KERNEL_CFLAGS    += $(LIBC_CFLAGS)
 KERNEL_CFLAGS    += -ffunction-sections -fdata-sections
 KERNEL_CFLAGS    += $(WERRORS)
-KERNEL_CFLAGS    += $(CONFIG_CFLAGS)
+KERNEL_CFLAGS    += $(KERNEL_CONFIG)
 
-CONFIG_CFLAGS += -DGIT_HASH=\"$(git_hash)\"
-CONFIG_CFLAGS += -DARCH=\"$(ARCH)\"
+KERNEL_CONFIG += -DGIT_HASH=\"$(git_hash)\"
+KERNEL_CONFIG += -DARCH=\"$(ARCH)\"
 
 DEBUG_CFLAGS  += -g3
 
@@ -261,7 +265,7 @@ include $(arch_src)/Makefile.include
 ifneq ($(BOARD),)
 	board_src = $(arch_src)/board/$(BOARD)
 
-	CONFIG_CFLAGS += -DBOARD=\"$(BOARD)\"
+	KERNEL_CONFIG += -DBOARD=\"$(BOARD)\"
 
 	# Include board-specific makefile when BOARD is defined.
 	include $(board_src)/Makefile.include
