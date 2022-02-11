@@ -331,7 +331,7 @@ $(libc): $(dist_dir) $(libc_asm_objects) $(libc_c_objects)
 
 $(initrd): $(misc_dir) userland
 	$(progress) "TAR" $@
-	cp -R $(userland_src_dir)/bin $(initrd_dir)
+	cp -R $(dist_dir)/userland/bin $(initrd_dir)
 	echo "$(OS_NAME) ($(ARCH)) build info" > $(initrd_dir)/info
 	echo "" >> $(initrd_dir)/info
 	echo "hash: $(git_hash)" >> $(initrd_dir)/info
