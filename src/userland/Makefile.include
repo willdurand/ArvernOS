@@ -74,11 +74,11 @@ objs += $(addprefix $(build_dir)/$(external_dir)/, $(external_objs))
 # Custom configuration
 ###############################################################################
 
--include $(root_dir)/config
+# Variables that may be affected by the custom configuration.
+CFLAGS ?=
 
-UBSAN       ?=
-LLVM_PREFIX ?=
-LLVM_SUFFIX ?=
+-include $(root_dir)/config
+include $(root_dir)/Makefile-cfg.include
 
 ifeq ($(UBSAN), 1)
 	CFLAGS += -fsanitize=undefined
