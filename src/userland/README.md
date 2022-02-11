@@ -3,8 +3,8 @@
 This directory contains programs that are compiled using the ArvernOS _libc_ and
 bundled into the initial RAM disk (`initrd`) when building the ISO.
 
-- `bin/` contains the final binaries for ArvernOS
-- `local-build/` contains the binaries compiled for a "local environment"
+- `local-build/` contains the binaries compiled for a "local environment" (see
+  below)
 - the other directories are programs
 
 ## Local builds

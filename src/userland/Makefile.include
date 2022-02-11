@@ -25,20 +25,21 @@ bin_name              ?=
 platform              := $(shell echo __$(OS_NAME)__ | tr '[:upper:]' '[:lower:]')
 
 root_dir     = ../../..
-bin_dir      = ../bin
 external_dir = $(root_dir)/external
 
 ifeq ($(BOARD),)
-	base_build_dir = $(root_dir)/build/$(ARCH)
+	target_build_dir = $(root_dir)/build/$(ARCH)
 else
-	base_build_dir = $(root_dir)/build/$(ARCH)/$(BOARD)
+	target_build_dir = $(root_dir)/build/$(ARCH)/$(BOARD)
 endif
 
-build_dir    = $(base_build_dir)/userland-objects/src/userland/$(bin_name)
+build_dir    = $(target_build_dir)/userland-objects/src/userland/$(bin_name)
+dist_dir     = $(target_build_dir)/dist
+bin_dir      = $(dist_dir)/userland/bin
 target       = $(bin_dir)/$(bin_name)
 
-local_build_dir    = ../local-build
-local_build_target = $(local_build_dir)/$(bin_name)
+local_build_dir = ../local-build
+local_target    = $(local_build_dir)/$(bin_name)
 
 # The list of external dependencies.
 external_deps ?=
@@ -140,7 +141,7 @@ ifeq ($(ENABLE_USERLAND_DEBUG), 1)
 	CFLAGS += -DENABLE_USERLAND_DEBUG
 endif
 
-LD_FLAGS += $(base_build_dir)/dist/libc-$(OS_NAME)-$(ARCH).a
+LD_FLAGS += $(target_build_dir)/dist/libc-$(OS_NAME)-$(ARCH).a
 
 ###############################################################################
 # Rules and targets
@@ -162,12 +163,12 @@ $(objs): $(build_dir)/%.o : %.c
 local: CFLAGS  = $(COMMON_CFLAGS)
 local: LD_FLAGS = -fuse-ld=lld
 local: $(objs)
-	$(progress) "LD" $(local_build_target)
+	$(progress) "LD" $(local_target)
 	mkdir -p $(local_build_dir)
-	$(CC) $(LD_FLAGS) -o $(local_build_target) $^
+	$(CC) $(LD_FLAGS) -o $(local_target) $^
 .PHONY: local
 
 clean:
 	$(progress) "CLEAN"
-	rm -f $(target) $(local_build_target) $(objs)
+	rm -f $(target) $(local_target) $(objs)
 .PHONY: clean
