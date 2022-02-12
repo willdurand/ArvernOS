@@ -62,6 +62,7 @@ libc             = $(dist_dir)/libc-$(OS_NAME)-$(ARCH).a
 symbols          = $(dist_dir)/$(symbols_txt)
 initrd           = $(dist_dir)/$(initrd_tar)
 log_file         = $(log_dir)/$(ARCH)-$(BUILD_MODE).log
+gdbinit          = .gdbinit
 
 # This is the list of external libraries we use and need to build for the
 # kernel (libk).
@@ -344,6 +345,12 @@ $(initrd): $(misc_dir) userland
 	echo "INCLUDES: $(KERNEL_INCLUDES)" >> $(initrd_dir)/info
 	cd $(initrd_dir) && $(TAR) -cf ../../$@ *
 
+gdbinit:
+	echo "target remote localhost:1234" > $(gdbinit)
+	echo "set disassembly-flavor intel" >> $(gdbinit)
+	echo "add-symbol-file $(kernel)"    >> $(gdbinit)
+.PHONY: gdbinit
+
 libc: ## build the libc
 libc: $(libc)
 .PHONY: libc
@@ -359,13 +366,18 @@ run-release: arch-run-release
 debug: ## build the project in debug mode
 debug: KERNEL_CFLAGS += $(DEBUG_CFLAGS)
 debug: BUILD_MODE = debug
-debug: arch-debug
+debug: arch-debug gdbinit
 .PHONY: debug
 
 run-debug: ## run the project in debug mode
 run-debug: BUILD_MODE = debug
 run-debug: arch-run-debug
 .PHONY: run-debug
+
+gdb: ## build, run the project in debug mode and enable GDB
+gdb: QEMU_OPTIONS += -s -S
+gdb: run-debug
+.PHONY: gdb
 
 run-test: ## run the project in test mode
 run-test: BUILD_MODE = test
