@@ -6,7 +6,9 @@
 
 typedef void (*syscall_ptr_t)(void);
 
-syscall_ptr_t syscall_handlers[200] = { (syscall_ptr_t)k_not_implemented };
+syscall_ptr_t syscall_handlers[300] = {
+  [0 ... 299] = (syscall_ptr_t)k_not_implemented,
+};
 
 void syscall_init()
 {
@@ -28,6 +30,7 @@ void syscall_init()
   syscall_handlers[SYSCALL_EXECV] = (syscall_ptr_t)k_execv;
   syscall_handlers[SYSCALL_GETPID] = (syscall_ptr_t)k_getpid;
   syscall_handlers[SYSCALL_EXIT] = (syscall_ptr_t)k_exit;
+  syscall_handlers[SYSCALL_OPENAT] = (syscall_ptr_t)k_openat;
 
   arch_syscall_init();
 }
