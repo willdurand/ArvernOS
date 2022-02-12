@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define STACKTRACE_MAX 16
+
 typedef struct stack_frame
 {
   struct stack_frame* rbp;
@@ -30,9 +32,15 @@ void arch_kernel_dump_stacktrace()
   stack_frame_t* stackframe = NULL;
   __asm__("movq %%rbp, %0" : "=r"(stackframe));
 
-  while (stackframe != NULL) {
+  uint8_t i = 0;
+  while (stackframe != NULL && i++ < STACKTRACE_MAX) {
     uint64_t address = stackframe->rip;
     uint64_t symbol_addr = address;
+
+    // This is the region where the kernel is located.
+    if (address < 0x100000 || address > 0x200000) {
+      break;
+    }
 
     char* symbol = kernel_find_symbol(&symbol_addr);
     char* name = symbol ? symbol : "???";
