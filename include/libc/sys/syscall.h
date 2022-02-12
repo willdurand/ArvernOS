@@ -27,6 +27,7 @@
 #define SYSCALL_EXECV          14
 #define SYSCALL_GETPID         15
 #define SYSCALL_EXIT           16
+#define SYSCALL_OPENAT         17
 
 #define SYSCALL_SET_ERRNO()                                                    \
   if (retval < 0) {                                                            \
@@ -205,5 +206,16 @@ pid_t getpid();
  * @param code the status code
  */
 void exit(int code);
+
+/**
+ * Implements the openat syscall.
+ *
+ * @param dirfd a directory file descriptor
+ * @param pathname the name of the file to open
+ * @param flags creation or file status flags
+ * @return a file descriptor, i.e. a small, non-negative integer that is used
+ * in subsequent system calls
+ */
+int openat(int dirfd, const char* pathname, int flags);
 
 #endif

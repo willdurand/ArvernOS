@@ -22,4 +22,7 @@
 /// Set file descriptor offset to EOF plus offset.
 #define SEEK_END 2
 
+/// SYSCALL_OPENAT should use the current working directory.
+#define AT_FDCWD -100
+
 #endif

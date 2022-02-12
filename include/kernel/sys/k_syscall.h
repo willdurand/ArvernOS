@@ -46,5 +46,6 @@ int k_gethostbyname2(const char* name, struct in_addr* in);
 int k_execv(const char* path, char* const argv[]);
 pid_t k_getpid();
 void k_exit(int code);
+int k_openat(int dirfd, const char* pathname, int flags);
 
 #endif
