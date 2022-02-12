@@ -2,10 +2,19 @@
 
 #include <arch/kernel.h>
 #include <arch/panic.h>
+#include <stdbool.h>
 #include <stdio.h>
+
+static bool panicked = false;
 
 void kernel_panic(bool dump_stacktrace, const char* format, ...)
 {
+  if (panicked) {
+    arch_halt();
+  }
+
+  panicked = true;
+
   printf("\033[0;31m");
 
   va_list arg;
