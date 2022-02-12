@@ -3,6 +3,7 @@
 #include <core/utils.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <sys/syscall.h>
 
 int arch_selftest()
 {
@@ -20,7 +21,7 @@ int arch_selftest()
   // because `syscall()` won't be available.
   extern int syscall(int id, ...);
   const char* s = "syscall";
-  int retval = syscall(1, s);
+  int retval = syscall(SYSCALL_TEST, s);
 
   if (retval == 42) {
     printf("Got expected syscall return value: %d\n", retval);
