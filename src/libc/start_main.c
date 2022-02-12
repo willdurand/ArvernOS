@@ -1,4 +1,5 @@
 #include <arvern/log.h>
+#include <errno.h>
 #include <stdio.h>
 #include <sys/syscall.h>
 
@@ -12,6 +13,8 @@ void start_main(int (*main)(int, char**, char**),
                 char* argv[],
                 char* envp[])
 {
+  errno = 0;
+
 #ifdef ENABLE_USERLAND_DEBUG
   arvern_log_init();
   ARVERN_LOG("main=%p argc=%d argv=%p envp=%p", main, argc, argv, envp);

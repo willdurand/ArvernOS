@@ -16,8 +16,6 @@ ssize_t recvfrom(int sockfd,
 #ifdef __is_libk
     retval = k_recvfrom(sockfd, buf, len, flags, src_addr, addrlen);
 #else
-    errno = 0;
-
     retval =
       syscall(SYSCALL_RECVFROM, sockfd, buf, len, flags, src_addr, addrlen);
 
