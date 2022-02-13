@@ -241,6 +241,16 @@ $ llvm-addr2line-13 -e build/x86_64/dist/kernel-x86_64.bin 01163B3
 /path/to/ArvernOS/src/kernel/kshell/selftest.c:12
 ```
 
+##### Debugging
+
+Use `make gdb` to run the project in debug mode with QEMU configured to wait for
+[gdb][] to connect.
+
+A sensible configuration is automatically generated when this command is
+executed (see also: `make gdbinit`). If a file named `.gdbinit.local` exists in
+the project's root directory, its content will be appended to the generated
+`.gdbinit` file.
+
 #### Release mode
 
 To compile the OS in release mode, build the image, and start `qemu` with the OS
@@ -277,8 +287,9 @@ ArvernOS is released under the MIT License. See the bundled
 details. In addition, some parts of this project have their own licenses
 attached (either in the source files or in a `LICENSE` file next to them).
 
-[git-submodules]: https://git-scm.com/book/en/v2/Git-Tools-Submodules
-[twitter-thread]: https://twitter.com/couac/status/866693418130575361
-[dockerhub-toolchain]: https://hub.docker.com/repository/docker/willdurand/arvernos-toolchain
 [dockerfile]: https://github.com/willdurand/ArvernOS/blob/master/Dockerfile
+[dockerhub-toolchain]: https://hub.docker.com/repository/docker/willdurand/arvernos-toolchain
+[gdb]: https://www.sourceware.org/gdb/
+[git-submodules]: https://git-scm.com/book/en/v2/Git-Tools-Submodules
 [license]: https://github.com/willdurand/ArvernOS/blob/master/LICENSE.md
+[twitter-thread]: https://twitter.com/couac/status/866693418130575361
