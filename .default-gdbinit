@@ -1,0 +1,10 @@
+tui enable
+layout asm
+
+define hook-quit
+  set confirm off
+end
+
+set disassembly-flavor intel
+
+target remote localhost:1234
