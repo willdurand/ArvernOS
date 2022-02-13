@@ -4,7 +4,7 @@
 *.so
 *.tar
 /.gdb_history
-/.gdbinit
+/.gdbinit*
 /build/
 /config
 /data/initrd/bin/

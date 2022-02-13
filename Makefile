@@ -346,9 +346,14 @@ $(initrd): $(misc_dir) userland
 	cd $(initrd_dir) && $(TAR) -cf ../../$@ *
 
 gdbinit:
-	echo "target remote localhost:1234" > $(gdbinit)
-	echo "set disassembly-flavor intel" >> $(gdbinit)
-	echo "add-symbol-file $(kernel)"    >> $(gdbinit)
+	echo "# AUTO-GENERATED CONFIGURATION, DO NOT EDIT.\n#" > $(gdbinit)
+	echo "# ARCH=$(ARCH)\n" >> $(gdbinit)
+	cat .default-gdbinit >> $(gdbinit)
+	echo "\nadd-symbol-file $(kernel)" >> $(gdbinit)
+	if [ -f ".gdbinit.local" ]; then \
+		echo "\n# .gdbinit.local - local configuration:" >> $(gdbinit); \
+		cat ".gdbinit.local" >> $(gdbinit); \
+	fi
 .PHONY: gdbinit
 
 libc: ## build the libc
