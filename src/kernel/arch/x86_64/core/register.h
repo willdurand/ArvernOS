@@ -38,6 +38,13 @@ uint64_t read_cr2();
 uint64_t read_cr3();
 
 /**
+ * Returns the value of the CR4 register.
+ *
+ * @return the address contained in the CR4 register
+ */
+uint64_t read_cr4();
+
+/**
  * Updates the value of the CR0 register.
  *
  * @param value the new value for the CR0 register
@@ -50,6 +57,13 @@ void write_cr0(uint64_t value);
  * @param value the new value for the CR3 register
  */
 void write_cr3(uint64_t value);
+
+/**
+ * Updates the value of the CR4 register.
+ *
+ * @param value the new value for the CR4 register
+ */
+void write_cr4(uint64_t value);
 
 /**
  * Read a Model Specific Register.
