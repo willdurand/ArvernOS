@@ -4,15 +4,15 @@
 #include <core/elf.h>
 #include <sys/types.h>
 
-#define USER_STACK_SIZE 1024
+#define USER_STACK_SIZE 0x3000
+#define USER_STACK_TOP  0x1000
+#define USER_STACK_BUF  0x2000
 
 typedef struct process
 {
   pid_t pid;
   char* name;
   elf_header_t* elf;
-  char** argv;
-  char** envp;
   uint64_t user_stack[USER_STACK_SIZE];
   uint64_t user_rsp;
   // TODO: We should probably retain the file descriptors that are opened by
