@@ -45,11 +45,11 @@ void ethernet_receive_frame(net_interface_t* interface,
   free(data);
 }
 
-void ethernet_transmit_frame(net_interface_t* interface,
-                             uint8_t dst_mac[6],
-                             uint16_t ethertype,
-                             uint8_t* data,
-                             uint32_t len)
+void ethernet_send_frame(net_interface_t* interface,
+                         uint8_t dst_mac[6],
+                         uint16_t ethertype,
+                         uint8_t* data,
+                         uint32_t len)
 {
   ethernet_header_t header = { .ethertype = htons(ethertype) };
   memcpy(header.src_mac, interface->mac, 6);
@@ -65,7 +65,7 @@ void ethernet_transmit_frame(net_interface_t* interface,
   memcpy(frame, &header, sizeof(ethernet_header_t));
   memcpy(frame + sizeof(ethernet_header_t), data, len);
 
-  interface->driver->transmit_frame(frame, frame_len);
+  interface->driver->transmit(frame, frame_len);
 
   free(frame);
 }

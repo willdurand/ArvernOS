@@ -38,7 +38,7 @@ struct net_driver
   /// This function returns the MAC address of the device.
   uint8_t* (*get_mac_address)();
   /// This function is used to transmit data.
-  void (*transmit_frame)(uint8_t* data, uint32_t len);
+  void (*transmit)(uint8_t* data, uint32_t len);
 };
 
 struct net_interface

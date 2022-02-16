@@ -50,10 +50,10 @@ void ethernet_receive_frame(net_interface_t* interface,
  * @param data the encapsulated payload
  * @param len the length of the data
  */
-void ethernet_transmit_frame(net_interface_t* interface,
-                             uint8_t dst_mac[6],
-                             uint16_t ethertype,
-                             uint8_t* data,
-                             uint32_t len);
+void ethernet_send_frame(net_interface_t* interface,
+                         uint8_t dst_mac[6],
+                         uint16_t ethertype,
+                         uint8_t* data,
+                         uint32_t len);
 
 #endif
