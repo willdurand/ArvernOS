@@ -10,9 +10,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-const char* get_name();
 uint8_t* rtl8139_get_mac_address();
-void rtl8139_transmit_frame(void* data, uint32_t len);
+void rtl8139_transmit_frame(uint8_t* data, uint32_t len);
 void rtl8139_receive_frame();
 static void rtl8139_callback(isr_stack_t* stack);
 
@@ -27,14 +26,14 @@ static uint8_t transmit_start_registers[4] = { 0x20, 0x24, 0x28, 0x2C };
 static uint8_t transmit_command_registers[4] = { 0x10, 0x14, 0x18, 0x1C };
 static uint8_t current_transmit_pair = 0;
 
-static const char* driver_name = "RealTek RTL8139";
 static uint8_t mac_address[6] = { 0 };
+
 static net_driver_t driver = {
-  .get_name = get_name,
+  .type = 1, // ARP_HTYPE_ETHERNET
+  .name = "RealTek RTL8139",
   .get_mac_address = rtl8139_get_mac_address,
   .transmit_frame = rtl8139_transmit_frame,
-  .receive_frame = NULL, // will be set in `net_interface_init()`.
-  .interface = NULL,     // will be set in `net_interface_init()`.
+  .interface = NULL, // will be set in `net_interface_init()`.
 };
 
 bool rtl8139_init(pci_device_t device)
@@ -116,7 +115,7 @@ uint8_t* rtl8139_get_mac_address()
   return mac_address;
 }
 
-void rtl8139_transmit_frame(void* data, uint32_t len)
+void rtl8139_transmit_frame(uint8_t* data, uint32_t len)
 {
   memcpy(tx_buffer, data, len);
 
@@ -151,8 +150,8 @@ void rtl8139_receive_frame()
     uint8_t* frame = malloc(sizeof(uint8_t) * len);
     memcpy(frame, &buffer[offset + 4], len);
 
-    if (driver.receive_frame != NULL && driver.interface != NULL) {
-      driver.receive_frame(driver.interface, frame, len);
+    if (driver.interface != NULL) {
+      driver.interface->receive_frame_callback(driver.interface, frame, len);
     } else {
       NET_DEBUG("%s",
                 "dropping frame because driver isn't bound to an interface.");
@@ -195,9 +194,4 @@ static void rtl8139_callback(isr_stack_t* stack)
   }
 
   UNUSED(*stack);
-}
-
-const char* get_name()
-{
-  return driver_name;
 }

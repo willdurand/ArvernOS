@@ -20,7 +20,7 @@ void arp_request(net_interface_t* interface, uint8_t ip[4])
 
   // Create ARP packet.
   arp_packet_t arp_packet = {
-    .hardware_type = htons(ARP_HTYPE_ETHERNET),
+    .hardware_type = htons(interface->hardware_type),
     .protocol_type = htons(ETHERTYPE_IPV4),
     .hardware_size = 6,
     .protocol_size = 4,

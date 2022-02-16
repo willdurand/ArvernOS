@@ -17,7 +17,7 @@ void net()
   char buf[16];
 
   printf("eth%d:\n", in_id);
-  printf("  driver : %s\n", in->driver->get_name());
+  printf("  driver : %s\n", in->driver->name);
   inet_itoa(in->ip, buf, 16);
   printf("  ip     : %s\n", buf);
   printf("  mac    : %02x:%02x:%02x:%02x:%02x:%02x\n",
