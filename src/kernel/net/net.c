@@ -22,14 +22,22 @@ void net_interface_init(uint8_t interface_id,
     return;
   }
 
+  if (driver->type != ARP_HTYPE_ETHERNET) {
+    NET_DEBUG("no support for hardware type other than Ethernet 802.3: "
+              "hardware_type=%d",
+              driver->type);
+    return;
+  }
+
   NET_DEBUG("initializing interface id=%d with driver='%s'",
             interface_id,
-            driver->get_name());
+            driver->name);
 
   net_interface_t* in = calloc(1, sizeof(net_interface_t));
   in->id = interface_id;
   in->driver = driver;
-  in->driver->receive_frame = ethernet_receive_frame;
+  in->hardware_type = driver->type;
+  in->receive_frame_callback = ethernet_receive_frame;
   in->driver->interface = in;
   memcpy(in->mac, in->driver->get_mac_address(), 6);
 

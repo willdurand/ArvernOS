@@ -29,19 +29,32 @@ typedef struct net_interface net_interface_t;
 
 struct net_driver
 {
+  /// The hardware type (see `ARP_HTYPE_*` values `kernel/net/arp.h`).
+  uint16_t type;
+  /// The name of the driver.
+  const char name[50];
+  /// The interface bound to this driver.
   net_interface_t* interface;
-  const char* (*get_name)();
+  /// This function returns the MAC address of the device.
   uint8_t* (*get_mac_address)();
-  void (*transmit_frame)(void* data, uint32_t len);
-  void (*receive_frame)(net_interface_t* interface,
-                        uint8_t* data,
-                        uint32_t len);
+  /// This function is used to transmit data.
+  void (*transmit_frame)(uint8_t* data, uint32_t len);
 };
 
 struct net_interface
 {
-  net_driver_t* driver;
+  /// The interface identifier.
   uint8_t id;
+  /// The hardware type of the interface.
+  uint16_t hardware_type;
+  /// The driver bound to this interface.
+  net_driver_t* driver;
+  /// The callback used by the driver to transfer the received data to the
+  /// upper layers.
+  void (*receive_frame_callback)(net_interface_t* interface,
+                                 uint8_t* data,
+                                 uint32_t len);
+  // Network configuration.
   uint8_t mac[6];
   uint8_t ip[4];
   uint8_t gateway_mac[6];
