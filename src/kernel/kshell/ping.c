@@ -1,7 +1,7 @@
 #include <kshell/kshell.h>
 
 #include <arpa/inet.h>
-#include <net/ipv4.h>
+#include <net/icmpv4.h>
 #include <net/net.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -32,7 +32,7 @@ void ping(int argc, char* argv[])
 
   printf("PING %s\n", buf);
   icmpv4_reply_t reply = { 0 };
-  int retval = ipv4_ping(in, ip, &reply);
+  int retval = icmpv4_send_packet(in, ip, &reply);
 
   switch (retval) {
     case 0:
