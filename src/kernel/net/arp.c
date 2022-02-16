@@ -35,8 +35,7 @@ void arp_request(net_interface_t* interface, uint8_t ip[4])
   uint8_t* packet = malloc(packet_len);
   memcpy(packet, &arp_packet, sizeof(arp_packet_t));
 
-  ethernet_transmit_frame(
-    interface, dst_mac, ETHERTYPE_ARP, packet, packet_len);
+  ethernet_send_frame(interface, dst_mac, ETHERTYPE_ARP, packet, packet_len);
 
   free(packet);
 }
@@ -117,7 +116,7 @@ void arp_reply(net_interface_t* interface, arp_packet_t* request)
   uint8_t* packet = malloc(packet_len);
   memcpy(packet, &reply, sizeof(arp_packet_t));
 
-  ethernet_transmit_frame(
+  ethernet_send_frame(
     interface, request->src_mac, ETHERTYPE_ARP, packet, packet_len);
 
   free(packet);

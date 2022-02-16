@@ -11,8 +11,8 @@
 #include <string.h>
 
 uint8_t* rtl8139_get_mac_address();
-void rtl8139_transmit_frame(uint8_t* data, uint32_t len);
-void rtl8139_receive_frame();
+void rtl8139_transmit(uint8_t* data, uint32_t len);
+void rtl8139_receive();
 static void rtl8139_callback(isr_stack_t* stack);
 
 static uint32_t ioaddr = 0;
@@ -32,7 +32,7 @@ static net_driver_t driver = {
   .type = 1, // ARP_HTYPE_ETHERNET
   .name = "RealTek RTL8139",
   .get_mac_address = rtl8139_get_mac_address,
-  .transmit_frame = rtl8139_transmit_frame,
+  .transmit = rtl8139_transmit,
   .interface = NULL, // will be set in `net_interface_init()`.
 };
 
@@ -115,7 +115,7 @@ uint8_t* rtl8139_get_mac_address()
   return mac_address;
 }
 
-void rtl8139_transmit_frame(uint8_t* data, uint32_t len)
+void rtl8139_transmit(uint8_t* data, uint32_t len)
 {
   memcpy(tx_buffer, data, len);
 
@@ -136,7 +136,7 @@ void rtl8139_transmit_frame(uint8_t* data, uint32_t len)
   }
 }
 
-void rtl8139_receive_frame()
+void rtl8139_receive()
 {
   uint8_t* buffer = rx_buffer;
   uint32_t index = rx_index;
@@ -189,7 +189,7 @@ static void rtl8139_callback(isr_stack_t* stack)
 
     if (status & RTL8139_ISR_ROK) {
       NET_DEBUG("%s", "frame received");
-      rtl8139_receive_frame();
+      rtl8139_receive();
     }
   }
 

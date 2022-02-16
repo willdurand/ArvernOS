@@ -112,7 +112,7 @@ void ipv4_send_packet(net_interface_t* interface,
   memcpy(packet, &ipv4_header, sizeof(ipv4_header_t));
   memcpy(packet + sizeof(ipv4_header_t), data, len);
 
-  ethernet_transmit_frame(
+  ethernet_send_frame(
     interface, interface->gateway_mac, ETHERTYPE_IPV4, packet, packet_len);
 
   free(packet);
