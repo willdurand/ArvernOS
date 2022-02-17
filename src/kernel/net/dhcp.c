@@ -60,7 +60,7 @@ void dhcp_discover(net_interface_t* interface)
 
   dhcp_header_t dhcp_header = {
     .opcode = DHCP_DISCOVER,
-    .htype = 0x01, // ethernet
+    .htype = interface->hardware_type,
     .hlen = 0x06,
     .hops = 0,
     .xid = htonl(xid),
@@ -141,7 +141,7 @@ void dhcp_handle_offer(net_interface_t* interface)
   if (type[0] == DHCP_OFFER) {
     dhcp_header_t dhcp_request = {
       .opcode = DHCP_DISCOVER,
-      .htype = 0x01, // ethernet
+      .htype = interface->hardware_type,
       .hlen = 0x06,
       .hops = 0,
       .xid = htonl(xid),
