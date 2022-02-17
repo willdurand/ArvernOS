@@ -23,7 +23,7 @@ void net_interface_init(uint8_t interface_id,
   }
 
   if (driver->type != ARP_HTYPE_ETHERNET) {
-    NET_DEBUG("no support for hardware type other than Ethernet 802.3: "
+    NET_DEBUG("no support for hardware type other than Ethernet: "
               "hardware_type=%d",
               driver->type);
     return;
