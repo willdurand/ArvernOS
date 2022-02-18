@@ -1,0 +1,5 @@
+image: willdurand/arvernos-toolchain
+
+tasks:
+  - name: create config file
+    init: cp .gitpod/config-x86_64 config

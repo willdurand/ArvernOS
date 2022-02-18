@@ -1,0 +1,8 @@
+# Configuration file for x86_64
+LLVM_PREFIX =
+LLVM_SUFFIX = -13
+
+# Allows to run QEMU in Gitpod's terminal.
+QEMU_OPTIONS += -curses
+
+CONFIG_SEMIHOSTING = 1
