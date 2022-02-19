@@ -1,15 +1,15 @@
 <map id="include/libc/unistd.h" name="include/libc/unistd.h">
-<area shape="rect" id="node1" title=" " alt="" coords="193,5,331,32"/>
-<area shape="rect" id="node2" href="$syscall_8h.html" title=" " alt="" coords="213,80,311,107"/>
-<area shape="rect" id="node3" href="$inet_8h.html" title=" " alt="" coords="105,155,190,181"/>
-<area shape="rect" id="node4" href="$socket_8h.html" title=" " alt="" coords="21,229,117,256"/>
-<area shape="rect" id="node5" href="$types_8h.html" title=" " alt="" coords="148,304,237,331"/>
-<area shape="rect" id="node8" title=" " alt="" coords="388,379,453,405"/>
-<area shape="rect" id="node9" href="$errno_8h.html" title=" " alt="" coords="265,155,329,181"/>
-<area shape="rect" id="node10" href="$stdio_8h.html" title=" " alt="" coords="403,155,465,181"/>
-<area shape="rect" id="node12" href="$stat_8h.html" title=" " alt="" coords="192,229,271,256"/>
-<area shape="rect" id="node13" href="$libc_2sys_2time_8h.html" title=" " alt="" coords="295,229,378,256"/>
-<area shape="rect" id="node6" title=" " alt="" coords="204,379,280,405"/>
-<area shape="rect" id="node7" title=" " alt="" coords="110,379,179,405"/>
-<area shape="rect" id="node11" title=" " alt="" coords="403,229,465,256"/>
+<area shape="rect" id="node1" title=" " alt="" coords="195,5,332,32"/>
+<area shape="rect" id="node2" href="$syscall_8h.html" title=" " alt="" coords="214,80,313,107"/>
+<area shape="rect" id="node3" href="$inet_8h.html" title=" " alt="" coords="109,155,192,181"/>
+<area shape="rect" id="node4" href="$socket_8h.html" title=" " alt="" coords="22,229,119,256"/>
+<area shape="rect" id="node5" href="$types_8h.html" title=" " alt="" coords="150,304,241,331"/>
+<area shape="rect" id="node8" title=" " alt="" coords="390,379,455,405"/>
+<area shape="rect" id="node9" href="$errno_8h.html" title=" " alt="" coords="267,155,330,181"/>
+<area shape="rect" id="node10" href="$stdio_8h.html" title=" " alt="" coords="405,155,466,181"/>
+<area shape="rect" id="node12" href="$stat_8h.html" title=" " alt="" coords="194,229,274,256"/>
+<area shape="rect" id="node13" href="$libc_2sys_2time_8h.html" title=" " alt="" coords="298,229,381,256"/>
+<area shape="rect" id="node6" title=" " alt="" coords="206,379,281,405"/>
+<area shape="rect" id="node7" title=" " alt="" coords="113,379,182,405"/>
+<area shape="rect" id="node11" title=" " alt="" coords="406,229,468,256"/>
 </map>

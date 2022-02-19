@@ -1,12 +1,12 @@
 <map id="include/kernel/panic.h" name="include/kernel/panic.h">
-<area shape="rect" id="node1" title=" " alt="" coords="49,5,200,32"/>
-<area shape="rect" id="node2" href="$arch_2panic_8h.html" title=" " alt="" coords="77,80,172,107"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,155,81,181"/>
-<area shape="rect" id="node5" href="$logging_8h.html" title="This is the general kernel logging module." alt="" coords="291,80,367,107"/>
-<area shape="rect" id="node4" title=" " alt="" coords="248,229,313,256"/>
-<area shape="rect" id="node6" href="$arch_2logging_8h.html" title=" " alt="" coords="160,155,265,181"/>
-<area shape="rect" id="node7" href="$inttypes_8h.html" title=" " alt="" coords="289,155,368,181"/>
-<area shape="rect" id="node8" href="$stdio_8h.html" title=" " alt="" coords="507,155,569,181"/>
-<area shape="rect" id="node10" href="$timer_8h.html" title=" " alt="" coords="393,155,483,181"/>
-<area shape="rect" id="node9" title=" " alt="" coords="507,229,569,256"/>
+<area shape="rect" id="node1" title=" " alt="" coords="49,5,197,32"/>
+<area shape="rect" id="node2" href="$arch_2panic_8h.html" title=" " alt="" coords="76,80,169,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,155,80,181"/>
+<area shape="rect" id="node5" href="$logging_8h.html" title="This is the general kernel logging module." alt="" coords="287,80,361,107"/>
+<area shape="rect" id="node4" title=" " alt="" coords="245,229,310,256"/>
+<area shape="rect" id="node6" href="$arch_2logging_8h.html" title=" " alt="" coords="158,155,261,181"/>
+<area shape="rect" id="node7" href="$inttypes_8h.html" title=" " alt="" coords="285,155,363,181"/>
+<area shape="rect" id="node8" href="$stdio_8h.html" title=" " alt="" coords="503,155,564,181"/>
+<area shape="rect" id="node10" href="$timer_8h.html" title=" " alt="" coords="388,155,479,181"/>
+<area shape="rect" id="node9" title=" " alt="" coords="502,229,565,256"/>
 </map>

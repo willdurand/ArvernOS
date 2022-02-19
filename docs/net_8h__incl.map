@@ -1,5 +1,5 @@
 <map id="include/kernel/net/net.h" name="include/kernel/net/net.h">
-<area shape="rect" id="node1" title="This module defines network interfaces and drivers." alt="" coords="27,5,153,47"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,95,81,121"/>
-<area shape="rect" id="node3" title=" " alt="" coords="105,95,171,121"/>
+<area shape="rect" id="node1" title="This module defines network interfaces and drivers." alt="" coords="27,5,151,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,95,80,121"/>
+<area shape="rect" id="node3" title=" " alt="" coords="105,95,170,121"/>
 </map>

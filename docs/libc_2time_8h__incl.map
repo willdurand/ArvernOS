@@ -1,8 +1,8 @@
 <map id="include/libc/time.h" name="include/libc/time.h">
-<area shape="rect" id="node1" title=" " alt="" coords="55,5,183,32"/>
+<area shape="rect" id="node1" title=" " alt="" coords="55,5,182,32"/>
 <area shape="rect" id="node2" title=" " alt="" coords="5,229,75,256"/>
 <area shape="rect" id="node3" href="$libc_2sys_2time_8h.html" title=" " alt="" coords="77,80,160,107"/>
-<area shape="rect" id="node4" href="$types_8h.html" title=" " alt="" coords="93,155,182,181"/>
-<area shape="rect" id="node5" title=" " alt="" coords="99,229,175,256"/>
-<area shape="rect" id="node6" title=" " alt="" coords="199,229,265,256"/>
+<area shape="rect" id="node4" href="$types_8h.html" title=" " alt="" coords="91,155,181,181"/>
+<area shape="rect" id="node5" title=" " alt="" coords="99,229,173,256"/>
+<area shape="rect" id="node6" title=" " alt="" coords="198,229,263,256"/>
 </map>

@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['receive_5fts_0',['receive_ts',['../structntp__header__t.html#a1375a2d2be2d89484d657f9d360cc003',1,'ntp_header_t']]],
-  ['reference_5fts_1',['reference_ts',['../structntp__header__t.html#a25374520c7dcba12a3d17bedd0ccb1f0',1,'ntp_header_t']]]
+  ['name_0',['name',['../structnet__driver.html#a21b097ab9061bc16ad8509062e801de3',1,'net_driver::name()'],['../structelf__section__header__t.html#ac874b50ab72c734c2b5eb5dfd02d989b',1,'elf_section_header_t::name()']]]
 ];

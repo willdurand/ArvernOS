@@ -4,10 +4,11 @@ var searchData=
   ['read_5fcr0_1',['read_cr0',['../x86__64_2core_2register_8h.html#a89763d209b83a61f0f2c9a01022f7f88',1,'register.c']]],
   ['read_5fcr2_2',['read_cr2',['../x86__64_2core_2register_8h.html#a7b2de5d97ae8b57fd726fa100087f2b9',1,'register.c']]],
   ['read_5fcr3_3',['read_cr3',['../x86__64_2core_2register_8h.html#a37758a1d9dd7aa158743e035016ea79b',1,'register.c']]],
-  ['read_5fmsr_4',['read_msr',['../x86__64_2core_2register_8h.html#af21f5b42b403d57093c91fc8f27a3ddd',1,'register.c']]],
-  ['read_5frsp_5',['read_rsp',['../x86__64_2core_2register_8h.html#a49c84f561ab5000417e1c3fdbbe323bf',1,'register.c']]],
-  ['reboot_6',['reboot',['../syscall_8h.html#a3e048601df87806f1bb72a84a6ff81e3',1,'reboot.c']]],
-  ['recvfrom_7',['recvfrom',['../syscall_8h.html#ad144bb8d4119d5fa0ee5b6c4d06bc645',1,'recvfrom.c']]],
-  ['rtl8139_5fdriver_8',['rtl8139_driver',['../rtl8139_8h.html#aedaac9701166b358589fdcfefd0f702e',1,'rtl8139.c']]],
-  ['rtl8139_5finit_9',['rtl8139_init',['../rtl8139_8h.html#a24e07ef25a2b1581bca67bbb213a0931',1,'rtl8139.c']]]
+  ['read_5fcr4_4',['read_cr4',['../x86__64_2core_2register_8h.html#a4c2bf7c9edf7912166b7649739b82a3d',1,'register.c']]],
+  ['read_5fmsr_5',['read_msr',['../x86__64_2core_2register_8h.html#af21f5b42b403d57093c91fc8f27a3ddd',1,'register.c']]],
+  ['read_5frsp_6',['read_rsp',['../x86__64_2core_2register_8h.html#a49c84f561ab5000417e1c3fdbbe323bf',1,'register.c']]],
+  ['reboot_7',['reboot',['../syscall_8h.html#a3e048601df87806f1bb72a84a6ff81e3',1,'reboot.c']]],
+  ['recvfrom_8',['recvfrom',['../syscall_8h.html#ad144bb8d4119d5fa0ee5b6c4d06bc645',1,'recvfrom.c']]],
+  ['rtl8139_5fdriver_9',['rtl8139_driver',['../rtl8139_8h.html#aedaac9701166b358589fdcfefd0f702e',1,'rtl8139.c']]],
+  ['rtl8139_5finit_10',['rtl8139_init',['../rtl8139_8h.html#a24e07ef25a2b1581bca67bbb213a0931',1,'rtl8139.c']]]
 ];

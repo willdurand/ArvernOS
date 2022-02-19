@@ -1,5 +1,6 @@
 var fcntl_8h =
 [
+    [ "AT_FDCWD", "fcntl_8h.html#a301749b9aa4b9416c329bb8b19345216", null ],
     [ "O_APPEND", "fcntl_8h.html#ae036f789407d21f07b211552d67b3214", null ],
     [ "O_CREAT", "fcntl_8h.html#a1cf6b1de1fffedaa1d26b189e9a8d2cc", null ],
     [ "O_RDONLY", "fcntl_8h.html#a7a68c9ffaac7dbcd652225dd7c06a54b", null ],

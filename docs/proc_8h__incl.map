@@ -1,8 +1,8 @@
 <map id="include/kernel/fs/proc.h" name="include/kernel/fs/proc.h">
-<area shape="rect" id="node1" title=" " alt="" coords="47,5,205,32"/>
-<area shape="rect" id="node2" href="$vfs_8h.html" title=" " alt="" coords="94,80,158,107"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,229,81,256"/>
-<area shape="rect" id="node6" title=" " alt="" coords="217,229,286,256"/>
-<area shape="rect" id="node4" title=" " alt="" coords="120,229,185,256"/>
-<area shape="rect" id="node5" href="$types_8h.html" title=" " alt="" coords="81,155,171,181"/>
+<area shape="rect" id="node1" title=" " alt="" coords="47,5,204,32"/>
+<area shape="rect" id="node2" href="$vfs_8h.html" title=" " alt="" coords="92,80,159,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,229,80,256"/>
+<area shape="rect" id="node6" title=" " alt="" coords="216,229,285,256"/>
+<area shape="rect" id="node4" title=" " alt="" coords="119,229,185,256"/>
+<area shape="rect" id="node5" href="$types_8h.html" title=" " alt="" coords="80,155,171,181"/>
 </map>

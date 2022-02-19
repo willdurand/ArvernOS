@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['name_0',['name',['../structelf__section__header__t.html#ac874b50ab72c734c2b5eb5dfd02d989b',1,'elf_section_header_t']]],
+  ['name_0',['name',['../structnet__driver.html#a21b097ab9061bc16ad8509062e801de3',1,'net_driver::name()'],['../structelf__section__header__t.html#ac874b50ab72c734c2b5eb5dfd02d989b',1,'elf_section_header_t::name()']]],
   ['net_2eh_1',['net.h',['../net_8h.html',1,'']]],
   ['net_5fdriver_2',['net_driver',['../structnet__driver.html',1,'']]],
   ['net_5fget_5finterface_3',['net_get_interface',['../net_8h.html#aa0f5ea1fc2a6969f5f7fea53a6dc2356',1,'net.c']]],

@@ -1,4 +1,4 @@
 <map id="gdt_table_t" name="gdt_table_t">
-<area shape="rect" id="node1" title=" " alt="" coords="20,197,108,224"/>
-<area shape="rect" id="node2" href="$structgdt__descriptor__t.html" title=" " alt="" coords="5,5,123,32"/>
+<area shape="rect" id="node1" title=" " alt="" coords="19,197,106,224"/>
+<area shape="rect" id="node2" href="$structgdt__descriptor__t.html" title=" " alt="" coords="5,5,120,32"/>
 </map>

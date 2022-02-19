@@ -1,6 +1,6 @@
 <map id="arch_clock_get_current_microseconds" name="arch_clock_get_current_microseconds">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,165,47"/>
-<area shape="rect" id="node2" href="$fake__clock_8c.html#ab4458e5c11135bbbaec3b6f2ee47e9d6" title=" " alt="" coords="213,5,373,47"/>
-<area shape="rect" id="node3" href="$timer_8c.html#a9e237401e78bbceb0c0070ef2ecb4569" title=" " alt="" coords="421,13,611,39"/>
-<area shape="rect" id="node4" href="$kernel_2arch_2x86__64_2arch_2time_8c.html#af8e08f88e4ec6768891cfce52318c3d3" title=" " alt="" coords="659,13,881,39"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,5,163,47"/>
+<area shape="rect" id="node2" href="$fake__clock_8c.html#ab4458e5c11135bbbaec3b6f2ee47e9d6" title=" " alt="" coords="211,5,368,47"/>
+<area shape="rect" id="node3" href="$timer_8c.html#a9e237401e78bbceb0c0070ef2ecb4569" title=" " alt="" coords="416,13,601,39"/>
+<area shape="rect" id="node4" href="$kernel_2arch_2x86__64_2arch_2time_8c.html#af8e08f88e4ec6768891cfce52318c3d3" title=" " alt="" coords="649,13,867,39"/>
 </map>

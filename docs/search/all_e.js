@@ -8,12 +8,13 @@ var searchData=
   ['o_5fwronly_5',['O_WRONLY',['../fcntl_8h.html#a11b644a8526139c4cc1850dac1271ced',1,'fcntl.h']]],
   ['offset_6',['offset',['../structelf__section__header__t.html#a2d090693f40eb11ca29ef3b20420dd67',1,'elf_section_header_t']]],
   ['open_7',['open',['../syscall_8h.html#ab7c31bf64ff68f61762bda6e72e255d6',1,'open.c']]],
-  ['opt_5fbool_5ft_8',['opt_bool_t',['../structopt__bool__t.html',1,'']]],
-  ['opt_5fuint16_5ft_9',['opt_uint16_t',['../structopt__uint16__t.html',1,'']]],
-  ['opt_5fuint32_5ft_10',['opt_uint32_t',['../structopt__uint32__t.html',1,'']]],
-  ['opt_5fuint64_5ft_11',['opt_uint64_t',['../structopt__uint64__t.html',1,'']]],
-  ['opt_5fuint8_5ft_12',['opt_uint8_t',['../structopt__uint8__t.html',1,'']]],
-  ['options_13',['options',['../structdhcp__header__t.html#a734798cfe1e826aa09e2a40b65f30ff1',1,'dhcp_header_t']]],
-  ['origin_5fts_14',['origin_ts',['../structntp__header__t.html#a024bd1f48208f1f2005f0ad5b3222272',1,'ntp_header_t']]],
-  ['osinfo_2eh_15',['osinfo.h',['../osinfo_8h.html',1,'']]]
+  ['openat_8',['openat',['../syscall_8h.html#ae49d1c90a87f9ab8500b66a5662bc0a8',1,'openat.c']]],
+  ['opt_5fbool_5ft_9',['opt_bool_t',['../structopt__bool__t.html',1,'']]],
+  ['opt_5fuint16_5ft_10',['opt_uint16_t',['../structopt__uint16__t.html',1,'']]],
+  ['opt_5fuint32_5ft_11',['opt_uint32_t',['../structopt__uint32__t.html',1,'']]],
+  ['opt_5fuint64_5ft_12',['opt_uint64_t',['../structopt__uint64__t.html',1,'']]],
+  ['opt_5fuint8_5ft_13',['opt_uint8_t',['../structopt__uint8__t.html',1,'']]],
+  ['options_14',['options',['../structdhcp__header__t.html#a734798cfe1e826aa09e2a40b65f30ff1',1,'dhcp_header_t']]],
+  ['origin_5fts_15',['origin_ts',['../structntp__header__t.html#a024bd1f48208f1f2005f0ad5b3222272',1,'ntp_header_t']]],
+  ['osinfo_2eh_16',['osinfo.h',['../osinfo_8h.html',1,'']]]
 ];

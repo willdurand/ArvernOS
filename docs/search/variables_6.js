@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['link_0',['link',['../structelf__section__header__t.html#a27a1ee484cbaf8f724621a6cbd247e9c',1,'elf_section_header_t']]]
+  ['hardware_5ftype_0',['hardware_type',['../structnet__interface.html#a6e168d48cb5501a4e5fa1b546bb66863',1,'net_interface']]]
 ];

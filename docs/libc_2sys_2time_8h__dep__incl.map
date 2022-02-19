@@ -1,7 +1,7 @@
 <map id="include/libc/sys/time.h" name="include/libc/sys/time.h">
 <area shape="rect" id="node1" title=" " alt="" coords="165,5,317,32"/>
-<area shape="rect" id="node2" href="$k__syscall_8h.html" title=" " alt="" coords="5,80,133,121"/>
-<area shape="rect" id="node3" href="$syscall_8h.html" title=" " alt="" coords="158,87,325,114"/>
-<area shape="rect" id="node5" href="$libc_2time_8h.html" title=" " alt="" coords="349,87,477,114"/>
-<area shape="rect" id="node4" href="$unistd_8h.html" title=" " alt="" coords="172,169,311,196"/>
+<area shape="rect" id="node2" href="$k__syscall_8h.html" title=" " alt="" coords="5,80,132,121"/>
+<area shape="rect" id="node3" href="$syscall_8h.html" title=" " alt="" coords="157,87,325,114"/>
+<area shape="rect" id="node5" href="$libc_2time_8h.html" title=" " alt="" coords="349,87,476,114"/>
+<area shape="rect" id="node4" href="$unistd_8h.html" title=" " alt="" coords="172,169,309,196"/>
 </map>
