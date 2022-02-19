@@ -5,6 +5,7 @@
 *.tar
 /.gdb_history
 /.gdbinit*
+/.vscode/
 /build/
 /config
 /data/initrd/bin/

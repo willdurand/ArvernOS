@@ -1,5 +1,11 @@
 image: willdurand/arvernos-toolchain
 
 tasks:
-  - name: create config file
+  - name: create ~/.gdbinit
+    init: echo 'set auto-load safe-path /' > ~/.gdbinit
+  - name: create default config file for ArvernOS
     init: cp .gitpod/config-x86_64 config
+
+vscode:
+  extensions:
+    - webfreak.debug
