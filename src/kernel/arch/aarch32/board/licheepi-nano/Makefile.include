@@ -55,9 +55,11 @@ $(kernel_img): $(kernel) $(initrd)
 	$(OBJCOPY) -O binary $< $@
 
 $(dist_dir)/boot.scr: $(board_src)/boot.cmd
+	$(progress) "MKIMAGE" $@
 	$(MKIMAGE) -n "$(OS_NAME)/$(BOARD) u-boot configuration" $(MKIMAGE_OPTIONS) -T script -d $< $@
 
 $(dist_dir)/uImage: $(kernel_img)
+	$(progress) "MKIMAGE" $@
 	$(MKIMAGE) -n "$(OS_NAME)/$(BOARD) image" -T kernel -a 0x80008000 -e 0x80008000 -d $< $@
 
 uboot-images: ## generate u-boot images (uImage and boot.scr)

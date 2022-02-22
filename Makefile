@@ -346,6 +346,7 @@ $(initrd): $(misc_dir) userland
 	cd $(initrd_dir) && $(TAR) -cf ../../$@ *
 
 gdbinit:
+	$(progress) "GEN" $(gdbinit)
 	echo "# AUTO-GENERATED CONFIGURATION, DO NOT EDIT.\n#" > $(gdbinit)
 	echo "# ARCH=$(ARCH)\n" >> $(gdbinit)
 	cat .default-gdbinit >> $(gdbinit)

@@ -187,6 +187,7 @@ $(grub_dir): | $(iso_boot_dir)
 
 # We mark this target as .PHONY to write the file every time.
 $(grub_cfg): $(grub_dir)
+	$(progress) "GEN" $@
 	echo "$$grub_cfg_body" > $@
 .PHONY: $(grub_cfg)
 
