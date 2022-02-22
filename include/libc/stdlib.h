@@ -21,6 +21,8 @@
 
 #include <liballoc.h>
 
+#define valloc malloc
+
 #endif // CONFIG_USE_DLMALLOC
 
 #else
