@@ -304,7 +304,9 @@ workflows:
           matrix:
             parameters:
               ubsan: [0, 1]
-      - x86_64-userland-test-suite-ubsan:
-          matrix:
-            parameters:
-              ubsan: [0, 1]
+# TODO: re-enable this test suite when we have usermode.
+#
+#      - x86_64-userland-test-suite-ubsan:
+#          matrix:
+#            parameters:
+#              ubsan: [0, 1]

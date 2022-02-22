@@ -1,10 +1,10 @@
 #include <sys/k_syscall.h>
 
-#include <arvern/utils.h>
+#include <proc/logging.h>
+#include <proc/task.h>
 
 void k_exit(int code)
 {
-  UNUSED(code);
-
-  // TODO: Implement this function when we have support for processes.
+  PROC_DEBUG("task id=%d is exiting (code=%d)", CURRENT_TASK->id, code);
+  task_exit(code);
 }
