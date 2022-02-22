@@ -115,8 +115,7 @@ void frame_deallocate(frame_number_t frame_number)
 
   if (request == 0) {
     DEBUG("failed to deallocate frame=%" PRIu64 " because request=%" PRIu64
-          ", which it is "
-          "very suspicious",
+          ", which is very suspicious",
           frame_number,
           request);
     return;
