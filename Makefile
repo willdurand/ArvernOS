@@ -292,6 +292,8 @@ libc_deps = $(libc_c_objects:%.o=%.d)
 $(build_dir):
 	$(MKDIR) $@
 
+# `|` is for order-only prerequisites, see:
+# https://www.gnu.org/software/make/manual/html_node/Prerequisite-Types.html
 $(target_build_dir): | $(build_dir)
 	$(MKDIR) -p $@
 
@@ -301,7 +303,7 @@ $(dist_dir): | $(target_build_dir)
 $(misc_dir): | $(target_build_dir)
 	$(MKDIR) $@
 
-$(kernel): $(dist_dir) $(libk_asm_objects) $(libk_c_objects) $(linker_ld)
+$(kernel): $(libk_asm_objects) $(libk_c_objects) $(linker_ld) | $(dist_dir)
 	$(progress) "LD" $@
 	$(LD) --output=$@ --script=$(linker_ld) $(LD_FLAGS) $(libk_asm_objects) $(libk_c_objects) $(libk_extra_objects)
 	$(NM) $@ | awk '{ print $$1, $$3 }' | sort > $(symbols)
@@ -326,11 +328,11 @@ $(libc_asm_objects): $(lib_objs_dir)/%.o: %.asm
 	$(MKDIR) -p $(dir $@)
 	$(ASM) $(LIBC_ASM_FLAGS) $< -o $@
 
-$(libc): $(dist_dir) $(libc_asm_objects) $(libc_c_objects)
+$(libc): $(libc_asm_objects) $(libc_c_objects) | $(dist_dir)
 	$(progress) "AR" $@
 	$(AR) rcs $@ $(libc_asm_objects) $(libc_c_objects)
 
-$(initrd): $(misc_dir) userland
+$(initrd): userland | $(misc_dir)
 	$(progress) "TAR" $@
 	cp -R $(dist_dir)/userland/bin $(initrd_dir)
 	echo "$(OS_NAME) ($(ARCH)) build info" > $(initrd_dir)/info

@@ -203,7 +203,7 @@ $(iso): kernel-with-font $(initrd) $(grub_cfg)
 	cp $(symbols) $(iso_boot_dir)
 	$(tools_dir)/grub-mkrescue -o $@ $(iso_dir)
 
-$(kernel_console_font): $(misc_dir) $(kernel_console_font_gz)
+$(kernel_console_font): $(kernel_console_font_gz) | $(misc_dir)
 	$(progress) "LD" $@
 	cp $(kernel_console_font_gz) $(misc_dir)/console.sfn.gz
 	gunzip -f $(misc_dir)/console.sfn.gz
