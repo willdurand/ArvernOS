@@ -60,11 +60,11 @@ arch-run-release: release
 ###############################################################################
 
 $(cmdline_txt): $(dist_dir)
-	$(progress) "TXT" $@
+	$(progress) "GEN" $@
 	echo $(CMDLINE) > $@
 
 $(config_txt): $(dist_dir)
-	$(progress) "TXT" $@
+	$(progress) "GEN" $@
 	echo "ramfsfile $(initrd_tar)" > $@
 
 $(kernel_img): $(kernel) $(initrd) $(cmdline_txt) $(config_txt)
