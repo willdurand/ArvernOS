@@ -6,4 +6,7 @@
 /// and we are aware of this variable not being used on purpose.
 #define UNUSED(x) (void)(x)
 
+/// Marks a variable as potentially unused.
+#define MAYBE_UNUSED(x) UNUSED(x)
+
 #endif
