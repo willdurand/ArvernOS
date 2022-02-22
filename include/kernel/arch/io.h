@@ -13,7 +13,7 @@
 #include <stdbool.h>
 
 /**
- * Read a character from an input.
+ * Reads a character from an input.
  *
  * @param blocking whether the call to this function should wait for a character
  * or not
@@ -22,7 +22,7 @@
 unsigned char arch_getchar(bool blocking);
 
 /**
- * Print a character to an output.
+ * Prints a character to an output.
  *
  * @param c the character to print
  */
