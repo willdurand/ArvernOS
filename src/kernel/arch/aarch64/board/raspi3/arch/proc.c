@@ -4,8 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define PAGE_SIZE     4096
-#define PSR_MODE_EL0t 0x00000000
+#define PAGE_SIZE 4096
 
 extern void ret_from_fork();
 
@@ -17,7 +16,7 @@ static task_t init_task = (task_t){
   0,                                         // counter
   1,                                         // priority
   0,                                         // preempt_count
-  PT_KTHREAD,                                // flags
+  KERNEL_TASK,                               // flags
 };
 
 task_t* arch_task_init()
