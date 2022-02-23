@@ -215,11 +215,11 @@ $ ./tools/fix-stacktrace.py build/x86_64/dist/symbols.txt log/x86_64-debug.log
 [...]
 DEBUG    | src/kernel/arch/x86_64/kshell/kshell.c:108:run_command(): command='selftest' argc=1
 DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:30:kernel_dump_stacktrace(): kernel stacktrace:
-DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   00000000001163B3 - selftest +0x63
-DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   0000000000115941 - run_command +0x271
-DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   0000000000115BE1 - kshell_run +0x181
-DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   00000000001152BF - kmain +0x107f
-DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   000000000010935B - long_mode_start +0x13
+DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   00000000001163B3 - selftest+0x63
+DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   0000000000115941 - run_command+0x271
+DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   0000000000115BE1 - kshell_run+0x181
+DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   00000000001152BF - kmain+0x107f
+DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   000000000010935B - long_mode_start+0x13
 ```
 
 In addition, you might want to find the corresponding line of code in the source
@@ -241,7 +241,7 @@ $ llvm-addr2line-13 -e build/x86_64/dist/kernel-x86_64.bin 01163B3
 ##### Debugging
 
 Use `make gdb` to run the project in debug mode with QEMU configured to wait for
-[gdb][] to connect.
+[gdb][] to connect. This has been tested with `vim` (`:Termdebug`) and VS Code.
 
 A sensible configuration is automatically generated when this command is
 executed (see also: `make gdbinit`). If a file named `.gdbinit.local` exists in
@@ -270,7 +270,7 @@ LLVM_SUFFIX =
 # Always enable the Undefined Behavior sanitizer
 UBSAN = 1
 
-# Sensible logging
+# Logging
 ENABLE_CORE_DEBUG     = 1
 ENABLE_PROC_DEBUG     = 1
 ENABLE_SYS_DEBUG      = 1

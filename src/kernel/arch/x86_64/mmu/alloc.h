@@ -7,8 +7,8 @@
 
 /// The virtual address to the start of the heap memory.
 #define HEAP_START 0x10000000
-/// The size of the heap (10 MiB).
-#define HEAP_SIZE (10 * 1024 * 1024)
+/// The size of the heap (20 MiB).
+#define HEAP_SIZE (20 * 1024 * 1024)
 /// The number of pages that we can allocate.
 #define MAX_PAGES (HEAP_SIZE / PAGE_SIZE)
 

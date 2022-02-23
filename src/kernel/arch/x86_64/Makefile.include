@@ -65,9 +65,7 @@ LIBC_CFLAGS      += --target=x86_64 -fstack-protector-strong
 LIBC_CFLAGS      += -mno-mmx -mno-sse -mno-sse2 -mno-avx -mno-avx2
 KERNEL_ASM_FLAGS += -f elf64
 KERNEL_ASM_FLAGS += -dVBE_WIDTH=$(vbe_width) -dVBE_HEIGHT=$(vbe_height) -dVBE_BPP=$(vbe_bpp)
-# We need to have -fno-omit-frame-pointer or the kernel stack backtrace won't
-# get the stack.
-KERNEL_CFLAGS    += -mno-red-zone -fno-omit-frame-pointer
+KERNEL_CFLAGS    += -mno-red-zone
 KERNEL_INCLUDES  += -I$(external_dir)/scalable-font2/
 
 ###############################################################################
@@ -161,14 +159,12 @@ set default=$(grub_default)
 menuentry "$(OS_NAME) $(BUILD_MODE)" {
 	multiboot2 /boot/$(kernel_bin) $(CMDLINE)
 	module2 /boot/$(initrd_tar) initrd
-	module2 /boot/$(symbols_txt) symbols
 	boot
 }
 
 menuentry "$(OS_NAME) $(BUILD_MODE) (kernel mode)" {
 	multiboot2 /boot/$(kernel_bin) $(KERNEL_CMDLINE)
 	module2 /boot/$(initrd_tar) initrd
-	module2 /boot/$(symbols_txt) symbols
 	boot
 }
 endef
@@ -199,7 +195,6 @@ $(iso): kernel-with-font $(initrd) $(grub_cfg)
 	mkdir -p $(iso_boot_dir)
 	cp $(kernel) $(iso_boot_dir)
 	cp $(initrd) $(iso_boot_dir)
-	cp $(symbols) $(iso_boot_dir)
 	$(tools_dir)/grub-mkrescue -o $@ $(iso_dir)
 
 $(kernel_console_font): $(kernel_console_font_gz) | $(misc_dir)

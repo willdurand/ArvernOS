@@ -193,6 +193,9 @@ KERNEL_INCLUDES  += $(INCLUDES)
 KERNEL_INCLUDES  += -I$(include_dir)/kernel/ -I$(arch_src)/
 KERNEL_INCLUDES  += $(addprefix -I$(external_dir)/,$(addsuffix /, $(external_deps)))
 KERNEL_ASM_FLAGS +=
+# We need to have -fno-omit-frame-pointer or the kernel stack backtrace won't
+# get the stack.
+KERNEL_CFLAGS    += -fno-omit-frame-pointer
 KERNEL_CFLAGS    += $(LIBC_CFLAGS)
 KERNEL_CFLAGS    += -ffunction-sections -fdata-sections
 KERNEL_CFLAGS    += $(WERRORS)
@@ -290,7 +293,6 @@ $(misc_dir): | $(target_build_dir)
 $(kernel): $(libk_asm_objects) $(libk_c_objects) $(linker_ld) | $(dist_dir)
 	$(progress) "LD" $@
 	$(LD) --output=$@ --script=$(linker_ld) $(LD_FLAGS) $(libk_asm_objects) $(libk_c_objects) $(libk_extra_objects)
-	$(NM) $@ | awk '{ print $$1, $$3 }' | sort > $(symbols)
 
 $(libk_asm_objects): $(libk_objs_dir)/%.o: %.asm
 	$(progress) "CC" $<
@@ -316,9 +318,13 @@ $(libc): $(libc_asm_objects) $(libc_c_objects) | $(dist_dir)
 	$(progress) "AR" $@
 	$(AR) rcs $@ $(libc_asm_objects) $(libc_c_objects)
 
-$(initrd): userland | $(misc_dir)
+$(symbols): $(kernel)
+	$(NM) $< | awk '{ print $$1, $$3 }' | sort > $@
+
+$(initrd): userland $(symbols) | $(misc_dir)
 	$(progress) "TAR" $@
 	cp -R $(dist_dir)/userland/bin $(initrd_dir)
+	cp $(symbols) $(initrd_dir)/etc
 	echo "$(OS_NAME) ($(ARCH)) build info" > $(initrd_dir)/info
 	echo "" >> $(initrd_dir)/info
 	echo "hash: $(git_hash)" >> $(initrd_dir)/info
@@ -374,7 +380,7 @@ gdb: run-debug
 run-test: ## run the project in test mode
 run-test: BUILD_MODE = test
 run-test: CMDLINE = /bin/userland-testsuite
-run-test: QEMU_OPTIONS += -curses
+run-test: QEMU_OPTIONS += -display curses
 run-test: run-release
 .PHONY: run-test
 
@@ -409,7 +415,11 @@ docs-fast: ## build the docs in fast mode (does not remove previous docs)
 
 clean: ## remove build artifacts
 	$(progress) "CLEAN"
-	rm -rf $(target_build_dir) $(initrd_dir)/info $(initrd_dir)/bin/ $(userland_src_dir)/bin/ $(userland_src_dir)/local-build/
+	rm -rf $(target_build_dir) \
+				 $(initrd_dir)/bin/ \
+				 $(initrd_dir)/etc/$(symbols_txt) \
+				 $(initrd_dir)/info \
+				 $(userland_src_dir)/local-build/ \
 .PHONY: clean
 
 what: ## display some information about the current configuration

@@ -18,14 +18,12 @@
 #include <mmu/paging.h>
 #include <net/net.h>
 #include <osinfo.h>
-#include <panic.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 void load_modules(multiboot_info_t* mbi);
 void load_network_config(inish_config_t* kernel_cfg, net_driver_t* driver);
-void load_symbols(multiboot_tag_module_t* module, uint64_t size);
 void load_system_config(inish_config_t* kernel_cfg);
 
 static uintptr_t initrd_addr = 0;
@@ -37,20 +35,12 @@ void load_modules(multiboot_info_t* mbi)
        tag = (multiboot_tag_t*)((uint8_t*)tag + ((tag->size + 7) & ~7))) {
     if (tag->type == MULTIBOOT_TAG_TYPE_MODULE) {
       multiboot_tag_module_t* module = (multiboot_tag_module_t*)tag;
-      uint64_t size = module->mod_end - module->mod_start;
 
       if (strcmp(module->cmdline, "initrd") == 0) {
         initrd_addr = (uintptr_t)module->mod_start;
-      } else if (strcmp(module->cmdline, "symbols") == 0) {
-        load_symbols(module, size);
       }
     }
   }
-}
-
-void load_symbols(multiboot_tag_module_t* module, uint64_t size)
-{
-  arch_kernel_load_symbols(module->mod_start, size);
 }
 
 void load_network_config(inish_config_t* kernel_cfg, net_driver_t* driver)
