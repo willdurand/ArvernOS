@@ -15,7 +15,7 @@
 // TODO: Get rid of this limitation.
 #define MAX_TASKS 64
 
-#define PT_KTHREAD 0x01
+#define KERNEL_TASK 0x01
 
 /// This special variable points to the current task being executed.
 #define CURRENT_TASK (task_get_current())

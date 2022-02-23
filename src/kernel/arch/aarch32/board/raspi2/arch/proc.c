@@ -15,7 +15,7 @@ static task_t init_task = (task_t){
   0,                                   // counter
   1,                                   // priority
   0,                                   // preempt_count
-  PT_KTHREAD,                          // flags
+  KERNEL_TASK,                         // flags
 };
 
 task_t* arch_task_init()

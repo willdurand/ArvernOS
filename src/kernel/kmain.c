@@ -148,7 +148,7 @@ void kmain_start(uintptr_t initrd_addr, const char* cmdline)
 
   task_init("idle");
 
-  int res = task_create("kinit", PT_KTHREAD, (uintptr_t)&kinit);
+  int res = task_create("kinit", KERNEL_TASK, (uintptr_t)&kinit);
   if (res < 0) {
     printf("kernel: error while starting kinit task\n");
   }
