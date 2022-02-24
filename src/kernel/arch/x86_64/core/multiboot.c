@@ -5,14 +5,12 @@
 reserved_areas_t build_reserved_areas();
 
 static multiboot_info_t* saved_mbi = NULL;
-
 static reserved_areas_t reserved_areas = { .kernel_start = 0,
                                            .kernel_end = 0,
                                            .multiboot_start = 0,
                                            .multiboot_end = 0,
                                            .start = 0,
                                            .end = 0 };
-
 static const char* cmdline = NULL;
 static multiboot_tag_framebuffer_t* framebuffer = NULL;
 static multiboot_tag_mmap_t* mmap = NULL;
@@ -95,13 +93,14 @@ reserved_areas_t build_reserved_areas()
                    ((multiboot_tag_string_t*)tag)->string);
         break;
 
-      case MULTIBOOT_TAG_TYPE_MODULE:
+      case MULTIBOOT_TAG_TYPE_MODULE: {
+        reserved.end = ((multiboot_tag_module_t*)tag)->mod_end;
         CORE_DEBUG("module at %p-%p with command line=%s",
                    ((multiboot_tag_module_t*)tag)->mod_start,
                    ((multiboot_tag_module_t*)tag)->mod_end,
                    ((multiboot_tag_module_t*)tag)->cmdline);
-        reserved.end = (uint64_t)((multiboot_tag_module_t*)tag)->mod_end;
         break;
+      }
 
       case MULTIBOOT_TAG_TYPE_BASIC_MEMINFO:
         CORE_DEBUG("mem_lower = %dKB, mem_upper = %dKB",
