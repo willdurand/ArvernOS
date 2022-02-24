@@ -169,8 +169,8 @@ Note: Some boards aren't supported in QEMU.
 
 ##### Logging
 
-In DEBUG mode, logging very likely uses the serial port `COM1` to write various
-debugging information. `qemu` is configured to write the output of this serial
+In debug mode, logging very likely uses the serial port `COM1` to write various
+debugging information. QEMU is configured to write the output of this serial
 port to a logfile in `./log/`. `DEBUG` level logs are not necessarily written by
 default, though, and it is possible to enable `DEBUG` logs for specific modules
 like this:
@@ -190,9 +190,6 @@ The available debug variables are:
 - `ENABLE_PROC_DEBUG`
 - `ENABLE_SYS_DEBUG`
 - `ENABLE_USERLAND_DEBUG`
-
-Note: There is also `ENABLE_ALL_DEBUG` to turn all debug logs on (which
-negatively impacts the performances).
 
 ##### Stacktraces
 

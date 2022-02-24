@@ -97,7 +97,7 @@ test: CFLAGS_WITHOUT_TARGET := $(filter-out --target=x86_64,$(KERNEL_CFLAGS))
 test: LIBC_CFLAGS = $(CFLAGS_WITHOUT_TARGET)
 test: LIBC_CFLAGS += -fPIC -g3 -fsanitize=undefined -fsanitize=address
 test: CFLAGS_FOR_TESTS += -g3 -fsanitize=undefined -fsanitize=address
-test: CFLAGS_FOR_TESTS += -DENABLE_LOGS_FOR_TESTS -DTEST_ENV
+test: CFLAGS_FOR_TESTS += -DTEST_ENV
 test: CFLAGS_FOR_TESTS += -I$(tests_dir)/ -I$(include_dir)/kernel/ -I$(arch_src)/
 test: libc
 	# libc

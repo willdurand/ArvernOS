@@ -2,12 +2,15 @@
  * @file
  * @brief This is the general kernel logging module.
  *
- * It supports several logging levels such as INFO, DEBUG, and TRACE:
+ * In release mode, the logging levels available are:
  *
- * - DEBUG logs are not enabled by default. They can be enabled by setting
- *   `ENABLE_KERNEL_DEBUG=0` in config.
- * - TRACE logs are not enabled by default. They can be enabled by setting
- *   `ENABLE_KERNEL_TRACE=1` in config.
+ * - INFO
+ * - WARN
+ *
+ * In debug mode, the following additional logging levels are available:
+ *
+ * - DEBUG: enabled by default but can be disabled with `ENABLE_KERNEL_DEBUG`
+ *   set to `0`.
  *
  * Each kernel module should ideally have its own logging header that depends
  * on this one. The main use case is to have more configurable loggers that can
@@ -18,7 +21,11 @@
 
 #ifdef TEST_ENV
 
-#define TRACE(format, ...)                                                     \
+#define INFO(format, ...)                                                      \
+  do {                                                                         \
+  } while (0)
+
+#define WARN(format, ...)                                                      \
   do {                                                                         \
   } while (0)
 
@@ -30,14 +37,6 @@
   do {                                                                         \
   } while (0)
 
-#define WARN(format, ...)                                                      \
-  do {                                                                         \
-  } while (0)
-
-#define INFO(format, ...)                                                      \
-  do {                                                                         \
-  } while (0)
-
 #else // TEST_ENV
 
 #include <arch/logging.h>
@@ -45,7 +44,7 @@
 #include <stdio.h>
 #include <time/timer.h>
 
-#define LOG(level, format, ...)                                                \
+#define __LOG(level, format, ...)                                              \
   fctprintf(&arch_logging_stream_output,                                       \
             NULL,                                                              \
             "%-8s | %s:%d:%s(): " format "\n",                                 \
@@ -55,9 +54,33 @@
             __func__,                                                          \
             __VA_ARGS__)
 
+#define __LOG_INFO(format, ...) __LOG("INFO", format, __VA_ARGS__)
+#define INFO(format, ...)                                                      \
+  __LOG_INFO(format, __VA_ARGS__);                                             \
+  {                                                                            \
+    uint64_t time_us = timer_uptime_microseconds();                            \
+    printf("[%3" PRIu64 ".%03" PRIu64 "%03" PRIu64 "] " format "\n",           \
+           time_us / 1000000,                                                  \
+           time_us / 1000,                                                     \
+           time_us % 1000,                                                     \
+           __VA_ARGS__);                                                       \
+  }
+
+#define __LOG_WARN(format, ...) __LOG("WARN", format, __VA_ARGS__)
+#define WARN(format, ...)                                                      \
+  __LOG_WARN(format, __VA_ARGS__);                                             \
+  {                                                                            \
+    uint64_t time_us = timer_uptime_microseconds();                            \
+    printf("[%3" PRIu64 ".%03" PRIu64 "%03" PRIu64 "] " format "\n",           \
+           time_us / 1000000,                                                  \
+           time_us / 1000,                                                     \
+           time_us % 1000,                                                     \
+           __VA_ARGS__);                                                       \
+  }
+
 #ifdef ENABLE_KERNEL_DEBUG
 
-#define DEBUG(format, ...) LOG("DEBUG", format, __VA_ARGS__)
+#define DEBUG(format, ...) __LOG("DEBUG", format, __VA_ARGS__)
 
 #define HEX_DEBUG(data, len)                                                   \
   DEBUG("(hexdump) data=%p len=%" PRIu64, data, (uint64_t)len);                \
@@ -70,10 +93,6 @@
   }                                                                            \
   fctprintf(&arch_logging_stream_output, NULL, "\n");
 
-#define LOG_WARN(format, ...) LOG("WARN", format, __VA_ARGS__)
-
-#define LOG_INFO(format, ...) LOG("INFO", format, __VA_ARGS__)
-
 #else // ENABLE_KERNEL_DEBUG
 
 #define DEBUG(format, ...)                                                     \
@@ -84,49 +103,7 @@
   do {                                                                         \
   } while (0)
 
-#define LOG_WARN(format, ...)                                                  \
-  do {                                                                         \
-  } while (0)
-
-#define LOG_INFO(format, ...)                                                  \
-  do {                                                                         \
-  } while (0)
-
 #endif // ENABLE_KERNEL_DEBUG
-
-#define WARN(format, ...)                                                      \
-  LOG_WARN(format, __VA_ARGS__);                                               \
-  {                                                                            \
-    uint64_t time_us = timer_uptime_microseconds();                            \
-    printf("[%3" PRIu64 ".%03" PRIu64 "%03" PRIu64 "] " format "\n",           \
-           time_us / 1000000,                                                  \
-           time_us / 1000,                                                     \
-           time_us % 1000,                                                     \
-           __VA_ARGS__);                                                       \
-  }
-
-#define INFO(format, ...)                                                      \
-  LOG_INFO(format, __VA_ARGS__);                                               \
-  {                                                                            \
-    uint64_t time_us = timer_uptime_microseconds();                            \
-    printf("[%3" PRIu64 ".%03" PRIu64 "%03" PRIu64 "] " format "\n",           \
-           time_us / 1000000,                                                  \
-           time_us / 1000,                                                     \
-           time_us % 1000,                                                     \
-           __VA_ARGS__);                                                       \
-  }
-
-#ifdef ENABLE_KERNEL_TRACE
-
-#define TRACE(format, ...) LOG("TRACE", format, __VA_ARGS__)
-
-#else // ENABLE_KERNEL_TRACE
-
-#define TRACE(format, ...)                                                     \
-  do {                                                                         \
-  } while (0)
-
-#endif // ENABLE_KERNEL_TRACE
 
 #endif // TEST_ENV
 
