@@ -89,7 +89,15 @@ $(document).ready(function(){initNavTree('kernel_8h.html',''); initResizable(); 
   <div class="headertitle"><div class="title">kernel.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<table class="memberdecls">
+<div class="textblock"><code>#include &lt;stdbool.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for kernel.h:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="kernel_8h__incl.svg" width="176" height="127"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a5fe1791c207cc3de3931c333ac05fbf7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="kernel_8h.html#a5fe1791c207cc3de3931c333ac05fbf7">arch_restart</a> ()</td></tr>
@@ -98,6 +106,8 @@ Functions</h2></td></tr>
 <tr class="separator:a0ffd13670c5c0bedb76b1e31cc3dd59d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afa8a138b0f00d1bb5d26f79378caa530"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="kernel_8h.html#afa8a138b0f00d1bb5d26f79378caa530">arch_halt</a> ()</td></tr>
 <tr class="separator:afa8a138b0f00d1bb5d26f79378caa530"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90eb89dc1751bf77f797ebe63dc856ee"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="kernel_8h.html#a90eb89dc1751bf77f797ebe63dc856ee">arch_is_kernel_address</a> (uintptr_t addr)</td></tr>
+<tr class="separator:a90eb89dc1751bf77f797ebe63dc856ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="afa8a138b0f00d1bb5d26f79378caa530" name="afa8a138b0f00d1bb5d26f79378caa530"></a>
@@ -114,13 +124,40 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >hutdown everything and perform a clean system halt. </p>
+<p >Shutdowns everything and performs a clean system halt. </p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><iframe scrolling="no" frameborder="0" src="kernel_8h_afa8a138b0f00d1bb5d26f79378caa530_icgraph.svg" width="228" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
+
+</div>
+</div>
+<a id="a90eb89dc1751bf77f797ebe63dc856ee" name="a90eb89dc1751bf77f797ebe63dc856ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a90eb89dc1751bf77f797ebe63dc856ee">&#9670;&nbsp;</a></span>arch_is_kernel_address()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool arch_is_kernel_address </td>
+          <td>(</td>
+          <td class="paramtype">uintptr_t&#160;</td>
+          <td class="paramname"><em>addr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Determines whether an address points to kernel code.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">addr</td><td>an address </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the address points to kernel code, <code>false</code> otherwise </dd></dl>
+<p >It does not have to be perfect, we just have to believe it will be fine.</p>
 
 </div>
 </div>
@@ -139,7 +176,7 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Shutdown everything and perform a clean system power off.</p>
+<p >Shutdowns everything and performs a clean system power off.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">exit_code</td><td>when <code>CONFIG_SEMIHOSTING</code> is set to <code>1</code>, this value is returned to the emulator. Otherwise, this value is ignored </td></tr>
@@ -163,9 +200,9 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Shutdown everything and perform a clean reboot. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000004">Todo:</a></b></dt><dd>Implement this function for AArch32. </dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000010">Todo:</a></b></dt><dd>Implement this function for AArch64. </dd></dl>
+<p >Shutdowns everything and performs a clean reboot. </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000005">Todo:</a></b></dt><dd>Implement this function for AArch32. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000011">Todo:</a></b></dt><dd>Implement this function for AArch64. </dd></dl>
 
 </div>
 </div>

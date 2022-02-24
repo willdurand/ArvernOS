@@ -120,8 +120,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "aarch32_2mmu_2alloc_8h.html",
-"keyboard_8h.html#aaeb4e4a3c4813ee1efc6b98bba9ec781",
-"timer_8h.html#a9e237401e78bbceb0c0070ef2ecb4569"
+"kernel_8h.html",
+"syscall_8h.html#aba00a3ed4c69aee0738c259d196779ed"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

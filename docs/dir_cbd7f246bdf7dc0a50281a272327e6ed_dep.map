@@ -1,8 +1,8 @@
 <map id="src/kernel" name="src/kernel">
 <area shape="rect" id="node13" href="dir_d44c64559bbebec7f509842c48db8b23.html" title="include" alt="" coords="565,159,637,207"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000045_000042.html" title="477" alt="" coords="645,181,667,196"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000045_000042.html" title="484" alt="" coords="645,181,667,196"/>
 <area shape="rect" id="node2" href="dir_76e3dd4d2fa719e8d3b096e9aa563982.html" title="arch" alt="" coords="997,63,1069,111"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000003_000042.html" title="183" alt="" coords="646,180,667,194"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000003_000042.html" title="175" alt="" coords="646,180,667,194"/>
 <area shape="rect" id="node3" href="dir_91ac63a6f1fcde128d29d4ab1613b3c5.html" title="config" alt="" coords="901,63,973,111"/>
 <area shape="rect" id="edge3-headlabel" href="dir_000022_000042.html" title="7" alt="" coords="652,182,660,197"/>
 <area shape="rect" id="node4" href="dir_bec13d53859e967dc83fcb104ab0b9fd.html" title="core" alt="" coords="805,63,877,111"/>
@@ -18,11 +18,11 @@
 <area shape="rect" id="node9" href="dir_7d5a55bffd9f0b5a19cf98f012f1d84d.html" title="net" alt="" coords="325,63,397,111"/>
 <area shape="rect" id="edge9-headlabel" href="dir_000058_000042.html" title="60" alt="" coords="541,159,556,174"/>
 <area shape="rect" id="node10" href="dir_6799a15b2a75f7240f888daacd198be8.html" title="proc" alt="" coords="229,63,301,111"/>
-<area shape="rect" id="edge10-headlabel" href="dir_000064_000042.html" title="3" alt="" coords="543,165,551,180"/>
+<area shape="rect" id="edge10-headlabel" href="dir_000063_000042.html" title="9" alt="" coords="543,165,551,180"/>
 <area shape="rect" id="node11" href="dir_4b0b675971e8b75ff33680b3a878a76d.html" title="sys" alt="" coords="133,63,205,111"/>
-<area shape="rect" id="edge11-headlabel" href="dir_000075_000042.html" title="76" alt="" coords="540,163,555,177"/>
+<area shape="rect" id="edge11-headlabel" href="dir_000073_000042.html" title="80" alt="" coords="540,163,555,177"/>
 <area shape="rect" id="node12" href="dir_fc5cfe600d892ad1b812a54c244fb6ca.html" title="time" alt="" coords="37,63,109,111"/>
-<area shape="rect" id="edge12-headlabel" href="dir_000079_000042.html" title="8" alt="" coords="543,164,551,179"/>
+<area shape="rect" id="edge12-headlabel" href="dir_000077_000042.html" title="8" alt="" coords="543,164,551,179"/>
 <area shape="rect" id="clust2" href="dir_cbd7f246bdf7dc0a50281a272327e6ed.html" alt="" coords="27,52,1176,121"/>
 <area shape="rect" id="clust1" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html" title="src" alt="" coords="16,16,1187,132"/>
 </map>

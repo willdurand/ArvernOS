@@ -108,10 +108,14 @@ This graph shows which files directly or indirectly include this file:</div>
 </div>
 </div><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >This is the general kernel logging module. </p>
-<p >It supports several logging levels such as INFO, DEBUG, and TRACE:</p>
+<p >In release mode, the logging levels available are:</p>
 <ul>
-<li>DEBUG logs are not enabled by default. They can be enabled by setting <code>ENABLE_KERNEL_DEBUG=0</code> in config.</li>
-<li>TRACE logs are not enabled by default. They can be enabled by setting <code>ENABLE_KERNEL_TRACE=1</code> in config.</li>
+<li>INFO</li>
+<li>WARN</li>
+</ul>
+<p >In debug mode, the following additional logging levels are available:</p>
+<ul>
+<li>DEBUG: enabled by default but can be disabled with <code>ENABLE_KERNEL_DEBUG</code> set to <code>0</code>.</li>
 </ul>
 <p >Each kernel module should ideally have its own logging header that depends on this one. The main use case is to have more configurable loggers that can be enabled/disabled depending on the needs. </p>
 </div></div><!-- contents -->

@@ -90,13 +90,12 @@ $(document).ready(function(){initNavTree('panic_8h.html',''); initResizable(); }
   <div class="headertitle"><div class="title">panic.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="arch_2panic_8h.html">arch/panic.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="logging_8h.html">logging.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="logging_8h.html">logging.h</a>&gt;</code><br />
 <code>#include &lt;stdbool.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for panic.h:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="panic_8h__incl.svg" width="571" height="262"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="panic_8h__incl.svg" width="418" height="262"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 </div><table class="memberdecls">
@@ -113,10 +112,12 @@ Macros</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:af92a4fe8363297fd713910fb044d41a9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="panic_8h.html#af92a4fe8363297fd713910fb044d41a9">kernel_panic</a> (bool dump_stacktrace, const char *format,...)</td></tr>
 <tr class="separator:af92a4fe8363297fd713910fb044d41a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a714e1c8a23ac88c46756c44ec1a5b7f8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="panic_8h.html#a714e1c8a23ac88c46756c44ec1a5b7f8">kernel_dump_stacktrace</a> ()</td></tr>
+<tr class="separator:a714e1c8a23ac88c46756c44ec1a5b7f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section see"><dt>See also</dt><dd><a href="https://en.wikipedia.org/wiki/Kernel_panic">https://en.wikipedia.org/wiki/Kernel_panic</a></dd></dl>
-<p>This file contains the macros to use for kernel panics. The implementation relies on some architecture-specific code to dump stack traces (optional but nice to have) and halt the system. </p>
+<p>This file mainly contains the macros to use for kernel panics. </p>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="a036282a28f9cb2ca0fd41b4ebc49adb2" name="a036282a28f9cb2ca0fd41b4ebc49adb2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a036282a28f9cb2ca0fd41b4ebc49adb2">&#9670;&nbsp;</a></span>PANIC_NO_STACKTRACE</h2>
@@ -138,6 +139,30 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a714e1c8a23ac88c46756c44ec1a5b7f8" name="a714e1c8a23ac88c46756c44ec1a5b7f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a714e1c8a23ac88c46756c44ec1a5b7f8">&#9670;&nbsp;</a></span>kernel_dump_stacktrace()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void kernel_dump_stacktrace </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Dumps a stacktrace on both the standard and debug outputs (unless both are the same, in which case we do not print the debug messages). </p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="panic_8h_a714e1c8a23ac88c46756c44ec1a5b7f8_icgraph.svg" width="318" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
+
+</div>
+</div>
 <a id="af92a4fe8363297fd713910fb044d41a9" name="af92a4fe8363297fd713910fb044d41a9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af92a4fe8363297fd713910fb044d41a9">&#9670;&nbsp;</a></span>kernel_panic()</h2>
 
@@ -180,7 +205,7 @@ Functions</h2></td></tr>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="panic_8h_af92a4fe8363297fd713910fb044d41a9_cgraph.svg" width="350" height="88"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="panic_8h_af92a4fe8363297fd713910fb044d41a9_cgraph.svg" width="318" height="88"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 

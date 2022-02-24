@@ -13,7 +13,7 @@ var searchData=
   ['paging_5fflag_5fwritable_10',['PAGING_FLAG_WRITABLE',['../paging_8h.html#adac89a5c7c54309cb4a4570d0f8cf75c',1,'paging.h']]],
   ['paging_5finit_11',['paging_init',['../paging_8h.html#a569adfd13ea3c63741f64108821b1712',1,'paging.c']]],
   ['panic_12',['PANIC',['../panic_8h.html#a8f54a1e3c548236aa6a60f4596699819',1,'panic.h']]],
-  ['panic_2eh_13',['panic.h',['../panic_8h.html',1,'(Global Namespace)'],['../arch_2panic_8h.html',1,'(Global Namespace)']]],
+  ['panic_2eh_13',['panic.h',['../panic_8h.html',1,'']]],
   ['panic_5fno_5fstacktrace_14',['PANIC_NO_STACKTRACE',['../panic_8h.html#a036282a28f9cb2ca0fd41b4ebc49adb2',1,'panic.h']]],
   ['pci_2eh_15',['pci.h',['../pci_8h.html',1,'']]],
   ['pci_5fdevice_5ft_16',['pci_device_t',['../unionpci__device__t.html',1,'']]],
@@ -32,10 +32,9 @@ var searchData=
   ['port_5fdword_5fout_29',['port_dword_out',['../port_8h.html#ab4cd5b4635fe2ba28abafebbb1ac6861',1,'port.c']]],
   ['port_5fword_5fin_30',['port_word_in',['../port_8h.html#ad8d1266775348d5a6428af04f500b8e3',1,'port.c']]],
   ['port_5fword_5fout_31',['port_word_out',['../port_8h.html#a08d9adffef857f1578d9086615626652',1,'port.c']]],
-  ['proc_2eh_32',['proc.h',['../proc_8h.html',1,'']]],
-  ['proc_5ffs_5fcreate_5freadonly_5ffile_33',['proc_fs_create_readonly_file',['../proc_8h.html#a261677ec59fe52476936fdf45585742f',1,'proc.c']]],
-  ['proc_5ffs_5finit_34',['proc_fs_init',['../proc_8h.html#aa8135d8245a646e0bf2920be16d9c9bb',1,'proc.c']]],
-  ['process_5ft_35',['process_t',['../structprocess__t.html',1,'']]],
-  ['prompt_36',['PROMPT',['../include_2kernel_2kshell_2kshell_8h.html#accdbea14ea06c15e271784368bd993e8',1,'kshell.h']]],
-  ['putchar_37',['putchar',['../stdio_8h.html#a948b7a0779c308ac5502c57e282e6933',1,'putchar.c']]]
+  ['proc_2eh_32',['proc.h',['../fs_2proc_8h.html',1,'(Global Namespace)'],['../arch_2proc_8h.html',1,'(Global Namespace)']]],
+  ['proc_5ffs_5fcreate_5freadonly_5ffile_33',['proc_fs_create_readonly_file',['../fs_2proc_8h.html#a261677ec59fe52476936fdf45585742f',1,'proc.c']]],
+  ['proc_5ffs_5finit_34',['proc_fs_init',['../fs_2proc_8h.html#aa8135d8245a646e0bf2920be16d9c9bb',1,'proc.c']]],
+  ['prompt_35',['PROMPT',['../include_2kernel_2kshell_2kshell_8h.html#accdbea14ea06c15e271784368bd993e8',1,'kshell.h']]],
+  ['putchar_36',['putchar',['../stdio_8h.html#a948b7a0779c308ac5502c57e282e6933',1,'putchar.c']]]
 ];

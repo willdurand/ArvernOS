@@ -21,7 +21,7 @@ var searchData=
   ['ihl_18',['ihl',['../structipv4__header__t.html#a1ebada57c22c5cb245aa284b326d4e71',1,'ipv4_header_t']]],
   ['in_5faddr_19',['in_addr',['../structin__addr.html',1,'']]],
   ['inet_2eh_20',['inet.h',['../inet_8h.html',1,'']]],
-  ['info_21',['info',['../structelf__section__header__t.html#ade2f8bd3a40f8d6c37034c3a2530067d',1,'elf_section_header_t']]],
+  ['info_21',['info',['../structtask__t.html#a43844c6968e3e97cf2e1a410bb572002',1,'task_t::info()'],['../structelf__section__header__t.html#ade2f8bd3a40f8d6c37034c3a2530067d',1,'elf_section_header_t::info()']]],
   ['inish_2eh_22',['inish.h',['../inish_8h.html',1,'']]],
   ['inish_5farray_5ft_23',['inish_array_t',['../structinish__array__t.html',1,'']]],
   ['inish_5fconfig_5ft_24',['inish_config_t',['../structinish__config__t.html',1,'']]],

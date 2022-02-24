@@ -1,5 +1,5 @@
 <map id="kernel_panic" name="kernel_panic">
 <area shape="rect" id="node1" title=" " alt="" coords="5,31,100,57"/>
-<area shape="rect" id="node2" href="$x86__64_2arch_2kernel_8c.html#afa8a138b0f00d1bb5d26f79378caa530" title=" " alt="" coords="209,5,283,32"/>
-<area shape="rect" id="node3" href="$arch_2x86__64_2arch_2panic_8c.html#a9643e195acfe8004833ed7ea8ee42f1c" title=" " alt="" coords="148,56,344,83"/>
+<area shape="rect" id="node2" href="$x86__64_2arch_2kernel_8c.html#afa8a138b0f00d1bb5d26f79378caa530" title=" " alt="" coords="193,5,267,32"/>
+<area shape="rect" id="node3" href="$panic_8c.html#a714e1c8a23ac88c46756c44ec1a5b7f8" title=" " alt="" coords="148,56,312,83"/>
 </map>

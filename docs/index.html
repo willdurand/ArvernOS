@@ -194,7 +194,7 @@ Debug mode</h4>
 <div class="fragment"><div class="line">$ make clean run-debug</div>
 </div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>Some boards aren't supported in QEMU.</dd></dl>
 <p><a class="anchor" id="autotoc_md13"></a> </p><h5>Logging</h5>
-<p >In DEBUG mode, logging very likely uses the serial port <code>COM1</code> to write various debugging information. <code>qemu</code> is configured to write the output of this serial port to a logfile in <code>./log/</code>. <code>DEBUG</code> level logs are not necessarily written by default, though, and it is possible to enable <code>DEBUG</code> logs for specific modules like this:</p>
+<p >In debug mode, logging very likely uses the serial port <code>COM1</code> to write various debugging information. QEMU is configured to write the output of this serial port to a logfile in <code>./log/</code>. <code>DEBUG</code> level logs are not necessarily written by default, though, and it is possible to enable <code>DEBUG</code> logs for specific modules like this:</p>
 <div class="fragment"><div class="line"># Enable the debug logs for the &quot;net&quot; and &quot;fs&quot; modules</div>
 <div class="line">$ make clean run-debug ENABLE_NET_DEBUG=1 ENABLE_FS_DEBUG=1</div>
 </div><!-- fragment --><p >The available debug variables are:</p>
@@ -208,8 +208,7 @@ Debug mode</h4>
 <li><code>ENABLE_SYS_DEBUG</code></li>
 <li><code>ENABLE_USERLAND_DEBUG</code></li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd>There is also <code>ENABLE_ALL_DEBUG</code> to turn all debug logs on (which negatively impacts the performances).</dd></dl>
-<p><a class="anchor" id="autotoc_md14"></a> </p><h5>Stacktraces</h5>
+<p ><a class="anchor" id="autotoc_md14"></a> </p><h5>Stacktraces</h5>
 <p >Log files may contain stacktraces without debug symbols if the symbols haven't been loaded:</p>
 <div class="fragment"><div class="line">[...]</div>
 <div class="line">DEBUG    | src/kernel/arch/x86_64/kshell/kshell.c:108:run_command(): command=&#39;selftest&#39; argc=1</div>
@@ -224,11 +223,11 @@ Debug mode</h4>
 <div class="line">[...]</div>
 <div class="line">DEBUG    | src/kernel/arch/x86_64/kshell/kshell.c:108:run_command(): command=&#39;selftest&#39; argc=1</div>
 <div class="line">DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:30:kernel_dump_stacktrace(): kernel stacktrace:</div>
-<div class="line">DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   00000000001163B3 - selftest +0x63</div>
-<div class="line">DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   0000000000115941 - run_command +0x271</div>
-<div class="line">DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   0000000000115BE1 - kshell_run +0x181</div>
-<div class="line">DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   00000000001152BF - kmain +0x107f</div>
-<div class="line">DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   000000000010935B - long_mode_start +0x13</div>
+<div class="line">DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   00000000001163B3 - selftest+0x63</div>
+<div class="line">DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   0000000000115941 - run_command+0x271</div>
+<div class="line">DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   0000000000115BE1 - kshell_run+0x181</div>
+<div class="line">DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   00000000001152BF - kmain+0x107f</div>
+<div class="line">DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   000000000010935B - long_mode_start+0x13</div>
 </div><!-- fragment --><p >In addition, you might want to find the corresponding line of code in the source files by using <code>llvm-addr2line</code> or <code>llvm-symbolizer</code>:</p>
 <div class="fragment"><div class="line">$ llvm-symbolizer-13 --obj=build/x86_64/dist/kernel-x86_64.bin 0x01163B3</div>
 <div class="line">print_selftest_header</div>
@@ -238,7 +237,7 @@ Debug mode</h4>
 </div><!-- fragment --><div class="fragment"><div class="line">$ llvm-addr2line-13 -e build/x86_64/dist/kernel-x86_64.bin 01163B3</div>
 <div class="line">/path/to/ArvernOS/src/kernel/kshell/selftest.c:12</div>
 </div><!-- fragment --><p ><a class="anchor" id="autotoc_md15"></a> </p><h5>Debugging</h5>
-<p >Use <code>make gdb</code> to run the project in debug mode with QEMU configured to wait for <a href="https://www.sourceware.org/gdb/">gdb</a> to connect.</p>
+<p >Use <code>make gdb</code> to run the project in debug mode with QEMU configured to wait for <a href="https://www.sourceware.org/gdb/">gdb</a> to connect. This has been tested with <code>vim</code> (<code>:Termdebug</code>) and VS Code.</p>
 <p >A sensible configuration is automatically generated when this command is executed (see also: <code>make gdbinit</code>). If a file named <code>.gdbinit.local</code> exists in the project's root directory, its content will be appended to the generated <code>.gdbinit</code> file.</p>
 <h4><a class="anchor" id="autotoc_md16"></a>
 Release mode</h4>
@@ -254,7 +253,7 @@ config files</h4>
 <div class="line"># Always enable the Undefined Behavior sanitizer</div>
 <div class="line">UBSAN = 1</div>
 <div class="line"> </div>
-<div class="line"># Sensible logging</div>
+<div class="line"># Logging</div>
 <div class="line">ENABLE_CORE_DEBUG     = 1</div>
 <div class="line">ENABLE_PROC_DEBUG     = 1</div>
 <div class="line">ENABLE_SYS_DEBUG      = 1</div>

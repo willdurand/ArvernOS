@@ -354,7 +354,7 @@
 <!-- Node5 -->
 <g id="node5" class="node">
 <title>Node5</title>
-<g id="a_node5"><a xlink:href="proc_8h.html" target="_top" xlink:title=" ">
+<g id="a_node5"><a xlink:href="fs_2proc_8h.html" target="_top" xlink:title=" ">
 <polygon fill="none" stroke="black" points="1105.75,-207 1105.75,-226 1223.75,-226 1223.75,-207 1105.75,-207"/>
 <text text-anchor="middle" x="1164.75" y="-214" font-family="Helvetica,sans-Serif" font-size="10.00">include/kernel/fs/proc.h</text>
 </a>

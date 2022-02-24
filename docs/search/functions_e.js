@@ -16,7 +16,7 @@ var searchData=
   ['port_5fdword_5fout_13',['port_dword_out',['../port_8h.html#ab4cd5b4635fe2ba28abafebbb1ac6861',1,'port.c']]],
   ['port_5fword_5fin_14',['port_word_in',['../port_8h.html#ad8d1266775348d5a6428af04f500b8e3',1,'port.c']]],
   ['port_5fword_5fout_15',['port_word_out',['../port_8h.html#a08d9adffef857f1578d9086615626652',1,'port.c']]],
-  ['proc_5ffs_5fcreate_5freadonly_5ffile_16',['proc_fs_create_readonly_file',['../proc_8h.html#a261677ec59fe52476936fdf45585742f',1,'proc.c']]],
-  ['proc_5ffs_5finit_17',['proc_fs_init',['../proc_8h.html#aa8135d8245a646e0bf2920be16d9c9bb',1,'proc.c']]],
+  ['proc_5ffs_5fcreate_5freadonly_5ffile_16',['proc_fs_create_readonly_file',['../fs_2proc_8h.html#a261677ec59fe52476936fdf45585742f',1,'proc.c']]],
+  ['proc_5ffs_5finit_17',['proc_fs_init',['../fs_2proc_8h.html#aa8135d8245a646e0bf2920be16d9c9bb',1,'proc.c']]],
   ['putchar_18',['putchar',['../stdio_8h.html#a948b7a0779c308ac5502c57e282e6933',1,'putchar.c']]]
 ];

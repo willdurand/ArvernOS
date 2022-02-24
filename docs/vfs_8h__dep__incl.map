@@ -1,7 +1,7 @@
 <map id="include/kernel/fs/vfs.h" name="include/kernel/fs/vfs.h">
 <area shape="rect" id="node1" title=" " alt="" coords="367,5,517,32"/>
 <area shape="rect" id="node2" href="$dev_8h.html" title=" " alt="" coords="5,87,156,114"/>
-<area shape="rect" id="node3" href="$proc_8h.html" title=" " alt="" coords="181,87,338,114"/>
+<area shape="rect" id="node3" href="$fs_2proc_8h.html" title=" " alt="" coords="181,87,338,114"/>
 <area shape="rect" id="node4" href="$sock_8h.html" title=" " alt="" coords="362,87,522,114"/>
 <area shape="rect" id="node5" href="$tar_8h.html" title=" " alt="" coords="546,87,693,114"/>
 <area shape="rect" id="node6" href="$descriptor_8h.html" title=" " alt="" coords="717,80,847,121"/>
