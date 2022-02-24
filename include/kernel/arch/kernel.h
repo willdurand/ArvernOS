@@ -2,13 +2,16 @@
 #ifndef ARCH_KERNEL_H
 #define ARCH_KERNEL_H
 
+#include <stdbool.h>
+#include <stdint.h>
+
 /**
- * Shutdown everything and perform a clean reboot.
+ * Shutdowns everything and performs a clean reboot.
  */
 void arch_restart();
 
 /**
- * Shutdown everything and perform a clean system power off.
+ * Shutdowns everything and performs a clean system power off.
  *
  * @param exit_code when `CONFIG_SEMIHOSTING` is set to `1`, this value is
  * returned to the emulator. Otherwise, this value is ignored
@@ -16,8 +19,16 @@ void arch_restart();
 void arch_poweroff(int exit_code);
 
 /**
- * hutdown everything and perform a clean system halt.
+ * Shutdowns everything and performs a clean system halt.
  */
 void arch_halt();
+
+/**
+ * Determines whether an address points to kernel code.
+ *
+ * @param addr an address
+ * @return `true` if the address points to kernel code, `false` otherwise
+ */
+bool arch_is_kernel_address(uintptr_t addr);
 
 #endif

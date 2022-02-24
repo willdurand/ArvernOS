@@ -21,7 +21,7 @@ int selftest()
   test("kshell");
 
   print_selftest_header("kernel stacktrace");
-  arch_kernel_dump_stacktrace();
+  kernel_dump_stacktrace();
 
   print_selftest_header("memory");
   printf("simple test with malloc()/free(): ");

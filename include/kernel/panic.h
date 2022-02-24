@@ -2,14 +2,11 @@
  * @file
  * @see https://en.wikipedia.org/wiki/Kernel_panic
  *
- * This file contains the macros to use for kernel panics. The implementation
- * relies on some architecture-specific code to dump stack traces (optional but
- * nice to have) and halt the system.
+ * This file mainly contains the macros to use for kernel panics.
  */
 #ifndef PANIC_H
 #define PANIC_H
 
-#include <arch/panic.h>
 #include <logging.h>
 #include <stdbool.h>
 
@@ -35,5 +32,11 @@
  * @param format the reason for the kernel panic
  */
 void kernel_panic(bool dump_stacktrace, const char* format, ...);
+
+/**
+ * Dumps a stacktrace on both the standard and debug outputs (unless both are
+ * the same, in which case we do not print the debug messages).
+ */
+void kernel_dump_stacktrace();
 
 #endif
