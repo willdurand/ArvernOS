@@ -6,18 +6,11 @@ SECTIONS {
     /* sets the load address of the first section to 1 MiB (convention) */
     . = 1M;
 
-    .rodata :
+    .text :
     {
         /* ensure that the multiboot header is at the beginning */
         KEEP(*(.multiboot_header))
-        *(.rodata .rodata.*)
-        . = ALIGN(4K);
-    }
-
-    /* next we put the .text section */
-    .text :
-    {
-        *(.text. .text.*)
+        *(.text .text.*)
         . = ALIGN(4K);
     }
 
@@ -28,6 +21,12 @@ SECTIONS {
         __initcall_start = .;
         *(.initcall_functions)
         __initcall_end = .;
+    }
+
+    .rodata :
+    {
+        *(.rodata .rodata.*)
+        . = ALIGN(4K);
     }
 
     /* read-write data (initialized) */
