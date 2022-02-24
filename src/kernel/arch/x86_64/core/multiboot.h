@@ -184,7 +184,7 @@ typedef struct multiboot_tag_framebuffer
       uint8_t framebuffer_blue_mask_size;
     };
   };
-} multiboot_tag_framebuffer_t;
+} __attribute__((packed)) multiboot_tag_framebuffer_t;
 
 void multiboot_init(multiboot_info_t* mbi);
 
