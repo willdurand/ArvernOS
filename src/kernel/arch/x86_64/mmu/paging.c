@@ -134,7 +134,7 @@ void remap_kernel()
        elf =
          (multiboot_elf_sections_entry_t*)((uint64_t)elf + (tag)->section_size),
       i++) {
-    if (!(elf->flags | MULTIBOOT_ELF_SECTION_FLAG_ALLOCATED) ||
+    if (!(elf->flags & MULTIBOOT_ELF_SECTION_FLAG_ALLOCATED) ||
         elf->size == 0) {
       continue;
     }
@@ -145,11 +145,11 @@ void remap_kernel()
 
     uint64_t flags = PAGING_FLAG_PRESENT;
 
-    if (elf->flags | MULTIBOOT_ELF_SECTION_FLAG_WRITABLE) {
+    if (elf->flags & MULTIBOOT_ELF_SECTION_FLAG_WRITABLE) {
       flags |= PAGING_FLAG_WRITABLE;
     }
 
-    if (!(elf->flags | MULTIBOOT_ELF_SECTION_FLAG_EXECUTABLE)) {
+    if (!(elf->flags & MULTIBOOT_ELF_SECTION_FLAG_EXECUTABLE)) {
       flags |= PAGING_FLAG_NO_EXECUTE;
     }
 
