@@ -1,4 +1,6 @@
 #include "console.h"
+#include <assert.h>
+#include <logging.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -19,7 +21,10 @@ static vtconsole_t* vtc = &static_vtc;
 
 void console_init(multiboot_tag_framebuffer_common_t* common)
 {
+  INFO("console: %s", "initializing console");
+
   fb_common = common;
+  assert(fb_common != NULL);
 
   if (console_mode_is_vbe()) {
     vbe_console_init(common);

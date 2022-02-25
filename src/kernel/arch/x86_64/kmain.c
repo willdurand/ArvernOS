@@ -1,4 +1,5 @@
 #include "kmain.h"
+#include <assert.h>
 #include <config/inish.h>
 #include <console/console.h>
 #include <core/elf.h>
@@ -103,20 +104,20 @@ init_register(init_network);
 void kmain(uintptr_t addr)
 {
   multiboot_info_t* mbi = (multiboot_info_t*)addr;
+  assert(mbi != NULL);
   multiboot_init(mbi);
 
   // enable serial port
   serial_init(SERIAL_COM1, SERIAL_SPEED_115200);
 
-  // This is required to be able to identity map the framebuffer.
-  frame_init();
-
   multiboot_tag_framebuffer_t* entry = multiboot_get_framebuffer();
+  assert(entry != NULL);
   console_init(&entry->common);
 
   kmain_early_start();
 
   tss_init();
+  frame_init();
   paging_init();
   alloc_init();
   keyboard_init();

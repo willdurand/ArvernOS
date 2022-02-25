@@ -8,7 +8,7 @@
 #define FB_HIGH_BYTE_COMMAND 14
 #define FB_LOW_BYTE_COMMAND  15
 
-uint16_t* framebuffer = (uint16_t*)VIDEO_ADDRESS;
+static uint16_t* framebuffer = (uint16_t*)VIDEO_ADDRESS;
 
 void vga_text_init()
 {

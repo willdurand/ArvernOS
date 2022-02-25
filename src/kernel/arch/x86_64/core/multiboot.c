@@ -132,9 +132,9 @@ reserved_areas_t build_reserved_areas()
 
       case MULTIBOOT_TAG_TYPE_FRAMEBUFFER: {
         framebuffer = (multiboot_tag_framebuffer_t*)tag;
-        CORE_DEBUG(
-          "framebuffer framebuffer_addr=%p",
-          ((multiboot_tag_framebuffer_t*)tag)->common.framebuffer_addr);
+        CORE_DEBUG("framebuffer framebuffer_addr=%p common_addr=%p",
+                   framebuffer->common.framebuffer_addr,
+                   (void*)&framebuffer->common);
         break;
       }
 
@@ -206,6 +206,10 @@ reserved_areas_t build_reserved_areas()
   CORE_DEBUG("total MBI size %#x", (uint64_t)tag - (uint64_t)saved_mbi);
 
   reserved.start = reserved.kernel_start;
+
+  if (reserved.end < reserved.multiboot_end) {
+    reserved.end = reserved.multiboot_end;
+  }
 
   CORE_DEBUG("kernel_start=%#x kernel_end=%#x multiboot_start=%#x "
              "multiboot_end=%#x reserved start=%#x end=%#x",

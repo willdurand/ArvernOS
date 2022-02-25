@@ -2,9 +2,9 @@
 #ifndef ASSERT_H
 #define ASSERT_H
 
-#include <panic.h>
-
 #ifdef __is_libk
+
+#include <panic.h>
 
 #define assert(expr)                                                           \
   do {                                                                         \
