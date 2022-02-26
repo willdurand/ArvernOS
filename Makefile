@@ -277,17 +277,21 @@ libc_deps = $(libc_c_objects:%.o=%.d)
 ###############################################################################
 
 $(build_dir):
+	$(progress) "MKDIR" $@
 	$(MKDIR) $@
 
 # `|` is for order-only prerequisites, see:
 # https://www.gnu.org/software/make/manual/html_node/Prerequisite-Types.html
 $(target_build_dir): | $(build_dir)
+	$(progress) "MKDIR" $@
 	$(MKDIR) -p $@
 
 $(dist_dir): | $(target_build_dir)
+	$(progress) "MKDIR" $@
 	$(MKDIR) $@
 
 $(misc_dir): | $(target_build_dir)
+	$(progress) "MKDIR" $@
 	$(MKDIR) $@
 
 $(kernel): $(libk_asm_objects) $(libk_c_objects) $(linker_ld) | $(dist_dir)

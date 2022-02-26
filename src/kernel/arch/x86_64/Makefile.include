@@ -99,7 +99,7 @@ test: CFLAGS_FOR_TESTS += -DTEST_ENV
 test: CFLAGS_FOR_TESTS += -I$(tests_dir)/ -I$(include_dir)/kernel/ -I$(arch_src)/
 test: libc
 	# libc
-	mkdir -p $(target_build_dir)/libc/string
+	$(MKDIR) -p $(target_build_dir)/libc/string
 	for file in $(libc_test_files); do \
 		echo ; \
 		$(CC) -shared $(lib_objs_dir)/src/$$file.o -o $(target_build_dir)/$$file.so ; \
@@ -171,17 +171,20 @@ endef
 
 export grub_cfg_body
 
-$(iso_dir): | $(target_build_dir)
-	mkdir $@
+$(iso_dir): | $(misc_dir)
+	$(progress) "MKDIR" $@
+	$(MKDIR) $@
 
 $(iso_boot_dir): | $(iso_dir)
-	mkdir $@
+	$(progress) "MKDIR" $@
+	$(MKDIR) $@
 
 $(grub_dir): | $(iso_boot_dir)
-	mkdir $@
+	$(progress) "MKDIR" $@
+	$(MKDIR) $@
 
 # We mark this target as .PHONY to write the file every time.
-$(grub_cfg): $(grub_dir)
+$(grub_cfg): | $(grub_dir)
 	$(progress) "GEN" $@
 	echo "$$grub_cfg_body" > $@
 .PHONY: $(grub_cfg)
@@ -190,9 +193,8 @@ kernel-with-font: libk_extra_objects += $(kernel_console_font)
 kernel-with-font: $(kernel_console_font) $(kernel)
 .PHONY: kernel-with-font
 
-$(iso): kernel-with-font $(initrd) $(grub_cfg)
+$(iso): kernel-with-font $(initrd) $(grub_cfg) | $(iso_boot_dir)
 	$(progress) "GRUB" $@
-	mkdir -p $(iso_boot_dir)
 	cp $(kernel) $(iso_boot_dir)
 	cp $(initrd) $(iso_boot_dir)
 	$(tools_dir)/grub-mkrescue -o $@ $(iso_dir)
