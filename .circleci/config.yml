@@ -45,7 +45,7 @@ commands:
       - setup:
           arch: << parameters.arch >>
           board: << parameters.board >>
-      - run: make << parameters.target >>
+      - run: make << parameters.target >> -j$(nproc)
       - when:
           condition: << parameters.board >>
           steps:

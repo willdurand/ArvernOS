@@ -294,7 +294,7 @@ $(misc_dir): | $(target_build_dir)
 	$(progress) "MKDIR" $@
 	$(MKDIR) $@
 
-$(kernel): $(libk_asm_objects) $(libk_c_objects) $(linker_ld) | $(dist_dir)
+$(kernel): $(linker_ld) $(libk_asm_objects) $(libk_c_objects) $(libk_extra_objects) | $(dist_dir)
 	$(progress) "LD" $@
 	$(LD) --output=$@ --script=$(linker_ld) $(LD_FLAGS) $(libk_asm_objects) $(libk_c_objects) $(libk_extra_objects)
 

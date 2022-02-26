@@ -41,19 +41,20 @@ endif
 # Source files
 ###############################################################################
 
-libk_c_files    += $(wildcard $(kernel_src_dir)/core/pci.c)
-libk_c_files    += $(wildcard $(kernel_src_dir)/core/port.c)
-libk_c_files    += $(wildcard $(arch_src)/*.c)
-libk_c_files    += $(wildcard $(arch_src)/arch/*.c)
-libk_c_files    += $(wildcard $(arch_src)/console/*.c)
-libk_c_files    += $(wildcard $(arch_src)/core/*.c)
-libk_c_files    += $(wildcard $(arch_src)/drivers/*.c)
-libk_c_files    += $(wildcard $(arch_src)/fs/dev/*.c)
-libk_c_files    += $(wildcard $(arch_src)/fs/proc/*.c)
-libk_c_files    += $(wildcard $(arch_src)/mmu/*.c)
-libk_c_files    += $(wildcard $(arch_src)/sys/*.c)
-libk_asm_files  += $(wildcard $(arch_src)/asm/*.asm)
-libc_test_files += $(patsubst $(tests_dir)/%.c, %, $(shell find $(tests_dir)/libc -name '*.c'))
+libk_c_files       += $(wildcard $(kernel_src_dir)/core/pci.c)
+libk_c_files       += $(wildcard $(kernel_src_dir)/core/port.c)
+libk_c_files       += $(wildcard $(arch_src)/*.c)
+libk_c_files       += $(wildcard $(arch_src)/arch/*.c)
+libk_c_files       += $(wildcard $(arch_src)/console/*.c)
+libk_c_files       += $(wildcard $(arch_src)/core/*.c)
+libk_c_files       += $(wildcard $(arch_src)/drivers/*.c)
+libk_c_files       += $(wildcard $(arch_src)/fs/dev/*.c)
+libk_c_files       += $(wildcard $(arch_src)/fs/proc/*.c)
+libk_c_files       += $(wildcard $(arch_src)/mmu/*.c)
+libk_c_files       += $(wildcard $(arch_src)/sys/*.c)
+libk_asm_files     += $(wildcard $(arch_src)/asm/*.asm)
+libc_test_files    += $(patsubst $(tests_dir)/%.c, %, $(shell find $(tests_dir)/libc -name '*.c'))
+libk_extra_objects += $(kernel_console_font)
 
 ###############################################################################
 # Flags
@@ -189,11 +190,7 @@ $(grub_cfg): | $(grub_dir)
 	echo "$$grub_cfg_body" > $@
 .PHONY: $(grub_cfg)
 
-kernel-with-font: libk_extra_objects += $(kernel_console_font)
-kernel-with-font: $(kernel_console_font) $(kernel)
-.PHONY: kernel-with-font
-
-$(iso): kernel-with-font $(initrd) $(grub_cfg) | $(iso_boot_dir)
+$(iso): $(kernel) $(initrd) $(grub_cfg) | $(iso_boot_dir)
 	$(progress) "GRUB" $@
 	cp $(kernel) $(iso_boot_dir)
 	cp $(initrd) $(iso_boot_dir)
