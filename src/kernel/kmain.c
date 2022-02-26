@@ -6,7 +6,7 @@
 #include <fs/sock.h>
 #include <fs/tar.h>
 #include <fs/vfs.h>
-#include <init.h>
+#include <initcall.h>
 #include <kshell/kshell.h>
 #include <logging.h>
 #include <osinfo.h>
@@ -18,8 +18,8 @@
 #include <time/clock.h>
 #include <time/timer.h>
 
-void run_initcalls();
-void init_fs(uintptr_t initrd_addr);
+void initcall_init();
+void fs_init(uintptr_t initrd_addr);
 
 char* saved_cmdline = NULL;
 
@@ -33,7 +33,7 @@ void kmain_early_start()
        KERNEL_TARGET);
 }
 
-void run_initcalls()
+void initcall_init()
 {
   DEBUG("initcalls: __initcall_start=%p __initcall_end=%p",
         (void*)&__initcall_start,
@@ -44,15 +44,17 @@ void run_initcalls()
     return;
   }
 
-  initcall_t* call_fn = (initcall_t*)&__initcall_start;
+  initcall_foreach(call_fn)
+  {
+    int retval = (*call_fn)();
 
-  do {
-    (*call_fn)();
-    call_fn++;
-  } while (call_fn < (initcall_t*)&__initcall_end);
+    if (retval != 0) {
+      PANIC("initcalls: call_fn=%p failed with retval=%d", *call_fn, retval);
+    }
+  }
 }
 
-void init_fs(uintptr_t initrd_addr)
+void fs_init(uintptr_t initrd_addr)
 {
   vfs_init();
 
@@ -138,13 +140,16 @@ void kmain_start(uintptr_t initrd_addr, const char* cmdline)
   }
 
   isr_init();
+
   timer_init();
+
   clock_init();
+
   syscall_init();
 
-  init_fs(initrd_addr);
+  fs_init(initrd_addr);
 
-  run_initcalls();
+  initcall_init();
 
   task_init("idle");
 

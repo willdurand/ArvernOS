@@ -2,7 +2,7 @@
 
 #include <arch/kernel.h>
 #include <fcntl.h>
-#include <init.h>
+#include <initcall.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -125,7 +125,7 @@ static char* kernel_find_symbol(uintptr_t* addr)
   return retval;
 }
 
-static int kernel_load_symbols()
+static int kernel_symbols_init()
 {
   DEBUG("%s", "loading debug symbols");
 
@@ -136,25 +136,25 @@ static int kernel_load_symbols()
 
   struct stat stat_buf;
   if (k_fstat(fd, &stat_buf) < 0) {
-    return -1;
+    return -2;
   }
 
   symbols = (char*)malloc((stat_buf.st_size + 1) * sizeof(char));
   if (symbols == NULL) {
-    return -1;
+    return -3;
   }
 
   if (k_read(fd, symbols, stat_buf.st_size) != stat_buf.st_size) {
-    return -1;
+    return -4;
   }
 
   symbols[stat_buf.st_size] = 0;
 
   if (k_close(fd) < 0) {
-    return -1;
+    return -5;
   }
 
   return 0;
 }
 
-init_register(kernel_load_symbols);
+initcall_early_register(kernel_symbols_init);

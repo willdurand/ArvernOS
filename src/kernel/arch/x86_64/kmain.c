@@ -11,7 +11,7 @@
 #include <drivers/rtl8139.h>
 #include <drivers/serial.h>
 #include <fs/tar.h>
-#include <init.h>
+#include <initcall.h>
 #include <kmain.h>
 #include <logging.h>
 #include <mmu/alloc.h>
@@ -65,7 +65,7 @@ void load_network_config(inish_config_t* kernel_cfg, net_driver_t* driver)
                      dns_ip);
 }
 
-int init_network()
+int network_init()
 {
   pci_device_t device = pci_get_device(RTL8139_VENDOR_ID, RTL8139_DEVICE_ID);
 
@@ -99,7 +99,7 @@ int init_network()
   return 0;
 }
 
-init_register(init_network);
+initcall_late_register(network_init);
 
 void kmain(uintptr_t addr)
 {

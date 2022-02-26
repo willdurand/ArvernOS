@@ -13,11 +13,11 @@ SECTIONS
     }
 
     /* this section contains initcall functions as defined in
-     * `include/kernel/init.h`. */
+     * `include/kernel/initcall.h`. */
     .initcalls :
     {
         __initcall_start = .;
-        *(.initcall_functions)
+        *(SORT_BY_NAME(.initcall_fn_[1-5][1-5]))
         __initcall_end = .;
     }
 

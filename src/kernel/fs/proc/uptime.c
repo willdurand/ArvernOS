@@ -1,6 +1,6 @@
 #include <fs/proc.h>
 
-#include <init.h>
+#include <initcall.h>
 #include <inttypes.h>
 #include <stdio.h>
 #include <time/timer.h>
@@ -27,4 +27,4 @@ int proc_uptime_init()
   return 0;
 }
 
-init_register(proc_uptime_init);
+initcall_fs_register(proc_uptime_init);
