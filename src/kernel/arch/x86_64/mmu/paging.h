@@ -15,50 +15,14 @@
 #define PAGING_FLAG_WRITABLE (1 << 1)
 /// Controls whether accesses from userspace (i.e. ring 3) are permitted.
 #define PAGING_FLAG_USER_ACCESSIBLE (1 << 2)
+/// Tells whether the mapped page is a huge page.
+#define PAGING_FLAG_HUGE_PAGE (1 << 7)
 /// Forbids executing code on this page.
 #define PAGING_FLAG_NO_EXECUTE ((uint64_t)1 << 63)
 
-// cf.http://os.phil-opp.com/modifying-page-tables.html#page-table-entries
-// cf. https://github.com/tmathmeyer/sos
-typedef struct page_entry
-{
-  union
-  {
-    uint64_t packed;
-    struct
-    {
-      uint8_t present : 1;
-      uint8_t writable : 1;
-      uint8_t user_accessible : 1;
-      uint8_t write_thru_cache : 1;
-      uint8_t disable_cache : 1;
-      uint8_t accessed : 1;
-      uint8_t dirty : 1;
-      uint8_t huge_page : 1;
-      uint8_t global : 1;
-      uint8_t OS_1 : 1;
-      uint8_t OS_2 : 1;
-      uint8_t OS_3 : 1;
-      uint64_t _addr : 40;
-      uint8_t OS_4 : 1;
-      uint8_t OS_5 : 1;
-      uint8_t OS_6 : 1;
-      uint8_t OS_7 : 1;
-      uint8_t OS_8 : 1;
-      uint8_t OS_9 : 1;
-      uint8_t OS_A : 1;
-      uint8_t OS_B : 1;
-      uint8_t OS_C : 1;
-      uint8_t OS_D : 1;
-      uint8_t OS_E : 1;
-      uint8_t no_execute : 1;
-    };
-  };
-} __attribute__((packed)) page_entry_t;
-
 typedef struct page_table
 {
-  page_entry_t entries[PAGE_ENTRIES];
+  uint64_t entries[PAGE_ENTRIES];
 } page_table_t;
 
 typedef uint64_t page_number_t;
@@ -176,6 +140,7 @@ void identity_map(uint64_t address, uint64_t flags);
 // The functions below are exposed for testing purposes.
 
 void _set_p4(page_table_t* table);
+uint64_t _p4_index(page_number_t page_number);
 uint64_t _p3_index(page_number_t page_number);
 uint64_t _p2_index(page_number_t page_number);
 uint64_t _p1_index(page_number_t page_number);

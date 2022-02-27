@@ -21,6 +21,7 @@ SECTIONS {
         __initcall_start = .;
         *(SORT_BY_NAME(.initcall_fn_[1-5][1-5]))
         __initcall_end = .;
+        . = ALIGN(4K);
     }
 
     .rodata :
