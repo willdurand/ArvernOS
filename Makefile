@@ -204,7 +204,7 @@ KERNEL_CFLAGS    += $(KERNEL_CONFIG)
 KERNEL_CONFIG += -DGIT_HASH=\"$(git_hash)\"
 KERNEL_CONFIG += -DARCH=\"$(ARCH)\"
 
-DEBUG_CFLAGS  += -g3
+DEBUG_CFLAGS  += -g3 -DDEBUG_MODE
 
 ENABLE_KERNEL_DEBUG ?= 1
 ifeq ($(ENABLE_KERNEL_DEBUG), 1)
@@ -368,7 +368,7 @@ run-release: arch-run-release
 debug: ## build the project in debug mode
 debug: KERNEL_CFLAGS += $(DEBUG_CFLAGS)
 debug: BUILD_MODE = debug
-debug: arch-debug gdbinit
+debug: arch-debug
 .PHONY: debug
 
 run-debug: ## run the project in debug mode
@@ -377,8 +377,9 @@ run-debug: arch-run-debug
 .PHONY: run-debug
 
 gdb: ## build, run the project in debug mode and enable GDB
+gdb: DEBUG_CFLAGS += -ggdb
 gdb: QEMU_OPTIONS += -s -S
-gdb: run-debug
+gdb: run-debug gdbinit
 .PHONY: gdb
 
 run-test: ## run the project in test mode

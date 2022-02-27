@@ -2,7 +2,7 @@
 #ifndef ASSERT_H
 #define ASSERT_H
 
-#ifdef __is_libk
+#if defined(__is_libk) && defined(DEBUG_MODE)
 
 #include <panic.h>
 
