@@ -69,9 +69,10 @@ int network_init()
 {
   pci_device_t device = pci_get_device(RTL8139_VENDOR_ID, RTL8139_DEVICE_ID);
 
+  // It is fine to early return with "success" when we don't find the hardware.
   if (device.packed == 0) {
     WARN("%s", "net: rtl8139: PCI device not found");
-    return -1;
+    return 0;
   }
 
   net_driver_t* net_driver = NULL;
@@ -81,7 +82,7 @@ int network_init()
   }
 
   if (net_driver == NULL) {
-    return -2;
+    return -1;
   }
 
   inish_config_t* kernel_cfg = inish_load("/etc/kernel.inish");
