@@ -155,17 +155,26 @@ ArvernOS. The different final files are located in the `build/<arch>/dist/` or
 To build the image in debug mode, run:
 
 ```
-$ make clean debug
+$ make clean ; make debug
 ```
 
 To compile the OS in debug mode, build the image, and start `qemu` with the OS
 loaded, run:
 
 ```
-$ make clean run-debug
+$ make clean ; make run-debug
 ```
 
 Note: Some boards aren't supported in QEMU.
+
+##### QEMU monitor
+
+When running `make run-debug`, the [QEMU monitor][] can be accessed over TCP on
+port `5555`. You can use tools like `telnet` or `nc`:
+
+```
+$ telnet 127.0.0.1 5555
+```
 
 ##### Logging
 
@@ -177,7 +186,7 @@ like this:
 
 ```
 # Enable the debug logs for the "net" and "fs" modules
-$ make clean run-debug ENABLE_NET_DEBUG=1 ENABLE_FS_DEBUG=1
+$ make clean ; make run-debug ENABLE_NET_DEBUG=1 ENABLE_FS_DEBUG=1
 ```
 
 The available debug variables are:
@@ -191,9 +200,9 @@ The available debug variables are:
 - `ENABLE_SYS_DEBUG`
 - `ENABLE_USERLAND_DEBUG`
 
-##### Stacktraces
+##### Stack traces
 
-Log files may contain stacktraces without debug symbols if the symbols haven't
+Log files may contain stack traces without debug symbols if the symbols haven't
 been loaded:
 
 ```
@@ -248,13 +257,16 @@ executed (see also: `make gdbinit`). If a file named `.gdbinit.local` exists in
 the project's root directory, its content will be appended to the generated
 `.gdbinit` file.
 
+Note: `make gdb` calls `make run-debug` under the hood so all configuration
+options are also supported. For example, it is possible to run `make gdb KERNEL_CMDLINE='kshell selftest'`.
+
 #### Release mode
 
 To compile the OS in release mode, build the image, and start `qemu` with the OS
 loaded, run:
 
 ```
-$ make clean run-release
+$ make clean ; make run-release
 ```
 
 #### config files
@@ -290,3 +302,4 @@ attached (either in the source files or in a `LICENSE` file next to them).
 [git-submodules]: https://git-scm.com/book/en/v2/Git-Tools-Submodules
 [license]: https://github.com/willdurand/ArvernOS/blob/master/LICENSE.md
 [twitter-thread]: https://twitter.com/couac/status/866693418130575361
+[qemu monitor]: https://www.qemu.org/docs/master/system/monitor.html
