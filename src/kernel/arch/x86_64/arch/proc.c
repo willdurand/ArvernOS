@@ -44,23 +44,16 @@ task_t* arch_task_create(uint64_t clone_flags, uintptr_t entrypoint)
 
   uintptr_t* rsp = (uintptr_t*)((uintptr_t)p + PAGE_SIZE);
 
-  // Prepare an interrupt frame for `iretq` called in `ret_from_fork`.
-  // See: src/kernel/arch/x86_64/asm/proc.asm
-  *--rsp = KERNEL_BASE_SELECTOR + 0x08; // ss
-  *--rsp = 0;                           // rsp
-  *--rsp = 0x202;                       // cpu flags
-  *--rsp = KERNEL_BASE_SELECTOR;        // cs
-  *--rsp = (uintptr_t)entrypoint;       // rip
-
-  // This will be used in `arch_task_switch` to call `ret_from_fork`.
-  *--rsp = (uintptr_t)ret_from_fork;
-  *--rsp = 0;     // rbp
-  *--rsp = 0;     // rbx
-  *--rsp = 0;     // r12
-  *--rsp = 0;     // r13
-  *--rsp = 0;     // r14
-  *--rsp = 0;     // r15
-  *--rsp = 0x202; // cpu flags
+  *--rsp = (uintptr_t)entrypoint;
+  *--rsp = (uintptr_t)ret_from_fork; // This will be used in `arch_task_switch`
+                                     // to call `ret_from_fork`.
+  *--rsp = 0;                        // rbp
+  *--rsp = 0;                        // rbx
+  *--rsp = 0;                        // r12
+  *--rsp = 0;                        // r13
+  *--rsp = 0;                        // r14
+  *--rsp = 0;                        // r15
+  *--rsp = 0x202;                    // cpu flags
 
   p->info.rsp = (uintptr_t)rsp;
 
