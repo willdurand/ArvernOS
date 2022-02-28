@@ -1,5 +1,6 @@
 #include "paging.h"
 #include <arvern/utils.h>
+#include <assert.h>
 #include <core/multiboot.h>
 #include <core/register.h>
 #include <inttypes.h>
@@ -11,16 +12,22 @@
 #include <string.h>
 
 #define MMU_DEBUG_PAGE_ENTRY(message, e)                                       \
-  MMU_DEBUG("%s "                                                              \
-            "page entry addr=%p present=%d "                                   \
-            "writable=%d no_execute=%d user_accessible=%d huge_page=%d",       \
-            message,                                                           \
-            (e).packed & 0x000ffffffffff000,                                   \
-            (e).present,                                                       \
-            (e).writable,                                                      \
-            (e).no_execute,                                                    \
-            (e).user_accessible,                                               \
-            (e).huge_page)
+  {                                                                            \
+    MMU_DEBUG("%s page entry addr=%p"                                          \
+              " present=%d"                                                    \
+              " writable=%d"                                                   \
+              " no_execute=%d"                                                 \
+              " user_accessible=%d"                                            \
+              " huge_page=%d",                                                 \
+              message,                                                         \
+              (e & 0x000ffffffffff000),                                        \
+              (e & PAGING_FLAG_PRESENT) == PAGING_FLAG_PRESENT,                \
+              (e & PAGING_FLAG_WRITABLE) == PAGING_FLAG_WRITABLE,              \
+              (e & PAGING_FLAG_NO_EXECUTE) == PAGING_FLAG_NO_EXECUTE,          \
+              (e & PAGING_FLAG_USER_ACCESSIBLE) ==                             \
+                PAGING_FLAG_USER_ACCESSIBLE,                                   \
+              (e & PAGING_FLAG_HUGE_PAGE) == PAGING_FLAG_HUGE_PAGE);           \
+  }
 
 void map_page_to_frame(page_number_t page_number,
                        uint64_t frame,
@@ -30,11 +37,9 @@ void enable_write_protection();
 void remap_kernel();
 void zero_table(page_table_t* table);
 page_table_t* next_table_address(page_table_t* table, uint64_t index);
-opt_uint64_t pointed_frame(page_entry_t entry);
-uint64_t p4_index(page_number_t page_number);
+opt_uint64_t pointed_frame(uint64_t entry);
 page_table_t* next_table_create(page_table_t* table, uint64_t index);
 page_table_t* get_p4();
-void paging_set_entry(page_entry_t* entry, uint64_t addr, uint64_t flags);
 opt_uint64_t paging_frame_allocate();
 void paging_frame_deallocate(frame_number_t frame_number);
 
@@ -68,9 +73,8 @@ void remap_kernel()
   // now we are able to zero the table
   zero_table(inactive_page_table);
   // set up recursive mapping for the table
-  paging_set_entry(&inactive_page_table->entries[511],
-                   inactive_page_table_frame,
-                   PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
+  inactive_page_table->entries[511] =
+    inactive_page_table_frame | PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE;
   unmap(temporary_page);
 
   uint64_t backup_addr = read_cr3();
@@ -85,9 +89,8 @@ void remap_kernel()
   page_table_t* p4_table = (page_table_t*)page_start_address(temporary_page);
 
   // overwrite recursive mapping
-  paging_set_entry(&active_p4_table->entries[511],
-                   inactive_page_table_frame,
-                   PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
+  active_p4_table->entries[511] =
+    inactive_page_table_frame | PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE;
   write_cr3(read_cr3());
 
   // We shouldn't deallocate the `inactive_page_table_frame`.
@@ -116,12 +119,6 @@ void remap_kernel()
     MMU_DEBUG("%s", "mapped VBE framebuffer!");
   }
 
-  reserved_areas_t reserved = multiboot_get_reserved_areas();
-  frame_number_t multiboot_start_frame =
-    frame_containing_address(reserved.multiboot_start);
-  frame_number_t multiboot_end_frame =
-    frame_containing_address(reserved.multiboot_end - 1);
-
   MMU_DEBUG("%s", "mapping kernel sections");
   multiboot_tag_elf_sections_t* tag =
     (multiboot_tag_elf_sections_t*)multiboot_find(
@@ -130,12 +127,17 @@ void remap_kernel()
   uint64_t i = 0;
   multiboot_elf_sections_entry_t* elf = NULL;
 
-  for (i = 0, elf = (tag)->sections; i < (tag)->num;
+  // TODO: create a foreach macro
+  for (i = 0, elf = ((multiboot_tag_elf_sections_t*)tag)->sections;
+       i < ((multiboot_tag_elf_sections_t*)tag)->num;
        elf =
-         (multiboot_elf_sections_entry_t*)((uint64_t)elf + (tag)->section_size),
+         (multiboot_elf_sections_entry_t*)((uint64_t)elf +
+                                           ((multiboot_tag_elf_sections_t*)tag)
+                                             ->section_size),
       i++) {
-    if (!(elf->flags & MULTIBOOT_ELF_SECTION_FLAG_ALLOCATED) ||
-        elf->size == 0) {
+    if ((elf->flags & MULTIBOOT_ELF_SECTION_FLAG_ALLOCATED) !=
+          MULTIBOOT_ELF_SECTION_FLAG_ALLOCATED ||
+        elf->type == MULTIBOOT_ELF_SECTION_TYPE_NULL) {
       continue;
     }
 
@@ -159,7 +161,17 @@ void remap_kernel()
   }
   MMU_DEBUG("%s", "kernel sections mapped!");
 
-  MMU_DEBUG("mapping multiboot info: start_frame=%" PRIu64
+  // Once the kernel is correctly mapped with the right flags, we map the rest
+  // of the reserved area that was determined by the multiboot code. We make
+  // sure that it is PRESENT, we probably don't need any other flags.
+  reserved_areas_t reserved = multiboot_get_reserved_areas();
+
+  frame_number_t multiboot_start_frame =
+    frame_containing_address(reserved.kernel_end);
+  frame_number_t multiboot_end_frame =
+    frame_containing_address(reserved.end - 1);
+
+  MMU_DEBUG("mapping end of the reserved area: start_frame=%" PRIu64
             " end_frame=%" PRIu64,
             multiboot_start_frame,
             multiboot_end_frame);
@@ -167,34 +179,7 @@ void remap_kernel()
   for (uint64_t i = multiboot_start_frame; i <= multiboot_end_frame; i++) {
     identity_map(frame_start_address(i), PAGING_FLAG_PRESENT);
   }
-  MMU_DEBUG("%s", "multiboot info mapped!");
-
-  // Find the first module.
-  multiboot_tag_module_t* module =
-    (multiboot_tag_module_t*)multiboot_find(MULTIBOOT_TAG_TYPE_MODULE);
-  frame_number_t modules_start_frame =
-    frame_containing_address((uint64_t)module->mod_start);
-
-  // Find the last frame of the last module.
-  frame_number_t modules_end_frame;
-  for (multiboot_tag_t* tag = (multiboot_tag_t*)multiboot_get_info()->tags;
-       tag->type != MULTIBOOT_TAG_TYPE_END;
-       tag = (multiboot_tag_t*)((uint8_t*)tag + ((tag->size + 7) & ~7))) {
-    if (tag->type == MULTIBOOT_TAG_TYPE_MODULE) {
-      modules_end_frame = frame_containing_address(
-        (uint64_t)((multiboot_tag_module_t*)tag)->mod_end - 1);
-    }
-  }
-
-  MMU_DEBUG("mapping multiboot modules: start_frame=%" PRIu64
-            " end_frame=%" PRIu64,
-            modules_start_frame,
-            modules_end_frame);
-
-  for (uint64_t i = modules_start_frame; i <= modules_end_frame; i++) {
-    identity_map(frame_start_address(i), PAGING_FLAG_PRESENT);
-  }
-  MMU_DEBUG("%s", "mapped multiboot modules!");
+  MMU_DEBUG("%s", "end of reserved area mapped!");
 
   // Bitmap for allocated frames.
   MMU_DEBUG("mapping %d pages for frame allocator, starting at addr=%p",
@@ -207,36 +192,34 @@ void remap_kernel()
   MMU_DEBUG("%s", "pages for frame allocator mapped!");
 
   // restore recursive mapping to original p4 table
-  paging_set_entry(&p4_table->entries[511],
-                   backup_addr,
-                   PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
+  p4_table->entries[511] =
+    backup_addr | PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE;
   write_cr3(read_cr3());
   MMU_DEBUG("%s", "restored recursive mapping");
 
   unmap(temporary_page);
 
   write_cr3(inactive_page_table_frame);
-  MMU_DEBUG("%s", "switched to new table");
+  DEBUG("switched to new table: cr3=%p", (void*)read_cr3());
 
   uint64_t old_page_table_frame =
     frame_start_address(frame_containing_address(backup_addr));
   page_number_t old_page_table = page_containing_address(old_page_table_frame);
   unmap(old_page_table);
-  MMU_DEBUG("guard page at %p", page_start_address(old_page_table));
+  DEBUG("guard page at %p", (void*)page_start_address(old_page_table));
 }
 
 void enable_nxe_bit()
 {
   uint64_t efer = read_msr(IA32_EFER);
   write_msr(IA32_EFER, efer | (1 << 11));
-  MMU_DEBUG(
-    "enabled NXE bit old_efer=%p new_efer=%p", efer, read_msr(IA32_EFER));
+  DEBUG("enabled NXE bit old_efer=%#x new_efer=%#x", efer, read_msr(IA32_EFER));
 }
 
 void enable_write_protection()
 {
   write_cr0(read_cr0() | (1 << 16));
-  MMU_DEBUG("%s", "enabled write protection (cr0)");
+  DEBUG("enabled write protection: cr0=%#x", read_cr0());
 }
 
 void zero_table(page_table_t* table)
@@ -246,19 +229,12 @@ void zero_table(page_table_t* table)
 
 page_table_t* next_table_address(page_table_t* table, uint64_t index)
 {
-  if (table->entries[index].present != 1) {
+  if ((table->entries[index] & PAGING_FLAG_PRESENT) != PAGING_FLAG_PRESENT) {
     MMU_DEBUG("entry at index=%" PRIu64 " in table=%p is not present, "
-              "returning 0",
+              "returning NULL",
               index,
               table);
-    return 0;
-  }
-
-  if (table->entries[index].huge_page == 1) {
-    MMU_DEBUG("huge page detected for table=%p index=%" PRIu64 ", returning 0",
-              table,
-              index);
-    return 0;
+    return NULL;
   }
 
 #ifdef TEST_ENV
@@ -310,13 +286,14 @@ opt_uint64_t translate_page(page_number_t page_number)
 {
   page_table_t* p4 = get_p4();
 
-  page_table_t* p3 = next_table_address(p4, p4_index(page_number));
+  page_table_t* p3 = next_table_address(p4, _p4_index(page_number));
 
   if (p3) {
-    page_entry_t p3_entry = p3->entries[_p3_index(page_number)];
+    uint64_t p3_entry = p3->entries[_p3_index(page_number)];
     opt_uint64_t frame = pointed_frame(p3_entry);
 
-    if (frame.has_value && p3_entry.huge_page) {
+    if (frame.has_value &&
+        (p3_entry & PAGING_FLAG_HUGE_PAGE) == PAGING_FLAG_HUGE_PAGE) {
       MMU_DEBUG(
         "1GB huge page=%" PRIu64 " frame=%" PRIu64, page_number, frame.value);
 
@@ -337,7 +314,8 @@ opt_uint64_t translate_page(page_number_t page_number)
   page_table_t* p2 = next_table_address(p3, _p3_index(page_number));
 
   if (p2) {
-    if (p3->entries[_p3_index(page_number)].huge_page) {
+    if ((p3->entries[_p3_index(page_number)] & PAGING_FLAG_HUGE_PAGE) ==
+        PAGING_FLAG_HUGE_PAGE) {
       opt_uint64_t frame = pointed_frame(p2->entries[_p2_index(page_number)]);
 
       MMU_DEBUG(
@@ -358,7 +336,7 @@ opt_uint64_t translate_page(page_number_t page_number)
 
   page_table_t* p1 = next_table_address(p2, _p2_index(page_number));
 
-  if (p1 == 0) {
+  if (p1 == NULL) {
     MMU_DEBUG("did not find p1 (%p), returning no value", p1);
     return (opt_uint64_t){ .has_value = false, .value = 0 };
   }
@@ -366,7 +344,7 @@ opt_uint64_t translate_page(page_number_t page_number)
   return pointed_frame(p1->entries[_p1_index(page_number)]);
 }
 
-uint64_t p4_index(page_number_t page_number)
+uint64_t _p4_index(page_number_t page_number)
 {
   return (page_number >> 27) & 0777;
 }
@@ -386,14 +364,12 @@ uint64_t _p1_index(page_number_t page_number)
   return (page_number >> 0) & 0777;
 }
 
-opt_uint64_t pointed_frame(page_entry_t entry)
+opt_uint64_t pointed_frame(uint64_t entry)
 {
-  MMU_DEBUG_PAGE_ENTRY("pointed_frame", entry);
-
-  if (entry.present) {
+  if (entry & PAGING_FLAG_PRESENT) {
     return (opt_uint64_t){ .has_value = true,
                            .value = frame_containing_address(
-                             entry.packed & 0x000ffffffffff000) };
+                             entry & 0x000ffffffffff000) };
   }
 
   return (opt_uint64_t){ .has_value = false, .value = 0 };
@@ -421,16 +397,11 @@ void map_page_to_frame(page_number_t page_number,
 #ifndef TEST_ENV
   // Do not call `translate_page()` here, otherwise our test suite wouldn't be
   // able to fake the calls to `next_table_address()` right after.
-  opt_uint64_t maybe_frame = translate_page(page_number);
-  if (maybe_frame.has_value) {
-    MMU_DEBUG("page=%" PRIu64 " already mapped to frame=%" PRIu64,
-              page_number,
-              maybe_frame.value);
-    return;
-  }
+  // opt_uint64_t maybe_frame = translate_page(page_number);
+  // assert(!maybe_frame.has_value);
 #endif
 
-  uint64_t p4_idx = p4_index(page_number);
+  uint64_t p4_idx = _p4_index(page_number);
   uint64_t p3_idx = _p3_index(page_number);
   uint64_t p2_idx = _p2_index(page_number);
   uint64_t p1_idx = _p1_index(page_number);
@@ -442,28 +413,21 @@ void map_page_to_frame(page_number_t page_number,
             p3_idx,
             p4_idx);
 
-  MMU_DEBUG("p4=%p", get_p4());
+  page_table_t* p4 = get_p4();
+  assert(p4 != NULL);
 
-  MMU_DEBUG("%s", "get or create p3");
-  page_table_t* p3 = next_table_create(get_p4(), p4_idx);
-  MMU_DEBUG("p3=%p", p3);
+  page_table_t* p3 = next_table_create(p4, p4_idx);
+  assert(p3 != NULL);
 
-  MMU_DEBUG("%s", "get or create p2");
   page_table_t* p2 = next_table_create(p3, p3_idx);
-  MMU_DEBUG("p2=%p", p2);
+  assert(p2 != NULL);
 
-  MMU_DEBUG("%s", "get or create p1");
   page_table_t* p1 = next_table_create(p2, p2_idx);
-  MMU_DEBUG("p1=%p", p1);
+  assert(p1 != NULL);
 
-  page_entry_t* entry = &p1->entries[p1_idx];
+  assert((p1->entries[p1_idx] & PAGING_FLAG_PRESENT) == 0);
 
-  if (entry->packed != 0) {
-    PANIC("%s", "entry should be unused");
-  }
-
-  paging_set_entry(entry, frame, flags);
-  p1->entries[p1_idx] = *entry;
+  p1->entries[p1_idx] = frame | flags;
 
   MMU_DEBUG("mapped page=%" PRIu64 " to frame=%" PRIu64 " (addr=%p)",
             page_number,
@@ -473,71 +437,29 @@ void map_page_to_frame(page_number_t page_number,
 
 page_table_t* next_table_create(page_table_t* table, uint64_t index)
 {
-  MMU_DEBUG("table=%p index=%" PRIu64, table, index);
+  MMU_DEBUG("table=%p index=%" PRIu64, (void*)table, index);
 
-  bool was_created = false;
-
-  page_entry_t* entry = &table->entries[index];
-
-  if (entry->present) {
+  if (table &&
+      (table->entries[index] & PAGING_FLAG_PRESENT) == PAGING_FLAG_PRESENT) {
     MMU_DEBUG("page entry at index=%" PRIu64 " is present", index);
-  } else {
-    MMU_DEBUG("page entry at index=%" PRIu64 " is not present, creating entry",
-              index);
 
-    opt_uint64_t frame = paging_frame_allocate();
-
-    if (!frame.has_value) {
-      PANIC("%s", "frame is unexpectedly missing");
-    }
-
-    paging_set_entry(
-      entry, frame.value, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
-
-    MMU_DEBUG_PAGE_ENTRY("created", table->entries[index]);
-
-    was_created = true;
+    return next_table_address(table, index);
   }
+
+  MMU_DEBUG("page entry at index=%" PRIu64 " is not present, creating entry",
+            index);
+
+  opt_uint64_t frame = paging_frame_allocate();
+  assert(frame.has_value);
+
+  table->entries[index] =
+    frame.value | PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE;
 
   page_table_t* next_table = next_table_address(table, index);
-  MMU_DEBUG("next table=%p", next_table);
 
-  if (was_created) {
-    zero_table(next_table);
-    MMU_DEBUG("zero'ed table=%p", next_table);
-  }
+  zero_table(next_table);
 
   return next_table;
-}
-
-void paging_set_entry(page_entry_t* entry, uint64_t addr, uint64_t flags)
-{
-  if ((addr & !0x000ffffffffff000) != 0) {
-    PANIC("trying to set an invalid address: %p", addr);
-  }
-
-  entry->packed = addr & 0x000ffffffffff000;
-
-  if (flags & PAGING_FLAG_PRESENT) {
-    entry->present = 1;
-  }
-
-  if (flags & PAGING_FLAG_WRITABLE) {
-    entry->writable = 1;
-  }
-
-  if (flags & PAGING_FLAG_NO_EXECUTE) {
-    entry->no_execute = 1;
-  }
-
-  if (flags & PAGING_FLAG_USER_ACCESSIBLE) {
-    entry->user_accessible = 1;
-  }
-
-  // TODO: Change that once we have a P4 for usermode.
-  entry->user_accessible = 1;
-
-  MMU_DEBUG_PAGE_ENTRY("set", (*entry));
 }
 
 page_table_t* get_p4()
@@ -571,26 +493,30 @@ void unmap(page_number_t page_number)
 #endif
 
   page_table_t* p4 = get_p4();
-  page_table_t* p3 = next_table_address(p4, p4_index(page_number));
+  assert(p4 != NULL);
+  page_table_t* p3 = next_table_address(p4, _p4_index(page_number));
+  assert(p3 != NULL);
   page_table_t* p2 = next_table_address(p3, _p3_index(page_number));
+  assert(p2 != NULL);
   page_table_t* p1 = next_table_address(p2, _p2_index(page_number));
+  assert(p1 != NULL);
 
-  page_entry_t entry = p1->entries[_p1_index(page_number)];
+  uint64_t entry = p1->entries[_p1_index(page_number)];
+
   opt_uint64_t frame = pointed_frame(entry);
-
-  if (!frame.has_value) {
-    PANIC("trying to unmap an entry without a frame");
-  }
+  assert(frame.has_value);
 
   frame_number_t frame_number = frame.value;
 
-  MMU_DEBUG_PAGE_ENTRY("clearing", entry);
-  p1->entries[_p1_index(page_number)].packed = 0;
+  p1->entries[_p1_index(page_number)] = 0;
 
 #ifndef TEST_ENV
   // flush the translation lookaside buffer
   // cf. http://os.phil-opp.com/modifying-page-tables.html#unmap
-  __asm__("invlpg (%0)" : /* no output */ : "r"(addr) : "memory");
+  __asm__("invlpg (%0)"
+          : /* no output */
+          : "r"(addr)
+          : "memory");
 #endif
 
   // TODO: Free p(1,2,3) table if empty.
