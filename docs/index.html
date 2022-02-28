@@ -242,7 +242,7 @@ Debug mode</h4>
 </div><!-- fragment --><p ><a class="anchor" id="autotoc_md16"></a> </p><h5>Debugging</h5>
 <p >Use <code>make gdb</code> to run the project in debug mode with QEMU configured to wait for <a href="https://www.sourceware.org/gdb/">gdb</a> to connect. This has been tested with <code>vim</code> (<code>:Termdebug</code>) and VS Code.</p>
 <p >A sensible configuration is automatically generated when this command is executed (see also: <code>make gdbinit</code>). If a file named <code>.gdbinit.local</code> exists in the project's root directory, its content will be appended to the generated <code>.gdbinit</code> file.</p>
-<dl class="section note"><dt>Note</dt><dd><code>make gdb</code> calls <code>make run-debug</code> under the hood so all configuration options are also supported. For example, it is possible to run &lsquo;make gdb KERNEL_CMDLINE='kshell selftest&rsquo;`.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd><code>make gdb</code> calls <code>make run-debug</code> under the hood so all configuration options are also supported. For example, it is possible to run <code>make gdb KERNEL_CMDLINE="kshell selftest"</code>.</dd></dl>
 <h4><a class="anchor" id="autotoc_md17"></a>
 Release mode</h4>
 <p >To compile the OS in release mode, build the image, and start <code>qemu</code> with the OS loaded, run:</p>

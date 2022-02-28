@@ -258,7 +258,7 @@ the project's root directory, its content will be appended to the generated
 `.gdbinit` file.
 
 Note: `make gdb` calls `make run-debug` under the hood so all configuration
-options are also supported. For example, it is possible to run `make gdb KERNEL_CMDLINE='kshell selftest'`.
+options are also supported. For example, it is possible to run `make gdb KERNEL_CMDLINE="kshell selftest"`.
 
 #### Release mode
 
