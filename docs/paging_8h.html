@@ -103,8 +103,6 @@ Include dependency graph for paging.h:</div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpage__entry__t.html">page_entry_t</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpage__table__t.html">page_table_t</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -122,6 +120,10 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>PAGING_FLAG_USER_ACCESSIBLE</b>&#160;&#160;&#160;(1 &lt;&lt; 2)</td></tr>
 <tr class="memdesc:a5c235330203c88a6c6800a58a49cef17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Controls whether accesses from userspace (i.e. ring 3) are permitted. <br /></td></tr>
 <tr class="separator:a5c235330203c88a6c6800a58a49cef17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaad81d99541751cd70b57286f794fdc0"><td class="memItemLeft" align="right" valign="top"><a id="aaad81d99541751cd70b57286f794fdc0" name="aaad81d99541751cd70b57286f794fdc0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>PAGING_FLAG_HUGE_PAGE</b>&#160;&#160;&#160;(1 &lt;&lt; 7)</td></tr>
+<tr class="memdesc:aaad81d99541751cd70b57286f794fdc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tells whether the mapped page is a huge page. <br /></td></tr>
+<tr class="separator:aaad81d99541751cd70b57286f794fdc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b636c6433bad872f80f46458db566f7"><td class="memItemLeft" align="right" valign="top"><a id="a9b636c6433bad872f80f46458db566f7" name="a9b636c6433bad872f80f46458db566f7"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>PAGING_FLAG_NO_EXECUTE</b>&#160;&#160;&#160;((uint64_t)1 &lt;&lt; 63)</td></tr>
 <tr class="memdesc:a9b636c6433bad872f80f46458db566f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forbids executing code on this page. <br /></td></tr>
@@ -491,7 +493,6 @@ Here is the caller graph for this function:</div>
   </table>
   </dd>
 </dl>
-<p >Do not call <code><a class="el" href="paging_8h.html#a1f069c46ac4245771221fc7f0bcfb2e0">translate()</a></code> here, otherwise our test suite wouldn't be able</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">

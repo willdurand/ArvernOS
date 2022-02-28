@@ -50,7 +50,6 @@ var annotated_dup =
     [ "opt_uint32_t", "structopt__uint32__t.html", null ],
     [ "opt_uint64_t", "structopt__uint64__t.html", null ],
     [ "opt_uint8_t", "structopt__uint8__t.html", null ],
-    [ "page_entry_t", "structpage__entry__t.html", null ],
     [ "page_table_t", "structpage__table__t.html", null ],
     [ "pci_device_t", "unionpci__device__t.html", "unionpci__device__t" ],
     [ "reserved_areas_t", "structreserved__areas__t.html", null ],

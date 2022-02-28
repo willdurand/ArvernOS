@@ -189,14 +189,17 @@ Building ArvernOS</h3>
 <h4><a class="anchor" id="autotoc_md12"></a>
 Debug mode</h4>
 <p >To build the image in debug mode, run:</p>
-<div class="fragment"><div class="line">$ make clean debug</div>
+<div class="fragment"><div class="line">$ make clean ; make debug</div>
 </div><!-- fragment --><p >To compile the OS in debug mode, build the image, and start <code>qemu</code> with the OS loaded, run:</p>
-<div class="fragment"><div class="line">$ make clean run-debug</div>
+<div class="fragment"><div class="line">$ make clean ; make run-debug</div>
 </div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>Some boards aren't supported in QEMU.</dd></dl>
-<p><a class="anchor" id="autotoc_md13"></a> </p><h5>Logging</h5>
+<p><a class="anchor" id="autotoc_md13"></a> </p><h5>QEMU monitor</h5>
+<p >When running <code>make run-debug</code>, the <a href="https://www.qemu.org/docs/master/system/monitor.html">QEMU monitor</a> can be accessed over TCP on port <code>5555</code>. You can use tools like <code>telnet</code> or <code>nc</code>:</p>
+<div class="fragment"><div class="line">$ telnet 127.0.0.1 5555</div>
+</div><!-- fragment --><p ><a class="anchor" id="autotoc_md14"></a> </p><h5>Logging</h5>
 <p >In debug mode, logging very likely uses the serial port <code>COM1</code> to write various debugging information. QEMU is configured to write the output of this serial port to a logfile in <code>./log/</code>. <code>DEBUG</code> level logs are not necessarily written by default, though, and it is possible to enable <code>DEBUG</code> logs for specific modules like this:</p>
 <div class="fragment"><div class="line"># Enable the debug logs for the &quot;net&quot; and &quot;fs&quot; modules</div>
-<div class="line">$ make clean run-debug ENABLE_NET_DEBUG=1 ENABLE_FS_DEBUG=1</div>
+<div class="line">$ make clean ; make run-debug ENABLE_NET_DEBUG=1 ENABLE_FS_DEBUG=1</div>
 </div><!-- fragment --><p >The available debug variables are:</p>
 <ul>
 <li><code>ENABLE_CONFIG_DEBUG</code></li>
@@ -208,8 +211,8 @@ Debug mode</h4>
 <li><code>ENABLE_SYS_DEBUG</code></li>
 <li><code>ENABLE_USERLAND_DEBUG</code></li>
 </ul>
-<p ><a class="anchor" id="autotoc_md14"></a> </p><h5>Stacktraces</h5>
-<p >Log files may contain stacktraces without debug symbols if the symbols haven't been loaded:</p>
+<p ><a class="anchor" id="autotoc_md15"></a> </p><h5>Stack traces</h5>
+<p >Log files may contain stack traces without debug symbols if the symbols haven't been loaded:</p>
 <div class="fragment"><div class="line">[...]</div>
 <div class="line">DEBUG    | src/kernel/arch/x86_64/kshell/kshell.c:108:run_command(): command=&#39;selftest&#39; argc=1</div>
 <div class="line">DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:30:kernel_dump_stacktrace(): kernel stacktrace:</div>
@@ -236,14 +239,15 @@ Debug mode</h4>
 <div class="line">/path/to/ArvernOS/src/kernel/kshell/selftest.c:30:3</div>
 </div><!-- fragment --><div class="fragment"><div class="line">$ llvm-addr2line-13 -e build/x86_64/dist/kernel-x86_64.bin 01163B3</div>
 <div class="line">/path/to/ArvernOS/src/kernel/kshell/selftest.c:12</div>
-</div><!-- fragment --><p ><a class="anchor" id="autotoc_md15"></a> </p><h5>Debugging</h5>
+</div><!-- fragment --><p ><a class="anchor" id="autotoc_md16"></a> </p><h5>Debugging</h5>
 <p >Use <code>make gdb</code> to run the project in debug mode with QEMU configured to wait for <a href="https://www.sourceware.org/gdb/">gdb</a> to connect. This has been tested with <code>vim</code> (<code>:Termdebug</code>) and VS Code.</p>
 <p >A sensible configuration is automatically generated when this command is executed (see also: <code>make gdbinit</code>). If a file named <code>.gdbinit.local</code> exists in the project's root directory, its content will be appended to the generated <code>.gdbinit</code> file.</p>
-<h4><a class="anchor" id="autotoc_md16"></a>
+<dl class="section note"><dt>Note</dt><dd><code>make gdb</code> calls <code>make run-debug</code> under the hood so all configuration options are also supported. For example, it is possible to run &lsquo;make gdb KERNEL_CMDLINE='kshell selftest&rsquo;`.</dd></dl>
+<h4><a class="anchor" id="autotoc_md17"></a>
 Release mode</h4>
 <p >To compile the OS in release mode, build the image, and start <code>qemu</code> with the OS loaded, run:</p>
-<div class="fragment"><div class="line">$ make clean run-release</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md17"></a>
+<div class="fragment"><div class="line">$ make clean ; make run-release</div>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md18"></a>
 config files</h4>
 <p ><code>config</code> files are used to configure how a build works. The content must be compatible with <code>make</code>. Here is an example:</p>
 <div class="fragment"><div class="line"># LLVM config on MacOS with Homebrew</div>
@@ -258,7 +262,7 @@ config files</h4>
 <div class="line">ENABLE_PROC_DEBUG     = 1</div>
 <div class="line">ENABLE_SYS_DEBUG      = 1</div>
 <div class="line">ENABLE_USERLAND_DEBUG = 1</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md18"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md19"></a>
 License</h2>
 <p >ArvernOS is released under the MIT License. See the bundled <a href="https://github.com/willdurand/ArvernOS/blob/master/LICENSE.md">LICENSE</a> file for details. In addition, some parts of this project have their own licenses attached (either in the source files or in a <code>LICENSE</code> file next to them). </p>
 </div></div><!-- PageDoc -->
