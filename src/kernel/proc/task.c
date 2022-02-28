@@ -43,7 +43,6 @@ void task_schedule()
 void task_schedule_on_timer_tick()
 {
   if (!current) {
-    PROC_DEBUG("%s", "no current task");
     return;
   }
 
