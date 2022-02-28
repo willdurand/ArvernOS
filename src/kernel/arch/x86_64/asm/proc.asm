@@ -24,7 +24,9 @@ arch_task_switch:
   ret
 
 ret_from_fork:
+  pop r12
+
   extern task_schedule_tail
   call task_schedule_tail
-  cli
-  iretq
+
+  call r12
