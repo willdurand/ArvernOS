@@ -86,4 +86,9 @@ task_t* task_get_current();
  */
 int task_create(const char* name, uint64_t clone_flags, uintptr_t entrypoint);
 
+/**
+ * Prints information about the tasks on the standard output.
+ */
+void task_print_info();
+
 #endif

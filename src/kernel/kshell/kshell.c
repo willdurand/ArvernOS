@@ -17,7 +17,7 @@ static char readline[READLINE_SIZE] = { 0 };
 static char last_readline[READLINE_SIZE] = { 0 };
 static unsigned int readline_index = 0;
 
-#define NB_DOCUMENTED_COMMANDS 13
+#define NB_DOCUMENTED_COMMANDS 14
 
 static const char* commands[][NB_DOCUMENTED_COMMANDS] = {
   { "cat", "print on the standard output" },
@@ -31,6 +31,7 @@ static const char* commands[][NB_DOCUMENTED_COMMANDS] = {
   { "overflow", "test the stack buffer overflow protection" },
   { "ping", "ping an IPv4 address" },
   { "poweroff", "power off the system" },
+  { "ps", "show information about the tasks" },
   { "selftest", "run the kernel test suite" },
   { "usermode", "switch to usermode (alias for 'exec /bin/init -s')" },
 };
@@ -105,6 +106,8 @@ void run_command()
     exec(3, args);
   } else if (strcmp(argv[0], "poweroff") == 0) {
     power_off(REBOOT_CMD_POWER_OFF);
+  } else if (strcmp(argv[0], "ps") == 0) {
+    ps(argc, argv);
   } else {
     printf("invalid kshell command\n");
   }
