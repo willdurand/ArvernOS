@@ -166,3 +166,14 @@ void task_switch(task_t* next)
 
   arch_task_switch(prev, next);
 }
+
+void task_print_info()
+{
+  printf("state name\n");
+  printf("----- ----\n");
+
+  for (uint8_t i = 0; i < nb_tasks; i++) {
+    char state = tasks[i]->state == RUNNING ? 'R' : 'Z';
+    printf("%c     %s\n", state, tasks[i]->name);
+  }
+}
