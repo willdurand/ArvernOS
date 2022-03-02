@@ -121,6 +121,7 @@ void kinit()
     // INFO("kmain: switching to usermode... (%s)", argv[0]);
     //
     // k_execv(argv[0], argv);
+    WARN("cannot execute: %s", saved_cmdline);
   }
 
   k_exit(EXIT_FAILURE);
