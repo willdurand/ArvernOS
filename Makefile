@@ -380,7 +380,7 @@ run-debug: arch-run-debug
 gdb: ## build, run the project in debug mode and enable GDB
 gdb: DEBUG_CFLAGS += -ggdb
 gdb: QEMU_OPTIONS += -s -S
-gdb: run-debug gdbinit
+gdb: gdbinit run-debug
 .PHONY: gdb
 
 run-test: ## run the project in test mode
