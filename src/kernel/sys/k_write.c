@@ -12,14 +12,8 @@
 ssize_t k_write(int fd, const void* buf, size_t count)
 {
   if (fd == STDOUT || fd == STDERR) {
-    // TODO: Make the code in this block better.
-    const char* s = (const char*)buf;
-    if (count > strlen(s)) {
-      count = strlen(s);
-    }
-
     for (size_t i = 0; i < count; i++) {
-      arch_putchar(s[i]);
+      arch_putchar(((const char*)buf)[i]);
     }
 
     return count;
