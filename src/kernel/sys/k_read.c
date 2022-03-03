@@ -37,8 +37,9 @@ ssize_t k_read(int fd, void* buf, size_t count)
     return -EBADF;
   }
 
-  if ((desc->flags != O_RDONLY && desc->flags != O_RDWR) ||
-      desc->flags == O_WRONLY) {
+  if (((desc->flags & O_RDONLY) != O_RDONLY &&
+       (desc->flags & O_RDWR) != O_RDWR) ||
+      (desc->flags & O_WRONLY) == O_WRONLY) {
     SYS_DEBUG("invalid flags for file descriptor fd=%d", fd);
     return -EBADF;
   }
