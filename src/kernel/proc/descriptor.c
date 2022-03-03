@@ -74,7 +74,9 @@ int create_socket_descriptor(inode_t inode,
 int descriptor_udp_lookup(uint16_t port)
 {
   for (uint8_t fd = 3; fd < NB_SYSTEM_DESCRIPTORS; fd++) {
-    if (descriptors[fd].used && descriptors[fd].port == port) {
+    if (descriptors[fd].used && descriptors[fd].type == SOCK_DGRAM &&
+        descriptors[fd].protocol == IPPROTO_UDP &&
+        descriptors[fd].port == port) {
       return fd;
     }
   }
