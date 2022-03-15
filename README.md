@@ -301,5 +301,5 @@ attached (either in the source files or in a `LICENSE` file next to them).
 [gdb]: https://www.sourceware.org/gdb/
 [git-submodules]: https://git-scm.com/book/en/v2/Git-Tools-Submodules
 [license]: https://github.com/willdurand/ArvernOS/blob/master/LICENSE.md
-[twitter-thread]: https://twitter.com/couac/status/866693418130575361
+[twitter-thread]: https://twitter.com/couac/status/1201278626211254274
 [qemu monitor]: https://www.qemu.org/docs/master/system/monitor.html
