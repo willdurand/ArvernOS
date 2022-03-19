@@ -96,14 +96,12 @@ $(document).ready(function(){initNavTree('include_2kernel_2proc_2task_8h.html','
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for task.h:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="include_2kernel_2proc_2task_8h__incl.svg" width="187" height="127"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="include_2kernel_2proc_2task_8h__incl.svg" width="187" height="127"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="include_2kernel_2proc_2task_8h__dep__incl.svg" width="142" height="142"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="include_2kernel_2proc_2task_8h__dep__incl.svg" width="142" height="142"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
@@ -130,6 +128,8 @@ Functions</h2></td></tr>
 <tr class="separator:a32c1128364ef08b15edabdac124bc11b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a953e6c75292fb9898a9e25af47321da0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2kernel_2proc_2task_8h.html#a953e6c75292fb9898a9e25af47321da0">task_create</a> (const char *name, uint64_t clone_flags, uintptr_t entrypoint)</td></tr>
 <tr class="separator:a953e6c75292fb9898a9e25af47321da0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba62108350393ac5cb4f2cf0f88c2a22"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2kernel_2proc_2task_8h.html#aba62108350393ac5cb4f2cf0f88c2a22">task_print_info</a> ()</td></tr>
+<tr class="separator:aba62108350393ac5cb4f2cf0f88c2a22"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >This module implements multi-tasking and it is based on Sergey Matyukevich's work (specifically the scheduler implemented in RPi OS), released under a MIT license. See: <a href="https://s-matyukevich.github.io/raspberry-pi-os/docs/lesson04/rpi-os.html">https://s-matyukevich.github.io/raspberry-pi-os/docs/lesson04/rpi-os.html</a> </p>
@@ -194,8 +194,7 @@ Functions</h2></td></tr>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="include_2kernel_2proc_2task_8h_a953e6c75292fb9898a9e25af47321da0_cgraph.svg" width="272" height="88"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="include_2kernel_2proc_2task_8h_a953e6c75292fb9898a9e25af47321da0_cgraph.svg" width="272" height="88"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -259,6 +258,24 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 <p >Initializes the scheduler. </p>
+
+</div>
+</div>
+<a id="aba62108350393ac5cb4f2cf0f88c2a22" name="aba62108350393ac5cb4f2cf0f88c2a22"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba62108350393ac5cb4f2cf0f88c2a22">&#9670;&nbsp;</a></span>task_print_info()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void task_print_info </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Prints information about the tasks on the standard output. </p>
 
 </div>
 </div>

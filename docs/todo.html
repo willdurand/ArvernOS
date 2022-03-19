@@ -89,7 +89,7 @@ $(document).ready(function(){initNavTree('todo.html',''); initResizable(); });
 <div class="contents">
 <div class="textblock"><dl class="reflist">
 <dt>Global <a class="el" href="stdlib_8h.html#ac54f53dc342019e8db34f4aa581a5792">abort</a>  ()</dt>
-<dd><a class="anchor" id="_todo000025"></a>Abnormally terminate the process as if by SIGABRT.  </dd>
+<dd><a class="anchor" id="_todo000024"></a>Abnormally terminate the process as if by SIGABRT.  </dd>
 <dt>Global <a class="el" href="kernel_8h.html#a5fe1791c207cc3de3931c333ac05fbf7">arch_restart</a>  ()</dt>
 <dd><p class="startdd"><a class="anchor" id="_todo000005"></a>Implement this function for AArch32. </p>
 <p class="enddd"><a class="anchor" id="_todo000011"></a>Implement this function for AArch64.  </p>
@@ -99,11 +99,11 @@ $(document).ready(function(){initNavTree('todo.html',''); initResizable(); });
 <dt>Global <a class="el" href="kernel_2arch_2time_8h.html#a92a37cf9da6c3705b6ef829f1978ab54">arch_timer_init</a>  ()</dt>
 <dd><a class="anchor" id="_todo000008"></a>Implement this function for AArch32/licheepi-nano.  </dd>
 <dt>Global <a class="el" href="stdlib_8h.html#aba146acbba01116cafaa55f720913ed8">atoi</a>  (char *s)</dt>
-<dd><a class="anchor" id="_todo000026"></a>Handle min/max values.  </dd>
+<dd><a class="anchor" id="_todo000025"></a>Handle min/max values.  </dd>
 <dt>Global <a class="el" href="structdhcp__header__t.html#a734798cfe1e826aa09e2a40b65f30ff1">dhcp_header_t::options</a>  [1024]</dt>
 <dd><a class="anchor" id="_todo000001"></a>It could be larger but then there is a problem with the ethernet and/or physical layers. The packet is transmitted correctly but the next received packet seems corrupted.  </dd>
 <dt>Global <a class="el" href="unistd_8h.html#a631de38822d3fe422dce124e7967edc3">environ</a>  []</dt>
-<dd><a class="anchor" id="_todo000027"></a>Use malloc() when it becomes possible.  </dd>
+<dd><a class="anchor" id="_todo000026"></a>Use malloc() when it becomes possible.  </dd>
 <dt>Global <a class="el" href="inet_8h.html#a69a7a4951ff21b302267532c21ee78fc">HTONS</a>  (n)</dt>
 <dd><a class="anchor" id="_todo000004"></a>Ideally, we'd check the endianness of the system but this project only deals with little endian system so far...  </dd>
 <dt>Global <a class="el" href="structipv4__header__t.html#a1ebada57c22c5cb245aa284b326d4e71">ipv4_header_t::ihl</a>  </dt>
@@ -114,8 +114,6 @@ $(document).ready(function(){initNavTree('todo.html',''); initResizable(); });
 <dd><a class="anchor" id="_todo000022"></a>Check flags.  </dd>
 <dt>Global <a class="el" href="k__syscall_8h.html#a256d0b3f99e3a51b61a5f92da3237787">k_openat</a>  (int dirfd, const char *pathname, int flags)</dt>
 <dd><a class="anchor" id="_todo000023"></a>Add better support for <code>dirfd</code> and other AT_* special values.  </dd>
-<dt>Global <a class="el" href="k__syscall_8h.html#ae80abe069ae7128caf6c98035b032776">k_write</a>  (int fd, const void *buf, size_t count)</dt>
-<dd><a class="anchor" id="_todo000024"></a>Make the code in this block better.  </dd>
 <dt>Global <a class="el" href="include_2kernel_2proc_2task_8h.html#aac747bed84189f8cfa509b94d488e622">MAX_TASKS</a>  </dt>
 <dd><a class="anchor" id="_todo000003"></a>Get rid of this limitation.  </dd>
 <dt>Global <a class="el" href="pci_8h.html#ad8515b86d19288e403722e2c9a4dc5dd">pci_get_device</a>  (uint16_t vendor_id, uint16_t device_id)</dt>
@@ -123,7 +121,7 @@ $(document).ready(function(){initNavTree('todo.html',''); initResizable(); });
 <dt>Global <a class="el" href="fs_2proc_8h.html#a261677ec59fe52476936fdf45585742f">proc_fs_create_readonly_file</a>  (const char *name, proc_read_t *read_fn)</dt>
 <dd><a class="anchor" id="_todo000015"></a>We probably want a specific driver for read-only pseudo-files.  </dd>
 <dt>Global <a class="el" href="stdlib_8h.html#a4902276982810f15128af3faa1f3e938">strtol_wip</a>  (const char *str, char **end, int base)</dt>
-<dd><a class="anchor" id="_todo000028"></a>This function is supposed to implement <code>strtol()</code> but it has been written for the kernel stacktrace and does not behave like it should (e.g., it does not skip spaces and does not support a <code>base</code> different than <code>16</code>).  </dd>
+<dd><a class="anchor" id="_todo000027"></a>This function is supposed to implement <code>strtol()</code> but it has been written for the kernel stacktrace and does not behave like it should (e.g., it does not skip spaces and does not support a <code>base</code> different than <code>16</code>).  </dd>
 <dt>Class <a class="el" href="structtask__info__t.html">task_info_t</a>  </dt>
 <dd><a class="anchor" id="_todo000007"></a>Implement multi-tasking for Lichee Pi Nano.  </dd>
 <dt>Global <a class="el" href="include_2kernel_2proc_2task_8h.html#ac196c54c15d40be45138ffdbfb42758c">task_schedule_on_timer_tick</a>  ()</dt>
