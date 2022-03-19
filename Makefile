@@ -426,6 +426,8 @@ clean: ## remove build artifacts
 				 $(initrd_dir)/etc/$(symbols_txt) \
 				 $(initrd_dir)/info \
 				 $(userland_src_dir)/local-build/ \
+				 $(libk_deps) \
+				 $(libc_deps)
 .PHONY: clean
 
 what: ## display some information about the current configuration
