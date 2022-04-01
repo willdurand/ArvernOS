@@ -8,8 +8,11 @@
 #define AF_INET 2
 // Types
 #define SOCK_DGRAM 2
+#define SOCK_RAW   3
 // Protocols
-#define IPPROTO_UDP 17
+#define IPPROTO_IP   0
+#define IPPROTO_ICMP 1
+#define IPPROTO_UDP  17
 
 typedef uint16_t sa_family_t;
 
