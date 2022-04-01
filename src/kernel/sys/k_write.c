@@ -11,6 +11,11 @@
 
 ssize_t k_write(int fd, const void* buf, size_t count)
 {
+#ifndef ENABLE_USERLAND_DEBUG
+  // This would conflict with the userland message being written.
+  SYS_DEBUG("fd=%d buf=%p count=%d", fd, buf, count);
+#endif
+
   if (fd == STDOUT || fd == STDERR) {
     for (size_t i = 0; i < count; i++) {
       arch_putchar(((const char*)buf)[i]);
@@ -18,16 +23,6 @@ ssize_t k_write(int fd, const void* buf, size_t count)
 
     return count;
   }
-
-  if (fd < 3) {
-    SYS_DEBUG("invalid file descriptor fd=%d", fd);
-    return -EPERM;
-  }
-
-#ifndef ENABLE_USERLAND_DEBUG
-  // This would conflict with the userland message being written.
-  SYS_DEBUG("fd=%d buf=%p count=%d", fd, buf, count);
-#endif
 
   descriptor_t* desc = get_descriptor(fd);
 
