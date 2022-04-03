@@ -72,9 +72,9 @@ void fs_init(uintptr_t initrd_addr)
     WARN("%s", "fs: failed to mount devfs");
   }
 
-  INFO("%s", "fs: mount devfs");
+  INFO("%s", "fs: mount procfs");
   if (!proc_fs_init()) {
-    WARN("%s", "fs: failed to mount devfs");
+    WARN("%s", "fs: failed to mount procfs");
   }
 
   INFO("%s", "fs: mount sockfs");
