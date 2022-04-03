@@ -192,7 +192,7 @@ LIBC_CFLAGS    += $(LIBC_CONFIG)
 KERNEL_INCLUDES  += $(INCLUDES)
 KERNEL_INCLUDES  += -I$(include_dir)/kernel/ -I$(arch_src)/
 KERNEL_INCLUDES  += $(addprefix -I$(external_dir)/,$(addsuffix /, $(external_deps)))
-KERNEL_ASM_FLAGS +=
+KERNEL_ASM_FLAGS += $(KERNEL_CONFIG)
 # We need to have -fno-omit-frame-pointer or the kernel stack backtrace won't
 # get the stack.
 KERNEL_CFLAGS    += -fno-omit-frame-pointer
