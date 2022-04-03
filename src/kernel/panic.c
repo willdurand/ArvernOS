@@ -119,7 +119,11 @@ static char* kernel_find_symbol(uintptr_t* addr)
 
     prev_symbol_addr = symbol_addr;
     prev_symbol_name = symbol_name;
-    line = strchr(line, '\n') + 1;
+
+    line = strchr(line, '\n');
+    if (line) {
+      line += 1;
+    }
   }
 
   return retval;
