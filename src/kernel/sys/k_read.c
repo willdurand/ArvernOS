@@ -12,6 +12,8 @@
 
 ssize_t k_read(int fd, void* buf, size_t count)
 {
+  SYS_DEBUG("fd=%d buf=%p count=%zu", fd, buf, count);
+
   if (fd == STDIN_FILENO) {
     unsigned char c = arch_getchar(false);
 
@@ -27,8 +29,6 @@ ssize_t k_read(int fd, void* buf, size_t count)
     SYS_DEBUG("invalid file descriptor fd=%d", fd);
     return -EPERM;
   }
-
-  SYS_DEBUG("fd=%d buf=%p count=%d", fd, buf, count);
 
   descriptor_t* desc = get_descriptor(fd);
 
