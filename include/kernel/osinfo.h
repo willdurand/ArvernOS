@@ -16,7 +16,7 @@
 
 #define KERNEL_NAME "ArvernOS"
 
-#define _KERNEL_VERSION "0.0.3"
+#define _KERNEL_VERSION "0.0.4"
 
 #ifdef ENABLE_KERNEL_DEBUG
 #define KERNEL_VERSION _KERNEL_VERSION "-debug"
