@@ -1,8 +1,5 @@
 # vim: ft=toml
 
-[system]
-hostname = "babar"
-
 [network]
 prefer-dhcp = true
 ip = "10.0.2.15"
