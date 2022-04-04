@@ -35,8 +35,8 @@
 #define KERNEL_DATE __DATE__
 #define KERNEL_TIME __TIME__
 
-#ifndef GIT_HASH
-#define GIT_HASH "dirty"
+#ifndef KERNEL_GIT_HASH
+#define KERNEL_GIT_HASH "dirty"
 #endif
 
 #endif
