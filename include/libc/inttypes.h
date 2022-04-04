@@ -8,6 +8,8 @@
 #define PRI_PREFIX "ll"
 #endif
 
+#define PRIu32 "lu"
+
 #ifndef PRIi64
 #define PRIi64 PRI_PREFIX "i"
 #endif
