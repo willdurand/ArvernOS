@@ -29,7 +29,7 @@ void kmain_early_start()
   INFO("%s %s (%s) for %s has started",
        KERNEL_NAME,
        KERNEL_VERSION,
-       GIT_HASH,
+       KERNEL_GIT_HASH,
        KERNEL_TARGET);
 }
 

@@ -202,7 +202,7 @@ KERNEL_CFLAGS    += -ffunction-sections -fdata-sections
 KERNEL_CFLAGS    += $(WERRORS)
 KERNEL_CFLAGS    += $(KERNEL_CONFIG)
 
-KERNEL_CONFIG += -DGIT_HASH=\"$(git_hash)\"
+KERNEL_CONFIG += -DKERNEL_GIT_HASH=\"$(git_hash)\"
 KERNEL_CONFIG += -DARCH=\"$(ARCH)\"
 
 DEBUG_CFLAGS  += -g3 -DDEBUG_MODE

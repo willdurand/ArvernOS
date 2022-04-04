@@ -11,7 +11,7 @@ int proc_read_version(char* buf, size_t size)
            "%s %s (%s) %s\n",
            KERNEL_NAME,
            KERNEL_VERSION,
-           GIT_HASH,
+           KERNEL_GIT_HASH,
            KERNEL_TARGET);
 
   return 0;
