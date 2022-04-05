@@ -31,7 +31,7 @@ int k_socket(int domain, int type, int protocol)
   // before returning it.
   inode_t inode = vfs_create(parent, NULL, 0);
 
-  if (parent == NULL) {
+  if (inode == NULL) {
     SYS_DEBUG("%s", "failed to create new inode");
     return -EMFILE;
   }
