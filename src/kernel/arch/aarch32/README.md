@@ -7,5 +7,5 @@ AArch32 is the 32-bit instruction set architecture defined by ARM.
 <!-- doxygen:
 ## Boards
 
-* \subpage ref_raspi2
+* \subpage refBoard_raspi2
 -->

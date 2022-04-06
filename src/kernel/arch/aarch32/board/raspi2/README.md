@@ -1,4 +1,4 @@
-<!-- doxygen: \page ref_raspi2 Raspberry Pi 2 -->
+<!-- doxygen: \page refBoard_raspi2 Raspberry Pi 2 -->
 
 # Raspberry Pi 2
 

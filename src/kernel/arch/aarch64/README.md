@@ -7,5 +7,5 @@ AArch64 is the 64-bit instruction set architecture defined by ARM.
 <!-- doxygen:
 ## Boards
 
-* \subpage refRaspi3
+* \subpage refBoard_raspi3
 -->

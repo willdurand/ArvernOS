@@ -1,4 +1,4 @@
-<!-- doxygen: \page refRaspi3 Raspberry Pi 3 -->
+<!-- doxygen: \page refBoard_raspi3 Raspberry Pi 3 -->
 
 # Raspberry Pi 3
 
