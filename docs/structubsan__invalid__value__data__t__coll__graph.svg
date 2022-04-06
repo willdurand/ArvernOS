@@ -22,7 +22,7 @@
 <g id="node2" class="node">
 <title>Node2</title>
 <g id="a_node2"><a xlink:href="structubsan__source__location__t.html" target="_top" xlink:title=" ">
-<polygon fill="none" stroke="#bfbfbf" points="0,-78.5 0,-97.5 125,-97.5 125,-78.5 0,-78.5"/>
+<polygon fill="none" stroke="black" points="0,-78.5 0,-97.5 125,-97.5 125,-78.5 0,-78.5"/>
 <text text-anchor="middle" x="62.5" y="-85.5" font-family="Helvetica,sans-Serif" font-size="10.00">ubsan_source_location_t</text>
 </a>
 </g>
@@ -38,7 +38,7 @@
 <g id="node3" class="node">
 <title>Node3</title>
 <g id="a_node3"><a xlink:href="structubsan__type__t.html" target="_top" xlink:title=" ">
-<polygon fill="none" stroke="#bfbfbf" points="143,-78.5 143,-97.5 218,-97.5 218,-78.5 143,-78.5"/>
+<polygon fill="none" stroke="black" points="143,-78.5 143,-97.5 218,-97.5 218,-78.5 143,-78.5"/>
 <text text-anchor="middle" x="180.5" y="-85.5" font-family="Helvetica,sans-Serif" font-size="10.00">ubsan_type_t</text>
 </a>
 </g>

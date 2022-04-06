@@ -48,49 +48,9 @@ var NAVTREE =
         [ "License", "index.html#autotoc_md19", null ]
       ] ]
     ] ],
-    [ "Raspberry Pi 2", "md_src_kernel_arch_aarch32_board_raspi2__r_e_a_d_m_e.html", [
-      [ "Raspberry Pi 2", "md_src_kernel_arch_aarch32_board_raspi2__r_e_a_d_m_e.html#autotoc_md20", [
-        [ "config file", "md_src_kernel_arch_aarch32_board_raspi2__r_e_a_d_m_e.html#autotoc_md21", null ]
-      ] ]
-    ] ],
-    [ "Architecture: aarch32", "md_src_kernel_arch_aarch32__r_e_a_d_m_e.html", [
-      [ "aarch32", "md_src_kernel_arch_aarch32__r_e_a_d_m_e.html#autotoc_md22", [
-        [ "Boards", "md_src_kernel_arch_aarch32__r_e_a_d_m_e.html#autotoc_md23", null ]
-      ] ]
-    ] ],
-    [ "Raspberry Pi 3", "md_src_kernel_arch_aarch64_board_raspi3__r_e_a_d_m_e.html", [
-      [ "Raspberry Pi 3", "md_src_kernel_arch_aarch64_board_raspi3__r_e_a_d_m_e.html#autotoc_md24", [
-        [ "config file", "md_src_kernel_arch_aarch64_board_raspi3__r_e_a_d_m_e.html#autotoc_md25", null ],
-        [ "Usage on real hardware", "md_src_kernel_arch_aarch64_board_raspi3__r_e_a_d_m_e.html#autotoc_md26", null ]
-      ] ]
-    ] ],
-    [ "Architecture: aarch64", "md_src_kernel_arch_aarch64__r_e_a_d_m_e.html", [
-      [ "aarch64", "md_src_kernel_arch_aarch64__r_e_a_d_m_e.html#autotoc_md27", [
-        [ "Boards", "md_src_kernel_arch_aarch64__r_e_a_d_m_e.html#autotoc_md28", null ]
-      ] ]
-    ] ],
-    [ "Architecture: x86_64", "md_src_kernel_arch_x86_64__r_e_a_d_m_e.html", [
-      [ "x86_64", "md_src_kernel_arch_x86_64__r_e_a_d_m_e.html#autotoc_md29", [
-        [ "config file", "md_src_kernel_arch_x86_64__r_e_a_d_m_e.html#autotoc_md30", null ],
-        [ "Boot options", "md_src_kernel_arch_x86_64__r_e_a_d_m_e.html#autotoc_md31", null ],
-        [ "Early boot sequence", "md_src_kernel_arch_x86_64__r_e_a_d_m_e.html#autotoc_md32", null ],
-        [ "Memory management", "md_src_kernel_arch_x86_64__r_e_a_d_m_e.html#autotoc_md33", null ],
-        [ "Memory map", "md_src_kernel_arch_x86_64__r_e_a_d_m_e.html#autotoc_md34", [
-          [ "Virtual address space", "md_src_kernel_arch_x86_64__r_e_a_d_m_e.html#autotoc_md35", null ]
-        ] ]
-      ] ]
-    ] ],
-    [ "Component: kernel", "md_src_kernel__r_e_a_d_m_e.html", [
-      [ "Related pages", "md_src_kernel__r_e_a_d_m_e.html#autotoc_md37", null ]
-    ] ],
+    [ "Component: kernel", "md_src_kernel__r_e_a_d_m_e.html", "md_src_kernel__r_e_a_d_m_e" ],
     [ "Component: lib(k|c)", "md_src_libc__r_e_a_d_m_e.html", null ],
-    [ "init", "md_src_userland_init__r_e_a_d_m_e.html", [
-      [ "init", "md_src_userland_init__r_e_a_d_m_e.html#autotoc_md39", null ]
-    ] ],
-    [ "Component: userland", "md_src_userland__r_e_a_d_m_e.html", [
-      [ "Local builds", "md_src_userland__r_e_a_d_m_e.html#autotoc_md41", null ],
-      [ "Related pages", "md_src_userland__r_e_a_d_m_e.html#autotoc_md42", null ]
-    ] ],
+    [ "Component: userland", "md_src_userland__r_e_a_d_m_e.html", "md_src_userland__r_e_a_d_m_e" ],
     [ "Todo List", "todo.html", null ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],

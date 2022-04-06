@@ -21,7 +21,7 @@
 <g id="node2" class="node">
 <title>Node2</title>
 <g id="a_node2"><a xlink:href="structvfs__driver__t.html" target="_top" xlink:title=" ">
-<polygon fill="none" stroke="#bfbfbf" points="0,-67.5 0,-86.5 68,-86.5 68,-67.5 0,-67.5"/>
+<polygon fill="none" stroke="black" points="0,-67.5 0,-86.5 68,-86.5 68,-67.5 0,-67.5"/>
 <text text-anchor="middle" x="34" y="-74.5" font-family="Helvetica,sans-Serif" font-size="10.00">vfs_driver_t</text>
 </a>
 </g>
@@ -37,7 +37,7 @@
 <g id="node3" class="node">
 <title>Node3</title>
 <g id="a_node3"><a xlink:href="structdirent__t.html" target="_top" xlink:title=" ">
-<polygon fill="none" stroke="#bfbfbf" points="9.5,-134.5 9.5,-153.5 58.5,-153.5 58.5,-134.5 9.5,-134.5"/>
+<polygon fill="none" stroke="black" points="9.5,-134.5 9.5,-153.5 58.5,-153.5 58.5,-134.5 9.5,-134.5"/>
 <text text-anchor="middle" x="34" y="-141.5" font-family="Helvetica,sans-Serif" font-size="10.00">dirent_t</text>
 </a>
 </g>

@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['raspberry_20pi_202_0',['Raspberry Pi 2',['../md_src_kernel_arch_aarch32_board_raspi2__r_e_a_d_m_e.html',1,'']]],
-  ['raspberry_20pi_203_1',['Raspberry Pi 3',['../md_src_kernel_arch_aarch64_board_raspi3__r_e_a_d_m_e.html',1,'']]],
+  ['raspberry_20pi_202_0',['Raspberry Pi 2',['../ref_board_raspi2.html',1,'refArch_aarch32']]],
+  ['raspberry_20pi_203_1',['Raspberry Pi 3',['../ref_board_raspi3.html',1,'refArch_aarch64']]],
   ['read_2',['read',['../syscall_8h.html#af32a16ad2dd9e48482f8f790db7dbbd2',1,'read.c']]],
   ['read_5fcr0_3',['read_cr0',['../x86__64_2core_2register_8h.html#a89763d209b83a61f0f2c9a01022f7f88',1,'register.c']]],
   ['read_5fcr2_4',['read_cr2',['../x86__64_2core_2register_8h.html#a7b2de5d97ae8b57fd726fa100087f2b9',1,'register.c']]],

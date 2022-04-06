@@ -36,7 +36,7 @@ var searchData=
   ['inish_5fkv_5fpair_5ft_33',['inish_kv_pair_t',['../structinish__kv__pair__t.html',1,'']]],
   ['inish_5fload_34',['inish_load',['../inish_8h.html#a6c6783a2593b39ce4914819912297092',1,'inish.c']]],
   ['inish_5fsection_5ft_35',['inish_section_t',['../structinish__section__t.html',1,'']]],
-  ['init_36',['init',['../md_src_userland_init__r_e_a_d_m_e.html',1,'']]],
+  ['init_36',['init',['../ref_init.html',1,'md_src_userland_README']]],
   ['initcall_2eh_37',['initcall.h',['../initcall_8h.html',1,'']]],
   ['initcall_5ft_38',['initcall_t',['../initcall_8h.html#a0821395e195df874becf8262c87d9deb',1,'initcall.h']]],
   ['interface_39',['interface',['../structnet__driver.html#ade16933ee12d65d40e4c991e41cfe6c0',1,'net_driver']]],

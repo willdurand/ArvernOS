@@ -21,7 +21,7 @@
 <g id="node2" class="node">
 <title>Node2</title>
 <g id="a_node2"><a xlink:href="structinish__section__t.html" target="_top" xlink:title=" ">
-<polygon fill="none" stroke="#bfbfbf" points="47,-67.5 47,-86.5 129,-86.5 129,-67.5 47,-67.5"/>
+<polygon fill="none" stroke="black" points="47,-67.5 47,-86.5 129,-86.5 129,-67.5 47,-67.5"/>
 <text text-anchor="middle" x="88" y="-74.5" font-family="Helvetica,sans-Serif" font-size="10.00">inish_section_t</text>
 </a>
 </g>
@@ -37,7 +37,7 @@
 <g id="node3" class="node">
 <title>Node3</title>
 <g id="a_node3"><a xlink:href="structinish__kv__pair__t.html" target="_top" xlink:title=" ">
-<polygon fill="none" stroke="#bfbfbf" points="0,-134.5 0,-153.5 82,-153.5 82,-134.5 0,-134.5"/>
+<polygon fill="none" stroke="black" points="0,-134.5 0,-153.5 82,-153.5 82,-134.5 0,-134.5"/>
 <text text-anchor="middle" x="41" y="-141.5" font-family="Helvetica,sans-Serif" font-size="10.00">inish_kv_pair_t</text>
 </a>
 </g>
@@ -53,7 +53,7 @@
 <g id="node4" class="node">
 <title>Node4</title>
 <g id="a_node4"><a xlink:href="structinish__array__t.html" target="_top" xlink:title=" ">
-<polygon fill="none" stroke="#bfbfbf" points="100,-134.5 100,-153.5 172,-153.5 172,-134.5 100,-134.5"/>
+<polygon fill="none" stroke="black" points="100,-134.5 100,-153.5 172,-153.5 172,-134.5 100,-134.5"/>
 <text text-anchor="middle" x="136" y="-141.5" font-family="Helvetica,sans-Serif" font-size="10.00">inish_array_t</text>
 </a>
 </g>

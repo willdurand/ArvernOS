@@ -11,7 +11,7 @@
 <g id="clust1" class="cluster">
 <title>clusterdir_b30df4826c7011c0e76e14e84665bb61</title>
 <g id="a_clust1"><a xlink:href="dir_b30df4826c7011c0e76e14e84665bb61.html" target="_top" xlink:title="board">
-<polygon fill="#edf0f7" stroke="#7f7f7f" stroke-dasharray="5,2" points="8,-56 8,-143 310,-143 310,-56 8,-56"/>
+<polygon fill="#ddddee" stroke="black" points="8,-56 8,-143 310,-143 310,-56 8,-56"/>
 <text text-anchor="middle" x="159" y="-131" font-family="Helvetica,sans-Serif" font-size="10.00">board</text>
 </a>
 </g>
@@ -19,7 +19,7 @@
 <g id="clust2" class="cluster">
 <title>clusterdir_0ee13ef8e704275bb683062618b87174</title>
 <g id="a_clust2"><a xlink:href="dir_0ee13ef8e704275bb683062618b87174.html" target="_top">
-<polygon fill="#edf0f7" stroke="#404040" stroke-width="2" points="16,-64 16,-116 302,-116 302,-64 16,-64"/>
+<polygon fill="#eeeeff" stroke="black" points="16,-64 16,-116 302,-116 302,-64 16,-64"/>
 </a>
 </g>
 </g>
@@ -28,41 +28,31 @@
 <title>dir_0ee13ef8e704275bb683062618b87174</title>
 <text text-anchor="middle" x="267" y="-87.5" font-family="Helvetica,sans-Serif" font-size="10.00">raspi3</text>
 </g>
-<!-- dir_d44c64559bbebec7f509842c48db8b23 -->
-<g id="node5" class="node">
-<title>dir_d44c64559bbebec7f509842c48db8b23</title>
-<g id="a_node5"><a xlink:href="dir_d44c64559bbebec7f509842c48db8b23.html" target="_top" xlink:title="include">
-<polygon fill="none" stroke="red" points="222,-36 168,-36 168,0 222,0 222,-36"/>
-<text text-anchor="middle" x="195" y="-15.5" font-family="Helvetica,sans-Serif" font-size="10.00">include</text>
-</a>
-</g>
-</g>
-<!-- dir_0ee13ef8e704275bb683062618b87174&#45;&gt;dir_d44c64559bbebec7f509842c48db8b23 -->
-<g id="edge1" class="edge">
-<title>dir_0ee13ef8e704275bb683062618b87174&#45;&gt;dir_d44c64559bbebec7f509842c48db8b23</title>
-<path fill="none" stroke="black" d="M249.2,-71.7C240.4,-63.14 229.62,-52.66 220,-43.3"/>
-<polygon fill="black" stroke="black" points="222.2,-40.57 212.59,-36.1 217.32,-45.58 222.2,-40.57"/>
-<g id="a_edge1&#45;headlabel"><a xlink:href="dir_000061_000039.html" target="_top" xlink:title="20">
-<text text-anchor="middle" x="226.76" y="-38.54" font-family="Helvetica,sans-Serif" font-size="10.00">20</text>
-</a>
-</g>
-</g>
 <!-- dir_1742f59156db57e3c3c19d5377929d16 -->
 <g id="node2" class="node">
 <title>dir_1742f59156db57e3c3c19d5377929d16</title>
 <g id="a_node2"><a xlink:href="dir_1742f59156db57e3c3c19d5377929d16.html" target="_top" xlink:title="arch">
-<polygon fill="#a2b4d6" stroke="#404040" points="222,-108 168,-108 168,-72 222,-72 222,-108"/>
+<polygon fill="white" stroke="black" points="222,-108 168,-108 168,-72 222,-72 222,-108"/>
 <text text-anchor="middle" x="195" y="-87.5" font-family="Helvetica,sans-Serif" font-size="10.00">arch</text>
 </a>
 </g>
 </g>
+<!-- dir_d44c64559bbebec7f509842c48db8b23 -->
+<g id="node5" class="node">
+<title>dir_d44c64559bbebec7f509842c48db8b23</title>
+<g id="a_node5"><a xlink:href="dir_d44c64559bbebec7f509842c48db8b23.html" target="_top" xlink:title="include">
+<polygon fill="none" stroke="red" points="150,-36 96,-36 96,0 150,0 150,-36"/>
+<text text-anchor="middle" x="123" y="-15.5" font-family="Helvetica,sans-Serif" font-size="10.00">include</text>
+</a>
+</g>
+</g>
 <!-- dir_1742f59156db57e3c3c19d5377929d16&#45;&gt;dir_d44c64559bbebec7f509842c48db8b23 -->
-<g id="edge2" class="edge">
+<g id="edge1" class="edge">
 <title>dir_1742f59156db57e3c3c19d5377929d16&#45;&gt;dir_d44c64559bbebec7f509842c48db8b23</title>
-<path fill="none" stroke="black" d="M195,-71.7C195,-63.98 195,-54.71 195,-46.11"/>
-<polygon fill="black" stroke="black" points="198.5,-46.1 195,-36.1 191.5,-46.1 198.5,-46.1"/>
-<g id="a_edge2&#45;headlabel"><a xlink:href="dir_000007_000039.html" target="_top" xlink:title="12">
-<text text-anchor="middle" x="201.34" y="-47.2" font-family="Helvetica,sans-Serif" font-size="10.00">12</text>
+<path fill="none" stroke="black" d="M177.2,-71.7C168.4,-63.14 157.62,-52.66 148,-43.3"/>
+<polygon fill="black" stroke="black" points="150.2,-40.57 140.59,-36.1 145.32,-45.58 150.2,-40.57"/>
+<g id="a_edge1&#45;headlabel"><a xlink:href="dir_000025_000000.html" target="_top" xlink:title="12">
+<text text-anchor="middle" x="154.76" y="-38.54" font-family="Helvetica,sans-Serif" font-size="10.00">12</text>
 </a>
 </g>
 </g>
@@ -70,7 +60,7 @@
 <g id="node3" class="node">
 <title>dir_115e9e33fc1490a9fac5bf904c60a358</title>
 <g id="a_node3"><a xlink:href="dir_115e9e33fc1490a9fac5bf904c60a358.html" target="_top" xlink:title="core">
-<polygon fill="#a2b4d6" stroke="#404040" points="150,-108 96,-108 96,-72 150,-72 150,-108"/>
+<polygon fill="white" stroke="black" points="150,-108 96,-108 96,-72 150,-72 150,-108"/>
 <text text-anchor="middle" x="123" y="-87.5" font-family="Helvetica,sans-Serif" font-size="10.00">core</text>
 </a>
 </g>
@@ -79,18 +69,18 @@
 <g id="node4" class="node">
 <title>dir_b5c5136b0a2ed351fa08c658cfa1f98a</title>
 <g id="a_node4"><a xlink:href="dir_b5c5136b0a2ed351fa08c658cfa1f98a.html" target="_top" xlink:title="mmu">
-<polygon fill="#a2b4d6" stroke="#404040" points="78,-108 24,-108 24,-72 78,-72 78,-108"/>
+<polygon fill="white" stroke="black" points="78,-108 24,-108 24,-72 78,-72 78,-108"/>
 <text text-anchor="middle" x="51" y="-87.5" font-family="Helvetica,sans-Serif" font-size="10.00">mmu</text>
 </a>
 </g>
 </g>
 <!-- dir_b5c5136b0a2ed351fa08c658cfa1f98a&#45;&gt;dir_d44c64559bbebec7f509842c48db8b23 -->
-<g id="edge3" class="edge">
+<g id="edge2" class="edge">
 <title>dir_b5c5136b0a2ed351fa08c658cfa1f98a&#45;&gt;dir_d44c64559bbebec7f509842c48db8b23</title>
-<path fill="none" stroke="black" d="M66.69,-72C72.62,-66.31 79.71,-60.33 87,-56 109.07,-42.89 136.44,-33.58 158.11,-27.57"/>
-<polygon fill="black" stroke="black" points="159.16,-30.92 167.93,-24.97 157.37,-24.15 159.16,-30.92"/>
-<g id="a_edge3&#45;headlabel"><a xlink:href="dir_000050_000039.html" target="_top" xlink:title="1">
-<text text-anchor="middle" x="156.42" y="-32.08" font-family="Helvetica,sans-Serif" font-size="10.00">1</text>
+<path fill="none" stroke="black" d="M68.8,-71.7C77.6,-63.14 88.38,-52.66 98,-43.3"/>
+<polygon fill="black" stroke="black" points="100.68,-45.58 105.41,-36.1 95.8,-40.57 100.68,-45.58"/>
+<g id="a_edge2&#45;headlabel"><a xlink:href="dir_000041_000000.html" target="_top" xlink:title="1">
+<text text-anchor="middle" x="100.08" y="-47.63" font-family="Helvetica,sans-Serif" font-size="10.00">1</text>
 </a>
 </g>
 </g>

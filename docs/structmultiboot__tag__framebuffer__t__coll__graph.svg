@@ -21,7 +21,7 @@
 <g id="node2" class="node">
 <title>Node2</title>
 <g id="a_node2"><a xlink:href="structmultiboot__tag__framebuffer__common__t.html" target="_top" xlink:title=" ">
-<polygon fill="none" stroke="#bfbfbf" points="0,-67.5 0,-97.5 130,-97.5 130,-67.5 0,-67.5"/>
+<polygon fill="none" stroke="black" points="0,-67.5 0,-97.5 130,-97.5 130,-67.5 0,-67.5"/>
 <text text-anchor="start" x="8" y="-85.5" font-family="Helvetica,sans-Serif" font-size="10.00">multiboot_tag_framebuffer</text>
 <text text-anchor="middle" x="65" y="-74.5" font-family="Helvetica,sans-Serif" font-size="10.00">_common_t</text>
 </a>
@@ -38,7 +38,7 @@
 <g id="node3" class="node">
 <title>Node3</title>
 <g id="a_node3"><a xlink:href="structmultiboot__color__t.html" target="_top" xlink:title=" ">
-<polygon fill="none" stroke="#bfbfbf" points="148.5,-73 148.5,-92 239.5,-92 239.5,-73 148.5,-73"/>
+<polygon fill="none" stroke="black" points="148.5,-73 148.5,-92 239.5,-92 239.5,-73 148.5,-73"/>
 <text text-anchor="middle" x="194" y="-80" font-family="Helvetica,sans-Serif" font-size="10.00">multiboot_color_t</text>
 </a>
 </g>
