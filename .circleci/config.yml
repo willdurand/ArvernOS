@@ -261,7 +261,6 @@ workflows:
             parameters:
               target: [debug, release]
               board:
-                - licheepi-nano
                 - raspi2
       - aarch32-kernel-selftest-dlmalloc:
           matrix:
