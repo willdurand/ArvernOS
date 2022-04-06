@@ -18,7 +18,7 @@ var searchData=
   ['arch_5fsyscall_5finit_15',['arch_syscall_init',['../sys_8h.html#aa375add58c700abbcaa8c54dcab6eea0',1,'sys.c']]],
   ['arch_5ftask_5fcreate_16',['arch_task_create',['../arch_2proc_8h.html#a491927dc191869338fab4ad37da1a743',1,'proc.c']]],
   ['arch_5ftask_5finit_17',['arch_task_init',['../arch_2proc_8h.html#a83fe01c7b5c7d2cad4c29120c49d2e27',1,'proc.c']]],
-  ['arch_5ftask_5fswitch_18',['arch_task_switch',['../arch_2proc_8h.html#a30f30f969e46688aa65c950f13b856e8',1,'proc.c']]],
+  ['arch_5ftask_5fswitch_18',['arch_task_switch',['../arch_2proc_8h.html#a30f30f969e46688aa65c950f13b856e8',1,'proc.h']]],
   ['arch_5ftimer_5finit_19',['arch_timer_init',['../kernel_2arch_2time_8h.html#a92a37cf9da6c3705b6ef829f1978ab54',1,'time.c']]],
   ['arch_5ftimer_5fuptime_5fmicroseconds_20',['arch_timer_uptime_microseconds',['../kernel_2arch_2time_8h.html#af8e08f88e4ec6768891cfce52318c3d3',1,'time.c']]],
   ['arp_5freceive_5fpacket_21',['arp_receive_packet',['../arp_8h.html#af8fccdaff0afb0830351393a2ec87df6',1,'arp.c']]],

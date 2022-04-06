@@ -1,0 +1,8 @@
+<map id="bcm2835_timer_uptime_microseconds" name="bcm2835_timer_uptime_microseconds">
+<area shape="rect" id="node1" title=" " alt="" coords="1176,5,1333,47"/>
+<area shape="rect" id="node2" href="$kernel_2arch_2x86__64_2arch_2time_8c.html#af8e08f88e4ec6768891cfce52318c3d3" title=" " alt="" coords="911,13,1128,39"/>
+<area shape="rect" id="node3" href="$timer_8c.html#a9e237401e78bbceb0c0070ef2ecb4569" title=" " alt="" coords="677,13,863,39"/>
+<area shape="rect" id="node4" href="$fake__clock_8c.html#ab4458e5c11135bbbaec3b6f2ee47e9d6" title=" " alt="" coords="472,5,629,47"/>
+<area shape="rect" id="node5" href="$kernel_2arch_2x86__64_2arch_2time_8c.html#ab4bc50190a5180744036f0962b00c364" title=" " alt="" coords="267,5,424,47"/>
+<area shape="rect" id="node6" href="$clock_8c.html#add4ef47919811f366e7c7561c71088fb" title=" " alt="" coords="5,13,219,39"/>
+</map>

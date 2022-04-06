@@ -88,22 +88,22 @@ $(document).ready(function(){initNavTree('md_src_kernel_arch_x86_64__r_e_a_d_m_e
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p ><a class="anchor" id="refArch_x86_64"></a></p>
-<h1><a class="anchor" id="autotoc_md31"></a>
+<h1><a class="anchor" id="autotoc_md29"></a>
 x86_64</h1>
 <p >The <code>x86_64</code> implementation uses GRUB as bootloader.</p>
-<h2><a class="anchor" id="autotoc_md32"></a>
+<h2><a class="anchor" id="autotoc_md30"></a>
 config file</h2>
 <div class="fragment"><div class="line"># This is the default architecture so we don&#39;t need to specify `ARCH`.</div>
 <div class="line"> </div>
 <div class="line"># This is only useful when QEMU is used.</div>
 <div class="line">CONFIG_SEMIHOSTING = 1</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md33"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md31"></a>
 Boot options</h2>
 <p >The GRUB configuration offers two choices: the normal mode and the kernel mode. The normal (or "default") mode will load the <code>/bin/init</code> program in user mode ("ring 3"). The kernel mode will load the <code>kshell</code> instead and will stay in kernel mode (as its name implies).</p>
 <p >It is possible to change the command line by passing the <code>CMDLINE</code> variable to <code>make</code> (or add it to your <code>config</code> file):</p>
 <div class="fragment"><div class="line">$ make clean run-debug CMDLINE=&quot;/bin/init foo bar&quot;</div>
 </div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>It is also possible to set <code>KERNEL_CMDLINE</code>, which is passed to the kernel in... kernel mode.</dd></dl>
-<h2><a class="anchor" id="autotoc_md34"></a>
+<h2><a class="anchor" id="autotoc_md32"></a>
 Early boot sequence</h2>
 <ol type="1">
 <li>The BIOS loads the bootloader (GRUB) from the ISO</li>
@@ -118,7 +118,7 @@ Early boot sequence</h2>
 <li>Call the C <code><a class="el" href="src_2kernel_2arch_2aarch32_2kmain_8h.html#af2771f04874bac550209cafd61dd4a57">kmain()</a></code> function</li>
 <li>Eventually switch to user mode and call <code>/bin/init</code> by default</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md35"></a>
+<h2><a class="anchor" id="autotoc_md33"></a>
 Memory management</h2>
 <p >During the early boot sequence, we identity map the first gigabyte of our kernel with 512 2MiB pages. When <code><a class="el" href="src_2kernel_2arch_2aarch32_2kmain_8h.html#af2771f04874bac550209cafd61dd4a57">kmain()</a></code> is called, we call <code><a class="el" href="paging_8h.html#a569adfd13ea3c63741f64108821b1712" title="Initializes paging to separate virtual and physical memory.">paging_init()</a></code> to update the mapping:</p>
 <ol type="1">
@@ -136,9 +136,9 @@ Memory management</h2>
 <li>enable the no-execute feature</li>
 <li>create a guard page</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md36"></a>
+<h2><a class="anchor" id="autotoc_md34"></a>
 Memory map</h2>
-<h3><a class="anchor" id="autotoc_md37"></a>
+<h3><a class="anchor" id="autotoc_md35"></a>
 Virtual address space</h3>
 <ul>
 <li><code>0x00000000</code> to <code>0x00100000</code>: the first 1MiB area is reserved</li>

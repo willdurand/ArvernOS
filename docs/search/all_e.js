@@ -6,7 +6,7 @@ var searchData=
   ['o_5frdwr_3',['O_RDWR',['../fcntl_8h.html#abb0586253488ee61072b73557eeb873b',1,'fcntl.h']]],
   ['o_5ftrunc_4',['O_TRUNC',['../fcntl_8h.html#ad1d67e453fb3031f40f8cd3403773813',1,'fcntl.h']]],
   ['o_5fwronly_5',['O_WRONLY',['../fcntl_8h.html#a11b644a8526139c4cc1850dac1271ced',1,'fcntl.h']]],
-  ['offset_6',['offset',['../structelf__section__header__t.html#a2d090693f40eb11ca29ef3b20420dd67',1,'elf_section_header_t']]],
+  ['offset_6',['offset',['../structelf__section__header__t.html#a2864b9a88294dfa26256579bd6c3522f',1,'elf_section_header_t']]],
   ['open_7',['open',['../syscall_8h.html#ab7c31bf64ff68f61762bda6e72e255d6',1,'open.c']]],
   ['openat_8',['openat',['../syscall_8h.html#ae49d1c90a87f9ab8500b66a5662bc0a8',1,'openat.c']]],
   ['opt_5fbool_5ft_9',['opt_bool_t',['../structopt__bool__t.html',1,'']]],

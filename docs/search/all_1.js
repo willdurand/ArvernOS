@@ -1,7 +1,7 @@
 var searchData=
 [
   ['abort_0',['abort',['../stdlib_8h.html#ac54f53dc342019e8db34f4aa581a5792',1,'abort.c']]],
-  ['addralign_1',['addralign',['../structelf__section__header__t.html#a8b33ed92712f7306d917be33cc7fb127',1,'elf_section_header_t']]],
+  ['addralign_1',['addralign',['../structelf__section__header__t.html#a67b9cce9eb1c31ab015fa6f4a5fe2787',1,'elf_section_header_t']]],
   ['alloc_2eh_2',['alloc.h',['../aarch32_2mmu_2alloc_8h.html',1,'(Global Namespace)'],['../x86__64_2mmu_2alloc_8h.html',1,'(Global Namespace)']]],
   ['alloc_5finit_3',['alloc_init',['../aarch32_2mmu_2alloc_8h.html#a0de47e42c61353f53c07a4274b87f864',1,'alloc_init():&#160;alloc.c'],['../x86__64_2mmu_2alloc_8h.html#a0de47e42c61353f53c07a4274b87f864',1,'alloc_init():&#160;alloc.c']]],
   ['arch_5fclock_5fget_5fcurrent_5fmicroseconds_4',['arch_clock_get_current_microseconds',['../kernel_2arch_2time_8h.html#ab4bc50190a5180744036f0962b00c364',1,'time.c']]],
@@ -20,7 +20,7 @@ var searchData=
   ['arch_5fsyscall_5finit_17',['arch_syscall_init',['../sys_8h.html#aa375add58c700abbcaa8c54dcab6eea0',1,'sys.c']]],
   ['arch_5ftask_5fcreate_18',['arch_task_create',['../arch_2proc_8h.html#a491927dc191869338fab4ad37da1a743',1,'proc.c']]],
   ['arch_5ftask_5finit_19',['arch_task_init',['../arch_2proc_8h.html#a83fe01c7b5c7d2cad4c29120c49d2e27',1,'proc.c']]],
-  ['arch_5ftask_5fswitch_20',['arch_task_switch',['../arch_2proc_8h.html#a30f30f969e46688aa65c950f13b856e8',1,'proc.c']]],
+  ['arch_5ftask_5fswitch_20',['arch_task_switch',['../arch_2proc_8h.html#a30f30f969e46688aa65c950f13b856e8',1,'proc.h']]],
   ['arch_5ftimer_5finit_21',['arch_timer_init',['../kernel_2arch_2time_8h.html#a92a37cf9da6c3705b6ef829f1978ab54',1,'time.c']]],
   ['arch_5ftimer_5fuptime_5fmicroseconds_22',['arch_timer_uptime_microseconds',['../kernel_2arch_2time_8h.html#af8e08f88e4ec6768891cfce52318c3d3',1,'time.c']]],
   ['architecture_3a_20aarch32_23',['Architecture: aarch32',['../md_src_kernel_arch_aarch32__r_e_a_d_m_e.html',1,'']]],

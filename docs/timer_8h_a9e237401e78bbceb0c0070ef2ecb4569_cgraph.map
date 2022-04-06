@@ -1,4 +1,5 @@
 <map id="timer_uptime_microseconds" name="timer_uptime_microseconds">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,191,32"/>
-<area shape="rect" id="node2" href="$kernel_2arch_2x86__64_2arch_2time_8c.html#af8e08f88e4ec6768891cfce52318c3d3" title=" " alt="" coords="239,5,456,32"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,13,191,39"/>
+<area shape="rect" id="node2" href="$kernel_2arch_2x86__64_2arch_2time_8c.html#af8e08f88e4ec6768891cfce52318c3d3" title=" " alt="" coords="239,13,456,39"/>
+<area shape="rect" id="node3" href="$bcm2835__timer_8c.html#aa5e375169036beb10f6778afb7eddecd" title=" " alt="" coords="504,5,661,47"/>
 </map>

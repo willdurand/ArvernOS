@@ -1,8 +1,9 @@
 <map id="kmain" name="kmain">
-<area shape="rect" id="node1" title=" " alt="" coords="5,107,63,133"/>
-<area shape="rect" id="node2" href="$x86__64_2mmu_2alloc_8c.html#a0de47e42c61353f53c07a4274b87f864" title=" " alt="" coords="137,5,210,32"/>
-<area shape="rect" id="node3" href="$atag_8c.html#aea5073c4d6bcc47bcf16c68dae9e640b" title=" " alt="" coords="111,56,235,83"/>
-<area shape="rect" id="node4" href="$atag_8c.html#a4211691846343994252b4794b98fee7c" title=" " alt="" coords="138,107,209,133"/>
-<area shape="rect" id="node5" href="$kmain_8c.html#a39b048730ab06513b29030aed1b5d8f4" title=" " alt="" coords="111,157,236,184"/>
-<area shape="rect" id="node6" href="$kmain_8c.html#a666c17b307920a60e50fcf56312f9500" title=" " alt="" coords="128,208,219,235"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,132,63,159"/>
+<area shape="rect" id="node2" href="$x86__64_2mmu_2alloc_8c.html#a0de47e42c61353f53c07a4274b87f864" title=" " alt="" coords="140,5,213,32"/>
+<area shape="rect" id="node3" href="$atag_8c.html#aea5073c4d6bcc47bcf16c68dae9e640b" title=" " alt="" coords="115,56,239,83"/>
+<area shape="rect" id="node4" href="$atag_8c.html#a3fe6491ab4b334fbbc628611703a6562" title=" " alt="" coords="111,107,243,133"/>
+<area shape="rect" id="node5" href="$atag_8c.html#a4211691846343994252b4794b98fee7c" title=" " alt="" coords="141,157,212,184"/>
+<area shape="rect" id="node6" href="$kmain_8c.html#a39b048730ab06513b29030aed1b5d8f4" title=" " alt="" coords="114,208,239,235"/>
+<area shape="rect" id="node7" href="$kmain_8c.html#a666c17b307920a60e50fcf56312f9500" title=" " alt="" coords="131,259,222,285"/>
 </map>

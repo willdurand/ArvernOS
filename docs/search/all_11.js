@@ -14,7 +14,7 @@ var searchData=
   ['serial_5fspeed_5f38400_11',['SERIAL_SPEED_38400',['../serial_8h.html#acb00722fe46bcf13413da98c229aded8',1,'serial.h']]],
   ['serial_5fspeed_5f57600_12',['SERIAL_SPEED_57600',['../serial_8h.html#abc968786733c07230d2d5230cec1e138',1,'serial.h']]],
   ['serial_5fwrite_13',['serial_write',['../serial_8h.html#a25ea2587d38072f4b5a53d59962ca418',1,'serial.c']]],
-  ['size_14',['size',['../structelf__section__header__t.html#a0a71f9f90c90da99840b3697675b2b46',1,'elf_section_header_t']]],
+  ['size_14',['size',['../structelf__section__header__t.html#aef4867a51cf8dee4d94e53d863d62af5',1,'elf_section_header_t']]],
   ['sock_2eh_15',['sock.h',['../sock_8h.html',1,'']]],
   ['sock_5fentry_5ft_16',['sock_entry_t',['../structsock__entry__t.html',1,'']]],
   ['sock_5ffs_5finit_17',['sock_fs_init',['../sock_8h.html#a844da9b1f4552399a6d2d947c13ad25b',1,'sock.c']]],

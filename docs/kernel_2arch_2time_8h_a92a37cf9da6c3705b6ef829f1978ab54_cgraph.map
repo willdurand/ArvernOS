@@ -1,0 +1,5 @@
+<map id="arch_timer_init" name="arch_timer_init">
+<area shape="rect" id="node1" title=" " alt="" coords="5,5,112,32"/>
+<area shape="rect" id="node2" href="$bcm2835__timer_8c.html#af1c06e30d4cc124b212c408dceaadbd0" title=" " alt="" coords="160,5,295,32"/>
+<area shape="rect" id="node3" href="$isr_8c.html#a919e035afe984042c7fb8672b16aaf1e" title=" " alt="" coords="343,5,477,32"/>
+</map>

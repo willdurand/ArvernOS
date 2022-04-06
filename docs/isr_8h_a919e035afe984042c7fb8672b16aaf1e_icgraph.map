@@ -1,4 +1,5 @@
 <map id="isr_register_handler" name="isr_register_handler">
-<area shape="rect" id="node1" title=" " alt="" coords="188,5,323,32"/>
-<area shape="rect" id="node2" href="$bcm2835__timer_8c.html#af1c06e30d4cc124b212c408dceaadbd0" title=" " alt="" coords="5,5,140,32"/>
+<area shape="rect" id="node1" title=" " alt="" coords="343,5,477,32"/>
+<area shape="rect" id="node2" href="$bcm2835__timer_8c.html#af1c06e30d4cc124b212c408dceaadbd0" title=" " alt="" coords="160,5,295,32"/>
+<area shape="rect" id="node3" href="$kernel_2arch_2x86__64_2arch_2time_8c.html#a92a37cf9da6c3705b6ef829f1978ab54" title=" " alt="" coords="5,5,112,32"/>
 </map>
