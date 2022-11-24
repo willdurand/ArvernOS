@@ -6,8 +6,7 @@
 
 ArvernOS (formerly known as "willOS") is a minimal and experimental monolithic
 kernel (not really an Operating System because it cannot do a lot of things
-currently). Some screencasts are available in [this Twitter
-thread][twitter-thread].
+currently).
 
 ## Goals
 
@@ -300,5 +299,4 @@ attached (either in the source files or in a `LICENSE` file next to them).
 [gdb]: https://www.sourceware.org/gdb/
 [git-submodules]: https://git-scm.com/book/en/v2/Git-Tools-Submodules
 [license]: https://github.com/willdurand/ArvernOS/blob/master/LICENSE.md
-[twitter-thread]: https://twitter.com/couac/status/1201278626211254274
 [qemu monitor]: https://www.qemu.org/docs/master/system/monitor.html
