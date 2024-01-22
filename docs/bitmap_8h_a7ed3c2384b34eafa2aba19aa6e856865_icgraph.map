@@ -1,8 +1,0 @@
-<map id="bitmap_get" name="bitmap_get">
-<area shape="rect" id="Node000001" title=" " alt="" coords="208,31,295,56"/>
-<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="280,19,271,12,251,9,234,11,225,16,222,21,227,29,223,32,217,22,220,12,232,6,251,4,273,7,283,14"/>
-<area shape="rect" id="Node000002" href="$frame_8c.html#ae2a26cdfa5b475a46dc4e26a21025252" title=" " alt="" coords="29,5,136,31"/>
-<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="193,37,136,29,137,23,194,32"/>
-<area shape="rect" id="Node000003" href="$frame_8c.html#a5d09b4704202b05347bd92d99a5de64e" title=" " alt="" coords="5,55,160,80"/>
-<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="194,54,161,59,160,54,193,49"/>
-</map>

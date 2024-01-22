@@ -1,7 +1,0 @@
-<map id="dhcp_negotiate" name="dhcp_negotiate">
-<area shape="rect" id="Node000001" title=" " alt="" coords="175,29,285,55"/>
-<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="258,17,249,11,230,8,213,10,204,15,202,20,207,27,202,30,197,21,200,11,211,5,230,3,251,6,261,13"/>
-<area shape="rect" id="Node000002" href="$net_2net_8c.html#a5da8d53d480b13e24e293e0ab90a0ac3" title=" " alt="" coords="5,29,127,55"/>
-<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="159,45,127,45,127,39,159,39"/>
-<area shape="poly" id="edge3_Node000002_Node000002" title=" " alt="" coords="94,17,85,11,66,8,49,10,40,15,38,20,43,27,38,30,33,21,36,11,47,5,66,3,87,6,97,13"/>
-</map>

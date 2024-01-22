@@ -1,7 +1,0 @@
-<map id="arch_isr_disable_interrupts" name="arch_isr_disable_interrupts">
-<area shape="rect" id="Node000001" title=" " alt="" coords="199,29,376,55"/>
-<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="324,18,312,11,287,8,265,10,253,15,251,20,257,27,252,30,246,21,250,11,264,5,287,3,314,6,327,13"/>
-<area shape="rect" id="Node000002" href="$isr_8c.html#a48c1ab85abf749224864c1576a186a3b" title=" " alt="" coords="5,29,151,55"/>
-<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="184,45,151,45,151,39,184,39"/>
-<area shape="poly" id="edge3_Node000002_Node000002" title=" " alt="" coords="115,18,103,11,78,8,56,10,44,15,42,20,47,27,43,30,36,21,40,11,55,5,78,3,105,6,118,13"/>
-</map>

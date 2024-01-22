@@ -1,7 +1,0 @@
-<map id="k_open" name="k_open">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,29,69,55"/>
-<area shape="poly" id="edge3_Node000001_Node000001" title=" " alt="" coords="11,30,6,21,9,11,20,5,37,3,57,6,67,13,63,17,55,11,37,8,22,10,13,14,11,20,16,28"/>
-<area shape="rect" id="Node000002" href="$descriptor_8c.html#a9d772be036ad7ec4e9e926a190b76003" title=" " alt="" coords="117,29,264,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="70,39,103,39,103,45,70,45"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="164,30,159,21,162,11,173,5,191,3,210,6,220,13,217,17,208,11,191,8,175,10,167,14,165,20,169,28"/>
-</map>

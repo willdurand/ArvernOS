@@ -1,9 +1,0 @@
-<map id="pit_init" name="pit_init">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,67,65,92"/>
-<area shape="rect" id="Node000002" href="$isr_8c.html#a919e035afe984042c7fb8672b16aaf1e" title=" " alt="" coords="113,29,248,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="65,69,114,56,115,62,67,74"/>
-<area shape="rect" id="Node000003" href="$port_8c.html#ac3c72bfda8c7b1920ef91bcc06c97c7f" title=" " alt="" coords="130,103,231,128"/>
-<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="67,84,116,97,115,102,65,89"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="156,30,151,21,154,11,164,5,181,3,199,6,209,13,205,17,197,10,181,8,166,10,158,14,156,20,160,28"/>
-<area shape="poly" id="edge4_Node000003_Node000003" title=" " alt="" coords="156,103,151,94,154,84,164,78,181,76,199,79,209,86,205,90,197,84,181,81,166,83,158,88,156,93,160,101"/>
-</map>

@@ -1,6 +1,0 @@
-<map id="kernel_dump_stacktrace" name="kernel_dump_stacktrace">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,29,169,55"/>
-<area shape="rect" id="Node000002" href="$x86__64_2arch_2kernel_8c.html#a90eb89dc1751bf77f797ebe63dc856ee" title=" " alt="" coords="217,29,376,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="170,39,202,39,202,45,170,45"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="262,30,255,21,259,11,273,5,297,3,323,6,336,13,333,18,322,11,297,8,275,10,263,15,260,20,266,27"/>
-</map>

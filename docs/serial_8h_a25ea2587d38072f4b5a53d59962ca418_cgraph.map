@@ -1,6 +1,0 @@
-<map id="serial_write" name="serial_write">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,29,93,55"/>
-<area shape="rect" id="Node000002" href="$port_8c.html#ac3c72bfda8c7b1920ef91bcc06c97c7f" title=" " alt="" coords="141,29,243,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="94,39,127,39,127,45,94,45"/>
-<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="167,30,163,21,165,11,176,5,192,3,210,6,220,13,216,17,208,10,192,8,177,10,170,14,168,20,172,28"/>
-</map>

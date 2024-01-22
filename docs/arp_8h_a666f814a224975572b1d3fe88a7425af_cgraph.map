@@ -1,7 +1,0 @@
-<map id="arp_request" name="arp_request">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,29,96,55"/>
-<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="22,30,17,21,20,11,32,5,51,3,72,6,82,13,79,17,70,11,51,8,33,10,24,15,22,20,27,27"/>
-<area shape="rect" id="Node000002" href="$ethernet_8c.html#ae0adc121b615550b0366f4354a1936b4" title=" " alt="" coords="144,29,288,55"/>
-<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="96,39,129,39,129,45,96,45"/>
-<area shape="poly" id="edge3_Node000002_Node000002" title=" " alt="" coords="188,30,182,21,186,11,197,5,216,3,237,6,247,13,244,17,235,11,216,8,199,10,190,15,188,20,192,27"/>
-</map>

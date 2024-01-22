@@ -1,6 +1,0 @@
-<map id="port_word_out" name="port_word_out">
-<area shape="rect" id="Node000001" title=" " alt="" coords="139,29,243,55"/>
-<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="215,17,207,10,191,8,176,10,168,14,167,20,171,28,166,30,161,21,164,11,174,5,191,3,209,6,218,13"/>
-<area shape="rect" id="Node000002" href="$rtl8139_8c.html#a24e07ef25a2b1581bca67bbb213a0931" title=" " alt="" coords="5,29,91,55"/>
-<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="124,45,91,45,91,39,124,39"/>
-</map>

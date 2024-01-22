@@ -1,7 +1,0 @@
-<map id="putchar" name="putchar">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,29,71,55"/>
-<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="19,30,16,21,18,11,25,5,38,3,52,6,59,13,55,16,49,10,38,8,28,10,22,14,21,20,24,28"/>
-<area shape="rect" id="Node000002" href="$write_8c.html#abb39b21888372e95ad3e5c59b166f5c8" title=" " alt="" coords="119,29,169,55"/>
-<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="71,39,104,39,104,45,71,45"/>
-<area shape="poly" id="edge3_Node000002_Node000002" title=" " alt="" coords="125,30,122,21,124,11,131,5,144,3,158,6,165,13,161,16,155,10,144,8,134,10,128,14,127,20,130,28"/>
-</map>

@@ -1,7 +1,0 @@
-<map id="ethernet_receive_frame" name="ethernet_receive_frame">
-<area shape="rect" id="Node000001" title=" " alt="" coords="175,29,333,55"/>
-<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="287,17,276,11,254,8,234,10,224,15,222,20,227,27,222,30,216,21,220,11,233,5,254,3,278,6,289,13"/>
-<area shape="rect" id="Node000002" href="$net_2net_8c.html#a5da8d53d480b13e24e293e0ab90a0ac3" title=" " alt="" coords="5,29,127,55"/>
-<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="160,45,127,45,127,39,160,39"/>
-<area shape="poly" id="edge3_Node000002_Node000002" title=" " alt="" coords="99,17,88,11,66,8,46,10,36,15,34,20,39,27,34,30,28,21,32,11,45,5,66,3,90,6,101,13"/>
-</map>

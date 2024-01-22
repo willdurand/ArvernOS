@@ -1,7 +1,0 @@
-<map id="arch_clock_get_current_microseconds" name="arch_clock_get_current_microseconds">
-<area shape="rect" id="Node000001" title=" " alt="" coords="267,29,424,69"/>
-<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="385,17,371,11,345,8,323,10,309,15,304,21,307,28,302,30,299,20,306,10,322,5,345,3,372,5,387,12"/>
-<area shape="rect" id="Node000002" href="$clock_8c.html#add4ef47919811f366e7c7561c71088fb" title=" " alt="" coords="5,37,219,62"/>
-<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="252,52,219,52,219,47,252,47"/>
-<area shape="poly" id="edge3_Node000002_Node000002" title=" " alt="" coords="154,26,141,18,112,15,87,17,74,22,71,27,78,34,73,38,66,28,70,18,86,12,112,10,142,13,156,21"/>
-</map>
