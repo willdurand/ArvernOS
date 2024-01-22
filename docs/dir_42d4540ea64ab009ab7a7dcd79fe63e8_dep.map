@@ -1,10 +1,10 @@
 <map id="src/kernel/arch/x86_64/console" name="src/kernel/arch/x86_64/console">
 <area shape="rect" id="node1" href="dir_1dc53930709e46457d0e1484ec309f4d.html" title="core" alt="" coords="28,340,100,388"/>
 <area shape="rect" id="node5" href="dir_d44c64559bbebec7f509842c48db8b23.html" title="include" alt="" coords="128,436,200,484"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000046_000000.html" title="3" alt="" coords="128,410,136,425"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000046_000000.html" title="3" alt="" coords="128,410,136,424"/>
 <area shape="rect" id="node2" href="dir_3a646564ec239f35c01425f0e9da2ba2.html" title="mmu" alt="" coords="80,244,152,292"/>
 <area shape="rect" id="edge2-headlabel" href="dir_000042_000046.html" title="2" alt="" coords="89,321,97,335"/>
-<area shape="rect" id="edge3-headlabel" href="dir_000042_000000.html" title="21" alt="" coords="155,409,169,423"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000042_000000.html" title="21" alt="" coords="155,409,169,424"/>
 <area shape="rect" id="node3" href="dir_dfce509d3294b4958bedddff0a015025.html" title="drivers" alt="" coords="53,148,125,196"/>
 <area shape="rect" id="edge8-headlabel" href="dir_000048_000046.html" title="3" alt="" coords="67,314,75,329"/>
 <area shape="rect" id="edge9-headlabel" href="dir_000048_000042.html" title="1" alt="" coords="109,217,117,231"/>
