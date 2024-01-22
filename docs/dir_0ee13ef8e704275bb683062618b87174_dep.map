@@ -1,10 +1,14 @@
 <map id="src/kernel/arch/aarch64/board/raspi3" name="src/kernel/arch/aarch64/board/raspi3">
-<area shape="rect" id="node2" href="dir_1742f59156db57e3c3c19d5377929d16.html" title="arch" alt="" coords="229,63,301,111"/>
-<area shape="rect" id="node5" href="dir_d44c64559bbebec7f509842c48db8b23.html" title="include" alt="" coords="133,159,205,207"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000025_000000.html" title="12" alt="" coords="205,144,219,159"/>
-<area shape="rect" id="node3" href="dir_115e9e33fc1490a9fac5bf904c60a358.html" title="core" alt="" coords="133,63,205,111"/>
-<area shape="rect" id="node4" href="dir_b5c5136b0a2ed351fa08c658cfa1f98a.html" title="mmu" alt="" coords="37,63,109,111"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000041_000000.html" title="1" alt="" coords="134,132,142,147"/>
-<area shape="rect" id="clust2" href="dir_0ee13ef8e704275bb683062618b87174.html" alt="" coords="27,52,408,121"/>
-<area shape="rect" id="clust1" href="dir_b30df4826c7011c0e76e14e84665bb61.html" title="board" alt="" coords="16,16,419,132"/>
+<area shape="rect" id="node5" href="dir_d44c64559bbebec7f509842c48db8b23.html" title="include" alt="" coords="175,136,238,161"/>
+<area shape="poly" id="edge1" href="dir_000061_000039.html" alt="" coords="273,90,232,128,228,124,269,86"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000061_000039.html" title="20" alt="" coords="231,122,246,137"/>
+<area shape="rect" id="node2" href="dir_1742f59156db57e3c3c19d5377929d16.html" title="arch" alt="" coords="183,63,230,88"/>
+<area shape="poly" id="edge2" href="dir_000007_000039.html" alt="" coords="209,88,209,121,204,121,204,88"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000007_000039.html" title="12" alt="" coords="208,110,222,125"/>
+<area shape="rect" id="node3" href="dir_115e9e33fc1490a9fac5bf904c60a358.html" title="core" alt="" coords="113,63,159,88"/>
+<area shape="rect" id="node4" href="dir_b5c5136b0a2ed351fa08c658cfa1f98a.html" title="mmu" alt="" coords="37,63,88,88"/>
+<area shape="poly" id="edge3" href="dir_000050_000039.html" alt="" coords="76,86,103,107,162,132,160,137,100,112,72,90"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000050_000039.html" title="1" alt="" coords="156,118,164,133"/>
+<area shape="rect" id="clust2" href="dir_0ee13ef8e704275bb683062618b87174.html" alt="" coords="27,52,323,99"/>
+<area shape="rect" id="clust1" href="dir_b30df4826c7011c0e76e14e84665bb61.html" title="board" alt="" coords="16,16,333,109"/>
 </map>

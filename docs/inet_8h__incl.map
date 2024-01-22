@@ -1,8 +1,14 @@
 <map id="include/libc/arpa/inet.h" name="include/libc/arpa/inet.h">
-<area shape="rect" id="node1" title=" " alt="" coords="63,5,215,32"/>
-<area shape="rect" id="node2" href="$socket_8h.html" title=" " alt="" coords="47,80,145,107"/>
-<area shape="rect" id="node3" href="$types_8h.html" title=" " alt="" coords="93,155,184,181"/>
-<area shape="rect" id="node4" title=" " alt="" coords="5,229,80,256"/>
-<area shape="rect" id="node5" title=" " alt="" coords="104,229,173,256"/>
-<area shape="rect" id="node6" title=" " alt="" coords="198,229,263,256"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="63,5,215,31"/>
+<area shape="rect" id="Node000002" href="$socket_8h.html" title=" " alt="" coords="47,79,145,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="134,32,113,67,108,65,129,30"/>
+<area shape="rect" id="Node000003" href="$types_8h.html" title=" " alt="" coords="93,152,184,177"/>
+<area shape="poly" id="edge6_Node000001_Node000003" title=" " alt="" coords="146,30,160,78,159,110,152,139,147,137,154,109,155,79,141,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="105,103,126,138,122,141,101,106"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="5,225,80,251"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="124,180,72,219,69,214,121,176"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="104,225,173,251"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="141,178,141,210,136,210,136,178"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="198,225,263,251"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="156,176,206,214,202,218,153,180"/>
 </map>

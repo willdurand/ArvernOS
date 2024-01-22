@@ -1,6 +1,9 @@
 <map id="include/kernel/mmu/bitmap.h" name="include/kernel/mmu/bitmap.h">
-<area shape="rect" id="node1" title=" " alt="" coords="63,5,198,47"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,95,69,121"/>
-<area shape="rect" id="node3" title=" " alt="" coords="93,95,168,121"/>
-<area shape="rect" id="node4" title=" " alt="" coords="193,95,258,121"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="63,5,198,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,93,69,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="109,48,64,86,60,82,106,44"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="93,93,168,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="133,46,133,79,128,79,128,46"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="193,93,258,119"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="156,44,202,82,199,86,152,48"/>
 </map>

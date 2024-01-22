@@ -1,4 +1,7 @@
 <map id="arch_clock_init" name="arch_clock_init">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,115,32"/>
-<area shape="rect" id="node2" href="$fake__clock_8c.html#ae57838590d8d0853b8a6036fbdd0b0d0" title=" " alt="" coords="163,5,272,32"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,29,115,55"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="33,30,28,21,31,11,42,5,60,3,80,6,90,13,87,17,78,11,60,8,44,10,35,15,33,20,38,28"/>
+<area shape="rect" id="Node000002" href="$fake__clock_8c.html#ae57838590d8d0853b8a6036fbdd0b0d0" title=" " alt="" coords="163,29,272,55"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="115,39,148,39,148,45,115,45"/>
+<area shape="poly" id="edge3_Node000002_Node000002" title=" " alt="" coords="190,30,185,21,188,11,199,5,217,3,237,6,247,13,244,17,235,11,217,8,201,10,192,15,191,20,195,28"/>
 </map>

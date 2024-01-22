@@ -1,6 +1,9 @@
 <map id="include/kernel/arch/proc.h" name="include/kernel/arch/proc.h">
-<area shape="rect" id="node1" title=" " alt="" coords="33,5,163,47"/>
-<area shape="rect" id="node2" href="$include_2kernel_2proc_2task_8h.html" title=" " alt="" coords="55,95,141,121"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,169,92,196"/>
-<area shape="rect" id="node4" title=" " alt="" coords="116,169,181,196"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="33,5,163,45"/>
+<area shape="rect" id="Node000002" href="$include_2kernel_2proc_2task_8h.html" title=" " alt="" coords="55,93,141,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="101,46,101,79,95,79,95,46"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,167,92,192"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="92,121,67,156,63,153,88,117"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="116,167,181,192"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="109,117,134,153,129,156,104,121"/>
 </map>

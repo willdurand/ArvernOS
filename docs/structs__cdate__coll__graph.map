@@ -1,4 +1,5 @@
 <map id="t_cdate" name="t_cdate">
-<area shape="rect" id="node1" title=" " alt="" coords="5,95,71,121"/>
-<area shape="rect" id="node2" href="$structtm.html" title=" " alt="" coords="19,5,57,32"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,93,71,119"/>
+<area shape="rect" id="Node000002" href="$structtm.html" title=" " alt="" coords="19,5,57,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="41,45,41,93,35,93,35,45"/>
 </map>

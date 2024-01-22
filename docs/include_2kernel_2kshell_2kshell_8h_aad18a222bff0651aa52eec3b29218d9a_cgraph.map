@@ -1,0 +1,10 @@
+<map id="kshell" name="kshell">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,67,61,92"/>
+<area shape="poly" id="edge3_Node000001_Node000001" title=" " alt="" coords="11,67,7,58,10,49,19,42,33,40,49,43,57,50,54,54,47,48,33,45,21,47,14,52,13,57,16,65"/>
+<area shape="rect" id="Node000002" href="$x86__64_2arch_2io_8c.html#a34512cf4b7563b16dab78467797aa5d8" title=" " alt="" coords="109,29,207,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="61,68,99,57,101,62,63,74"/>
+<area shape="rect" id="Node000003" href="$strncpy_8c.html#a9456973049933ecacd5ad9c4b4f080d8" title="This is actually a safer implementation based on strlcpy()." alt="" coords="125,103,191,128"/>
+<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="62,85,112,99,110,104,61,90"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="136,30,132,21,135,11,143,5,158,3,174,6,182,13,179,17,172,10,158,8,145,10,139,14,137,20,141,28"/>
+<area shape="poly" id="edge5_Node000003_Node000003" title=" " alt="" coords="136,103,132,94,135,85,143,78,158,76,174,79,182,86,179,90,172,84,158,81,145,83,139,88,137,93,141,101"/>
+</map>

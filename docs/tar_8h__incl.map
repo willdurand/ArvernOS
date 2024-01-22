@@ -1,8 +1,15 @@
 <map id="include/kernel/fs/tar.h" name="include/kernel/fs/tar.h">
-<area shape="rect" id="node1" title=" " alt="" coords="65,5,212,32"/>
-<area shape="rect" id="node2" href="$vfs_8h.html" title=" " alt="" coords="105,80,172,107"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,229,80,256"/>
-<area shape="rect" id="node4" title=" " alt="" coords="198,229,263,256"/>
-<area shape="rect" id="node5" href="$types_8h.html" title=" " alt="" coords="93,155,184,181"/>
-<area shape="rect" id="node6" title=" " alt="" coords="104,229,173,256"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="65,5,212,31"/>
+<area shape="rect" id="Node000002" href="$vfs_8h.html" title=" " alt="" coords="105,79,172,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="141,31,141,64,136,64,136,31"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,225,80,251"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="127,106,105,127,84,154,67,183,54,213,49,210,62,181,79,150,101,124,123,102"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="198,225,263,251"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="155,103,177,124,198,151,214,181,226,210,221,212,209,183,194,153,173,127,151,107"/>
+<area shape="rect" id="Node000005" href="$types_8h.html" title=" " alt="" coords="93,152,184,177"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="141,104,141,137,136,137,136,104"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="124,180,72,219,69,214,121,176"/>
+<area shape="poly" id="edge7_Node000005_Node000004" title=" " alt="" coords="156,176,206,214,202,218,153,180"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="104,225,173,251"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="141,178,141,210,136,210,136,178"/>
 </map>

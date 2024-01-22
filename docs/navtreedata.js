@@ -25,32 +25,10 @@
 var NAVTREE =
 [
   [ "ArvernOS", "index.html", [
-    [ "Introduction", "index.html", [
-      [ "ArvernOS", "index.html#autotoc_md0", [
-        [ "Goals", "index.html#autotoc_md1", null ],
-        [ "Architectures, boards and tiers", "index.html#autotoc_md2", [
-          [ "Tier 1", "index.html#autotoc_md3", null ],
-          [ "Tier 2", "index.html#autotoc_md4", null ]
-        ] ],
-        [ "Hacking on ArvernOS", "index.html#autotoc_md5", [
-          [ "Setting up a development environment", "index.html#autotoc_md6", [
-            [ "Getting the sources", "index.html#autotoc_md7", null ],
-            [ "Docker (recommended way)", "index.html#autotoc_md8", null ],
-            [ "MacOS", "index.html#autotoc_md9", null ],
-            [ "Linux", "index.html#autotoc_md10", null ]
-          ] ],
-          [ "Building ArvernOS", "index.html#autotoc_md11", [
-            [ "Debug mode", "index.html#autotoc_md12", null ],
-            [ "Release mode", "index.html#autotoc_md17", null ],
-            [ "config files", "index.html#autotoc_md18", null ]
-          ] ]
-        ] ],
-        [ "License", "index.html#autotoc_md19", null ]
-      ] ]
-    ] ],
-    [ "Component: kernel", "md_src_kernel__r_e_a_d_m_e.html", "md_src_kernel__r_e_a_d_m_e" ],
-    [ "Component: lib(k|c)", "md_src_libc__r_e_a_d_m_e.html", null ],
-    [ "Component: userland", "md_src_userland__r_e_a_d_m_e.html", "md_src_userland__r_e_a_d_m_e" ],
+    [ "Introduction", "index.html", "index" ],
+    [ "Component: kernel", "md_src_2kernel_2_r_e_a_d_m_e.html", "md_src_2kernel_2_r_e_a_d_m_e" ],
+    [ "Component: lib(k|c)", "md_src_2libc_2_r_e_a_d_m_e.html", null ],
+    [ "Component: userland", "md_src_2userland_2_r_e_a_d_m_e.html", "md_src_2userland_2_r_e_a_d_m_e" ],
     [ "Todo List", "todo.html", null ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],

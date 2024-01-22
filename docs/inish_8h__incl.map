@@ -1,8 +1,16 @@
 <map id="include/kernel/config/inish.h" name="include/kernel/config/inish.h">
-<area shape="rect" id="node1" title=" " alt="" coords="59,5,200,47"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,244,80,271"/>
-<area shape="rect" id="node3" title=" " alt="" coords="210,244,275,271"/>
-<area shape="rect" id="node4" href="$stat_8h.html" title=" " alt="" coords="128,95,208,121"/>
-<area shape="rect" id="node5" href="$types_8h.html" title=" " alt="" coords="101,169,192,196"/>
-<area shape="rect" id="node6" title=" " alt="" coords="112,244,181,271"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="59,5,200,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,240,80,265"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="124,47,55,227,50,225,119,45"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="210,240,275,265"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="170,44,198,64,222,92,237,126,245,162,248,225,242,225,240,163,232,127,218,95,195,68,167,48"/>
+<area shape="rect" id="Node000004" href="$stat_8h.html" title=" " alt="" coords="128,93,208,119"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="141,45,158,79,153,81,137,47"/>
+<area shape="rect" id="Node000005" href="$types_8h.html" title=" " alt="" coords="101,167,192,192"/>
+<area shape="poly" id="edge8_Node000001_Node000005" title=" " alt="" coords="125,46,117,80,119,118,133,153,129,155,113,119,112,80,120,45"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="167,120,157,153,152,152,162,118"/>
+<area shape="poly" id="edge5_Node000005_Node000002" title=" " alt="" coords="131,195,73,234,70,229,128,190"/>
+<area shape="poly" id="edge7_Node000005_Node000003" title=" " alt="" coords="165,191,217,229,214,233,161,195"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="112,240,181,265"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="149,192,149,225,144,225,144,192"/>
 </map>

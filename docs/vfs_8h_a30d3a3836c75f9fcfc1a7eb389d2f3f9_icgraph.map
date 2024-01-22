@@ -1,4 +1,10 @@
 <map id="vfs_make_directory" name="vfs_make_directory">
-<area shape="rect" id="node1" title=" " alt="" coords="152,5,288,32"/>
-<area shape="rect" id="node2" href="$tar_8c.html#a591d90d6b7cf5c472a1740f065178017" title=" " alt="" coords="5,5,104,32"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="152,67,288,92"/>
+<area shape="poly" id="edge5_Node000001_Node000001" title=" " alt="" coords="248,55,239,48,220,45,203,47,194,52,192,57,196,65,192,68,186,58,190,48,201,42,220,40,241,43,251,50"/>
+<area shape="rect" id="Node000002" href="$dev_8c.html#a0dbadb87fe40e866f57cbab98239c224" title=" " alt="" coords="12,29,97,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="146,65,97,54,98,49,148,60"/>
+<area shape="rect" id="Node000003" href="$tar_8c.html#a591d90d6b7cf5c472a1740f065178017" title=" " alt="" coords="5,103,104,128"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="145,98,105,107,104,102,144,93"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="83,17,74,11,55,8,37,10,28,15,26,20,31,27,26,30,21,21,24,11,36,5,55,3,76,6,86,13"/>
+<area shape="poly" id="edge4_Node000003_Node000003" title=" " alt="" coords="83,91,74,84,55,81,37,83,28,88,26,93,31,101,26,104,21,94,24,84,36,78,55,76,76,79,86,86"/>
 </map>

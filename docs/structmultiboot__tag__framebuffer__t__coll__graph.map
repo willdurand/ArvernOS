@@ -1,5 +1,7 @@
 <map id="multiboot_tag_framebuffer_t" name="multiboot_tag_framebuffer_t">
-<area shape="rect" id="node1" title=" " alt="" coords="85,109,269,136"/>
-<area shape="rect" id="node2" href="$structmultiboot__tag__framebuffer__common__t.html" title=" " alt="" coords="5,5,179,47"/>
-<area shape="rect" id="node3" href="$structmultiboot__color__t.html" title=" " alt="" coords="203,13,325,39"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="85,108,269,133"/>
+<area shape="rect" id="Node000002" href="$structmultiboot__tag__framebuffer__common__t.html" title=" " alt="" coords="5,5,179,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="121,54,169,106,165,110,117,58"/>
+<area shape="rect" id="Node000003" href="$structmultiboot__color__t.html" title=" " alt="" coords="203,13,325,38"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="245,51,190,109,187,106,241,47"/>
 </map>

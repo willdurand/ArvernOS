@@ -1,5 +1,10 @@
 <map id="arch_timer_init" name="arch_timer_init">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,112,32"/>
-<area shape="rect" id="node2" href="$bcm2835__timer_8c.html#af1c06e30d4cc124b212c408dceaadbd0" title=" " alt="" coords="160,5,295,32"/>
-<area shape="rect" id="node3" href="$isr_8c.html#a919e035afe984042c7fb8672b16aaf1e" title=" " alt="" coords="343,5,477,32"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,29,112,55"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="30,30,24,21,28,11,40,5,59,3,80,6,91,13,88,17,78,11,59,8,41,10,32,15,30,20,35,27"/>
+<area shape="rect" id="Node000002" href="$bcm2835__timer_8c.html#af1c06e30d4cc124b212c408dceaadbd0" title=" " alt="" coords="160,29,295,55"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="113,39,145,39,145,45,113,45"/>
+<area shape="poly" id="edge3_Node000002_Node000002" title=" " alt="" coords="199,30,193,21,196,11,208,5,227,3,249,6,259,13,256,17,247,11,227,8,210,10,201,15,198,20,203,27"/>
+<area shape="rect" id="Node000003" href="$isr_8c.html#a919e035afe984042c7fb8672b16aaf1e" title=" " alt="" coords="343,29,477,55"/>
+<area shape="poly" id="edge4_Node000002_Node000003" title=" " alt="" coords="295,39,328,39,328,45,295,45"/>
+<area shape="poly" id="edge5_Node000003_Node000003" title=" " alt="" coords="379,30,373,21,377,11,389,5,410,3,433,6,444,13,442,17,431,11,410,8,391,10,381,15,379,20,384,27"/>
 </map>

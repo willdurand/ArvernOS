@@ -1,4 +1,8 @@
 <map id="atag_get_cmdline" name="atag_get_cmdline">
-<area shape="rect" id="node1" title=" " alt="" coords="111,5,235,32"/>
-<area shape="rect" id="node2" href="$arch_2aarch32_2board_2raspi2_2kmain_8c.html#a798325fe646ee31fccf3f735f9bbaf60" title=" " alt="" coords="5,5,63,32"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="111,31,235,56"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="196,18,188,12,173,9,159,11,151,16,149,21,153,29,149,31,144,22,147,13,157,6,173,4,190,7,199,14"/>
+<area shape="rect" id="Node000002" href="$arch_2aarch32_2board_2raspi2_2kmain_8c.html#a798325fe646ee31fccf3f735f9bbaf60" title=" " alt="" coords="5,5,63,31"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="95,32,63,26,64,21,96,27"/>
+<area shape="rect" id="Node000003" href="$arch_2x86__64_2kmain_8c.html#ad6d3bd9ddd2519d6040e79426dc57fb5" title=" " alt="" coords="5,55,63,80"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="96,59,64,65,63,60,95,54"/>
 </map>

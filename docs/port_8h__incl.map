@@ -1,4 +1,5 @@
 <map id="include/kernel/core/port.h" name="include/kernel/core/port.h">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,136,47"/>
-<area shape="rect" id="node2" title=" " alt="" coords="38,95,103,121"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,136,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="38,93,103,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="73,46,73,79,68,79,68,46"/>
 </map>

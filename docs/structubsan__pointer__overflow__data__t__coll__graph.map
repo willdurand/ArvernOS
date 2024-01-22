@@ -1,4 +1,5 @@
 <map id="ubsan_pointer_overflow_data_t" name="ubsan_pointer_overflow_data_t">
-<area shape="rect" id="node1" title=" " alt="" coords="9,95,168,136"/>
-<area shape="rect" id="node2" href="$structubsan__source__location__t.html" title=" " alt="" coords="5,5,172,32"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="9,93,168,133"/>
+<area shape="rect" id="Node000002" href="$structubsan__source__location__t.html" title=" " alt="" coords="5,5,172,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="91,46,91,93,86,93,86,46"/>
 </map>

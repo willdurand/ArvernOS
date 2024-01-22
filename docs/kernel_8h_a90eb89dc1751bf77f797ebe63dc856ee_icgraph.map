@@ -1,0 +1,8 @@
+<map id="arch_is_kernel_address" name="arch_is_kernel_address">
+<area shape="rect" id="Node000001" title=" " alt="" coords="360,29,519,55"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="476,18,464,11,439,8,417,10,405,15,403,20,409,27,404,30,398,21,402,11,416,5,439,3,466,6,479,13"/>
+<area shape="rect" id="Node000002" href="$panic_8c.html#a714e1c8a23ac88c46756c44ec1a5b7f8" title=" " alt="" coords="148,29,312,55"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="345,45,312,45,312,39,345,39"/>
+<area shape="rect" id="Node000003" href="$panic_8c.html#af92a4fe8363297fd713910fb044d41a9" title=" " alt="" coords="5,29,100,55"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="133,45,100,45,100,39,133,39"/>
+</map>

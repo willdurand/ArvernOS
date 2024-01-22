@@ -1,4 +1,7 @@
 <map id="inish_get_bool" name="inish_get_bool">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,111,32"/>
-<area shape="rect" id="node2" href="$inish_8c.html#ab82e6fa9e31051b59219a253d556f5fa" title=" " alt="" coords="159,5,281,32"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,29,111,55"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="30,30,25,21,28,11,40,5,58,3,79,6,89,13,86,17,77,11,58,8,41,10,32,15,30,20,35,28"/>
+<area shape="rect" id="Node000002" href="$inish_8c.html#ab82e6fa9e31051b59219a253d556f5fa" title=" " alt="" coords="159,29,281,55"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="111,39,144,39,144,45,111,45"/>
+<area shape="poly" id="edge3_Node000002_Node000002" title=" " alt="" coords="192,30,187,21,190,11,202,5,220,3,241,6,251,13,248,17,239,11,220,8,203,10,194,15,192,20,197,28"/>
 </map>

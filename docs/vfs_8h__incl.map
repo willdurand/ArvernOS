@@ -1,7 +1,13 @@
 <map id="include/kernel/fs/vfs.h" name="include/kernel/fs/vfs.h">
-<area shape="rect" id="node1" title=" " alt="" coords="63,5,214,32"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,155,80,181"/>
-<area shape="rect" id="node3" title=" " alt="" coords="198,155,263,181"/>
-<area shape="rect" id="node4" href="$types_8h.html" title=" " alt="" coords="93,80,184,107"/>
-<area shape="rect" id="node5" title=" " alt="" coords="104,155,173,181"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="63,5,214,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,152,80,177"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="127,33,105,54,84,80,67,110,54,139,49,137,62,108,79,77,101,50,123,29"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="198,152,263,177"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="155,29,177,50,198,77,214,108,226,137,221,139,209,110,194,80,173,54,151,33"/>
+<area shape="rect" id="Node000004" href="$types_8h.html" title=" " alt="" coords="93,79,184,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="141,31,141,64,136,64,136,31"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="124,107,72,145,69,141,121,103"/>
+<area shape="poly" id="edge6_Node000004_Node000003" title=" " alt="" coords="156,103,206,141,202,145,153,107"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="104,152,173,177"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="141,104,141,137,136,137,136,104"/>
 </map>

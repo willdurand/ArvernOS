@@ -1,5 +1,10 @@
 <map id="timer_uptime_microseconds" name="timer_uptime_microseconds">
-<area shape="rect" id="node1" title=" " alt="" coords="5,13,191,39"/>
-<area shape="rect" id="node2" href="$kernel_2arch_2x86__64_2arch_2time_8c.html#af8e08f88e4ec6768891cfce52318c3d3" title=" " alt="" coords="239,13,456,39"/>
-<area shape="rect" id="node3" href="$bcm2835__timer_8c.html#aa5e375169036beb10f6778afb7eddecd" title=" " alt="" coords="504,5,661,47"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,37,191,62"/>
+<area shape="poly" id="edge5_Node000001_Node000001" title=" " alt="" coords="57,38,49,28,54,18,70,12,98,10,130,13,145,21,143,26,129,18,98,15,71,17,57,22,54,27,61,34"/>
+<area shape="rect" id="Node000002" href="$kernel_2arch_2x86__64_2arch_2time_8c.html#af8e08f88e4ec6768891cfce52318c3d3" title=" " alt="" coords="239,37,456,62"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="191,47,224,47,224,52,191,52"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="308,38,301,28,305,18,321,12,347,10,378,13,392,21,389,26,376,18,347,15,322,17,309,22,306,27,313,34"/>
+<area shape="rect" id="Node000003" href="$bcm2835__timer_8c.html#aa5e375169036beb10f6778afb7eddecd" title=" " alt="" coords="504,29,661,69"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="456,47,489,47,489,52,456,52"/>
+<area shape="poly" id="edge4_Node000003_Node000003" title=" " alt="" coords="539,30,536,20,543,10,559,5,583,3,609,5,625,12,622,17,608,11,583,8,560,10,546,15,541,21,544,28"/>
 </map>

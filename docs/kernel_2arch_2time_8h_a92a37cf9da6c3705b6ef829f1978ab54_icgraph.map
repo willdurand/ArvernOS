@@ -1,0 +1,13 @@
+<map id="arch_timer_init" name="arch_timer_init">
+<area shape="rect" id="Node000001" title=" " alt="" coords="372,31,479,56"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="449,18,441,12,425,9,411,11,404,16,402,21,406,29,401,31,397,22,399,13,409,6,425,4,443,7,452,14"/>
+<area shape="rect" id="Node000002" href="$timer_8c.html#a896a4c37c6ecf8868ef0dc758e5a598c" title=" " alt="" coords="249,31,324,56"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="357,46,324,46,324,41,357,41"/>
+<area shape="poly" id="edge6_Node000002_Node000002" title=" " alt="" coords="308,18,301,12,287,9,273,11,266,16,265,21,269,29,264,31,260,22,262,13,272,6,287,4,303,7,312,14"/>
+<area shape="rect" id="Node000003" href="$kmain_8c.html#a666c17b307920a60e50fcf56312f9500" title=" " alt="" coords="111,31,201,56"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="234,46,202,46,202,41,234,41"/>
+<area shape="rect" id="Node000004" href="$arch_2aarch32_2board_2raspi2_2kmain_8c.html#a798325fe646ee31fccf3f735f9bbaf60" title=" " alt="" coords="5,5,63,31"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="95,33,63,27,64,21,96,28"/>
+<area shape="rect" id="Node000005" href="$arch_2x86__64_2kmain_8c.html#ad6d3bd9ddd2519d6040e79426dc57fb5" title=" " alt="" coords="5,55,63,80"/>
+<area shape="poly" id="edge5_Node000003_Node000005" title=" " alt="" coords="96,58,64,64,63,59,95,53"/>
+</map>

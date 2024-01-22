@@ -1,9 +1,15 @@
 <map id="include/kernel/logging.h" name="include/kernel/logging.h">
-<area shape="rect" id="node1" title="This is the general kernel logging module." alt="" coords="139,5,297,32"/>
-<area shape="rect" id="node2" href="$arch_2logging_8h.html" title=" " alt="" coords="5,80,108,107"/>
-<area shape="rect" id="node3" href="$inttypes_8h.html" title=" " alt="" coords="132,80,211,107"/>
-<area shape="rect" id="node4" href="$stdio_8h.html" title=" " alt="" coords="235,80,297,107"/>
-<area shape="rect" id="node6" href="$timer_8h.html" title=" " alt="" coords="321,80,411,107"/>
-<area shape="rect" id="node5" title=" " alt="" coords="235,155,297,181"/>
-<area shape="rect" id="node7" title=" " alt="" coords="333,155,399,181"/>
+<area shape="rect" id="Node000001" title="This is the general kernel logging module." alt="" coords="139,5,297,31"/>
+<area shape="rect" id="Node000002" href="$arch_2logging_8h.html" title=" " alt="" coords="5,79,108,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="192,34,98,75,96,70,190,29"/>
+<area shape="rect" id="Node000003" href="$inttypes_8h.html" title=" " alt="" coords="132,79,211,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="213,32,189,67,185,64,208,30"/>
+<area shape="rect" id="Node000004" href="$stdio_8h.html" title=" " alt="" coords="235,79,297,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="228,30,252,65,248,68,224,33"/>
+<area shape="rect" id="Node000006" href="$timer_8h.html" title=" " alt="" coords="321,79,411,104"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="244,29,329,70,327,74,242,34"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="235,152,297,177"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="269,104,269,137,263,137,263,104"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="333,152,399,177"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="369,104,369,137,363,137,363,104"/>
 </map>

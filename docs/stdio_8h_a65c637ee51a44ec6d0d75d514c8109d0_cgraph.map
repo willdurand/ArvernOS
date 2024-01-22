@@ -1,5 +1,10 @@
 <map id="_putchar" name="_putchar">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,77,32"/>
-<area shape="rect" id="node2" href="$putchar_8c.html#a948b7a0779c308ac5502c57e282e6933" title=" " alt="" coords="125,5,191,32"/>
-<area shape="rect" id="node3" href="$write_8c.html#abb39b21888372e95ad3e5c59b166f5c8" title=" " alt="" coords="239,5,289,32"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,29,77,55"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="21,30,17,21,19,11,28,5,41,3,56,6,64,13,60,16,54,10,41,8,30,10,24,14,22,20,26,28"/>
+<area shape="rect" id="Node000002" href="$putchar_8c.html#a948b7a0779c308ac5502c57e282e6933" title=" " alt="" coords="125,29,191,55"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="77,39,110,39,110,45,77,45"/>
+<area shape="poly" id="edge3_Node000002_Node000002" title=" " alt="" coords="139,30,136,21,138,11,145,5,158,3,172,6,179,13,175,16,169,10,158,8,148,10,142,14,141,20,144,28"/>
+<area shape="rect" id="Node000003" href="$write_8c.html#abb39b21888372e95ad3e5c59b166f5c8" title=" " alt="" coords="239,29,289,55"/>
+<area shape="poly" id="edge4_Node000002_Node000003" title=" " alt="" coords="191,39,224,39,224,45,191,45"/>
+<area shape="poly" id="edge5_Node000003_Node000003" title=" " alt="" coords="245,30,242,21,244,11,251,5,264,3,278,6,285,13,281,16,275,10,264,8,254,10,248,14,247,20,250,28"/>
 </map>

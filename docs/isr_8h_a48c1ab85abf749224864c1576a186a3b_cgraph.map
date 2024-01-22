@@ -1,4 +1,7 @@
 <map id="isr_disable_interrupts" name="isr_disable_interrupts">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,151,32"/>
-<area shape="rect" id="node2" href="$x86__64_2arch_2core_8c.html#adb9ece40fe28bd1eea16ae8088b6a7bd" title=" " alt="" coords="199,5,376,32"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,29,151,55"/>
+<area shape="poly" id="edge3_Node000001_Node000001" title=" " alt="" coords="43,30,36,21,40,11,55,5,78,3,105,6,118,13,115,18,103,11,78,8,56,10,44,15,42,20,47,27"/>
+<area shape="rect" id="Node000002" href="$x86__64_2arch_2core_8c.html#adb9ece40fe28bd1eea16ae8088b6a7bd" title=" " alt="" coords="199,29,376,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="151,39,184,39,184,45,151,45"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="252,30,246,21,250,11,264,5,287,3,314,6,327,13,324,18,312,11,287,8,265,10,253,15,251,20,257,27"/>
 </map>

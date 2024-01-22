@@ -1,11 +1,24 @@
 var searchData=
 [
-  ['gdt_5fdescriptor_5ft_0',['gdt_descriptor_t',['../structgdt__descriptor__t.html',1,'']]],
-  ['gdt_5ftable_5ft_1',['gdt_table_t',['../structgdt__table__t.html',1,'']]],
-  ['get_5fdescriptor_2',['get_descriptor',['../descriptor_8h.html#ab813e27b51b02aab5c7c6c174ad482a1',1,'descriptor.c']]],
-  ['get_5fmac_5faddress_3',['get_mac_address',['../structnet__driver.html#aa941fc31af4a8d2e7467481d8bf5bf76',1,'net_driver']]],
-  ['getchar_4',['getchar',['../stdio_8h.html#a92292ba4fd255fe335e84aac9e952f5f',1,'getchar.c']]],
-  ['gethostbyname2_5',['gethostbyname2',['../syscall_8h.html#aba00a3ed4c69aee0738c259d196779ed',1,'gethostbyname2.c']]],
-  ['getpid_6',['getpid',['../syscall_8h.html#add1dc6545057b7f1c7f91352536fb060',1,'getpid.c']]],
-  ['gettimeofday_7',['gettimeofday',['../syscall_8h.html#a08c6fa45afb77767891dc6fb73d1010f',1,'gettimeofday.c']]]
+  ['debug_20mode_0',['Debug mode',['../index.html#autotoc_md12',1,'']]],
+  ['delete_5fdescriptor_1',['delete_descriptor',['../descriptor_8h.html#a74df9557c5920fbbbf2a81e16f266db3',1,'descriptor.c']]],
+  ['descriptor_2eh_2',['descriptor.h',['../descriptor_8h.html',1,'']]],
+  ['descriptor_5ft_3',['descriptor_t',['../structdescriptor__t.html',1,'']]],
+  ['descriptor_5fudp_5flookup_4',['descriptor_udp_lookup',['../descriptor_8h.html#a3a4a85ff782854b3c65aacf9ff4574d5',1,'descriptor.c']]],
+  ['dev_2eh_5',['dev.h',['../dev_8h.html',1,'']]],
+  ['dev_5ffs_5fcreate_6',['dev_fs_create',['../dev_8h.html#a19cbd7433414e04cc8c0beb82f397c21',1,'dev.c']]],
+  ['dev_5ffs_5finit_7',['dev_fs_init',['../dev_8h.html#a0dbadb87fe40e866f57cbab98239c224',1,'dev.c']]],
+  ['development_20environment_8',['Setting up a development environment',['../index.html#autotoc_md6',1,'']]],
+  ['device_5fnumber_9',['device_number',['../unionpci__device__t.html#a44ce4c93d0d13aacc7db4160942e6498',1,'pci_device_t']]],
+  ['dhcp_2eh_10',['dhcp.h',['../dhcp_8h.html',1,'']]],
+  ['dhcp_5fheader_5ft_11',['dhcp_header_t',['../structdhcp__header__t.html',1,'']]],
+  ['dhcp_5fnegotiate_12',['dhcp_negotiate',['../dhcp_8h.html#ae37a0dfd11fc8825b9808761417c979b',1,'dhcp.c']]],
+  ['dhcp_5freceive_5fpacket_13',['dhcp_receive_packet',['../dhcp_8h.html#aaeb6c2139785dacf8f0c6f1cdf580c27',1,'dhcp.c']]],
+  ['dirent_5ft_14',['dirent_t',['../structdirent__t.html',1,'']]],
+  ['dns_2eh_15',['dns.h',['../dns_8h.html',1,'']]],
+  ['dns_5fanswer_5fheader_5ft_16',['dns_answer_header_t',['../structdns__answer__header__t.html',1,'']]],
+  ['dns_5fheader_5ft_17',['dns_header_t',['../structdns__header__t.html',1,'']]],
+  ['dns_5flookup_18',['dns_lookup',['../dns_8h.html#a625ff8641773273b1a293e7242680ef2',1,'dns.c']]],
+  ['docker_20recommended_20way_19',['Docker (recommended way)',['../index.html#autotoc_md8',1,'']]],
+  ['driver_20',['driver',['../structnet__interface.html#a305d36e04264f37ba3986431c4aa69bc',1,'net_interface']]]
 ];

@@ -1,6 +1,7 @@
 <map id="src/kernel/arch/aarch64/board/raspi3/arch" name="src/kernel/arch/aarch64/board/raspi3/arch">
-<area shape="rect" id="node1" href="dir_1742f59156db57e3c3c19d5377929d16.html" title="arch" alt="" coords="27,52,99,100"/>
-<area shape="rect" id="node2" href="dir_d44c64559bbebec7f509842c48db8b23.html" title="include" alt="" coords="27,148,99,196"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000025_000000.html" title="12" alt="" coords="64,122,78,137"/>
-<area shape="rect" id="clust1" href="dir_0ee13ef8e704275bb683062618b87174.html" title="raspi3" alt="" coords="16,16,109,111"/>
+<area shape="rect" id="node1" href="dir_1742f59156db57e3c3c19d5377929d16.html" title="arch" alt="" coords="27,52,74,77"/>
+<area shape="rect" id="node2" href="dir_d44c64559bbebec7f509842c48db8b23.html" title="include" alt="" coords="19,125,82,151"/>
+<area shape="poly" id="edge1" href="dir_000007_000039.html" alt="" coords="53,78,53,110,48,110,48,78"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000007_000039.html" title="12" alt="" coords="52,99,66,114"/>
+<area shape="rect" id="clust1" href="dir_0ee13ef8e704275bb683062618b87174.html" title="raspi3" alt="" coords="16,16,85,88"/>
 </map>

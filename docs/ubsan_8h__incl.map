@@ -1,4 +1,5 @@
 <map id="include/libc/ubsan.h" name="include/libc/ubsan.h">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,143,32"/>
-<area shape="rect" id="node2" title=" " alt="" coords="41,80,107,107"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,143,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="41,79,107,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="77,31,77,64,71,64,71,31"/>
 </map>

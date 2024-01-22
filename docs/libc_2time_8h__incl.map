@@ -1,8 +1,15 @@
 <map id="include/libc/time.h" name="include/libc/time.h">
-<area shape="rect" id="node1" title=" " alt="" coords="55,5,182,32"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,229,75,256"/>
-<area shape="rect" id="node3" href="$libc_2sys_2time_8h.html" title=" " alt="" coords="77,80,160,107"/>
-<area shape="rect" id="node4" href="$types_8h.html" title=" " alt="" coords="91,155,181,181"/>
-<area shape="rect" id="node5" title=" " alt="" coords="99,229,173,256"/>
-<area shape="rect" id="node6" title=" " alt="" coords="198,229,263,256"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="55,5,182,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,225,75,251"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="106,33,86,53,68,80,55,113,48,149,42,210,37,210,42,148,50,112,63,77,82,50,103,29"/>
+<area shape="rect" id="Node000003" href="$libc_2sys_2time_8h.html" title=" " alt="" coords="77,79,160,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="121,31,121,64,116,64,116,31"/>
+<area shape="rect" id="Node000004" href="$types_8h.html" title=" " alt="" coords="91,152,181,177"/>
+<area shape="poly" id="edge7_Node000001_Node000004" title=" " alt="" coords="136,29,157,50,174,78,177,95,174,112,159,141,154,139,169,110,172,95,170,80,153,53,132,33"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="124,104,132,137,127,138,119,105"/>
+<area shape="poly" id="edge5_Node000004_Node000002" title=" " alt="" coords="121,180,69,219,66,214,118,176"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="99,225,173,251"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="139,178,139,210,133,210,133,178"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="198,225,263,251"/>
+<area shape="poly" id="edge6_Node000004_Node000006" title=" " alt="" coords="154,176,205,214,202,218,150,180"/>
 </map>

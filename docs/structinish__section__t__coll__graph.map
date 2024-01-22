@@ -1,5 +1,7 @@
 <map id="inish_section_t" name="inish_section_t">
-<area shape="rect" id="node1" title=" " alt="" coords="68,95,177,121"/>
-<area shape="rect" id="node2" href="$structinish__kv__pair__t.html" title=" " alt="" coords="5,5,115,32"/>
-<area shape="rect" id="node3" href="$structinish__array__t.html" title=" " alt="" coords="139,5,235,32"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="68,93,177,119"/>
+<area shape="rect" id="Node000002" href="$structinish__kv__pair__t.html" title=" " alt="" coords="5,5,115,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="80,41,116,91,112,94,75,45"/>
+<area shape="rect" id="Node000003" href="$structinish__array__t.html" title=" " alt="" coords="139,5,235,31"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="175,45,157,71,136,94,132,91,153,68,170,42"/>
 </map>

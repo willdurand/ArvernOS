@@ -1,4 +1,10 @@
 <map id="lseek" name="lseek">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,59,32"/>
-<area shape="rect" id="node2" href="$k__lseek_8c.html#aca2b074f62174df41781abb400ac6c67" title=" " alt="" coords="107,5,173,32"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,29,59,55"/>
+<area shape="poly" id="edge5_Node000001_Node000001" title=" " alt="" coords="13,30,9,21,11,11,19,5,32,3,46,6,53,13,49,16,44,10,32,8,21,10,16,14,14,20,18,28"/>
+<area shape="rect" id="Node000002" href="$k__lseek_8c.html#aca2b074f62174df41781abb400ac6c67" title=" " alt="" coords="107,29,173,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="59,39,92,39,92,45,59,45"/>
+<area shape="poly" id="edge4_Node000002_Node000002" title=" " alt="" coords="121,30,117,21,119,11,127,5,140,3,154,6,161,13,157,16,152,10,140,8,129,10,124,14,122,20,126,28"/>
+<area shape="rect" id="Node000003" href="$descriptor_8c.html#ab813e27b51b02aab5c7c6c174ad482a1" title=" " alt="" coords="221,29,325,55"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="174,39,207,39,207,45,174,45"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="250,30,246,21,248,11,258,5,273,3,290,5,299,12,296,17,288,10,273,8,260,10,253,14,251,20,255,28"/>
 </map>

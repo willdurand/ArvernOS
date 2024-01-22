@@ -1,7 +1,13 @@
 <map id="src/kernel/arch/x86_64/drivers/rtl8139.h" name="src/kernel/arch/x86_64/drivers/rtl8139.h">
-<area shape="rect" id="node1" title=" " alt="" coords="75,5,215,47"/>
-<area shape="rect" id="node2" href="$pci_8h.html" title=" " alt="" coords="5,95,84,121"/>
-<area shape="rect" id="node4" href="$net_8h.html" title="This module defines network interfaces and drivers." alt="" coords="108,95,181,121"/>
-<area shape="rect" id="node5" title=" " alt="" coords="145,169,219,196"/>
-<area shape="rect" id="node3" title=" " alt="" coords="52,169,117,196"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="75,5,215,45"/>
+<area shape="rect" id="Node000002" href="$pci_8h.html" title=" " alt="" coords="5,93,84,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="122,48,72,86,69,82,118,44"/>
+<area shape="rect" id="Node000004" href="$net_8h.html" title="This module defines network interfaces and drivers." alt="" coords="108,93,181,119"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="147,46,147,79,142,79,142,46"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="145,167,219,192"/>
+<area shape="poly" id="edge6_Node000001_Node000005" title=" " alt="" coords="166,44,183,66,197,93,200,124,194,153,189,152,194,124,191,94,179,69,162,47"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="52,167,117,192"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="54,118,73,152,68,155,49,120"/>
+<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="137,121,106,157,102,153,133,117"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="153,118,171,152,166,154,148,120"/>
 </map>

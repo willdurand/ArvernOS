@@ -1,7 +1,16 @@
 <map id="arch_clock_get_current_microseconds" name="arch_clock_get_current_microseconds">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,163,47"/>
-<area shape="rect" id="node2" href="$fake__clock_8c.html#ab4458e5c11135bbbaec3b6f2ee47e9d6" title=" " alt="" coords="211,5,368,47"/>
-<area shape="rect" id="node3" href="$timer_8c.html#a9e237401e78bbceb0c0070ef2ecb4569" title=" " alt="" coords="416,13,601,39"/>
-<area shape="rect" id="node4" href="$kernel_2arch_2x86__64_2arch_2time_8c.html#af8e08f88e4ec6768891cfce52318c3d3" title=" " alt="" coords="649,13,867,39"/>
-<area shape="rect" id="node5" href="$bcm2835__timer_8c.html#aa5e375169036beb10f6778afb7eddecd" title=" " alt="" coords="915,5,1072,47"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,29,163,69"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="45,30,43,20,49,11,63,5,84,3,108,5,121,12,118,17,106,10,84,8,64,10,53,15,48,21,50,28"/>
+<area shape="rect" id="Node000002" href="$fake__clock_8c.html#ab4458e5c11135bbbaec3b6f2ee47e9d6" title=" " alt="" coords="211,29,368,69"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="163,47,195,47,195,52,163,52"/>
+<area shape="poly" id="edge3_Node000002_Node000002" title=" " alt="" coords="251,30,248,20,255,11,268,5,289,3,313,5,326,12,324,17,311,10,289,8,270,10,258,15,254,21,256,28"/>
+<area shape="rect" id="Node000003" href="$timer_8c.html#a9e237401e78bbceb0c0070ef2ecb4569" title=" " alt="" coords="416,37,601,62"/>
+<area shape="poly" id="edge4_Node000002_Node000003" title=" " alt="" coords="368,47,401,47,401,52,368,52"/>
+<area shape="poly" id="edge9_Node000003_Node000003" title=" " alt="" coords="472,38,465,28,469,18,484,12,509,10,537,13,550,20,547,25,535,18,509,15,485,17,473,22,470,27,476,35"/>
+<area shape="rect" id="Node000004" href="$kernel_2arch_2x86__64_2arch_2time_8c.html#af8e08f88e4ec6768891cfce52318c3d3" title=" " alt="" coords="649,37,867,62"/>
+<area shape="poly" id="edge5_Node000003_Node000004" title=" " alt="" coords="602,47,635,47,635,52,602,52"/>
+<area shape="poly" id="edge6_Node000004_Node000004" title=" " alt="" coords="719,38,711,28,716,18,732,12,758,10,789,13,803,21,800,26,787,18,758,15,733,17,720,22,717,27,723,34"/>
+<area shape="rect" id="Node000005" href="$bcm2835__timer_8c.html#aa5e375169036beb10f6778afb7eddecd" title=" " alt="" coords="915,29,1072,69"/>
+<area shape="poly" id="edge7_Node000004_Node000005" title=" " alt="" coords="867,47,900,47,900,52,867,52"/>
+<area shape="poly" id="edge8_Node000005_Node000005" title=" " alt="" coords="949,30,947,20,954,10,969,5,993,3,1020,5,1035,12,1033,17,1019,11,993,8,971,10,957,15,952,21,955,28"/>
 </map>

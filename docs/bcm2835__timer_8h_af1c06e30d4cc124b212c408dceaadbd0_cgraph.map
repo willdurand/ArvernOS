@@ -1,4 +1,7 @@
 <map id="bcm2835_timer_init" name="bcm2835_timer_init">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,140,32"/>
-<area shape="rect" id="node2" href="$isr_8c.html#a919e035afe984042c7fb8672b16aaf1e" title=" " alt="" coords="188,5,323,32"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,29,140,55"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="42,30,36,21,39,11,52,5,73,3,96,6,107,13,104,17,94,11,73,8,54,10,43,15,41,20,46,27"/>
+<area shape="rect" id="Node000002" href="$isr_8c.html#a919e035afe984042c7fb8672b16aaf1e" title=" " alt="" coords="188,29,323,55"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="141,39,173,39,173,45,141,45"/>
+<area shape="poly" id="edge3_Node000002_Node000002" title=" " alt="" coords="225,30,219,21,222,11,235,5,255,3,278,6,290,13,287,17,277,11,255,8,236,10,226,15,224,20,229,27"/>
 </map>

@@ -1,0 +1,7 @@
+<map id="task_exit" name="task_exit">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,29,80,55"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="19,30,14,21,17,11,27,5,43,3,60,5,69,12,66,17,58,10,43,8,29,10,21,14,19,20,23,28"/>
+<area shape="rect" id="Node000002" href="$task_8c.html#a7b77adca1da85233e213a9a0eacd8086" title=" " alt="" coords="128,29,235,55"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="80,39,113,39,113,45,80,45"/>
+<area shape="poly" id="edge3_Node000002_Node000002" title=" " alt="" coords="157,30,153,21,155,11,165,5,181,3,199,5,208,12,205,17,197,10,181,8,167,10,160,14,158,20,162,28"/>
+</map>

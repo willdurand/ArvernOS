@@ -1,4 +1,5 @@
 <map id="kernel_dump_stacktrace" name="kernel_dump_stacktrace">
-<area shape="rect" id="node1" title=" " alt="" coords="148,5,312,32"/>
-<area shape="rect" id="node2" href="$panic_8c.html#af92a4fe8363297fd713910fb044d41a9" title=" " alt="" coords="5,5,100,32"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="148,5,312,31"/>
+<area shape="rect" id="Node000002" href="$panic_8c.html#af92a4fe8363297fd713910fb044d41a9" title=" " alt="" coords="5,5,100,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="133,21,100,21,100,15,133,15"/>
 </map>

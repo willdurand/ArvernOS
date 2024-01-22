@@ -1,4 +1,6 @@
 <map id="serial_init" name="serial_init">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,83,32"/>
-<area shape="rect" id="node2" href="$port_8c.html#ac3c72bfda8c7b1920ef91bcc06c97c7f" title=" " alt="" coords="131,5,232,32"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,29,83,55"/>
+<area shape="rect" id="Node000002" href="$port_8c.html#ac3c72bfda8c7b1920ef91bcc06c97c7f" title=" " alt="" coords="131,29,232,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="83,39,116,39,116,45,83,45"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="157,30,153,21,156,11,165,5,181,3,199,5,208,12,204,17,197,10,181,8,167,10,160,14,158,20,162,28"/>
 </map>

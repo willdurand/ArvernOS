@@ -1,4 +1,6 @@
 <map id="arch_halt" name="arch_halt">
-<area shape="rect" id="node1" title=" " alt="" coords="148,5,223,32"/>
-<area shape="rect" id="node2" href="$panic_8c.html#af92a4fe8363297fd713910fb044d41a9" title=" " alt="" coords="5,5,100,32"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="148,29,223,55"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="207,17,200,10,185,8,172,10,165,14,163,20,167,28,162,30,158,21,161,11,170,5,185,3,202,5,211,12"/>
+<area shape="rect" id="Node000002" href="$panic_8c.html#af92a4fe8363297fd713910fb044d41a9" title=" " alt="" coords="5,29,100,55"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="133,45,101,45,101,39,133,39"/>
 </map>

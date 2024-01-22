@@ -1,4 +1,5 @@
 <map id="include/kernel/core/pci.h" name="include/kernel/core/pci.h">
-<area shape="rect" id="node1" title=" " alt="" coords="10,5,141,47"/>
-<area shape="rect" id="node2" href="$rtl8139_8h.html" title=" " alt="" coords="5,95,145,136"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="10,5,141,45"/>
+<area shape="rect" id="Node000002" href="$rtl8139_8h.html" title=" " alt="" coords="5,93,145,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="78,60,78,93,73,93,73,60"/>
 </map>

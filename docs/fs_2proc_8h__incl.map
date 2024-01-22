@@ -1,8 +1,17 @@
 <map id="include/kernel/fs/proc.h" name="include/kernel/fs/proc.h">
-<area shape="rect" id="node1" title=" " alt="" coords="47,5,204,32"/>
-<area shape="rect" id="node2" href="$vfs_8h.html" title=" " alt="" coords="92,80,159,107"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,229,80,256"/>
-<area shape="rect" id="node6" title=" " alt="" coords="216,229,285,256"/>
-<area shape="rect" id="node4" title=" " alt="" coords="119,229,185,256"/>
-<area shape="rect" id="node5" href="$types_8h.html" title=" " alt="" coords="80,155,171,181"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="47,5,204,31"/>
+<area shape="rect" id="Node000002" href="$vfs_8h.html" title=" " alt="" coords="92,79,159,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="128,31,128,64,123,64,123,31"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,225,80,251"/>
+<area shape="poly" id="edge8_Node000001_Node000003" title=" " alt="" coords="117,32,82,80,65,115,55,153,46,211,41,210,49,151,60,113,78,77,113,29"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="216,225,285,251"/>
+<area shape="poly" id="edge9_Node000001_Node000006" title=" " alt="" coords="138,30,173,77,213,149,242,210,237,213,208,151,168,80,133,33"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="112,106,91,127,70,153,57,183,50,212,44,210,52,181,66,151,87,123,109,102"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="119,225,185,251"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="144,103,167,123,185,151,188,168,186,185,172,215,167,212,181,183,183,168,180,153,163,127,141,106"/>
+<area shape="rect" id="Node000005" href="$types_8h.html" title=" " alt="" coords="80,152,171,177"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="128,104,128,137,123,137,123,104"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="113,180,69,217,66,213,110,176"/>
+<area shape="poly" id="edge7_Node000005_Node000004" title=" " alt="" coords="132,177,145,210,140,212,127,179"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="148,176,219,216,216,220,145,180"/>
 </map>

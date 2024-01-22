@@ -1,4 +1,7 @@
 <map id="arch_timer_uptime_microseconds" name="arch_timer_uptime_microseconds">
-<area shape="rect" id="node1" title=" " alt="" coords="5,13,223,39"/>
-<area shape="rect" id="node2" href="$bcm2835__timer_8c.html#aa5e375169036beb10f6778afb7eddecd" title=" " alt="" coords="271,5,428,47"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,37,223,62"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="75,38,67,28,72,18,88,12,114,10,145,13,159,21,156,26,143,18,114,15,89,17,76,22,73,27,79,34"/>
+<area shape="rect" id="Node000002" href="$bcm2835__timer_8c.html#aa5e375169036beb10f6778afb7eddecd" title=" " alt="" coords="271,29,428,69"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="223,47,256,47,256,52,223,52"/>
+<area shape="poly" id="edge3_Node000002_Node000002" title=" " alt="" coords="305,30,303,20,310,10,325,5,349,3,376,5,391,12,389,17,375,11,349,8,327,10,313,15,308,21,311,28"/>
 </map>

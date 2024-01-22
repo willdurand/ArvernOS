@@ -1,0 +1,13 @@
+<map id="timer_init" name="timer_init">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,29,80,55"/>
+<area shape="poly" id="edge7_Node000001_Node000001" title=" " alt="" coords="19,30,14,21,17,11,27,5,43,3,60,5,69,12,66,17,58,10,43,8,29,10,21,14,19,20,23,28"/>
+<area shape="rect" id="Node000002" href="$kernel_2arch_2x86__64_2arch_2time_8c.html#a92a37cf9da6c3705b6ef829f1978ab54" title=" " alt="" coords="128,29,235,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="80,39,113,39,113,45,80,45"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="157,30,153,21,155,11,165,5,181,3,199,5,208,12,205,17,197,10,181,8,167,10,160,14,158,20,162,28"/>
+<area shape="rect" id="Node000003" href="$bcm2835__timer_8c.html#af1c06e30d4cc124b212c408dceaadbd0" title=" " alt="" coords="283,29,417,55"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="235,39,268,39,268,45,235,45"/>
+<area shape="poly" id="edge4_Node000003_Node000003" title=" " alt="" coords="321,30,316,21,319,11,331,5,350,3,371,6,382,13,379,17,370,11,350,8,332,10,323,15,321,20,326,27"/>
+<area shape="rect" id="Node000004" href="$isr_8c.html#a919e035afe984042c7fb8672b16aaf1e" title=" " alt="" coords="465,29,600,55"/>
+<area shape="poly" id="edge5_Node000003_Node000004" title=" " alt="" coords="418,39,451,39,451,45,418,45"/>
+<area shape="poly" id="edge6_Node000004_Node000004" title=" " alt="" coords="502,30,496,21,499,11,512,5,533,3,556,6,567,13,564,17,554,11,533,8,514,10,503,15,501,20,506,27"/>
+</map>

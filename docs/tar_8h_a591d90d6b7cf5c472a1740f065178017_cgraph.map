@@ -1,4 +1,7 @@
 <map id="tar_fs_create" name="tar_fs_create">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,104,32"/>
-<area shape="rect" id="node2" href="$vfs_8c.html#a30d3a3836c75f9fcfc1a7eb389d2f3f9" title=" " alt="" coords="152,5,288,32"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,29,104,55"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="26,30,21,21,24,11,36,5,55,3,76,6,86,13,83,17,74,11,55,8,37,10,28,15,26,20,31,27"/>
+<area shape="rect" id="Node000002" href="$vfs_8c.html#a30d3a3836c75f9fcfc1a7eb389d2f3f9" title=" " alt="" coords="152,29,288,55"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="104,39,137,39,137,45,104,45"/>
+<area shape="poly" id="edge3_Node000002_Node000002" title=" " alt="" coords="192,30,186,21,190,11,201,5,220,3,241,6,251,13,248,17,239,11,220,8,203,10,194,15,192,20,196,27"/>
 </map>

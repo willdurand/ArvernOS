@@ -1,5 +1,7 @@
 <map id="include/kernel/time/timer.h" name="include/kernel/time/timer.h">
-<area shape="rect" id="node1" title=" " alt="" coords="19,5,150,47"/>
-<area shape="rect" id="node2" href="$logging_8h.html" title="This is the general kernel logging module." alt="" coords="5,95,164,121"/>
-<area shape="rect" id="node3" href="$panic_8h.html" title=" " alt="" coords="11,169,159,196"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="19,5,150,45"/>
+<area shape="rect" id="Node000002" href="$logging_8h.html" title="This is the general kernel logging module." alt="" coords="5,93,164,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="87,61,87,93,82,93,82,61"/>
+<area shape="rect" id="Node000003" href="$panic_8h.html" title=" " alt="" coords="11,167,159,192"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="87,133,87,166,82,166,82,133"/>
 </map>

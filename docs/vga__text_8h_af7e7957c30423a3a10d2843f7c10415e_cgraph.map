@@ -1,0 +1,6 @@
+<map id="vga_text_move_cursor" name="vga_text_move_cursor">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,29,160,55"/>
+<area shape="rect" id="Node000002" href="$port_8c.html#ac3c72bfda8c7b1920ef91bcc06c97c7f" title=" " alt="" coords="208,29,309,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="161,39,193,39,193,45,161,45"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="229,30,223,21,227,11,239,5,259,3,281,6,292,13,289,17,279,11,259,8,240,10,231,15,228,20,233,27"/>
+</map>

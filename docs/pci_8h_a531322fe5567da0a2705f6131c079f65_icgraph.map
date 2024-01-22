@@ -1,0 +1,6 @@
+<map id="pci_write" name="pci_write">
+<area shape="rect" id="Node000001" title=" " alt="" coords="139,29,213,55"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="197,17,190,10,176,8,163,10,156,14,155,20,158,28,154,30,149,21,152,11,161,5,176,3,192,6,201,13"/>
+<area shape="rect" id="Node000002" href="$rtl8139_8c.html#a24e07ef25a2b1581bca67bbb213a0931" title=" " alt="" coords="5,29,91,55"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="124,45,91,45,91,39,124,39"/>
+</map>

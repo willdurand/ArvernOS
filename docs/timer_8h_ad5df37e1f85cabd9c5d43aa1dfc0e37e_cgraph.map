@@ -1,0 +1,13 @@
+<map id="timer_uptime" name="timer_uptime">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,37,103,62"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="22,38,16,28,20,18,33,12,54,10,78,13,90,20,87,25,76,18,54,15,34,17,24,22,21,27,27,35"/>
+<area shape="rect" id="Node000002" href="$timer_8c.html#a9e237401e78bbceb0c0070ef2ecb4569" title=" " alt="" coords="151,37,336,62"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="103,47,136,47,136,52,103,52"/>
+<area shape="poly" id="edge7_Node000002_Node000002" title=" " alt="" coords="211,38,205,28,209,18,222,12,243,10,267,13,279,20,276,25,265,18,243,15,223,17,213,22,211,27,216,35"/>
+<area shape="rect" id="Node000003" href="$kernel_2arch_2x86__64_2arch_2time_8c.html#af8e08f88e4ec6768891cfce52318c3d3" title=" " alt="" coords="384,37,601,62"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="337,47,369,47,369,52,337,52"/>
+<area shape="poly" id="edge4_Node000003_Node000003" title=" " alt="" coords="454,38,446,28,451,18,467,12,493,10,523,13,537,21,535,26,522,18,493,15,468,17,454,22,451,27,458,34"/>
+<area shape="rect" id="Node000004" href="$bcm2835__timer_8c.html#aa5e375169036beb10f6778afb7eddecd" title=" " alt="" coords="649,29,807,69"/>
+<area shape="poly" id="edge5_Node000003_Node000004" title=" " alt="" coords="602,47,634,47,634,52,602,52"/>
+<area shape="poly" id="edge6_Node000004_Node000004" title=" " alt="" coords="684,30,681,20,689,10,704,5,728,3,755,5,770,12,768,17,753,11,728,8,705,10,692,15,687,21,689,28"/>
+</map>

@@ -1,5 +1,10 @@
 <map id="task_create" name="task_create">
-<area shape="rect" id="node1" title=" " alt="" coords="5,31,96,57"/>
-<area shape="rect" id="node2" href="$arch_2x86__64_2arch_2proc_8c.html#a491927dc191869338fab4ad37da1a743" title=" " alt="" coords="144,5,267,32"/>
-<area shape="rect" id="node3" href="$strncpy_8c.html#a9456973049933ecacd5ad9c4b4f080d8" title="This is actually a safer implementation based on strlcpy()." alt="" coords="173,56,238,83"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,67,96,92"/>
+<area shape="poly" id="edge5_Node000001_Node000001" title=" " alt="" coords="24,67,19,58,22,48,33,42,51,40,70,43,80,50,77,54,68,48,51,45,35,47,26,52,24,57,29,65"/>
+<area shape="rect" id="Node000002" href="$arch_2x86__64_2arch_2proc_8c.html#a491927dc191869338fab4ad37da1a743" title=" " alt="" coords="144,29,267,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="96,66,136,56,137,61,97,71"/>
+<area shape="rect" id="Node000003" href="$strncpy_8c.html#a9456973049933ecacd5ad9c4b4f080d8" title="This is actually a safer implementation based on strlcpy()." alt="" coords="173,103,238,128"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="97,87,159,102,158,107,96,92"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="179,30,174,21,177,11,188,5,205,3,225,6,235,13,232,17,223,11,205,8,189,10,181,14,179,20,183,28"/>
+<area shape="poly" id="edge4_Node000003_Node000003" title=" " alt="" coords="179,103,174,94,177,84,188,78,205,76,225,79,235,86,232,90,223,84,205,81,189,83,181,88,179,93,183,101"/>
 </map>

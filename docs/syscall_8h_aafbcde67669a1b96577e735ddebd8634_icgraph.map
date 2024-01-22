@@ -1,0 +1,10 @@
+<map id="close" name="close">
+<area shape="rect" id="Node000001" title=" " alt="" coords="141,67,195,92"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="187,54,181,48,168,45,156,47,150,52,148,57,152,65,147,67,143,58,145,49,154,42,168,40,183,43,191,50"/>
+<area shape="rect" id="Node000002" href="$dns_8c.html#a625ff8641773273b1a293e7242680ef2" title=" " alt="" coords="5,29,93,55"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="126,69,91,58,93,53,128,64"/>
+<area shape="rect" id="Node000003" href="$inish_8c.html#a6c6783a2593b39ce4914819912297092" title=" " alt="" coords="9,103,89,128"/>
+<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="128,94,90,106,89,101,126,89"/>
+<area shape="poly" id="edge3_Node000002_Node000002" title=" " alt="" coords="69,16,62,10,49,8,37,10,31,14,30,20,33,28,28,30,24,21,27,11,35,5,49,3,65,6,72,13"/>
+<area shape="poly" id="edge5_Node000003_Node000003" title=" " alt="" coords="69,90,62,84,49,81,37,83,31,88,30,93,33,101,28,103,24,94,27,85,35,78,49,76,65,79,72,86"/>
+</map>

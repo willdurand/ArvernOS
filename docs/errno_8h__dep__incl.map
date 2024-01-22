@@ -1,5 +1,7 @@
 <map id="include/libc/errno.h" name="include/libc/errno.h">
-<area shape="rect" id="node1" title=" " alt="" coords="24,5,155,32"/>
-<area shape="rect" id="node2" href="$syscall_8h.html" title=" " alt="" coords="5,80,173,107"/>
-<area shape="rect" id="node3" href="$unistd_8h.html" title=" " alt="" coords="21,155,158,181"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="24,5,155,31"/>
+<area shape="rect" id="Node000002" href="$syscall_8h.html" title=" " alt="" coords="5,79,173,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="92,45,92,78,87,78,87,45"/>
+<area shape="rect" id="Node000003" href="$unistd_8h.html" title=" " alt="" coords="21,152,158,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="92,119,92,151,87,151,87,119"/>
 </map>
