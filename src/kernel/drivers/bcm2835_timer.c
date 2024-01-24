@@ -1,5 +1,6 @@
 #include <drivers/bcm2835_timer.h>
 
+#include <arvern/utils.h>
 #include <core/isr.h>
 #include <core/mmio.h>
 #include <stdint.h>
@@ -15,7 +16,7 @@
 #define TIMER_C1    (_mmio_base + 0x00003010)
 #define TIMER_CS_M1 (1 << 1)
 
-void bcm2835_timer_callback();
+void bcm2835_timer_callback(isr_stack_t* stack);
 
 static uintptr_t _mmio_base = 0;
 static void (*_callback)();
@@ -49,8 +50,10 @@ uint64_t bcm2835_timer_uptime_microseconds()
   return ((uint64_t)hi << 32) | lo;
 }
 
-void bcm2835_timer_callback()
+void bcm2835_timer_callback(isr_stack_t* stack)
 {
+  UNUSED(stack);
+
   mmio_write(TIMER_CS, TIMER_CS_M1);
 
   uint32_t value = mmio_read(TIMER_CLO);

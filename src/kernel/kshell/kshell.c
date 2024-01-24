@@ -92,7 +92,7 @@ void run_command()
   } else if (strcmp(argv[0], "overflow") == 0) {
     overflow();
   } else if (strcmp(argv[0], "net") == 0) {
-    net(argc, argv);
+    net();
   } else if (strcmp(argv[0], "ping") == 0) {
     ping(argc, argv);
   } else if (strcmp(argv[0], "host") == 0) {

@@ -22,7 +22,7 @@ static vfs_driver_t dev_null_driver = {
 uint64_t null_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
 {
   UNUSED(node);
-  UNUSED(*buffer);
+  UNUSED(buffer);
   UNUSED(size);
   UNUSED(offset);
 
@@ -32,7 +32,7 @@ uint64_t null_read(inode_t node, void* buffer, uint64_t size, uint64_t offset)
 uint64_t null_write(inode_t node, void* buffer, uint64_t size, uint64_t offset)
 {
   UNUSED(node);
-  UNUSED(*buffer);
+  UNUSED(buffer);
   UNUSED(offset);
 
   return size;

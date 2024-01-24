@@ -33,7 +33,7 @@ void arvern_log_deinit()
 
 void arvern_log_putchar(char c, void* arg)
 {
-  UNUSED(*arg);
+  UNUSED(arg);
 
   if (com1_fd < 3) {
     return;

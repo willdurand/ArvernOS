@@ -14,6 +14,6 @@ void overflow();
 void ping(int argc, char* argv[]);
 void power_off(int cmd);
 int selftest();
-void ps();
+void ps(int argc, char* argv[]);
 
 #endif

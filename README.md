@@ -58,7 +58,7 @@ building and working on ArvernOS.
 
 The following dependencies are required to build this project:
 
-- `llvm` (version 13 currently)
+- `llvm` (version 17 currently)
 - `make`
 - `qemu` (version >= 5)
 
@@ -233,7 +233,7 @@ In addition, you might want to find the corresponding line of code in the source
 files by using `llvm-addr2line` or `llvm-symbolizer`:
 
 ```
-$ llvm-symbolizer-13 --obj=build/x86_64/dist/kernel-x86_64.bin 0x01163B3
+$ llvm-symbolizer --obj=build/x86_64/dist/kernel-x86_64.bin 0x01163B3
 print_selftest_header
 /path/to/ArvernOS/src/kernel/kshell/selftest.c:12:3
 selftest
@@ -241,7 +241,7 @@ selftest
 ```
 
 ```
-$ llvm-addr2line-13 -e build/x86_64/dist/kernel-x86_64.bin 01163B3
+$ llvm-addr2line -e build/x86_64/dist/kernel-x86_64.bin 01163B3
 /path/to/ArvernOS/src/kernel/kshell/selftest.c:12
 ```
 

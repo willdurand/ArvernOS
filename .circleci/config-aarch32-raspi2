@@ -1,6 +1,6 @@
 # Configuration file for aarch32/raspi2
 LLVM_PREFIX =
-LLVM_SUFFIX = -13
+LLVM_SUFFIX = -17
 
 ARCH  = aarch32
 BOARD = raspi2

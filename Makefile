@@ -157,6 +157,8 @@ ifeq ($(CONFIG_SEMIHOSTING), 1)
 endif
 
 ifeq ($(CONFIG_USE_FAKE_CLOCK), 1)
+	# If the compiler complains about `N` being added to the value, that's because
+	# `date` isn't the GNU version. E.g. on macOS, we need to use `gdate`.
 	KERNEL_CONFIG += -DBUILD_TIME_IN_NANOSECONDS=$(shell date +%s%N)
 	libk_c_files  += $(kernel_src_dir)/time/fake_clock.c
 endif
@@ -165,7 +167,7 @@ endif
 in_docker = $(wildcard /tmp/install-linux-deps)
 ifneq ($(in_docker),)
 	LLVM_PREFIX =
-	LLVM_SUFFIX = -13
+	LLVM_SUFFIX = -17
 endif
 
 ###############################################################################
@@ -200,6 +202,8 @@ KERNEL_CFLAGS    += -fno-omit-frame-pointer
 KERNEL_CFLAGS    += $(LIBC_CFLAGS)
 KERNEL_CFLAGS    += -ffunction-sections -fdata-sections
 KERNEL_CFLAGS    += $(WERRORS)
+# Define a constant to detect the current architecture.
+KERNEL_CFLAGS    += -D__is_$(ARCH)
 KERNEL_CFLAGS    += $(KERNEL_CONFIG)
 
 KERNEL_CONFIG += -DKERNEL_GIT_HASH=\"$(git_hash)\"
