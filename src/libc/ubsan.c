@@ -25,8 +25,7 @@ static const char* kinds[] = {
   "cast to virtual base",
 };
 
-void __ubsan_handle_type_mismatch_v1(ubsan_mismatch_v1_data_t* data,
-                                     uintptr_t ptr)
+void __ubsan_handle_type_mismatch(ubsan_mismatch_data_t* data, uintptr_t ptr)
 {
   const char* error = "type mismatch (insufficient size)";
 
@@ -41,7 +40,7 @@ void __ubsan_handle_type_mismatch_v1(ubsan_mismatch_v1_data_t* data,
           (void*)ptr,
           data->type->name);
     // In non-debug mode, this variable is not used.
-    UNUSED(*kinds);
+    UNUSED(kinds);
 #else
     printf("ubsan: kind=%s ptr=%p type=%s\n",
            kinds[data->kind],
@@ -53,108 +52,82 @@ void __ubsan_handle_type_mismatch_v1(ubsan_mismatch_v1_data_t* data,
   ubsan_panic_at(&data->location, error);
 }
 
-void __ubsan_handle_add_overflow(ubsan_overflow_data_t* data,
-                                 void* lhs,
-                                 void* rhs)
+void __ubsan_handle_type_mismatch_v1(ubsan_mismatch_v1_data_t* data,
+                                     uintptr_t ptr)
 {
-  UNUSED(*lhs);
-  UNUSED(*rhs);
+  ubsan_mismatch_data_t old_data = {
+    .location = data->location,
+    .type = data->type,
+    .alignment = 1UL << data->log_alignment,
+    .kind = data->kind,
+  };
 
-  ubsan_panic_at(&data->location, "add overflow");
+  __ubsan_handle_type_mismatch(&old_data, ptr);
 }
 
-void __ubsan_handle_sub_overflow(ubsan_overflow_data_t* data,
-                                 void* lhs,
-                                 void* rhs)
+void __ubsan_handle_add_overflow(ubsan_source_location_t* location)
 {
-  UNUSED(*lhs);
-  UNUSED(*rhs);
-
-  ubsan_panic_at(&data->location, "sub overflow");
+  ubsan_panic_at(location, "add overflow");
 }
 
-void __ubsan_handle_mul_overflow(ubsan_overflow_data_t* data,
-                                 void* lhs,
-                                 void* rhs)
+void __ubsan_handle_sub_overflow(ubsan_source_location_t* location)
 {
-  UNUSED(*lhs);
-  UNUSED(*rhs);
-
-  ubsan_panic_at(&data->location, "mul overflow");
+  ubsan_panic_at(location, "sub overflow");
 }
 
-void __ubsan_handle_negate_overflow(ubsan_overflow_data_t* data,
-                                    void* old_value)
+void __ubsan_handle_mul_overflow(ubsan_source_location_t* location)
 {
-  UNUSED(*old_value);
-
-  ubsan_panic_at(&data->location, "negation overflow");
+  ubsan_panic_at(location, "mul overflow");
 }
 
-void __ubsan_handle_divrem_overflow(ubsan_overflow_data_t* data,
-                                    void* lhs,
-                                    void* rhs)
+void __ubsan_handle_negate_overflow(ubsan_source_location_t* location)
 {
-  UNUSED(*lhs);
-  UNUSED(*rhs);
-
-  ubsan_panic_at(&data->location, "negation overflow");
+  ubsan_panic_at(location, "negation overflow");
 }
 
-void __ubsan_handle_shift_out_of_bounds(ubsan_shift_out_of_bounds_data_t* data,
-                                        void* lhs,
-                                        void* rhs)
+void __ubsan_handle_divrem_overflow(ubsan_source_location_t* location)
 {
-  UNUSED(*lhs);
-  UNUSED(*rhs);
-
-  ubsan_panic_at(&data->location, "shift out of bounds");
+  ubsan_panic_at(location, "negation overflow");
 }
 
-void __ubsan_handle_out_of_bounds(ubsan_out_of_bounds_data_t* data, void* index)
+void __ubsan_handle_shift_out_of_bounds(ubsan_source_location_t* location)
 {
-  UNUSED(*index);
-
-  ubsan_panic_at(&data->location, "shift out of bounds");
+  ubsan_panic_at(location, "shift out of bounds");
 }
 
-void __ubsan_handle_load_invalid_value(ubsan_invalid_value_data_t* data,
-                                       void* value)
+void __ubsan_handle_out_of_bounds(ubsan_source_location_t* location)
 {
-  UNUSED(*value);
-
-  ubsan_panic_at(&data->location, "invalid value load");
+  ubsan_panic_at(location, "shift out of bounds");
 }
 
-void __ubsan_handle_float_cast_overflow(ubsan_float_cast_overflow_data_t* data,
-                                        void* from)
+void __ubsan_handle_load_invalid_value(ubsan_source_location_t* location)
 {
-  UNUSED(*from);
-
-  ubsan_panic_at(&data->location, "float cast overflow");
+  ubsan_panic_at(location, "invalid value load");
 }
 
-void __ubsan_handle_pointer_overflow(ubsan_pointer_overflow_data_t* data,
-                                     void* lhs,
-                                     void* rhs)
+void __ubsan_handle_float_cast_overflow(ubsan_source_location_t* location)
 {
-  UNUSED(*lhs);
-  UNUSED(*rhs);
-
-  ubsan_panic_at(&data->location, "pointer overflow");
+  ubsan_panic_at(location, "float cast overflow");
 }
 
-void __ubsan_handle_vla_bound_not_positive(ubsan_vla_bound_data_t* data,
-                                           void* bound)
+void __ubsan_handle_pointer_overflow(ubsan_source_location_t* location)
 {
-  UNUSED(*bound);
-
-  ubsan_panic_at(&data->location, "vla bound not positive");
+  ubsan_panic_at(location, "pointer overflow");
 }
 
-void __ubsan_handle_invalid_builtin(ubsan_invalid_builtin_data_t* data)
+void __ubsan_handle_vla_bound_not_positive(ubsan_source_location_t* location)
 {
-  ubsan_panic_at(&data->location, "invalid built-in");
+  ubsan_panic_at(location, "vla bound not positive");
+}
+
+void __ubsan_handle_invalid_builtin(ubsan_source_location_t* location)
+{
+  ubsan_panic_at(location, "invalid built-in");
+}
+
+void __ubsan_handle_function_type_mismatch(ubsan_source_location_t* location)
+{
+  ubsan_panic_at(location, "function type mismatch");
 }
 
 void ubsan_panic_at(ubsan_source_location_t* location, const char* error)
