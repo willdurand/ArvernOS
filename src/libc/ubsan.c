@@ -157,3 +157,55 @@ void ubsan_panic_at(ubsan_source_location_t* location, const char* error)
   abort();
 #endif
 }
+
+#ifdef __is_aarch32
+
+// This is needed to fix the following issue on AArch32:
+//
+// ```
+// ld.lld: error: undefined symbol: abort
+// >>> referenced by unwind-arm.c
+// >>>               unwind-arm.o:(unwind_phase2)
+// ```
+//
+// While this error is about `abort()`, the underlying issue is that we build
+// an object file that references the `__aeabi_unwind_cpp_pr0` symbol for this
+// module. This can be observed with:
+//
+// ```
+// $ llvm-objdump -x build/aarch32/raspi2/libk-objects/src/libc/ubsan.o
+//
+// [...]
+//
+// RELOCATION RECORDS FOR [.ARM.exidx.text.__ubsan_handle_type_mismatch_v1]:
+// OFFSET   TYPE                     VALUE
+// 00000000 R_ARM_NONE               __aeabi_unwind_cpp_pr0
+//
+// [...]
+// ```
+//
+// Now, I am not sure why `-fno-exceptions` doesn't prevent this to be honest.
+//
+// Anyway, the reason why the stacktrace above mentions `abort()` is because we
+// also link to libgcc on AArch32 (because we have to target the ARM Embedded
+// ABI), and libgcc is bundled with libunwind, hence `unwind-arm.c`. And this
+// calls `abort()` at some point [1] .
+//
+// In libk, it is expected that we do not have an `abort()` function but it
+// looks like the libgcc we're using should be patched or something if we
+// wanted to fully get rid of the exception/unwind (generated) code [2] [3].
+//
+// Sigh.
+//
+// The approach chosen here is to avoid linking this `__aeabi_unwind_cpp_pr0`
+// symbol against libgcc by defining an empty function in the same compilation
+// module instead.
+//
+// [1]:
+// https://github.com/gcc-mirror/gcc/blob/9693459e030977d6e906ea7eb587ed09ee4fddbd/libgcc/unwind-arm-common.inc#L436
+// [2]: https://gcc.gnu.org/legacy-ml/gcc-help/2012-03/msg00372.html
+// [3]:
+// https://github.com/Rockbox/www/blob/9ecaa836d52dbf15113c93a7c447d11323e75aaf/gcc/rockbox-multilibs-noexceptions-arm-elf-eabi-gcc-4.4.2_1.diff#L2
+void __aeabi_unwind_cpp_pr0() {}
+
+#endif

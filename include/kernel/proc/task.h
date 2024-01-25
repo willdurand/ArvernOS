@@ -46,8 +46,10 @@ typedef struct task
 
 /**
  * Initializes the scheduler.
+ *
+ * @param init_name the name of the initial task.
  */
-void task_init();
+void task_init(const char* init_name);
 
 /**
  * Schedules a new task.

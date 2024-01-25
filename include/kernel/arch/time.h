@@ -9,7 +9,7 @@
 #include <stdint.h>
 #include <time.h>
 
-#define SEC_TO_MICROSEC(s)  ((s)*1000000)
+#define SEC_TO_MICROSEC(s)  ((s) * 1000000)
 #define MICROSEC_TO_SEC(us) ((us) / 1000000)
 
 /**

@@ -26,7 +26,7 @@ apt-get install -y \
 
 wget https://apt.llvm.org/llvm.sh
 chmod +x llvm.sh
-./llvm.sh 13
+./llvm.sh 17
 rm -f llvm.sh
 
-apt-get install -y clang-format-13
+apt-get install -y clang-format-17

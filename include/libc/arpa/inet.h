@@ -7,11 +7,11 @@
 
 // TODO: Ideally, we'd check the endianness of the system but this project only
 // deals with little endian system so far...
-#define HTONS(n) ((((n)&0xFF) << 8) | (((n)&0xFF00) >> 8))
+#define HTONS(n) ((((n) & 0xFF) << 8) | (((n) & 0xFF00) >> 8))
 #define NTOHS(n) HTONS(n)
 #define HTONL(n)                                                               \
-  ((((n)&0x000000FF) << 24) | (((n)&0x0000FF00) << 8) |                        \
-   (((n)&0x00FF0000) >> 8) | (((n)&0xFF000000) >> 24))
+  ((((n) & 0x000000FF) << 24) | (((n) & 0x0000FF00) << 8) |                    \
+   (((n) & 0x00FF0000) >> 8) | (((n) & 0xFF000000) >> 24))
 #define NTOHL(n) HTONL(n)
 
 typedef uint32_t in_addr_t;

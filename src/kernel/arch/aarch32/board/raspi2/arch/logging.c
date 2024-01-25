@@ -5,7 +5,7 @@
 
 void arch_logging_stream_output(char c, void* arg)
 {
-  UNUSED(*arg);
+  UNUSED(arg);
 
   miniuart_putc(c);
 }

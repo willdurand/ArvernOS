@@ -6,7 +6,7 @@
 
 int k_gettimeofday(struct timeval* p, void* z)
 {
-  UNUSED(*z);
+  UNUSED(z);
 
   intmax_t current = clock_get_current_microseconds();
 

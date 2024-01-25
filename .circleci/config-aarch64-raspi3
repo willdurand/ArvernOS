@@ -1,6 +1,6 @@
 # Configuration file for aarch64/raspi3
 LLVM_PREFIX =
-LLVM_SUFFIX = -13
+LLVM_SUFFIX = -17
 
 ARCH  = aarch64
 BOARD = raspi3

@@ -89,7 +89,7 @@ endif
 in_docker = $(wildcard /tmp/install-linux-deps)
 ifneq ($(in_docker),)
 	LLVM_PREFIX =
-	LLVM_SUFFIX = -13
+	LLVM_SUFFIX = -17
 endif
 
 ###############################################################################
