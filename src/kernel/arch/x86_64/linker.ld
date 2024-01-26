@@ -1,4 +1,4 @@
-/* cf. https://intermezzos.github.io/book/hello-world.html */
+/* cf. https://intermezzos.github.io/book/first-edition/hello-world.html */
 
 ENTRY(start)
 

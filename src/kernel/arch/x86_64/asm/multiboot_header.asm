@@ -1,4 +1,9 @@
-; This is a Multiboot-compliant header file in assembly code.
+; This is a Multiboot-compliant header file in assembly code, based on Philipp
+; Oppermann's OS [1], which was released under the MIT License - Copyright (c)
+; 2019 Philipp Oppermann.
+;
+; [1]: https://os.phil-opp.com/edition-1/
+
 section .multiboot_header
 align 8
 

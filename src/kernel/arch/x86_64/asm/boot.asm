@@ -1,4 +1,12 @@
-; cf. https://intermezzos.github.io/book/hello-world.html
+; The content of this file is based on two projects:
+;
+; 1. intermezzOS [1], released under the MIT license - Copyright (c) 2016
+; intermezzOS Developer
+; 2. Philipp Oppermann's OS [2], released under the MIT License - Copyright
+; (c) 2019 Philipp Oppermann
+;
+; [1]: https://intermezzos.github.io/book/first-edition/hello-world.html
+; [2]: https://os.phil-opp.com/edition-1/
 
 global start ; exports a label (makes it public). As start will be the entry
              ; point of our kernel, it needs to be public.

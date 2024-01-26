@@ -1,3 +1,5 @@
+; The code samples from "The little book about OS development" - which is where
+; the macros in this file are coming from - are in the public domain.
 %macro def_exception_handler 1
   global exc%1
   exc%1:
