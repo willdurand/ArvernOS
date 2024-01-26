@@ -1,9 +1,9 @@
 <map id="include/kernel/kshell/kshell.h" name="include/kernel/kshell/kshell.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="15,5,155,45"/>
-<area shape="rect" id="Node000002" href="$stdlib_8h.html" title=" " alt="" coords="53,93,117,119"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="88,46,88,79,83,79,83,46"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="5,167,75,192"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="80,120,58,155,53,152,76,118"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="99,167,165,192"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="95,118,118,152,114,155,91,120"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="15,5,155,46"/>
+<area shape="rect" id="Node000002" href="$stdlib_8h.html" title=" " alt="" coords="53,94,117,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="88,46,88,78,82,78,82,46"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,168,74,193"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="80,121,57,156,53,153,75,118"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="98,168,162,193"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="95,118,117,153,112,156,90,121"/>
 </map>

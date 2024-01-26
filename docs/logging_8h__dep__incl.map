@@ -1,5 +1,5 @@
 <map id="include/kernel/logging.h" name="include/kernel/logging.h">
-<area shape="rect" id="Node000001" title="This is the general kernel logging module." alt="" coords="5,5,164,31"/>
-<area shape="rect" id="Node000002" href="$panic_8h.html" title=" " alt="" coords="11,79,159,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="87,45,87,78,82,78,82,45"/>
+<area shape="rect" id="Node000001" title="This is the general kernel logging module." alt="" coords="5,5,163,31"/>
+<area shape="rect" id="Node000002" href="$panic_8h.html" title=" " alt="" coords="10,79,158,105"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="87,46,87,79,81,79,81,46"/>
 </map>

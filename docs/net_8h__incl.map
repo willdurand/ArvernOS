@@ -1,7 +1,7 @@
 <map id="include/kernel/net/net.h" name="include/kernel/net/net.h">
-<area shape="rect" id="Node000001" title="This module defines network interfaces and drivers." alt="" coords="27,5,151,45"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,93,80,119"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="80,47,59,82,55,79,76,45"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="105,93,170,119"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="103,45,125,79,120,82,99,47"/>
+<area shape="rect" id="Node000001" title="This module defines network interfaces and drivers." alt="" coords="28,5,151,46"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,94,80,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="80,48,60,82,55,79,75,45"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="104,94,168,120"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="103,45,123,79,119,82,98,48"/>
 </map>

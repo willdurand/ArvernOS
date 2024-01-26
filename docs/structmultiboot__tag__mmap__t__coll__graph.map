@@ -1,5 +1,5 @@
 <map id="multiboot_tag_mmap_t" name="multiboot_tag_mmap_t">
-<area shape="rect" id="Node000001" title=" " alt="" coords="11,93,165,119"/>
-<area shape="rect" id="Node000002" href="$structmultiboot__mmap__entry__t.html" title=" " alt="" coords="5,5,171,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="91,45,91,93,85,93,85,45"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="11,94,164,120"/>
+<area shape="rect" id="Node000002" href="$structmultiboot__mmap__entry__t.html" title=" " alt="" coords="5,5,170,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="90,47,90,94,85,94,85,47"/>
 </map>

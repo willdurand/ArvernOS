@@ -1,25 +1,25 @@
 <map id="include/kernel/net/icmpv4.h" name="include/kernel/net/icmpv4.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="231,5,355,45"/>
-<area shape="rect" id="Node000002" href="$ipv4_8h.html" title=" " alt="" coords="164,93,243,119"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="272,48,229,86,226,82,269,44"/>
-<area shape="rect" id="Node000008" title=" " alt="" coords="295,387,360,412"/>
-<area shape="poly" id="edge14_Node000001_Node000008" title=" " alt="" coords="306,44,331,103,342,140,346,178,346,254,342,318,335,372,329,372,337,317,341,254,341,178,337,141,326,104,301,47"/>
-<area shape="rect" id="Node000009" href="$net_8h.html" title="This module defines network interfaces and drivers." alt="" coords="231,240,304,265"/>
-<area shape="poly" id="edge13_Node000001_Node000009" title=" " alt="" coords="293,46,273,226,268,225,288,46"/>
-<area shape="rect" id="Node000003" href="$inet_8h.html" title=" " alt="" coords="71,167,154,192"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="190,121,141,160,137,155,186,117"/>
-<area shape="rect" id="Node000005" href="$types_8h.html" title=" " alt="" coords="98,313,189,339"/>
-<area shape="poly" id="edge12_Node000002_Node000005" title=" " alt="" coords="203,120,153,300,148,298,198,118"/>
-<area shape="poly" id="edge9_Node000002_Node000009" title=" " alt="" coords="211,118,259,225,254,227,206,120"/>
-<area shape="rect" id="Node000004" href="$socket_8h.html" title=" " alt="" coords="5,240,103,265"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="105,194,75,230,71,227,101,191"/>
-<area shape="poly" id="edge8_Node000003_Node000005" title=" " alt="" coords="118,192,140,298,135,299,113,193"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="71,264,119,302,116,306,67,268"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="195,387,270,412"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="160,337,208,375,205,380,157,341"/>
-<area shape="rect" id="Node000007" title=" " alt="" coords="102,387,171,412"/>
-<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="145,339,142,372,137,371,140,339"/>
-<area shape="poly" id="edge7_Node000005_Node000008" title=" " alt="" coords="176,337,284,378,282,383,174,342"/>
-<area shape="poly" id="edge10_Node000009_Node000006" title=" " alt="" coords="267,266,242,373,236,371,262,265"/>
-<area shape="poly" id="edge11_Node000009_Node000008" title=" " alt="" coords="275,265,319,372,314,374,270,267"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="229,5,353,46"/>
+<area shape="rect" id="Node000002" href="$ipv4_8h.html" title=" " alt="" coords="164,94,242,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="271,48,230,85,226,81,267,44"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="292,389,356,414"/>
+<area shape="poly" id="edge14_Node000001_Node000008" title=" " alt="" coords="304,45,330,104,340,141,344,179,344,256,340,319,332,374,327,373,335,319,339,255,339,179,335,142,325,106,299,48"/>
+<area shape="rect" id="Node000009" href="$net_8h.html" title="This module defines network interfaces and drivers." alt="" coords="229,241,302,267"/>
+<area shape="poly" id="edge13_Node000001_Node000009" title=" " alt="" coords="291,47,271,226,266,225,286,46"/>
+<area shape="rect" id="Node000003" href="$inet_8h.html" title=" " alt="" coords="70,168,152,193"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="189,122,140,160,136,156,186,118"/>
+<area shape="rect" id="Node000005" href="$types_8h.html" title=" " alt="" coords="97,315,186,341"/>
+<area shape="poly" id="edge12_Node000002_Node000005" title=" " alt="" coords="202,121,151,301,146,299,197,119"/>
+<area shape="poly" id="edge9_Node000002_Node000009" title=" " alt="" coords="210,119,257,226,252,228,206,121"/>
+<area shape="rect" id="Node000004" href="$socket_8h.html" title=" " alt="" coords="5,241,102,267"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="103,195,75,231,71,227,99,192"/>
+<area shape="poly" id="edge8_Node000003_Node000005" title=" " alt="" coords="116,193,138,299,133,300,111,194"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="70,265,117,303,113,307,67,270"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="194,389,268,414"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="158,339,206,377,202,381,155,343"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="101,389,169,414"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="143,341,140,373,135,373,138,341"/>
+<area shape="poly" id="edge7_Node000005_Node000008" title=" " alt="" coords="173,339,280,380,278,385,172,344"/>
+<area shape="poly" id="edge10_Node000009_Node000006" title=" " alt="" coords="265,268,240,374,235,373,260,267"/>
+<area shape="poly" id="edge11_Node000009_Node000008" title=" " alt="" coords="273,266,316,373,311,375,268,268"/>
 </map>

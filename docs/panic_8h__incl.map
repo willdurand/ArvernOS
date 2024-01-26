@@ -1,19 +1,19 @@
 <map id="include/kernel/panic.h" name="include/kernel/panic.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="193,5,341,31"/>
-<area shape="rect" id="Node000002" href="$logging_8h.html" title="This is the general kernel logging module." alt="" coords="181,79,255,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="261,33,237,68,232,65,257,29"/>
-<area shape="rect" id="Node000009" title=" " alt="" coords="279,79,354,104"/>
-<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="278,29,302,65,298,68,273,33"/>
-<area shape="rect" id="Node000003" href="$arch_2logging_8h.html" title=" " alt="" coords="5,152,108,177"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="192,107,98,148,96,143,190,102"/>
-<area shape="rect" id="Node000004" href="$inttypes_8h.html" title=" " alt="" coords="132,152,211,177"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="213,106,189,141,185,138,208,103"/>
-<area shape="rect" id="Node000005" href="$stdio_8h.html" title=" " alt="" coords="235,152,297,177"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="228,103,252,138,248,141,224,106"/>
-<area shape="rect" id="Node000007" href="$timer_8h.html" title=" " alt="" coords="321,152,411,177"/>
-<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="244,102,329,143,327,148,242,107"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="235,225,297,251"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="269,178,269,210,263,210,263,178"/>
-<area shape="rect" id="Node000008" title=" " alt="" coords="333,225,399,251"/>
-<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="369,178,369,210,363,210,363,178"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="192,5,340,31"/>
+<area shape="rect" id="Node000002" href="$logging_8h.html" title="This is the general kernel logging module." alt="" coords="181,79,255,105"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="260,33,237,67,232,64,256,30"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="278,79,352,105"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="276,30,301,65,296,68,272,33"/>
+<area shape="rect" id="Node000003" href="$arch_2logging_8h.html" title=" " alt="" coords="5,153,108,178"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="192,108,99,148,97,144,189,103"/>
+<area shape="rect" id="Node000004" href="$inttypes_8h.html" title=" " alt="" coords="132,153,210,178"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="212,106,190,141,185,138,208,103"/>
+<area shape="rect" id="Node000005" href="$stdio_8h.html" title=" " alt="" coords="234,153,295,178"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="228,103,251,138,246,141,223,106"/>
+<area shape="rect" id="Node000007" href="$timer_8h.html" title=" " alt="" coords="319,153,408,178"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="244,103,326,143,324,148,241,108"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="234,226,295,252"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="267,179,267,211,262,211,262,179"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="331,226,395,252"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="366,179,366,211,361,211,361,179"/>
 </map>

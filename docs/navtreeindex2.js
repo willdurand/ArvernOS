@@ -1,12 +1,5 @@
 var NAVTREEINDEX2 =
 {
-"syscall_8h.html#ae19bbc8361e8a64914e6d5d5d2258748":[6,0,0,1,2,3,13],
-"syscall_8h.html#ae1dd6bbd94b0f4e3dd37ecf1c1b832dd":[6,0,0,1,2,3,1],
-"syscall_8h.html#ae49d1c90a87f9ab8500b66a5662bc0a8":[6,0,0,1,2,3,9],
-"syscall_8h.html#af32a16ad2dd9e48482f8f790db7dbbd2":[6,0,0,1,2,3,10],
-"syscall_8h.html#af4e0711877c45a41168ac677b0670ccd":[6,0,0,1,2,3,14],
-"tar_8h.html":[6,0,0,0,4,3],
-"tar_8h.html#a591d90d6b7cf5c472a1740f065178017":[6,0,0,0,4,3,1],
 "timer_8h.html":[6,0,0,0,10,2],
 "timer_8h.html#a896a4c37c6ecf8868ef0dc758e5a598c":[6,0,0,0,10,2,0],
 "timer_8h.html#a9e237401e78bbceb0c0070ef2ecb4569":[6,0,0,0,10,2,2],

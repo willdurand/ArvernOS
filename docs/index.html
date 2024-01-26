@@ -138,7 +138,7 @@ Hacking on ArvernOS</h2>
 Setting up a development environment</h3>
 <p>The following dependencies are required to build this project:</p>
 <ul>
-<li><code>llvm</code> (version 13 currently)</li>
+<li><code>llvm</code> (version 17 currently)</li>
 <li><code>make</code></li>
 <li><code>qemu</code> (version &gt;= 5)</li>
 </ul>
@@ -240,12 +240,12 @@ Debug mode</h4>
 <div class="line">DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   00000000001152BF - kmain+0x107f</div>
 <div class="line">DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:39:kernel_dump_stacktrace():   000000000010935B - long_mode_start+0x13</div>
 </div><!-- fragment --><p>In addition, you might want to find the corresponding line of code in the source files by using <code>llvm-addr2line</code> or <code>llvm-symbolizer</code>:</p>
-<div class="fragment"><div class="line">$ llvm-symbolizer-13 --obj=build/x86_64/dist/kernel-x86_64.bin 0x01163B3</div>
+<div class="fragment"><div class="line">$ llvm-symbolizer --obj=build/x86_64/dist/kernel-x86_64.bin 0x01163B3</div>
 <div class="line">print_selftest_header</div>
 <div class="line">/path/to/ArvernOS/src/kernel/kshell/selftest.c:12:3</div>
 <div class="line">selftest</div>
 <div class="line">/path/to/ArvernOS/src/kernel/kshell/selftest.c:30:3</div>
-</div><!-- fragment --><div class="fragment"><div class="line">$ llvm-addr2line-13 -e build/x86_64/dist/kernel-x86_64.bin 01163B3</div>
+</div><!-- fragment --><div class="fragment"><div class="line">$ llvm-addr2line -e build/x86_64/dist/kernel-x86_64.bin 01163B3</div>
 <div class="line">/path/to/ArvernOS/src/kernel/kshell/selftest.c:12</div>
 </div><!-- fragment --><p><a class="anchor" id="autotoc_md16"></a> </p><h5>Debugging</h5>
 <p>Use <code>make gdb</code> to run the project in debug mode with QEMU configured to wait for <a href="https://www.sourceware.org/gdb/">gdb</a> to connect. This has been tested with <code>vim</code> (<code>:Termdebug</code>) and VS Code.</p>

@@ -1,7 +1,7 @@
 <map id="include/kernel/proc/task.h" name="include/kernel/proc/task.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="33,5,163,45"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,93,92,119"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="88,47,66,82,62,79,84,45"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="116,93,181,119"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="113,44,136,80,131,83,108,47"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="33,5,163,46"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,94,92,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="88,48,66,82,62,79,83,45"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="116,94,181,120"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="113,45,135,79,130,82,108,48"/>
 </map>

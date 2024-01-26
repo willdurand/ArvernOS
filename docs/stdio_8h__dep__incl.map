@@ -1,11 +1,11 @@
 <map id="include/libc/stdio.h" name="include/libc/stdio.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="113,5,243,31"/>
-<area shape="rect" id="Node000002" href="$logging_8h.html" title="This is the general kernel logging module." alt="" coords="5,79,164,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="152,42,102,80,99,76,149,38"/>
-<area shape="rect" id="Node000004" href="$syscall_8h.html" title=" " alt="" coords="189,79,357,104"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="207,38,258,76,255,80,204,42"/>
-<area shape="rect" id="Node000003" href="$panic_8h.html" title=" " alt="" coords="11,152,159,177"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="87,119,87,151,82,151,82,119"/>
-<area shape="rect" id="Node000005" href="$unistd_8h.html" title=" " alt="" coords="204,152,341,177"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="275,119,275,151,270,151,270,119"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="113,5,242,31"/>
+<area shape="rect" id="Node000002" href="$logging_8h.html" title="This is the general kernel logging module." alt="" coords="5,79,163,105"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="151,43,101,81,98,77,148,39"/>
+<area shape="rect" id="Node000004" href="$syscall_8h.html" title=" " alt="" coords="187,79,354,105"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="207,39,257,77,253,81,204,43"/>
+<area shape="rect" id="Node000003" href="$panic_8h.html" title=" " alt="" coords="10,153,158,178"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="87,120,87,152,81,152,81,120"/>
+<area shape="rect" id="Node000005" href="$unistd_8h.html" title=" " alt="" coords="203,153,339,178"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="273,120,273,152,268,152,268,120"/>
 </map>

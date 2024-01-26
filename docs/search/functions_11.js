@@ -4,7 +4,7 @@ var searchData=
   ['task_5fcreate_1',['task_create',['../include_2kernel_2proc_2task_8h.html#a953e6c75292fb9898a9e25af47321da0',1,'task.c']]],
   ['task_5fexit_2',['task_exit',['../include_2kernel_2proc_2task_8h.html#ae4bc8886787eac6213c6cd0eab9b2893',1,'task.c']]],
   ['task_5fget_5fcurrent_3',['task_get_current',['../include_2kernel_2proc_2task_8h.html#a32c1128364ef08b15edabdac124bc11b',1,'task.c']]],
-  ['task_5finit_4',['task_init',['../include_2kernel_2proc_2task_8h.html#a0dd765564611ce3bf2bd466fe2ca4ae5',1,'task.h']]],
+  ['task_5finit_4',['task_init',['../include_2kernel_2proc_2task_8h.html#a0a9103c8ffaba75b47709fb06d28c7f5',1,'task.c']]],
   ['task_5fprint_5finfo_5',['task_print_info',['../include_2kernel_2proc_2task_8h.html#aba62108350393ac5cb4f2cf0f88c2a22',1,'task.c']]],
   ['task_5fschedule_6',['task_schedule',['../include_2kernel_2proc_2task_8h.html#a7b77adca1da85233e213a9a0eacd8086',1,'task.c']]],
   ['task_5fschedule_5fon_5ftimer_5ftick_7',['task_schedule_on_timer_tick',['../include_2kernel_2proc_2task_8h.html#ac196c54c15d40be45138ffdbfb42758c',1,'task.c']]],

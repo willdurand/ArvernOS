@@ -1,7 +1,7 @@
 <map id="src/kernel/arch/x86_64/mmu/frame.h" name="src/kernel/arch/x86_64/mmu/frame.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="84,5,217,45"/>
-<area shape="rect" id="Node000002" href="$x86__64_2mmu_2alloc_8h.html" title=" " alt="" coords="5,93,139,133"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="125,58,91,95,87,91,121,54"/>
-<area shape="rect" id="Node000003" href="$paging_8h.html" title=" " alt="" coords="163,93,296,133"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="180,54,214,91,210,95,176,58"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="83,5,215,46"/>
+<area shape="rect" id="Node000002" href="$x86__64_2mmu_2alloc_8h.html" title=" " alt="" coords="5,94,138,135"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="123,60,91,95,87,92,119,56"/>
+<area shape="rect" id="Node000003" href="$paging_8h.html" title=" " alt="" coords="161,94,294,135"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="179,56,212,92,208,95,175,60"/>
 </map>

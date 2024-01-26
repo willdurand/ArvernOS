@@ -8,7 +8,7 @@ var searchData=
   ['task_5fexit_5',['task_exit',['../include_2kernel_2proc_2task_8h.html#ae4bc8886787eac6213c6cd0eab9b2893',1,'task.c']]],
   ['task_5fget_5fcurrent_6',['task_get_current',['../include_2kernel_2proc_2task_8h.html#a32c1128364ef08b15edabdac124bc11b',1,'task.c']]],
   ['task_5finfo_5ft_7',['task_info_t',['../structtask__info__t.html',1,'']]],
-  ['task_5finit_8',['task_init',['../include_2kernel_2proc_2task_8h.html#a0dd765564611ce3bf2bd466fe2ca4ae5',1,'task.h']]],
+  ['task_5finit_8',['task_init',['../include_2kernel_2proc_2task_8h.html#a0a9103c8ffaba75b47709fb06d28c7f5',1,'task.c']]],
   ['task_5fprint_5finfo_9',['task_print_info',['../include_2kernel_2proc_2task_8h.html#aba62108350393ac5cb4f2cf0f88c2a22',1,'task.c']]],
   ['task_5fschedule_10',['task_schedule',['../include_2kernel_2proc_2task_8h.html#a7b77adca1da85233e213a9a0eacd8086',1,'task.c']]],
   ['task_5fschedule_5fon_5ftimer_5ftick_11',['task_schedule_on_timer_tick',['../include_2kernel_2proc_2task_8h.html#ac196c54c15d40be45138ffdbfb42758c',1,'task.c']]],

@@ -1,7 +1,7 @@
 <map id="include/libc/sys" name="include/libc/sys">
-<area shape="rect" id="node1" href="dir_4808aa484d0a013f0d2313f6f625fe90.html" title="arpa" alt="" coords="27,125,74,151"/>
-<area shape="rect" id="node2" href="dir_384e8044a4a3017e1583fef77edf0684.html" title="sys" alt="" coords="29,52,72,77"/>
-<area shape="poly" id="edge1" href="dir_000066_000011.html" alt="" coords="53,78,53,110,48,110,48,78"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000066_000011.html" title="1" alt="" coords="55,99,63,114"/>
-<area shape="rect" id="clust1" href="dir_f9f386f816a45f0ffce9eeb77a177fce.html" title="libc" alt="" coords="16,16,85,161"/>
+<area shape="rect" id="node1" href="dir_4808aa484d0a013f0d2313f6f625fe90.html" title="arpa" alt="" coords="26,126,73,152"/>
+<area shape="rect" id="node2" href="dir_384e8044a4a3017e1583fef77edf0684.html" title="sys" alt="" coords="28,52,71,78"/>
+<area shape="poly" id="edge1" href="dir_000066_000011.html" alt="" coords="52,78,52,110,47,110,47,78"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000066_000011.html" title="1" alt="" coords="54,100,61,115"/>
+<area shape="rect" id="clust1" href="dir_f9f386f816a45f0ffce9eeb77a177fce.html" title="libc" alt="" coords="16,16,83,162"/>
 </map>

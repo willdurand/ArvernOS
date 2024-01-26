@@ -1,11 +1,11 @@
 <map id="include/libc/sys/stat.h" name="include/libc/sys/stat.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="160,5,309,31"/>
-<area shape="rect" id="Node000002" href="$inish_8h.html" title=" " alt="" coords="5,79,147,119"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="199,40,116,80,114,76,197,35"/>
-<area shape="rect" id="Node000003" href="$k__syscall_8h.html" title=" " alt="" coords="171,79,298,119"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="237,45,237,79,232,79,232,45"/>
-<area shape="rect" id="Node000004" href="$syscall_8h.html" title=" " alt="" coords="323,86,491,111"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="275,35,381,83,379,88,273,40"/>
-<area shape="rect" id="Node000005" href="$unistd_8h.html" title=" " alt="" coords="338,167,475,192"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="409,126,409,166,404,166,404,126"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="159,5,307,31"/>
+<area shape="rect" id="Node000002" href="$inish_8h.html" title=" " alt="" coords="5,79,146,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="196,41,116,81,114,76,194,36"/>
+<area shape="rect" id="Node000003" href="$k__syscall_8h.html" title=" " alt="" coords="170,79,296,120"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="236,46,236,79,230,79,230,46"/>
+<area shape="rect" id="Node000004" href="$syscall_8h.html" title=" " alt="" coords="320,87,487,112"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="274,36,379,84,376,88,272,40"/>
+<area shape="rect" id="Node000005" href="$unistd_8h.html" title=" " alt="" coords="335,168,472,193"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="406,128,406,167,401,167,401,128"/>
 </map>

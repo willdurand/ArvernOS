@@ -1,5 +1,5 @@
 <map id="multiboot_tag_elf_sections_t" name="multiboot_tag_elf_sections_t">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,108,193,133"/>
-<area shape="rect" id="Node000002" href="$structmultiboot__elf__sections__entry__t.html" title=" " alt="" coords="23,5,175,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="102,60,102,108,97,108,97,60"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,109,193,135"/>
+<area shape="rect" id="Node000002" href="$structmultiboot__elf__sections__entry__t.html" title=" " alt="" coords="23,5,175,46"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="102,61,102,109,96,109,96,61"/>
 </map>

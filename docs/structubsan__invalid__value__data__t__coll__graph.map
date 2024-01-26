@@ -1,7 +1,0 @@
-<map id="ubsan_invalid_value_data_t" name="ubsan_invalid_value_data_t">
-<area shape="rect" id="Node000001" title=" " alt="" coords="98,93,237,133"/>
-<area shape="rect" id="Node000002" href="$structubsan__source__location__t.html" title=" " alt="" coords="5,5,172,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="110,40,153,91,149,95,106,44"/>
-<area shape="rect" id="Node000003" href="$structubsan__type__t.html" title=" " alt="" coords="196,5,296,31"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="229,44,186,95,181,91,225,40"/>
-</map>
