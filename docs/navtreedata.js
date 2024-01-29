@@ -54,7 +54,7 @@ var NAVTREEINDEX =
 [
 "aarch32_2mmu_2alloc_8h.html",
 "kernel_8h.html#a0ffd13670c5c0bedb76b1e31cc3dd59d",
-"timer_8h.html"
+"timer_8h.html#a9e237401e78bbceb0c0070ef2ecb4569"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

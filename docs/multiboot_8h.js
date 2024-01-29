@@ -3,8 +3,6 @@ var multiboot_8h =
     [ "multiboot_tag_t", "structmultiboot__tag__t.html", null ],
     [ "multiboot_info_t", "structmultiboot__info__t.html", null ],
     [ "multiboot_tag_string_t", "structmultiboot__tag__string__t.html", null ],
-    [ "multiboot_tag_basic_meminfo_t", "structmultiboot__tag__basic__meminfo__t.html", null ],
-    [ "multiboot_tag_bootdev_t", "structmultiboot__tag__bootdev__t.html", null ],
     [ "multiboot_tag_module_t", "structmultiboot__tag__module__t.html", null ],
     [ "multiboot_mmap_entry_t", "structmultiboot__mmap__entry__t.html", null ],
     [ "multiboot_tag_mmap_t", "structmultiboot__tag__mmap__t.html", null ],
