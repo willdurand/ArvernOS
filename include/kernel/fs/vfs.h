@@ -1,4 +1,13 @@
-/** @file */
+/**
+ * @file
+ *
+ * Virtual File System (VFS) implementation based on Thomas Lovén's work on
+ * [MITTOS64](https://github.com/thomasloven/mittos64-old/), released under the
+ * MIT license - Copyright (c) 2016 Thomas Lovén.
+ *
+ * MITTOS64's implementation is very likely based on Thomas' previous work on
+ * VFS described in http://thomasloven.com/blog/2013/12/VFS-syscalls/.
+ */
 #ifndef FS_VFS_H
 #define FS_VFS_H
 

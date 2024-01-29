@@ -15,6 +15,8 @@ uint64_t debug_write(inode_t node,
                      uint64_t offset);
 uint64_t debug_isatty(inode_t inode);
 
+// Inspired by Thomas Lovén described in
+// http://thomasloven.com/blog/2013/12/Debug-Filesystem/.
 static vfs_driver_t debug_driver = {
   .open = NULL,
   .close = NULL,
