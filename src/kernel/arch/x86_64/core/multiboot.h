@@ -8,6 +8,11 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+// The constants and structures in this file come from the Multiboot 2 header
+// file released under the MIT license.
+//
+// Copyright (C) 1999,2003,2007,2008,2009,2010  Free Software Foundation, Inc.
+
 // Flags set in the 'flags' member of the multiboot header.
 #define MULTIBOOT_TAG_TYPE_END              0
 #define MULTIBOOT_TAG_TYPE_CMDLINE          1
@@ -61,23 +66,6 @@ typedef struct multiboot_tag_string
   uint32_t size;
   char string[];
 } __attribute__((packed)) multiboot_tag_string_t;
-
-typedef struct multiboot_tag_basic_meminfo
-{
-  uint32_t type;
-  uint32_t size;
-  uint32_t mem_lower;
-  uint32_t mem_upper;
-} __attribute__((packed)) multiboot_tag_basic_meminfo_t;
-
-typedef struct multiboot_tag_bootdev
-{
-  uint32_t type;
-  uint32_t size;
-  uint32_t biosdev;
-  uint32_t slice;
-  uint32_t part;
-} __attribute__((packed)) multiboot_tag_bootdev_t;
 
 typedef struct multiboot_tag_module
 {
