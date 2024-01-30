@@ -306,7 +306,7 @@ $(kernel): $(linker_ld) $(libk_asm_objects) $(libk_c_objects) $(libk_extra_objec
 $(libk_asm_objects): $(libk_objs_dir)/%.o: %.asm
 	$(progress) "CC" $<
 	$(MKDIR) -p $(dir $@)
-	$(ASM) $(KERNEL_ASM_FLAGS) $< -o $@
+	$(CC) $(KERNEL_ASM_FLAGS) $< -o $@
 
 $(libk_c_objects): $(libk_objs_dir)/%.o: %.c
 	$(progress) "CC" $<
@@ -321,7 +321,7 @@ $(libc_c_objects): $(lib_objs_dir)/%.o: %.c
 $(libc_asm_objects): $(lib_objs_dir)/%.o: %.asm
 	$(progress) "CC" $<
 	$(MKDIR) -p $(dir $@)
-	$(ASM) $(LIBC_ASM_FLAGS) $< -o $@
+	$(CC) $(LIBC_ASM_FLAGS) $< -o $@
 
 $(libc): $(libc_asm_objects) $(libc_c_objects) | $(dist_dir)
 	$(progress) "AR" $@
@@ -409,7 +409,6 @@ fmt: ## automatically format the code with clang-format
 
 version: ## print tool versions
 	$(CC) --version
-	$(ASM) --version
 	$(LD) --version
 	$(AR) --version
 	$(QEMU) --version

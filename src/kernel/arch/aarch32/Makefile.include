@@ -14,7 +14,6 @@ log_file         = $(log_dir)/$(ARCH)-$(BOARD)-$(BUILD_MODE).log
 
 QEMU    = qemu-system-arm
 ARM_GCC = arm-none-eabi-gcc
-ASM     = $(CC)
 
 ###############################################################################
 # Options for the different tools

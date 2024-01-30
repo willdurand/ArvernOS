@@ -20,7 +20,6 @@ vbe_bpp                = 32
 # Tools
 ###############################################################################
 
-ASM  = nasm
 QEMU = qemu-system-x86_64
 
 ###############################################################################
@@ -60,14 +59,15 @@ libk_extra_objects += $(kernel_console_font)
 # Flags
 ###############################################################################
 
-LD_TARGET        = elf_x86_64
-LIBC_ASM_FLAGS   += -f elf64
-LIBC_CFLAGS      += --target=x86_64 -fstack-protector-strong
+X86_64_CFLAGS    += --target=x86_64
+LIBC_ASM_FLAGS   += -c $(X86_64_CFLAGS)
+LIBC_CFLAGS      += $(X86_64_CFLAGS) -fstack-protector-strong
 LIBC_CFLAGS      += -mno-mmx -mno-sse -mno-sse2 -mno-avx -mno-avx2
-KERNEL_ASM_FLAGS += -f elf64
+KERNEL_ASM_FLAGS += -c $(X86_64_CFLAGS)
 KERNEL_ASM_FLAGS += -dVBE_WIDTH=$(vbe_width) -dVBE_HEIGHT=$(vbe_height) -dVBE_BPP=$(vbe_bpp)
 KERNEL_CFLAGS    += -mno-red-zone
 KERNEL_INCLUDES  += -I$(external_dir)/scalable-font2/
+LD_TARGET        = elf_x86_64
 
 ###############################################################################
 # Arch-specific targets

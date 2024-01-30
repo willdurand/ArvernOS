@@ -65,7 +65,6 @@ The following dependencies are required to build this project:
 If you want to work on the `x86_64` architecture, you'll need the following
 extra dependencies:
 
-- `nasm`
 - `grub-mkrescue`
 - `xorriso`
 
@@ -134,7 +133,7 @@ depending on the architecture and board configured.
 Install [Homebrew](https://brew.sh/), then run the following commands:
 
 ```
-$ brew install nasm xorriso qemu llvm u-boot-tools
+$ brew install xorriso qemu llvm u-boot-tools
 ```
 
 #### Linux

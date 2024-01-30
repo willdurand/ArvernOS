@@ -1,10 +1,12 @@
-global syscall_handler
+.intel_syntax noprefix
+
+.global "syscall_handler"
 
 syscall_handler:
   sti
 
-  push rcx     ; save the return address
-  push r11     ; save the flags
+  push rcx     // save the return address
+  push r11     // save the flags
   push rbp
   push rbx
   push rdx
@@ -18,9 +20,8 @@ syscall_handler:
   push r14
   push r15
 
-  mov rcx, r10 ; fix 3rd syscall arg
+  mov rcx, r10 // fix 3rd syscall arg
 
-  extern syscall_handlers
   call [rax * 8 + syscall_handlers]
 
   pop r15
@@ -39,4 +40,4 @@ syscall_handler:
   pop rcx
 
   cli
-  o64 sysret
+  sysret

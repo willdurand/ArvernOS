@@ -1,5 +1,7 @@
-global arch_task_switch
-global ret_from_fork
+.intel_syntax noprefix
+
+.global arch_task_switch
+.global ret_from_fork
 
 arch_task_switch:
   push rbp
@@ -26,7 +28,6 @@ arch_task_switch:
 ret_from_fork:
   pop r12
 
-  extern task_schedule_tail
   call task_schedule_tail
 
   call r12
