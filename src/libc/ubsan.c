@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Based on: https://wiki.osdev.org/Undefined_Behavior_Sanitization
+
 #ifdef __is_libk
 
 #include <logging.h>
@@ -12,57 +14,14 @@
 
 void ubsan_panic_at(ubsan_source_location_t* location, const char* error);
 
-static const char* kinds[] = {
-  "load",
-  "store",
-  "reference binding",
-  "member access",
-  "member call",
-  "constructor call",
-  "downcast",
-  "downcast",
-  "upcast",
-  "cast to virtual base",
-};
-
-void __ubsan_handle_type_mismatch(ubsan_mismatch_data_t* data, uintptr_t ptr)
+void __ubsan_handle_type_mismatch(ubsan_source_location_t* location)
 {
-  const char* error = "type mismatch (insufficient size)";
-
-  if (!ptr) {
-    error = "null pointer access";
-  } else if (data->alignment && (ptr & (data->alignment - 1))) {
-    error = "unaligned access";
-  } else {
-#ifdef __is_libk
-    DEBUG("ubsan: kind=%s ptr=%p type=%s",
-          kinds[data->kind],
-          (void*)ptr,
-          data->type->name);
-    // In non-debug mode, this variable is not used.
-    UNUSED(kinds);
-#else
-    printf("ubsan: kind=%s ptr=%p type=%s\n",
-           kinds[data->kind],
-           (void*)ptr,
-           data->type->name);
-#endif
-  }
-
-  ubsan_panic_at(&data->location, error);
+  ubsan_panic_at(location, "type mismatch");
 }
 
-void __ubsan_handle_type_mismatch_v1(ubsan_mismatch_v1_data_t* data,
-                                     uintptr_t ptr)
+void __ubsan_handle_type_mismatch_v1(ubsan_source_location_t* location)
 {
-  ubsan_mismatch_data_t old_data = {
-    .location = data->location,
-    .type = data->type,
-    .alignment = 1UL << data->log_alignment,
-    .kind = data->kind,
-  };
-
-  __ubsan_handle_type_mismatch(&old_data, ptr);
+  ubsan_panic_at(location, "type mismatch v1");
 }
 
 void __ubsan_handle_add_overflow(ubsan_source_location_t* location)
@@ -82,12 +41,12 @@ void __ubsan_handle_mul_overflow(ubsan_source_location_t* location)
 
 void __ubsan_handle_negate_overflow(ubsan_source_location_t* location)
 {
-  ubsan_panic_at(location, "negation overflow");
+  ubsan_panic_at(location, "negate overflow");
 }
 
 void __ubsan_handle_divrem_overflow(ubsan_source_location_t* location)
 {
-  ubsan_panic_at(location, "negation overflow");
+  ubsan_panic_at(location, "divrem overflow");
 }
 
 void __ubsan_handle_shift_out_of_bounds(ubsan_source_location_t* location)
@@ -97,12 +56,12 @@ void __ubsan_handle_shift_out_of_bounds(ubsan_source_location_t* location)
 
 void __ubsan_handle_out_of_bounds(ubsan_source_location_t* location)
 {
-  ubsan_panic_at(location, "shift out of bounds");
+  ubsan_panic_at(location, "out of bounds");
 }
 
 void __ubsan_handle_load_invalid_value(ubsan_source_location_t* location)
 {
-  ubsan_panic_at(location, "invalid value load");
+  ubsan_panic_at(location, "load invalid value");
 }
 
 void __ubsan_handle_float_cast_overflow(ubsan_source_location_t* location)
@@ -122,7 +81,7 @@ void __ubsan_handle_vla_bound_not_positive(ubsan_source_location_t* location)
 
 void __ubsan_handle_invalid_builtin(ubsan_source_location_t* location)
 {
-  ubsan_panic_at(location, "invalid built-in");
+  ubsan_panic_at(location, "invalid builtin");
 }
 
 void __ubsan_handle_function_type_mismatch(ubsan_source_location_t* location)
