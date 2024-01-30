@@ -189,8 +189,6 @@ error:
 
 ; -----------------------------------------------------------------------------
 section .bss
-; This ensures that the page tables are page aligned.
-align 4096
 
 p4_table:
   ; `resb` means 'reserves bytes'
