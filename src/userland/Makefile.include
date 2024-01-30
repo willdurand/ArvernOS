@@ -85,6 +85,10 @@ ifeq ($(UBSAN), 1)
 	CFLAGS += -fsanitize=undefined
 endif
 
+ifeq ($(CONFIG_LINUX_COMPAT), 1)
+	CFLAGS += -DCONFIG_LINUX_COMPAT
+endif
+
 # This file exists in a Docker container because we copy it in `Dockerfile`.
 in_docker = $(wildcard /tmp/install-linux-deps)
 ifneq ($(in_docker),)

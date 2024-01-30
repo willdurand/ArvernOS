@@ -27,6 +27,19 @@ void load_modules();
 void load_network_config(inish_config_t* kernel_cfg, net_driver_t* driver);
 void load_system_config(inish_config_t* kernel_cfg);
 
+#ifdef CONFIG_LINUX_COMPAT
+
+typedef struct cpu_vars
+{
+  uint64_t rsp0;
+  uint64_t cs;
+  uint64_t ss;
+} cpu_vars_t;
+
+static cpu_vars_t cpu_vars = { 0 };
+
+#endif // CONFIG_LINUX_COMPAT
+
 static uintptr_t initrd_addr = 0;
 
 void load_modules()
@@ -112,6 +125,10 @@ void kmain(uintptr_t addr)
   console_init(&entry->common);
 
   kmain_early_start();
+
+#ifdef CONFIG_LINUX_COMPAT
+  __asm__("wrgsbase %0" ::"r"(&cpu_vars));
+#endif
 
   tss_init();
   frame_init();

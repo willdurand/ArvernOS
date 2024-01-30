@@ -15,7 +15,13 @@ ssize_t k_read(int fd, void* buf, size_t count)
   SYS_DEBUG("fd=%d buf=%p count=%zu", fd, buf, count);
 
   if (fd == STDIN_FILENO) {
+#ifdef CONFIG_LINUX_COMPAT
+    // TODO: This was changed to please `read(STDIN)` for Linux compat' but I
+    // am not sure that's what we want...
+    unsigned char c = arch_getchar(true);
+#else
     unsigned char c = arch_getchar(false);
+#endif
 
     if (c) {
       ((uint8_t*)buf)[0] = c;

@@ -11,6 +11,12 @@
 #include <sys/time.h>
 #include <sys/types.h>
 
+#ifdef CONFIG_LINUX_COMPAT
+
+#include <sys/linux_compat.h>
+
+#else // CONFIG_LINUX_COMPAT
+
 #define SYSCALL_TEST           1
 #define SYSCALL_WRITE          2
 #define SYSCALL_READ           3
@@ -28,6 +34,8 @@
 #define SYSCALL_GETPID         15
 #define SYSCALL_EXIT           16
 #define SYSCALL_OPENAT         17
+
+#endif // CONFIG_LINUX_COMPAT
 
 #define SYSCALL_SET_ERRNO()                                                    \
   if (retval < 0) {                                                            \

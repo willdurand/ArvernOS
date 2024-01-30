@@ -1,5 +1,6 @@
 #include <kmain.h>
 
+#include <arvern/utils.h>
 #include <core/isr.h>
 #include <fs/dev.h>
 #include <fs/proc.h>
@@ -112,18 +113,17 @@ void kinit()
   argv[_argc] = NULL;
   free(_cmdline);
 
+  INFO("kmain: loading %s...", argv[0]);
+
   if (strcmp(argv[0], "kshell") == 0) {
-    INFO("kmain: loading %s...", argv[0]);
     kshell(argc, argv);
   } else {
-    // TODO: create task
-
-    // INFO("kmain: switching to usermode... (%s)", argv[0]);
-    //
-    // k_execv(argv[0], argv);
-    WARN("cannot execute: %s", saved_cmdline);
+    int retval = k_execv(argv[0], argv);
+    MAYBE_UNUSED(retval);
+    DEBUG("k_execv failed: retval=%d", retval);
   }
 
+  WARN("kinit: failed to load %s", argv[0]);
   k_exit(EXIT_FAILURE);
 }
 

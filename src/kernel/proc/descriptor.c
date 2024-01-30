@@ -1,7 +1,6 @@
 #include <proc/descriptor.h>
 
 #include <string.h>
-#include <sys/socket.h>
 
 #define NB_SYSTEM_DESCRIPTORS 20
 
@@ -39,6 +38,12 @@ descriptor_t* get_descriptor(int id)
   return &descriptors[id];
 }
 
+void duplicate_descriptor(int oldfd, int newfd)
+{
+  memcpy(&descriptors[newfd], get_descriptor(oldfd), sizeof(descriptor_t));
+  delete_descriptor(oldfd);
+}
+
 void delete_descriptor(int id)
 {
   if (id >= NB_SYSTEM_DESCRIPTORS) {
@@ -71,6 +76,25 @@ int create_socket_descriptor(inode_t inode,
   return -1;
 }
 
+int descriptor_raw_lookup(uint32_t protocol, in_addr_t src_addr)
+{
+  for (uint8_t fd = 0; fd < NB_SYSTEM_DESCRIPTORS; fd++) {
+    if (!descriptors[fd].used || descriptors[fd].type != SOCK_RAW ||
+        descriptors[fd].protocol != protocol) {
+      continue;
+    }
+
+    struct sockaddr_in sa = { 0 };
+    memcpy(&sa, &descriptors[fd].addr, descriptors[fd].addr_len);
+
+    if (sa.sin_addr.s_addr == src_addr) {
+      return fd;
+    }
+  }
+
+  return -1;
+}
+
 int descriptor_udp_lookup(uint16_t port)
 {
   for (uint8_t fd = 3; fd < NB_SYSTEM_DESCRIPTORS; fd++) {
@@ -89,10 +113,17 @@ bool is_protocol_supported(uint32_t type, uint32_t protocol)
   switch (type) {
     case SOCK_DGRAM:
       switch (protocol) {
+        case IPPROTO_IP:
         case IPPROTO_UDP:
           return true;
       }
       break;
+
+    case SOCK_RAW:
+      switch (protocol) {
+        case IPPROTO_ICMP:
+          return true;
+      }
   }
 
   return false;

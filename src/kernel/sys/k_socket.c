@@ -8,15 +8,24 @@
 
 int k_socket(int domain, int type, int protocol)
 {
+  SYS_DEBUG("domain=%d type=%d protocol=%d", domain, type, protocol);
+
   if (domain != AF_INET) {
+    SYS_DEBUG("domain %d not supported", domain);
     return -EAFNOSUPPORT;
   }
 
-  if (type != SOCK_DGRAM) {
-    return -ESOCKTNOSUPPORT;
+  switch (type) {
+    case SOCK_DGRAM:
+    case SOCK_RAW:
+      break;
+    default:
+      SYS_DEBUG("type %d not supported", type);
+      return -ESOCKTNOSUPPORT;
   }
 
   if (!is_protocol_supported(type, protocol)) {
+    SYS_DEBUG("protocol %d not supported", protocol);
     return -EPROTONOSUPPORT;
   }
 
@@ -43,6 +52,12 @@ int k_socket(int domain, int type, int protocol)
     return -ENFILE;
   }
 
-  SYS_DEBUG("open sd=%d", sd);
+  SYS_DEBUG("open sd=%d inode=%p domain=%d type=%d protocol=%d",
+            sd,
+            inode,
+            domain,
+            type,
+            protocol);
+
   return sd;
 }

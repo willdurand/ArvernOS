@@ -425,7 +425,11 @@ void map_page_to_frame(page_number_t page_number,
   page_table_t* p1 = next_table_create(p2, p2_idx);
   assert(p1 != NULL);
 
+#ifndef CONFIG_LINUX_COMPAT
+  // TODO: We should not have to skip this assertion when CONFIG_LINUX_COMPAT
+  // is set.
   assert((p1->entries[p1_idx] & PAGING_FLAG_PRESENT) == 0);
+#endif
 
   p1->entries[p1_idx] = frame | flags;
 

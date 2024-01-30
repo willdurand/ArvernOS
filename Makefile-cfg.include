@@ -6,6 +6,8 @@ LLVM_SUFFIX ?=
 
 # When set to 1, enable the Undefined Behavior SANitizer.
 UBSAN                 ?=
+# When set to 1, enable Linux (binary) compatibility.
+CONFIG_LINUX_COMPAT   ?=
 # When set to 1, enable semi-hosting mode (QEMU, mainly).
 CONFIG_SEMIHOSTING    ?=
 # When set to 1, use dlmalloc for malloc/free/realloc (instead of liballoc).

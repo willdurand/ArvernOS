@@ -36,10 +36,36 @@ start:
   ; load the 64-bit GDT
   lgdt [gdt64.pointer]
 
+%ifdef CONFIG_LINUX_COMPAT
+  call enable_sse
+
+  ; enable the following instructions: rdfsbase, rdgsbase, wrfsbase, wrgsbase
+  mov eax, cr4
+  or eax, 1 << 16
+  mov cr4, eax
+%endif
+
   jmp gdt64.kernel_code:long_mode_start
 
-  ; Should not be reached.
+  ; should not be reached
   hlt
+
+enable_sse:
+  mov eax, 0x1        ; check for SSE
+  cpuid
+  test edx, 1 << 25
+  jz .no_sse          ; after this, SSE can be enabled
+  mov eax, cr0
+  and ax, 0xFFFB      ; clear coprocessor emulation CR0.EM
+  or ax, 0x2          ; set coprocessor monitoring  CR0.MP
+  mov cr0, eax
+  mov eax, cr4
+  or ax, 3 << 9       ; set CR4.OSFXSR and CR4.OSXMMEXCPT at the same time
+  mov cr4, eax
+  ret
+
+.no_sse:
+  ret
 
 ; -----------------------------------------------------------------------------
 ; make sure the kernel was really loaded by a Multiboot compliant bootloader
