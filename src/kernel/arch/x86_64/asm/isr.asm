@@ -4,8 +4,8 @@
   global exc%1
   exc%1:
     cli
-    push dword 0
-    push dword %1
+    push 0
+    push %1
     jmp int_common_stub
 %endmacro
 
@@ -24,7 +24,7 @@
   global exc%1
   exc%1:
     cli
-    push dword %1
+    push %1
     jmp int_common_stub
 %endmacro
 
@@ -32,8 +32,8 @@
   global irq%1
   irq%1:
     cli
-    push dword 0
-    push dword (32 + %1)
+    push 0
+    push (32 + %1)
     jmp irq_common_stub
 %endmacro
 
@@ -41,8 +41,8 @@
   global int%1
   int%1:
     cli
-    push dword 0
-    push dword %1
+    push 0
+    push %1
     jmp int_common_stub
 %endmacro
 
