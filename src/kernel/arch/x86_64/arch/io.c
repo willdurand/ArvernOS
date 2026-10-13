@@ -2,6 +2,7 @@
 
 #include <console/console.h>
 #include <drivers/keyboard.h>
+#include <drivers/serial.h>
 #include <keymap.h>
 
 static bool caps_lock_mode = false;
@@ -65,4 +66,8 @@ unsigned char arch_getchar(bool blocking)
 void arch_putchar(char c)
 {
   console_putchar(c);
+
+  // Mirror the console output to the serial port so that it can be captured
+  // when running without a display (e.g. `-nographic`).
+  serial_write(SERIAL_COM1, c);
 }
