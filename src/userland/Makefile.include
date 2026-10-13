@@ -37,6 +37,7 @@ build_dir    = $(target_build_dir)/userland-objects/src/userland/$(bin_name)
 dist_dir     = $(target_build_dir)/dist
 bin_dir      = $(dist_dir)/userland/bin
 target       = $(bin_dir)/$(bin_name)
+libc_archive = $(target_build_dir)/dist/libc-$(OS_NAME)-$(ARCH).a
 
 local_build_dir = ../local-build
 local_target    = $(local_build_dir)/$(bin_name)
@@ -141,7 +142,7 @@ ifeq ($(ENABLE_USERLAND_DEBUG), 1)
 	CFLAGS += -DENABLE_USERLAND_DEBUG
 endif
 
-LD_FLAGS += $(target_build_dir)/dist/libc-$(OS_NAME)-$(ARCH).a
+LD_FLAGS += $(libc_archive)
 
 ###############################################################################
 # Rules and targets
@@ -150,7 +151,9 @@ LD_FLAGS += $(target_build_dir)/dist/libc-$(OS_NAME)-$(ARCH).a
 all: $(target)
 .PHONY: all
 
-$(target): $(objs)
+# Relink whenever the static libc changes, otherwise the updated libc would not
+# make it into the binary.
+$(target): $(objs) $(libc_archive)
 	$(progress) "LD" $@
 	mkdir -p $(bin_dir)
 	$(LD) -o $@ $^ $(LD_FLAGS)
