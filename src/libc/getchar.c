@@ -8,14 +8,16 @@
 
 unsigned char getchar()
 {
-  unsigned char c;
+  unsigned char c = 0;
 
 #ifdef __is_libk
   c = arch_getchar(true);
 #else
+  ssize_t n;
+
   do {
-    read(STDIN_FILENO, &c, 1);
-  } while (c == 0);
+    n = read(STDIN_FILENO, &c, 1);
+  } while (n > 0 && c == 0);
 #endif
 
   return c;
