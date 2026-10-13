@@ -145,6 +145,7 @@ test: libc
 # Misc.
 ###############################################################################
 
+ENABLE_FRAMEBUFFER ?= 0
 ifeq ($(ENABLE_FRAMEBUFFER), 1)
 	KERNEL_CFLAGS    += -DENABLE_FRAMEBUFFER
 	KERNEL_ASM_FLAGS += -dENABLE_FRAMEBUFFER
