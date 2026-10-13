@@ -104,6 +104,14 @@ $ docker build -t willdurand/arvernos-toolchain .
 [...]
 ```
 
+The image supports both `linux/amd64` and `linux/arm64` platforms nowadays. Use
+the following command to build both:
+
+```
+$ docker buildx build --platform=linux/amd64,linux/arm64 -t willdurand/arvernos-toolchain .
+[...]
+```
+
 You can then use it with `docker run`:
 
 ```
