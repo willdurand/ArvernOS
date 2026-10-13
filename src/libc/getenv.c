@@ -6,7 +6,7 @@
 char* getenv(const char* name)
 {
   int i = 0;
-  while (environ[i] != NULL) {
+  while (i < ENVIRON_SIZE && environ[i] != NULL) {
     char* s = strchr(environ[i], '=');
 
     int pos = 0;

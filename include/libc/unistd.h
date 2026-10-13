@@ -12,8 +12,12 @@
 #define STDOUT_FILENO 1
 #define STDERR_FILENO 2
 
+/// Maximum number of environment variables (with the last entry reserved for
+/// the `NULL` terminator).
+#define ENVIRON_SIZE 10
+
 #ifndef __is_libk
-extern char* environ[];
+extern char* environ[ENVIRON_SIZE];
 #endif
 
 #endif

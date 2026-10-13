@@ -2,9 +2,10 @@
 #include <errno.h>
 #include <stdio.h>
 #include <sys/syscall.h>
+#include <unistd.h>
 
 // TODO: Use malloc() when it becomes possible.
-char* environ[10] = { NULL };
+char* environ[ENVIRON_SIZE] = { NULL };
 
 #ifndef __is_libk
 
