@@ -2,7 +2,7 @@
 
 # ArvernOS
 
-[![CircleCI](https://circleci.com/gh/willdurand/ArvernOS/tree/master.svg?style=svg)](https://circleci.com/gh/willdurand/ArvernOS/tree/master)
+[![CircleCI](https://circleci.com/gh/willdurand/ArvernOS/tree/main.svg?style=svg)](https://circleci.com/gh/willdurand/ArvernOS/tree/main)
 
 ArvernOS (formerly known as "willOS") is a minimal and experimental monolithic
 kernel (not really an Operating System because it cannot do a lot of things
