@@ -13,7 +13,7 @@ typedef enum action
 
 int main(int argc, char* argv[])
 {
-  printf("init: %s started with pid=%" PRId64 "\n", argv[0], getpid());
+  printf("init: %s started with pid=%d\n", argv[0], (int)getpid());
 
   const char* options = "hs";
   struct parg_state ps;

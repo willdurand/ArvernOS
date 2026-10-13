@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
   putenv("USER=user");
   putenv("SHELL=/bin/shell");
 
-  printf("shell: pid=%" PRId64 "\n", getpid());
+  printf("shell: pid=%d\n", (int)getpid());
   printf("\nWelcome!\n"
          "This is ArvernOS user shell. Type 'help' for more information.\n\n");
 
