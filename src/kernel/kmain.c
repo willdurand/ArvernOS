@@ -1,5 +1,6 @@
 #include <kmain.h>
 
+#include <boot.h>
 #include <core/isr.h>
 #include <fs/dev.h>
 #include <fs/proc.h>
@@ -19,7 +20,7 @@
 #include <time/timer.h>
 
 void initcall_init();
-void fs_init(uintptr_t initrd_addr);
+void fs_init();
 
 char* saved_cmdline = NULL;
 
@@ -54,8 +55,10 @@ void initcall_init()
   }
 }
 
-void fs_init(uintptr_t initrd_addr)
+void fs_init()
 {
+  uintptr_t initrd_addr = boot_info_get()->initrd_addr;
+
   vfs_init();
 
   if (initrd_addr) {
@@ -127,10 +130,12 @@ void kinit()
   k_exit(EXIT_FAILURE);
 }
 
-void kmain_start(uintptr_t initrd_addr, const char* cmdline)
+void kmain_start()
 {
+  const char* cmdline = boot_info_get()->cmdline;
+
   if (cmdline == NULL) {
-    PANIC("invalid cmdline passed to kmain_start()");
+    PANIC("no kernel command line was provided by the boot code");
   }
   INFO("kmain: cmdline is '%s'", cmdline);
   // Keep a copy of the original command line.
@@ -148,7 +153,7 @@ void kmain_start(uintptr_t initrd_addr, const char* cmdline)
 
   syscall_init();
 
-  fs_init(initrd_addr);
+  fs_init();
 
   initcall_init();
 
