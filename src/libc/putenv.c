@@ -4,7 +4,7 @@
 
 int putenv(char* str)
 {
-  for (int i = 0; i < 10; i++) {
+  for (int i = 0; i < ENVIRON_SIZE - 1; i++) {
     if (environ[i] == NULL) {
       environ[i] = str;
       return 0;
