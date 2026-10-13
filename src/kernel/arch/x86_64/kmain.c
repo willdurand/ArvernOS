@@ -1,5 +1,6 @@
 #include "kmain.h"
 #include <assert.h>
+#include <boot.h>
 #include <config/inish.h>
 #include <console/console.h>
 #include <core/elf.h>
@@ -23,20 +24,19 @@
 #include <stdlib.h>
 #include <string.h>
 
-void load_modules();
+void load_modules(boot_info_t* info);
 void load_network_config(inish_config_t* kernel_cfg, net_driver_t* driver);
 void load_system_config(inish_config_t* kernel_cfg);
 
-static uintptr_t initrd_addr = 0;
-
-void load_modules()
+void load_modules(boot_info_t* info)
 {
   // TODO: See also comment in `src/kernel/arch/x86_64/core/multiboot.c` about
   // the lack of support for more than one module.
   multiboot_tag_module_t* module = multiboot_find(MULTIBOOT_TAG_TYPE_MODULE);
 
   if (module != NULL && strcmp(module->cmdline, "initrd") == 0) {
-    initrd_addr = (uintptr_t)module->mod_start;
+    info->initrd_addr = (uintptr_t)module->mod_start;
+    info->initrd_size = module->mod_end - module->mod_start;
   }
 }
 
@@ -119,7 +119,13 @@ void kmain(uintptr_t addr)
   alloc_init();
   keyboard_init();
 
-  load_modules();
+  boot_info_t info = {
+    .initrd_addr = 0,
+    .initrd_size = 0,
+    .cmdline = multiboot_get_cmdline(),
+  };
+
+  load_modules(&info);
 
   if (console_mode_is_vbe()) {
     INFO("%s", "console: switching to fullscreen mode");
@@ -129,5 +135,6 @@ void kmain(uintptr_t addr)
     }
   }
 
-  kmain_start(initrd_addr, multiboot_get_cmdline());
+  boot_info_set(&info);
+  kmain_start();
 }
