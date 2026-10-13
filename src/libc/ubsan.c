@@ -93,7 +93,7 @@ void ubsan_panic_at(ubsan_source_location_t* location, const char* error)
 {
 #ifdef __is_libk
   if (location) {
-    PANIC("ubsan: file=%s line=%ld column=%ld error=%s",
+    PANIC("ubsan: file=%s line=%u column=%u error=%s",
           location->file,
           location->line,
           location->column,
@@ -104,7 +104,7 @@ void ubsan_panic_at(ubsan_source_location_t* location, const char* error)
   }
 #else
   if (location) {
-    printf("ubsan: file=%s line=%ld column=%ld error=%s\n",
+    printf("ubsan: file=%s line=%u column=%u error=%s\n",
            location->file,
            location->line,
            location->column,
