@@ -95,6 +95,10 @@ commands:
           title: kernel selftest
           command: |
             make run-test CMDLINE='<< parameters.cmdline >>' << parameters.extra_args >>
+      - unless:
+          condition: << parameters.board >>
+          steps:
+            - run: cat log/<< parameters.arch >>-test.log
 
 jobs:
   checks:
@@ -247,6 +251,7 @@ jobs:
           title: userland test suite
           command: |
             make run-test UBSAN=<< parameters.ubsan >>
+            cat log/x86_64-test.log
 
 workflows:
   default-workflow:
