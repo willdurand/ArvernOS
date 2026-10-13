@@ -396,11 +396,12 @@ gdb: QEMU_OPTIONS += -s -S
 gdb: gdbinit run-debug
 .PHONY: gdb
 
-run-test: ## run the project in test mode
+run-test: ## run the project in test mode (headless)
 run-test: BUILD_MODE = test
 run-test: CMDLINE = /bin/userland-testsuite
-run-test: QEMU_OPTIONS += -display curses
+run-test: QEMU_OPTIONS += -display none
 run-test: run-release
+	@$(progress) "LOG" $(log_file)
 .PHONY: run-test
 
 userland: ## compile the userland programs (statically linked to libc)
