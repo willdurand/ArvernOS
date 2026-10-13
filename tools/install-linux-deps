@@ -13,7 +13,6 @@ apt-get install -y \
 	nasm \
 	xorriso \
 	grub2-common \
-	grub-pc-bin \
 	git \
 	valgrind \
 	qemu-system \
@@ -24,6 +23,21 @@ apt-get install -y \
 	bc \
 	u-boot-tools \
 	libarchive-tools
+
+# The x86_64 target boots via GRUB, so building its ISO needs GRUB's BIOS
+# modules (the `i386-pc` directory). `grub-pc-bin` ships them but is only
+# available for x86, so we need to get the modules of the matching amd64
+# package instead on other archs...
+if [ "$(dpkg --print-architecture)" = "amd64" ]; then
+	apt-get install -y grub-pc-bin
+else
+	grub_version="$(dpkg-query -W -f '${Version}' grub2-common | sed 's/^[0-9]*://')"
+	grub_deb="grub-pc-bin_${grub_version}_amd64.deb"
+	wget -qO "/tmp/${grub_deb}" "http://archive.ubuntu.com/ubuntu/pool/main/g/grub2/${grub_deb}"
+	dpkg-deb -x "/tmp/${grub_deb}" /tmp/grub-pc-bin
+	cp -a /tmp/grub-pc-bin/usr/lib/grub/i386-pc /usr/lib/grub/
+	rm -rf "/tmp/${grub_deb}" /tmp/grub-pc-bin
+fi
 
 wget https://apt.llvm.org/llvm.sh
 chmod +x llvm.sh
