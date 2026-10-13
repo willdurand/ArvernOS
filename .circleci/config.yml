@@ -3,7 +3,7 @@ version: 2.1
 references:
   defaults: &defaults
     docker:
-      - image: willdurand/arvernos-circle:llvm-17
+      - image: willdurand/arvernos-circle:llvm-21
 
 commands:
   setup:

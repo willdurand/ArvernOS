@@ -58,7 +58,7 @@ building and working on ArvernOS.
 
 The following dependencies are required to build this project:
 
-- `llvm` (version 17 currently)
+- `llvm` (version 21 currently)
 - `make`
 - `qemu` (version >= 5)
 
