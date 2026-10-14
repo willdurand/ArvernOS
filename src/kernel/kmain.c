@@ -1,11 +1,6 @@
 #include <kmain.h>
 
 #include <boot.h>
-#include <fs/dev.h>
-#include <fs/proc.h>
-#include <fs/sock.h>
-#include <fs/tar.h>
-#include <fs/vfs.h>
 #include <initcall.h>
 #include <kshell/kshell.h>
 #include <logging.h>
@@ -43,42 +38,6 @@ void initcall_init()
     }
   }
 }
-
-int fs_init()
-{
-  uintptr_t initrd_addr = boot_info_get()->initrd_addr;
-
-  vfs_init();
-
-  if (initrd_addr) {
-    INFO("fs: mount tarfs (init ramdisk) - addr=%#lx", initrd_addr);
-    inode_t initrd = vfs_mount("/", tar_fs_create(initrd_addr));
-
-    if (!initrd) {
-      WARN("%s", "fs: failed to mount tarfs (init ramdisk)");
-    }
-  }
-
-  INFO("%s", "fs: mount devfs");
-  if (!dev_fs_init()) {
-    WARN("%s", "fs: failed to mount devfs");
-  }
-
-  INFO("%s", "fs: mount procfs");
-  if (!proc_fs_init()) {
-    WARN("%s", "fs: failed to mount procfs");
-  }
-
-  INFO("%s", "fs: mount sockfs");
-  if (!sock_fs_init()) {
-    WARN("%s", "fs: failed to mount sockfs");
-  }
-
-  return 0;
-}
-
-// NOTE: the filesystem must be mounted before the modules that depend on it.
-initcall_fs_register_with_priority(fs_init, 1);
 
 void kinit()
 {

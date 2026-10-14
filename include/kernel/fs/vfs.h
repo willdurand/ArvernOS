@@ -69,7 +69,12 @@ typedef struct vfs_node
   int64_t data;
 } vfs_node_t;
 
-bool vfs_init();
+/**
+ * Initializes the virtual file system.
+ *
+ * @return 0 on success
+ */
+int vfs_init();
 
 uint64_t vfs_open(inode_t inode, uint64_t flags);
 

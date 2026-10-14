@@ -22,8 +22,10 @@ typedef struct sock_entry
 
 /**
  * Initializes the "sock" file system.
+ *
+ * @return 0 on success
  */
-bool sock_fs_init();
+int sock_fs_init();
 
 #ifdef TEST_ENV
 inode_t sock_fs_create();
