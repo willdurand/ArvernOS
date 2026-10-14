@@ -8,7 +8,16 @@
 
 typedef intmax_t time_t;
 typedef intmax_t suseconds_t;
+
+#if defined(__arm__) && !defined(__aarch64__)
+// On 32-bit ARM, `intmax_t` is 64-bit, but the variadic syscall ABI cannot
+// express 64-bit arguments. AAPCS wants them on even registers, which the
+// assembler stub cannot guarantee. File offsets fit in 32 bits, so use a
+// 32-bit `off_t` on this target.
+typedef int32_t off_t;
+#else
 typedef intmax_t off_t;
+#endif
 
 #ifndef __pid_t_defined
 #if defined(__arm__) && !defined(__aarch64__)
