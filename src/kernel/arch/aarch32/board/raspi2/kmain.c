@@ -19,14 +19,8 @@ void kmain(uint32_t r0, uint32_t r1, uint32_t r2)
   atag_init((atag_header_t*)r2);
   alloc_init();
 
-  // We load the init ramdisk as the first (and only) initrd2 entry.
-  atag_initrd2_t* initrd = atag_get_initrd2_at(0);
-  boot_info_t info = {
-    .initrd_addr = (initrd != NULL) ? initrd->start : 0,
-    .initrd_size = (initrd != NULL) ? initrd->size : 0,
-    .cmdline = atag_get_cmdline(),
-  };
-  boot_info_set(&info);
+  boot_info_t info = { 0 };
+  atag_get_boot_info(&info);
 
-  kmain_start();
+  kmain_start(&info);
 }

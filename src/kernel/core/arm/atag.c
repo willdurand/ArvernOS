@@ -78,3 +78,12 @@ atag_initrd2_t* atag_get_initrd2_at(uint8_t index)
 
   return initrd2_entries[index];
 }
+
+void atag_get_boot_info(boot_info_t* info)
+{
+  atag_initrd2_t* initrd = atag_get_initrd2_at(0);
+
+  info->initrd_addr = (initrd != NULL) ? initrd->start : 0;
+  info->initrd_size = (initrd != NULL) ? initrd->size : 0;
+  info->cmdline = atag_get_cmdline();
+}

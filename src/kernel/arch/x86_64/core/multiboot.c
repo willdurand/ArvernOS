@@ -1,6 +1,7 @@
 #include "multiboot.h"
 #include <core/logging.h>
 #include <stdio.h>
+#include <string.h>
 
 reserved_areas_t build_reserved_areas();
 void* _multiboot_find(multiboot_tag_t* tag, uint16_t type);
@@ -37,6 +38,22 @@ multiboot_tag_framebuffer_t* multiboot_get_framebuffer()
 const char* multiboot_get_cmdline()
 {
   return cmdline;
+}
+
+void multiboot_get_boot_info(boot_info_t* info)
+{
+  info->initrd_addr = 0;
+  info->initrd_size = 0;
+  info->cmdline = multiboot_get_cmdline();
+
+  // TODO: See also comment in `build_reserved_areas()` about the lack of
+  // support for more than one module.
+  multiboot_tag_module_t* module = multiboot_find(MULTIBOOT_TAG_TYPE_MODULE);
+
+  if (module != NULL && strcmp(module->cmdline, "initrd") == 0) {
+    info->initrd_addr = (uintptr_t)module->mod_start;
+    info->initrd_size = module->mod_end - module->mod_start;
+  }
 }
 
 reserved_areas_t multiboot_get_reserved_areas()

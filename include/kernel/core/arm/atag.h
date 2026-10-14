@@ -9,6 +9,7 @@
 #ifndef CORE_ARM_ATAG_H
 #define CORE_ARM_ATAG_H
 
+#include <boot.h>
 #include <stdint.h>
 
 #define ATAG_NONE      0
@@ -70,5 +71,12 @@ const char* atag_get_cmdline();
  * @return the initrd2 entry or `NULL` if not found (or `index` is invalid)
  */
 atag_initrd2_t* atag_get_initrd2_at(uint8_t index);
+
+/**
+ * Fills the boot information from the parsed ARM tags.
+ *
+ * @param info the boot information to fill
+ */
+void atag_get_boot_info(boot_info_t* info);
 
 #endif
