@@ -10,8 +10,10 @@
 
 /**
  * Initializes the system timer.
+ *
+ * @return 0 on success
  */
-void timer_init();
+int timer_init();
 
 /**
  * Returns the number of seconds since the timer has been initialized.

@@ -1,6 +1,7 @@
 #include <sys/k_syscall.h>
 
 #include <arch/sys.h>
+#include <initcall.h>
 #include <sys/logging.h>
 #include <sys/syscall.h>
 
@@ -10,7 +11,7 @@ syscall_ptr_t syscall_handlers[300] = {
   [0 ... 299] = (syscall_ptr_t)k_not_implemented,
 };
 
-void syscall_init()
+int syscall_init()
 {
   INFO("%s", "sys: initialize syscalls");
 
@@ -33,9 +34,13 @@ void syscall_init()
   syscall_handlers[SYSCALL_OPENAT] = (syscall_ptr_t)k_openat;
 
   arch_syscall_init();
+
+  return 0;
 }
 
 int k_not_implemented()
 {
   return -ENOSYS;
 }
+
+initcall_core_register_with_priority(syscall_init, 4);

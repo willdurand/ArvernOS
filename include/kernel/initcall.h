@@ -1,16 +1,10 @@
 /**
  * @file
  *
- * Initcall functions are loaded after the architecture-specific code
- * initialization in `kmain_start()` and after the essential modules,
- * including:
+ * Initcall functions are automatically called when the kernel starts, after
+ * the architecture-specific code has booted it.
  *
- * - isr
- * - timer
- * - clock
- * - syscall
- * - fs
- *
+ * Use the `initcall_*_register()` helper functions to register them.
  */
 #ifndef INITCALL_H
 #define INITCALL_H
@@ -18,6 +12,7 @@
 #include <stdint.h>
 
 #define INITCALL_EARLY 1
+#define INITCALL_CORE  2
 #define INITCALL_FS    3
 #define INITCALL_LATE  5
 
@@ -34,6 +29,11 @@ typedef int (*initcall_t)();
 extern unsigned char __initcall_start;
 extern unsigned char __initcall_end;
 
+/// Call the registered initcall functions, in ascending level and priority
+/// order, and panics if any of them returns a non-zero value. Called once by
+/// `kmain_start()`.
+void initcall_init();
+
 // We must use `retain` in addition to `used` because of what's described in
 // https://lists.llvm.org/pipermail/llvm-dev/2021-February/148760.html and
 // https://reviews.llvm.org/D97447.
@@ -49,6 +49,12 @@ extern unsigned char __initcall_end;
 
 #define initcall_early_register(func)                                          \
   initcall_early_register_with_priority(func, INITCALL_PRIORITY_LATEST)
+
+#define initcall_core_register_with_priority(func, priority)                   \
+  _initcall(func, INITCALL_CORE, priority)
+
+#define initcall_core_register(func)                                           \
+  initcall_core_register_with_priority(func, INITCALL_PRIORITY_LATEST)
 
 #define initcall_fs_register_with_priority(func, priority)                     \
   _initcall(func, INITCALL_FS, priority)

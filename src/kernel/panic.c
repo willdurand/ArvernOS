@@ -161,4 +161,7 @@ static int kernel_symbols_init()
   return 0;
 }
 
-initcall_early_register(kernel_symbols_init);
+// Loading the debug symbols requires the filesystem to be mounted. `fs_init()`
+// runs at the earliest `INITCALL_FS` priority, so run just after it and before
+// the filesystem providers.
+initcall_fs_register_with_priority(kernel_symbols_init, 2);
