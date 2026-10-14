@@ -4,7 +4,6 @@
 #include <console/console.h>
 #include <core/multiboot.h>
 #include <core/tss.h>
-#include <drivers/keyboard.h>
 #include <drivers/serial.h>
 #include <kmain.h>
 #include <logging.h>
@@ -46,7 +45,6 @@ void kmain(uintptr_t addr)
   frame_init();
   paging_init();
   alloc_init();
-  keyboard_init();
 
   boot_info_t info = {
     .initrd_addr = 0,

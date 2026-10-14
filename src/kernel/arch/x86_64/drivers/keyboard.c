@@ -3,6 +3,7 @@
 #include <core/interrupt.h>
 #include <core/isr.h>
 #include <core/port.h>
+#include <initcall.h>
 #include <logging.h>
 #include <stdlib.h>
 
@@ -36,11 +37,13 @@ static void keyboard_callback(isr_stack_t* stack)
   UNUSED(*stack);
 }
 
-void keyboard_init()
+int keyboard_init()
 {
   INFO("%s", "drivers: initialize keyboard");
 
   isr_register_handler(IRQ1, keyboard_callback);
+
+  return 0;
 }
 
 uint8_t keyboard_get_scancode()
@@ -58,3 +61,5 @@ uint8_t keyboard_get_scancode()
 
   return scancode;
 }
+
+initcall_core_register(keyboard_init);
