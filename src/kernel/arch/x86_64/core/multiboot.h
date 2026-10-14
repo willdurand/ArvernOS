@@ -5,6 +5,7 @@
 #ifndef CORE_MULTIBOOT_H
 #define CORE_MULTIBOOT_H
 
+#include <boot.h>
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -181,6 +182,13 @@ reserved_areas_t multiboot_get_reserved_areas();
 multiboot_tag_framebuffer_t* multiboot_get_framebuffer();
 
 const char* multiboot_get_cmdline();
+
+/**
+ * Fills the boot information from the multiboot information.
+ *
+ * @param info the boot information to fill
+ */
+void multiboot_get_boot_info(boot_info_t* info);
 
 multiboot_info_t* multiboot_get_info();
 

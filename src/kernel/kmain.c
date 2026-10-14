@@ -67,8 +67,10 @@ void kinit()
   k_exit(EXIT_FAILURE);
 }
 
-void kmain_start()
+void kmain_start(const boot_info_t* info)
 {
+  boot_info_set(info);
+
   const char* cmdline = boot_info_get()->cmdline;
 
   if (cmdline == NULL) {

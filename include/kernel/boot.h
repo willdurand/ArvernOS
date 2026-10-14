@@ -19,8 +19,7 @@ typedef struct boot_info
 /**
  * Records the boot information.
  *
- * Must be called by the architecture-specific `kmain()` before it hands
- * control over to `kmain_start()`.
+ * Called by `kmain_start()` once the heap is available.
  *
  * @param info the boot information to set
  */
