@@ -23,22 +23,6 @@ void kmain_early_start()
        KERNEL_TARGET);
 }
 
-void initcall_init()
-{
-  DEBUG("initcalls: __initcall_start=%p __initcall_end=%p",
-        (void*)&__initcall_start,
-        (void*)&__initcall_end);
-
-  initcall_foreach(call_fn)
-  {
-    int retval = (*call_fn)();
-
-    if (retval != 0) {
-      PANIC("initcalls: call_fn=%p failed with retval=%d", *call_fn, retval);
-    }
-  }
-}
-
 void kinit()
 {
   int argc = 0;
