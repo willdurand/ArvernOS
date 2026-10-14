@@ -2,10 +2,10 @@
  * @file
  *
  * This file contains the functions shared by all arch- and/or board-specific
- * `kmain()` functions, which are the kernel entry point functions in ArvernOS.
+ * `kmain()` functions to start the kernel in ArvernOS.
  */
-#ifndef KMAIN_H
-#define KMAIN_H
+#ifndef KMAIN_START_H
+#define KMAIN_START_H
 
 #include <stdint.h>
 

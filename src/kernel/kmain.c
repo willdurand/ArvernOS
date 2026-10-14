@@ -1,4 +1,4 @@
-#include <kmain.h>
+#include <kmain_start.h>
 
 #include <boot.h>
 #include <initcall.h>
