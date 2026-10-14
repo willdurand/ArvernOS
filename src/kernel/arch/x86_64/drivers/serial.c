@@ -54,7 +54,9 @@ char serial_read(uint16_t com)
     ;
   }
 
-  return port_byte_in(com);
+  char c = port_byte_in(com);
+
+  return c == '\r' ? '\n' : c;
 }
 
 void serial_write(uint16_t com, char c)
