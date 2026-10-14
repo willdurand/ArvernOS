@@ -44,54 +44,53 @@
 #include <stdio.h>
 #include <time/timer.h>
 
-#define __LOG(level, format, ...)                                              \
+/// Timestamp prefix (`[seconds.microseconds]`) shared by the structured logger
+/// and the console output. The seconds are right-aligned on 3 characters and
+/// the fractional part is zero-padded to 6 digits.
+#define __LOG_TIMESTAMP_FORMAT "[%3" PRIu64 ".%03" PRIu64 "%03" PRIu64 "] "
+
+/// Writes one log line to the structured logger (serial port).
+#define __LOG_STREAM(time_us, level, format, ...)                              \
   fctprintf(&arch_logging_stream_output,                                       \
             NULL,                                                              \
-            "%-8s | %s:%d:%s(): " format "\n",                                 \
+            __LOG_TIMESTAMP_FORMAT "%-8s | %s:%d:%s(): " format "\n",          \
+            (time_us) / 1000000,                                               \
+            ((time_us) / 1000) % 1000,                                         \
+            (time_us) % 1000,                                                  \
             level,                                                             \
             __FILE__,                                                          \
             __LINE__,                                                          \
             __func__,                                                          \
-            __VA_ARGS__)
+            ##__VA_ARGS__)
 
-#define __LOG_INFO(format, ...) __LOG("INFO", format, __VA_ARGS__)
-#define INFO(format, ...)                                                      \
-  __LOG_INFO(format, __VA_ARGS__);                                             \
-  {                                                                            \
-    uint64_t time_us = timer_uptime_microseconds();                            \
-    printf("[%3" PRIu64 ".%03" PRIu64 "%03" PRIu64 "] " format "\n",           \
-           time_us / 1000000,                                                  \
-           time_us / 1000,                                                     \
-           time_us % 1000,                                                     \
-           __VA_ARGS__);                                                       \
-  }
+/// Writes one log line, using the same timestamp for the whole message.
+#define __LOG(level, format, ...)                                              \
+  do {                                                                         \
+    uint64_t __time_us = timer_uptime_microseconds();                          \
+    __LOG_STREAM(__time_us, level, format, ##__VA_ARGS__);                     \
+  } while (0)
 
-#define __LOG_WARN(format, ...) __LOG("WARN", format, __VA_ARGS__)
-#define WARN(format, ...)                                                      \
-  __LOG_WARN(format, __VA_ARGS__);                                             \
-  {                                                                            \
-    uint64_t time_us = timer_uptime_microseconds();                            \
-    printf("[%3" PRIu64 ".%03" PRIu64 "%03" PRIu64 "] " format "\n",           \
-           time_us / 1000000,                                                  \
-           time_us / 1000,                                                     \
-           time_us % 1000,                                                     \
-           __VA_ARGS__);                                                       \
-  }
+#define INFO(format, ...) __LOG("INFO", format, ##__VA_ARGS__)
+#define WARN(format, ...) __LOG("WARN", format, ##__VA_ARGS__)
 
 #ifdef ENABLE_KERNEL_DEBUG
 
-#define DEBUG(format, ...) __LOG("DEBUG", format, __VA_ARGS__)
+#define DEBUG(format, ...) __LOG("DEBUG", format, ##__VA_ARGS__)
 
 #define HEX_DEBUG(data, len)                                                   \
-  DEBUG("(hexdump) data=%p len=%" PRIu64, data, (uint64_t)len);                \
-  for (uint64_t i = 0; i < len; i++) {                                         \
-    if (i > 0 && i % 8 == 0) {                                                 \
-      fctprintf(&arch_logging_stream_output, NULL, "\n");                      \
+  do {                                                                         \
+    const uint8_t* __hex_data = (const uint8_t*)(data);                        \
+    uint64_t __hex_len = (uint64_t)(len);                                      \
+    DEBUG(                                                                     \
+      "(hexdump) data=%p len=%" PRIu64, (const void*)__hex_data, __hex_len);   \
+    for (uint64_t i = 0; i < __hex_len; i++) {                                 \
+      if (i > 0 && i % 8 == 0) {                                               \
+        fctprintf(&arch_logging_stream_output, NULL, "\n");                    \
+      }                                                                        \
+      fctprintf(&arch_logging_stream_output, NULL, "%02x ", __hex_data[i]);    \
     }                                                                          \
-    fctprintf(                                                                 \
-      &arch_logging_stream_output, NULL, "%02x ", (uint8_t)(data + i));        \
-  }                                                                            \
-  fctprintf(&arch_logging_stream_output, NULL, "\n");
+    fctprintf(&arch_logging_stream_output, NULL, "\n");                        \
+  } while (0)
 
 #else // ENABLE_KERNEL_DEBUG
 
