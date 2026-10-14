@@ -25,8 +25,13 @@
 
 /**
  * Initializes the keyboard (PS/2 controller) driver.
+ *
+ * We automatically register this function as a "core" initcall, and we need
+ * the interrupt controller to be initialized before that.
+ *
+ * @return 0 on success
  */
-void keyboard_init();
+int keyboard_init();
 
 /**
  * Returns the last scancode read from the keyboard or `0`.
