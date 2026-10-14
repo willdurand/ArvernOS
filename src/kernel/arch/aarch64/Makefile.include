@@ -35,6 +35,8 @@ libk_asm_files += $(wildcard $(arch_src)/asm/*.asm)
 ###############################################################################
 
 AARCH64_CFLAGS   += --target=aarch64-elf
+# Prevent the compiler from emitting unaligned loads/stores.
+AARCH64_CFLAGS   += -mstrict-align
 LIBC_CFLAGS      += $(AARCH64_CFLAGS)
 LIBC_ASM_FLAGS   += -c $(AARCH64_CFLAGS)
 KERNEL_ASM_FLAGS += -c $(AARCH64_CFLAGS)

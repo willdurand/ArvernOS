@@ -37,6 +37,8 @@ libk_asm_files += $(wildcard $(arch_src)/asm/*.asm)
 ###############################################################################
 
 AARCH32_CFLAGS   += --target=arm-none-eabi
+# Prevent the compiler from emitting unaligned loads/stores.
+AARCH32_CFLAGS   += -mstrict-align
 LIBC_CFLAGS      += $(AARCH32_CFLAGS)
 LIBC_ASM_FLAGS   += -c $(AARCH32_CFLAGS)
 KERNEL_ASM_FLAGS += -c $(AARCH32_CFLAGS)
