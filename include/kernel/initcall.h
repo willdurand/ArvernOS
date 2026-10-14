@@ -11,15 +11,12 @@
 
 #include <stdint.h>
 
-#define INITCALL_EARLY 1
-#define INITCALL_CORE  2
-#define INITCALL_FS    3
-#define INITCALL_LATE  5
+#define INITCALL_CORE 1
+#define INITCALL_FS   2
+#define INITCALL_LATE 3
 
 #define INITCALL_PRIORITY_EARLIEST 1
 #define INITCALL_PRIORITY_LATEST   5
-
-#pragma GCC poison OUT_OF_BOUNDS
 
 /// This type defines an initcall function, which is a function automatically
 /// called when the kernel is started. Use `initcall_*_register()` helper
@@ -43,12 +40,6 @@ void initcall_init();
   __initcall_##level##_##priority##_##func = func
 
 #define _initcall(func, level, priority) __initcall(func, level, priority)
-
-#define initcall_early_register_with_priority(func, priority)                  \
-  _initcall(func, INITCALL_EARLY, priority)
-
-#define initcall_early_register(func)                                          \
-  initcall_early_register_with_priority(func, INITCALL_PRIORITY_LATEST)
 
 #define initcall_core_register_with_priority(func, priority)                   \
   _initcall(func, INITCALL_CORE, priority)
