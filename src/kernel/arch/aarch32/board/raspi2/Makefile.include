@@ -13,7 +13,12 @@ config_txt  = $(dist_dir)/config.txt
 # Options for the different tools
 ###############################################################################
 
-QEMU_OPTIONS += -M raspi2b -serial null -serial stdio
+# The mini UART is the second serial port. Keep the live output on the terminal
+# and mirror it to the log file so that it can be reviewed (and printed in CI)
+# like the x86_64 boards.
+QEMU_OPTIONS += -M raspi2b
+QEMU_OPTIONS += -chardev stdio,id=miniuart,logfile=$(log_file)
+QEMU_OPTIONS += -serial null -serial chardev:miniuart
 QEMU_OPTIONS += -append "$(shell cat $(cmdline_txt))"
 QEMU_OPTIONS += -initrd $(initrd)
 
