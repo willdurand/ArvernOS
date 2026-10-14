@@ -27,7 +27,7 @@ int k_fstat(int fd, struct stat* statbuf)
   statbuf->st_size = stat.size;
   statbuf->st_mode = stat.mode;
 
-  SYS_DEBUG("fd=%d st_size=%" PRIi64, fd, statbuf->st_size);
+  SYS_DEBUG("fd=%d st_size=%" PRIi64, fd, (int64_t)statbuf->st_size);
 
   return 0;
 }
