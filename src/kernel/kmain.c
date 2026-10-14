@@ -40,11 +40,6 @@ void initcall_init()
         (void*)&__initcall_start,
         (void*)&__initcall_end);
 
-  if ((void*)&__initcall_start == NULL) {
-    DEBUG("%s", "initcalls: nothing to initialize");
-    return;
-  }
-
   initcall_foreach(call_fn)
   {
     int retval = (*call_fn)();
