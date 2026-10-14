@@ -1,4 +1,3 @@
-#include "../../kmain.h"
 #include <board.h>
 #include <boot.h>
 #include <core/arm/atag.h>
@@ -6,6 +5,7 @@
 #include <fs/tar.h>
 #include <fs/vfs.h>
 #include <kmain.h>
+#include <kmain_start.h>
 #include <logging.h>
 #include <stdint.h>
 #include <stdio.h>

@@ -1,10 +1,10 @@
-#include "../../kmain.h"
 #include <arvern/utils.h>
 #include <board.h>
 #include <boot.h>
 #include <core/arm/atag.h>
 #include <drivers/miniuart.h>
 #include <kmain.h>
+#include <kmain_start.h>
 #include <mmu/alloc.h>
 #include <stdlib.h>
 
