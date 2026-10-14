@@ -1,7 +1,6 @@
 #include <kmain.h>
 
 #include <boot.h>
-#include <core/isr.h>
 #include <fs/dev.h>
 #include <fs/proc.h>
 #include <fs/sock.h>
@@ -16,11 +15,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <sys/k_syscall.h>
-#include <time/clock.h>
-#include <time/timer.h>
-
-void initcall_init();
-void fs_init();
 
 char* saved_cmdline = NULL;
 
@@ -50,7 +44,7 @@ void initcall_init()
   }
 }
 
-void fs_init()
+int fs_init()
 {
   uintptr_t initrd_addr = boot_info_get()->initrd_addr;
 
@@ -79,7 +73,12 @@ void fs_init()
   if (!sock_fs_init()) {
     WARN("%s", "fs: failed to mount sockfs");
   }
+
+  return 0;
 }
+
+// NOTE: the filesystem must be mounted before the modules that depend on it.
+initcall_fs_register_with_priority(fs_init, 1);
 
 void kinit()
 {
@@ -139,16 +138,6 @@ void kmain_start()
   if (saved_cmdline == NULL) {
     PANIC("failed to copy cmdline, is heap memory available?");
   }
-
-  isr_init();
-
-  timer_init();
-
-  clock_init();
-
-  syscall_init();
-
-  fs_init();
 
   initcall_init();
 

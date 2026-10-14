@@ -14,8 +14,10 @@ typedef void (*isr_handler_t)(isr_stack_t* stack);
 
 /**
  * Initializes the Interrupt Service Routines (ISR).
+ *
+ * @return 0 on success
  */
-void isr_init();
+int isr_init();
 
 /**
  * Enables interrupts.

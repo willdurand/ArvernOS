@@ -10,8 +10,10 @@
 
 /**
  * Initializes the syscalls management.
+ *
+ * @return 0 on success
  */
-void syscall_init();
+int syscall_init();
 
 /**
  * This is a no-op syscall that should be used when an actual syscall is not

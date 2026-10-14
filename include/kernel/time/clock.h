@@ -10,8 +10,10 @@
 
 /**
  * Initializes the system clock.
+ *
+ * @return 0 on success
  */
-void clock_init();
+int clock_init();
 
 /**
  * Returns the current system time in microseconds.
