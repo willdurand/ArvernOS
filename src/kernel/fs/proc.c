@@ -2,6 +2,7 @@
 
 #include <arvern/utils.h>
 #include <fs/logging.h>
+#include <initcall.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -24,9 +25,16 @@ static vfs_driver_t proc_driver = {
   .create = NULL,
 };
 
-bool proc_fs_init()
+int proc_fs_init()
 {
-  return (bool)vfs_mount(FS_PROC_MOUNTPOINT, proc_fs_create());
+  INFO("%s", "fs: mount procfs");
+
+  if (!vfs_mount(FS_PROC_MOUNTPOINT, proc_fs_create())) {
+    WARN("%s", "fs: failed to mount procfs");
+    return -1;
+  }
+
+  return 0;
 }
 
 inode_t proc_fs_create()
@@ -88,3 +96,5 @@ uint64_t proc_read(inode_t inode, void* buffer, uint64_t size, uint64_t offset)
 
   return 0;
 }
+
+initcall_fs_register_with_priority(proc_fs_init, 4);

@@ -10,8 +10,10 @@
 
 /**
  * Initializes the "dev" filesystem.
+ *
+ * @return 0 on success
  */
-bool dev_fs_init();
+int dev_fs_init();
 
 /**
  * Creates a new devfs character device.

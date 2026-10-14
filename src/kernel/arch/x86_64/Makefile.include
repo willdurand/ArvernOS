@@ -113,7 +113,7 @@ test: libc
 	./$(target_build_dir)/vfs
 	# fs/tar
 	$(CC) $(CFLAGS_FOR_TESTS) -I$(tests_dir)/proxies/ -o $(target_build_dir)/tar \
-		$(kernel_tests_dir)/fs/tar.c $(kernel_src_dir)/fs/tar.c $(kernel_src_dir)/fs/vfs.c
+		$(kernel_tests_dir)/fs/tar.c $(kernel_src_dir)/fs/tar.c $(kernel_src_dir)/fs/vfs.c $(kernel_src_dir)/boot.c
 	./$(target_build_dir)/tar
 	# fs/proc
 	$(CC) $(CFLAGS_FOR_TESTS) -I$(tests_dir)/proxies/ -o $(target_build_dir)/proc \

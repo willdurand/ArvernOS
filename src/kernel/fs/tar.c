@@ -1,7 +1,9 @@
 #include <fs/tar.h>
 
 #include <arvern/utils.h>
+#include <boot.h>
 #include <fs/logging.h>
+#include <initcall.h>
 #include <inttypes.h>
 #include <stdbool.h>
 #include <stdint.h>
@@ -35,6 +37,25 @@ static vfs_driver_t tar_driver = {
   .cleanup = tar_cleanup,
   .create = NULL,
 };
+
+int tar_fs_init()
+{
+  uintptr_t address = boot_info_get()->initrd_addr;
+
+  if (!address) {
+    WARN("%s", "fs: no initial ramdisk, skipping the root filesystem");
+    return 0;
+  }
+
+  INFO("fs: mount tarfs (init ramdisk) - addr=%#lx", address);
+
+  if (!vfs_mount("/", tar_fs_create(address))) {
+    WARN("%s", "fs: failed to mount tarfs (init ramdisk)");
+    return -1;
+  }
+
+  return 0;
+}
 
 inode_t tar_fs_create(uintptr_t address)
 {
@@ -352,3 +373,5 @@ uint64_t tar_read_headers(uint64_t address)
 
   return i;
 }
+
+initcall_fs_register_with_priority(tar_fs_init, 2);

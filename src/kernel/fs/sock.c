@@ -3,6 +3,7 @@
 #include <arvern/utils.h>
 #include <fcntl.h>
 #include <fs/logging.h>
+#include <initcall.h>
 #include <inttypes.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -35,9 +36,16 @@ static vfs_driver_t sock_driver = {
   .create = sock_create,
 };
 
-bool sock_fs_init()
+int sock_fs_init()
 {
-  return (bool)vfs_mount(FS_SOCK_MOUNTPOINT, sock_fs_create());
+  INFO("%s", "fs: mount sockfs");
+
+  if (!vfs_mount(FS_SOCK_MOUNTPOINT, sock_fs_create())) {
+    WARN("%s", "fs: failed to mount sockfs");
+    return -1;
+  }
+
+  return 0;
 }
 
 inode_t sock_fs_create()
@@ -193,3 +201,5 @@ uint64_t sock_write(inode_t inode, void* ptr, uint64_t length, uint64_t offset)
 
   return i;
 }
+
+initcall_fs_register_with_priority(sock_fs_init, 5);

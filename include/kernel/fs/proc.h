@@ -18,8 +18,10 @@ typedef int proc_read_t(char* buf, size_t size);
  * Initializes the "proc" file system.
  *
  * The "proc" file system exposes kernel information using files.
+ *
+ * @return 0 on success
  */
-bool proc_fs_init();
+int proc_fs_init();
 
 // This function is used to create a procfs pseudo-file. It must be publicly
 // accessible but should generally NOT be used directly. Instead, use

@@ -26,6 +26,16 @@ typedef struct tar_header
 } tar_header_t;
 
 /**
+ * Mounts the initial ram disk as the root ("/") file system.
+ *
+ * The location of the archive is read from the boot information. When there is
+ * no initial ram disk, the function does nothing and succeeds.
+ *
+ * @return 0 on success
+ */
+int tar_fs_init();
+
+/**
  * Creates a TAR-based read-only file system root node.
  *
  * This function creates a TAR-based read-only file system by reading an

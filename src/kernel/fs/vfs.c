@@ -1,6 +1,7 @@
 #include <fs/vfs.h>
 
 #include <fs/logging.h>
+#include <initcall.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,7 +13,7 @@ inode_t vfs_namei_mount(const char* path, inode_t root);
 
 static vfs_node_t* vfs_root = NULL;
 
-bool vfs_init()
+int vfs_init()
 {
   INFO("%s", "fs: initialize virtual file system");
 
@@ -20,13 +21,13 @@ bool vfs_init()
 
   if (!vfs_root) {
     WARN("%s", "fs: failed to initialize virtual file system");
-    return false;
+    return -1;
   }
 
   vfs_root->parent = vfs_root;
   vfs_root->type |= FS_MOUNTPOINT;
 
-  return true;
+  return 0;
 }
 
 uint64_t vfs_open(inode_t inode, uint64_t mode)
@@ -439,3 +440,5 @@ void vfs_debug(inode_t node, int depth)
     vfs_debug(node->children[i], depth);
   }
 }
+
+initcall_fs_register_with_priority(vfs_init, 1);
