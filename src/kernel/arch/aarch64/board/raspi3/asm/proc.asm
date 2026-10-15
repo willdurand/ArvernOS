@@ -1,5 +1,6 @@
 .global ret_from_fork
 .global arch_task_switch
+.global switch_to_el0
 
 .include "macro-defs.asm"
 
@@ -32,3 +33,12 @@ arch_task_switch:
   ldr x30, [x8]
   mov sp, x9
   ret
+
+// Drops the CPU to EL0 and starts executing the program at the given entry
+// point (x0), with the user stack top (x1).
+switch_to_el0:
+  msr sp_el0,   x1
+  msr elr_el1,  x0
+  ldr x2,       =0x00000000 // EL0t, DAIF 0
+  msr spsr_el1, x2
+  eret

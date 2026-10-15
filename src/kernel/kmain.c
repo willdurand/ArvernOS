@@ -56,12 +56,11 @@ void kinit()
     INFO("kmain: loading %s...", argv[0]);
     kshell(argc, argv);
   } else {
-    // TODO: create task
+    INFO("switching to user mode... (%s)", argv[0]);
+    // `k_execv()` takes over the current task on success and never returns.
+    int retval = k_execv(argv[0], argv);
 
-    // INFO("kmain: switching to usermode... (%s)", argv[0]);
-    //
-    // k_execv(argv[0], argv);
-    WARN("cannot execute: %s", saved_cmdline);
+    WARN("cannot execute '%s' (ret=%d)", argv[0], retval);
   }
 
   k_exit(EXIT_FAILURE);
