@@ -104,6 +104,10 @@ ifeq ($(ARCH), aarch32)
 	# object with architecture supporting feature detected".
 	CFLAGS   += --target=arm-none-eabi -march=armv5te
 	LD_FLAGS += $(shell $(ARM_GCC) -print-libgcc-file-name)
+	# The aarch32 boards do not use an MMU yet, so the kernel and the user
+	# programs share the same flat address space. User programs must be linked
+	# above the kernel image/heap and below the initrd (loaded at 0x8000000).
+	LD_FLAGS += --image-base=0x1000000
 endif
 
 ifeq ($(ARCH), aarch64)

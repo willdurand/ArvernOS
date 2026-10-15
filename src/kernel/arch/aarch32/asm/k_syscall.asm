@@ -16,10 +16,14 @@ syscall_handler:
   ldr r8, [r6, r7, lsl #2]  // r7 contains the syscall number
   blx r8
   bl isr_disable_interrupts
-  str r0, [sp, #12]         // overwrite the value of r0 with r0) (a.k.a. the
-                            // return value coming from the syscall) in the
-                            // stack. It is currently #12 because we push {r2,
-                            // r3} in `kernel_entry`.
+  // Overwrite the saved r0 with the return value coming from the syscall, so
+  // that `kernel_exit` restores it in r0. The r0 slot lives at `sp + 8 + pad`,
+  // where `pad` is the padding value pushed by `kernel_entry` to keep the
+  // stack 8-byte aligned (it is 0 or 4, depending on the incoming stack
+  // pointer).
+  ldr r3, [sp, #4]
+  add r3, r3, #8
+  str r0, [sp, r3]
   kernel_exit
 
 not_a_syscall:
@@ -31,7 +35,7 @@ not_a_syscall:
 // libc).
 .global syscall
 syscall:
-  push {lr}
+  push {r4, r5, r6, r7, lr}
   mov r7, r0 // syscall number
   mov r0, r1 // 1st arg
   mov r1, r2 // 2nd arg
@@ -40,5 +44,5 @@ syscall:
   mov r4, r5 // 5th arg
   mov r5, r6 // 6th arg
   swi 0
-  pop {lr}
+  pop {r4, r5, r6, r7, lr}
   bx lr
