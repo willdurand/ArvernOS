@@ -57,8 +57,8 @@ int k_execv(const char* path, char* const argv[])
     return -ENOEXEC;
   }
 
-  uint64_t s[4096];
-  void* stack = (void*)&s[4095];
+  uint64_t s[USER_STACK_SIZE / sizeof(uint64_t)];
+  void* stack = (void*)&s[(USER_STACK_SIZE / sizeof(uint64_t)) - 1];
 
   // The initial stack is made of `uintptr_t`-sized words on all architectures.
   // That's what the crt0 of the different archs expect, and we need to support

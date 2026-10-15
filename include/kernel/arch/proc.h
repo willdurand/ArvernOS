@@ -7,6 +7,13 @@
 #include <proc/task.h>
 
 /**
+ * Size (in bytes) of the user stack that `k_execv()` prepares for a user
+ * program. On architectures with a memory management unit, the whole stack
+ * has to fit in this range so that it can be mapped as user-accessible.
+ */
+#define USER_STACK_SIZE (32 * 1024)
+
+/**
  * Creates and returns the initial task.
  *
  * This function is called by `task_init()`.

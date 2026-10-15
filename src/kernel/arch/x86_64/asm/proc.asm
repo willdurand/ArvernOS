@@ -1,5 +1,6 @@
 global arch_task_switch
 global ret_from_fork
+global switch_to_ring3
 
 arch_task_switch:
   push rbp
@@ -30,3 +31,17 @@ ret_from_fork:
   call task_schedule_tail
 
   call r12
+
+; Builds an `iretq` frame that drops the CPU to ring 3 (CPL=3), then performs
+; the `iretq`. This never returns.
+;
+; rdi = entry point
+; rsi = user stack top
+switch_to_ring3:
+  cli
+  push 0x23   ; SS: user data
+  push rsi    ; RSP: user stack
+  push 0x202  ; RFLAGS
+  push 0x2B   ; CS: user code
+  push rdi    ; RIP: entry point
+  iretq

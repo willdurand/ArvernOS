@@ -137,6 +137,14 @@ uint32_t paging_amount_for_byte_size(uint64_t start_address,
  */
 void identity_map(uint64_t address, uint64_t flags);
 
+/**
+ * Grants user access (i.e. ring 3) to an already-mapped range of pages.
+ *
+ * @param address the start address of the range
+ * @param byte_size the size of the range in bytes
+ */
+void paging_grant_user_access(uint64_t address, uint64_t byte_size);
+
 // The functions below are exposed for testing purposes.
 
 void _set_p4(page_table_t* table);

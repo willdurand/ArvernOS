@@ -429,6 +429,16 @@ void map_page_to_frame(page_number_t page_number,
 
   p1->entries[p1_idx] = frame | flags;
 
+  // On x86_64, a user-mode access is only allowed if the U/S bit is set at
+  // *every* level of the page walk (P4, P3, P2 and P1). Intermediate tables
+  // are created with supervisor rights, so we propagate the user bit here
+  // whenever the leaf page is user-accessible.
+  if ((flags & PAGING_FLAG_USER_ACCESSIBLE) == PAGING_FLAG_USER_ACCESSIBLE) {
+    p4->entries[p4_idx] |= PAGING_FLAG_USER_ACCESSIBLE;
+    p3->entries[p3_idx] |= PAGING_FLAG_USER_ACCESSIBLE;
+    p2->entries[p2_idx] |= PAGING_FLAG_USER_ACCESSIBLE;
+  }
+
   MMU_DEBUG("mapped page=%" PRIu64 " to frame=%" PRIu64 " (addr=%p)",
             page_number,
             frame_containing_address(frame),
@@ -599,4 +609,40 @@ void identity_map(uint64_t address, uint64_t flags)
 {
   page_number_t page = page_containing_address(address);
   map_page_to_frame(page, address, flags);
+}
+
+void paging_grant_user_access(uint64_t address, uint64_t byte_size)
+{
+  page_number_t start_page = page_containing_address(address);
+  uint32_t number_of_pages = paging_amount_for_byte_size(address, byte_size);
+
+  MMU_DEBUG("granting user access to %u page(s), starting at addr=%p",
+            number_of_pages,
+            (void*)address);
+
+  for (uint32_t i = 0; i < number_of_pages; i++) {
+    page_number_t page = start_page + i;
+
+    page_table_t* p4 = get_p4();
+    assert(p4 != NULL);
+
+    page_table_t* p3 = next_table_address(p4, _p4_index(page));
+    assert(p3 != NULL);
+
+    page_table_t* p2 = next_table_address(p3, _p3_index(page));
+    assert(p2 != NULL);
+
+    page_table_t* p1 = next_table_address(p2, _p2_index(page));
+    assert(p1 != NULL);
+
+    // The pages are already mapped, we only add the user bit on every level of
+    // the page walk so that ring 3 is allowed to access them.
+    p4->entries[_p4_index(page)] |= PAGING_FLAG_USER_ACCESSIBLE;
+    p3->entries[_p3_index(page)] |= PAGING_FLAG_USER_ACCESSIBLE;
+    p2->entries[_p2_index(page)] |= PAGING_FLAG_USER_ACCESSIBLE;
+    p1->entries[_p1_index(page)] |= PAGING_FLAG_USER_ACCESSIBLE;
+  }
+
+  // Changing the rights of existing entries requires flushing the TLB.
+  write_cr3(read_cr3());
 }
