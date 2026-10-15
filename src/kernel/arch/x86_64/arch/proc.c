@@ -1,20 +1,23 @@
 #include <arch/proc.h>
 
 #include <arch/task.h>
+#include <arvern/utils.h>
 #include <core/gdt.h>
 #include <logging.h>
 #include <mmu/frame.h>
+#include <mmu/paging.h>
 #include <stdlib.h>
 #include <string.h>
 
 extern void ret_from_fork();
+extern void switch_to_ring3(uintptr_t entry, uintptr_t user_stack_top);
 
 static task_t init_task = (task_t){
   { 0 },       // task_info_t
   0,           // task ID
   "",          // name
   RUNNING,     // state
-  0,           // counter
+  1,           // counter
   1,           // priority
   0,           // preempt_count
   KERNEL_TASK, // flags
@@ -39,7 +42,7 @@ task_t* arch_task_create(uint64_t clone_flags, uintptr_t entrypoint)
   p->priority = CURRENT_TASK->priority;
   p->state = RUNNING;
   p->counter = p->priority;
-  // disable preemtion until task_schedule_tail()
+  // disable preemption until task_schedule_tail()
   p->preempt_count = 1;
 
   uintptr_t* rsp = (uintptr_t*)((uintptr_t)p + PAGE_SIZE);
@@ -58,4 +61,19 @@ task_t* arch_task_create(uint64_t clone_flags, uintptr_t entrypoint)
   p->info.rsp = (uintptr_t)rsp;
 
   return p;
+}
+
+__attribute__((noreturn)) void arch_task_enter_user(uintptr_t entry,
+                                                    uintptr_t user_stack_top,
+                                                    task_t* task)
+{
+  UNUSED(task);
+
+  // `k_execv()` prepares the initial stack in kernel memory (the address space
+  // is flat and identity mapped). Make sure ring 3 is allowed to use it.
+  paging_grant_user_access(user_stack_top - USER_STACK_SIZE, USER_STACK_SIZE);
+
+  switch_to_ring3(entry, user_stack_top);
+
+  __builtin_unreachable();
 }
