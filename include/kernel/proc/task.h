@@ -11,9 +11,11 @@
 
 #include <arch/task.h>
 #include <stdint.h>
+#include <sys/types.h>
 
 // TODO: Get rid of this limitation.
-#define MAX_TASKS 64
+#define MAX_TASKS     64
+#define TASK_NAME_LEN 20
 
 #define KERNEL_TASK 0x01
 
@@ -35,8 +37,8 @@ typedef struct task
   // This should be the first field in this structure because it is easier to
   // access in assembly code.
   task_info_t info;
-  uint32_t id;
-  char name[20];
+  pid_t id;
+  char name[TASK_NAME_LEN];
   task_state_t state;
   int64_t counter;
   uint64_t priority;
