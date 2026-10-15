@@ -73,7 +73,6 @@ KERNEL_INCLUDES  += -I$(external_dir)/scalable-font2/
 # Arch-specific targets
 ###############################################################################
 
-arch-debug: grub_default = 1
 arch-debug: $(iso)
 .PHONY: arch-debug
 
