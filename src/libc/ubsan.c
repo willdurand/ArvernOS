@@ -89,6 +89,11 @@ void __ubsan_handle_function_type_mismatch(ubsan_source_location_t* location)
   ubsan_panic_at(location, "function type mismatch");
 }
 
+void __ubsan_handle_builtin_unreachable(ubsan_source_location_t* location)
+{
+  ubsan_panic_at(location, "builtin unreachable");
+}
+
 void ubsan_panic_at(ubsan_source_location_t* location, const char* error)
 {
 #ifdef __is_libk
