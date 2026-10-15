@@ -1,18 +1,20 @@
 #include <arch/proc.h>
 
 #include <arch/task.h>
+#include <arvern/utils.h>
 #include <string.h>
 
 #define PAGE_SIZE 4096
 
 extern void ret_from_fork();
+extern void switch_to_usr(uintptr_t entry, uintptr_t user_stack_top);
 
 static task_t init_task = (task_t){
   { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, // task_info_t
   0,                                   // task ID
   "",                                  // name
   RUNNING,                             // state
-  0,                                   // counter
+  1,                                   // counter
   1,                                   // priority
   0,                                   // preempt_count
   KERNEL_TASK,                         // flags
@@ -37,7 +39,7 @@ task_t* arch_task_create(uint64_t clone_flags, uintptr_t entrypoint)
   p->priority = CURRENT_TASK->priority;
   p->state = RUNNING;
   p->counter = p->priority;
-  // disable preemtion until task_schedule_tail()
+  // disable preemption until task_schedule_tail()
   p->preempt_count = 1;
 
   p->info.r4 = entrypoint;
@@ -46,4 +48,15 @@ task_t* arch_task_create(uint64_t clone_flags, uintptr_t entrypoint)
   p->info.pc = (uintptr_t)ret_from_fork;
 
   return p;
+}
+
+__attribute__((noreturn)) void arch_task_enter_user(uintptr_t entry,
+                                                    uintptr_t user_stack_top,
+                                                    task_t* task)
+{
+  UNUSED(task);
+
+  switch_to_usr(entry, user_stack_top);
+
+  __builtin_unreachable();
 }

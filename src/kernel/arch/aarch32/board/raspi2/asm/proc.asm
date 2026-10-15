@@ -1,5 +1,6 @@
-.global ret_from_fork
 .global arch_task_switch
+.global ret_from_fork
+.global switch_to_usr
 
 // r0: prev task
 // r1: next task
@@ -22,3 +23,12 @@ arch_task_switch:
 ret_from_fork:
   bl task_schedule_tail
   blx r4
+
+// r0: entry point
+// r1: user stack top
+switch_to_usr:
+  msr sp_usr, r1
+  mov r2, #0x10
+  msr spsr, r2
+  mov lr, r0
+  movs pc, lr
