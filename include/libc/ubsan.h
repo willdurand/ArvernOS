@@ -49,4 +49,6 @@ void __ubsan_handle_invalid_builtin(ubsan_source_location_t* location);
 
 void __ubsan_handle_function_type_mismatch(ubsan_source_location_t* location);
 
+void __ubsan_handle_builtin_unreachable(ubsan_source_location_t* location);
+
 #endif
