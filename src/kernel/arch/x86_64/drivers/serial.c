@@ -6,9 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 
-bool serial_is_waiting(uint16_t com);
 bool serial_is_transmitting(uint16_t com);
-char serial_read(uint16_t com);
 
 void serial_init(uint16_t com, uint16_t speed)
 {

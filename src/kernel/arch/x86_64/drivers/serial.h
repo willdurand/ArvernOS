@@ -2,6 +2,7 @@
 #ifndef DRIVERS_SERIAL_H
 #define DRIVERS_SERIAL_H
 
+#include <stdbool.h>
 #include <stdint.h>
 
 /// All the I/O ports are calculated relative to the data port. This is because
@@ -50,5 +51,22 @@ void serial_print(uint16_t com, const char* str);
  * @param c the character to print to the serial port
  */
 void serial_write(uint16_t com, char c);
+
+/**
+ * Reads a character from the serial port. This function blocks until a
+ * character is available.
+ *
+ * @param com a serial port number
+ * @return the character
+ */
+char serial_read(uint16_t com);
+
+/**
+ * Tells whether a character is waiting in the serial port receive queue.
+ *
+ * @param com a serial port number
+ * @return whether a character is available
+ */
+bool serial_is_waiting(uint16_t com);
 
 #endif

@@ -13,6 +13,12 @@ unsigned char arch_getchar(bool blocking)
   unsigned char c = 0;
 
   while (c == 0) {
+    // Allow input to come from the serial port so that we can still interact
+    // with the system in "-nographic" mode.
+    if (serial_is_waiting(SERIAL_COM1)) {
+      return serial_read(SERIAL_COM1);
+    }
+
     uint8_t scancode = keyboard_get_scancode();
     bool key_was_released = false;
 
