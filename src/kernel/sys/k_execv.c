@@ -6,14 +6,11 @@
 #include <errno.h>
 #include <fs/vfs.h>
 #include <proc/task.h>
+#include <proc/user_stack.h>
 #include <sys/logging.h>
 
 /// Maximum size of an executable we are willing to load.
 #define EXEC_MAX_FILE_SIZE (16 * 1024 * 1024)
-
-#define PUSH_TO_STACK(stack, type, value)                                      \
-  stack = (char*)stack - sizeof(type);                                         \
-  *((type*)stack) = value
 
 int k_execv(const char* path, char* const argv[])
 {
@@ -57,34 +54,27 @@ int k_execv(const char* path, char* const argv[])
     return -ENOEXEC;
   }
 
-  uint64_t s[USER_STACK_SIZE / sizeof(uint64_t)];
-  void* stack = (void*)&s[(USER_STACK_SIZE / sizeof(uint64_t)) - 1];
+  int argc = 0;
+  if (argv != NULL) {
+    while (argv[argc] != NULL) {
+      argc++;
+    }
+  }
 
-  // The initial stack is made of `uintptr_t`-sized words on all architectures.
-  // That's what the crt0 of the different archs expect, and we need to support
-  // 32-bit archs.
+  uintptr_t s[USER_STACK_SIZE / sizeof(uintptr_t)];
+  uintptr_t stack_top = (uintptr_t)&s[USER_STACK_SIZE / sizeof(uintptr_t)];
+  uintptr_t user_sp = create_user_stack(stack_top, argc, argv, NULL, entry);
 
-  // aux: AT_NULL
-  PUSH_TO_STACK(stack, uintptr_t, (uintptr_t)NULL);
-  PUSH_TO_STACK(stack, uintptr_t, 0);
-  // aux: AT_ENTRY
-  PUSH_TO_STACK(stack, uintptr_t, (uintptr_t)entry);
-  PUSH_TO_STACK(stack, uintptr_t, 9);
-  // aux: AT_PAGESZ
-  PUSH_TO_STACK(stack, uintptr_t, 4096);
-  PUSH_TO_STACK(stack, uintptr_t, 6);
-  // envp
-  PUSH_TO_STACK(stack, uintptr_t, (uintptr_t)NULL);
-  // argv
-  PUSH_TO_STACK(stack, uintptr_t, (uintptr_t)NULL);
-  PUSH_TO_STACK(stack, uintptr_t, (uintptr_t)argv[0]);
-  // argc
-  PUSH_TO_STACK(stack, uintptr_t, 1);
+  if (user_sp == 0) {
+    return -ENOMEM;
+  }
 
-  SYS_DEBUG(
-    "entering user mode: entry=%p argv[0]=%s", (void*)entry, task->name);
+  SYS_DEBUG("entering user mode: entry=%p argv[0]=%s user_sp=%p",
+            (void*)entry,
+            task->name,
+            user_sp);
 
-  arch_task_enter_user(entry, (uintptr_t)stack, task);
+  arch_task_enter_user(entry, user_sp, task);
 
   // `arch_task_enter_user()` never returns.
   __builtin_unreachable();
