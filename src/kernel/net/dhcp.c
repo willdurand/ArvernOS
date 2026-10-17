@@ -90,10 +90,18 @@ void dhcp_receive_packet(net_interface_t* interface,
                          udp_header_t* header)
 {
   UNUSED(*interface);
-  UNUSED(*header);
+
+  if (header->len < sizeof(udp_header_t)) {
+    return;
+  }
+
+  uint16_t packet_len = header->len - sizeof(udp_header_t);
+  if (packet_len > sizeof(dhcp_header_t)) {
+    packet_len = sizeof(dhcp_header_t);
+  }
 
   dhcp_header_t dhcp_header = { 0 };
-  memcpy(&dhcp_header, packet, sizeof(dhcp_header_t));
+  memcpy(&dhcp_header, packet, packet_len);
   dhcp_header.xid = ntohl(dhcp_header.xid);
 
   NET_DEBUG("dhcp packet received: opcode=0x%02x xid=0x%08x",
