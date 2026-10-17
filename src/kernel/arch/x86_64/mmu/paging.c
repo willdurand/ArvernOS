@@ -2,6 +2,8 @@
 #include <arvern/utils.h>
 #include <assert.h>
 #include <core/isr.h>
+// TODO: use a board-agnostic `boot_memory.h` instead of the board-provided
+// `core/multiboot.h`.
 #include <core/multiboot.h>
 #include <core/register.h>
 #include <inttypes.h>

@@ -2,6 +2,8 @@
 #ifndef MMU_FRAME_H
 #define MMU_FRAME_H
 
+// TODO: use a board-agnostic `boot_memory.h` instead of the board-provided
+// `core/multiboot.h`.
 #include <core/multiboot.h>
 #include <mmu/bitmap.h>
 #include <sys/types.h>

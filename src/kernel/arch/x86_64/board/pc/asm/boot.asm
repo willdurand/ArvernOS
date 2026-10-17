@@ -197,6 +197,10 @@ error:
 # -----------------------------------------------------------------------------
 .section .bss
 
+# The page tables must be 4KiB-aligned. We cannot rely on the linker script's
+# `ALIGN(4K)` for that because it only aligns the start of the `.bss` output
+# section, and other objects may contribute `.bss` before this one.
+.balign 4096
 p4_table:
   .skip 4096
 p3_table:
