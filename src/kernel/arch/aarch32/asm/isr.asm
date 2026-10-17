@@ -4,7 +4,11 @@
 
 .macro exc_handler type
 exc_handler_\type:
+  // Capture the faulting CPSR while we are still in the exception mode.
+  // `kernel_entry` does not clobber r0, so the captured value survives it.
+  mrs r0, spsr
   kernel_entry exc
+  mov r1, r0
   mov r0, #\type
   bl isr_exception_handler
   b hang

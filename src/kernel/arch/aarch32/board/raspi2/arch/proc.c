@@ -21,7 +21,6 @@ static task_t init_task = (task_t){
   0,                                   // kernel_stack_top
   NULL,                                // address_space
   0,                                   // user_stack_base
-
 };
 
 task_t* arch_task_init()
@@ -48,8 +47,11 @@ task_t* arch_task_create(uint64_t clone_flags, uintptr_t entrypoint)
 
   p->info.r4 = entrypoint;
   p->info.cpsr = 0x13 | (8 << 1); // svc + irq enabled
-  p->info.sp = (uintptr_t)p + PAGE_SIZE;
+  p->kernel_stack_top = (uintptr_t)p + PAGE_SIZE;
+  p->info.sp = p->kernel_stack_top;
   p->info.pc = (uintptr_t)ret_from_fork;
+  p->address_space = NULL;
+  p->user_stack_base = 0;
 
   return p;
 }

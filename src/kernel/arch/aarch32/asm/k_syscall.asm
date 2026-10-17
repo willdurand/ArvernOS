@@ -28,6 +28,11 @@ syscall_handler:
 
 not_a_syscall:
   mov r0, #2
+  // A SWI is taken to SVC mode, so `spsr` is not banked and still holds the
+  // caller's CPSR (read it after `kernel_entry`, which must not clobber the
+  // saved `r1`). Pass it so the handler can tell whether the SWI was issued
+  // from user mode.
+  mrs r1, spsr
   bl isr_exception_handler
   kernel_exit
 
