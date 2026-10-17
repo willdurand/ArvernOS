@@ -32,7 +32,7 @@ Tier 1 is the reference implementation and very likely the most advanced.
 Current Tier 1 archs/boards:
 
 - **x86_64**
-  - generic
+  - `pc`
 
 ### Tier 2
 
@@ -225,7 +225,7 @@ Use the `tools/fix-stacktrace.py` script to add missing symbol names to the
 output:
 
 ```
-$ ./tools/fix-stacktrace.py build/x86_64/dist/symbols.txt log/x86_64-debug.log
+$ ./tools/fix-stacktrace.py build/x86_64/pc/dist/symbols.txt log/x86_64-pc-debug.log
 [...]
 DEBUG    | src/kernel/arch/x86_64/kshell/kshell.c:108:run_command(): command='selftest' argc=1
 DEBUG    | src/kernel/arch/x86_64/kernel/panic.c:30:kernel_dump_stacktrace(): kernel stacktrace:
@@ -240,7 +240,7 @@ In addition, you might want to find the corresponding line of code in the source
 files by using `llvm-addr2line` or `llvm-symbolizer`:
 
 ```
-$ llvm-symbolizer --obj=build/x86_64/dist/kernel-x86_64.bin 0x01163B3
+$ llvm-symbolizer --obj=build/x86_64/pc/dist/kernel-x86_64-pc.bin 0x01163B3
 print_selftest_header
 /path/to/ArvernOS/src/kernel/kshell/selftest.c:12:3
 selftest
@@ -248,7 +248,7 @@ selftest
 ```
 
 ```
-$ llvm-addr2line -e build/x86_64/dist/kernel-x86_64.bin 01163B3
+$ llvm-addr2line -e build/x86_64/pc/dist/kernel-x86_64-pc.bin 01163B3
 /path/to/ArvernOS/src/kernel/kshell/selftest.c:12
 ```
 
