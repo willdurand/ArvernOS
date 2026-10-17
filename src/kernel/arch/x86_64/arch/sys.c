@@ -17,7 +17,9 @@ void arch_syscall_init()
   star |= (uint64_t)USER_BASE_SELECTOR << 48;
   write_msr(IA32_STAR, star);
   write_msr(IA32_LSTAR, (uint64_t)&syscall_handler);
-  write_msr(IA32_SFMASK, 0);
+  // Mask IF so that interrupts are disabled until the handler is ready to
+  // re-enable them, after the stack switch has happened.
+  write_msr(IA32_SFMASK, 0x200);
 
   SYS_DEBUG("IA32_EFER=0x%016x IA32_STAR=0x%016x IA32_LSTAR=0x%016x",
             read_msr(IA32_EFER),

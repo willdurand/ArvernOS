@@ -24,4 +24,12 @@ typedef struct tss
 
 void tss_init();
 
+/**
+ * Updates the kernel stack pointer (rsp0) used by the CPU when an interrupt
+ * or exception occurs while running in user mode (ring 3).
+ *
+ * @param rsp0 the new kernel stack pointer
+ */
+void tss_set_rsp0(uint64_t rsp0);
+
 #endif

@@ -44,3 +44,8 @@ void tss_init()
         gdt64.tss_high.type,
         gdt64.tss_high.limit19_16_and_flags);
 }
+
+void tss_set_rsp0(uint64_t rsp0)
+{
+  tss.rsp0 = rsp0;
+}

@@ -18,6 +18,10 @@ static task_t init_task = (task_t){
   1,                                   // priority
   0,                                   // preempt_count
   KERNEL_TASK,                         // flags
+  0,                                   // kernel_stack_top
+  NULL,                                // address_space
+  0,                                   // user_stack_base
+
 };
 
 task_t* arch_task_init()
@@ -59,4 +63,9 @@ __attribute__((noreturn)) void arch_task_enter_user(uintptr_t entry,
   switch_to_usr(entry, user_stack_top);
 
   __builtin_unreachable();
+}
+
+void arch_task_set_kernel_stack(task_t* task)
+{
+  UNUSED(task);
 }

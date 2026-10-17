@@ -8,10 +8,14 @@
 #include <core/register.h>
 #include <inttypes.h>
 #include <panic.h>
+#include <proc/task.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+// Invalid memory reference
+#define SIGSEGV 11
 
 void breakpoint_handler(isr_stack_t* stack);
 void page_fault_handler(isr_stack_t* stack);
@@ -142,6 +146,18 @@ void arch_isr_disable_interrupts()
 
 void isr_int_handler(isr_stack_t stack)
 {
+  // A fault raised from user code (CPL=3) is not a kernel bug: terminate the
+  // task with exit code set to SIGSEGV instead of panicking.
+  if ((stack.code_segment & 3) == 3) {
+    WARN("user fault: task_id=%d int=%d ip=%p cs=%#x, killing it",
+         CURRENT_TASK == NULL ? -1 : CURRENT_TASK->id,
+         (int)stack.id,
+         (void*)stack.instruction_pointer,
+         (unsigned int)stack.code_segment);
+    task_exit(SIGSEGV);
+    return;
+  }
+
   isr_handler_t handler = isr_get_handler(stack.id);
 
   if (handler != 0) {
