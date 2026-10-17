@@ -20,7 +20,7 @@ vbe_bpp                = 32
 # Tools
 ###############################################################################
 
-ASM  = nasm
+ASM  = $(CC)
 QEMU = qemu-system-x86_64
 
 ###############################################################################
@@ -64,11 +64,11 @@ libk_extra_objects += $(kernel_console_font)
 ###############################################################################
 
 LD_TARGET        = elf_x86_64
-LIBC_ASM_FLAGS   += -f elf64
+LIBC_ASM_FLAGS   += -c --target=x86_64
 LIBC_CFLAGS      += --target=x86_64 -fstack-protector-strong
 LIBC_CFLAGS      += -mno-mmx -mno-sse -mno-sse2 -mno-avx -mno-avx2
-KERNEL_ASM_FLAGS += -f elf64
-KERNEL_ASM_FLAGS += -dVBE_WIDTH=$(vbe_width) -dVBE_HEIGHT=$(vbe_height) -dVBE_BPP=$(vbe_bpp)
+KERNEL_ASM_FLAGS += -c --target=x86_64
+KERNEL_ASM_FLAGS += -Wa,--defsym,VBE_WIDTH=$(vbe_width) -Wa,--defsym,VBE_HEIGHT=$(vbe_height) -Wa,--defsym,VBE_BPP=$(vbe_bpp)
 KERNEL_CFLAGS    += -mno-red-zone
 KERNEL_INCLUDES  += -I$(external_dir)/scalable-font2/
 
@@ -154,7 +154,7 @@ test: libc
 ENABLE_FRAMEBUFFER ?= 0
 ifeq ($(ENABLE_FRAMEBUFFER), 1)
 	KERNEL_CFLAGS    += -DENABLE_FRAMEBUFFER
-	KERNEL_ASM_FLAGS += -dENABLE_FRAMEBUFFER
+	KERNEL_ASM_FLAGS += -Wa,--defsym,ENABLE_FRAMEBUFFER=1
 endif
 
 grub_default ?= 0

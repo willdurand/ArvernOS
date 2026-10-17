@@ -1,52 +1,58 @@
-; The code samples from "The little book about OS development" - which is where
-; the macros in this file are coming from - are in the public domain.
-%macro def_exception_handler 1
-  global exc%1
-  exc%1:
-    cli
-    push 0
-    push %1
-    jmp int_common_stub
-%endmacro
+# The code samples from "The little book about OS development" - which is where
+# the macros in this file are coming from - are in the public domain.
+#
+# This file is assembled with the LLVM integrated assembler (GNU syntax) in
+# Intel mode.
 
-; See: https://github.com/littleosbook/littleosbook/blob/e90faeb24c5c9fed8cde9a35974893706e81cbbf/interrupts.md
-;
-;     +------------+
-; +40 | %SS        |
-; +32 | %RSP       |
-; +24 | %CPU FLAGS |
-; +16 | %CS        |
-;  +8 | %IP        |
-;   0 | ERROR CODE | <-- %RSP
-;     +------------+
-;
-%macro def_exception_handler_err 1
-  global exc%1
-  exc%1:
-    cli
-    push %1
-    jmp int_common_stub
-%endmacro
+.intel_syntax noprefix
 
-%macro def_irq_handler 1
-  global irq%1
-  irq%1:
-    cli
-    push 0
-    push (32 + %1)
-    jmp irq_common_stub
-%endmacro
+.macro def_exception_handler num
+  .global exc\num
+exc\num:
+  cli
+  push 0
+  push \num
+  jmp int_common_stub
+.endm
 
-%macro def_int_handler 1
-  global int%1
-  int%1:
-    cli
-    push 0
-    push %1
-    jmp int_common_stub
-%endmacro
+# See: https://github.com/littleosbook/littleosbook/blob/e90faeb24c5c9fed8cde9a35974893706e81cbbf/interrupts.md
+#
+#     +------------+
+# +40 | %SS        |
+# +32 | %RSP       |
+# +24 | %CPU FLAGS |
+# +16 | %CS        |
+#  +8 | %IP        |
+#   0 | ERROR CODE | <-- %RSP
+#     +------------+
+#
+.macro def_exception_handler_err num
+  .global exc\num
+exc\num:
+  cli
+  push \num
+  jmp int_common_stub
+.endm
 
-%macro save_registers 0
+.macro def_irq_handler num
+  .global irq\num
+irq\num:
+  cli
+  push 0
+  push (32 + \num)
+  jmp irq_common_stub
+.endm
+
+.macro def_int_handler num
+  .global int\num
+int\num:
+  cli
+  push 0
+  push \num
+  jmp int_common_stub
+.endm
+
+.macro save_registers
   push rax
   push rbx
   push rcx
@@ -62,9 +68,9 @@
   push r13
   push r14
   push r15
-%endmacro
+.endm
 
-%macro restore_registers 0
+.macro restore_registers
   pop r15
   pop r14
   pop r13
@@ -80,11 +86,11 @@
   pop rcx
   pop rbx
   pop rax
-%endmacro
+.endm
 
 int_common_stub:
   save_registers
-  extern isr_int_handler
+  .extern isr_int_handler
   call isr_int_handler
   restore_registers
   add rsp, 16
@@ -93,15 +99,15 @@ int_common_stub:
 
 irq_common_stub:
   save_registers
-  extern isr_irq_handler
+  .extern isr_irq_handler
   call isr_irq_handler
   restore_registers
   add rsp, 16
   sti
   iretq
 
-; define exceptions
-; should be keep in sync with src/arch/x86_64/core/isr.h
+# define exceptions
+# should be kept in sync with src/kernel/arch/x86_64/core/isr.h
 def_exception_handler 0
 def_exception_handler 1
 def_exception_handler 2
@@ -135,8 +141,8 @@ def_exception_handler 29
 def_exception_handler 30
 def_exception_handler 31
 
-; define hardware interrupts
-; should be keep in sync with src/arch/x86_64/core/isr.h
+# define hardware interrupts
+# should be kept in sync with src/kernel/arch/x86_64/core/isr.h
 def_irq_handler 0
 def_irq_handler 1
 def_irq_handler 2
