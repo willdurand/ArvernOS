@@ -12,7 +12,8 @@ uint64_t frame_number_to_request(frame_number_t frame_number);
 uint8_t frames_for_bitmap = 0;
 bitmap_t* allocated_frames = NULL;
 
-static multiboot_tag_mmap_t* mmap = NULL;
+static const memory_region_t* memory_regions = NULL;
+static uint32_t memory_regions_count = 0;
 static uint64_t max_allocatable_frames = 0;
 static uint64_t first_request = 0;
 
@@ -20,10 +21,11 @@ void frame_init()
 {
   INFO("%s", "mmu: initialize frame allocator");
 
-  reserved_areas_t reserved_areas = multiboot_get_reserved_areas();
-  multiboot_tag_mmap_t* _mmap = multiboot_get_mmap();
+  memory_reserved_areas_t reserved_areas = memory_get_reserved_areas();
 
-  _frame_init(&reserved_areas, _mmap);
+  memory_regions_t regions = memory_get_regions();
+
+  _frame_init(&reserved_areas, regions.regions, regions.count);
 
   DEBUG("start=%p end=%p max_allocatable_frames=%" PRIu64
         " allocated_frames=%p used_count=%" PRIu64 " first_request=%" PRIu64,
@@ -35,15 +37,16 @@ void frame_init()
         first_request);
 }
 
-void _frame_init(reserved_areas_t* reserved_areas, multiboot_tag_mmap_t* _mmap)
+void _frame_init(memory_reserved_areas_t* reserved_areas,
+                 const memory_region_t* regions,
+                 uint32_t region_count)
 {
-  mmap = _mmap;
+  memory_regions = regions;
+  memory_regions_count = region_count;
 
   uint64_t available_memory = 0;
-  for (multiboot_mmap_entry_t* entry = mmap->entries;
-       (uint8_t*)entry < (uint8_t*)mmap + mmap->size;
-       entry = (multiboot_mmap_entry_t*)((uint64_t)entry + mmap->entry_size)) {
-    available_memory += entry->len;
+  for (uint32_t i = 0; i < region_count; i++) {
+    available_memory += regions[i].len;
   }
 
   max_allocatable_frames = available_memory / PAGE_SIZE;
@@ -138,10 +141,10 @@ opt_uint64_t read_mmap(uint64_t request)
 {
   uint64_t cur_num = 0;
 
-  for (multiboot_mmap_entry_t* entry = mmap->entries;
-       (uint8_t*)entry < (uint8_t*)mmap + mmap->size;
-       entry = (multiboot_mmap_entry_t*)((uint64_t)entry + mmap->entry_size)) {
-    if (entry->type != MULTIBOOT_MEMORY_AVAILABLE) {
+  for (uint32_t i = 0; i < memory_regions_count; i++) {
+    const memory_region_t* entry = &memory_regions[i];
+
+    if (entry->type != MEMORY_AVAILABLE) {
       continue;
     }
 
@@ -165,10 +168,9 @@ uint64_t frame_number_to_request(frame_number_t frame_number)
   uintptr_t frame = frame_start_address(frame_number);
 
   uint64_t request = 0;
-  for (multiboot_mmap_entry_t* entry = mmap->entries;
-       (uint8_t*)entry < (uint8_t*)mmap + mmap->size;
-       entry = (multiboot_mmap_entry_t*)((uint64_t)entry + mmap->entry_size)) {
-    if (entry->type != MULTIBOOT_MEMORY_AVAILABLE) {
+  for (uint32_t i = 0; i < memory_regions_count; i++) {
+    const memory_region_t* entry = &memory_regions[i];
+    if (entry->type != MEMORY_AVAILABLE) {
       continue;
     }
 

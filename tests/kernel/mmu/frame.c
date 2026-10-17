@@ -13,30 +13,21 @@ void kernel_panic(const char* format, ...)
 
 int main()
 {
-  reserved_areas_t reserved_areas = { .kernel_start = 0x1001,
-                                      .kernel_end = 0x1100,
-                                      .multiboot_start = 0x1200,
-                                      .multiboot_end = 0x2050,
-                                      .start = 0x1000,
-                                      .end = 0x2050 };
+  memory_reserved_areas_t reserved_areas = { .kernel_end = 0x1100,
+                                             .start = 0x1000,
+                                             .end = 0x2050 };
 
-  multiboot_tag_mmap_t* mmap = malloc(
-    sizeof(multiboot_tag_mmap_t) + sizeof(multiboot_mmap_entry_t) * NB_ENTRIES);
-
-  multiboot_mmap_entry_t entries[NB_ENTRIES] = {
-    { .type = MULTIBOOT_MEMORY_AVAILABLE, .addr = 0x000000, .len = 0x10000 },
-    { .type = MULTIBOOT_MEMORY_RESERVED, .addr = 0x010000, .len = 0x05000 },
-    { .type = MULTIBOOT_MEMORY_AVAILABLE, .addr = 0x015000, .len = 0x03000 },
+  const memory_region_t regions[NB_ENTRIES] = {
+    { .type = MEMORY_AVAILABLE, .addr = 0x000000, .len = 0x10000 },
+    { .type = MEMORY_RESERVED, .addr = 0x010000, .len = 0x05000 },
+    { .type = MEMORY_AVAILABLE, .addr = 0x015000, .len = 0x03000 },
   };
-  mmap->size = sizeof(multiboot_mmap_entry_t) * NB_ENTRIES;
-  mmap->entry_size = sizeof(multiboot_mmap_entry_t);
-  memcpy(mmap->entries, entries, sizeof(multiboot_mmap_entry_t) * NB_ENTRIES);
 
   bitmap_t* bitmap = (bitmap_t*)calloc(1, PAGE_SIZE);
 
   describe("frame_init()");
   _frame_set_bitmap(bitmap);
-  _frame_init(&reserved_areas, mmap);
+  _frame_init(&reserved_areas, regions, NB_ENTRIES);
   end_describe();
 
   describe("frame_deallocate()");
@@ -85,7 +76,6 @@ int main()
          "allocates previously deallocated frame");
   end_describe();
 
-  free(mmap);
   free(bitmap);
 
   return test_summary();

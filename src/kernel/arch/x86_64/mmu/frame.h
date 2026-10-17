@@ -2,9 +2,7 @@
 #ifndef MMU_FRAME_H
 #define MMU_FRAME_H
 
-// TODO: use a board-agnostic `boot_memory.h` instead of the board-provided
-// `core/multiboot.h`.
-#include <core/multiboot.h>
+#include <memory.h>
 #include <mmu/bitmap.h>
 #include <sys/types.h>
 
@@ -63,7 +61,9 @@ uint64_t frame_get_used_count();
 uint64_t frame_get_max_count();
 
 // The declarations below are for testing purposes.
-void _frame_init(reserved_areas_t* reserved_areas, multiboot_tag_mmap_t* _mmap);
+void _frame_init(memory_reserved_areas_t* reserved_areas,
+                 const memory_region_t* regions,
+                 uint32_t region_count);
 void _frame_set_bitmap(bitmap_t* bitmap);
 
 #endif

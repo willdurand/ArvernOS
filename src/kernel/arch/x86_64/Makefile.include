@@ -89,7 +89,8 @@ test: libc
 	./$(target_build_dir)/sock
 	# mmu/frame
 	$(CC) $(CFLAGS_FOR_TESTS) -Wformat=0 -I$(tests_dir)/proxies/ -o $(target_build_dir)/frame \
-		$(kernel_tests_dir)/mmu/frame.c $(arch_src)/mmu/frame.c $(board_src)/core/multiboot.c $(kernel_src_dir)/mmu/bitmap.c
+		$(kernel_tests_dir)/mmu/frame.c $(arch_src)/mmu/frame.c $(kernel_tests_dir)/mmu/memory.c \
+		$(kernel_src_dir)/mmu/bitmap.c
 	./$(target_build_dir)/frame
 	# config/inish
 	$(CC) $(CFLAGS_FOR_TESTS) -I$(tests_dir)/proxies/ -o $(target_build_dir)/inish \
@@ -101,7 +102,8 @@ test: libc
 	./$(target_build_dir)/bitmap
 	# mmu/paging
 	$(CC) $(CFLAGS_FOR_TESTS) -Wformat=0 -I$(tests_dir)/proxies/ -o $(target_build_dir)/paging \
-		$(kernel_tests_dir)/mmu/paging.c $(arch_src)/mmu/paging.c $(board_src)/core/multiboot.c $(arch_src)/mmu/frame.c $(kernel_src_dir)/mmu/bitmap.c $(arch_src)/core/register.c
+		$(kernel_tests_dir)/mmu/paging.c $(arch_src)/mmu/paging.c $(kernel_tests_dir)/mmu/memory.c \
+		$(arch_src)/mmu/frame.c $(kernel_src_dir)/mmu/bitmap.c $(arch_src)/core/register.c
 	./$(target_build_dir)/paging
 	# proc/user_stack
 	$(CC) $(CFLAGS_FOR_TESTS) -o $(target_build_dir)/user_stack \
