@@ -5,6 +5,7 @@
 #include <core/isr.h>
 #include <core/logging.h>
 #include <core/mmio.h>
+#include <proc/task.h>
 
 void arch_isr_init()
 {
@@ -35,7 +36,27 @@ void isr_irq_handler()
 
 void isr_exception_handler(uint8_t type)
 {
-  WARN("exception handler invoked: type=%d", type);
+  uint64_t esr = 0, far = 0, spsr = 0;
+  __asm__("mrs %0, esr_el1" : "=r"(esr) : /* no input */);
+  __asm__("mrs %0, far_el1" : "=r"(far) : /* no input */);
+  __asm__("mrs %0, spsr_el1" : "=r"(spsr) : /* no input */);
+
+  // A synchronous exception taken from user mode is not a kernel bug:
+  // terminate the task with exit code set to SIGSEGV instead of halting the
+  // kernel.
+  if ((spsr & 0xf) == 0) {
+    WARN("user fault: type=%d esr_el1=0x%lx far_el1=0x%lx, killing it",
+         type,
+         esr,
+         far);
+    task_exit(SIGSEGV);
+    return;
+  }
+
+  WARN("exception handler invoked: type=%d esr_el1=0x%lx far_el1=0x%lx",
+       type,
+       esr,
+       far);
 
   arch_halt();
 }

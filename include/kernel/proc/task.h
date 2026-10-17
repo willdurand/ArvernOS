@@ -19,6 +19,9 @@
 
 #define KERNEL_TASK 0x01
 
+// Invalid memory reference
+#define SIGSEGV 11
+
 /// This special variable points to the current task being executed.
 #define CURRENT_TASK (task_get_current())
 

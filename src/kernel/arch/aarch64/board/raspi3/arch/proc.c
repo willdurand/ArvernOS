@@ -8,7 +8,9 @@
 #define PAGE_SIZE 4096
 
 extern void ret_from_fork();
-extern void switch_to_el0(uintptr_t entry, uintptr_t user_stack_top);
+extern void switch_to_el0(uintptr_t entry,
+                          uintptr_t user_stack_top,
+                          uintptr_t kernel_stack_top);
 
 static task_t init_task = (task_t){
   { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, // task_info_t
@@ -48,7 +50,10 @@ task_t* arch_task_create(uint64_t clone_flags, uintptr_t entrypoint)
 
   p->info.x19 = entrypoint;
   p->info.pc = (uintptr_t)ret_from_fork;
-  p->info.sp = (uintptr_t)p + PAGE_SIZE;
+  p->kernel_stack_top = (uintptr_t)p + PAGE_SIZE;
+  p->info.sp = p->kernel_stack_top;
+  p->address_space = NULL;
+  p->user_stack_base = 0;
 
   return p;
 }
@@ -57,9 +62,9 @@ __attribute__((noreturn)) void arch_task_enter_user(uintptr_t entry,
                                                     uintptr_t user_stack_top,
                                                     task_t* task)
 {
-  UNUSED(task);
+  uintptr_t kernel_stack_top = (task != NULL) ? task->kernel_stack_top : 0;
 
-  switch_to_el0(entry, user_stack_top);
+  switch_to_el0(entry, user_stack_top, kernel_stack_top);
 
   __builtin_unreachable();
 }

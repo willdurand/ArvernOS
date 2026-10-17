@@ -14,9 +14,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Invalid memory reference
-#define SIGSEGV 11
-
 void breakpoint_handler(isr_stack_t* stack);
 void page_fault_handler(isr_stack_t* stack);
 
