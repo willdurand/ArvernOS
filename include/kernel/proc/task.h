@@ -44,6 +44,9 @@ typedef struct task
   uint64_t priority;
   int64_t preempt_count;
   uint64_t flags;
+  uintptr_t kernel_stack_top; // top (high address) of the kernel stack
+  void* address_space;        // per-task address space (may be `NULL`)
+  uintptr_t user_stack_base;  // base (low address) of the user stack
 } task_t;
 
 /**
@@ -86,7 +89,7 @@ task_t* task_get_current();
  * @param name the name of the task to create
  * @param clone_flags configuration flags
  * @param entrypoint the entrypoint of the task
- * @return `0` on success, `-1` otherwise
+ * @return pid on success, `-1` otherwise
  */
 int task_create(const char* name, uint64_t clone_flags, uintptr_t entrypoint);
 
@@ -94,5 +97,13 @@ int task_create(const char* name, uint64_t clone_flags, uintptr_t entrypoint);
  * Prints information about the tasks on the standard output.
  */
 void task_print_info();
+
+/**
+ * Sets the name of a task.
+ *
+ * @param task the task to update
+ * @param name the new name (a `NULL` value clears the name)
+ */
+void task_set_name(task_t* task, const char* name);
 
 #endif

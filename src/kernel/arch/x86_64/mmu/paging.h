@@ -9,6 +9,9 @@
 #define PAGE_ENTRIES 512
 #define P4_TABLE     0xfffffffffffff000
 
+/// End of the user address space.
+#define USER_SPACE_END 0x80000000
+
 /// Specifies whether the mapped page is loaded in memory.
 #define PAGING_FLAG_PRESENT (1 << 0)
 /// Controls whether writes to the mapped frames are allowed.
@@ -26,6 +29,17 @@ typedef struct page_table
 } page_table_t;
 
 typedef uint64_t page_number_t;
+
+/// The user space lives in P3 index 1.
+#define USER_P3_INDEX 1
+
+// Scratch virtual pages used to temporarily access physical frames while
+// building an address space. Their page numbers translate to virtual addresses
+// far away from both the kernel mapping and the user space.
+#define PAGING_TMP_P4 ((page_number_t)0xcafed000)
+#define PAGING_TMP_P3 ((page_number_t)0xcafee000)
+
+#define PAGING_FRAME_ADDRESS_MASK 0x000ffffffffff000ULL
 
 /**
  * @brief Initializes paging to separate virtual and physical memory.
@@ -138,12 +152,27 @@ uint32_t paging_amount_for_byte_size(uint64_t start_address,
 void identity_map(uint64_t address, uint64_t flags);
 
 /**
- * Grants user access (i.e. ring 3) to an already-mapped range of pages.
+ * Creates a new (empty) user address space that shares the kernel mappings.
  *
- * @param address the start address of the range
- * @param byte_size the size of the range in bytes
+ * @return the physical address of the new P4 table, or `NULL` on failure
  */
-void paging_grant_user_access(uint64_t address, uint64_t byte_size);
+void* paging_create_user_space();
+
+/**
+ * Activates an address space.
+ *
+ * @param space an address space returned by `paging_create_user_space()`, or
+ * `NULL` for the kernel address space
+ */
+void paging_activate(void* space);
+
+/**
+ * Deactivates an address space created by `paging_create_user_space()`, freeing
+ * its user pages and private page tables.
+ *
+ * @param space the address space to deactivate
+ */
+void paging_deactivate(void* space);
 
 // The functions below are exposed for testing purposes.
 

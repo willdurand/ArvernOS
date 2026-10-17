@@ -3,6 +3,7 @@
 #include <arch/task.h>
 #include <arvern/utils.h>
 #include <core/gdt.h>
+#include <core/tss.h>
 #include <logging.h>
 #include <mmu/frame.h>
 #include <mmu/paging.h>
@@ -10,7 +11,9 @@
 #include <string.h>
 
 extern void ret_from_fork();
-extern void switch_to_ring3(uintptr_t entry, uintptr_t user_stack_top);
+extern void switch_to_ring3(uintptr_t entry,
+                            uintptr_t user_stack_top,
+                            uintptr_t kernel_stack_top);
 
 static task_t init_task = (task_t){
   { 0 },       // task_info_t
@@ -21,6 +24,9 @@ static task_t init_task = (task_t){
   1,           // priority
   0,           // preempt_count
   KERNEL_TASK, // flags
+  0,           // kernel_stack_top
+  NULL,        // address_space
+  0,           // user_stack_base
 };
 
 task_t* arch_task_init()
@@ -59,6 +65,9 @@ task_t* arch_task_create(uint64_t clone_flags, uintptr_t entrypoint)
   *--rsp = 0x202;                    // cpu flags
 
   p->info.rsp = (uintptr_t)rsp;
+  p->kernel_stack_top = (uintptr_t)p + PAGE_SIZE;
+  p->address_space = NULL;
+  p->user_stack_base = 0;
 
   return p;
 }
@@ -67,13 +76,20 @@ __attribute__((noreturn)) void arch_task_enter_user(uintptr_t entry,
                                                     uintptr_t user_stack_top,
                                                     task_t* task)
 {
-  UNUSED(task);
+  // Reset the kernel stack to the top of this task's stack page, then let the
+  // assembly build the `iretq` frame that drops us to ring 3.
+  uintptr_t kernel_stack_top = (task != NULL) ? task->kernel_stack_top : 0;
 
-  // `k_execv()` prepares the initial stack in kernel memory (the address space
-  // is flat and identity mapped). Make sure ring 3 is allowed to use it.
-  paging_grant_user_access(user_stack_top - USER_STACK_SIZE, USER_STACK_SIZE);
-
-  switch_to_ring3(entry, user_stack_top);
+  switch_to_ring3(entry, user_stack_top, kernel_stack_top);
 
   __builtin_unreachable();
+}
+
+void arch_task_set_kernel_stack(task_t* task)
+{
+  if (task == NULL) {
+    return;
+  }
+
+  tss_set_rsp0(task->kernel_stack_top);
 }

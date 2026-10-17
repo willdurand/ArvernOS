@@ -1,6 +1,7 @@
 #include "paging.h"
 #include <arvern/utils.h>
 #include <assert.h>
+#include <core/isr.h>
 #include <core/multiboot.h>
 #include <core/register.h>
 #include <inttypes.h>
@@ -38,7 +39,9 @@ void remap_kernel();
 void zero_table(page_table_t* table);
 page_table_t* next_table_address(page_table_t* table, uint64_t index);
 opt_uint64_t pointed_frame(uint64_t entry);
-page_table_t* next_table_create(page_table_t* table, uint64_t index);
+page_table_t* next_table_create(page_table_t* table,
+                                uint64_t index,
+                                uint64_t flags);
 page_table_t* get_p4();
 opt_uint64_t paging_frame_allocate();
 void paging_frame_deallocate(frame_number_t frame_number);
@@ -49,6 +52,8 @@ extern void load_p4(uint64_t addr);
 
 static page_table_t* active_p4_table = (page_table_t*)P4_TABLE;
 static bool can_deallocate_frames = false;
+// Physical address of the kernel page table (set by `paging_init()`).
+static uint64_t kernel_p4_frame = 0;
 
 void paging_init()
 {
@@ -57,6 +62,10 @@ void paging_init()
   enable_nxe_bit();
   enable_write_protection();
   remap_kernel();
+
+  // Remember the kernel page table: once a user address space is active, CR3
+  // no longer points at it.
+  kernel_p4_frame = read_cr3();
 }
 
 void remap_kernel()
@@ -416,28 +425,18 @@ void map_page_to_frame(page_number_t page_number,
   page_table_t* p4 = get_p4();
   assert(p4 != NULL);
 
-  page_table_t* p3 = next_table_create(p4, p4_idx);
+  page_table_t* p3 = next_table_create(p4, p4_idx, flags);
   assert(p3 != NULL);
 
-  page_table_t* p2 = next_table_create(p3, p3_idx);
+  page_table_t* p2 = next_table_create(p3, p3_idx, flags);
   assert(p2 != NULL);
 
-  page_table_t* p1 = next_table_create(p2, p2_idx);
+  page_table_t* p1 = next_table_create(p2, p2_idx, flags);
   assert(p1 != NULL);
 
   assert((p1->entries[p1_idx] & PAGING_FLAG_PRESENT) == 0);
 
   p1->entries[p1_idx] = frame | flags;
-
-  // On x86_64, a user-mode access is only allowed if the U/S bit is set at
-  // *every* level of the page walk (P4, P3, P2 and P1). Intermediate tables
-  // are created with supervisor rights, so we propagate the user bit here
-  // whenever the leaf page is user-accessible.
-  if ((flags & PAGING_FLAG_USER_ACCESSIBLE) == PAGING_FLAG_USER_ACCESSIBLE) {
-    p4->entries[p4_idx] |= PAGING_FLAG_USER_ACCESSIBLE;
-    p3->entries[p3_idx] |= PAGING_FLAG_USER_ACCESSIBLE;
-    p2->entries[p2_idx] |= PAGING_FLAG_USER_ACCESSIBLE;
-  }
 
   MMU_DEBUG("mapped page=%" PRIu64 " to frame=%" PRIu64 " (addr=%p)",
             page_number,
@@ -445,13 +444,26 @@ void map_page_to_frame(page_number_t page_number,
             frame);
 }
 
-page_table_t* next_table_create(page_table_t* table, uint64_t index)
+page_table_t* next_table_create(page_table_t* table,
+                                uint64_t index,
+                                uint64_t flags)
 {
-  MMU_DEBUG("table=%p index=%" PRIu64, (void*)table, index);
+  MMU_DEBUG("table=%p index=%" PRIu64 " flags=%#x", (void*)table, index, flags);
+
+  // Intermediate page tables must be user-accessible for a ring-3 access to
+  // succeed: the CPU checks the U/S bit at every level. Leaf entries keep the
+  // actual permission, so propagating this flag here does not expose kernel
+  // pages that have `PAGING_FLAG_USER_ACCESSIBLE` clear in their leaf entry.
+  uint64_t entry_flags = PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE;
+  if ((flags & PAGING_FLAG_USER_ACCESSIBLE) != 0) {
+    entry_flags |= PAGING_FLAG_USER_ACCESSIBLE;
+  }
 
   if (table &&
       (table->entries[index] & PAGING_FLAG_PRESENT) == PAGING_FLAG_PRESENT) {
     MMU_DEBUG("page entry at index=%" PRIu64 " is present", index);
+
+    table->entries[index] |= (entry_flags & PAGING_FLAG_USER_ACCESSIBLE);
 
     return next_table_address(table, index);
   }
@@ -462,8 +474,7 @@ page_table_t* next_table_create(page_table_t* table, uint64_t index)
   opt_uint64_t frame = paging_frame_allocate();
   assert(frame.has_value);
 
-  table->entries[index] =
-    frame.value | PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE;
+  table->entries[index] = frame.value | entry_flags;
 
   page_table_t* next_table = next_table_address(table, index);
 
@@ -611,38 +622,144 @@ void identity_map(uint64_t address, uint64_t flags)
   map_page_to_frame(page, address, flags);
 }
 
-void paging_grant_user_access(uint64_t address, uint64_t byte_size)
+void* paging_create_user_space(void)
 {
-  page_number_t start_page = page_containing_address(address);
-  uint32_t number_of_pages = paging_amount_for_byte_size(address, byte_size);
-
-  MMU_DEBUG("granting user access to %u page(s), starting at addr=%p",
-            number_of_pages,
-            (void*)address);
-
-  for (uint32_t i = 0; i < number_of_pages; i++) {
-    page_number_t page = start_page + i;
-
-    page_table_t* p4 = get_p4();
-    assert(p4 != NULL);
-
-    page_table_t* p3 = next_table_address(p4, _p4_index(page));
-    assert(p3 != NULL);
-
-    page_table_t* p2 = next_table_address(p3, _p3_index(page));
-    assert(p2 != NULL);
-
-    page_table_t* p1 = next_table_address(p2, _p2_index(page));
-    assert(p1 != NULL);
-
-    // The pages are already mapped, we only add the user bit on every level of
-    // the page walk so that ring 3 is allowed to access them.
-    p4->entries[_p4_index(page)] |= PAGING_FLAG_USER_ACCESSIBLE;
-    p3->entries[_p3_index(page)] |= PAGING_FLAG_USER_ACCESSIBLE;
-    p2->entries[_p2_index(page)] |= PAGING_FLAG_USER_ACCESSIBLE;
-    p1->entries[_p1_index(page)] |= PAGING_FLAG_USER_ACCESSIBLE;
+  opt_uint64_t p4_frame = paging_frame_allocate();
+  if (!p4_frame.has_value) {
+    return NULL;
   }
 
-  // Changing the rights of existing entries requires flushing the TLB.
-  write_cr3(read_cr3());
+  opt_uint64_t p3_frame = paging_frame_allocate();
+  if (!p3_frame.has_value) {
+    paging_frame_deallocate(frame_containing_address(p4_frame.value));
+    return NULL;
+  }
+
+  // Do not free the frames that we temporarily map while writing the tables.
+  bool saved = can_deallocate_frames;
+  can_deallocate_frames = false;
+
+  map_page_to_frame(
+    PAGING_TMP_P4, p4_frame.value, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
+  page_table_t* new_p4 = (page_table_t*)page_start_address(PAGING_TMP_P4);
+
+  map_page_to_frame(
+    PAGING_TMP_P3, p3_frame.value, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
+  page_table_t* new_p3 = (page_table_t*)page_start_address(PAGING_TMP_P3);
+
+  zero_table(new_p4);
+  zero_table(new_p3);
+
+  // Share the kernel mappings: copy every P3 entry of the current address space
+  // except the user region, which stays private to the new space.
+  page_table_t* kernel_p3 = next_table_address(get_p4(), 0);
+  if (kernel_p3 != NULL) {
+    for (uint64_t i = 0; i < PAGE_ENTRIES; i++) {
+      if (i == USER_P3_INDEX) {
+        continue;
+      }
+      new_p3->entries[i] = kernel_p3->entries[i];
+    }
+  }
+
+  new_p4->entries[0] =
+    p3_frame.value | PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE;
+  new_p4->entries[511] =
+    p4_frame.value | PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE;
+
+  unmap(PAGING_TMP_P3);
+  unmap(PAGING_TMP_P4);
+
+  can_deallocate_frames = saved;
+
+  return (void*)p4_frame.value;
+}
+
+void paging_activate(void* space)
+{
+  uint64_t target = (space == NULL) ? kernel_p4_frame : (uint64_t)space;
+
+  if (read_cr3() != target) {
+    write_cr3(target);
+  }
+}
+
+void paging_deactivate(void* space)
+{
+  if (space == NULL) {
+    return;
+  }
+
+  uint64_t target = (uint64_t)space;
+  uint64_t old_p4 = read_cr3();
+  isr_disable_interrupts();
+  if (old_p4 != target) {
+    write_cr3(target);
+  }
+
+  page_table_t* p4 = get_p4();
+  frame_number_t p4_frame =
+    frame_containing_address(p4->entries[511] & PAGING_FRAME_ADDRESS_MASK);
+
+  page_table_t* p3 = next_table_address(p4, 0);
+
+  if (p3 != NULL) {
+    page_table_t* p2 = next_table_address(p3, USER_P3_INDEX);
+
+    if (p2 != NULL) {
+      for (uint64_t i = 0; i < PAGE_ENTRIES; i++) {
+        if ((p2->entries[i] & PAGING_FLAG_PRESENT) == 0) {
+          continue;
+        }
+
+        page_table_t* p1 = next_table_address(p2, i);
+        if (p1 == NULL) {
+          continue;
+        }
+
+        for (uint64_t j = 0; j < PAGE_ENTRIES; j++) {
+          if ((p1->entries[j] & PAGING_FLAG_PRESENT) == 0) {
+            continue;
+          }
+
+          opt_uint64_t f = pointed_frame(p1->entries[j]);
+          p1->entries[j] = 0;
+
+          if (f.has_value) {
+            paging_frame_deallocate(f.value);
+          }
+        }
+
+        opt_uint64_t p1f = pointed_frame(p2->entries[i]);
+        p2->entries[i] = 0;
+
+        if (p1f.has_value) {
+          paging_frame_deallocate(p1f.value);
+        }
+      }
+
+      opt_uint64_t p2f = pointed_frame(p3->entries[USER_P3_INDEX]);
+      p3->entries[USER_P3_INDEX] = 0;
+
+      if (p2f.has_value) {
+        paging_frame_deallocate(p2f.value);
+      }
+    }
+
+    // Free the private P3 table. Switch back first because we are currently
+    // running on it.
+    opt_uint64_t p3f = pointed_frame(p4->entries[0]);
+    p4->entries[0] = 0;
+
+    write_cr3(old_p4);
+
+    if (p3f.has_value) {
+      paging_frame_deallocate(p3f.value);
+    }
+  } else {
+    write_cr3(old_p4);
+  }
+
+  isr_enable_interrupts();
+  paging_frame_deallocate(p4_frame);
 }

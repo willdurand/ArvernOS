@@ -1,3 +1,4 @@
+#include <core/isr.h>
 #include <mmu/paging.h>
 #include <stdlib.h>
 #include <string.h>
@@ -17,6 +18,16 @@ char fake_frame[NB_FRAMES][PAGE_SIZE];
 uint32_t next_free_frame = 0;
 
 void kernel_panic(const char* format, ...)
+{
+  // noop implementation
+}
+
+void isr_enable_interrupts()
+{
+  // noop implementation
+}
+
+void isr_disable_interrupts()
 {
   // noop implementation
 }

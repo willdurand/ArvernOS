@@ -37,8 +37,10 @@ ret_from_fork:
 ;
 ; rdi = entry point
 ; rsi = user stack top
+; rdx = kernel stack top
 switch_to_ring3:
   cli
+  mov rsp, rdx
   push 0x23   ; SS: user data
   push rsi    ; RSP: user stack
   push 0x202  ; RFLAGS
