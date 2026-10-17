@@ -35,10 +35,12 @@ arch_task_switch:
   ret
 
 // Drops the CPU to EL0 and starts executing the program at the given entry
-// point (x0), with the user stack top (x1).
+// point (x0), with the user stack top (x1), and the kernel stack top (x2).
 switch_to_el0:
-  msr sp_el0,   x1
-  msr elr_el1,  x0
-  ldr x2,       =0x00000000 // EL0t, DAIF 0
-  msr spsr_el1, x2
+  msr sp_el0, x1
+  msr elr_el1, x0
+  msr spsr_el1, xzr
+  mov sp, x2
+  dsb ish
+  isb
   eret

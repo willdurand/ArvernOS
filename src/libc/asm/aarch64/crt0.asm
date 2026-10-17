@@ -4,6 +4,6 @@
 
 _start:
   ldr x0, =main
-  ldr x1, [sp], #8 // argc
-  mov x2, sp       // argv
+  ldr x1, [sp]     // argc
+  add x2, sp, #8   // argv
   bl start_main

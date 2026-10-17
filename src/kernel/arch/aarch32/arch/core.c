@@ -8,9 +8,6 @@
 #include <proc/task.h>
 #include <stdint.h>
 
-// Invalid memory reference.
-#define SIGSEGV 11
-
 // CPSR mode field: `0x1F` is the mask and `0x10` is USR mode.
 #define CPSR_MODE_MASK 0x1F
 #define CPSR_MODE_USR  0x10
@@ -60,6 +57,7 @@ void isr_exception_handler(uint8_t type, uint32_t spsr)
   // An exception taken from user mode is not a kernel bug: terminate the task
   // with exit code set to SIGSEGV instead of halting the kernel.
   if ((spsr & CPSR_MODE_MASK) == CPSR_MODE_USR) {
+    WARN("user fault: type=%d, killing it", type);
     task_exit(SIGSEGV);
     return;
   }
