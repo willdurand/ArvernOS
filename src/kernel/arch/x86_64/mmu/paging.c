@@ -2,11 +2,9 @@
 #include <arvern/utils.h>
 #include <assert.h>
 #include <core/isr.h>
-// TODO: use a board-agnostic `boot_memory.h` instead of the board-provided
-// `core/multiboot.h`.
-#include <core/multiboot.h>
 #include <core/register.h>
 #include <inttypes.h>
+#include <memory.h>
 #include <mmu/bitmap.h>
 #include <mmu/logging.h>
 #include <panic.h>
@@ -35,6 +33,7 @@
 void map_page_to_frame(page_number_t page_number,
                        uint64_t frame,
                        uint64_t flags);
+void map_kernel_section(uint64_t addr, uint64_t size, uint32_t flags);
 void enable_nxe_bit();
 void enable_write_protection();
 void remap_kernel();
@@ -117,77 +116,38 @@ void remap_kernel()
   }
   MMU_DEBUG("%s", "mapped first 1MB!");
 
-  multiboot_tag_framebuffer_t* entry = multiboot_get_framebuffer();
-  if (entry->common.framebuffer_addr != 0xB8000) {
+  memory_framebuffer_t framebuffer = memory_get_framebuffer();
+  if (framebuffer.addr != 0) {
     uint64_t pages_for_fb =
-      (entry->common.framebuffer_pitch * entry->common.framebuffer_height) /
-      PAGE_SIZE;
+      (framebuffer.pitch * framebuffer.height) / PAGE_SIZE;
 
     for (uint64_t i = 0; i < pages_for_fb; i++) {
-      identity_map((uint64_t)entry->common.framebuffer_addr + (i * PAGE_SIZE),
+      identity_map(framebuffer.addr + (i * PAGE_SIZE),
                    PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
     }
     MMU_DEBUG("%s", "mapped VBE framebuffer!");
   }
 
   MMU_DEBUG("%s", "mapping kernel sections");
-  multiboot_tag_elf_sections_t* tag =
-    (multiboot_tag_elf_sections_t*)multiboot_find(
-      MULTIBOOT_TAG_TYPE_ELF_SECTIONS);
-
-  uint64_t i = 0;
-  multiboot_elf_sections_entry_t* elf = NULL;
-
-  // TODO: create a foreach macro
-  for (i = 0, elf = ((multiboot_tag_elf_sections_t*)tag)->sections;
-       i < ((multiboot_tag_elf_sections_t*)tag)->num;
-       elf =
-         (multiboot_elf_sections_entry_t*)((uint64_t)elf +
-                                           ((multiboot_tag_elf_sections_t*)tag)
-                                             ->section_size),
-      i++) {
-    if ((elf->flags & MULTIBOOT_ELF_SECTION_FLAG_ALLOCATED) !=
-          MULTIBOOT_ELF_SECTION_FLAG_ALLOCATED ||
-        elf->type == MULTIBOOT_ELF_SECTION_TYPE_NULL) {
-      continue;
-    }
-
-    frame_number_t start_frame_number = frame_containing_address(elf->addr);
-    frame_number_t end_frame_number =
-      frame_containing_address(elf->addr + elf->size - 1);
-
-    uint64_t flags = PAGING_FLAG_PRESENT;
-
-    if (elf->flags & MULTIBOOT_ELF_SECTION_FLAG_WRITABLE) {
-      flags |= PAGING_FLAG_WRITABLE;
-    }
-
-    if (!(elf->flags & MULTIBOOT_ELF_SECTION_FLAG_EXECUTABLE)) {
-      flags |= PAGING_FLAG_NO_EXECUTE;
-    }
-
-    for (uint64_t i = start_frame_number; i <= end_frame_number; i++) {
-      identity_map(frame_start_address(i), flags);
-    }
-  }
+  memory_map_kernel_sections(map_kernel_section);
   MMU_DEBUG("%s", "kernel sections mapped!");
 
   // Once the kernel is correctly mapped with the right flags, we map the rest
-  // of the reserved area that was determined by the multiboot code. We make
-  // sure that it is PRESENT, we probably don't need any other flags.
-  reserved_areas_t reserved = multiboot_get_reserved_areas();
+  // of the reserved area that was determined by the boot code. We make sure
+  // that it is PRESENT, we probably don't need any other flags.
+  memory_reserved_areas_t reserved = memory_get_reserved_areas();
 
-  frame_number_t multiboot_start_frame =
+  frame_number_t reserved_start_frame =
     frame_containing_address(reserved.kernel_end);
-  frame_number_t multiboot_end_frame =
+  frame_number_t reserved_end_frame =
     frame_containing_address(reserved.end - 1);
 
   MMU_DEBUG("mapping end of the reserved area: start_frame=%" PRIu64
             " end_frame=%" PRIu64,
-            multiboot_start_frame,
-            multiboot_end_frame);
+            reserved_start_frame,
+            reserved_end_frame);
 
-  for (uint64_t i = multiboot_start_frame; i <= multiboot_end_frame; i++) {
+  for (uint64_t i = reserved_start_frame; i <= reserved_end_frame; i++) {
     identity_map(frame_start_address(i), PAGING_FLAG_PRESENT);
   }
   MMU_DEBUG("%s", "end of reserved area mapped!");
@@ -218,6 +178,26 @@ void remap_kernel()
   page_number_t old_page_table = page_containing_address(old_page_table_frame);
   unmap(old_page_table);
   DEBUG("guard page at %p", (void*)page_start_address(old_page_table));
+}
+
+void map_kernel_section(uint64_t addr, uint64_t size, uint32_t section_flags)
+{
+  frame_number_t start_frame_number = frame_containing_address(addr);
+  frame_number_t end_frame_number = frame_containing_address(addr + size - 1);
+
+  uint64_t flags = PAGING_FLAG_PRESENT;
+
+  if (section_flags & MEMORY_SECTION_WRITABLE) {
+    flags |= PAGING_FLAG_WRITABLE;
+  }
+
+  if (!(section_flags & MEMORY_SECTION_EXECUTABLE)) {
+    flags |= PAGING_FLAG_NO_EXECUTE;
+  }
+
+  for (uint64_t i = start_frame_number; i <= end_frame_number; i++) {
+    identity_map(frame_start_address(i), flags);
+  }
 }
 
 void enable_nxe_bit()
