@@ -286,12 +286,6 @@ long_mode_start:
   mov fs, ax
   mov gs, ax
 
-  mov dx, 0x3F8
-  mov al, 'C'                      # 'C' for "Calling main"
-  out dx, al
-  mov al, 10
-  out dx, al
-
   call kmain
 
   # Should not happen.
