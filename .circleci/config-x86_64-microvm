@@ -1,0 +1,8 @@
+# Configuration file for x86_64/microvm
+LLVM_PREFIX =
+LLVM_SUFFIX = -21
+
+ARCH  = x86_64
+BOARD = microvm
+
+CONFIG_USE_FAKE_CLOCK = 1
