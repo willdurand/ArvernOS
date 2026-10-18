@@ -1,9 +1,6 @@
 var searchData=
 [
-  ['kb_5farrow_5fup_0',['KB_ARROW_UP',['../keyboard_8h.html#a85cb0c863f1b67d9b99c728634295929',1,'keyboard.h']]],
-  ['kb_5fbackspace_1',['KB_BACKSPACE',['../keyboard_8h.html#a0b41f74350cf619c4f080a98d06eec85',1,'keyboard.h']]],
-  ['kb_5fcaps_5flock_2',['KB_CAPS_LOCK',['../keyboard_8h.html#a8d228ccce74894dba08d2d8f9f2e07da',1,'keyboard.h']]],
-  ['kb_5fenter_3',['KB_ENTER',['../keyboard_8h.html#a70388a0a0edc2a476657e42919b55655',1,'keyboard.h']]],
-  ['kb_5flshift_4',['KB_LSHIFT',['../keyboard_8h.html#aa118eb14764e4006d95472b4e7a44b59',1,'keyboard.h']]],
-  ['kb_5frshift_5',['KB_RSHIFT',['../keyboard_8h.html#a2e1993a35d9afd0cfd9335fc50572add',1,'keyboard.h']]]
+  ['heap_5fsize_0',['HEAP_SIZE',['../x86__64_2mmu_2alloc_8h.html#a1b45302695680930829cac31d65e41e1',1,'alloc.h']]],
+  ['heap_5fstart_1',['HEAP_START',['../x86__64_2mmu_2alloc_8h.html#ae9739bcecd10d5962cc10c12bf01594f',1,'alloc.h']]],
+  ['htons_2',['HTONS',['../inet_8h.html#a69a7a4951ff21b302267532c21ee78fc',1,'inet.h']]]
 ];

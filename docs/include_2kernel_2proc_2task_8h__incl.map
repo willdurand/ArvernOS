@@ -1,7 +1,14 @@
 <map id="include/kernel/proc/task.h" name="include/kernel/proc/task.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="33,5,163,46"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="63,5,194,46"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="5,94,92,120"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="88,48,66,82,62,79,83,45"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="116,94,181,120"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="113,45,135,79,130,82,108,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="107,49,74,85,70,81,110,44"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="94,168,158,193"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="130,45,129,153,124,151,126,48"/>
+<area shape="rect" id="Node000004" href="$types_8h.html" title=" " alt="" coords="172,94,261,120"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="151,44,194,83,189,84,150,49"/>
+<area shape="poly" id="edge6_Node000004_Node000003" title=" " alt="" coords="204,119,154,160,151,156,199,121"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="182,168,256,193"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="219,118,220,154,216,151,215,122"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="281,168,349,193"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="234,118,289,159,284,158,232,123"/>
 </map>

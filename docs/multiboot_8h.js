@@ -11,6 +11,7 @@ var multiboot_8h =
     [ "reserved_areas_t", "structreserved__areas__t.html", null ],
     [ "multiboot_color_t", "structmultiboot__color__t.html", null ],
     [ "multiboot_tag_framebuffer_common_t", "structmultiboot__tag__framebuffer__common__t.html", null ],
-    [ "multiboot_tag_framebuffer_t", "structmultiboot__tag__framebuffer__t.html", null ],
-    [ "multiboot_find", "multiboot_8h.html#a531ddb1c49012191e43cfa192bd607ba", null ]
+    [ "multiboot_tag_framebuffer_t", "structmultiboot__tag__framebuffer__t.html", "structmultiboot__tag__framebuffer__t" ],
+    [ "multiboot_find", "multiboot_8h.html#a531ddb1c49012191e43cfa192bd607ba", null ],
+    [ "multiboot_get_boot_info", "multiboot_8h.html#a5ccf779d3d8526a875e61b52e7e1d24f", null ]
 ];

@@ -1,0 +1,5 @@
+<map id="memory_regions_t" name="memory_regions_t">
+<area shape="rect" id="Node000001" title="The physical memory map: a contiguous array of regions and its length." alt="" coords="5,102,134,128"/>
+<area shape="rect" id="Node000002" href="$structmemory__region__t.html" title=" " alt="" coords="9,5,130,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="72,45,72,102,67,101,67,48"/>
+</map>

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['todo_20list_0',['Todo List',['../todo.html',1,'']]]
+  ['getting_20the_20sources_0',['Getting the sources',['../index.html#autotoc_md7',1,'']]],
+  ['goals_1',['Goals',['../index.html#autotoc_md1',1,'']]]
 ];

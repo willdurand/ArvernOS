@@ -1,6 +1,6 @@
 var idt_8h =
 [
-    [ "idt_gate_t", "structidt__gate__t.html", null ],
+    [ "idt_gate_t", "structidt__gate__t.html", "structidt__gate__t" ],
     [ "idt_register_t", "structidt__register__t.html", null ],
     [ "IDT_ENTRIES", "idt_8h.html#a2a59a505aa55f15c152f30f811fbd310", null ],
     [ "idt_load", "idt_8h.html#ac32911224d6d0fd8e287f2e021ee3ba4", null ],

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['raspberry_20pi_202_0',['Raspberry Pi 2',['../ref_board_raspi2.html',1,'refArch_aarch32']]],
-  ['raspberry_20pi_203_1',['Raspberry Pi 3',['../ref_board_raspi3.html',1,'refArch_aarch64']]]
+  ['file_0',['file',['../ref_board_raspi2.html#autotoc_md21',1,'config file'],['../ref_board_raspi3.html#autotoc_md25',1,'config file'],['../ref_arch_x86_64.html#autotoc_md30',1,'config file']]],
+  ['files_1',['config files',['../index.html#autotoc_md18',1,'']]]
 ];

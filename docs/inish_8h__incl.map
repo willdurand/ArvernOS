@@ -1,16 +1,16 @@
 <map id="include/kernel/config/inish.h" name="include/kernel/config/inish.h">
 <area shape="rect" id="Node000001" title=" " alt="" coords="59,5,199,46"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="5,241,80,267"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="124,48,55,228,50,226,119,46"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="124,47,55,228,50,226,119,46"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="210,241,275,267"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="170,44,198,65,222,93,237,126,245,163,247,226,242,226,239,163,232,128,218,95,195,69,167,49"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="168,44,198,65,222,93,237,126,245,163,247,227,242,225,239,163,232,128,218,95,195,69,169,49"/>
 <area shape="rect" id="Node000004" href="$stat_8h.html" title=" " alt="" coords="128,94,208,120"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="141,45,158,79,153,81,136,48"/>
-<area shape="rect" id="Node000005" href="$types_8h.html" title=" " alt="" coords="103,168,193,193"/>
-<area shape="poly" id="edge8_Node000001_Node000005" title=" " alt="" coords="125,47,117,81,118,119,133,153,128,155,113,120,112,81,119,46"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="167,121,158,153,153,152,162,119"/>
-<area shape="poly" id="edge5_Node000005_Node000002" title=" " alt="" coords="131,196,74,235,71,230,128,192"/>
-<area shape="poly" id="edge7_Node000005_Node000003" title=" " alt="" coords="165,192,216,230,213,234,162,196"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="139,44,158,80,153,80,138,49"/>
+<area shape="rect" id="Node000005" href="$types_8h.html" title=" " alt="" coords="103,168,192,193"/>
+<area shape="poly" id="edge8_Node000001_Node000005" title=" " alt="" coords="123,44,117,81,118,119,134,154,128,154,113,120,112,81,121,49"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="166,118,158,154,153,151,163,122"/>
+<area shape="poly" id="edge5_Node000005_Node000002" title=" " alt="" coords="133,194,74,235,72,230,127,194"/>
+<area shape="poly" id="edge7_Node000005_Node000003" title=" " alt="" coords="165,191,217,232,212,232,163,196"/>
 <area shape="rect" id="Node000006" title=" " alt="" coords="114,241,182,267"/>
-<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="151,194,151,226,145,226,145,194"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="150,192,150,227,145,224,146,196"/>
 </map>

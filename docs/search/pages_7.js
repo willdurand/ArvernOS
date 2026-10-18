@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['pi_202_0',['Raspberry Pi 2',['../ref_board_raspi2.html',1,'refArch_aarch32']]],
-  ['pi_203_1',['Raspberry Pi 3',['../ref_board_raspi3.html',1,'refArch_aarch64']]]
+  ['early_20boot_20sequence_0',['Early boot sequence',['../ref_arch_x86_64.html#autotoc_md32',1,'']]],
+  ['environment_1',['Setting up a development environment',['../index.html#autotoc_md6',1,'']]]
 ];

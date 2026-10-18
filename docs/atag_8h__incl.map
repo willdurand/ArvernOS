@@ -1,5 +1,8 @@
 <map id="include/kernel/core/arm/atag.h" name="include/kernel/core/arm/atag.h">
 <area shape="rect" id="Node000001" title=" " alt="" coords="5,5,136,46"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="38,94,103,120"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="73,46,73,78,68,78,68,46"/>
+<area shape="rect" id="Node000002" href="$boot_8h.html" title=" " alt="" coords="8,94,66,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="61,49,51,81,46,79,63,44"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="38,168,103,193"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="75,44,81,80,81,120,77,153,72,152,76,120,75,81,73,49"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="44,118,61,153,56,154,41,122"/>
 </map>

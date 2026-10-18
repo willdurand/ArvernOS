@@ -1,8 +1,5 @@
 var searchData=
 [
-  ['s_5fcdate_0',['s_cdate',['../structs__cdate.html',1,'']]],
-  ['sock_5fentry_5ft_1',['sock_entry_t',['../structsock__entry__t.html',1,'']]],
-  ['sockaddr_2',['sockaddr',['../structsockaddr.html',1,'']]],
-  ['sockaddr_5fin_3',['sockaddr_in',['../structsockaddr__in.html',1,'']]],
-  ['stat_4',['stat',['../structstat.html',1,'']]]
+  ['page_5ftable_5ft_0',['page_table_t',['../structpage__table__t.html',1,'']]],
+  ['pci_5fdevice_5ft_1',['pci_device_t',['../unionpci__device__t.html',1,'']]]
 ];

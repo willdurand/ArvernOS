@@ -1,13 +1,11 @@
 var searchData=
 [
-  ['page_5fsize_0',['PAGE_SIZE',['../frame_8h.html#a7d467c1d283fdfa1f2081ba1e0d01b6e',1,'frame.h']]],
-  ['paging_5fflag_5fhuge_5fpage_1',['PAGING_FLAG_HUGE_PAGE',['../paging_8h.html#aaad81d99541751cd70b57286f794fdc0',1,'paging.h']]],
-  ['paging_5fflag_5fno_5fexecute_2',['PAGING_FLAG_NO_EXECUTE',['../paging_8h.html#a9b636c6433bad872f80f46458db566f7',1,'paging.h']]],
-  ['paging_5fflag_5fpresent_3',['PAGING_FLAG_PRESENT',['../paging_8h.html#a28ff91b933f24d95e25ec5f03a736117',1,'paging.h']]],
-  ['paging_5fflag_5fuser_5faccessible_4',['PAGING_FLAG_USER_ACCESSIBLE',['../paging_8h.html#a5c235330203c88a6c6800a58a49cef17',1,'paging.h']]],
-  ['paging_5fflag_5fwritable_5',['PAGING_FLAG_WRITABLE',['../paging_8h.html#adac89a5c7c54309cb4a4570d0f8cf75c',1,'paging.h']]],
-  ['panic_6',['PANIC',['../panic_8h.html#a8f54a1e3c548236aa6a60f4596699819',1,'panic.h']]],
-  ['panic_5fno_5fstacktrace_7',['PANIC_NO_STACKTRACE',['../panic_8h.html#a036282a28f9cb2ca0fd41b4ebc49adb2',1,'panic.h']]],
-  ['pit_5ffrequency_5fhz_8',['PIT_FREQUENCY_HZ',['../pit_8h.html#a6e4244cf2584dcc8d1988cf32a9faa36',1,'pit.h']]],
-  ['prompt_9',['PROMPT',['../include_2kernel_2kshell_2kshell_8h.html#accdbea14ea06c15e271784368bd993e8',1,'kshell.h']]]
+  ['max_5fpages_0',['MAX_PAGES',['../x86__64_2mmu_2alloc_8h.html#a85f89e842475a0305bb474a98d61bdfe',1,'alloc.h']]],
+  ['max_5fstack_5fargs_1',['MAX_STACK_ARGS',['../user__stack_8h.html#a2abba0c0447f38281db569b50e18ab90',1,'user_stack.h']]],
+  ['max_5ftasks_2',['MAX_TASKS',['../include_2kernel_2proc_2task_8h.html#aac747bed84189f8cfa509b94d488e622',1,'task.h']]],
+  ['maybe_5funused_3',['MAYBE_UNUSED',['../include_2libc_2arvern_2utils_8h.html#a3282fda96b0ba454bf4a8254c41e466a',1,'utils.h']]],
+  ['memory_5favailable_4',['MEMORY_AVAILABLE',['../memory_8h.html#a4f48242e4fdac285f6ccbc8935a2b0e0',1,'memory.h']]],
+  ['memory_5freserved_5',['MEMORY_RESERVED',['../memory_8h.html#a1679bf8e71b63b8c29a999260bc8c7c4',1,'memory.h']]],
+  ['memory_5fsection_5fexecutable_6',['MEMORY_SECTION_EXECUTABLE',['../memory_8h.html#accafbfb023ae346746173f1ba2bd1961',1,'memory.h']]],
+  ['memory_5fsection_5fwritable_7',['MEMORY_SECTION_WRITABLE',['../memory_8h.html#a3093a5dd98f78b69ef78726dffdd38be',1,'memory.h']]]
 ];

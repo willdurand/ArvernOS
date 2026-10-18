@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['at_5ffdcwd_0',['AT_FDCWD',['../fcntl_8h.html#a301749b9aa4b9416c329bb8b19345216',1,'fcntl.h']]]
+  ['_5f_5flog_0',['__LOG',['../logging_8h.html#a80e98daa0d39ef3e960f696b0c641896',1,'logging.h']]],
+  ['_5f_5flog_5fstream_1',['__LOG_STREAM',['../logging_8h.html#aecf53eb136cace2b51be2c20681b02fc',1,'logging.h']]],
+  ['_5f_5flog_5ftimestamp_5fformat_2',['__LOG_TIMESTAMP_FORMAT',['../logging_8h.html#a753545626a8f97b9ad37d04c9dc1fadf',1,'logging.h']]]
 ];

@@ -1,4 +1,13 @@
 var searchData=
 [
-  ['video_5faddress_0',['VIDEO_ADDRESS',['../vga__text_8h.html#a446862b030fd0351d3b4b871147dd625',1,'vga_text.h']]]
+  ['seek_5fcur_0',['SEEK_CUR',['../fcntl_8h.html#a4c8d0b76b470ba65a43ca46a88320f39',1,'fcntl.h']]],
+  ['seek_5fend_1',['SEEK_END',['../fcntl_8h.html#ad2a2e6c114780c3071efd24f16c7f7d8',1,'fcntl.h']]],
+  ['seek_5fset_2',['SEEK_SET',['../fcntl_8h.html#a0d112bae8fd35be772185b6ec6bcbe64',1,'fcntl.h']]],
+  ['serial_5fcom1_3',['SERIAL_COM1',['../serial_8h.html#a7dba27fd7950f6e40269808bd9238aca',1,'serial.h']]],
+  ['serial_5fline_5fenable_5fdlab_4',['SERIAL_LINE_ENABLE_DLAB',['../serial_8h.html#a86dbcd1e612dc4ca6f5270d81def6ccd',1,'serial.h']]],
+  ['serial_5fspeed_5f115200_5',['SERIAL_SPEED_115200',['../serial_8h.html#ad22db02c1b733cacbf6e2411ed8577d3',1,'serial.h']]],
+  ['serial_5fspeed_5f38400_6',['SERIAL_SPEED_38400',['../serial_8h.html#acb00722fe46bcf13413da98c229aded8',1,'serial.h']]],
+  ['serial_5fspeed_5f57600_7',['SERIAL_SPEED_57600',['../serial_8h.html#abc968786733c07230d2d5230cec1e138',1,'serial.h']]],
+  ['sigsegv_8',['SIGSEGV',['../include_2kernel_2proc_2task_8h.html#ae20b4f7171a09516ea73c9d2745bd596',1,'task.h']]],
+  ['stack_5falignment_9',['STACK_ALIGNMENT',['../user__stack_8h.html#a112ac222442ad424caa8087c47fa8430',1,'user_stack.h']]]
 ];

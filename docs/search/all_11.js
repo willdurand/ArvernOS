@@ -1,23 +1,12 @@
 var searchData=
 [
-  ['o_5fappend_0',['O_APPEND',['../fcntl_8h.html#ae036f789407d21f07b211552d67b3214',1,'fcntl.h']]],
-  ['o_5fcreat_1',['O_CREAT',['../fcntl_8h.html#a1cf6b1de1fffedaa1d26b189e9a8d2cc',1,'fcntl.h']]],
-  ['o_5frdonly_2',['O_RDONLY',['../fcntl_8h.html#a7a68c9ffaac7dbcd652225dd7c06a54b',1,'fcntl.h']]],
-  ['o_5frdwr_3',['O_RDWR',['../fcntl_8h.html#abb0586253488ee61072b73557eeb873b',1,'fcntl.h']]],
-  ['o_5ftrunc_4',['O_TRUNC',['../fcntl_8h.html#ad1d67e453fb3031f40f8cd3403773813',1,'fcntl.h']]],
-  ['o_5fwronly_5',['O_WRONLY',['../fcntl_8h.html#a11b644a8526139c4cc1850dac1271ced',1,'fcntl.h']]],
-  ['offset_6',['offset',['../structelf__section__header__t.html#a2864b9a88294dfa26256579bd6c3522f',1,'elf_section_header_t']]],
-  ['on_20arvernos_7',['Hacking on ArvernOS',['../index.html#autotoc_md5',1,'']]],
-  ['on_20real_20hardware_8',['Usage on real hardware',['../ref_board_raspi3.html#autotoc_md26',1,'']]],
-  ['open_9',['open',['../syscall_8h.html#ab7c31bf64ff68f61762bda6e72e255d6',1,'open.c']]],
-  ['openat_10',['openat',['../syscall_8h.html#ae49d1c90a87f9ab8500b66a5662bc0a8',1,'openat.c']]],
-  ['opt_5fbool_5ft_11',['opt_bool_t',['../structopt__bool__t.html',1,'']]],
-  ['opt_5fuint16_5ft_12',['opt_uint16_t',['../structopt__uint16__t.html',1,'']]],
-  ['opt_5fuint32_5ft_13',['opt_uint32_t',['../structopt__uint32__t.html',1,'']]],
-  ['opt_5fuint64_5ft_14',['opt_uint64_t',['../structopt__uint64__t.html',1,'']]],
-  ['opt_5fuint8_5ft_15',['opt_uint8_t',['../structopt__uint8__t.html',1,'']]],
-  ['options_16',['Boot options',['../ref_arch_x86_64.html#autotoc_md31',1,'']]],
-  ['options_17',['options',['../structdhcp__header__t.html#a734798cfe1e826aa09e2a40b65f30ff1',1,'dhcp_header_t']]],
-  ['origin_5fts_18',['origin_ts',['../structntp__header__t.html#a024bd1f48208f1f2005f0ad5b3222272',1,'ntp_header_t']]],
-  ['osinfo_2eh_19',['osinfo.h',['../osinfo_8h.html',1,'']]]
+  ['name_0',['name',['../structelf__section__header__t.html#ac874b50ab72c734c2b5eb5dfd02d989b',1,'elf_section_header_t::name'],['../structnet__driver.html#a21b097ab9061bc16ad8509062e801de3',1,'net_driver::name']]],
+  ['net_2eh_1',['net.h',['../net_8h.html',1,'']]],
+  ['net_5fdriver_2',['net_driver',['../structnet__driver.html',1,'']]],
+  ['net_5fget_5finterface_3',['net_get_interface',['../net_8h.html#aa0f5ea1fc2a6969f5f7fea53a6dc2356',1,'net.c']]],
+  ['net_5finterface_4',['net_interface',['../structnet__interface.html',1,'']]],
+  ['net_5finterface_5finit_5',['net_interface_init',['../net_8h.html#a5da8d53d480b13e24e293e0ab90a0ac3',1,'net.c']]],
+  ['ntp_2eh_6',['ntp.h',['../ntp_8h.html',1,'']]],
+  ['ntp_5fheader_5ft_7',['ntp_header_t',['../structntp__header__t.html',1,'']]],
+  ['ntp_5ftimestamp_5ft_8',['ntp_timestamp_t',['../structntp__timestamp__t.html',1,'']]]
 ];

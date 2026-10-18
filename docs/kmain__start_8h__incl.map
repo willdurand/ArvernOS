@@ -1,0 +1,8 @@
+<map id="include/kernel/kmain_start.h" name="include/kernel/kmain_start.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,146,46"/>
+<area shape="rect" id="Node000002" href="$boot_8h.html" title=" " alt="" coords="14,94,71,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="66,49,56,81,51,78,68,44"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="43,168,108,193"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="80,44,86,80,86,120,82,154,77,152,81,120,80,81,78,49"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="49,118,66,153,61,154,46,122"/>
+</map>

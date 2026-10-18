@@ -7,9 +7,9 @@ var searchData=
   ['kernel_5fdump_5fstacktrace_4',['kernel_dump_stacktrace',['../panic_8h.html#a714e1c8a23ac88c46756c44ec1a5b7f8',1,'panic.c']]],
   ['kernel_5fpanic_5',['kernel_panic',['../panic_8h.html#af92a4fe8363297fd713910fb044d41a9',1,'panic.c']]],
   ['keyboard_5fget_5fscancode_6',['keyboard_get_scancode',['../keyboard_8h.html#a7f253db86f85d1a41dbbafa69b943f5f',1,'keyboard.c']]],
-  ['keyboard_5finit_7',['keyboard_init',['../keyboard_8h.html#aaeb4e4a3c4813ee1efc6b98bba9ec781',1,'keyboard.c']]],
-  ['kmain_8',['kmain',['../src_2kernel_2arch_2aarch32_2kmain_8h.html#af2771f04874bac550209cafd61dd4a57',1,'kmain(uint32_t r0, uint32_t r1, uint32_t r2) __asm__(&quot;kmain&quot;):&#160;kmain.c'],['../src_2kernel_2arch_2aarch64_2kmain_8h.html#a94361b39c7d51d1870c88bcc97c0bcc5',1,'kmain(uintptr_t w0) __asm__(&quot;kmain&quot;):&#160;kmain.c'],['../src_2kernel_2arch_2x86__64_2kmain_8h.html#acc2a4efe18c51d7730b2324776148e01',1,'kmain(uintptr_t addr) __asm__(&quot;kmain&quot;):&#160;kmain.c']]],
-  ['kmain_5fearly_5fstart_9',['kmain_early_start',['../include_2kernel_2kmain_8h.html#a39b048730ab06513b29030aed1b5d8f4',1,'kmain.c']]],
-  ['kmain_5fstart_10',['kmain_start',['../include_2kernel_2kmain_8h.html#a666c17b307920a60e50fcf56312f9500',1,'kmain.c']]],
+  ['keyboard_5finit_7',['keyboard_init',['../keyboard_8h.html#a79fbc7183748b9b3ef9ae53a889e5eab',1,'keyboard.c']]],
+  ['kmain_8',['kmain',['../aarch32_2kmain_8h.html#af2771f04874bac550209cafd61dd4a57',1,'kmain(uint32_t r0, uint32_t r1, uint32_t r2) __asm__(&quot;kmain&quot;):&#160;kmain.c'],['../aarch64_2kmain_8h.html#a94361b39c7d51d1870c88bcc97c0bcc5',1,'kmain(uintptr_t w0) __asm__(&quot;kmain&quot;):&#160;kmain.c'],['../x86__64_2kmain_8h.html#acc2a4efe18c51d7730b2324776148e01',1,'kmain(uintptr_t addr) __asm__(&quot;kmain&quot;):&#160;kmain.c']]],
+  ['kmain_5fearly_5fstart_9',['kmain_early_start',['../kmain__start_8h.html#a39b048730ab06513b29030aed1b5d8f4',1,'kmain.c']]],
+  ['kmain_5fstart_10',['kmain_start',['../kmain__start_8h.html#aaacc1b0aec044bfdc64348c95103039a',1,'kmain.c']]],
   ['kshell_11',['kshell',['../include_2kernel_2kshell_2kshell_8h.html#aad18a222bff0651aa52eec3b29218d9a',1,'kshell.c']]]
 ];

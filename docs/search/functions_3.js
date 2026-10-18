@@ -1,7 +1,7 @@
 var searchData=
 [
   ['clock_5fget_5fcurrent_5fmicroseconds_0',['clock_get_current_microseconds',['../clock_8h.html#add4ef47919811f366e7c7561c71088fb',1,'clock.c']]],
-  ['clock_5finit_1',['clock_init',['../clock_8h.html#ae9cc0a879e88eea28e4e8b57318ef8e5',1,'clock.c']]],
+  ['clock_5finit_1',['clock_init',['../clock_8h.html#ae08171c0791f6dc38756a2c1fcc4b705',1,'clock.c']]],
   ['close_2',['close',['../syscall_8h.html#aafbcde67669a1b96577e735ddebd8634',1,'close.c']]],
   ['cmos_5fboot_5ftime_3',['cmos_boot_time',['../cmos_8h.html#a075a41918112363e92d77ce1e86d171b',1,'cmos.c']]],
   ['cmos_5fcurrent_5ftime_4',['cmos_current_time',['../cmos_8h.html#a47a3c085ee4471f77246a440b5a6aba9',1,'cmos.c']]],
@@ -13,5 +13,6 @@ var searchData=
   ['console_5fputchar_10',['console_putchar',['../console_8h.html#ac156aa97dae8b45e5aea8f6534d38946',1,'console.c']]],
   ['console_5fwrite_11',['console_write',['../console_8h.html#ae757ada21a608ffb2ffb39e567feb07b',1,'console.c']]],
   ['create_5ffile_5fdescriptor_12',['create_file_descriptor',['../descriptor_8h.html#a9d772be036ad7ec4e9e926a190b76003',1,'descriptor.c']]],
-  ['create_5fsocket_5fdescriptor_13',['create_socket_descriptor',['../descriptor_8h.html#a04175d4d27dc399e18af7e68aa7e1a3a',1,'descriptor.c']]]
+  ['create_5fsocket_5fdescriptor_13',['create_socket_descriptor',['../descriptor_8h.html#a04175d4d27dc399e18af7e68aa7e1a3a',1,'descriptor.c']]],
+  ['create_5fuser_5fstack_14',['create_user_stack',['../user__stack_8h.html#ac4875dab52e69f777c0ce3b9c6daee1c',1,'user_stack.c']]]
 ];

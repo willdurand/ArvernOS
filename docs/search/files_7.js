@@ -4,6 +4,7 @@ var searchData=
   ['kernel_2eh_1',['kernel.h',['../kernel_8h.html',1,'']]],
   ['keyboard_2eh_2',['keyboard.h',['../keyboard_8h.html',1,'']]],
   ['keymap_2eh_3',['keymap.h',['../keymap_8h.html',1,'']]],
-  ['kmain_2eh_4',['kmain.h',['../include_2kernel_2kmain_8h.html',1,'(Global Namespace)'],['../src_2kernel_2arch_2aarch32_2kmain_8h.html',1,'(Global Namespace)'],['../src_2kernel_2arch_2aarch64_2kmain_8h.html',1,'(Global Namespace)'],['../src_2kernel_2arch_2x86__64_2kmain_8h.html',1,'(Global Namespace)']]],
-  ['kshell_2eh_5',['kshell.h',['../include_2kernel_2arch_2kshell_8h.html',1,'(Global Namespace)'],['../include_2kernel_2kshell_2kshell_8h.html',1,'(Global Namespace)']]]
+  ['kmain_2eh_4',['kmain.h',['../aarch32_2kmain_8h.html',1,'(Global Namespace)'],['../aarch64_2kmain_8h.html',1,'(Global Namespace)'],['../x86__64_2kmain_8h.html',1,'(Global Namespace)']]],
+  ['kmain_5fstart_2eh_5',['kmain_start.h',['../kmain__start_8h.html',1,'']]],
+  ['kshell_2eh_6',['kshell.h',['../include_2kernel_2arch_2kshell_8h.html',1,'(Global Namespace)'],['../include_2kernel_2kshell_2kshell_8h.html',1,'(Global Namespace)']]]
 ];

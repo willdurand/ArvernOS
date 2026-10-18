@@ -14,7 +14,12 @@ var index =
           [ "Linux", "index.html#autotoc_md10", null ]
         ] ],
         [ "Building ArvernOS", "index.html#autotoc_md11", [
-          [ "Debug mode", "index.html#autotoc_md12", null ],
+          [ "Debug mode", "index.html#autotoc_md12", [
+            [ "QEMU monitor", "index.html#autotoc_md13", null ],
+            [ "Logging", "index.html#autotoc_md14", null ],
+            [ "Stack traces", "index.html#autotoc_md15", null ],
+            [ "Debugging", "index.html#autotoc_md16", null ]
+          ] ],
           [ "Release mode", "index.html#autotoc_md17", null ],
           [ "config files", "index.html#autotoc_md18", null ]
         ] ]

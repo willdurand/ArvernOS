@@ -1,5 +1,5 @@
 <map id="gdt_table_t" name="gdt_table_t">
-<area shape="rect" id="Node000001" title=" " alt="" coords="20,199,105,225"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="20,244,105,270"/>
 <area shape="rect" id="Node000002" href="$structgdt__descriptor__t.html" title=" " alt="" coords="5,5,120,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="65,47,65,199,60,199,60,47"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="65,46,65,244,60,244,60,47"/>
 </map>

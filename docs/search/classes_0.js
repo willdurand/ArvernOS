@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['arp_5fpacket_5ft_0',['arp_packet_t',['../structarp__packet__t.html',1,'']]],
-  ['atag_5fcmdline_5ft_1',['atag_cmdline_t',['../structatag__cmdline__t.html',1,'']]],
-  ['atag_5fheader_5ft_2',['atag_header_t',['../structatag__header__t.html',1,'']]],
-  ['atag_5finitrd2_5ft_3',['atag_initrd2_t',['../structatag__initrd2__t.html',1,'']]],
-  ['atag_5fmem_5ft_4',['atag_mem_t',['../structatag__mem__t.html',1,'']]]
+  ['_5bstruct_5d_2e_5f_5funnamed0_5f_5f_0',['[struct].__unnamed0__',['../structpci__device__t_1_1_0fstruct_0e_8____unnamed0____.html',1,'pci_device_t']]],
+  ['_5bstruct_5d_2e_5f_5funnamed0_5f_5f_2e_5f_5funnamed0_5f_5f_1',['[struct].__unnamed0__.__unnamed0__',['../structidt__gate__t_1_1_0fstruct_0e_8____unnamed0_____8____unnamed0____.html',1,'idt_gate_t::[struct].__unnamed0__.__unnamed0__'],['../structmultiboot__tag__framebuffer__t_1_1_0fstruct_0e_8____unnamed0_____8____unnamed0____.html',1,'multiboot_tag_framebuffer_t::[struct].__unnamed0__.__unnamed0__']]],
+  ['_5bstruct_5d_2e_5f_5funnamed0_5f_5f_2e_5f_5funnamed1_5f_5f_2',['[struct].__unnamed0__.__unnamed1__',['../structmultiboot__tag__framebuffer__t_1_1_0fstruct_0e_8____unnamed0_____8____unnamed1____.html',1,'multiboot_tag_framebuffer_t::[union].__unnamed0__']]],
+  ['_5bunion_5d_2e_5f_5funnamed0_5f_5f_3',['[union].__unnamed0__',['../unionidt__gate__t_1_1_0funion_0e_8____unnamed0____.html',1,'idt_gate_t::[union].__unnamed0__'],['../unionmultiboot__tag__framebuffer__t_1_1_0funion_0e_8____unnamed0____.html',1,'multiboot_tag_framebuffer_t::[union].__unnamed0__']]]
 ];

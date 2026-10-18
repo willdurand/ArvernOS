@@ -7,5 +7,5 @@ var keyboard_8h =
     [ "KB_LSHIFT", "keyboard_8h.html#aa118eb14764e4006d95472b4e7a44b59", null ],
     [ "KB_RSHIFT", "keyboard_8h.html#a2e1993a35d9afd0cfd9335fc50572add", null ],
     [ "keyboard_get_scancode", "keyboard_8h.html#a7f253db86f85d1a41dbbafa69b943f5f", null ],
-    [ "keyboard_init", "keyboard_8h.html#aaeb4e4a3c4813ee1efc6b98bba9ec781", null ]
+    [ "keyboard_init", "keyboard_8h.html#a79fbc7183748b9b3ef9ae53a889e5eab", null ]
 ];

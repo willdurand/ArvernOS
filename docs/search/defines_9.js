@@ -1,11 +1,13 @@
 var searchData=
 [
-  ['seek_5fcur_0',['SEEK_CUR',['../fcntl_8h.html#a4c8d0b76b470ba65a43ca46a88320f39',1,'fcntl.h']]],
-  ['seek_5fend_1',['SEEK_END',['../fcntl_8h.html#ad2a2e6c114780c3071efd24f16c7f7d8',1,'fcntl.h']]],
-  ['seek_5fset_2',['SEEK_SET',['../fcntl_8h.html#a0d112bae8fd35be772185b6ec6bcbe64',1,'fcntl.h']]],
-  ['serial_5fcom1_3',['SERIAL_COM1',['../serial_8h.html#a7dba27fd7950f6e40269808bd9238aca',1,'serial.h']]],
-  ['serial_5fline_5fenable_5fdlab_4',['SERIAL_LINE_ENABLE_DLAB',['../serial_8h.html#a86dbcd1e612dc4ca6f5270d81def6ccd',1,'serial.h']]],
-  ['serial_5fspeed_5f115200_5',['SERIAL_SPEED_115200',['../serial_8h.html#ad22db02c1b733cacbf6e2411ed8577d3',1,'serial.h']]],
-  ['serial_5fspeed_5f38400_6',['SERIAL_SPEED_38400',['../serial_8h.html#acb00722fe46bcf13413da98c229aded8',1,'serial.h']]],
-  ['serial_5fspeed_5f57600_7',['SERIAL_SPEED_57600',['../serial_8h.html#abc968786733c07230d2d5230cec1e138',1,'serial.h']]]
+  ['page_5fsize_0',['PAGE_SIZE',['../frame_8h.html#a7d467c1d283fdfa1f2081ba1e0d01b6e',1,'frame.h']]],
+  ['paging_5fflag_5fhuge_5fpage_1',['PAGING_FLAG_HUGE_PAGE',['../paging_8h.html#aaad81d99541751cd70b57286f794fdc0',1,'paging.h']]],
+  ['paging_5fflag_5fno_5fexecute_2',['PAGING_FLAG_NO_EXECUTE',['../paging_8h.html#a9b636c6433bad872f80f46458db566f7',1,'paging.h']]],
+  ['paging_5fflag_5fpresent_3',['PAGING_FLAG_PRESENT',['../paging_8h.html#a28ff91b933f24d95e25ec5f03a736117',1,'paging.h']]],
+  ['paging_5fflag_5fuser_5faccessible_4',['PAGING_FLAG_USER_ACCESSIBLE',['../paging_8h.html#a5c235330203c88a6c6800a58a49cef17',1,'paging.h']]],
+  ['paging_5fflag_5fwritable_5',['PAGING_FLAG_WRITABLE',['../paging_8h.html#adac89a5c7c54309cb4a4570d0f8cf75c',1,'paging.h']]],
+  ['panic_6',['PANIC',['../panic_8h.html#a8f54a1e3c548236aa6a60f4596699819',1,'panic.h']]],
+  ['panic_5fno_5fstacktrace_7',['PANIC_NO_STACKTRACE',['../panic_8h.html#a036282a28f9cb2ca0fd41b4ebc49adb2',1,'panic.h']]],
+  ['pit_5ffrequency_5fhz_8',['PIT_FREQUENCY_HZ',['../pit_8h.html#a6e4244cf2584dcc8d1988cf32a9faa36',1,'pit.h']]],
+  ['prompt_9',['PROMPT',['../include_2kernel_2kshell_2kshell_8h.html#accdbea14ea06c15e271784368bd993e8',1,'kshell.h']]]
 ];

@@ -1,9 +1,9 @@
 <map id="include/kernel/net/udp.h" name="include/kernel/net/udp.h">
 <area shape="rect" id="Node000001" title=" " alt="" coords="153,5,277,46"/>
 <area shape="rect" id="Node000002" href="$dhcp_8h.html" title=" " alt="" coords="5,94,129,135"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="170,56,102,96,99,91,167,52"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="171,53,102,96,99,91,166,55"/>
 <area shape="rect" id="Node000003" href="$dns_8h.html" title=" " alt="" coords="153,94,277,135"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="218,62,218,94,212,94,212,62"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="217,60,217,95,213,92,213,64"/>
 <area shape="rect" id="Node000004" href="$ntp_8h.html" title=" " alt="" coords="301,94,425,135"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="263,52,331,91,328,96,260,56"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="262,52,332,94,327,94,261,57"/>
 </map>

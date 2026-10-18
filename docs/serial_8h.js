@@ -6,6 +6,8 @@ var serial_8h =
     [ "SERIAL_SPEED_38400", "serial_8h.html#acb00722fe46bcf13413da98c229aded8", null ],
     [ "SERIAL_SPEED_57600", "serial_8h.html#abc968786733c07230d2d5230cec1e138", null ],
     [ "serial_init", "serial_8h.html#a086a2712ee8de77b7621d922d2b96857", null ],
+    [ "serial_is_waiting", "serial_8h.html#a28ddcbb74fb72017b14404aa8b9504ae", null ],
     [ "serial_print", "serial_8h.html#a1e9e38c6dbae13f53e8ed436fef0cd5b", null ],
+    [ "serial_read", "serial_8h.html#ac8c098699a8c80c4c587a27e844d3892", null ],
     [ "serial_write", "serial_8h.html#a25ea2587d38072f4b5a53d59962ca418", null ]
 ];

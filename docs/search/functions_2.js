@@ -4,5 +4,7 @@ var searchData=
   ['bcm2835_5ftimer_5fuptime_5fmicroseconds_1',['bcm2835_timer_uptime_microseconds',['../bcm2835__timer_8h.html#aa5e375169036beb10f6778afb7eddecd',1,'bcm2835_timer.c']]],
   ['bitmap_5fclear_2',['bitmap_clear',['../bitmap_8h.html#acbd3f5323acaf517704e69c47396119f',1,'bitmap.c']]],
   ['bitmap_5fget_3',['bitmap_get',['../bitmap_8h.html#a7ed3c2384b34eafa2aba19aa6e856865',1,'bitmap.c']]],
-  ['bitmap_5fset_4',['bitmap_set',['../bitmap_8h.html#ae60e1e9970fe0c4f68ee27902adbebfa',1,'bitmap.c']]]
+  ['bitmap_5fset_4',['bitmap_set',['../bitmap_8h.html#ae60e1e9970fe0c4f68ee27902adbebfa',1,'bitmap.c']]],
+  ['boot_5finfo_5fget_5',['boot_info_get',['../boot_8h.html#ab182be6c2d269c3b976f397dee959fbd',1,'boot.c']]],
+  ['boot_5finfo_5fset_6',['boot_info_set',['../boot_8h.html#a0bb86369ef80a7cf42c3fc350420c197',1,'boot.c']]]
 ];

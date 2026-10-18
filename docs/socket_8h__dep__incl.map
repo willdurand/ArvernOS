@@ -1,26 +1,26 @@
 <map id="include/libc/sys/socket.h" name="include/libc/sys/socket.h">
 <area shape="rect" id="Node000001" title=" " alt="" coords="162,5,327,31"/>
 <area shape="rect" id="Node000002" href="$k__syscall_8h.html" title=" " alt="" coords="5,153,132,193"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="213,42,158,81,119,119,87,154,83,150,115,115,155,77,210,37"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="210,42,158,81,119,119,87,154,83,151,115,115,155,77,213,37"/>
 <area shape="rect" id="Node000003" href="$inet_8h.html" title=" " alt="" coords="169,79,320,105"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="247,46,247,79,242,79,242,46"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="245,44,247,79,242,78,244,49"/>
 <area shape="rect" id="Node000010" href="$syscall_8h.html" title=" " alt="" coords="354,160,522,186"/>
-<area shape="poly" id="edge13_Node000001_Node000010" title=" " alt="" coords="278,38,334,77,427,158,424,162,331,81,275,42"/>
-<area shape="poly" id="edge10_Node000003_Node000002" title=" " alt="" coords="205,114,114,155,111,150,202,109"/>
+<area shape="poly" id="edge13_Node000001_Node000010" title=" " alt="" coords="277,37,334,77,428,159,423,160,331,81,276,42"/>
+<area shape="poly" id="edge10_Node000003_Node000002" title=" " alt="" coords="202,114,114,154,111,150,205,109"/>
 <area shape="rect" id="Node000004" href="$ipv4_8h.html" title=" " alt="" coords="156,153,280,193"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="238,120,227,153,222,151,233,118"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="237,117,227,154,222,151,234,122"/>
 <area shape="rect" id="Node000006" href="$udp_8h.html" title=" " alt="" coords="239,241,362,282"/>
-<area shape="poly" id="edge9_Node000003_Node000006" title=" " alt="" coords="270,115,283,132,294,152,304,199,305,241,299,241,299,200,289,154,279,135,266,118"/>
-<area shape="poly" id="edge11_Node000003_Node000010" title=" " alt="" coords="289,108,409,157,407,162,287,113"/>
+<area shape="poly" id="edge9_Node000003_Node000006" title=" " alt="" coords="268,114,283,132,294,152,304,199,304,242,300,240,299,200,289,154,279,135,267,119"/>
+<area shape="poly" id="edge11_Node000003_Node000010" title=" " alt="" coords="288,108,411,159,406,161,288,114"/>
 <area shape="rect" id="Node000005" href="$icmpv4_8h.html" title=" " alt="" coords="91,241,214,282"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="196,208,169,243,165,239,192,204"/>
-<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="249,203,284,239,280,243,245,207"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="196,204,169,243,165,239,192,208"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="248,202,284,241,279,241,246,207"/>
 <area shape="rect" id="Node000007" href="$dhcp_8h.html" title=" " alt="" coords="91,330,214,371"/>
-<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="255,292,187,332,185,327,252,288"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="256,289,187,332,185,327,251,291"/>
 <area shape="rect" id="Node000008" href="$dns_8h.html" title=" " alt="" coords="239,330,362,371"/>
-<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="303,298,303,330,298,330,298,298"/>
+<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="302,296,303,331,298,328,299,300"/>
 <area shape="rect" id="Node000009" href="$ntp_8h.html" title=" " alt="" coords="387,330,510,371"/>
-<area shape="poly" id="edge8_Node000006_Node000009" title=" " alt="" coords="349,288,416,327,414,332,346,292"/>
-<area shape="rect" id="Node000011" href="$unistd_8h.html" title=" " alt="" coords="386,249,522,275"/>
-<area shape="poly" id="edge12_Node000010_Node000011" title=" " alt="" coords="445,201,454,248,449,249,440,202"/>
+<area shape="poly" id="edge8_Node000006_Node000009" title=" " alt="" coords="348,288,418,330,412,329,347,293"/>
+<area shape="rect" id="Node000011" href="$unistd_8h.html" title=" " alt="" coords="386,249,522,274"/>
+<area shape="poly" id="edge12_Node000010_Node000011" title=" " alt="" coords="444,199,454,250,449,247,441,203"/>
 </map>
