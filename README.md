@@ -32,7 +32,7 @@ Tier 1 is the reference implementation and very likely the most advanced.
 Current Tier 1 archs/boards:
 
 - **x86_64**
-  - `pc`
+  - [`pc`](./src/kernel/arch/x86_64/board/pc/README.md)
 
 ### Tier 2
 

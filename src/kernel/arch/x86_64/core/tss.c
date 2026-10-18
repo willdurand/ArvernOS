@@ -2,7 +2,7 @@
 #include <core/gdt.h>
 #include <core/logging.h>
 
-// Defined in `src/arch/x86_64/boot.asm`.
+// Defined in `$(board_src)/asm/boot.asm`.
 extern tss_t tss;
 extern gdt_table_t gdt64;
 

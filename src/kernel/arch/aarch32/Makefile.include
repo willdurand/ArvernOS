@@ -53,5 +53,15 @@ LD_FLAGS         += $(shell $(ARM_GCC) -print-libgcc-file-name)
 arch-debug: $(kernel_img)
 .PHONY: arch-debug
 
+arch-run-debug: debug
+	$(progress) "RUN" $(kernel_img)
+	$(QEMU) -kernel $(kernel_img) $(QEMU_OPTIONS)
+.PHONY: arch-run-debug
+
 arch-release: $(kernel_img)
 .PHONY: arch-release
+
+arch-run-release: release
+	$(progress) "RUN" $(kernel_img)
+	$(QEMU) -kernel $(kernel_img) $(QEMU_OPTIONS)
+.PHONY: arch-run-release

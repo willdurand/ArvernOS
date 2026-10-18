@@ -26,8 +26,6 @@ endif
 # Source files
 ###############################################################################
 
-libk_c_files       += $(wildcard $(kernel_src_dir)/core/pci.c)
-libk_c_files       += $(wildcard $(kernel_src_dir)/core/port.c)
 libk_c_files       += $(wildcard $(arch_src)/arch/*.c)
 libk_c_files       += $(wildcard $(arch_src)/core/*.c)
 libk_c_files       += $(wildcard $(arch_src)/drivers/pit.c)
@@ -110,13 +108,3 @@ test: libc
 		$(kernel_tests_dir)/proc/user_stack.c $(kernel_src_dir)/proc/user_stack.c
 	./$(target_build_dir)/user_stack
 .PHONY: arch-test
-
-###############################################################################
-# Misc.
-###############################################################################
-
-ENABLE_FRAMEBUFFER ?= 0
-ifeq ($(ENABLE_FRAMEBUFFER), 1)
-	KERNEL_CFLAGS    += -DENABLE_FRAMEBUFFER
-	KERNEL_ASM_FLAGS += -Wa,--defsym,ENABLE_FRAMEBUFFER=1
-endif
