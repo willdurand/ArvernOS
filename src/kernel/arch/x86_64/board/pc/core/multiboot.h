@@ -1,6 +1,10 @@
 /**
  * @file
  * @see https://www.gnu.org/software/grub/manual/multiboot2/multiboot.html
+ *
+ * This module manages the Multiboot 2 boot information, which is handed over
+ * by the bootloader (GRUB) when the kernel is loaded using the Multiboot 2
+ * header (see `asm/multiboot_header.asm`).
  */
 #ifndef CORE_MULTIBOOT_H
 #define CORE_MULTIBOOT_H

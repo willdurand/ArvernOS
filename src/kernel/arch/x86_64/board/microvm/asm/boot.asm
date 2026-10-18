@@ -21,8 +21,8 @@
 start:
   mov esp, OFFSET stack_top
   mov ebp, 0
-  # `ebx` points to the `pvh_start_info` boot information structure. We move it
-  # to `edi` to pass it to our kernel.
+  # `ebx` points to the `hvm_start_info` boot information structure. We move
+  # it to `edi` to pass it to our kernel.
   mov edi, ebx
 
   # various checks before we can move on.
