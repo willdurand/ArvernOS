@@ -1,5 +1,6 @@
 #include <kmain.h>
 
+#include <core/tss.h>
 #include <drivers/serial.h>
 #include <kmain_start.h>
 #include <logging.h>
@@ -10,6 +11,8 @@ void kmain(uintptr_t addr)
   DEBUG("microvm: addr=%p", addr);
 
   kmain_early_start();
+
+  tss_init();
 
   while (1) {
     __asm__ volatile("hlt");
