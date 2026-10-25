@@ -135,7 +135,10 @@ static int kernel_symbols_init()
 
   int fd = k_open("/etc/symbols.txt", O_RDONLY);
   if (fd < 0) {
-    return -1;
+    DEBUG(
+      "%s",
+      "cannot open /etc/symbols.txt, will print stacktraces without symbols");
+    return 0;
   }
 
   struct stat stat_buf;

@@ -87,4 +87,11 @@ pvh_mmap_t* pvh_get_mmap();
  */
 void pvh_get_modules_range(uintptr_t* start, uintptr_t* end);
 
+/**
+ * Fills the boot information from the PVH boot information.
+ *
+ * @param info the boot information to fill
+ */
+void pvh_get_boot_info(boot_info_t* info);
+
 #endif
