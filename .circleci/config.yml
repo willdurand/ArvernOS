@@ -12,25 +12,13 @@ commands:
         type: string
       board:
         type: string
-        default: ""
     steps:
       - checkout
       - run: git submodule sync && git submodule update --init
-      - when:
-          condition: << parameters.board >>
-          steps:
-            - run:
-                name: create config for Circle CI
-                command: |
-                  cp .circleci/config-<< parameters.arch >>-<< parameters.board >> config
-
-      - unless:
-          condition: << parameters.board >>
-          steps:
-            - run:
-                name: create config for Circle CI
-                command: |
-                  cp .circleci/config-<< parameters.arch >> config
+      - run:
+          name: create config for Circle CI
+          command: |
+            cp .circleci/config-<< parameters.arch >>-<< parameters.board >> config
 
   build:
     parameters:
@@ -40,24 +28,14 @@ commands:
         type: string
       board:
         type: string
-        default: ""
     steps:
       - setup:
           arch: << parameters.arch >>
           board: << parameters.board >>
       - run: make << parameters.target >> -j$(nproc)
-      - when:
-          condition: << parameters.board >>
-          steps:
-            - run:
-                name: ensure the kernel has been built
-                command: test -f build/<< parameters.arch >>/<< parameters.board >>/dist/kernel-<< parameters.arch >>-<< parameters.board >>.bin
-      - unless:
-          condition: << parameters.board >>
-          steps:
-            - run:
-                name: ensure the kernel has been built
-                command: test -f build/<< parameters.arch >>/dist/kernel-<< parameters.arch >>.bin
+      - run:
+          name: ensure the kernel has been built
+          command: test -f build/<< parameters.arch >>/<< parameters.board >>/dist/kernel-<< parameters.arch >>-<< parameters.board >>.elf
 
   run_qemu:
     parameters:
@@ -80,7 +58,6 @@ commands:
         type: string
       board:
         type: string
-        default: ""
       cmdline:
         type: string
         default: kshell selftest

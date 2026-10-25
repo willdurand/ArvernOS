@@ -54,7 +54,7 @@ libk_objs_dir    = $(target_build_dir)/libk-objects
 misc_dir         = $(target_build_dir)/misc
 # Files.
 initrd_tar       = initrd.tar
-kernel_bin       = kernel-$(ARCH).bin
+kernel_bin       = kernel-$(ARCH)-$(BOARD).elf
 symbols_txt      = symbols.txt
 linker_ld        = $(arch_src)/linker.ld
 kernel           = $(dist_dir)/$(kernel_bin)
