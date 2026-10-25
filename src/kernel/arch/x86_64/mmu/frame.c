@@ -5,7 +5,7 @@
 #include <string.h>
 
 opt_uint64_t read_mmap(uint64_t request);
-uint64_t frame_number_to_request(frame_number_t frame_number);
+opt_uint64_t frame_number_to_request(frame_number_t frame_number);
 
 // These variables can be accessed by other parts of the kernel and we do that
 // in `paging_init()` to identity map the bitmap for allocated frames.
@@ -112,19 +112,19 @@ opt_uint64_t frame_allocate()
 
 void frame_deallocate(frame_number_t frame_number)
 {
-  uint64_t request = frame_number_to_request(frame_number);
-  MMU_DEBUG(
-    "deallocating frame=%" PRIu64 " request=%" PRIu64, frame_number, request);
+  opt_uint64_t request = frame_number_to_request(frame_number);
+  MMU_DEBUG("deallocating frame=%" PRIu64 " request=%" PRIu64,
+            frame_number,
+            request.value);
 
-  if (request == 0) {
-    DEBUG("failed to deallocate frame=%" PRIu64 " because request=%" PRIu64
-          ", which is very suspicious",
-          frame_number,
-          request);
+  if (!request.has_value) {
+    DEBUG("failed to deallocate frame=%" PRIu64
+          " because it is not in an available memory region",
+          frame_number);
     return;
   }
 
-  bitmap_clear(allocated_frames, request);
+  bitmap_clear(allocated_frames, request.value);
 }
 
 frame_number_t frame_containing_address(uint64_t physical_address)
@@ -163,7 +163,7 @@ opt_uint64_t read_mmap(uint64_t request)
   return (opt_uint64_t){ .has_value = false, .value = 0 };
 }
 
-uint64_t frame_number_to_request(frame_number_t frame_number)
+opt_uint64_t frame_number_to_request(frame_number_t frame_number)
 {
   uintptr_t frame = frame_start_address(frame_number);
 
@@ -179,14 +179,14 @@ uint64_t frame_number_to_request(frame_number_t frame_number)
     for (uint64_t addr = entry->addr; addr + PAGE_SIZE <= entry_end;
          addr += PAGE_SIZE) {
       if (addr == frame) {
-        return request;
+        return (opt_uint64_t){ .has_value = true, .value = request };
       }
 
       request++;
     }
   }
 
-  return 0;
+  return (opt_uint64_t){ .has_value = false, .value = 0 };
 }
 
 uint64_t frame_get_used_count()
