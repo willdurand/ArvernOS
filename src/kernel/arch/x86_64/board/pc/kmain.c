@@ -1,10 +1,11 @@
+#include <kmain.h>
+
 #include <assert.h>
 #include <boot.h>
 #include <console/console.h>
 #include <core/multiboot.h>
 #include <core/tss.h>
 #include <drivers/serial.h>
-#include <kmain.h>
 #include <kmain_start.h>
 #include <logging.h>
 #include <mmu/alloc.h>
