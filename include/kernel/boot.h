@@ -12,7 +12,7 @@
 typedef struct boot_info
 {
   uintptr_t initrd_addr; ///< Address of the initial ramdisk, or 0 if none
-  uintptr_t initrd_size; ///< Size in bytes of the initial ramdisk, or 0
+  uint64_t initrd_size;  ///< Size in bytes of the initial ramdisk, or 0
   const char* cmdline;   ///< Kernel command line, or `NULL` if none
 } boot_info_t;
 

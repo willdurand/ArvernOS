@@ -53,7 +53,7 @@ void pvh_get_modules_range(uintptr_t* start, uintptr_t* end)
 
 void pvh_get_boot_info(boot_info_t* info)
 {
-  info->initrd_addr = 0;
-  info->initrd_size = 0;
+  info->initrd_addr = module_start;
+  info->initrd_size = (uint64_t)(module_end - module_start);
   info->cmdline = pvh_get_cmdline();
 }
