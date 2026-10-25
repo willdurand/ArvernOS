@@ -1,6 +1,9 @@
 #include <arch/kernel.h>
 #include <arvern/utils.h>
 
+extern char __kernel_start;
+extern char __kernel_end;
+
 void arch_restart()
 {
   // TODO: implement me
@@ -19,7 +22,5 @@ void arch_halt()
 
 bool arch_is_kernel_address(uintptr_t addr)
 {
-  UNUSED(addr);
-
-  return false;
+  return addr >= (uintptr_t)&__kernel_start && addr < (uintptr_t)&__kernel_end;
 }
