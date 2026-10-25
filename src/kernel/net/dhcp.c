@@ -5,6 +5,7 @@
 #include <net/logging.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time/timer.h>
 
 void dhcp_discover(net_interface_t* interface);
 void dhcp_handle_offer(net_interface_t* interface);
@@ -21,16 +22,35 @@ static uint32_t xid = 1;
 
 static dhcp_header_t* dhcp_offer = NULL;
 
+// How long we wait for a DHCP reply, in microseconds.
+#define DHCP_REPLY_TIMEOUT 1000000
+
+/**
+ * Waits for a DHCP reply.
+ *
+ * The reply is processed from an interrupt handler, hence the busy-wait (which
+ * keeps interrupts enabled). The timeout is measured with the system timer
+ * because counting loop iterations is too fragile: a reply can arrive after
+ * the counter has reached its limit.
+ *
+ * @return `true` when a reply has been received
+ */
+static bool dhcp_wait_reply()
+{
+  uint64_t deadline = timer_uptime_microseconds() + DHCP_REPLY_TIMEOUT;
+
+  while (dhcp_offer == NULL && timer_uptime_microseconds() < deadline) {
+    ;
+  }
+
+  return dhcp_offer != NULL;
+}
+
 bool dhcp_negotiate(net_interface_t* interface)
 {
   dhcp_discover(interface);
 
-  uint64_t elapsed = 0;
-  while (dhcp_offer == NULL && elapsed++ < 10000) {
-    ;
-  }
-
-  if (dhcp_offer == NULL) {
+  if (!dhcp_wait_reply()) {
     return false;
   }
 
@@ -38,12 +58,7 @@ bool dhcp_negotiate(net_interface_t* interface)
   free(dhcp_offer);
   dhcp_offer = NULL;
 
-  elapsed = 0;
-  while (dhcp_offer == NULL && elapsed++ < 10000) {
-    ;
-  }
-
-  if (dhcp_offer == NULL) {
+  if (!dhcp_wait_reply()) {
     return false;
   }
 
