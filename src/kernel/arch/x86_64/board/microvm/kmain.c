@@ -7,6 +7,7 @@
 #include <kmain_start.h>
 #include <logging.h>
 #include <mmu/frame.h>
+#include <mmu/paging.h>
 
 void kmain(uintptr_t addr)
 {
@@ -21,6 +22,7 @@ void kmain(uintptr_t addr)
 
   tss_init();
   frame_init();
+  paging_init();
 
   while (1) {
     __asm__ volatile("hlt");

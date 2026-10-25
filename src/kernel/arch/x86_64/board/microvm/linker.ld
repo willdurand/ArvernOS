@@ -10,12 +10,16 @@ SECTIONS {
 
     .notes :
     {
+        __notes_start = .;
         *(.notes)
+        __notes_end = .;
     }
 
     .text ALIGN(4K) :
     {
+        __text_start = .;
         *(.text .text.*)
+        __text_end = .;
     }
 
     /* this section contains initcall functions as defined in
@@ -29,19 +33,25 @@ SECTIONS {
 
     .rodata ALIGN(4K) :
     {
+        __rodata_start = .;
         *(.rodata .rodata.*)
+        __rodata_end = .;
     }
 
     /* read-write data (initialized) */
     .data ALIGN(4K) :
     {
+        __data_start = .;
         *(.data .data.*)
+        __data_end = .;
     }
 
     /* read-write data (uninitialized) and stack */
     .bss ALIGN(4K) :
     {
+        __bss_start = .;
         *(.bss .bss.*)
+        __bss_end = .;
     }
 
     __kernel_end = .;
