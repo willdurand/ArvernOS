@@ -41,7 +41,8 @@ arch-debug: $(kernel) $(initrd)
 
 arch-run-debug: debug
 	$(progress) "RUN" $(kernel)
-	$(QEMU) -kernel $(kernel) -append $(KERNEL_CMDLINE) -initrd $(initrd) $(QEMU_OPTIONS)
+	$(QEMU) -kernel $(kernel) -append "$(KERNEL_CMDLINE)" -initrd $(initrd) $(filter-out -semihosting, $(QEMU_OPTIONS))
+
 .PHONY: arch-run-debug
 
 arch-release: $(kernel) $(initrd)
@@ -49,5 +50,6 @@ arch-release: $(kernel) $(initrd)
 
 arch-run-release: release
 	$(progress) "RUN" $(kernel)
-	$(QEMU) -kernel $(kernel) -append $(CMDLINE) -initrd $(initrd) $(QEMU_OPTIONS)
+	$(QEMU) -kernel $(kernel) -append "$(CMDLINE)" -initrd $(initrd) $(filter-out -semihosting, $(QEMU_OPTIONS))
+
 .PHONY: arch-run-release
