@@ -6,6 +6,8 @@ SECTIONS {
     /* sets the load address of the first section to 1 MiB (convention) */
     . = 1M;
 
+    __kernel_start = .;
+
     .notes :
     {
         *(.notes)
@@ -41,6 +43,8 @@ SECTIONS {
     {
         *(.bss .bss.*)
     }
+
+    __kernel_end = .;
 
     /* get rid of unnecessary bits */
     /DISCARD/ :

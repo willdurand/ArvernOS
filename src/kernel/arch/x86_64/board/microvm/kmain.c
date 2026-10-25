@@ -6,6 +6,7 @@
 #include <drivers/serial.h>
 #include <kmain_start.h>
 #include <logging.h>
+#include <mmu/frame.h>
 
 void kmain(uintptr_t addr)
 {
@@ -19,6 +20,7 @@ void kmain(uintptr_t addr)
   kmain_early_start();
 
   tss_init();
+  frame_init();
 
   while (1) {
     __asm__ volatile("hlt");
