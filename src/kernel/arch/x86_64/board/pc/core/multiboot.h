@@ -122,16 +122,6 @@ typedef struct multiboot_tag_elf_sections
   multiboot_elf_sections_entry_t sections[];
 } __attribute__((packed)) multiboot_tag_elf_sections_t;
 
-typedef struct reserved_areas
-{
-  uint64_t kernel_start;
-  uint64_t kernel_end;
-  uint64_t multiboot_start;
-  uint64_t multiboot_end;
-  uint64_t start;
-  uint64_t end;
-} reserved_areas_t;
-
 typedef struct multiboot_color
 {
   uint8_t red;
@@ -175,13 +165,19 @@ typedef struct multiboot_tag_framebuffer
   };
 } __attribute__((packed)) multiboot_tag_framebuffer_t;
 
+/**
+ * Initializes the multiboot module with the multiboot information structure.
+ *
+ * @param mbi the multiboot information structure
+ */
 void multiboot_init(multiboot_info_t* mbi);
 
-reserved_areas_t multiboot_get_reserved_areas();
-
+/**
+ * Returns the linear framebuffer tag.
+ *
+ * @return a pointer to the framebuffer tag or `0`
+ */
 multiboot_tag_framebuffer_t* multiboot_get_framebuffer();
-
-const char* multiboot_get_cmdline();
 
 /**
  * Fills the boot information from the multiboot information.
@@ -190,13 +186,23 @@ const char* multiboot_get_cmdline();
  */
 void multiboot_get_boot_info(boot_info_t* info);
 
+/**
+ * Returns the multiboot information structure.
+ *
+ * @return a pointer to the multiboot information structure or `0`
+ */
 multiboot_info_t* multiboot_get_info();
 
+/**
+ * Returns the memory map tag.
+ *
+ * @return a pointer to the memory map tag or `0`
+ */
 multiboot_tag_mmap_t* multiboot_get_mmap();
 
 /**
  * Finds and returns a pointer to a specific "tag" in the multiboot
- * information.
+ * information. `multiboot_init()` should be called first.
  *
  * @param type the type of the tag to find
  * @return a pointer to a multiboot tag structure or `0`

@@ -13,9 +13,20 @@ void kernel_panic(const char* format, ...)
 
 int main()
 {
-  memory_reserved_areas_t reserved_areas = { .kernel_end = 0x1100,
-                                             .start = 0x1000,
-                                             .end = 0x2050 };
+  const memory_area_t areas[] = {
+    {
+      .start = 0x1100,
+      .end = 0x2050,
+      .flags = MEMORY_AREA_NO_ALLOC | MEMORY_AREA_IDENTITY,
+    },
+  };
+
+  memory_reserved_areas_t reserved_areas = {
+    .kernel_start = 0x1000,
+    .kernel_end = 0x1100,
+    .areas = areas,
+    .area_count = 1,
+  };
 
   const memory_region_t regions[NB_ENTRIES] = {
     { .type = MEMORY_AVAILABLE, .addr = 0x000000, .len = 0x10000 },

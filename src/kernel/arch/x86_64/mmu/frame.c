@@ -17,6 +17,29 @@ static uint32_t memory_regions_count = 0;
 static uint64_t max_allocatable_frames = 0;
 static uint64_t first_request = 0;
 
+static uint64_t page_align_up(uint64_t address)
+{
+  uint64_t last_byte = address + PAGE_SIZE - 1;
+
+  return frame_start_address(frame_containing_address(last_byte));
+}
+
+static bool range_is_available(uint64_t addr, uint64_t size)
+{
+  for (uint32_t i = 0; i < memory_regions_count; i++) {
+    const memory_region_t* entry = &memory_regions[i];
+    if (entry->type != MEMORY_AVAILABLE) {
+      continue;
+    }
+
+    if (addr >= entry->addr && addr + size <= entry->addr + entry->len) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 void frame_init()
 {
   INFO("%s", "mmu: initialize frame allocator");
@@ -27,10 +50,10 @@ void frame_init()
 
   _frame_init(&reserved_areas, regions.regions, regions.count);
 
-  DEBUG("start=%p end=%p max_allocatable_frames=%" PRIu64
+  DEBUG("kernel_start=%p kernel_end=%p max_allocatable_frames=%" PRIu64
         " allocated_frames=%p used_count=%" PRIu64 " first_request=%" PRIu64,
-        reserved_areas.start,
-        reserved_areas.end,
+        reserved_areas.kernel_start,
+        reserved_areas.kernel_end,
         max_allocatable_frames,
         allocated_frames,
         frame_get_used_count(),
@@ -46,6 +69,10 @@ void _frame_init(memory_reserved_areas_t* reserved_areas,
 
   uint64_t available_memory = 0;
   for (uint32_t i = 0; i < region_count; i++) {
+    if (regions[i].type != MEMORY_AVAILABLE) {
+      continue;
+    }
+
     available_memory += regions[i].len;
   }
 
@@ -54,9 +81,37 @@ void _frame_init(memory_reserved_areas_t* reserved_areas,
     ((max_allocatable_frames / BITS_PER_WORD) * sizeof(bitmap_t)) / PAGE_SIZE +
     1;
 
-  uint64_t bitmap_address =
-    frame_start_address(frame_containing_address(reserved_areas->end) + 1);
+  // The bitmap goes right after the kernel image, skipping the bootloader
+  // areas that would otherwise collide with it.
   uint64_t bitmap_size = frames_for_bitmap * PAGE_SIZE;
+  uint64_t bitmap_address = page_align_up(reserved_areas->kernel_end);
+
+  bool moved = true;
+  while (moved) {
+    moved = false;
+    for (uint32_t i = 0; i < reserved_areas->area_count; i++) {
+      const memory_area_t* area = &reserved_areas->areas[i];
+      if (area->end <= area->start) {
+        continue;
+      }
+
+      if (bitmap_address < area->end &&
+          area->start < bitmap_address + bitmap_size) {
+        // Move past this area. The new location may overlap another area,
+        // hence the loop until nothing moves anymore.
+        bitmap_address = page_align_up(area->end);
+        moved = true;
+      }
+    }
+  }
+
+  if (!range_is_available(bitmap_address, bitmap_size)) {
+    PANIC("bitmap at %p (%" PRIu64 " bytes) does not sit in an available "
+          "memory region",
+          bitmap_address,
+          bitmap_size);
+  }
+
   MMU_DEBUG("bitmap: address=%p size=%" PRIu64 " (%" PRIu64 " pages)",
             bitmap_address,
             bitmap_size,
@@ -70,10 +125,43 @@ void _frame_init(memory_reserved_areas_t* reserved_areas,
   // Mark frames as used from address `0` to the end of the memory allocated
   // for the "allocated frames".
   frame_number_t end = frame_containing_address(bitmap_address + bitmap_size);
-  for (uint64_t i = 0; i < end; i++) {
-    bitmap_set(allocated_frames, i);
+  for (frame_number_t frame = 0; frame < end; frame++) {
+    // Frames in the memory map's holes are not allocatable, so there is no
+    // request to mark for them.
+    opt_uint64_t request = frame_number_to_request(frame);
+    if (request.has_value) {
+      bitmap_set(allocated_frames, request.value);
+      // Requests are ordered like frames: the last marked one is followed by
+      // the first request the allocator may consider.
+      first_request = request.value + 1;
+    }
   }
-  first_request = end;
+
+  // Mark the frames used by the bootloader areas (e.g. the init ramdisk),
+  // which typically sit in usable RAM.
+  for (uint32_t i = 0; i < reserved_areas->area_count; i++) {
+    const memory_area_t* area = &reserved_areas->areas[i];
+    MMU_DEBUG("reserved area #%u: start=%p end=%p flags=%#x",
+              i,
+              area->start,
+              area->end,
+              area->flags);
+
+    if (!(area->flags & MEMORY_AREA_NO_ALLOC) || area->end <= area->start) {
+      continue;
+    }
+
+    for (frame_number_t frame = frame_containing_address(area->start);
+         frame <= frame_containing_address(area->end - 1);
+         frame++) {
+      // Frames outside of the available regions are not allocatable, so there
+      // is nothing to mark for them.
+      opt_uint64_t request = frame_number_to_request(frame);
+      if (request.has_value) {
+        bitmap_set(allocated_frames, request.value);
+      }
+    }
+  }
 }
 
 void _frame_set_bitmap(bitmap_t* bitmap)

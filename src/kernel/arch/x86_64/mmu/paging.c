@@ -106,15 +106,17 @@ void remap_kernel()
   // We shouldn't deallocate the `inactive_page_table_frame`.
   can_deallocate_frames = true;
 
-  // Identity map first 1 MB.
+  // Identity map the low memory area, i.e. everything below the kernel image.
   // See: https://wiki.osdev.org/Memory_Map_(x86)
   for (uint64_t addr = 0; addr < 0x000A0000; addr += PAGE_SIZE) {
     identity_map(addr, PAGING_FLAG_PRESENT);
   }
-  for (uint64_t addr = 0x000A0000; addr < 0x00100000; addr += PAGE_SIZE) {
+  for (uint64_t addr = 0x000A0000; addr < KERNEL_LOAD_ADDRESS;
+       addr += PAGE_SIZE) {
     identity_map(addr, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
   }
-  MMU_DEBUG("%s", "mapped first 1MB!");
+  MMU_DEBUG("mapped low memory below %p!",
+            (void*)(uintptr_t)KERNEL_LOAD_ADDRESS);
 
   memory_framebuffer_t framebuffer = memory_get_framebuffer();
   if (framebuffer.addr != 0) {
@@ -132,25 +134,45 @@ void remap_kernel()
   memory_map_kernel_sections(map_kernel_section);
   MMU_DEBUG("%s", "kernel sections mapped!");
 
-  // Once the kernel is correctly mapped with the right flags, we map the rest
-  // of the reserved area that was determined by the boot code. We make sure
-  // that it is PRESENT, we probably don't need any other flags.
+  // Once the kernel is correctly mapped with the right flags, we map the
+  // bootloader-owned areas (init ramdisk, boot information, ...) so that they
+  // remain accessible. We make sure that they are PRESENT, we probably don't
+  // need any other flags.
   memory_reserved_areas_t reserved = memory_get_reserved_areas();
 
-  frame_number_t reserved_start_frame =
-    frame_containing_address(reserved.kernel_end);
-  frame_number_t reserved_end_frame =
-    frame_containing_address(reserved.end - 1);
-
-  MMU_DEBUG("mapping end of the reserved area: start_frame=%" PRIu64
-            " end_frame=%" PRIu64,
-            reserved_start_frame,
-            reserved_end_frame);
-
-  for (uint64_t i = reserved_start_frame; i <= reserved_end_frame; i++) {
-    identity_map(frame_start_address(i), PAGING_FLAG_PRESENT);
+  // The low-memory identity map above stops at `KERNEL_LOAD_ADDRESS`. If the
+  // board places the kernel image elsewhere, that map leaves a gap (or maps
+  // memory that is not below the kernel), so the assumption is broken.
+  if (reserved.kernel_start != 0 &&
+      reserved.kernel_start != KERNEL_LOAD_ADDRESS) {
+    PANIC("kernel starts at %p, expected %p",
+          (void*)reserved.kernel_start,
+          (void*)(uintptr_t)KERNEL_LOAD_ADDRESS);
   }
-  MMU_DEBUG("%s", "end of reserved area mapped!");
+
+  MMU_DEBUG("mapping %u bootloader area(s)", reserved.area_count);
+  for (uint32_t i = 0; i < reserved.area_count; i++) {
+    const memory_area_t* area = &reserved.areas[i];
+    if (!(area->flags & MEMORY_AREA_IDENTITY) || area->end <= area->start) {
+      continue;
+    }
+
+    // Some of these pages may already be mapped: the bootloader can place its
+    // payload right next to the kernel image (sharing a page with the last
+    // kernel section), and low memory below the kernel image is identity
+    // mapped above.
+    page_number_t first_page = frame_containing_address(area->start);
+    page_number_t last_page = frame_containing_address(area->end - 1);
+
+    for (page_number_t page = first_page; page <= last_page; page++) {
+      if (translate_page(page).has_value) {
+        continue;
+      }
+
+      identity_map(page_start_address(page), PAGING_FLAG_PRESENT);
+    }
+  }
+  MMU_DEBUG("%s", "bootloader areas mapped!");
 
   // Bitmap for allocated frames.
   MMU_DEBUG("mapping %d pages for frame allocator, starting at addr=%p",
@@ -182,6 +204,10 @@ void remap_kernel()
 
 void map_kernel_section(uint64_t addr, uint64_t size, uint32_t section_flags)
 {
+  if (size == 0) {
+    return;
+  }
+
   frame_number_t start_frame_number = frame_containing_address(addr);
   frame_number_t end_frame_number = frame_containing_address(addr + size - 1);
 
