@@ -4,6 +4,10 @@
 #include <net/logging.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time/timer.h>
+
+// How long we wait for an ICMPv4 reply, in microseconds.
+#define ICMPV4_REPLY_TIMEOUT 1000000
 
 // TODO: Find a better approach to generate such IDs.
 static uint16_t icmpv4_id = 1;
@@ -58,12 +62,18 @@ int icmpv4_send_packet(net_interface_t* interface,
                    (uint8_t*)&icmpv4_echo,
                    sizeof(icmpv4_echo_t));
 
-  uint64_t elapsed = 0;
-  while (icmpv4_reply == NULL && elapsed < 10000) {
+  // The reply is processed from an interrupt handler, so we busy-wait (with
+  // interrupts enabled) instead of sleeping. The timeout is measured with the
+  // system timer because counting loop iterations is too fragile: a reply can
+  // arrive after the counter has reached its limit.
+  uint64_t deadline = timer_uptime_microseconds() + ICMPV4_REPLY_TIMEOUT;
+
+  while (icmpv4_reply == NULL && timer_uptime_microseconds() < deadline) {
     ;
   }
 
   if (icmpv4_reply == NULL) {
+    NET_DEBUG("%s", "no ICMPv4 reply");
     return -1;
   }
 

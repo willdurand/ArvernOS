@@ -7,8 +7,12 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time/timer.h>
 
 void arp_reply(net_interface_t* interface, arp_packet_t* request);
+
+// How long we wait for an ARP reply, in microseconds.
+#define ARP_REPLY_TIMEOUT 1000000
 
 static uint8_t last_arp_mac_addr[6] = { 0 };
 static bool last_arp_mac_addr_set = false;
@@ -44,12 +48,20 @@ void arp_wait_reply(uint8_t* dst_mac)
 {
   memset(dst_mac, 0, 6);
 
-  for (uint32_t i = 0; i < 10000; i++) {
-    if (last_arp_mac_addr_set) {
-      memcpy(dst_mac, last_arp_mac_addr, 6);
-      last_arp_mac_addr_set = false;
-      return;
-    }
+  // The reply is processed from an interrupt handler, so we busy-wait (with
+  // interrupts enabled) instead of sleeping. The timeout is measured with the
+  // system timer because counting loop iterations is too fragile: a reply can
+  // arrive after the counter has reached its limit.
+  uint64_t deadline = timer_uptime_microseconds() + ARP_REPLY_TIMEOUT;
+
+  while (!last_arp_mac_addr_set && timer_uptime_microseconds() < deadline) {
+    ;
+  }
+
+  if (last_arp_mac_addr_set) {
+    memcpy(dst_mac, last_arp_mac_addr, 6);
+    last_arp_mac_addr_set = false;
+    return;
   }
 
   NET_DEBUG("%s", "no ARP reply");
