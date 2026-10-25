@@ -6,4 +6,5 @@
 ## Boards
 
 * \subpage refBoard_pc
+* \subpage refBoard_microvm
 -->

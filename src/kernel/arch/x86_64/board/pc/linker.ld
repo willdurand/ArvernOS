@@ -39,11 +39,10 @@ SECTIONS {
         *(.bss .bss.*)
     }
 
-    /* get rid of unnecessary gcc bits */
+    /* get rid of unnecessary bits */
     /DISCARD/ :
     {
         *(.comment)
         *(.eh_frame)
-        *(.note.gnu.build-id)
     }
 }

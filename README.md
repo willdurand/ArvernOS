@@ -48,6 +48,8 @@ Current Tier 2 archs/boards:
   - [Raspberry Pi 2](./src/kernel/arch/aarch32/board/raspi2/README.md)
 - **aarch64**
   - [Raspberry Pi 3](./src/kernel/arch/aarch64/board/raspi3/README.md)
+- **x86_64**
+  - [`microvm`](./src/kernel/arch/x86_64/board/microvm/README.md)
 
 ## Hacking on ArvernOS
 
