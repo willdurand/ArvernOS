@@ -11,7 +11,24 @@ void arch_restart()
 
 void arch_poweroff(int exit_code)
 {
-  // TODO: implement me
+#ifdef CONFIG_SEMIHOSTING
+  // Generate a triple-fault to trigger a guest-initiated shutdown, see:
+  // https://www.qemu.org/docs/master/system/i386/microvm.html#triggering-a-guest-initiated-shut-down
+
+  // Structure matching an IDT register.
+  struct
+  {
+    uint16_t limit;
+    uint64_t base;
+  } __attribute__((packed)) idt_reg = { 0, 0 };
+
+  // Load the empty IDT and trigger an interrupt.
+  __asm__ volatile("lidt %0;"
+                   "int $3;"
+                   :
+                   : "m"(idt_reg));
+#endif
+
   UNUSED(exit_code);
 }
 

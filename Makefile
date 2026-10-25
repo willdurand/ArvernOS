@@ -152,7 +152,7 @@ else
 endif
 
 ifeq ($(CONFIG_SEMIHOSTING), 1)
-	QEMU_OPTIONS  += -semihosting
+	QEMU_OPTIONS  += -semihosting -no-reboot
 	KERNEL_CONFIG += -DCONFIG_SEMIHOSTING
 endif
 
