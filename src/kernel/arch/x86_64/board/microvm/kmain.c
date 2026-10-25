@@ -1,15 +1,15 @@
-#include <arvern/utils.h>
 #include <kmain.h>
+
+#include <drivers/serial.h>
+#include <kmain_start.h>
+#include <logging.h>
 
 void kmain(uintptr_t addr)
 {
-  UNUSED(addr);
+  serial_init(SERIAL_COM1, SERIAL_SPEED_115200);
+  DEBUG("microvm: addr=%p", addr);
 
-  const char* msg = "here!\n";
-  while (*msg) {
-    __asm__ volatile("outb %0, %1" : : "a"(*msg), "Nd"((uint16_t)0x3F8));
-    msg++;
-  }
+  kmain_early_start();
 
   while (1) {
     __asm__ volatile("hlt");
