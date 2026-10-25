@@ -5,5 +5,6 @@ var searchData=
   ['kb_5fcaps_5flock_2',['KB_CAPS_LOCK',['../keyboard_8h.html#a8d228ccce74894dba08d2d8f9f2e07da',1,'keyboard.h']]],
   ['kb_5fenter_3',['KB_ENTER',['../keyboard_8h.html#a70388a0a0edc2a476657e42919b55655',1,'keyboard.h']]],
   ['kb_5flshift_4',['KB_LSHIFT',['../keyboard_8h.html#aa118eb14764e4006d95472b4e7a44b59',1,'keyboard.h']]],
-  ['kb_5frshift_5',['KB_RSHIFT',['../keyboard_8h.html#a2e1993a35d9afd0cfd9335fc50572add',1,'keyboard.h']]]
+  ['kb_5frshift_5',['KB_RSHIFT',['../keyboard_8h.html#a2e1993a35d9afd0cfd9335fc50572add',1,'keyboard.h']]],
+  ['kernel_5fload_5faddress_6',['KERNEL_LOAD_ADDRESS',['../memory_8h.html#aa1e55130fc38989d09ff33b30dd85dc2',1,'memory.h']]]
 ];

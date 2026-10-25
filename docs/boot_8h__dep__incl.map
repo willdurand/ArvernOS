@@ -1,11 +1,13 @@
 <map id="include/kernel/boot.h" name="include/kernel/boot.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="160,5,301,31"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="256,5,397,31"/>
 <area shape="rect" id="Node000002" href="$atag_8h.html" title=" " alt="" coords="5,79,136,120"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="191,40,112,81,109,76,194,36"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="271,38,135,81,133,76,274,34"/>
 <area shape="rect" id="Node000003" href="$kmain__start_8h.html" title=" " alt="" coords="160,79,301,120"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="232,44,233,80,228,78,229,49"/>
-<area shape="rect" id="Node000004" href="$multiboot_8h.html" title=" " alt="" coords="324,79,518,120"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="274,35,376,78,371,79,274,40"/>
-<area shape="rect" id="Node000005" href="$console_8h.html" title=" " alt="" coords="348,168,494,223"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="423,133,423,169,419,165,419,137"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="303,39,256,81,253,76,298,42"/>
+<area shape="rect" id="Node000004" href="$pvh_8h.html" title=" " alt="" coords="325,79,522,120"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="354,38,402,79,397,79,352,44"/>
+<area shape="rect" id="Node000005" href="$multiboot_8h.html" title=" " alt="" coords="547,79,740,120"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="390,32,567,78,562,79,390,38"/>
+<area shape="rect" id="Node000006" href="$console_8h.html" title=" " alt="" coords="571,168,716,223"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="646,133,646,169,642,165,642,137"/>
 </map>

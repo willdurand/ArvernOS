@@ -1,14 +1,14 @@
 <map id="src/kernel/arch" name="src/kernel/arch">
 <area shape="rect" id="node2" href="dir_164d9d2f5b0c525076e27a6a92d62d00.html" title="aarch32" alt="" coords="108,63,175,89"/>
 <area shape="rect" id="node5" href="dir_d44c64559bbebec7f509842c48db8b23.html" title="include" alt="" coords="202,137,264,162"/>
-<area shape="poly" id="edge1" href="dir_000000_000043.html" alt="" coords="158,87,209,127,203,127,156,92"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000000_000043.html" title="31" alt="" coords="202,111,216,126"/>
+<area shape="poly" id="edge1" href="dir_000000_000045.html" alt="" coords="158,87,209,127,203,127,156,92"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000000_000045.html" title="31" alt="" coords="202,111,216,126"/>
 <area shape="rect" id="node3" href="dir_0acad8e611f5f3679e26f7f6ddf45d1c.html" title="aarch64" alt="" coords="200,63,267,89"/>
-<area shape="poly" id="edge2" href="dir_000001_000043.html" alt="" coords="235,87,236,122,231,119,231,91"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000001_000043.html" title="29" alt="" coords="235,111,249,126"/>
+<area shape="poly" id="edge2" href="dir_000001_000045.html" alt="" coords="235,87,236,122,231,119,231,91"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000001_000045.html" title="29" alt="" coords="235,111,249,126"/>
 <area shape="rect" id="node4" href="dir_7c4c796ec9937bed8074dafcec3d25e4.html" title="x86_64" alt="" coords="291,63,354,89"/>
-<area shape="poly" id="edge3" href="dir_000083_000043.html" alt="" coords="310,88,262,129,259,124,305,90"/>
-<area shape="rect" id="edge3-headlabel" href="dir_000083_000043.html" title="109" alt="" coords="257,124,278,139"/>
+<area shape="poly" id="edge3" href="dir_000086_000045.html" alt="" coords="310,88,262,129,259,124,305,90"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000086_000045.html" title="109" alt="" coords="257,124,278,139"/>
 <area shape="rect" id="clust2" href="dir_76e3dd4d2fa719e8d3b096e9aa563982.html" alt="" coords="27,52,365,99"/>
 <area shape="rect" id="clust1" href="dir_cbd7f246bdf7dc0a50281a272327e6ed.html" title="kernel" alt="" coords="16,16,376,110"/>
 </map>

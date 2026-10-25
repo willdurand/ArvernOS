@@ -5,7 +5,7 @@ var searchData=
   ['aarch64_2',['aarch64',['../ref_arch_aarch64.html#autotoc_md27',1,'aarch64'],['../ref_arch_aarch64.html',1,'Architecture: aarch64']]],
   ['abort_3',['abort',['../stdlib_8h.html#ac54f53dc342019e8db34f4aa581a5792',1,'abort.c']]],
   ['addralign_4',['addralign',['../structelf__section__header__t.html#a67b9cce9eb1c31ab015fa6f4a5fe2787',1,'elf_section_header_t']]],
-  ['address_20space_5',['Virtual address space',['../ref_arch_x86_64.html#autotoc_md35',1,'']]],
+  ['address_20space_5',['Virtual address space',['../ref_board_pc.html#autotoc_md37',1,'']]],
   ['alloc_2eh_6',['alloc.h',['../aarch32_2mmu_2alloc_8h.html',1,'(Global Namespace)'],['../x86__64_2mmu_2alloc_8h.html',1,'(Global Namespace)']]],
   ['alloc_5finit_7',['alloc_init',['../aarch32_2mmu_2alloc_8h.html#a0de47e42c61353f53c07a4274b87f864',1,'alloc_init():&#160;alloc.c'],['../x86__64_2mmu_2alloc_8h.html#a0de47e42c61353f53c07a4274b87f864',1,'alloc_init():&#160;alloc.c']]],
   ['and_20tiers_8',['Architectures, boards and tiers',['../index.html#autotoc_md2',1,'']]],

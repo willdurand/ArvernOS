@@ -1,18 +1,14 @@
 var searchData=
 [
-  ['memory_5fframebuffer_5ft_0',['memory_framebuffer_t',['../structmemory__framebuffer__t.html',1,'']]],
-  ['memory_5fregion_5ft_1',['memory_region_t',['../structmemory__region__t.html',1,'']]],
-  ['memory_5fregions_5ft_2',['memory_regions_t',['../structmemory__regions__t.html',1,'']]],
-  ['memory_5freserved_5fareas_5ft_3',['memory_reserved_areas_t',['../structmemory__reserved__areas__t.html',1,'']]],
-  ['multiboot_5fcolor_5ft_4',['multiboot_color_t',['../structmultiboot__color__t.html',1,'']]],
-  ['multiboot_5felf_5fsections_5fentry_5ft_5',['multiboot_elf_sections_entry_t',['../structmultiboot__elf__sections__entry__t.html',1,'']]],
-  ['multiboot_5finfo_5ft_6',['multiboot_info_t',['../structmultiboot__info__t.html',1,'']]],
-  ['multiboot_5fmmap_5fentry_5ft_7',['multiboot_mmap_entry_t',['../structmultiboot__mmap__entry__t.html',1,'']]],
-  ['multiboot_5ftag_5felf_5fsections_5ft_8',['multiboot_tag_elf_sections_t',['../structmultiboot__tag__elf__sections__t.html',1,'']]],
-  ['multiboot_5ftag_5fframebuffer_5fcommon_5ft_9',['multiboot_tag_framebuffer_common_t',['../structmultiboot__tag__framebuffer__common__t.html',1,'']]],
-  ['multiboot_5ftag_5fframebuffer_5ft_10',['multiboot_tag_framebuffer_t',['../structmultiboot__tag__framebuffer__t.html',1,'']]],
-  ['multiboot_5ftag_5fmmap_5ft_11',['multiboot_tag_mmap_t',['../structmultiboot__tag__mmap__t.html',1,'']]],
-  ['multiboot_5ftag_5fmodule_5ft_12',['multiboot_tag_module_t',['../structmultiboot__tag__module__t.html',1,'']]],
-  ['multiboot_5ftag_5fstring_5ft_13',['multiboot_tag_string_t',['../structmultiboot__tag__string__t.html',1,'']]],
-  ['multiboot_5ftag_5ft_14',['multiboot_tag_t',['../structmultiboot__tag__t.html',1,'']]]
+  ['icmpv4_5fecho_5ft_0',['icmpv4_echo_t',['../structicmpv4__echo__t.html',1,'']]],
+  ['icmpv4_5freply_5ft_1',['icmpv4_reply_t',['../structicmpv4__reply__t.html',1,'']]],
+  ['idt_5fgate_5ft_2',['idt_gate_t',['../structidt__gate__t.html',1,'']]],
+  ['idt_5fregister_5ft_3',['idt_register_t',['../structidt__register__t.html',1,'']]],
+  ['in_5faddr_4',['in_addr',['../structin__addr.html',1,'']]],
+  ['inish_5farray_5ft_5',['inish_array_t',['../structinish__array__t.html',1,'']]],
+  ['inish_5fconfig_5ft_6',['inish_config_t',['../structinish__config__t.html',1,'']]],
+  ['inish_5fkv_5fpair_5ft_7',['inish_kv_pair_t',['../structinish__kv__pair__t.html',1,'']]],
+  ['inish_5fsection_5ft_8',['inish_section_t',['../structinish__section__t.html',1,'']]],
+  ['ipv4_5fheader_5ft_9',['ipv4_header_t',['../structipv4__header__t.html',1,'']]],
+  ['isr_5fstack_5ft_10',['isr_stack_t',['../structisr__stack__t.html',1,'']]]
 ];

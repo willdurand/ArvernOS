@@ -129,18 +129,25 @@ This graph shows which files directly or indirectly include this file:</div>
 Data Structures</h2></td></tr>
 <tr class="memitem:memory_5Fregion_5Ft" id="r_memory_5Fregion_5Ft"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structmemory__region__t.html">memory_region_t</a></td></tr>
 <tr class="memitem:memory_5Fregions_5Ft" id="r_memory_5Fregions_5Ft"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structmemory__regions__t.html">memory_regions_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The physical memory map: a contiguous array of regions and its length.  <a href="structmemory__regions__t.html#details">More...</a><br /></td></tr>
+<tr class="memitem:memory_5Farea_5Ft" id="r_memory_5Farea_5Ft"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structmemory__area__t.html">memory_area_t</a></td></tr>
 <tr class="memitem:memory_5Freserved_5Fareas_5Ft" id="r_memory_5Freserved_5Fareas_5Ft"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structmemory__reserved__areas__t.html">memory_reserved_areas_t</a></td></tr>
 <tr class="memitem:memory_5Fframebuffer_5Ft" id="r_memory_5Fframebuffer_5Ft"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structmemory__framebuffer__t.html">memory_framebuffer_t</a></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-define-members" class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
+<tr class="memitem:aa1e55130fc38989d09ff33b30dd85dc2" id="r_aa1e55130fc38989d09ff33b30dd85dc2"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#aa1e55130fc38989d09ff33b30dd85dc2">KERNEL_LOAD_ADDRESS</a>&#160;&#160;&#160;0x00100000</td></tr>
 <tr class="memitem:a4f48242e4fdac285f6ccbc8935a2b0e0" id="r_a4f48242e4fdac285f6ccbc8935a2b0e0"><td class="memItemLeft"><a id="a4f48242e4fdac285f6ccbc8935a2b0e0" name="a4f48242e4fdac285f6ccbc8935a2b0e0"></a>
 #define&#160;</td><td class="memItemRight"><b>MEMORY_AVAILABLE</b>&#160;&#160;&#160;1</td></tr>
-<tr class="memdesc:a4f48242e4fdac285f6ccbc8935a2b0e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Usable RAM. <br /></td></tr>
+<tr class="memdesc:a4f48242e4fdac285f6ccbc8935a2b0e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Usable RAM (E820 type 1). <br /></td></tr>
 <tr class="memitem:a1679bf8e71b63b8c29a999260bc8c7c4" id="r_a1679bf8e71b63b8c29a999260bc8c7c4"><td class="memItemLeft"><a id="a1679bf8e71b63b8c29a999260bc8c7c4" name="a1679bf8e71b63b8c29a999260bc8c7c4"></a>
 #define&#160;</td><td class="memItemRight"><b>MEMORY_RESERVED</b>&#160;&#160;&#160;2</td></tr>
-<tr class="memdesc:a1679bf8e71b63b8c29a999260bc8c7c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Memory reserved. <br /></td></tr>
+<tr class="memdesc:a1679bf8e71b63b8c29a999260bc8c7c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Memory reserved (E820 type 2). <br /></td></tr>
+<tr class="memitem:a5cadc023e0fa9ad6eedadbc0ca900e29" id="r_a5cadc023e0fa9ad6eedadbc0ca900e29"><td class="memItemLeft"><a id="a5cadc023e0fa9ad6eedadbc0ca900e29" name="a5cadc023e0fa9ad6eedadbc0ca900e29"></a>
+#define&#160;</td><td class="memItemRight"><b>MEMORY_AREA_NO_ALLOC</b>&#160;&#160;&#160;(1 &lt;&lt; 0)</td></tr>
+<tr class="memdesc:a5cadc023e0fa9ad6eedadbc0ca900e29"><td class="mdescLeft">&#160;</td><td class="mdescRight">The frame allocator must not hand out frames in this area. <br /></td></tr>
+<tr class="memitem:aeb7f9748bbdddff8381d736feb8f5ebf" id="r_aeb7f9748bbdddff8381d736feb8f5ebf"><td class="memItemLeft"><a id="aeb7f9748bbdddff8381d736feb8f5ebf" name="aeb7f9748bbdddff8381d736feb8f5ebf"></a>
+#define&#160;</td><td class="memItemRight"><b>MEMORY_AREA_IDENTITY</b>&#160;&#160;&#160;(1 &lt;&lt; 1)</td></tr>
+<tr class="memdesc:aeb7f9748bbdddff8381d736feb8f5ebf"><td class="mdescLeft">&#160;</td><td class="mdescRight">This area must remain identity-mapped when paging is enabled. <br /></td></tr>
 <tr class="memitem:a3093a5dd98f78b69ef78726dffdd38be" id="r_a3093a5dd98f78b69ef78726dffdd38be"><td class="memItemLeft"><a id="a3093a5dd98f78b69ef78726dffdd38be" name="a3093a5dd98f78b69ef78726dffdd38be"></a>
 #define&#160;</td><td class="memItemRight"><b>MEMORY_SECTION_WRITABLE</b>&#160;&#160;&#160;0x1</td></tr>
 <tr class="memdesc:a3093a5dd98f78b69ef78726dffdd38be"><td class="mdescLeft">&#160;</td><td class="mdescRight">The kernel section is writable. <br /></td></tr>
@@ -161,8 +168,28 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Physical memory handoff between the board's bootloader and the MMU.</p>
-<p>A board learns the physical memory layout from its bootloader and normalizes it here, so that the architecture's frame allocator and paging code stay board-agnostic. </p>
-</div><a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Typedef Documentation</h2>
+<p>A board learns the physical memory layout from its bootloader and normalizes it here, so that the architecture's frame allocator and paging code stay board-agnostic.</p>
+<ul>
+<li><span class="tt"><a class="el" href="#a35c02338b7ba3f0ee3794aa84a7a1ab3">memory_get_regions()</a></span> returns the bootloader's E820-style memory map, i.e. what the machine says is RAM and what it says is not.</li>
+<li><span class="tt"><a class="el" href="#a2cbf978da2dc42a76a2d786afc5bc808">memory_get_reserved_areas()</a></span> returns the ranges the bootloader has populated on top of plain RAM (kernel image, boot payloads, boot information), which the E820 memory map does not account for. </li>
+</ul>
+</div><a name="doc-define-members" id="doc-define-members"></a><h2 id="header-doc-define-members" class="groupheader">Macro Definition Documentation</h2>
+<a id="aa1e55130fc38989d09ff33b30dd85dc2" name="aa1e55130fc38989d09ff33b30dd85dc2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1e55130fc38989d09ff33b30dd85dc2">&#9670;&#160;</a></span>KERNEL_LOAD_ADDRESS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define KERNEL_LOAD_ADDRESS&#160;&#160;&#160;0x00100000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Address where the kernel image is loaded, i.e. the end of low memory. Must match the load address set by the board's linker script. </p>
+
+</div>
+</div>
+<a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Typedef Documentation</h2>
 <a id="ad3f8ce0886f140d5b70b6c03f20c7c94" name="ad3f8ce0886f140d5b70b6c03f20c7c94"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad3f8ce0886f140d5b70b6c03f20c7c94">&#9670;&#160;</a></span>memory_section_map_fn</h2>
 
@@ -239,7 +266,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Returns the physical address ranges reserved by the bootloader.</p>
+<p>Returns the physical address ranges reserved by the bootloader: the kernel image and the areas populated on top of plain RAM around it.</p>
+<p>The <span class="tt">areas</span> array is owned by the board and remains valid until the next call to this function.</p>
 <dl class="section return"><dt>Returns</dt><dd>the reserved address ranges </dd></dl>
 
 </div>
@@ -259,6 +287,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Invokes <span class="tt"><a class="el" href="paging_8h.html#af55681dc6c9ebb94b26ea497afe673f8">map</a></span> for every allocated section of the kernel image, so that paging can identity map each section with the right permissions.</p>
+<p>The implementation must report page-granular ranges and sections must not overlap each other.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">map</td><td>the callback to invoke for each section </td></tr>

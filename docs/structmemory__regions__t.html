@@ -114,9 +114,6 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('structmemory__
 </div><!--header-->
 <div class="contents">
 
-<p>The physical memory map: a contiguous array of regions and its length.  
- <a href="#details">More...</a></p>
-
 <p><code>#include &lt;memory.h&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for memory_regions_t:</div>
@@ -124,7 +121,8 @@ Collaboration diagram for memory_regions_t:</div>
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="structmemory__regions__t__coll__graph.svg" width="139" height="134"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The physical memory map: a contiguous array of regions and its length. </p>
+<div class="textblock"><p>The physical memory map: a contiguous array of regions and its length.</p>
+<p>The array is owned by the bootloader and remains valid for the lifetime of the kernel. </p>
 </div><hr/>The documentation for this struct was generated from the following file:<ul>
 <li>src/kernel/arch/x86_64/<a class="el" href="memory_8h.html">memory.h</a></li>
 </ul>

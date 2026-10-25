@@ -5,5 +5,8 @@ var searchData=
   ['hardware_5ftype_2',['hardware_type',['../structnet__interface.html#a6e168d48cb5501a4e5fa1b546bb66863',1,'net_interface']]],
   ['heap_5fsize_3',['HEAP_SIZE',['../x86__64_2mmu_2alloc_8h.html#a1b45302695680930829cac31d65e41e1',1,'alloc.h']]],
   ['heap_5fstart_4',['HEAP_START',['../x86__64_2mmu_2alloc_8h.html#ae9739bcecd10d5962cc10c12bf01594f',1,'alloc.h']]],
-  ['htons_5',['HTONS',['../inet_8h.html#a69a7a4951ff21b302267532c21ee78fc',1,'inet.h']]]
+  ['htons_5',['HTONS',['../inet_8h.html#a69a7a4951ff21b302267532c21ee78fc',1,'inet.h']]],
+  ['hvm_5fmemmap_5ftable_5fentry_6',['hvm_memmap_table_entry',['../structhvm__memmap__table__entry.html',1,'']]],
+  ['hvm_5fmodlist_5fentry_7',['hvm_modlist_entry',['../structhvm__modlist__entry.html',1,'']]],
+  ['hvm_5fstart_5finfo_5ft_8',['hvm_start_info_t',['../structhvm__start__info__t.html',1,'']]]
 ];

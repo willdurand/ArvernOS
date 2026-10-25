@@ -116,7 +116,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('structmemory__
 
 <p><code>#include &lt;memory.h&gt;</code></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A region of physical memory, as reported by the bootloader and modeled after the Multiboot2 spec. </p>
+<div class="textblock"><p>A region of physical memory, as reported by the bootloader's E820-style memory map.</p>
+<p>The map is passed through as-is. Only regions of type <span class="tt"><a class="el" href="memory_8h.html#a4f48242e4fdac285f6ccbc8935a2b0e0" title="Usable RAM (E820 type 1).">MEMORY_AVAILABLE</a></span> are allocatable; all other types are considered unavailable. </p>
 </div><hr/>The documentation for this struct was generated from the following file:<ul>
 <li>src/kernel/arch/x86_64/<a class="el" href="memory_8h.html">memory.h</a></li>
 </ul>

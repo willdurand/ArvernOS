@@ -2,8 +2,12 @@ var memory_8h =
 [
     [ "memory_region_t", "structmemory__region__t.html", null ],
     [ "memory_regions_t", "structmemory__regions__t.html", null ],
+    [ "memory_area_t", "structmemory__area__t.html", null ],
     [ "memory_reserved_areas_t", "structmemory__reserved__areas__t.html", null ],
     [ "memory_framebuffer_t", "structmemory__framebuffer__t.html", null ],
+    [ "KERNEL_LOAD_ADDRESS", "memory_8h.html#aa1e55130fc38989d09ff33b30dd85dc2", null ],
+    [ "MEMORY_AREA_IDENTITY", "memory_8h.html#aeb7f9748bbdddff8381d736feb8f5ebf", null ],
+    [ "MEMORY_AREA_NO_ALLOC", "memory_8h.html#a5cadc023e0fa9ad6eedadbc0ca900e29", null ],
     [ "MEMORY_AVAILABLE", "memory_8h.html#a4f48242e4fdac285f6ccbc8935a2b0e0", null ],
     [ "MEMORY_RESERVED", "memory_8h.html#a1679bf8e71b63b8c29a999260bc8c7c4", null ],
     [ "MEMORY_SECTION_EXECUTABLE", "memory_8h.html#accafbfb023ae346746173f1ba2bd1961", null ],

@@ -137,18 +137,22 @@ Data Structures</h2></td></tr>
 <tr class="memitem:multiboot_5Ftag_5Fmmap_5Ft" id="r_multiboot_5Ftag_5Fmmap_5Ft"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structmultiboot__tag__mmap__t.html">multiboot_tag_mmap_t</a></td></tr>
 <tr class="memitem:multiboot_5Felf_5Fsections_5Fentry_5Ft" id="r_multiboot_5Felf_5Fsections_5Fentry_5Ft"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structmultiboot__elf__sections__entry__t.html">multiboot_elf_sections_entry_t</a></td></tr>
 <tr class="memitem:multiboot_5Ftag_5Felf_5Fsections_5Ft" id="r_multiboot_5Ftag_5Felf_5Fsections_5Ft"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structmultiboot__tag__elf__sections__t.html">multiboot_tag_elf_sections_t</a></td></tr>
-<tr class="memitem:reserved_5Fareas_5Ft" id="r_reserved_5Fareas_5Ft"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structreserved__areas__t.html">reserved_areas_t</a></td></tr>
 <tr class="memitem:multiboot_5Fcolor_5Ft" id="r_multiboot_5Fcolor_5Ft"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structmultiboot__color__t.html">multiboot_color_t</a></td></tr>
 <tr class="memitem:multiboot_5Ftag_5Fframebuffer_5Fcommon_5Ft" id="r_multiboot_5Ftag_5Fframebuffer_5Fcommon_5Ft"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structmultiboot__tag__framebuffer__common__t.html">multiboot_tag_framebuffer_common_t</a></td></tr>
 <tr class="memitem:multiboot_5Ftag_5Fframebuffer_5Ft" id="r_multiboot_5Ftag_5Fframebuffer_5Ft"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structmultiboot__tag__framebuffer__t.html">multiboot_tag_framebuffer_t</a></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a041e30555814c213256f2341ad51ce93" id="r_a041e30555814c213256f2341ad51ce93"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a041e30555814c213256f2341ad51ce93">multiboot_init</a> (<a class="el" href="structmultiboot__info__t.html">multiboot_info_t</a> *mbi)</td></tr>
+<tr class="memitem:ae54050d669389f6602144c2312b970cb" id="r_ae54050d669389f6602144c2312b970cb"><td class="memItemLeft"><a class="el" href="structmultiboot__tag__framebuffer__t.html">multiboot_tag_framebuffer_t</a> *&#160;</td><td class="memItemRight"><a class="el" href="#ae54050d669389f6602144c2312b970cb">multiboot_get_framebuffer</a> ()</td></tr>
 <tr class="memitem:a5ccf779d3d8526a875e61b52e7e1d24f" id="r_a5ccf779d3d8526a875e61b52e7e1d24f"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a5ccf779d3d8526a875e61b52e7e1d24f">multiboot_get_boot_info</a> (<a class="el" href="structboot__info__t.html">boot_info_t</a> *info)</td></tr>
+<tr class="memitem:abed4f0431e7e1944d8228e17e0f58e6a" id="r_abed4f0431e7e1944d8228e17e0f58e6a"><td class="memItemLeft"><a class="el" href="structmultiboot__info__t.html">multiboot_info_t</a> *&#160;</td><td class="memItemRight"><a class="el" href="#abed4f0431e7e1944d8228e17e0f58e6a">multiboot_get_info</a> ()</td></tr>
+<tr class="memitem:a1729f36a18d7f01c28434e55b6598583" id="r_a1729f36a18d7f01c28434e55b6598583"><td class="memItemLeft"><a class="el" href="structmultiboot__tag__mmap__t.html">multiboot_tag_mmap_t</a> *&#160;</td><td class="memItemRight"><a class="el" href="#a1729f36a18d7f01c28434e55b6598583">multiboot_get_mmap</a> ()</td></tr>
 <tr class="memitem:a531ddb1c49012191e43cfa192bd607ba" id="r_a531ddb1c49012191e43cfa192bd607ba"><td class="memItemLeft">void *&#160;</td><td class="memItemRight"><a class="el" href="#a531ddb1c49012191e43cfa192bd607ba">multiboot_find</a> (uint16_t type)</td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><dl class="section see"><dt>See also</dt><dd><a href="https://www.gnu.org/software/grub/manual/multiboot2/multiboot.html">https://www.gnu.org/software/grub/manual/multiboot2/multiboot.html</a> </dd></dl>
+<div class="textblock"><dl class="section see"><dt>See also</dt><dd><a href="https://www.gnu.org/software/grub/manual/multiboot2/multiboot.html">https://www.gnu.org/software/grub/manual/multiboot2/multiboot.html</a></dd></dl>
+<p>This module manages the Multiboot 2 boot information, which is handed over by the bootloader (GRUB) when the kernel is loaded using the Multiboot 2 header (see <span class="tt">asm/multiboot_header.asm</span>). </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
 <a id="a531ddb1c49012191e43cfa192bd607ba" name="a531ddb1c49012191e43cfa192bd607ba"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a531ddb1c49012191e43cfa192bd607ba">&#9670;&#160;</a></span>multiboot_find()</h2>
@@ -164,7 +168,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Finds and returns a pointer to a specific "tag" in the multiboot information.</p>
+<p>Finds and returns a pointer to a specific "tag" in the multiboot information. <span class="tt"><a class="el" href="#a041e30555814c213256f2341ad51ce93">multiboot_init()</a></span> should be called first.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">type</td><td>the type of the tag to find </td></tr>
@@ -196,7 +200,88 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000007">Todo</a></b></dt><dd>See also comment in <span class="tt">build_reserved_areas()</span> about the lack of support for more than one module. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000008">Todo</a></b></dt><dd>Add support for more than one module. While most tags are unique in Multiboot2, this isn't the case for modules. </dd></dl>
+
+</div>
+</div>
+<a id="ae54050d669389f6602144c2312b970cb" name="ae54050d669389f6602144c2312b970cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae54050d669389f6602144c2312b970cb">&#9670;&#160;</a></span>multiboot_get_framebuffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structmultiboot__tag__framebuffer__t.html">multiboot_tag_framebuffer_t</a> * multiboot_get_framebuffer </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns the linear framebuffer tag.</p>
+<dl class="section return"><dt>Returns</dt><dd>a pointer to the framebuffer tag or <span class="tt">0</span> </dd></dl>
+
+</div>
+</div>
+<a id="abed4f0431e7e1944d8228e17e0f58e6a" name="abed4f0431e7e1944d8228e17e0f58e6a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abed4f0431e7e1944d8228e17e0f58e6a">&#9670;&#160;</a></span>multiboot_get_info()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structmultiboot__info__t.html">multiboot_info_t</a> * multiboot_get_info </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns the multiboot information structure.</p>
+<dl class="section return"><dt>Returns</dt><dd>a pointer to the multiboot information structure or <span class="tt">0</span> </dd></dl>
+
+</div>
+</div>
+<a id="a1729f36a18d7f01c28434e55b6598583" name="a1729f36a18d7f01c28434e55b6598583"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1729f36a18d7f01c28434e55b6598583">&#9670;&#160;</a></span>multiboot_get_mmap()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structmultiboot__tag__mmap__t.html">multiboot_tag_mmap_t</a> * multiboot_get_mmap </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns the memory map tag.</p>
+<dl class="section return"><dt>Returns</dt><dd>a pointer to the memory map tag or <span class="tt">0</span> </dd></dl>
+
+</div>
+</div>
+<a id="a041e30555814c213256f2341ad51ce93" name="a041e30555814c213256f2341ad51ce93"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a041e30555814c213256f2341ad51ce93">&#9670;&#160;</a></span>multiboot_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void multiboot_init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmultiboot__info__t.html">multiboot_info_t</a> *</td>          <td class="paramname"><span class="paramname"><em>mbi</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Initializes the multiboot module with the multiboot information structure.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mbi</td><td>the multiboot information structure </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

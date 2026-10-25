@@ -21,5 +21,10 @@ var searchData=
   ['port_5fword_5fout_18',['port_word_out',['../port_8h.html#a08d9adffef857f1578d9086615626652',1,'port.c']]],
   ['proc_5ffs_5fcreate_5freadonly_5ffile_19',['proc_fs_create_readonly_file',['../fs_2proc_8h.html#a261677ec59fe52476936fdf45585742f',1,'proc.c']]],
   ['proc_5ffs_5finit_20',['proc_fs_init',['../fs_2proc_8h.html#aeb261bec43942270e72349813c904a5a',1,'proc.c']]],
-  ['putchar_21',['putchar',['../stdio_8h.html#a948b7a0779c308ac5502c57e282e6933',1,'putchar.c']]]
+  ['putchar_21',['putchar',['../stdio_8h.html#a948b7a0779c308ac5502c57e282e6933',1,'putchar.c']]],
+  ['pvh_5fget_5fboot_5finfo_22',['pvh_get_boot_info',['../pvh_8h.html#ac9fec184fbd8344c8956d022784192e9',1,'pvh.c']]],
+  ['pvh_5fget_5fcmdline_23',['pvh_get_cmdline',['../pvh_8h.html#a618e698886f5e313d4c999f0247a2bbc',1,'pvh.c']]],
+  ['pvh_5fget_5fmmap_24',['pvh_get_mmap',['../pvh_8h.html#ad6e62ee5bee1eb542bb786a51dc1756f',1,'pvh.c']]],
+  ['pvh_5fget_5fmodules_5frange_25',['pvh_get_modules_range',['../pvh_8h.html#acb44bfbe2c54f2acf123074b2a21277b',1,'pvh.c']]],
+  ['pvh_5finit_26',['pvh_init',['../pvh_8h.html#ad61026a4b02d28fbf1cb9bf4c9a7775c',1,'pvh.c']]]
 ];

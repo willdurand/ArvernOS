@@ -10,7 +10,7 @@ var searchData=
   ['dev_5ffs_5fcreate_7',['dev_fs_create',['../dev_8h.html#a19cbd7433414e04cc8c0beb82f397c21',1,'dev.c']]],
   ['dev_5ffs_5finit_8',['dev_fs_init',['../dev_8h.html#ad38d1da6ed44549a44bf01855a681730',1,'dev.c']]],
   ['development_20environment_9',['Setting up a development environment',['../index.html#autotoc_md6',1,'']]],
-  ['device_5fnumber_10',['device_number',['../structpci__device__t_1_1_0fstruct_0e_8____unnamed0____.html#a2c1e39394bc84fa73c51ba9d8601caeb',1,'pci_device_t::[struct].__unnamed0__']]],
+  ['device_5fnumber_10',['device_number',['../structpci__device__t_1_1_0fstruct_0e_8____unnamed0____.html#a2482a9cfafdcbbda982e4874d66b6385',1,'pci_device_t::[struct].__unnamed0__']]],
   ['dhcp_2eh_11',['dhcp.h',['../dhcp_8h.html',1,'']]],
   ['dhcp_5fheader_5ft_12',['dhcp_header_t',['../structdhcp__header__t.html',1,'']]],
   ['dhcp_5fnegotiate_13',['dhcp_negotiate',['../dhcp_8h.html#ae37a0dfd11fc8825b9808761417c979b',1,'dhcp.c']]],

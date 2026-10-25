@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['early_20boot_20sequence_0',['Early boot sequence',['../ref_arch_x86_64.html#autotoc_md32',1,'']]],
+  ['early_20boot_20sequence_0',['Early boot sequence',['../ref_board_pc.html#autotoc_md34',1,'']]],
   ['elf_2eh_1',['elf.h',['../elf_8h.html',1,'']]],
   ['elf_5fheader_5ft_2',['elf_header_t',['../structelf__header__t.html',1,'']]],
   ['elf_5fprogram_5fflag_5fexecute_3',['ELF_PROGRAM_FLAG_EXECUTE',['../elf_8h.html#aebb74ea17fe6a8dd9668bb43fbcdd522',1,'elf.h']]],
@@ -16,7 +16,7 @@ var searchData=
   ['elf_5fsection_5ftype_5fstrtab_13',['ELF_SECTION_TYPE_STRTAB',['../elf_8h.html#ae079a75578fcd79f43a7a2ce98dcf3fe',1,'elf.h']]],
   ['elf_5fsection_5ftype_5fsymtab_14',['ELF_SECTION_TYPE_SYMTAB',['../elf_8h.html#a5f757e46d7f3e0d4d84e63e75399b1ae',1,'elf.h']]],
   ['elf_5ftype_5fexecutable_15',['ELF_TYPE_EXECUTABLE',['../elf_8h.html#ad2f1035ee9df02bd3d7504cb7f6c97d8',1,'elf.h']]],
-  ['enable_16',['enable',['../structpci__device__t_1_1_0fstruct_0e_8____unnamed0____.html#a8ca9954e9fa9287d5aeed86a5aef3a81',1,'pci_device_t::[struct].__unnamed0__']]],
+  ['enable_16',['enable',['../structpci__device__t_1_1_0fstruct_0e_8____unnamed0____.html#ad610a1767a8087e0917e8f2e43325d5f',1,'pci_device_t::[struct].__unnamed0__']]],
   ['entsize_17',['entsize',['../structelf__section__header__t.html#a987427db07393065207521760633938b',1,'elf_section_header_t']]],
   ['environ_18',['environ',['../unistd_8h.html#aabcddb309730f4730117e476515c1363',1,'start_main.c']]],
   ['environ_5fsize_19',['ENVIRON_SIZE',['../unistd_8h.html#aa8e7e2e2c6871ac91451a18930ec8944',1,'unistd.h']]],

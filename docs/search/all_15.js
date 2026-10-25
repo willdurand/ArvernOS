@@ -21,10 +21,9 @@ var searchData=
   ['recvfrom_18',['recvfrom',['../syscall_8h.html#ad144bb8d4119d5fa0ee5b6c4d06bc645',1,'recvfrom.c']]],
   ['reference_5fts_19',['reference_ts',['../structntp__header__t.html#a25374520c7dcba12a3d17bedd0ccb1f0',1,'ntp_header_t']]],
   ['register_2eh_20',['register.h',['../x86__64_2core_2register_8h.html',1,'']]],
-  ['related_20pages_21',['Related pages',['../dir_cbd7f246bdf7dc0a50281a272327e6ed.html#autotoc_md37',1,'Related pages'],['../dir_173c9e88aa581eef1e30c63858f75f59.html#autotoc_md42',1,'Related pages']]],
+  ['related_20pages_21',['Related pages',['../dir_cbd7f246bdf7dc0a50281a272327e6ed.html#autotoc_md41',1,'Related pages'],['../dir_173c9e88aa581eef1e30c63858f75f59.html#autotoc_md46',1,'Related pages']]],
   ['release_20mode_22',['Release mode',['../index.html#autotoc_md17',1,'']]],
-  ['reserved_5fareas_5ft_23',['reserved_areas_t',['../structreserved__areas__t.html',1,'']]],
-  ['rtl8139_2eh_24',['rtl8139.h',['../rtl8139_8h.html',1,'']]],
-  ['rtl8139_5fdriver_25',['rtl8139_driver',['../rtl8139_8h.html#aedaac9701166b358589fdcfefd0f702e',1,'rtl8139.c']]],
-  ['rtl8139_5finit_26',['rtl8139_init',['../rtl8139_8h.html#a24e07ef25a2b1581bca67bbb213a0931',1,'rtl8139.c']]]
+  ['rtl8139_2eh_23',['rtl8139.h',['../rtl8139_8h.html',1,'']]],
+  ['rtl8139_5fdriver_24',['rtl8139_driver',['../rtl8139_8h.html#aedaac9701166b358589fdcfefd0f702e',1,'rtl8139.c']]],
+  ['rtl8139_5finit_25',['rtl8139_init',['../rtl8139_8h.html#a24e07ef25a2b1581bca67bbb213a0931',1,'rtl8139.c']]]
 ];

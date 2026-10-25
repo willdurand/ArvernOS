@@ -1,0 +1,23 @@
+<map id="src/kernel/arch/x86_64/board/microvm" name="src/kernel/arch/x86_64/board/microvm">
+<area shape="rect" id="node3" href="dir_4f4b8b71eabd933b05a81c8e1310c9d8.html" title="core" alt="" coords="92,137,138,162"/>
+<area shape="poly" id="edge2" href="dir_000054_000030.html" alt="" coords="80,86,103,123,98,124,79,91"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000054_000030.html" title="2" alt="" coords="103,109,110,124"/>
+<area shape="rect" id="node4" href="dir_3a646564ec239f35c01425f0e9da2ba2.html" title="mmu" alt="" coords="211,137,261,162"/>
+<area shape="poly" id="edge1" href="dir_000054_000058.html" alt="" coords="100,86,199,130,194,132,99,91"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000054_000058.html" title="2" alt="" coords="194,115,201,130"/>
+<area shape="rect" id="node5" href="dir_d44c64559bbebec7f509842c48db8b23.html" title="include" alt="" coords="268,210,330,236"/>
+<area shape="poly" id="edge3" href="dir_000054_000045.html" alt="" coords="109,83,208,109,251,123,275,135,293,164,300,196,295,194,288,166,272,139,249,128,206,114,109,88"/>
+<area shape="rect" id="edge3-headlabel" href="dir_000054_000045.html" title="11" alt="" coords="298,184,312,199"/>
+<area shape="rect" id="node6" href="dir_dfce509d3294b4958bedddff0a015025.html" title="drivers" alt="" coords="336,137,397,162"/>
+<area shape="poly" id="edge4" href="dir_000054_000039.html" alt="" coords="109,83,323,135,320,139,109,88"/>
+<area shape="rect" id="edge4-headlabel" href="dir_000054_000039.html" title="3" alt="" coords="317,121,324,136"/>
+<area shape="rect" id="node2" href="dir_67c740927e3a1f10cd2db69d4435cd32.html" title="arch" alt="" coords="133,63,179,89"/>
+<area shape="poly" id="edge5" href="dir_000009_000045.html" alt="" coords="179,76,236,83,306,94,370,111,395,122,411,135,419,148,421,160,419,172,411,185,398,199,382,209,346,221,344,216,379,205,395,195,407,182,414,171,416,160,414,149,407,138,392,126,369,116,305,99,235,88,180,82"/>
+<area shape="rect" id="edge5-headlabel" href="dir_000009_000045.html" title="5" alt="" coords="346,219,353,234"/>
+<area shape="poly" id="edge6" href="dir_000009_000039.html" alt="" coords="180,83,324,132,319,134,179,88"/>
+<area shape="rect" id="edge6-headlabel" href="dir_000009_000039.html" title="2" alt="" coords="318,116,325,131"/>
+<area shape="poly" id="edge7" href="dir_000030_000045.html" alt="" coords="139,157,200,181,256,204,250,205,198,186,138,163"/>
+<area shape="rect" id="edge7-headlabel" href="dir_000030_000045.html" title="1" alt="" coords="250,188,257,203"/>
+<area shape="rect" id="clust2" href="dir_44ffb275fbbed82cd7b7ba82f706e211.html" alt="" coords="27,52,189,173"/>
+<area shape="rect" id="clust1" href="dir_7d8c460b05ac94f3409122b3bc1d7756.html" title="board" alt="" coords="16,16,200,184"/>
+</map>

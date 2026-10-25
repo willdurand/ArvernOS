@@ -16,7 +16,7 @@ var searchData=
   ['opt_5fuint32_5ft_13',['opt_uint32_t',['../structopt__uint32__t.html',1,'']]],
   ['opt_5fuint64_5ft_14',['opt_uint64_t',['../structopt__uint64__t.html',1,'']]],
   ['opt_5fuint8_5ft_15',['opt_uint8_t',['../structopt__uint8__t.html',1,'']]],
-  ['options_16',['options',['../ref_arch_x86_64.html#autotoc_md31',1,'Boot options'],['../structdhcp__header__t.html#a734798cfe1e826aa09e2a40b65f30ff1',1,'dhcp_header_t::options']]],
+  ['options_16',['options',['../ref_board_pc.html#autotoc_md33',1,'Boot options'],['../structdhcp__header__t.html#a734798cfe1e826aa09e2a40b65f30ff1',1,'dhcp_header_t::options']]],
   ['origin_5fts_17',['origin_ts',['../structntp__header__t.html#a024bd1f48208f1f2005f0ad5b3222272',1,'ntp_header_t']]],
   ['osinfo_2eh_18',['osinfo.h',['../osinfo_8h.html',1,'']]]
 ];

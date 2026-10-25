@@ -28,19 +28,9 @@ var NAVTREE =
     [ "Introduction", "index.html", "index" ],
     [ "Architecture: aarch32", "ref_arch_aarch32.html", "ref_arch_aarch32" ],
     [ "Architecture: aarch64", "ref_arch_aarch64.html", "ref_arch_aarch64" ],
-    [ "Architecture: x86_64", "ref_arch_x86_64.html", [
-      [ "x86_64", "ref_arch_x86_64.html#autotoc_md29", [
-        [ "config file", "ref_arch_x86_64.html#autotoc_md30", null ],
-        [ "Boot options", "ref_arch_x86_64.html#autotoc_md31", null ],
-        [ "Early boot sequence", "ref_arch_x86_64.html#autotoc_md32", null ],
-        [ "Memory management", "ref_arch_x86_64.html#autotoc_md33", null ],
-        [ "Memory map", "ref_arch_x86_64.html#autotoc_md34", [
-          [ "Virtual address space", "ref_arch_x86_64.html#autotoc_md35", null ]
-        ] ]
-      ] ]
-    ] ],
+    [ "Architecture: x86_64", "ref_arch_x86_64.html", "ref_arch_x86_64" ],
     [ "init", "ref_init.html", [
-      [ "init", "ref_init.html#autotoc_md39", null ]
+      [ "init", "ref_init.html#autotoc_md43", null ]
     ] ],
     [ "Todo List", "todo.html", null ],
     [ "Data Structures", "annotated.html", [
@@ -66,8 +56,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "aarch32_2kmain_8h.html",
-"inet_8h.html#a69a7a4951ff21b302267532c21ee78fc",
-"structnet__driver.html#ac6e96c4cc83f5b379d7a52323f54aee9"
+"index.html#autotoc_md9",
+"structipv4__header__t.html"
 ];
 
 const SYNCONMSG = 'click to disable panel synchronization';

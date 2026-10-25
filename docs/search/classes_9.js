@@ -1,7 +1,19 @@
 var searchData=
 [
-  ['net_5fdriver_0',['net_driver',['../structnet__driver.html',1,'']]],
-  ['net_5finterface_1',['net_interface',['../structnet__interface.html',1,'']]],
-  ['ntp_5fheader_5ft_2',['ntp_header_t',['../structntp__header__t.html',1,'']]],
-  ['ntp_5ftimestamp_5ft_3',['ntp_timestamp_t',['../structntp__timestamp__t.html',1,'']]]
+  ['memory_5farea_5ft_0',['memory_area_t',['../structmemory__area__t.html',1,'']]],
+  ['memory_5fframebuffer_5ft_1',['memory_framebuffer_t',['../structmemory__framebuffer__t.html',1,'']]],
+  ['memory_5fregion_5ft_2',['memory_region_t',['../structmemory__region__t.html',1,'']]],
+  ['memory_5fregions_5ft_3',['memory_regions_t',['../structmemory__regions__t.html',1,'']]],
+  ['memory_5freserved_5fareas_5ft_4',['memory_reserved_areas_t',['../structmemory__reserved__areas__t.html',1,'']]],
+  ['multiboot_5fcolor_5ft_5',['multiboot_color_t',['../structmultiboot__color__t.html',1,'']]],
+  ['multiboot_5felf_5fsections_5fentry_5ft_6',['multiboot_elf_sections_entry_t',['../structmultiboot__elf__sections__entry__t.html',1,'']]],
+  ['multiboot_5finfo_5ft_7',['multiboot_info_t',['../structmultiboot__info__t.html',1,'']]],
+  ['multiboot_5fmmap_5fentry_5ft_8',['multiboot_mmap_entry_t',['../structmultiboot__mmap__entry__t.html',1,'']]],
+  ['multiboot_5ftag_5felf_5fsections_5ft_9',['multiboot_tag_elf_sections_t',['../structmultiboot__tag__elf__sections__t.html',1,'']]],
+  ['multiboot_5ftag_5fframebuffer_5fcommon_5ft_10',['multiboot_tag_framebuffer_common_t',['../structmultiboot__tag__framebuffer__common__t.html',1,'']]],
+  ['multiboot_5ftag_5fframebuffer_5ft_11',['multiboot_tag_framebuffer_t',['../structmultiboot__tag__framebuffer__t.html',1,'']]],
+  ['multiboot_5ftag_5fmmap_5ft_12',['multiboot_tag_mmap_t',['../structmultiboot__tag__mmap__t.html',1,'']]],
+  ['multiboot_5ftag_5fmodule_5ft_13',['multiboot_tag_module_t',['../structmultiboot__tag__module__t.html',1,'']]],
+  ['multiboot_5ftag_5fstring_5ft_14',['multiboot_tag_string_t',['../structmultiboot__tag__string__t.html',1,'']]],
+  ['multiboot_5ftag_5ft_15',['multiboot_tag_t',['../structmultiboot__tag__t.html',1,'']]]
 ];
