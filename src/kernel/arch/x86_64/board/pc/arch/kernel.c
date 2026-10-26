@@ -30,6 +30,8 @@ void arch_restart()
   }
 
   port_byte_out(KEYBOARD_STATUS_PORT, RESET_CPU_COMMAND);
+
+  arch_halt();
 }
 
 void arch_poweroff(int exit_code)
@@ -46,4 +48,6 @@ void arch_poweroff(int exit_code)
 #else
   UNUSED(exit_code);
 #endif
+
+  arch_halt();
 }
