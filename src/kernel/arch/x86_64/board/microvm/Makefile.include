@@ -10,12 +10,8 @@
 # Options for the different tools
 ###############################################################################
 
-QEMU_OPTIONS += -M microvm -display none
-QEMU_OPTIONS += -m 512M
-# Keep the live output on the terminal and mirror it to the log file so that it
-# can be reviewed (and printed in CI).
-QEMU_OPTIONS += -chardev stdio,id=serial0,logfile=$(log_file)
-QEMU_OPTIONS += -serial chardev:serial0
+QEMU_OPTIONS += -M microvm
+QEMU_OPTIONS += -display none
 
 ###############################################################################
 # Source files
@@ -39,9 +35,10 @@ KERNEL_INCLUDES += -I$(board_src)/
 arch-debug: $(kernel) $(initrd)
 .PHONY: arch-debug
 
+arch-run-debug: QEMU_OPTIONS += -d guest_errors,unimp
 arch-run-debug: debug
 	$(progress) "RUN" $(kernel)
-	$(QEMU) -kernel $(kernel) -append "$(KERNEL_CMDLINE)" -initrd $(initrd) $(filter-out -semihosting, $(QEMU_OPTIONS))
+	$(QEMU) -kernel $(kernel) -append "$(CMDLINE)" -initrd $(initrd) $(filter-out -semihosting, $(QEMU_OPTIONS))
 
 .PHONY: arch-run-debug
 
