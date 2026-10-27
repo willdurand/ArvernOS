@@ -14,7 +14,7 @@ unsigned char arch_getchar(bool blocking)
 
   while (c == 0) {
     // Allow input to come from the serial port so that we can still interact
-    // with the system in "-nographic" mode.
+    // with the system when there is no display.
     if (serial_is_waiting(SERIAL_COM1)) {
       return serial_read(SERIAL_COM1);
     }
@@ -71,9 +71,9 @@ unsigned char arch_getchar(bool blocking)
 
 void arch_putchar(char c)
 {
-  console_putchar(c);
-
-  // Mirror the console output to the serial port so that it can be captured
-  // when running without a display (e.g. `-nographic`).
+  // Always write to the serial line.
   serial_write(SERIAL_COM1, c);
+
+  // Maybe write to the screen.
+  console_putchar(c);
 }

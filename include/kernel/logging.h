@@ -39,7 +39,6 @@
 
 #else // TEST_ENV
 
-#include <arch/logging.h>
 #include <inttypes.h>
 #include <stdio.h>
 #include <time/timer.h>
@@ -51,7 +50,7 @@
 
 /// Writes one log line to the structured logger (serial port).
 #define __LOG_STREAM(time_us, level, format, ...)                              \
-  fctprintf(&arch_logging_stream_output,                                       \
+  fctprintf(&logging_stream_output,                                            \
             NULL,                                                              \
             __LOG_TIMESTAMP_FORMAT "%-8s | %s:%d:%s(): " format "\n",          \
             (time_us) / 1000000,                                               \
@@ -73,6 +72,14 @@
 #define INFO(format, ...) __LOG("INFO", format, ##__VA_ARGS__)
 #define WARN(format, ...) __LOG("WARN", format, ##__VA_ARGS__)
 
+/**
+ * This function is used to output logs.
+ *
+ * @param c a character to print
+ * @param arg optional arguments. This should be `NULL` all the time.
+ */
+void logging_stream_output(char c, void* arg);
+
 #ifdef ENABLE_KERNEL_DEBUG
 
 #define DEBUG(format, ...) __LOG("DEBUG", format, ##__VA_ARGS__)
@@ -85,11 +92,11 @@
       "(hexdump) data=%p len=%" PRIu64, (const void*)__hex_data, __hex_len);   \
     for (uint64_t i = 0; i < __hex_len; i++) {                                 \
       if (i > 0 && i % 8 == 0) {                                               \
-        fctprintf(&arch_logging_stream_output, NULL, "\n");                    \
+        fctprintf(&logging_stream_output, NULL, "\n");                         \
       }                                                                        \
-      fctprintf(&arch_logging_stream_output, NULL, "%02x ", __hex_data[i]);    \
+      fctprintf(&logging_stream_output, NULL, "%02x ", __hex_data[i]);         \
     }                                                                          \
-    fctprintf(&arch_logging_stream_output, NULL, "\n");                        \
+    fctprintf(&logging_stream_output, NULL, "\n");                             \
   } while (0)
 
 #else // ENABLE_KERNEL_DEBUG
