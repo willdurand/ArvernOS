@@ -1,8 +1,20 @@
 #include <arch/kernel.h>
 #include <arvern/utils.h>
+#include <core/isr.h>
 
 extern char __kernel_start;
 extern char __kernel_end;
+
+void arch_halt()
+{
+  isr_disable_interrupts();
+
+  while (1) {
+    // This allows the CPU to enter a sleep state in which it consumes much less
+    // energy. See: https://en.wikipedia.org/wiki/HLT_(x86_instruction)
+    __asm__("hlt");
+  }
+}
 
 void arch_restart()
 {
@@ -30,11 +42,6 @@ void arch_poweroff(int exit_code)
 #endif
 
   UNUSED(exit_code);
-}
-
-void arch_halt()
-{
-  // TODO: implement me
 }
 
 bool arch_is_kernel_address(uintptr_t addr)
