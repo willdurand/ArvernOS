@@ -12,7 +12,7 @@
   vfs_mount(FS_PROC_MOUNTPOINT "/" name,                                       \
             proc_fs_create_readonly_file(name, read_fn));
 
-typedef int proc_read_t(char* buf, size_t size);
+typedef int proc_read_t(char* buf, size_t size, uint64_t offset);
 
 /**
  * Initializes the "proc" file system.
