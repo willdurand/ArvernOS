@@ -43,12 +43,12 @@
 #include <stdio.h>
 #include <time/timer.h>
 
-/// Timestamp prefix (`[seconds.microseconds]`) shared by the structured logger
-/// and the console output. The seconds are right-aligned on 3 characters and
-/// the fractional part is zero-padded to 6 digits.
+/// Timestamp prefix (`[seconds.microseconds]`) for the logger. The seconds are
+/// right-aligned on 3 characters and the fractional part is zero-padded to 6
+/// digits.
 #define __LOG_TIMESTAMP_FORMAT "[%3" PRIu64 ".%03" PRIu64 "%03" PRIu64 "] "
 
-/// Writes one log line to the structured logger (serial port).
+/// Writes one log line to the structured logger.
 #define __LOG_STREAM(time_us, level, format, ...)                              \
   fctprintf(&logging_stream_output,                                            \
             NULL,                                                              \

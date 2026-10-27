@@ -5,7 +5,8 @@
 
 void _putchar(char c)
 {
-  arch_putchar(c);
+  arch_serial_putchar(c);
+  arch_screen_putchar(c);
 }
 
 #else
