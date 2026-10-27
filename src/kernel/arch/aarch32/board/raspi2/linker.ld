@@ -6,6 +6,8 @@ SECTIONS
      * because real hardware expects 0x8000 but QEMU uses 0x10000. */
     . = 0x0;
 
+    __kernel_start = .;
+
     .text :
     {
         KEEP(*(.text.boot))
@@ -48,6 +50,8 @@ SECTIONS
         *(COMMON)
         __bss_end = .;
     }
+
+    __kernel_end = .;
 
     . = ALIGN(4096);
     __heap_start = .;

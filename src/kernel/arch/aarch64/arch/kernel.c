@@ -30,8 +30,3 @@ void arch_halt()
     __asm__("wfi");
   }
 }
-
-bool arch_is_kernel_address(uintptr_t addr)
-{
-  return addr >= 0x80000 && addr <= 0x100000;
-}

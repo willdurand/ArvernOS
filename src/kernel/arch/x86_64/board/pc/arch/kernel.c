@@ -47,8 +47,3 @@ void arch_poweroff(int exit_code)
   UNUSED(exit_code);
 #endif
 }
-
-bool arch_is_kernel_address(uintptr_t addr)
-{
-  return addr >= 0x100000 && addr <= 0x210000;
-}

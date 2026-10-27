@@ -2,9 +2,6 @@
 #include <arvern/utils.h>
 #include <core/isr.h>
 
-extern char __kernel_start;
-extern char __kernel_end;
-
 void arch_halt()
 {
   isr_disable_interrupts();
@@ -42,9 +39,4 @@ void arch_poweroff(int exit_code)
 #endif
 
   UNUSED(exit_code);
-}
-
-bool arch_is_kernel_address(uintptr_t addr)
-{
-  return addr >= (uintptr_t)&__kernel_start && addr < (uintptr_t)&__kernel_end;
 }

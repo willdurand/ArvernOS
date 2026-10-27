@@ -8,6 +8,14 @@
 #include <string.h>
 #include <sys/k_syscall.h>
 
+extern char __kernel_start;
+extern char __kernel_end;
+
+static bool is_kernel_address(uintptr_t addr)
+{
+  return addr >= (uintptr_t)&__kernel_start && addr < (uintptr_t)&__kernel_end;
+}
+
 #define STACKTRACE_MAX 16
 
 static char* kernel_find_symbol(uintptr_t* addr);
@@ -59,7 +67,7 @@ void kernel_dump_stacktrace()
     uintptr_t address = stackframe->return_address;
     uintptr_t symbol_addr = address;
 
-    if (!arch_is_kernel_address(address)) {
+    if (!is_kernel_address(address)) {
       break;
     }
 
