@@ -4,6 +4,8 @@ SECTIONS
 {
     . = 0x80000;
 
+    __kernel_start = .;
+
     .text :
     {
         . = ALIGN(4);
@@ -43,6 +45,8 @@ SECTIONS
         . = ALIGN(4);
         __bss_end = .;
     }
+
+    __kernel_end = .;
 
     /DISCARD/ :
     {

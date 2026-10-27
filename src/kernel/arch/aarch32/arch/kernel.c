@@ -36,9 +36,3 @@ void arch_halt()
     __asm__(WFI);
   }
 }
-
-bool arch_is_kernel_address(uintptr_t addr)
-{
-  // It does not have to be perfect, we just have to believe it will be fine.
-  return addr >= 0x8000;
-}

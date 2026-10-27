@@ -23,12 +23,4 @@ void arch_poweroff(int exit_code);
  */
 void arch_halt();
 
-/**
- * Determines whether an address points to kernel code.
- *
- * @param addr an address
- * @return `true` if the address points to kernel code, `false` otherwise
- */
-bool arch_is_kernel_address(uintptr_t addr);
-
 #endif
