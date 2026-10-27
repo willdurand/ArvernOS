@@ -13,6 +13,9 @@
 
 char* saved_cmdline = NULL;
 
+// Defined in `src/kernel/logging.c`.
+extern bool kernel_boot_complete;
+
 void kmain_early_start()
 {
   INFO("\n\033[1;34m%s\033[0m\n", KERNEL_ASCII);
@@ -91,6 +94,8 @@ void kmain_start(const boot_info_t* info)
   if (res < 0) {
     printf("kernel: error while starting kinit task\n");
   }
+
+  kernel_boot_complete = true;
 
   while (1) {
     task_schedule();

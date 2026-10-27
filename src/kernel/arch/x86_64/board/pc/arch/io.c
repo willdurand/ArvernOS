@@ -69,11 +69,12 @@ unsigned char arch_getchar(bool blocking)
   return c;
 }
 
-void arch_putchar(char c)
+void arch_screen_putchar(char c)
 {
-  // Always write to the serial line.
-  serial_write(SERIAL_COM1, c);
-
-  // Maybe write to the screen.
   console_putchar(c);
+}
+
+void arch_serial_putchar(char c)
+{
+  serial_write(SERIAL_COM1, c);
 }

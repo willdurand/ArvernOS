@@ -22,10 +22,18 @@
 unsigned char arch_getchar(bool blocking);
 
 /**
- * Prints a character to an output.
+ * Prints a character to the screen. This function might be a no-op on headless
+ * boards.
  *
  * @param c the character to print
  */
-void arch_putchar(char c);
+void arch_screen_putchar(char c);
+
+/**
+ * Prints a character to a serial line.
+ *
+ * @param c the character to print
+ */
+void arch_serial_putchar(char c);
 
 #endif
