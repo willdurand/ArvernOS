@@ -1,19 +1,21 @@
 #include <logging.h>
 
 #include <arch/io.h>
-#include <arvern/utils.h>
 
 bool kernel_boot_complete = false;
+log_level_t minimum_log_level = LEVEL_WARN;
 
 void logging_stream_output(char c, void* arg)
 {
-  UNUSED(arg);
+  log_context_t* ctx = (log_context_t*)arg;
 
   if (!kernel_boot_complete) {
     arch_serial_putchar(c);
     arch_screen_putchar(c);
-  } else {
-    // TODO: introduce log levels and filter out non-critical messages.
+    return;
+  }
+
+  if (ctx == NULL || ctx->level >= minimum_log_level) {
     arch_serial_putchar(c);
   }
 }

@@ -13,9 +13,6 @@
 
 char* saved_cmdline = NULL;
 
-// Defined in `src/kernel/logging.c`.
-extern bool kernel_boot_complete;
-
 void kmain_early_start()
 {
   INFO("\n\033[1;34m%s\033[0m\n", KERNEL_ASCII);

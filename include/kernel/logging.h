@@ -40,6 +40,7 @@
 #else // TEST_ENV
 
 #include <inttypes.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <time/timer.h>
 
@@ -49,9 +50,9 @@
 #define __LOG_TIMESTAMP_FORMAT "[%3" PRIu64 ".%03" PRIu64 "%03" PRIu64 "] "
 
 /// Writes one log line to the structured logger.
-#define __LOG_STREAM(time_us, level, format, ...)                              \
+#define __LOG_STREAM(time_us, ctx, level, format, ...)                         \
   fctprintf(&logging_stream_output,                                            \
-            NULL,                                                              \
+            &ctx,                                                              \
             __LOG_TIMESTAMP_FORMAT "%-8s | %s:%d:%s(): " format "\n",          \
             (time_us) / 1000000,                                               \
             ((time_us) / 1000) % 1000,                                         \
@@ -63,26 +64,42 @@
             ##__VA_ARGS__)
 
 /// Writes one log line, using the same timestamp for the whole message.
-#define __LOG(level, format, ...)                                              \
+#define __LOG(_level, prefix, format, ...)                                     \
   do {                                                                         \
     uint64_t __time_us = timer_uptime_microseconds();                          \
-    __LOG_STREAM(__time_us, level, format, ##__VA_ARGS__);                     \
+    log_context_t ctx = { .level = _level };                                   \
+    __LOG_STREAM(__time_us, ctx, prefix, format, ##__VA_ARGS__);               \
   } while (0)
 
-#define INFO(format, ...) __LOG("INFO", format, ##__VA_ARGS__)
-#define WARN(format, ...) __LOG("WARN", format, ##__VA_ARGS__)
+#define INFO(format, ...) __LOG(LEVEL_INFO, "INFO", format, ##__VA_ARGS__)
+#define WARN(format, ...) __LOG(LEVEL_WARN, "WARN", format, ##__VA_ARGS__)
+
+typedef enum
+{
+  LEVEL_DEBUG = 0,
+  LEVEL_INFO = 1,
+  LEVEL_WARN = 2,
+  LEVEL_ERROR = 3,
+} log_level_t;
+
+typedef struct
+{
+  log_level_t level;
+} log_context_t;
+
+extern bool kernel_boot_complete;
 
 /**
  * This function is used to output logs.
  *
  * @param c a character to print
- * @param arg optional arguments. This should be `NULL` all the time.
+ * @param arg optional argument, either a `log_context_t` or `NULL`.
  */
 void logging_stream_output(char c, void* arg);
 
 #ifdef ENABLE_KERNEL_DEBUG
 
-#define DEBUG(format, ...) __LOG("DEBUG", format, ##__VA_ARGS__)
+#define DEBUG(format, ...) __LOG(LEVEL_DEBUG, "DEBUG", format, ##__VA_ARGS__)
 
 #define HEX_DEBUG(data, len)                                                   \
   do {                                                                         \
