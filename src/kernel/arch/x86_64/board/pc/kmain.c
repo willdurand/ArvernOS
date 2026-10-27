@@ -18,7 +18,6 @@ void kmain(uintptr_t addr)
   assert(mbi != NULL);
   multiboot_init(mbi);
 
-  // enable serial port
   serial_init(SERIAL_COM1, SERIAL_SPEED_115200);
 
   multiboot_tag_framebuffer_t* entry = multiboot_get_framebuffer();

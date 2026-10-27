@@ -18,8 +18,6 @@ void kmain(uintptr_t addr)
   pvh_init(hsi);
 
   serial_init(SERIAL_COM1, SERIAL_SPEED_115200);
-  DEBUG("microvm: addr=%p cmdline=%s", addr, pvh_get_cmdline());
-
   kmain_early_start();
 
   tss_init();
