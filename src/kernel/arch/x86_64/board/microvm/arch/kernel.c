@@ -1,4 +1,5 @@
 #include <arch/kernel.h>
+
 #include <arvern/utils.h>
 #include <core/isr.h>
 
@@ -15,12 +16,16 @@ void arch_halt()
 
 void arch_restart()
 {
-  // TODO: implement me
+  // There is no way to restart this board.
+  arch_poweroff(0);
 }
 
 void arch_poweroff(int exit_code)
 {
-#ifdef CONFIG_SEMIHOSTING
+  UNUSED(exit_code);
+
+  isr_disable_interrupts();
+
   // Generate a triple-fault to trigger a guest-initiated shutdown, see:
   // https://www.qemu.org/docs/master/system/i386/microvm.html#triggering-a-guest-initiated-shut-down
 
@@ -36,7 +41,6 @@ void arch_poweroff(int exit_code)
                    "int $3;"
                    :
                    : "m"(idt_reg));
-#endif
 
-  UNUSED(exit_code);
+  arch_halt();
 }
