@@ -97,6 +97,15 @@ extern bool kernel_boot_complete;
  */
 void logging_stream_output(char c, void* arg);
 
+/**
+ * Reads from the kernel log ring buffer.
+ *
+ * @param buf destination buffer.
+ * @param size buffer size in bytes.
+ * @param offset byte offset into the available log data.
+ */
+void logging_buffer_read(char* buf, size_t size, uint64_t offset);
+
 #ifdef ENABLE_KERNEL_DEBUG
 
 #define DEBUG(format, ...) __LOG(LEVEL_DEBUG, "DEBUG", format, ##__VA_ARGS__)

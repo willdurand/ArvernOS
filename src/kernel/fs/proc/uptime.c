@@ -3,9 +3,10 @@
 #include <initcall.h>
 #include <inttypes.h>
 #include <stdio.h>
+#include <string.h>
 #include <time/timer.h>
 
-int proc_read_uptime(char* buf, size_t size)
+int proc_read_uptime(char* buf, size_t size, uint64_t offset)
 {
   // Linux returns two numbers according to the man page (quoted below):
   // http://man7.org/linux/man-pages/man5/proc.5.html.
@@ -16,6 +17,16 @@ int proc_read_uptime(char* buf, size_t size)
   //
   // We do not have the notion of process yet so there is only one value.
   snprintf(buf, size, "%" PRIu64 "\n", timer_uptime());
+
+  size_t len = strlen(buf);
+  if (offset >= len) {
+    buf[0] = '\0';
+    return 0;
+  }
+
+  if (offset > 0) {
+    memmove(buf, buf + offset, len - offset + 1);
+  }
 
   return 0;
 }
