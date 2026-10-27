@@ -20,11 +20,7 @@ vbe_bpp                = 32
 # Options for the different tools
 ###############################################################################
 
-QEMU_OPTIONS += -m 512M
-# Keep the live output on the terminal and mirror it to the log file so that it
-# can be reviewed (and printed in CI).
-QEMU_OPTIONS += -chardev stdio,id=serial0,logfile=$(log_file)
-QEMU_OPTIONS += -serial chardev:serial0
+# Add a network card.
 QEMU_OPTIONS += -netdev user,id=u1,ipv6=off,dhcpstart=10.0.2.20
 QEMU_OPTIONS += -device rtl8139,netdev=u1
 QEMU_OPTIONS += -object filter-dump,id=f1,netdev=u1,file=$(log_dir)/traffic-$(BUILD_MODE).pcap
@@ -117,7 +113,7 @@ $(kernel_console_font): $(kernel_console_font_gz) | $(misc_dir)
 arch-debug: $(iso)
 .PHONY: arch-debug
 
-arch-run-debug: QEMU_OPTIONS += -d guest_errors,unimp --no-reboot
+arch-run-debug: QEMU_OPTIONS += -d guest_errors,unimp
 arch-run-debug: debug
 	$(progress) "RUN" $(iso)
 	$(QEMU) -cdrom $(iso) $(filter-out -semihosting, $(QEMU_OPTIONS))

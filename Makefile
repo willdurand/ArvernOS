@@ -386,7 +386,7 @@ debug: arch-debug
 
 run-debug: ## run the project in debug mode
 run-debug: BUILD_MODE = debug
-run-debug: QEMU_OPTIONS += -monitor tcp:127.0.0.1:5555,server,nowait -nographic
+run-debug: QEMU_OPTIONS += -monitor tcp:127.0.0.1:5555,server,nowait -display none
 run-debug: arch-run-debug
 .PHONY: run-debug
 
