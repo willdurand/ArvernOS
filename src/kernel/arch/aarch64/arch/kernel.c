@@ -1,5 +1,6 @@
 #include <arch/kernel.h>
 
+#include <arch/core.h>
 #include <stdint.h>
 #include <sys/k_semihosting.h>
 
@@ -26,6 +27,8 @@ void arch_poweroff(int exit_code)
 
 void arch_halt()
 {
+  arch_isr_disable_interrupts();
+
   while (1) {
     __asm__("wfi");
   }
