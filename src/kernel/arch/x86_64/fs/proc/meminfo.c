@@ -14,8 +14,9 @@ int proc_read_meminfo(char* buf, size_t size, uint64_t offset)
   uint64_t used_heap = alloc_get_used_count();
   uint64_t max_heap = alloc_get_max_count();
 
-  snprintf(buf,
-           size,
+  char content[256];
+  snprintf(content,
+           sizeof(content),
            "frames: %6" PRIu64 "/%" PRIu64 "\n"
            "heap  : %6" PRIu64 "/%" PRIu64 " KiB [%" PRIu64 "/%" PRIu64 "]\n",
            used_frames,
@@ -25,15 +26,7 @@ int proc_read_meminfo(char* buf, size_t size, uint64_t offset)
            used_heap,
            max_heap);
 
-  size_t len = strlen(buf);
-  if (offset >= len) {
-    buf[0] = '\0';
-    return 0;
-  }
-
-  if (offset > 0) {
-    memmove(buf, buf + offset, len - offset + 1);
-  }
+  proc_copy_out(buf, size, offset, content, strlen(content));
 
   return 0;
 }

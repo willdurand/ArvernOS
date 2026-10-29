@@ -16,17 +16,10 @@ int proc_read_uptime(char* buf, size_t size, uint64_t offset)
   // spent in the idle process.
   //
   // We do not have the notion of process yet so there is only one value.
-  snprintf(buf, size, "%" PRIu64 "\n", timer_uptime());
+  char content[64];
+  snprintf(content, sizeof(content), "%" PRIu64 "\n", timer_uptime());
 
-  size_t len = strlen(buf);
-  if (offset >= len) {
-    buf[0] = '\0';
-    return 0;
-  }
-
-  if (offset > 0) {
-    memmove(buf, buf + offset, len - offset + 1);
-  }
+  proc_copy_out(buf, size, offset, content, strlen(content));
 
   return 0;
 }

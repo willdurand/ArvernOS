@@ -9,17 +9,9 @@
 
 int proc_read_version(char* buf, size_t size, uint64_t offset)
 {
-  snprintf(buf, size, "some version\n");
+  const char* content = "some version\n";
 
-  size_t len = strlen(buf);
-  if (offset >= len) {
-    buf[0] = '\0';
-    return 0;
-  }
-
-  if (offset > 0) {
-    memmove(buf, buf + offset, len - offset + 1);
-  }
+  proc_copy_out(buf, size, offset, content, strlen(content));
 
   return 0;
 }
@@ -29,6 +21,7 @@ int main()
   vfs_init();
 
   char buf[BUF_SIZE];
+  char chunk[8];
 
   inode_t root, version;
 
@@ -92,6 +85,23 @@ int main()
   bytes_read = vfs_read(version, buf, BUF_SIZE, 30);
   assert(strcmp(buf, "") == 0, "handles big offsets");
   assert(bytes_read == 0, "returns no bytes read when offset is too big");
+  end_describe();
+
+  describe("proc_read() with a small buffer");
+  bytes_read = vfs_read(version, chunk, sizeof(chunk), 0);
+  assert(strcmp(chunk, "some ve") == 0,
+         "reads the beginning of a truncated buffer");
+  assert(bytes_read == 7, "returns the truncated number of bytes read");
+
+  bytes_read = vfs_read(version, chunk, sizeof(chunk), 7);
+  assert(strcmp(chunk, "rsion\n") == 0,
+         "reads the end of a truncated buffer with an offset");
+  assert(bytes_read == 6,
+         "returns the number of bytes read with a truncated buffer");
+
+  bytes_read = vfs_read(version, chunk, 1, 0);
+  assert(strcmp(chunk, "") == 0, "handles a one-byte buffer");
+  assert(bytes_read == 0, "returns no bytes read with a one-byte buffer");
   end_describe();
 
   describe("vfs_free()");
