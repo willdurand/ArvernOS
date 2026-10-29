@@ -56,6 +56,32 @@ inode_t proc_fs_create_readonly_file(const char* name, proc_read_t* read_fn)
   return node;
 }
 
+size_t proc_copy_out(char* buf,
+                     size_t size,
+                     uint64_t offset,
+                     const char* src,
+                     size_t len)
+{
+  if (size == 0) {
+    return 0;
+  }
+
+  if (offset >= len) {
+    buf[0] = '\0';
+    return 0;
+  }
+
+  size_t count = len - (size_t)offset;
+  if (count >= size) {
+    count = size - 1;
+  }
+
+  memcpy(buf, src + (size_t)offset, count);
+  buf[count] = '\0';
+
+  return count;
+}
+
 uint64_t proc_read(inode_t inode, void* buffer, uint64_t size, uint64_t offset)
 {
   if (vfs_type(inode) != FS_FILE) {

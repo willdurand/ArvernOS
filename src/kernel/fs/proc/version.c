@@ -7,23 +7,17 @@
 
 int proc_read_version(char* buf, size_t size, uint64_t offset)
 {
-  snprintf(buf,
-           size,
+  char content[256];
+
+  snprintf(content,
+           sizeof(content),
            "%s %s (%s) %s\n",
            KERNEL_NAME,
            KERNEL_VERSION,
            KERNEL_GIT_HASH,
            KERNEL_TARGET);
 
-  size_t len = strlen(buf);
-  if (offset >= len) {
-    buf[0] = '\0';
-    return 0;
-  }
-
-  if (offset > 0) {
-    memmove(buf, buf + offset, len - offset + 1);
-  }
+  proc_copy_out(buf, size, offset, content, strlen(content));
 
   return 0;
 }

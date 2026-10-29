@@ -19,6 +19,44 @@
 #ifndef LOGGING_H
 #define LOGGING_H
 
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+
+typedef enum
+{
+  LEVEL_DEBUG = 0,
+  LEVEL_INFO = 1,
+  LEVEL_WARN = 2,
+  LEVEL_ERROR = 3,
+} log_level_t;
+
+typedef struct
+{
+  log_level_t level;
+} log_context_t;
+
+/// Whether the kernel has finished booting. Until then, logs are written to
+/// both the serial port and the screen.
+extern bool kernel_boot_complete;
+
+/**
+ * This function is used to output logs.
+ *
+ * @param c a character to print
+ * @param arg optional argument, either a `log_context_t` or `NULL`.
+ */
+void logging_stream_output(char c, void* arg);
+
+/**
+ * Reads from the kernel log ring buffer.
+ *
+ * @param buf destination buffer.
+ * @param size buffer size in bytes.
+ * @param offset byte offset into the available log data.
+ */
+void logging_buffer_read(char* buf, size_t size, uint64_t offset);
+
 #ifdef TEST_ENV
 
 #define INFO(format, ...)                                                      \
@@ -40,7 +78,6 @@
 #else // TEST_ENV
 
 #include <inttypes.h>
-#include <stdbool.h>
 #include <stdio.h>
 #include <time/timer.h>
 
@@ -73,38 +110,6 @@
 
 #define INFO(format, ...) __LOG(LEVEL_INFO, "INFO", format, ##__VA_ARGS__)
 #define WARN(format, ...) __LOG(LEVEL_WARN, "WARN", format, ##__VA_ARGS__)
-
-typedef enum
-{
-  LEVEL_DEBUG = 0,
-  LEVEL_INFO = 1,
-  LEVEL_WARN = 2,
-  LEVEL_ERROR = 3,
-} log_level_t;
-
-typedef struct
-{
-  log_level_t level;
-} log_context_t;
-
-extern bool kernel_boot_complete;
-
-/**
- * This function is used to output logs.
- *
- * @param c a character to print
- * @param arg optional argument, either a `log_context_t` or `NULL`.
- */
-void logging_stream_output(char c, void* arg);
-
-/**
- * Reads from the kernel log ring buffer.
- *
- * @param buf destination buffer.
- * @param size buffer size in bytes.
- * @param offset byte offset into the available log data.
- */
-void logging_buffer_read(char* buf, size_t size, uint64_t offset);
 
 #ifdef ENABLE_KERNEL_DEBUG
 

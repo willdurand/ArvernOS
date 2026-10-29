@@ -12,12 +12,12 @@ typedef struct logging_buffer
   size_t tail;
 } logging_buffer_t;
 
-void logging_buffer_putchar(char c);
+static void logging_buffer_putchar(char c);
 
 static logging_buffer_t kmsg = { 0 };
 
 bool kernel_boot_complete = false;
-log_level_t minimum_log_level = LEVEL_WARN;
+static log_level_t minimum_log_level = LEVEL_WARN;
 
 void logging_stream_output(char c, void* arg)
 {
@@ -36,7 +36,7 @@ void logging_stream_output(char c, void* arg)
   }
 }
 
-void logging_buffer_putchar(char c)
+static void logging_buffer_putchar(char c)
 {
   if ((kmsg.head - kmsg.tail) == LOGGING_BUFSIZE) {
     kmsg.tail++;
