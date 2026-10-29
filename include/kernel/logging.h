@@ -23,6 +23,9 @@
 #include <stddef.h>
 #include <stdint.h>
 
+/// Size of the kernel log ring buffer. Must be a power of two.
+#define LOGGING_BUFSIZE 4096
+
 typedef enum
 {
   LEVEL_DEBUG = 0,

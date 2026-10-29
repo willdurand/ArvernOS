@@ -2,8 +2,6 @@
 
 #include <arch/io.h>
 
-#define LOGGING_BUFSIZE 4096
-
 // Internal structure for the logging (ring) buffer.
 typedef struct logging_buffer
 {
