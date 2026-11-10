@@ -9,6 +9,7 @@
 #include <arvern/utils.h>
 #include <assert.h>
 #include <core/isr.h>
+#include <errno.h>
 #include <proc/logging.h>
 #include <stdlib.h>
 #include <string.h>
@@ -43,6 +44,8 @@ void task_init(const char* init_name)
   // `kernel_stack_top` and `address_space`), so task_init() only overrides
   // the fields it owns.
   task_set_name(init_task, init_name);
+  init_task->parent = -1;
+  init_task->wait_pid = -1;
 
   assert(init_task->id >= 0 && init_task->id < MAX_TASKS);
 
@@ -90,11 +93,25 @@ void task_exit(int code)
     return;
   }
 
-  // TODO: set the exit code to the zombie task.
-  UNUSED(code);
-
   task_preempt_disable();
   current->state = ZOMBIE;
+  current->exit_code = code;
+
+  PROC_DEBUG(
+    "task_exit: task=%d name=%s code=%d", current->id, current->name, code);
+
+  task_t* parent = NULL;
+  if (current->parent >= 0 && current->parent < MAX_TASKS) {
+    parent = tasks[current->parent];
+  }
+
+  if (parent != NULL && parent->state == WAITING) {
+    if (parent->wait_pid == current->id || parent->wait_pid == -1 ||
+        parent->wait_pid == 0) {
+      parent->state = RUNNING;
+    }
+  }
+
   task_preempt_enable();
 
   task_schedule();
@@ -131,6 +148,9 @@ int task_create(const char* name, uint64_t clone_flags, uintptr_t entrypoint)
 
   task->id = free_id;
   task_set_name(task, name);
+  task->parent = (current != NULL) ? current->id : -1;
+  task->exit_code = 0;
+  task->wait_pid = -1;
 
   if (task->id < MAX_TASKS) {
     tasks[task->id] = task;
@@ -146,6 +166,130 @@ int task_create(const char* name, uint64_t clone_flags, uintptr_t entrypoint)
   task_preempt_enable();
 
   return task->id;
+}
+
+static task_t* task_find_zombie_child(task_t* parent, pid_t pid)
+{
+  for (int i = 0; i < MAX_TASKS; i++) {
+    task_t* task = tasks[i];
+
+    if (task == NULL || task->parent != parent->id || task->state != ZOMBIE) {
+      continue;
+    }
+
+    if (pid > 0 && task->id != pid) {
+      continue;
+    }
+
+    return task;
+  }
+
+  return NULL;
+}
+
+static void task_reap(task_t* task)
+{
+  tasks[task->id] = NULL;
+
+#if defined(__x86_64__)
+  if (task->address_space != NULL) {
+    paging_deactivate(task->address_space);
+  }
+#endif
+
+  free(task);
+}
+
+pid_t task_wait(pid_t pid, int* status)
+{
+  task_t* parent = current;
+
+  if (parent == NULL) {
+    return -ECHILD;
+  }
+
+  bool found = false;
+
+  for (int i = 0; i < MAX_TASKS; i++) {
+    if (tasks[i] != NULL && tasks[i]->parent == parent->id &&
+        (pid <= 0 || tasks[i]->id == pid)) {
+      found = true;
+      break;
+    }
+  }
+
+  if (!found) {
+    return -ECHILD;
+  }
+
+  for (;;) {
+    task_preempt_disable();
+
+    task_t* child = task_find_zombie_child(parent, pid);
+
+    if (child == NULL) {
+      parent->state = WAITING;
+      parent->wait_pid = pid;
+      task_preempt_enable();
+
+      task_schedule();
+      continue;
+    }
+
+    pid_t id = child->id;
+
+    if (status != NULL) {
+      *status = child->exit_code;
+    }
+
+    task_reap(child);
+    task_preempt_enable();
+
+    return id;
+  }
+}
+
+task_t* task_fork_child(task_t* parent)
+{
+  if (parent == NULL) {
+    return NULL;
+  }
+
+  task_preempt_disable();
+
+  int free_id = -1;
+  for (int i = 0; i < MAX_TASKS; i++) {
+    if (tasks[i] == NULL) {
+      free_id = i;
+      break;
+    }
+  }
+  if (free_id < 0) {
+    task_preempt_enable();
+    return NULL;
+  }
+
+  // This allocates the child task (and its kernel stack) with a copy of the
+  // parent's saved user context already seeded on it.
+  task_t* child = arch_task_create_child(parent);
+  if (child == NULL) {
+    task_preempt_enable();
+    return NULL;
+  }
+
+  child->id = free_id;
+  child->parent = parent->id;
+  child->exit_code = 0;
+  child->wait_pid = -1;
+  child->user_stack_base = parent->user_stack_base;
+  tasks[free_id] = child;
+
+  strncpy(child->name, parent->name, TASK_NAME_LEN - 1);
+  child->name[TASK_NAME_LEN - 1] = '\0';
+
+  task_preempt_enable();
+
+  return child;
 }
 
 void task_do_schedule()
@@ -257,7 +401,9 @@ void task_print_info()
       continue;
     }
 
-    char state = tasks[i]->state == RUNNING ? 'R' : 'Z';
+    char state = tasks[i]->state == RUNNING   ? 'R'
+                 : tasks[i]->state == WAITING ? 'W'
+                                              : 'Z';
     printf("%c     %s\n", state, tasks[i]->name);
   }
 }

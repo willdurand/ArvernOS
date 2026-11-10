@@ -60,4 +60,15 @@ void arch_task_enter_user(uintptr_t entry,
  */
 void arch_task_set_kernel_stack(task_t* task);
 
+/**
+ * Creates a child task that will resume the parent's user context (used by
+ * `k_fork()`).
+ *
+ * On architectures without fork support this returns `NULL`.
+ *
+ * @param parent the task that called `fork()`
+ * @return the child task, or `NULL` when unsupported / out of memory
+ */
+task_t* arch_task_create_child(task_t* parent);
+
 #endif

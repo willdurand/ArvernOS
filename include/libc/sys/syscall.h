@@ -28,6 +28,8 @@
 #define SYSCALL_GETPID         15
 #define SYSCALL_EXIT           16
 #define SYSCALL_OPENAT         17
+#define SYSCALL_FORK           18
+#define SYSCALL_WAITPID        19
 
 #define SYSCALL_SET_ERRNO()                                                    \
   if (retval < 0) {                                                            \

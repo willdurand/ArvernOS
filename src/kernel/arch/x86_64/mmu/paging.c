@@ -683,6 +683,124 @@ void* paging_create_user_space(void)
   return (void*)p4_frame.value;
 }
 
+// Maps `frame` at `page_number` and returns the corresponding virtual address.
+static void* map_scratch(page_number_t page_number, uint64_t frame)
+{
+  map_page_to_frame(
+    page_number, frame, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
+
+  return (void*)page_start_address(page_number);
+}
+
+void* paging_clone_user(void)
+{
+  page_table_t* p3 = next_table_address(get_p4(), 0);
+  page_table_t* p2 =
+    (p3 != NULL) ? next_table_address(p3, USER_P3_INDEX) : NULL;
+
+  if (p2 == NULL) {
+    // No user pages to copy: return a fresh (empty) address space.
+    return paging_create_user_space();
+  }
+
+  // Count the present user pages.
+  uint64_t count = 0;
+  for (uint64_t i = 0; i < PAGE_ENTRIES; i++) {
+    if ((p2->entries[i] & PAGING_FLAG_PRESENT) == 0) {
+      continue;
+    }
+    page_table_t* p1 = next_table_address(p2, i);
+    if (p1 == NULL) {
+      continue;
+    }
+    for (uint64_t j = 0; j < PAGE_ENTRIES; j++) {
+      if (p1->entries[j] & PAGING_FLAG_PRESENT) {
+        count++;
+      }
+    }
+  }
+
+  paging_user_page_t* pages = NULL;
+  if (count > 0) {
+    pages = malloc(count * sizeof(paging_user_page_t));
+    if (pages == NULL) {
+      return NULL;
+    }
+  }
+
+  // Record every user page (virtual page number, physical frame and flags) so
+  // that we can copy it once we switch to the new address space.
+  uint64_t n = 0;
+  for (uint64_t i = 0; i < PAGE_ENTRIES; i++) {
+    if ((p2->entries[i] & PAGING_FLAG_PRESENT) == 0) {
+      continue;
+    }
+
+    page_table_t* p1 = next_table_address(p2, i);
+    if (p1 == NULL) {
+      continue;
+    }
+
+    for (uint64_t j = 0; j < PAGE_ENTRIES; j++) {
+      uint64_t entry = p1->entries[j];
+      if ((entry & PAGING_FLAG_PRESENT) == 0) {
+        continue;
+      }
+
+      pages[n].page = ((page_number_t)USER_P3_INDEX << 18) | (i << 9) | j;
+      pages[n].frame = entry & PAGING_FRAME_ADDRESS_MASK;
+      pages[n].flags = (entry & 0xfff) | (entry & PAGING_FLAG_NO_EXECUTE);
+      n++;
+    }
+  }
+
+  void* space = paging_create_user_space();
+  if (space == NULL) {
+    free(pages);
+    return NULL;
+  }
+
+  // Switch to the new address space so that `map_page_to_frame()` targets it.
+  // Interrupts must remain disabled while CR3 points at the new space: a
+  // preemption would otherwise resume us on the previous address space and the
+  // remaining copies would be applied to the wrong page tables.
+  uint64_t old_p4 = read_cr3();
+  isr_disable_interrupts();
+  write_cr3((uint64_t)space);
+
+  bool saved = can_deallocate_frames;
+  // The scratch mappings point at frames owned by the parent / child: they must
+  // never be deallocated when we unmap them.
+  can_deallocate_frames = false;
+
+  for (uint64_t k = 0; k < n; k++) {
+    opt_uint64_t frame = paging_frame_allocate();
+    if (!frame.has_value) {
+      can_deallocate_frames = saved;
+      write_cr3(old_p4);
+      isr_enable_interrupts();
+      paging_deactivate(space);
+      free(pages);
+      return NULL;
+    }
+
+    void* src = map_scratch(PAGING_TMP_SRC, pages[k].frame);
+    void* dst = map_scratch(PAGING_TMP_DST, frame.value);
+    memcpy(dst, src, PAGE_SIZE);
+    unmap(PAGING_TMP_SRC);
+    unmap(PAGING_TMP_DST);
+
+    map_page_to_frame(pages[k].page, frame.value, pages[k].flags);
+  }
+
+  can_deallocate_frames = saved;
+  write_cr3(old_p4);
+  isr_enable_interrupts();
+  free(pages);
+
+  return space;
+}
+
 void paging_activate(void* space)
 {
   uint64_t target = (space == NULL) ? kernel_p4_frame : (uint64_t)space;

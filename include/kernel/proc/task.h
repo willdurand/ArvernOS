@@ -28,6 +28,7 @@
 typedef enum task_state
 {
   RUNNING,
+  WAITING,
   ZOMBIE,
 } task_state_t;
 
@@ -50,6 +51,9 @@ typedef struct task
   uintptr_t kernel_stack_top; // top (high address) of the kernel stack
   void* address_space;        // per-task address space (may be `NULL`)
   uintptr_t user_stack_base;  // base (low address) of the user stack
+  pid_t parent;               // pid of the parent task, or `-1`
+  int exit_code;              // exit status, set when the task becomes a zombie
+  pid_t wait_pid;             // pid the task is waiting for, or `-1` for any
 } task_t;
 
 /**
@@ -95,6 +99,23 @@ task_t* task_get_current();
  * @return pid on success, `-1` otherwise
  */
 int task_create(const char* name, uint64_t clone_flags, uintptr_t entrypoint);
+
+/**
+ * Waits for a child task to terminate.
+ *
+ * @param pid the pid of the child to wait for, or `-1` for any child
+ * @param status where to store the exit status of the terminated child
+ * @return the pid of the terminated child, or a negative errno
+ */
+pid_t task_wait(pid_t pid, int* status);
+
+/**
+ * Creates a child of `parent` that resumes the parent's user context.
+ *
+ * @param parent the parent task
+ * @return the child task on success, `NULL` otherwise
+ */
+task_t* task_fork_child(task_t* parent);
 
 /**
  * Prints information about the tasks on the standard output.

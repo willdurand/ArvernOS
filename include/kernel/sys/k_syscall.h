@@ -49,5 +49,7 @@ int k_execv(const char* path, char* const argv[]);
 pid_t k_getpid();
 void k_exit(int code);
 int k_openat(int dirfd, const char* pathname, int flags);
+int k_fork(void);
+pid_t k_waitpid(pid_t pid, int* status);
 
 #endif
