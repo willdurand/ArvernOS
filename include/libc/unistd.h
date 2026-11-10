@@ -7,6 +7,7 @@
 #define UNISTD_H
 
 #include <sys/syscall.h>
+#include <sys/types.h>
 
 #define STDIN_FILENO  0
 #define STDOUT_FILENO 1
@@ -19,5 +20,12 @@
 #ifndef __is_libk
 extern char* environ[ENVIRON_SIZE];
 #endif
+
+/**
+ * Forks the current process.
+ *
+ * @return the child pid in the parent, 0 in the child, or a negative errno.
+ */
+pid_t fork(void);
 
 #endif

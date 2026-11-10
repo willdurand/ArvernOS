@@ -24,6 +24,9 @@ static task_t init_task = (task_t){
   0,                                         // kernel_stack_top
   NULL,                                      // address_space
   0,                                         // user_stack_base
+  -1,                                        // parent pid
+  0,                                         // exit code
+  -1,                                        // pid being waited for
 };
 
 task_t* arch_task_init()
@@ -72,4 +75,11 @@ __attribute__((noreturn)) void arch_task_enter_user(uintptr_t entry,
 void arch_task_set_kernel_stack(task_t* task)
 {
   UNUSED(task);
+}
+
+task_t* arch_task_create_child(task_t* parent)
+{
+  UNUSED(parent);
+  // TODO: add raspi3 implementation
+  return NULL;
 }

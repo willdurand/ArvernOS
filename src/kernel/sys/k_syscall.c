@@ -32,6 +32,8 @@ int syscall_init()
   syscall_handlers[SYSCALL_GETPID] = (syscall_ptr_t)k_getpid;
   syscall_handlers[SYSCALL_EXIT] = (syscall_ptr_t)k_exit;
   syscall_handlers[SYSCALL_OPENAT] = (syscall_ptr_t)k_openat;
+  syscall_handlers[SYSCALL_FORK] = (syscall_ptr_t)k_fork;
+  syscall_handlers[SYSCALL_WAITPID] = (syscall_ptr_t)k_waitpid;
 
   arch_syscall_init();
 

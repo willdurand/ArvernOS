@@ -36,10 +36,20 @@ typedef uint64_t page_number_t;
 // Scratch virtual pages used to temporarily access physical frames while
 // building an address space. Their page numbers translate to virtual addresses
 // far away from both the kernel mapping and the user space.
-#define PAGING_TMP_P4 ((page_number_t)0xcafed000)
-#define PAGING_TMP_P3 ((page_number_t)0xcafee000)
+#define PAGING_TMP_P4  ((page_number_t)0xcafed000)
+#define PAGING_TMP_P3  ((page_number_t)0xcafee000)
+#define PAGING_TMP_SRC ((page_number_t)0xcafef000)
+#define PAGING_TMP_DST ((page_number_t)0xcaff0000)
 
 #define PAGING_FRAME_ADDRESS_MASK 0x000ffffffffff000ULL
+
+/// Describes a user page to copy when cloning an address space.
+typedef struct paging_user_page
+{
+  page_number_t page;
+  uint64_t frame;
+  uint64_t flags;
+} paging_user_page_t;
 
 /**
  * @brief Initializes paging to separate virtual and physical memory.
@@ -159,10 +169,17 @@ void identity_map(uint64_t address, uint64_t flags);
 void* paging_create_user_space();
 
 /**
+ * Clones the current address space, eagerly copying every user page.
+ *
+ * @return the physical address of the new P4 table, or `NULL` on failure
+ */
+void* paging_clone_user();
+
+/**
  * Activates an address space.
  *
- * @param space an address space returned by `paging_create_user_space()`, or
- * `NULL` for the kernel address space
+ * @param space an address space returned by `paging_create_user_space()` or
+ * `paging_clone_user()`, or `NULL` for the kernel address space
  */
 void paging_activate(void* space);
 
