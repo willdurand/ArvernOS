@@ -5,13 +5,21 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 
-// TODO: Ideally, we'd check the endianness of the system but this project only
-// deals with little endian system so far...
-#define HTONS(n) ((((n) & 0xFF) << 8) | (((n) & 0xFF00) >> 8))
-#define NTOHS(n) HTONS(n)
+#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
+#define HTONS(n)                                                               \
+  ((uint16_t)((((uint16_t)(n) & 0x00FFU) << 8) |                               \
+              (((uint16_t)(n) & 0xFF00U) >> 8)))
 #define HTONL(n)                                                               \
-  ((((n) & 0x000000FF) << 24) | (((n) & 0x0000FF00) << 8) |                    \
-   (((n) & 0x00FF0000) >> 8) | (((n) & 0xFF000000) >> 24))
+  ((uint32_t)((((uint32_t)(n) & 0x000000FFU) << 24) |                          \
+              (((uint32_t)(n) & 0x0000FF00U) << 8) |                           \
+              (((uint32_t)(n) & 0x00FF0000U) >> 8) |                           \
+              (((uint32_t)(n) & 0xFF000000U) >> 24)))
+#else
+#define HTONS(n) ((uint16_t)(n))
+#define HTONL(n) ((uint32_t)(n))
+#endif
+
+#define NTOHS(n) HTONS(n)
 #define NTOHL(n) HTONL(n)
 
 typedef uint32_t in_addr_t;
