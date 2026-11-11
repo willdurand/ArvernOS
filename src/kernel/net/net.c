@@ -1,5 +1,6 @@
 #include <net/net.h>
 
+#include <config/inish.h>
 #include <net/arp.h>
 #include <net/dhcp.h>
 #include <net/ethernet.h>
@@ -9,6 +10,28 @@
 #include <string.h>
 
 static net_interface_t* interfaces[NET_MAX_INTERFACES];
+
+static void load_network_config(inish_config_t* kernel_cfg,
+                                net_driver_t* driver)
+{
+  uint8_t ip[4] = { 0 };
+  uint8_t gateway_ip[4] = { 0 };
+  uint8_t dns_ip[4] = { 0 };
+
+  inish_section_t* network = inish_get_section(kernel_cfg, "network");
+  opt_bool_t prefer_dhcp = inish_get_bool(network, "prefer-dhcp");
+  inish_get_ipv4(network, "ip", ip);
+  inish_get_ipv4(network, "gateway_ip", gateway_ip);
+  inish_get_ipv4(network, "dns_ip", dns_ip);
+
+  net_interface_init(0,
+                     driver,
+                     // Use DHCP when there is no network config.
+                     prefer_dhcp.has_value ? prefer_dhcp.value : true,
+                     ip,
+                     gateway_ip,
+                     dns_ip);
+}
 
 void net_interface_init(uint8_t interface_id,
                         net_driver_t* driver,
@@ -97,4 +120,19 @@ net_interface_t* net_get_interface(uint8_t interface_id)
   }
 
   return interfaces[interface_id];
+}
+
+void net_driver_ready(net_driver_t* driver)
+{
+  inish_config_t* kernel_cfg = inish_load("/etc/kernel.inish");
+
+  if (kernel_cfg != NULL) {
+    INFO("%s", "net: load /etc/kernel.inish configuration");
+  }
+
+  load_network_config(kernel_cfg, driver);
+
+  if (kernel_cfg != NULL) {
+    inish_free(kernel_cfg);
+  }
 }

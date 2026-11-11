@@ -24,6 +24,15 @@ SECTIONS {
         __initcall_end = .;
     }
 
+    /* this section contains PCI driver registrations as defined in
+     * `src/kernel/arch/x86_64/board/pc/core/pci.h`. */
+    .pci_drivers ALIGN(4K) :
+    {
+        __pci_drivers_start = .;
+        *(.pci_drivers)
+        __pci_drivers_end = .;
+    }
+
     .rodata ALIGN(4K) :
     {
         *(.rodata .rodata.*)
