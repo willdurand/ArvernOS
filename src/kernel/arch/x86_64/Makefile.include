@@ -33,8 +33,7 @@ QEMU_OPTIONS += -serial chardev:serial0
 
 libk_c_files       += $(wildcard $(arch_src)/arch/*.c)
 libk_c_files       += $(wildcard $(arch_src)/core/*.c)
-libk_c_files       += $(wildcard $(arch_src)/drivers/pit.c)
-libk_c_files       += $(wildcard $(arch_src)/drivers/serial.c)
+libk_c_files       += $(wildcard $(arch_src)/drivers/*.c)
 libk_c_files       += $(wildcard $(arch_src)/fs/dev/*.c)
 libk_c_files       += $(wildcard $(arch_src)/fs/proc/*.c)
 libk_c_files       += $(wildcard $(arch_src)/mmu/*.c)
