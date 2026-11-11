@@ -2,30 +2,10 @@
 
 #include <arvern/utils.h>
 #include <core/isr.h>
+#include <core/port.h>
 
-void arch_halt()
+static void triple_fault()
 {
-  isr_disable_interrupts();
-
-  while (1) {
-    // This allows the CPU to enter a sleep state in which it consumes much less
-    // energy. See: https://en.wikipedia.org/wiki/HLT_(x86_instruction)
-    __asm__("hlt");
-  }
-}
-
-void arch_restart()
-{
-  // There is no way to restart this board.
-  arch_poweroff(0);
-}
-
-void arch_poweroff(int exit_code)
-{
-  UNUSED(exit_code);
-
-  isr_disable_interrupts();
-
   // Generate a triple-fault to trigger a guest-initiated shutdown, see:
   // https://www.qemu.org/docs/master/system/i386/microvm.html#triggering-a-guest-initiated-shut-down
 
@@ -41,6 +21,40 @@ void arch_poweroff(int exit_code)
                    "int $3;"
                    :
                    : "m"(idt_reg));
+}
+
+void arch_halt()
+{
+  isr_disable_interrupts();
+
+  while (1) {
+    // This allows the CPU to enter a sleep state in which it consumes much less
+    // energy. See: https://en.wikipedia.org/wiki/HLT_(x86_instruction)
+    __asm__("hlt");
+  }
+}
+
+void arch_restart()
+{
+  // The triple-fault resets the board, unless `-no-reboot` is passed to QEMU.
+  triple_fault();
+}
+
+void arch_poweroff(int exit_code)
+{
+  isr_disable_interrupts();
+
+#ifdef CONFIG_SEMIHOSTING
+  if (exit_code == 0) {
+    triple_fault();
+  } else {
+    port_byte_out(0x501, exit_code);
+  }
+#else
+  UNUSED(exit_code);
+
+  triple_fault();
+#endif
 
   arch_halt();
 }

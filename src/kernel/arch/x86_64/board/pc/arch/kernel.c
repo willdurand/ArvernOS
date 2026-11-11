@@ -47,6 +47,9 @@ void arch_poweroff(int exit_code)
   }
 #else
   UNUSED(exit_code);
+
+  // Power-off for QEMU, see: https://wiki.osdev.org/Shutdown
+  port_word_out(0x604, 0x2000);
 #endif
 
   arch_halt();

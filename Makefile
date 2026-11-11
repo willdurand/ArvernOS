@@ -152,7 +152,7 @@ else
 endif
 
 ifeq ($(CONFIG_SEMIHOSTING), 1)
-	QEMU_OPTIONS  += -semihosting -no-reboot
+	QEMU_OPTIONS  += -semihosting
 	KERNEL_CONFIG += -DCONFIG_SEMIHOSTING
 endif
 
@@ -399,7 +399,7 @@ gdb: gdbinit run-debug
 run-test: ## run the project in test mode (headless)
 run-test: BUILD_MODE = test
 run-test: CMDLINE = /bin/userland-testsuite
-run-test: QEMU_OPTIONS += -display none
+run-test: QEMU_OPTIONS += -display none -no-reboot
 run-test: run-release
 	@$(progress) "LOG" $(log_file)
 .PHONY: run-test

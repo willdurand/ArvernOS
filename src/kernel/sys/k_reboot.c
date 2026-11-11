@@ -37,7 +37,6 @@ int k_reboot(int command)
 
 void restart()
 {
-  SYS_DEBUG("%s", "restarting system");
   printf("Restarting system now...\n");
 
   arch_restart();
@@ -45,8 +44,7 @@ void restart()
 
 void poweroff(int exit_code)
 {
-  INFO("powering off system: exit_code=%d", exit_code);
-  printf("Powering off system now...\n");
+  printf("Powering off system now... (exit_code=%d)\n", exit_code);
 
   arch_poweroff(exit_code);
 }
