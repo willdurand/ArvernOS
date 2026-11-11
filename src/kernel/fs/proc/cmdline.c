@@ -1,10 +1,8 @@
 #include <fs/proc.h>
 
+#include <boot.h>
 #include <initcall.h>
 #include <string.h>
-
-// This variable is defined in `src/kernel/kmain.c`.
-extern char* saved_cmdline;
 
 int proc_read_cmdline(char* buf, size_t size, uint64_t offset)
 {
@@ -12,7 +10,8 @@ int proc_read_cmdline(char* buf, size_t size, uint64_t offset)
     return 0;
   }
 
-  size_t cmd_len = (saved_cmdline != NULL) ? strlen(saved_cmdline) : 0;
+  const char* cmdline = boot_info_get()->cmdline;
+  size_t cmd_len = (cmdline != NULL) ? strlen(cmdline) : 0;
   // The content ends with a newline.
   size_t len = cmd_len + 1;
 
@@ -28,7 +27,7 @@ int proc_read_cmdline(char* buf, size_t size, uint64_t offset)
 
   // Copy the command line bytes in the requested window. A buffer of
   // `count + 1` makes `proc_copy_out()` copy at most `count` bytes.
-  size_t copied = proc_copy_out(buf, count + 1, offset, saved_cmdline, cmd_len);
+  size_t copied = proc_copy_out(buf, count + 1, offset, cmdline, cmd_len);
 
   // Append the trailing newline if the window reaches the end of the command
   // line.
