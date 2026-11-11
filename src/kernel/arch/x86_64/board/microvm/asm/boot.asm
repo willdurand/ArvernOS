@@ -26,7 +26,8 @@ start:
   mov edi, ebx
 
   # various checks before we can move on.
-  # TODO: check PVH
+  # Note: the PVH `hvm_start_info` magic/version are validated in `pvh_init()`,
+  # once we are in 64-bit mode (see `core/pvh.c`).
   call check_cpuid
   call check_long_mode
 

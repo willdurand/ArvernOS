@@ -1,5 +1,6 @@
 #include "pvh.h"
 
+#include <panic.h>
 #include <stddef.h>
 
 static const char* cmdline = NULL;
@@ -9,6 +10,19 @@ static uintptr_t module_end = 0;
 
 void pvh_init(hvm_start_info_t* info)
 {
+  if (info->magic != HVM_START_MAGIC_VALUE) {
+    PANIC("pvh: invalid magic=%#x (expected %#x)",
+          info->magic,
+          HVM_START_MAGIC_VALUE);
+  }
+
+  // Version 0 does not guarantee that `memmap_paddr`/`memmap_entries` are
+  // populated, so only trust them from version 1 onwards.
+  if (info->version == 0) {
+    PANIC("pvh: unsupported version=%d, memory map is not guaranteed",
+          info->version);
+  }
+
   cmdline = (char*)info->cmdline_paddr;
   mmap.addr = info->memmap_paddr;
   mmap.count = info->memmap_entries;
