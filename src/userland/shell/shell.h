@@ -4,5 +4,6 @@
 void _reboot();
 void selftest();
 void env();
+void run(char* argv[]);
 
 #endif
