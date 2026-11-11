@@ -18,7 +18,7 @@ QEMU = qemu-system-x86_64
 ###############################################################################
 
 ifeq ($(CONFIG_SEMIHOSTING), 1)
-	QEMU_OPTIONS += -device isa-debug-exit
+	QEMU_OPTIONS += -device isa-debug-exit,iobase=0x501,iosize=0x04
 endif
 
 QEMU_OPTIONS += -m 512M
