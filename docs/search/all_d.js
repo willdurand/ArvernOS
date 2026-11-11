@@ -36,7 +36,7 @@ var searchData=
   ['inish_5fkv_5fpair_5ft_33',['inish_kv_pair_t',['../structinish__kv__pair__t.html',1,'']]],
   ['inish_5fload_34',['inish_load',['../inish_8h.html#a6c6783a2593b39ce4914819912297092',1,'inish.c']]],
   ['inish_5fsection_5ft_35',['inish_section_t',['../structinish__section__t.html',1,'']]],
-  ['init_36',['init',['../ref_init.html',1,'init'],['../ref_init.html#autotoc_md43',1,'init']]],
+  ['init_36',['init',['../ref_init.html',1,'init'],['../ref_init.html#autotoc_md45',1,'init']]],
   ['initcall_2eh_37',['initcall.h',['../initcall_8h.html',1,'']]],
   ['initcall_5finit_38',['initcall_init',['../initcall_8h.html#a12c6d73e00277a8c99dcde5b18d861db',1,'initcall.c']]],
   ['initcall_5ft_39',['initcall_t',['../initcall_8h.html#a0f7618ff1a70a5340a1d3d7fd2375aa8',1,'initcall.h']]],

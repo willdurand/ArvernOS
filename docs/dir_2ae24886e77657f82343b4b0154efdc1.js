@@ -14,6 +14,7 @@ var dir_2ae24886e77657f82343b4b0154efdc1 =
     [ "boot.h", "boot_8h.html", "boot_8h" ],
     [ "initcall.h", "initcall_8h.html", "initcall_8h" ],
     [ "keymap.h", "keymap_8h.html", null ],
+    [ "kinit.h", "kinit_8h.html", null ],
     [ "kmain_start.h", "kmain__start_8h.html", "kmain__start_8h" ],
     [ "logging.h", "logging_8h.html", "logging_8h" ],
     [ "osinfo.h", "osinfo_8h.html", null ],

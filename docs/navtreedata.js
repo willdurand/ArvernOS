@@ -30,7 +30,7 @@ var NAVTREE =
     [ "Architecture: aarch64", "ref_arch_aarch64.html", "ref_arch_aarch64" ],
     [ "Architecture: x86_64", "ref_arch_x86_64.html", "ref_arch_x86_64" ],
     [ "init", "ref_init.html", [
-      [ "init", "ref_init.html#autotoc_md43", null ]
+      [ "init", "ref_init.html#autotoc_md45", null ]
     ] ],
     [ "Todo List", "todo.html", null ],
     [ "Data Structures", "annotated.html", [
@@ -56,8 +56,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "aarch32_2kmain_8h.html",
-"index.html#autotoc_md9",
-"structipv4__header__t.html"
+"index.html#autotoc_md7",
+"structhvm__start__info__t.html"
 ];
 
 const SYNCONMSG = 'click to disable panel synchronization';

@@ -1,6 +1,7 @@
 var paging_8h =
 [
     [ "page_table_t", "structpage__table__t.html", null ],
+    [ "paging_user_page_t", "structpaging__user__page__t.html", null ],
     [ "PAGING_FLAG_HUGE_PAGE", "paging_8h.html#aaad81d99541751cd70b57286f794fdc0", null ],
     [ "PAGING_FLAG_NO_EXECUTE", "paging_8h.html#a9b636c6433bad872f80f46458db566f7", null ],
     [ "PAGING_FLAG_PRESENT", "paging_8h.html#a28ff91b933f24d95e25ec5f03a736117", null ],
@@ -15,6 +16,7 @@ var paging_8h =
     [ "page_start_address", "paging_8h.html#a96f5f0b5adaea47eda3e10c93401b2bf", null ],
     [ "paging_activate", "paging_8h.html#a9b317719546ec5f9f3cb3cfa11059b61", null ],
     [ "paging_amount_for_byte_size", "paging_8h.html#acd78a6bfbdc7cbbe0e578e52eccad8bf", null ],
+    [ "paging_clone_user", "paging_8h.html#a4ce90eaaea9133b9ec83bcdd88253de0", null ],
     [ "paging_create_user_space", "paging_8h.html#aba0288fd7319171020f2541ae1673191", null ],
     [ "paging_deactivate", "paging_8h.html#a7bba02efe37449dc6b340f8ff12aee60", null ],
     [ "paging_init", "paging_8h.html#a569adfd13ea3c63741f64108821b1712", null ],

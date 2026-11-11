@@ -114,15 +114,20 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('unistd_8h.html
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;<a class="el" href="syscall_8h.html">sys/syscall.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="types_8h.html">sys/types.h</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for unistd.h:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="unistd_8h__incl.svg" width="499" height="406"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="unistd_8h__incl.svg" width="531" height="406"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-define-members" class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:aa8e7e2e2c6871ac91451a18930ec8944" id="r_aa8e7e2e2c6871ac91451a18930ec8944"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#aa8e7e2e2c6871ac91451a18930ec8944">ENVIRON_SIZE</a>&#160;&#160;&#160;10</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:aa4e4714e6e8927c80b2553a40094b6d9" id="r_aa4e4714e6e8927c80b2553a40094b6d9"><td class="memItemLeft">pid_t&#160;</td><td class="memItemRight"><a class="el" href="#aa4e4714e6e8927c80b2553a40094b6d9">fork</a> (void)</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -146,6 +151,26 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
+<a id="aa4e4714e6e8927c80b2553a40094b6d9" name="aa4e4714e6e8927c80b2553a40094b6d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4e4714e6e8927c80b2553a40094b6d9">&#9670;&#160;</a></span>fork()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">pid_t fork </td>
+          <td>(</td>
+          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Forks the current process.</p>
+<dl class="section return"><dt>Returns</dt><dd>the child pid in the parent, 0 in the child, or a negative errno. </dd></dl>
+
+</div>
+</div>
 <a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Variable Documentation</h2>
 <a id="aabcddb309730f4730117e476515c1363" name="aabcddb309730f4730117e476515c1363"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aabcddb309730f4730117e476515c1363">&#9670;&#160;</a></span>environ</h2>
@@ -166,7 +191,7 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000023">Todo</a></b></dt><dd>Use malloc() when it becomes possible. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000021">Todo</a></b></dt><dd>Use malloc() when it becomes possible. </dd></dl>
 
 </div>
 </div>

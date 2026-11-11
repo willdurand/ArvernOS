@@ -1,13 +1,8 @@
 var searchData=
 [
-  ['seek_5fcur_0',['SEEK_CUR',['../fcntl_8h.html#a4c8d0b76b470ba65a43ca46a88320f39',1,'fcntl.h']]],
-  ['seek_5fend_1',['SEEK_END',['../fcntl_8h.html#ad2a2e6c114780c3071efd24f16c7f7d8',1,'fcntl.h']]],
-  ['seek_5fset_2',['SEEK_SET',['../fcntl_8h.html#a0d112bae8fd35be772185b6ec6bcbe64',1,'fcntl.h']]],
-  ['serial_5fcom1_3',['SERIAL_COM1',['../serial_8h.html#a7dba27fd7950f6e40269808bd9238aca',1,'serial.h']]],
-  ['serial_5fline_5fenable_5fdlab_4',['SERIAL_LINE_ENABLE_DLAB',['../serial_8h.html#a86dbcd1e612dc4ca6f5270d81def6ccd',1,'serial.h']]],
-  ['serial_5fspeed_5f115200_5',['SERIAL_SPEED_115200',['../serial_8h.html#ad22db02c1b733cacbf6e2411ed8577d3',1,'serial.h']]],
-  ['serial_5fspeed_5f38400_6',['SERIAL_SPEED_38400',['../serial_8h.html#acb00722fe46bcf13413da98c229aded8',1,'serial.h']]],
-  ['serial_5fspeed_5f57600_7',['SERIAL_SPEED_57600',['../serial_8h.html#abc968786733c07230d2d5230cec1e138',1,'serial.h']]],
-  ['sigsegv_8',['SIGSEGV',['../include_2kernel_2proc_2task_8h.html#ae20b4f7171a09516ea73c9d2745bd596',1,'task.h']]],
-  ['stack_5falignment_9',['STACK_ALIGNMENT',['../user__stack_8h.html#a112ac222442ad424caa8087c47fa8430',1,'user_stack.h']]]
+  ['readline_5fsize_0',['READLINE_SIZE',['../include_2kernel_2kshell_2kshell_8h.html#ac75983952a0074eee55efdb2cc0a5773',1,'kshell.h']]],
+  ['reboot_5fcmd_5fpower_5foff_1',['REBOOT_CMD_POWER_OFF',['../reboot_8h.html#a70661d0d8ca4c851262904036c5008a0',1,'reboot.h']]],
+  ['reboot_5fcmd_5fpower_5foff_5fexit_5fcode_5f0_2',['REBOOT_CMD_POWER_OFF_EXIT_CODE_0',['../reboot_8h.html#a0638fd5e6416c73cf97905adfbaee33c',1,'reboot.h']]],
+  ['reboot_5fcmd_5fpower_5foff_5fexit_5fcode_5f1_3',['REBOOT_CMD_POWER_OFF_EXIT_CODE_1',['../reboot_8h.html#a38933507d90479f1e5265fd0257b8bb6',1,'reboot.h']]],
+  ['reboot_5fcmd_5frestart_4',['REBOOT_CMD_RESTART',['../reboot_8h.html#adc52a7803cb96790ea328a69fb56a73d',1,'reboot.h']]]
 ];

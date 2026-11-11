@@ -113,13 +113,42 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('ref_arch_x86_6
   <div class="headertitle"><div class="title">Architecture: x86_64 </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1 class="doxsection"><a class="anchor" id="autotoc_md38"></a>
+<div class="textblock"><h1 class="doxsection"><a class="anchor" id="autotoc_md37"></a>
 x86_64</h1>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md39"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md38"></a>
 Boards</h2>
 <ul>
 <li><a class="el" href="ref_board_pc.html" title="pc">pc</a></li>
-<li><a class="el" href="ref_board_microvm.html" title="microvm">microvm</a> </li>
+<li><a class="el" href="ref_board_microvm.html" title="microvm">microvm</a></li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md39"></a>
+Memory management</h2>
+<p>During the early boot sequence, we identity map the first gigabyte of our kernel with 512 2MiB pages. When <span class="tt">kmain()</span> is called, <span class="tt"><a class="el" href="paging_8h.html#a569adfd13ea3c63741f64108821b1712" title="Initializes paging to separate virtual and physical memory.">paging_init()</a></span> updates the mapping:</p>
+<ol type="1">
+<li>Memory from <span class="tt">0x00000000</span> to <span class="tt">0x000A0000</span> is identity mapped (present)</li>
+<li>Memory from <span class="tt">0x000A0000</span> to <span class="tt">0x00100000</span> is identity mapped (present + writable)</li>
+<li>The VBE framebuffer might be identity mapped as well (present + writable, and only if <span class="tt">ENABLE_FRAMEBUFFER=1</span> is passed to <span class="tt">make</span>; only applicable to <span class="tt">pc</span>)</li>
+<li>The kernel sections are identity mapped with the correct flags for each section</li>
+<li>The board's boot information is identity mapped (the multiboot information on <span class="tt">pc</span>, the PVH <span class="tt">hvm_start_info</span> structure on <span class="tt">microvm</span>)</li>
+<li>The board's boot modules are identity mapped with the correct flags (in our case, it is the init ramdisk)</li>
+<li>The memory allocated for the frame allocator is then identity mapped</li>
+</ol>
+<p>In addition, <span class="tt"><a class="el" href="paging_8h.html#a569adfd13ea3c63741f64108821b1712" title="Initializes paging to separate virtual and physical memory.">paging_init()</a></span> will:</p>
+<ol type="1">
+<li>enable write protection</li>
+<li>enable the no-execute feature</li>
+<li>create a guard page</li>
+</ol>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md40"></a>
+Memory map</h2>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md41"></a>
+Virtual address space</h3>
+<ul>
+<li><span class="tt">0x00000000</span> to <span class="tt">0x00100000</span>: the first 1MiB area is reserved</li>
+<li><span class="tt">0x00100000</span>: the kernel code and data and boot modules</li>
+<li><span class="tt">0x0020xxxx</span>: after the end of the previous area (which is computed at runtime using the board's boot information), we allocate some space for the frame allocator</li>
+<li><span class="tt">0x10000000</span>: kernel heap area (we currently have a fixed heap size)</li>
+<li><span class="tt">0x40000000</span>: user space </li>
 </ul>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->

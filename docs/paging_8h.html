@@ -125,6 +125,8 @@ Include dependency graph for paging.h:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:page_5Ftable_5Ft" id="r_page_5Ftable_5Ft"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structpage__table__t.html">page_table_t</a></td></tr>
+<tr class="memitem:paging_5Fuser_5Fpage_5Ft" id="r_paging_5Fuser_5Fpage_5Ft"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structpaging__user__page__t.html">paging_user_page_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Describes a user page to copy when cloning an address space.  <a href="structpaging__user__page__t.html#details">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-define-members" class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
@@ -165,6 +167,7 @@ Functions</h2></td></tr>
 <tr class="memitem:acd78a6bfbdc7cbbe0e578e52eccad8bf" id="r_acd78a6bfbdc7cbbe0e578e52eccad8bf"><td class="memItemLeft">uint32_t&#160;</td><td class="memItemRight"><a class="el" href="#acd78a6bfbdc7cbbe0e578e52eccad8bf">paging_amount_for_byte_size</a> (uint64_t start_address, uint64_t byte_size)</td></tr>
 <tr class="memitem:a0fe6ae7a3d76ec54afbc3a0b484f5804" id="r_a0fe6ae7a3d76ec54afbc3a0b484f5804"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a0fe6ae7a3d76ec54afbc3a0b484f5804">identity_map</a> (uint64_t address, uint64_t flags)</td></tr>
 <tr class="memitem:aba0288fd7319171020f2541ae1673191" id="r_aba0288fd7319171020f2541ae1673191"><td class="memItemLeft">void *&#160;</td><td class="memItemRight"><a class="el" href="#aba0288fd7319171020f2541ae1673191">paging_create_user_space</a> ()</td></tr>
+<tr class="memitem:a4ce90eaaea9133b9ec83bcdd88253de0" id="r_a4ce90eaaea9133b9ec83bcdd88253de0"><td class="memItemLeft">void *&#160;</td><td class="memItemRight"><a class="el" href="#a4ce90eaaea9133b9ec83bcdd88253de0">paging_clone_user</a> ()</td></tr>
 <tr class="memitem:a9b317719546ec5f9f3cb3cfa11059b61" id="r_a9b317719546ec5f9f3cb3cfa11059b61"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a9b317719546ec5f9f3cb3cfa11059b61">paging_activate</a> (void *space)</td></tr>
 <tr class="memitem:a7bba02efe37449dc6b340f8ff12aee60" id="r_a7bba02efe37449dc6b340f8ff12aee60"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a7bba02efe37449dc6b340f8ff12aee60">paging_deactivate</a> (void *space)</td></tr>
 </table>
@@ -329,7 +332,7 @@ Functions</h2></td></tr>
 <p>Activates an address space.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">space</td><td>an address space returned by <span class="tt"><a class="el" href="#aba0288fd7319171020f2541ae1673191">paging_create_user_space()</a></span>, or <span class="tt">NULL</span> for the kernel address space </td></tr>
+    <tr><td class="paramname">space</td><td>an address space returned by <span class="tt"><a class="el" href="#aba0288fd7319171020f2541ae1673191">paging_create_user_space()</a></span> or <span class="tt"><a class="el" href="#a4ce90eaaea9133b9ec83bcdd88253de0">paging_clone_user()</a></span>, or <span class="tt">NULL</span> for the kernel address space </td></tr>
   </table>
   </dd>
 </dl>
@@ -363,6 +366,25 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the amount of pages required for mapping from start_address until start_address + byte_size </dd></dl>
+
+</div>
+</div>
+<a id="a4ce90eaaea9133b9ec83bcdd88253de0" name="a4ce90eaaea9133b9ec83bcdd88253de0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ce90eaaea9133b9ec83bcdd88253de0">&#9670;&#160;</a></span>paging_clone_user()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void * paging_clone_user </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Clones the current address space, eagerly copying every user page.</p>
+<dl class="section return"><dt>Returns</dt><dd>the physical address of the new P4 table, or <span class="tt">NULL</span> on failure </dd></dl>
 
 </div>
 </div>
@@ -505,7 +527,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000011">Todo</a></b></dt><dd>Free p(1,2,3) table if empty. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000010">Todo</a></b></dt><dd>Free p(1,2,3) table if empty. </dd></dl>
 
 </div>
 </div>

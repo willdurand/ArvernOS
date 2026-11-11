@@ -115,14 +115,35 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('ref_board_micr
 <div class="contents">
 <div class="textblock"><h1 class="doxsection"><a class="anchor" id="autotoc_md29"></a>
 microvm</h1>
-<p>See: <a href="https://www.qemu.org/docs/master/system/i386/microvm.html">https://www.qemu.org/docs/master/system/i386/microvm.html</a></p>
+<p>The x86_64 <span class="tt">microvm</span> implementation targets QEMU's <span class="tt">microvm</span> machine type. See: <a href="https://www.qemu.org/docs/master/system/i386/microvm.html">https://www.qemu.org/docs/master/system/i386/microvm.html</a></p>
+<p>There is no bootloader: QEMU boots the kernel directly (<span class="tt">-kernel</span>) using the <a href="https://xenbits.xen.org/docs/unstable/misc/pvh.html">PVH ELF note</a> (see <span class="tt">asm/notes.asm</span>), and hands over boot information (command line, initrd, memory map) via a <span class="tt">hvm_start_info</span> structure (see <span class="tt">core/pvh.c</span>).</p>
+<p>Compared to <span class="tt">pc</span>, this board is headless (serial console only, no VGA/ framebuffer, no keyboard) and has no PCI bus (no networking yet).</p>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md30"></a>
-config file</h2>
+Config file</h2>
 <div class="fragment"><div class="line">ARCH  = x86_64</div>
 <div class="line">BOARD = microvm</div>
 <div class="line"> </div>
-<div class="line">CONFIG_USE_FAKE_CLOCK = 1</div>
-</div><!-- fragment --> </div></div><!-- contents -->
+<div class="line"># This is only useful when QEMU is used.</div>
+<div class="line">CONFIG_SEMIHOSTING = 1</div>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md31"></a>
+Boot options</h2>
+<p>It is possible to change the command line by passing the <span class="tt">CMDLINE</span> variable to <span class="tt">make</span> (or add it to your <span class="tt">config</span> file):</p>
+<div class="fragment"><div class="line">$ make clean run-debug CMDLINE=&quot;/bin/init foo bar&quot;</div>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md32"></a>
+Early boot sequence</h2>
+<ol type="1">
+<li>QEMU loads the kernel ELF directly and finds the PVH entry point</li>
+<li>QEMU builds the <span class="tt">hvm_start_info</span> structure (command line, initrd, memory map) and jumps to the entry point (<span class="tt">start</span>), passing its address in <span class="tt">ebx</span></li>
+<li>Various checks are performed to make sure we can continue the boot process</li>
+<li>The page tables and paging are configured and enabled</li>
+<li>A 64-bit Global Descriptor Table is loaded</li>
+<li>A Task State Segment is loaded</li>
+<li>All the data segment registers are reloaded</li>
+<li>The C <span class="tt">kmain()</span> function is called, which validates the <span class="tt">hvm_start_info</span> structure and parses the boot information</li>
+<li>Eventually, the kernel switches to user mode and calls <span class="tt">/bin/init</span> by default</li>
+</ol>
+<p>See the <a class="el" href="ref_arch_x86_64.html" title="Architecture: x86_64">x86_64 architecture page</a> for memory management/layout details shared with other boards. </p>
+</div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
 <div id="page-nav" class="page-nav-panel">

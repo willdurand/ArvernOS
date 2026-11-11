@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['link_0',['link',['../structelf__section__header__t.html#a27a1ee484cbaf8f724621a6cbd247e9c',1,'elf_section_header_t']]]
+  ['kernel_5fboot_5fcomplete_0',['kernel_boot_complete',['../logging_8h.html#a92eb07ce86eb67f51d80e930be6d9b31',1,'logging.c']]]
 ];

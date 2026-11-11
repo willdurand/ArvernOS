@@ -122,7 +122,40 @@ Macros</h2></td></tr>
 <tr class="memitem:a70661d0d8ca4c851262904036c5008a0" id="r_a70661d0d8ca4c851262904036c5008a0"><td class="memItemLeft"><a id="a70661d0d8ca4c851262904036c5008a0" name="a70661d0d8ca4c851262904036c5008a0"></a>
 #define&#160;</td><td class="memItemRight"><b>REBOOT_CMD_POWER_OFF</b>&#160;&#160;&#160;3</td></tr>
 <tr class="memdesc:a70661d0d8ca4c851262904036c5008a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">A message is printed, and the system is stopped and powered off. <br /></td></tr>
+<tr class="memitem:a0638fd5e6416c73cf97905adfbaee33c" id="r_a0638fd5e6416c73cf97905adfbaee33c"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#a0638fd5e6416c73cf97905adfbaee33c">REBOOT_CMD_POWER_OFF_EXIT_CODE_0</a>&#160;&#160;&#160;100</td></tr>
+<tr class="memitem:a38933507d90479f1e5265fd0257b8bb6" id="r_a38933507d90479f1e5265fd0257b8bb6"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#a38933507d90479f1e5265fd0257b8bb6">REBOOT_CMD_POWER_OFF_EXIT_CODE_1</a>&#160;&#160;&#160;101</td></tr>
 </table>
+<a name="doc-define-members" id="doc-define-members"></a><h2 id="header-doc-define-members" class="groupheader">Macro Definition Documentation</h2>
+<a id="a0638fd5e6416c73cf97905adfbaee33c" name="a0638fd5e6416c73cf97905adfbaee33c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0638fd5e6416c73cf97905adfbaee33c">&#9670;&#160;</a></span>REBOOT_CMD_POWER_OFF_EXIT_CODE_0</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define REBOOT_CMD_POWER_OFF_EXIT_CODE_0&#160;&#160;&#160;100</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This is like <span class="tt"><a class="el" href="#a70661d0d8ca4c851262904036c5008a0" title="A message is printed, and the system is stopped and powered off.">REBOOT_CMD_POWER_OFF</a></span> but it sets the exit code to <span class="tt">0</span> (success) when <span class="tt">CONFIG_SEMIHOSTING</span> is set to <span class="tt">1</span> and the emulator supports exit codes. </p>
+
+</div>
+</div>
+<a id="a38933507d90479f1e5265fd0257b8bb6" name="a38933507d90479f1e5265fd0257b8bb6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a38933507d90479f1e5265fd0257b8bb6">&#9670;&#160;</a></span>REBOOT_CMD_POWER_OFF_EXIT_CODE_1</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define REBOOT_CMD_POWER_OFF_EXIT_CODE_1&#160;&#160;&#160;101</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This is like <span class="tt"><a class="el" href="#a70661d0d8ca4c851262904036c5008a0" title="A message is printed, and the system is stopped and powered off.">REBOOT_CMD_POWER_OFF</a></span> but it sets the exit code to <span class="tt">1</span> (error) when <span class="tt">CONFIG_SEMIHOSTING</span> is set to <span class="tt">1</span> and the emulator supports exit codes. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <div id="page-nav" class="page-nav-panel">

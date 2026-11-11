@@ -1,9 +1,13 @@
 var searchData=
 [
-  ['o_5fappend_0',['O_APPEND',['../fcntl_8h.html#ae036f789407d21f07b211552d67b3214',1,'fcntl.h']]],
-  ['o_5fcreat_1',['O_CREAT',['../fcntl_8h.html#a1cf6b1de1fffedaa1d26b189e9a8d2cc',1,'fcntl.h']]],
-  ['o_5frdonly_2',['O_RDONLY',['../fcntl_8h.html#a7a68c9ffaac7dbcd652225dd7c06a54b',1,'fcntl.h']]],
-  ['o_5frdwr_3',['O_RDWR',['../fcntl_8h.html#abb0586253488ee61072b73557eeb873b',1,'fcntl.h']]],
-  ['o_5ftrunc_4',['O_TRUNC',['../fcntl_8h.html#ad1d67e453fb3031f40f8cd3403773813',1,'fcntl.h']]],
-  ['o_5fwronly_5',['O_WRONLY',['../fcntl_8h.html#a11b644a8526139c4cc1850dac1271ced',1,'fcntl.h']]]
+  ['max_5fpages_0',['MAX_PAGES',['../x86__64_2mmu_2alloc_8h.html#a85f89e842475a0305bb474a98d61bdfe',1,'alloc.h']]],
+  ['max_5fstack_5fargs_1',['MAX_STACK_ARGS',['../user__stack_8h.html#a2abba0c0447f38281db569b50e18ab90',1,'user_stack.h']]],
+  ['max_5ftasks_2',['MAX_TASKS',['../include_2kernel_2proc_2task_8h.html#aac747bed84189f8cfa509b94d488e622',1,'task.h']]],
+  ['maybe_5funused_3',['MAYBE_UNUSED',['../include_2libc_2arvern_2utils_8h.html#a3282fda96b0ba454bf4a8254c41e466a',1,'utils.h']]],
+  ['memory_5farea_5fidentity_4',['MEMORY_AREA_IDENTITY',['../memory_8h.html#aeb7f9748bbdddff8381d736feb8f5ebf',1,'memory.h']]],
+  ['memory_5farea_5fno_5falloc_5',['MEMORY_AREA_NO_ALLOC',['../memory_8h.html#a5cadc023e0fa9ad6eedadbc0ca900e29',1,'memory.h']]],
+  ['memory_5favailable_6',['MEMORY_AVAILABLE',['../memory_8h.html#a4f48242e4fdac285f6ccbc8935a2b0e0',1,'memory.h']]],
+  ['memory_5freserved_7',['MEMORY_RESERVED',['../memory_8h.html#a1679bf8e71b63b8c29a999260bc8c7c4',1,'memory.h']]],
+  ['memory_5fsection_5fexecutable_8',['MEMORY_SECTION_EXECUTABLE',['../memory_8h.html#accafbfb023ae346746173f1ba2bd1961',1,'memory.h']]],
+  ['memory_5fsection_5fwritable_9',['MEMORY_SECTION_WRITABLE',['../memory_8h.html#a3093a5dd98f78b69ef78726dffdd38be',1,'memory.h']]]
 ];

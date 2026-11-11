@@ -9,6 +9,5 @@ var searchData=
   ['read_5frsp_6',['read_rsp',['../x86__64_2core_2register_8h.html#a49c84f561ab5000417e1c3fdbbe323bf',1,'register.c']]],
   ['reboot_7',['reboot',['../syscall_8h.html#a3e048601df87806f1bb72a84a6ff81e3',1,'reboot.c']]],
   ['recvfrom_8',['recvfrom',['../syscall_8h.html#ad144bb8d4119d5fa0ee5b6c4d06bc645',1,'recvfrom.c']]],
-  ['rtl8139_5fdriver_9',['rtl8139_driver',['../rtl8139_8h.html#aedaac9701166b358589fdcfefd0f702e',1,'rtl8139.c']]],
-  ['rtl8139_5finit_10',['rtl8139_init',['../rtl8139_8h.html#a24e07ef25a2b1581bca67bbb213a0931',1,'rtl8139.c']]]
+  ['rtl8139_5fdriver_9',['rtl8139_driver',['../rtl8139_8h.html#aedaac9701166b358589fdcfefd0f702e',1,'rtl8139.c']]]
 ];

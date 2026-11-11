@@ -123,7 +123,8 @@ Include dependency graph for io.h:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a34512cf4b7563b16dab78467797aa5d8" id="r_a34512cf4b7563b16dab78467797aa5d8"><td class="memItemLeft">unsigned char&#160;</td><td class="memItemRight"><a class="el" href="#a34512cf4b7563b16dab78467797aa5d8">arch_getchar</a> (bool blocking)</td></tr>
-<tr class="memitem:aa14df9de71a783c32a3f9b7bfd56701d" id="r_aa14df9de71a783c32a3f9b7bfd56701d"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aa14df9de71a783c32a3f9b7bfd56701d">arch_putchar</a> (char c)</td></tr>
+<tr class="memitem:ae8b5b7ab52b4ddf510b85741495463df" id="r_ae8b5b7ab52b4ddf510b85741495463df"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ae8b5b7ab52b4ddf510b85741495463df">arch_screen_putchar</a> (char c)</td></tr>
+<tr class="memitem:a7d25d10b185c56b7d5d9e34fdd41c7c5" id="r_a7d25d10b185c56b7d5d9e34fdd41c7c5"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a7d25d10b185c56b7d5d9e34fdd41c7c5">arch_serial_putchar</a> (char c)</td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Architecture-specific code for input/output. Currently, "input" and "output" are not well-defined, although the functions listed below should be used exclusively by the kernel. Input should be "the thing that sends characters
@@ -155,21 +156,45 @@ characters from the kernel to a human". </p>
 
 </div>
 </div>
-<a id="aa14df9de71a783c32a3f9b7bfd56701d" name="aa14df9de71a783c32a3f9b7bfd56701d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa14df9de71a783c32a3f9b7bfd56701d">&#9670;&#160;</a></span>arch_putchar()</h2>
+<a id="ae8b5b7ab52b4ddf510b85741495463df" name="ae8b5b7ab52b4ddf510b85741495463df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8b5b7ab52b4ddf510b85741495463df">&#9670;&#160;</a></span>arch_screen_putchar()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void arch_putchar </td>
+          <td class="memname">void arch_screen_putchar </td>
           <td>(</td>
           <td class="paramtype">char</td>          <td class="paramname"><span class="paramname"><em>c</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Prints a character to an output.</p>
+<p>Prints a character to the screen. This function might be a no-op on headless boards.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">c</td><td>the character to print </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7d25d10b185c56b7d5d9e34fdd41c7c5" name="a7d25d10b185c56b7d5d9e34fdd41c7c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d25d10b185c56b7d5d9e34fdd41c7c5">&#9670;&#160;</a></span>arch_serial_putchar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arch_serial_putchar </td>
+          <td>(</td>
+          <td class="paramtype">char</td>          <td class="paramname"><span class="paramname"><em>c</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Prints a character to a serial line.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">c</td><td>the character to print </td></tr>

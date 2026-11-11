@@ -126,8 +126,58 @@ Include dependency graph for proc.h:</div>
 Functions</h2></td></tr>
 <tr class="memitem:aeb261bec43942270e72349813c904a5a" id="r_aeb261bec43942270e72349813c904a5a"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#aeb261bec43942270e72349813c904a5a">proc_fs_init</a> ()</td></tr>
 <tr class="memitem:a261677ec59fe52476936fdf45585742f" id="r_a261677ec59fe52476936fdf45585742f"><td class="memItemLeft">inode_t&#160;</td><td class="memItemRight"><a class="el" href="#a261677ec59fe52476936fdf45585742f">proc_fs_create_readonly_file</a> (const char *name, proc_read_t *read_fn)</td></tr>
+<tr class="memitem:af7f16cd632c7a9b02e23e218e8c58e36" id="r_af7f16cd632c7a9b02e23e218e8c58e36"><td class="memItemLeft">size_t&#160;</td><td class="memItemRight"><a class="el" href="#af7f16cd632c7a9b02e23e218e8c58e36">proc_copy_out</a> (char *buf, size_t size, uint64_t offset, const char *src, size_t len)</td></tr>
 </table>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
+<a id="af7f16cd632c7a9b02e23e218e8c58e36" name="af7f16cd632c7a9b02e23e218e8c58e36"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af7f16cd632c7a9b02e23e218e8c58e36">&#9670;&#160;</a></span>proc_copy_out()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t proc_copy_out </td>
+          <td>(</td>
+          <td class="paramtype">char *</td>          <td class="paramname"><span class="paramname"><em>buf</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>size</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t</td>          <td class="paramname"><span class="paramname"><em>offset</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>src</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>len</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Copies a slice of the source string into the destination buffer.</p>
+<p>The slice starts at <span class="tt">offset</span>. At most <span class="tt">size - 1</span> bytes are copied and the result is always NUL-terminated. If <span class="tt">offset</span> is past the end of the source string, the destination buffer is set to an empty string.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buf</td><td>destination buffer </td></tr>
+    <tr><td class="paramname">size</td><td>size of the destination buffer in bytes </td></tr>
+    <tr><td class="paramname">offset</td><td>byte offset into the source string </td></tr>
+    <tr><td class="paramname">src</td><td>source string </td></tr>
+    <tr><td class="paramname">len</td><td>length of the source string in bytes </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the number of bytes copied </dd></dl>
+
+</div>
+</div>
 <a id="a261677ec59fe52476936fdf45585742f" name="a261677ec59fe52476936fdf45585742f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a261677ec59fe52476936fdf45585742f">&#9670;&#160;</a></span>proc_fs_create_readonly_file()</h2>
 
@@ -146,7 +196,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000013">Todo</a></b></dt><dd>We probably want a specific driver for read-only pseudo-files. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000012">Todo</a></b></dt><dd>We probably want a specific driver for read-only pseudo-files. </dd></dl>
 
 </div>
 </div>

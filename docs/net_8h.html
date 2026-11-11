@@ -138,6 +138,7 @@ Data Structures</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:a5da8d53d480b13e24e293e0ab90a0ac3" id="r_a5da8d53d480b13e24e293e0ab90a0ac3"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a5da8d53d480b13e24e293e0ab90a0ac3">net_interface_init</a> (uint8_t interface_id, net_driver_t *driver, bool prefer_dhcp, uint8_t ip[4], uint8_t gateway_ip[4], uint8_t dns_ip[4])</td></tr>
 <tr class="memitem:aa0f5ea1fc2a6969f5f7fea53a6dc2356" id="r_aa0f5ea1fc2a6969f5f7fea53a6dc2356"><td class="memItemLeft">net_interface_t *&#160;</td><td class="memItemRight"><a class="el" href="#aa0f5ea1fc2a6969f5f7fea53a6dc2356">net_get_interface</a> (uint8_t interface_id)</td></tr>
+<tr class="memitem:adde5468ec1f6137cc73a8aeb32f22d58" id="r_adde5468ec1f6137cc73a8aeb32f22d58"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#adde5468ec1f6137cc73a8aeb32f22d58">net_driver_ready</a> (net_driver_t *driver)</td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This module defines network interfaces and drivers. </p>
@@ -151,6 +152,30 @@ Functions</h2></td></tr>
 </ul>
 <p>Yep, it is very IP oriented but that's how we can show nice things :) </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
+<a id="adde5468ec1f6137cc73a8aeb32f22d58" name="adde5468ec1f6137cc73a8aeb32f22d58"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adde5468ec1f6137cc73a8aeb32f22d58">&#9670;&#160;</a></span>net_driver_ready()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void net_driver_ready </td>
+          <td>(</td>
+          <td class="paramtype">net_driver_t *</td>          <td class="paramname"><span class="paramname"><em>driver</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Called by a network driver once it has successfully initialized its device, so that it can be configured (via <span class="tt">/etc/kernel.inish</span>) and attached to a network interface.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">driver</td><td>the network driver that is now ready to be used </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="aa0f5ea1fc2a6969f5f7fea53a6dc2356" name="aa0f5ea1fc2a6969f5f7fea53a6dc2356"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa0f5ea1fc2a6969f5f7fea53a6dc2356">&#9670;&#160;</a></span>net_get_interface()</h2>
 

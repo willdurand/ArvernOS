@@ -127,6 +127,7 @@ Functions</h2></td></tr>
 <tr class="memitem:a491927dc191869338fab4ad37da1a743" id="r_a491927dc191869338fab4ad37da1a743"><td class="memItemLeft"><a class="el" href="structtask__t.html">task_t</a> *&#160;</td><td class="memItemRight"><a class="el" href="#a491927dc191869338fab4ad37da1a743">arch_task_create</a> (uint64_t clone_flags, uintptr_t entrypoint)</td></tr>
 <tr class="memitem:a22654602d5c9c4843be7cf32f33f7655" id="r_a22654602d5c9c4843be7cf32f33f7655"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a22654602d5c9c4843be7cf32f33f7655">arch_task_enter_user</a> (uintptr_t entry, uintptr_t user_stack_top, <a class="el" href="structtask__t.html">task_t</a> *task)</td></tr>
 <tr class="memitem:a70353bf16eecfb61c5564a8508391074" id="r_a70353bf16eecfb61c5564a8508391074"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a70353bf16eecfb61c5564a8508391074">arch_task_set_kernel_stack</a> (<a class="el" href="structtask__t.html">task_t</a> *task)</td></tr>
+<tr class="memitem:aa48c60acdc0146a474ce55121623b848" id="r_aa48c60acdc0146a474ce55121623b848"><td class="memItemLeft"><a class="el" href="structtask__t.html">task_t</a> *&#160;</td><td class="memItemRight"><a class="el" href="#aa48c60acdc0146a474ce55121623b848">arch_task_create_child</a> (<a class="el" href="structtask__t.html">task_t</a> *parent)</td></tr>
 </table>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
 <a id="a491927dc191869338fab4ad37da1a743" name="a491927dc191869338fab4ad37da1a743"></a>
@@ -157,6 +158,33 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a task </dd></dl>
+
+</div>
+</div>
+<a id="aa48c60acdc0146a474ce55121623b848" name="aa48c60acdc0146a474ce55121623b848"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa48c60acdc0146a474ce55121623b848">&#9670;&#160;</a></span>arch_task_create_child()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structtask__t.html">task_t</a> * arch_task_create_child </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structtask__t.html">task_t</a> *</td>          <td class="paramname"><span class="paramname"><em>parent</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Creates a child task that will resume the parent's user context (used by <span class="tt">k_fork()</span>).</p>
+<p>On architectures without fork support this returns <span class="tt">NULL</span>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">parent</td><td>the task that called <span class="tt"><a class="el" href="unistd_8h.html#aa4e4714e6e8927c80b2553a40094b6d9">fork()</a></span> </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the child task, or <span class="tt">NULL</span> when unsupported / out of memory </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000005">Todo</a></b></dt><dd>add raspi2 implementation </dd></dl>
 
 </div>
 </div>

@@ -149,6 +149,8 @@ Functions</h2></td></tr>
 <tr class="memitem:ae4bc8886787eac6213c6cd0eab9b2893" id="r_ae4bc8886787eac6213c6cd0eab9b2893"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ae4bc8886787eac6213c6cd0eab9b2893">task_exit</a> (int code)</td></tr>
 <tr class="memitem:a32c1128364ef08b15edabdac124bc11b" id="r_a32c1128364ef08b15edabdac124bc11b"><td class="memItemLeft"><a class="el" href="structtask__t.html">task_t</a> *&#160;</td><td class="memItemRight"><a class="el" href="#a32c1128364ef08b15edabdac124bc11b">task_get_current</a> ()</td></tr>
 <tr class="memitem:a953e6c75292fb9898a9e25af47321da0" id="r_a953e6c75292fb9898a9e25af47321da0"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a953e6c75292fb9898a9e25af47321da0">task_create</a> (const char *name, uint64_t clone_flags, uintptr_t entrypoint)</td></tr>
+<tr class="memitem:afd61b3d382983e8846e230f91cc4357b" id="r_afd61b3d382983e8846e230f91cc4357b"><td class="memItemLeft">pid_t&#160;</td><td class="memItemRight"><a class="el" href="#afd61b3d382983e8846e230f91cc4357b">task_wait</a> (pid_t pid, int *status)</td></tr>
+<tr class="memitem:a53ab8fc674357ad6baa53dc9b53c04b6" id="r_a53ab8fc674357ad6baa53dc9b53c04b6"><td class="memItemLeft"><a class="el" href="structtask__t.html">task_t</a> *&#160;</td><td class="memItemRight"><a class="el" href="#a53ab8fc674357ad6baa53dc9b53c04b6">task_fork_child</a> (<a class="el" href="structtask__t.html">task_t</a> *parent)</td></tr>
 <tr class="memitem:aba62108350393ac5cb4f2cf0f88c2a22" id="r_aba62108350393ac5cb4f2cf0f88c2a22"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aba62108350393ac5cb4f2cf0f88c2a22">task_print_info</a> ()</td></tr>
 <tr class="memitem:aa1e0ae72049ad38db727082cd87da8a2" id="r_aa1e0ae72049ad38db727082cd87da8a2"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aa1e0ae72049ad38db727082cd87da8a2">task_set_name</a> (<a class="el" href="structtask__t.html">task_t</a> *task, const char *name)</td></tr>
 </table>
@@ -228,7 +230,31 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000017">Todo</a></b></dt><dd>set the exit code to the zombie task. </dd></dl>
+
+</div>
+</div>
+<a id="a53ab8fc674357ad6baa53dc9b53c04b6" name="a53ab8fc674357ad6baa53dc9b53c04b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53ab8fc674357ad6baa53dc9b53c04b6">&#9670;&#160;</a></span>task_fork_child()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structtask__t.html">task_t</a> * task_fork_child </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structtask__t.html">task_t</a> *</td>          <td class="paramname"><span class="paramname"><em>parent</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Creates a child of <span class="tt">parent</span> that resumes the parent's user context.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">parent</td><td>the parent task </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the child task on success, <span class="tt">NULL</span> otherwise </dd></dl>
 
 </div>
 </div>
@@ -356,6 +382,36 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="afd61b3d382983e8846e230f91cc4357b" name="afd61b3d382983e8846e230f91cc4357b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd61b3d382983e8846e230f91cc4357b">&#9670;&#160;</a></span>task_wait()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">pid_t task_wait </td>
+          <td>(</td>
+          <td class="paramtype">pid_t</td>          <td class="paramname"><span class="paramname"><em>pid</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *</td>          <td class="paramname"><span class="paramname"><em>status</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Waits for a child task to terminate.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pid</td><td>the pid of the child to wait for, or <span class="tt">-1</span> for any child </td></tr>
+    <tr><td class="paramname">status</td><td>where to store the exit status of the terminated child </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the pid of the terminated child, or a negative errno </dd></dl>
 
 </div>
 </div>

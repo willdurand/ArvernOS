@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['s_5fcdate_0',['s_cdate',['../structs__cdate.html',1,'']]],
-  ['sock_5fentry_5ft_1',['sock_entry_t',['../structsock__entry__t.html',1,'']]],
-  ['sockaddr_2',['sockaddr',['../structsockaddr.html',1,'']]],
-  ['sockaddr_5fin_3',['sockaddr_in',['../structsockaddr__in.html',1,'']]],
-  ['stat_4',['stat',['../structstat.html',1,'']]]
+  ['page_5ftable_5ft_0',['page_table_t',['../structpage__table__t.html',1,'']]],
+  ['paging_5fuser_5fpage_5ft_1',['paging_user_page_t',['../structpaging__user__page__t.html',1,'']]],
+  ['pci_5fdevice_5ft_2',['pci_device_t',['../unionpci__device__t.html',1,'']]],
+  ['pci_5fdriver_5ft_3',['pci_driver_t',['../structpci__driver__t.html',1,'']]],
+  ['pvh_5fmmap_5ft_4',['pvh_mmap_t',['../structpvh__mmap__t.html',1,'']]]
 ];

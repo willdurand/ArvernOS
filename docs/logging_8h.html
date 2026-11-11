@@ -116,14 +116,16 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('logging_8h.htm
 
 <p>This is the general kernel logging module.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;<a class="el" href="arch_2logging_8h.html">arch/logging.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;stdbool.h&gt;</code><br />
+<code>#include &lt;stddef.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
 <code>#include &lt;<a class="el" href="inttypes_8h.html">inttypes.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="stdio_8h.html">stdio.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="timer_8h.html">time/timer.h</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for logging.h:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="logging_8h__incl.svg" width="414" height="184"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="logging_8h__incl.svg" width="530" height="184"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
@@ -131,15 +133,31 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="logging_8h__dep__incl.svg" width="168" height="111"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:log_5Fcontext_5Ft" id="r_log_5Fcontext_5Ft"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structlog__context__t.html">log_context_t</a></td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-define-members" class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
+<tr class="memitem:a5b786af5e3a142f5e7fb75e794d58461" id="r_a5b786af5e3a142f5e7fb75e794d58461"><td class="memItemLeft"><a id="a5b786af5e3a142f5e7fb75e794d58461" name="a5b786af5e3a142f5e7fb75e794d58461"></a>
+#define&#160;</td><td class="memItemRight"><b>LOGGING_BUFSIZE</b>&#160;&#160;&#160;4096</td></tr>
+<tr class="memdesc:a5b786af5e3a142f5e7fb75e794d58461"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the kernel log ring buffer. Must be a power of two. <br /></td></tr>
 <tr class="memitem:a753545626a8f97b9ad37d04c9dc1fadf" id="r_a753545626a8f97b9ad37d04c9dc1fadf"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#a753545626a8f97b9ad37d04c9dc1fadf">__LOG_TIMESTAMP_FORMAT</a>&#160;&#160;&#160;&quot;[%3&quot; PRIu64 &quot;.%03&quot; PRIu64 &quot;%03&quot; PRIu64 &quot;] &quot;</td></tr>
-<tr class="memitem:aecf53eb136cace2b51be2c20681b02fc" id="r_aecf53eb136cace2b51be2c20681b02fc"><td class="memItemLeft"><a id="aecf53eb136cace2b51be2c20681b02fc" name="aecf53eb136cace2b51be2c20681b02fc"></a>
-#define&#160;</td><td class="memItemRight"><b>__LOG_STREAM</b>(time_us,  level,  format, ...)</td></tr>
-<tr class="memdesc:aecf53eb136cace2b51be2c20681b02fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes one log line to the structured logger (serial port). <br /></td></tr>
-<tr class="memitem:a80e98daa0d39ef3e960f696b0c641896" id="r_a80e98daa0d39ef3e960f696b0c641896"><td class="memItemLeft"><a id="a80e98daa0d39ef3e960f696b0c641896" name="a80e98daa0d39ef3e960f696b0c641896"></a>
-#define&#160;</td><td class="memItemRight"><b>__LOG</b>(level,  format, ...)</td></tr>
-<tr class="memdesc:a80e98daa0d39ef3e960f696b0c641896"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes one log line, using the same timestamp for the whole message. <br /></td></tr>
+<tr class="memitem:a12e00f81bdb98faa98b6926360654eb7" id="r_a12e00f81bdb98faa98b6926360654eb7"><td class="memItemLeft"><a id="a12e00f81bdb98faa98b6926360654eb7" name="a12e00f81bdb98faa98b6926360654eb7"></a>
+#define&#160;</td><td class="memItemRight"><b>__LOG_STREAM</b>(time_us,  ctx,  level,  format, ...)</td></tr>
+<tr class="memdesc:a12e00f81bdb98faa98b6926360654eb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes one log line to the structured logger. <br /></td></tr>
+<tr class="memitem:ae882c296fb8bb314763e18e74feed65b" id="r_ae882c296fb8bb314763e18e74feed65b"><td class="memItemLeft"><a id="ae882c296fb8bb314763e18e74feed65b" name="ae882c296fb8bb314763e18e74feed65b"></a>
+#define&#160;</td><td class="memItemRight"><b>__LOG</b>(_level,  prefix,  format, ...)</td></tr>
+<tr class="memdesc:ae882c296fb8bb314763e18e74feed65b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes one log line, using the same timestamp for the whole message. <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:affb5baa30e34f0f8a25efcd5ccc6ead7" id="r_affb5baa30e34f0f8a25efcd5ccc6ead7"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#affb5baa30e34f0f8a25efcd5ccc6ead7">logging_stream_output</a> (char c, void *arg)</td></tr>
+<tr class="memitem:a2a5489243ee723134e941e704ce88b52" id="r_a2a5489243ee723134e941e704ce88b52"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a2a5489243ee723134e941e704ce88b52">logging_buffer_read</a> (char *buf, size_t size, uint64_t offset)</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a92eb07ce86eb67f51d80e930be6d9b31" id="r_a92eb07ce86eb67f51d80e930be6d9b31"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a92eb07ce86eb67f51d80e930be6d9b31">kernel_boot_complete</a></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This is the general kernel logging module. </p>
@@ -165,7 +183,96 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Timestamp prefix (<span class="tt">[seconds.microseconds]</span>) shared by the structured logger and the console output. The seconds are right-aligned on 3 characters and the fractional part is zero-padded to 6 digits. </p>
+<p>Timestamp prefix (<span class="tt">[seconds.microseconds]</span>) for the logger. The seconds are right-aligned on 3 characters and the fractional part is zero-padded to 6 digits. </p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
+<a id="a2a5489243ee723134e941e704ce88b52" name="a2a5489243ee723134e941e704ce88b52"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a5489243ee723134e941e704ce88b52">&#9670;&#160;</a></span>logging_buffer_read()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void logging_buffer_read </td>
+          <td>(</td>
+          <td class="paramtype">char *</td>          <td class="paramname"><span class="paramname"><em>buf</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>size</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t</td>          <td class="paramname"><span class="paramname"><em>offset</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Reads from the kernel log ring buffer.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buf</td><td>destination buffer. </td></tr>
+    <tr><td class="paramname">size</td><td>buffer size in bytes. </td></tr>
+    <tr><td class="paramname">offset</td><td>byte offset into the available log data. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="affb5baa30e34f0f8a25efcd5ccc6ead7" name="affb5baa30e34f0f8a25efcd5ccc6ead7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#affb5baa30e34f0f8a25efcd5ccc6ead7">&#9670;&#160;</a></span>logging_stream_output()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void logging_stream_output </td>
+          <td>(</td>
+          <td class="paramtype">char</td>          <td class="paramname"><span class="paramname"><em>c</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>arg</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function is used to output logs.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">c</td><td>a character to print </td></tr>
+    <tr><td class="paramname">arg</td><td>optional argument, either a <span class="tt"><a class="el" href="structlog__context__t.html">log_context_t</a></span> or <span class="tt">NULL</span>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Variable Documentation</h2>
+<a id="a92eb07ce86eb67f51d80e930be6d9b31" name="a92eb07ce86eb67f51d80e930be6d9b31"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92eb07ce86eb67f51d80e930be6d9b31">&#9670;&#160;</a></span>kernel_boot_complete</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool kernel_boot_complete</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel extern">extern</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Whether the kernel has finished booting. Until then, logs are written to both the serial port and the screen. </p>
 
 </div>
 </div>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['virtual_5faddress_0',['virtual_address',['../structelf__section__header__t.html#a7c2247db277612d93f9e99e3ddc2309b',1,'elf_section_header_t']]]
+  ['size_0',['size',['../structelf__section__header__t.html#aef4867a51cf8dee4d94e53d863d62af5',1,'elf_section_header_t']]]
 ];

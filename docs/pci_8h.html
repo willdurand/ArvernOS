@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.18.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ArvernOS: src/kernel/arch/x86_64/core/pci.h File Reference</title>
+<title>ArvernOS: src/kernel/arch/x86_64/board/pc/core/pci.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="codefolding.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
@@ -117,21 +117,21 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('pci_8h.html','
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for pci.h:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="pci_8h__incl.svg" width="143" height="126"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="pci_8h__incl.svg" width="168" height="126"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="pci_8h__dep__incl.svg" width="151" height="155"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="pci_8h__dep__incl.svg" width="168" height="155"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:pci_5Fdevice_5Ft" id="r_pci_5Fdevice_5Ft"><td class="memItemLeft">union &#160;</td><td class="memItemRight"><a class="el" href="unionpci__device__t.html">pci_device_t</a></td></tr>
+<tr class="memitem:pci_5Fdriver_5Ft" id="r_pci_5Fdriver_5Ft"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structpci__driver__t.html">pci_driver_t</a></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ad8515b86d19288e403722e2c9a4dc5dd" id="r_ad8515b86d19288e403722e2c9a4dc5dd"><td class="memItemLeft"><a class="el" href="unionpci__device__t.html">pci_device_t</a>&#160;</td><td class="memItemRight"><a class="el" href="#ad8515b86d19288e403722e2c9a4dc5dd">pci_get_device</a> (uint16_t vendor_id, uint16_t device_id)</td></tr>
 <tr class="memitem:abb0a8e6fa16437a49fe35b85a84feec2" id="r_abb0a8e6fa16437a49fe35b85a84feec2"><td class="memItemLeft">uint32_t&#160;</td><td class="memItemRight"><a class="el" href="#abb0a8e6fa16437a49fe35b85a84feec2">pci_read</a> (<a class="el" href="unionpci__device__t.html">pci_device_t</a> device, uint32_t field, uint8_t size)</td></tr>
 <tr class="memitem:a531322fe5567da0a2705f6131c079f65" id="r_a531322fe5567da0a2705f6131c079f65"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a531322fe5567da0a2705f6131c079f65">pci_write</a> (<a class="el" href="unionpci__device__t.html">pci_device_t</a> device, uint32_t field, uint32_t value)</td></tr>
 </table>
@@ -139,37 +139,6 @@ Functions</h2></td></tr>
 <div class="textblock"><dl class="section see"><dt>See also</dt><dd><a href="https://wiki.osdev.org/PCI">https://wiki.osdev.org/PCI</a></dd></dl>
 <p>This module manages the Peripheral Component Interconnect (PCI) bus. </p>
 </div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
-<a id="ad8515b86d19288e403722e2c9a4dc5dd" name="ad8515b86d19288e403722e2c9a4dc5dd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad8515b86d19288e403722e2c9a4dc5dd">&#9670;&#160;</a></span>pci_get_device()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="unionpci__device__t.html">pci_device_t</a> pci_get_device </td>
-          <td>(</td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>vendor_id</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>device_id</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Given a <span class="tt">vendor_id</span> and <span class="tt">device_id</span>, this function returns the corresponding PCI device if it exists.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">vendor_id</td><td>ID of the manufacturer of the device </td></tr>
-    <tr><td class="paramname">device_id</td><td>ID of the particular device </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>the PCI device or a zero'ed structure </dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000010">Todo</a></b></dt><dd>This is the minimal amount of code to retrieve a PCI device when there is only one with the same vendor and device IDs and no function. </dd></dl>
-
-</div>
-</div>
 <a id="abb0a8e6fa16437a49fe35b85a84feec2" name="abb0a8e6fa16437a49fe35b85a84feec2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abb0a8e6fa16437a49fe35b85a84feec2">&#9670;&#160;</a></span>pci_read()</h2>
 
@@ -254,7 +223,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>src</b></li><li class="navelem"><a href="dir_cbd7f246bdf7dc0a50281a272327e6ed.html">kernel</a></li><li class="navelem"><b>arch</b></li><li class="navelem"><b>x86_64</b></li><li class="navelem"><b>core</b></li><li class="navelem"><a href="pci_8h.html">pci.h</a></li>
+    <li class="navelem"><b>src</b></li><li class="navelem"><a href="dir_cbd7f246bdf7dc0a50281a272327e6ed.html">kernel</a></li><li class="navelem"><b>arch</b></li><li class="navelem"><b>x86_64</b></li><li class="navelem"><b>board</b></li><li class="navelem"><b>pc</b></li><li class="navelem"><b>core</b></li><li class="navelem"><a href="pci_8h.html">pci.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.18.0 </li>
   </ul>
 </div>
