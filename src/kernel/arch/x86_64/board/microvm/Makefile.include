@@ -10,7 +10,7 @@
 # Options for the different tools
 ###############################################################################
 
-QEMU_OPTIONS += -M microvm
+QEMU_OPTIONS += -M microvm,rtc=on
 QEMU_OPTIONS += -display none
 
 ###############################################################################
