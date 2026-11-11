@@ -17,6 +17,10 @@
 //
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2016, Citrix Systems, Inc.
+
+/// Value of `hvm_start_info.magic` when the structure is valid.
+#define HVM_START_MAGIC_VALUE 0x336ec578
+
 typedef struct hvm_start_info
 {
   uint32_t magic;
