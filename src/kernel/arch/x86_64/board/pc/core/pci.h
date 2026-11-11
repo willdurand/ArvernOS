@@ -48,15 +48,27 @@ typedef union pci_device
   };
 } pci_device_t;
 
-/**
- * Given a `vendor_id` and `device_id`, this function returns the corresponding
- * PCI device if it exists.
- *
- * @param vendor_id ID of the manufacturer of the device
- * @param device_id ID of the particular device
- * @return the PCI device or a zero'ed structure
- */
-pci_device_t pci_get_device(uint16_t vendor_id, uint16_t device_id);
+/// A driver claiming a specific (`vendor_id`, `device_id`) pair. Use the
+/// `PCI_DRIVER_REGISTER()` macro to register such a driver.
+typedef struct pci_driver
+{
+  const char* name;
+  uint16_t vendor_id;
+  uint16_t device_id;
+  /// Called when a matching device is found during PCI enumeration.
+  void (*probe)(pci_device_t device);
+} pci_driver_t;
+
+// We must use `retain` in addition to `used` for the same reason as
+// `initcall.h`'s `__initcall()`.
+#define PCI_DRIVER_REGISTER(name, vendor_id, device_id, probe_fn)              \
+  static pci_driver_t __attribute__((                                          \
+    used, retain, __section__(".pci_drivers"))) __pci_driver_##probe_fn = {    \
+    name, vendor_id, device_id, probe_fn                                       \
+  }
+
+extern unsigned char __pci_drivers_start;
+extern unsigned char __pci_drivers_end;
 
 /**
  * Reads a field from the configuration space.

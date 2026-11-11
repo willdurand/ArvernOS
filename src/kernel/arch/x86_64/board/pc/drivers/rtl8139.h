@@ -30,14 +30,6 @@
 #define TX_BUFFER_SIZE 1536
 
 /**
- * Initializes the RTL8139 driver.
- *
- * @param the PCI device corresponding to a RTL8139 ethernet card
- * @return true when initialization has succeeded, false otherwise
- */
-bool rtl8139_init(pci_device_t device);
-
-/**
  * Returns a network driver.
  */
 net_driver_t* rtl8139_driver();

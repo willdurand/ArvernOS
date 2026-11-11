@@ -91,4 +91,13 @@ void net_interface_init(uint8_t interface_id,
  */
 net_interface_t* net_get_interface(uint8_t interface_id);
 
+/**
+ * Called by a network driver once it has successfully initialized its device,
+ * so that it can be configured (via `/etc/kernel.inish`) and attached to a
+ * network interface.
+ *
+ * @param driver the network driver that is now ready to be used
+ */
+void net_driver_ready(net_driver_t* driver);
+
 #endif

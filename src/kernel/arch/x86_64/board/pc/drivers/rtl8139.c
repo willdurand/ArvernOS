@@ -2,6 +2,7 @@
 #include <arvern/utils.h>
 #include <core/interrupt.h>
 #include <core/isr.h>
+#include <core/pci.h>
 #include <core/port.h>
 #include <mmu/paging.h>
 // We use the net logger because this driver is for a network card.
@@ -13,7 +14,10 @@
 uint8_t* rtl8139_get_mac_address();
 void rtl8139_transmit(uint8_t* data, uint32_t len);
 void rtl8139_receive();
+
 static void rtl8139_callback(isr_stack_t* stack);
+static bool rtl8139_init(pci_device_t device);
+static void rtl8139_probe(pci_device_t device);
 
 static uint32_t ioaddr = 0;
 
@@ -36,7 +40,7 @@ static net_driver_t driver = {
   .interface = NULL, // will be set in `net_interface_init()`.
 };
 
-bool rtl8139_init(pci_device_t device)
+static bool rtl8139_init(pci_device_t device)
 {
   uint32_t ret = pci_read(device, PCI_BASE_ADDR_0, 4);
   ioaddr = ret & (~0x3);
@@ -108,6 +112,16 @@ bool rtl8139_init(pci_device_t device)
 net_driver_t* rtl8139_driver()
 {
   return &driver;
+}
+
+static void rtl8139_probe(pci_device_t device)
+{
+  if (!rtl8139_init(device)) {
+    WARN("%s", "net: rtl8139: failed to initialize device");
+    return;
+  }
+
+  net_driver_ready(&driver);
 }
 
 uint8_t* rtl8139_get_mac_address()
@@ -195,3 +209,8 @@ static void rtl8139_callback(isr_stack_t* stack)
 
   UNUSED(*stack);
 }
+
+PCI_DRIVER_REGISTER("rtl8139",
+                    RTL8139_VENDOR_ID,
+                    RTL8139_DEVICE_ID,
+                    rtl8139_probe);
