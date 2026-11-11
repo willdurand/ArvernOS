@@ -10,6 +10,9 @@
 #define READLINE_SIZE          256
 #define PROMPT                 "\033[0;36m$\033[0m "
 #define NB_DOCUMENTED_COMMANDS 4
+/// Maximum number of arguments passed to a program (plus the `NULL`
+/// terminator).
+#define MAX_ARGS 10
 
 void print_prompt();
 
@@ -65,7 +68,7 @@ int main(int argc, char* argv[])
 
         break;
 
-      case '\n':
+      case '\n': {
         printf("\n");
 
         if (*readline == 0) {
@@ -73,19 +76,29 @@ int main(int argc, char* argv[])
           break;
         }
 
-        char* command = strtok(readline, " ");
-        char* first_arg = strtok(NULL, " ");
+        // Split the line into arguments.
+        char* args[MAX_ARGS + 1];
+        int nargs = 0;
+        char* arg = strtok(readline, " ");
 
-        // Comsume all other arguments.
-        while (strtok(NULL, " ") != NULL) {
-          ;
+        while (arg != NULL && nargs < MAX_ARGS) {
+          args[nargs++] = arg;
+          arg = strtok(NULL, " ");
         }
+
+        args[nargs] = NULL;
+
+        char* command = args[0];
+        char* first_arg = args[1];
 
         if (strcmp(command, "help") == 0) {
           if (first_arg == NULL) {
             for (uint8_t i = 0; i < NB_DOCUMENTED_COMMANDS; i++) {
               printf("%-10s %s\n", commands[i][0], commands[i][1]);
             }
+
+            printf("\nOther programs are looked up in /bin"
+                   " (e.g. 'cat', 'date', 'cal').\n");
           } else {
             for (uint8_t i = 0; i < NB_DOCUMENTED_COMMANDS; i++) {
               if (strcmp(first_arg, commands[i][0]) == 0) {
@@ -101,7 +114,7 @@ int main(int argc, char* argv[])
         } else if (strcmp(command, "env") == 0) {
           env();
         } else {
-          printf("invalid command\n");
+          run(args);
         }
 
         readline_index = 0;
@@ -110,6 +123,7 @@ int main(int argc, char* argv[])
         print_prompt();
 
         break;
+      }
 
       case '\t':
         printf("  ");
