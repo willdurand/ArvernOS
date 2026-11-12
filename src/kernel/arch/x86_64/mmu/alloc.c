@@ -1,4 +1,5 @@
 #include "alloc.h"
+#include <arch/mmu.h>
 #include <arvern/utils.h>
 #include <inttypes.h>
 #include <mmu/logging.h>
@@ -26,7 +27,7 @@ void* libk_sbrk(ptrdiff_t size)
   if (size == 0) {
     return (void*)heap_addr;
   } else if (size > 0) {
-    map_multiple(page_containing_address(heap_addr),
+    map_multiple(arch_page_containing_address(heap_addr),
                  size / PAGE_SIZE,
                  PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
     memset((void*)heap_addr, 0, size);
@@ -70,8 +71,8 @@ void alloc_init()
 {
   INFO("%s", "mmu: initialize heap allocator");
 
-  heap_end_page = page_containing_address(HEAP_START + HEAP_SIZE - 1);
-  heap_start_page = page_containing_address(HEAP_START);
+  heap_end_page = arch_page_containing_address(HEAP_START + HEAP_SIZE - 1);
+  heap_start_page = arch_page_containing_address(HEAP_START);
 
   DEBUG("heap_start_page=%" PRIu64 " heap_end_page=%" PRIu64 " "
         "used_count=%" PRIu64 "",
@@ -132,13 +133,13 @@ void* liballoc_alloc(int number_of_pages)
 
 int liballoc_free(void* ptr, int number_of_pages)
 {
-  uint64_t page = page_containing_address((uint64_t)ptr);
+  uint64_t page = arch_page_containing_address((uint64_t)ptr);
   MMU_DEBUG("ptr=%p page=%u", ptr, page);
 
   unmap_multiple(page, number_of_pages);
 
   uint64_t first_free_page =
-    page_containing_address((uint64_t)ptr - HEAP_START);
+    arch_page_containing_address((uint64_t)ptr - HEAP_START);
   for (int32_t i = 0; i < number_of_pages; i++) {
     bitmap_clear(allocated_pages, first_free_page + i);
   }

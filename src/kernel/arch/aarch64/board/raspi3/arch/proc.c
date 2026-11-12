@@ -2,10 +2,9 @@
 
 #include <arch/task.h>
 #include <arvern/utils.h>
+#include <mmu/page.h>
 #include <stdlib.h>
 #include <string.h>
-
-#define PAGE_SIZE 4096
 
 extern void ret_from_fork();
 extern void switch_to_el0(uintptr_t entry,

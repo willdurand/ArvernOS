@@ -1,4 +1,5 @@
 #include "paging.h"
+#include <arch/mmu.h>
 #include <arvern/utils.h>
 #include <assert.h>
 #include <core/isr.h>
@@ -197,7 +198,8 @@ void remap_kernel()
 
   uint64_t old_page_table_frame =
     frame_start_address(frame_containing_address(backup_addr));
-  page_number_t old_page_table = page_containing_address(old_page_table_frame);
+  page_number_t old_page_table =
+    arch_page_containing_address(old_page_table_frame);
   unmap(old_page_table);
   DEBUG("guard page at %p", (void*)page_start_address(old_page_table));
 }
@@ -269,7 +271,7 @@ page_table_t* next_table_address(page_table_t* table, uint64_t index)
 opt_uint64_t translate(uint64_t virtual_address)
 {
   uint64_t offset = virtual_address % PAGE_SIZE;
-  page_number_t page = page_containing_address(virtual_address);
+  page_number_t page = arch_page_containing_address(virtual_address);
   opt_uint64_t frame = translate_page(page);
 
   if (!frame.has_value) {
@@ -278,25 +280,6 @@ opt_uint64_t translate(uint64_t virtual_address)
 
   return (opt_uint64_t){ .has_value = true,
                          .value = frame.value * PAGE_SIZE + offset };
-}
-
-page_number_t page_containing_address(uint64_t virtual_address)
-{
-  // So the address space is split into two halves: the higher half containing
-  // addresses with sign extension and the lower half containing addresses
-  // without. Everything in between is invalid.
-  if (virtual_address < 0x0000800000000000 ||
-      virtual_address >= 0xffff800000000000) {
-    return virtual_address / PAGE_SIZE;
-  }
-
-  PANIC("invalid address=%p", virtual_address);
-  return 0; // never reached but avoid a compiler error.
-}
-
-uint64_t page_start_address(page_number_t page_number)
-{
-  return page_number * PAGE_SIZE;
 }
 
 opt_uint64_t translate_page(page_number_t page_number)
@@ -596,16 +579,6 @@ void unmap_multiple(page_number_t start_page_number, uint32_t number_of_pages)
   }
 }
 
-uint32_t paging_amount_for_byte_size(uint64_t start_address, uint64_t byte_size)
-{
-  page_number_t start_page = page_containing_address(start_address);
-  page_number_t end_page = page_containing_address(start_address + byte_size);
-
-  uint32_t difference = (uint32_t)(end_page - start_page) + 1;
-
-  return difference;
-}
-
 opt_uint64_t paging_frame_allocate()
 {
 #ifdef TEST_ENV
@@ -626,7 +599,7 @@ void paging_frame_deallocate(frame_number_t frame_number)
 
 void identity_map(uint64_t address, uint64_t flags)
 {
-  page_number_t page = page_containing_address(address);
+  page_number_t page = arch_page_containing_address(address);
   map_page_to_frame(page, address, flags);
 }
 

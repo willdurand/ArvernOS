@@ -10,13 +10,10 @@
 #include <assert.h>
 #include <core/isr.h>
 #include <errno.h>
+#include <mmu/page.h>
 #include <proc/logging.h>
 #include <stdlib.h>
 #include <string.h>
-
-#ifndef PAGE_SIZE
-#define PAGE_SIZE 4096
-#endif
 
 void task_do_schedule();
 void task_preempt_disable();
