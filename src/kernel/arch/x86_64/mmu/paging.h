@@ -3,6 +3,7 @@
 #define MMU_PAGING_H
 
 #include <mmu/frame.h>
+#include <mmu/page.h>
 #include <stdint.h>
 #include <sys/types.h>
 
@@ -10,8 +11,7 @@
 /// match the load address set by the board's linker script.
 #define KERNEL_LOAD_ADDRESS 0x00100000
 
-#define PAGE_ENTRIES 512
-#define P4_TABLE     0xfffffffffffff000
+#define P4_TABLE 0xfffffffffffff000
 
 /// End of the user address space.
 #define USER_SPACE_END 0x80000000
@@ -26,13 +26,6 @@
 #define PAGING_FLAG_HUGE_PAGE (1 << 7)
 /// Forbids executing code on this page.
 #define PAGING_FLAG_NO_EXECUTE ((uint64_t)1 << 63)
-
-typedef struct page_table
-{
-  uint64_t entries[PAGE_ENTRIES];
-} page_table_t;
-
-typedef uint64_t page_number_t;
 
 /// The user space lives in P3 index 1.
 #define USER_P3_INDEX 1
@@ -78,22 +71,6 @@ typedef struct paging_user_page
  * which isn't great but it works for now.
  */
 void paging_init();
-
-/**
- * Returns a page number given a virtual address.
- *
- * @param virtual_address a virtual address (page)
- * @returns a page number
- */
-page_number_t page_containing_address(uint64_t virtual_address);
-
-/**
- * Returns the virtual start address of a page.
- *
- * @param page_number a page number
- * @returns a virtual address (page)
- */
-uint64_t page_start_address(page_number_t page_number);
 
 /**
  * Translates a page number to a frame number.
@@ -145,17 +122,6 @@ void unmap(page_number_t page_number);
  * @param number_of_pages the amount of pages to unmap
  */
 void unmap_multiple(page_number_t start_page_number, uint32_t number_of_pages);
-
-/**
- * Calculates how many pages are needed for a range of addresses.
- *
- * @param start_address the starting virtual address
- * @param byte_size the amount of bytes
- * @return the amount of pages required for mapping from start_address until
- * start_address + byte_size
- */
-uint32_t paging_amount_for_byte_size(uint64_t start_address,
-                                     uint64_t byte_size);
 
 /**
  * Maps a page (virtual address) to the equivalent frame (physical address).

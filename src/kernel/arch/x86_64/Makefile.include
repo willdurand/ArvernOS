@@ -104,8 +104,10 @@ test: libc
 	./$(target_build_dir)/bitmap
 	# mmu/paging
 	$(CC) $(CFLAGS_FOR_TESTS) -Wformat=0 -I$(tests_dir)/proxies/ -o $(target_build_dir)/paging \
-		$(kernel_tests_dir)/mmu/paging.c $(arch_src)/mmu/paging.c $(kernel_tests_dir)/mmu/memory.c \
-		$(kernel_src_dir)/mmu/frame.c $(kernel_src_dir)/mmu/bitmap.c $(arch_src)/core/register.c
+		$(kernel_tests_dir)/mmu/paging.c $(arch_src)/mmu/paging.c $(arch_src)/arch/mmu.c \
+		$(kernel_tests_dir)/mmu/memory.c \
+		$(kernel_src_dir)/mmu/frame.c $(kernel_src_dir)/mmu/page.c \
+		$(kernel_src_dir)/mmu/bitmap.c $(arch_src)/core/register.c
 	./$(target_build_dir)/paging
 	# proc/user_stack
 	$(CC) $(CFLAGS_FOR_TESTS) -o $(target_build_dir)/user_stack \

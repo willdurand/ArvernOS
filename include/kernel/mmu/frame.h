@@ -4,10 +4,8 @@
 
 #include <mmu/bitmap.h>
 #include <mmu/memory.h>
+#include <mmu/page.h>
 #include <sys/types.h>
-
-/// The default page size.
-#define PAGE_SIZE 4096
 
 typedef uint64_t frame_number_t;
 

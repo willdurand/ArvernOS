@@ -1,3 +1,4 @@
+#include <arch/mmu.h>
 #include <core/isr.h>
 #include <mmu/paging.h>
 #include <stdlib.h>
@@ -80,15 +81,15 @@ int main()
   fake_p1 = malloc(sizeof(page_table_t));
 
   uint64_t addr = 42 * 512 * 512 * 4096L; // 42th P3 entry
-  uint64_t page = page_containing_address(addr);
+  uint64_t page = arch_page_containing_address(addr);
 
-  describe("page_containing_address()");
+  describe("arch_page_containing_address()");
   assert(page == 11010048, "returns a page number for a given virtual address");
-  assert(page_containing_address(0x1000) == 1,
+  assert(arch_page_containing_address(0x1000) == 1,
          "returns a page number for a given virtual address");
-  assert(page_containing_address(0x0000800000000000) == 0,
+  assert(arch_page_containing_address(0x0000800000000000) == 0,
          "returns 0 for invalid addresses");
-  assert(page_containing_address(0xffff800000000000 - 1) == 0,
+  assert(arch_page_containing_address(0xffff800000000000 - 1) == 0,
          "returns 0 for invalid addresses");
   end_describe();
 
@@ -138,7 +139,7 @@ int main()
 
   describe("identity_map()");
   uint64_t addr_identity = (uint64_t)&fake_frame[9];
-  page_number_t page_identity = page_containing_address(addr_identity);
+  page_number_t page_identity = arch_page_containing_address(addr_identity);
 
   // reset fake next_table impl.
   next_table_index = 3;
