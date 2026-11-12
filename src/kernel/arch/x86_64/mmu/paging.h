@@ -6,6 +6,10 @@
 #include <stdint.h>
 #include <sys/types.h>
 
+/// Address where the kernel image is loaded, i.e. the end of low memory. Must
+/// match the load address set by the board's linker script.
+#define KERNEL_LOAD_ADDRESS 0x00100000
+
 #define PAGE_ENTRIES 512
 #define P4_TABLE     0xfffffffffffff000
 

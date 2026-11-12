@@ -1,5 +1,6 @@
+#include <mmu/memory.h>
+
 #include <core/multiboot.h>
-#include <memory.h>
 #include <stddef.h>
 
 static void set_kernel_bounds(uint64_t* start, uint64_t* end)

@@ -4,9 +4,9 @@
 #include <core/isr.h>
 #include <core/register.h>
 #include <inttypes.h>
-#include <memory.h>
 #include <mmu/bitmap.h>
 #include <mmu/logging.h>
+#include <mmu/memory.h>
 #include <panic.h>
 #include <stdio.h>
 #include <stdlib.h>

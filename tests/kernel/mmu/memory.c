@@ -3,7 +3,7 @@
  *
  * Stub of the board memory handoff for the host unit tests.
  */
-#include <memory.h>
+#include <mmu/memory.h>
 
 memory_regions_t memory_get_regions()
 {

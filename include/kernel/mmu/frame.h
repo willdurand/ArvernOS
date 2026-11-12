@@ -2,8 +2,8 @@
 #ifndef MMU_FRAME_H
 #define MMU_FRAME_H
 
-#include <memory.h>
 #include <mmu/bitmap.h>
+#include <mmu/memory.h>
 #include <sys/types.h>
 
 /// The default page size.
