@@ -1,4 +1,4 @@
-#include <memory.h>
+#include <mmu/memory.h>
 
 #include <arvern/utils.h>
 #include <core/pvh.h>

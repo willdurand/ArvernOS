@@ -7,28 +7,26 @@
  * it here, so that the architecture's frame allocator and paging code stay
  * board-agnostic.
  *
- * - `memory_get_regions()` returns the bootloader's E820-style memory map,
- *   i.e. what the machine says is RAM and what it says is not.
+ * - `memory_get_regions()` returns the bootloader's memory map, i.e. what the
+ *   machine says is RAM and what it says is not.
  * - `memory_get_reserved_areas()` returns the ranges the bootloader has
  *   populated on top of plain RAM (kernel image, boot payloads, boot
- *   information), which the E820 memory map does not account for.
+ *   information), which the memory map does not account for.
+ *
+ * Boards whose bootloader reports an E820-style map can pass the map through
+ * as-is; other boards translate their own format into the same types.
  */
-#ifndef X86_64_MEMORY_H
-#define X86_64_MEMORY_H
+#ifndef MMU_MEMORY_H
+#define MMU_MEMORY_H
 
 #include <stdint.h>
-
-/// Address where the kernel image is loaded, i.e. the end of low memory. Must
-/// match the load address set by the board's linker script.
-#define KERNEL_LOAD_ADDRESS 0x00100000
 
 /// Usable RAM (E820 type 1).
 #define MEMORY_AVAILABLE 1
 /// Memory reserved (E820 type 2).
 #define MEMORY_RESERVED 2
 
-/// A region of physical memory, as reported by the bootloader's E820-style
-/// memory map.
+/// A region of physical memory, as reported by the bootloader's memory map.
 ///
 /// The map is passed through as-is. Only regions of type `MEMORY_AVAILABLE`
 /// are allocatable; all other types are considered unavailable.
@@ -56,7 +54,7 @@ typedef struct memory_regions
 #define MEMORY_AREA_IDENTITY (1 << 1)
 
 /// A physical address range populated by the bootloader on top of plain RAM
-/// (e.g. the init ramdisk), which the E820 memory map does not account for.
+/// (e.g. the init ramdisk), which the memory map does not account for.
 typedef struct memory_area
 {
   uintptr_t start; // inclusive
