@@ -35,8 +35,8 @@ uint64_t page_start_address(page_number_t page_number);
  * @return the amount of pages required for mapping from start_address until
  * start_address + byte_size
  */
-uint32_t paging_amount_for_byte_size(uint64_t start_address,
-                                     uint64_t byte_size);
+uint32_t paging_page_amount_for_byte_size(uint64_t start_address,
+                                          uint64_t byte_size);
 
 #if defined(__x86_64__)
 #include <arch/paging.h>
