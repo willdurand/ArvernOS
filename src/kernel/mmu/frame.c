@@ -2,6 +2,7 @@
 
 #include <inttypes.h>
 #include <mmu/logging.h>
+#include <mmu/paging.h>
 #include <panic.h>
 #include <string.h>
 

@@ -1,5 +1,6 @@
 #include <mmu/bitmap.h>
 #include <mmu/frame.h>
+#include <mmu/paging.h>
 #include <stdlib.h>
 #include <string.h>
 #include <test.h>

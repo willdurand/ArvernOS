@@ -1,6 +1,6 @@
 #include <arch/mmu.h>
 
-#include <mmu/page.h>
+#include <mmu/paging.h>
 #include <panic.h>
 
 page_number_t arch_page_containing_address(uint64_t virtual_address)

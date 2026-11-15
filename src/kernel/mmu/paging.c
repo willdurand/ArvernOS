@@ -1,4 +1,4 @@
-#include <mmu/page.h>
+#include <mmu/paging.h>
 
 #include <arch/mmu.h>
 

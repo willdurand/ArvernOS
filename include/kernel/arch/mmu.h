@@ -2,7 +2,7 @@
 #ifndef ARCH_MMU_H
 #define ARCH_MMU_H
 
-#include <mmu/page.h>
+#include <mmu/paging.h>
 
 /**
  * Returns the page number containing a virtual address.

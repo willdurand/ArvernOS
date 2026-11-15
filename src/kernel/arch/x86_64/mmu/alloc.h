@@ -3,6 +3,7 @@
 #define MMU_ALLOC_H
 
 #include <mmu/frame.h>
+#include <mmu/paging.h>
 #include <sys/types.h>
 
 /// The virtual address to the start of the heap memory.

@@ -4,6 +4,7 @@
 #include <inttypes.h>
 #include <mmu/alloc.h>
 #include <mmu/frame.h>
+#include <mmu/paging.h>
 #include <stdio.h>
 #include <string.h>
 

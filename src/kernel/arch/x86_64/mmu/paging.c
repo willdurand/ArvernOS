@@ -1,4 +1,3 @@
-#include "paging.h"
 #include <arch/mmu.h>
 #include <arvern/utils.h>
 #include <assert.h>
@@ -8,6 +7,7 @@
 #include <mmu/bitmap.h>
 #include <mmu/logging.h>
 #include <mmu/memory.h>
+#include <mmu/paging.h>
 #include <panic.h>
 #include <stdio.h>
 #include <stdlib.h>

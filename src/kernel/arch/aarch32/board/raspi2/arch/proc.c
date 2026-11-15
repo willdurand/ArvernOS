@@ -2,7 +2,7 @@
 
 #include <arch/task.h>
 #include <arvern/utils.h>
-#include <mmu/page.h>
+#include <mmu/paging.h>
 #include <string.h>
 
 extern void ret_from_fork();
