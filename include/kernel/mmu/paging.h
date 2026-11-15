@@ -1,6 +1,6 @@
 /** @file */
-#ifndef MMU_PAGE_H
-#define MMU_PAGE_H
+#ifndef MMU_PAGING_H
+#define MMU_PAGING_H
 
 #include <stdint.h>
 
@@ -37,5 +37,9 @@ uint64_t page_start_address(page_number_t page_number);
  */
 uint32_t paging_amount_for_byte_size(uint64_t start_address,
                                      uint64_t byte_size);
+
+#if defined(__x86_64__)
+#include <arch/paging.h>
+#endif
 
 #endif

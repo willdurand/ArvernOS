@@ -1,9 +1,9 @@
 /** @file */
-#ifndef MMU_PAGING_H
-#define MMU_PAGING_H
+#ifndef ARCH_PAGING_H
+#define ARCH_PAGING_H
 
 #include <mmu/frame.h>
-#include <mmu/page.h>
+#include <mmu/paging.h>
 #include <stdint.h>
 #include <sys/types.h>
 

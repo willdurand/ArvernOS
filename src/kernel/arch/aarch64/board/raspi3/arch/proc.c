@@ -2,7 +2,7 @@
 
 #include <arch/task.h>
 #include <arvern/utils.h>
-#include <mmu/page.h>
+#include <mmu/paging.h>
 #include <stdlib.h>
 #include <string.h>
 

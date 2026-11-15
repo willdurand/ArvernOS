@@ -2,15 +2,11 @@
 
 #include <arch/proc.h>
 
-#if defined(__x86_64__)
-#include <mmu/paging.h>
-#endif
-
 #include <arvern/utils.h>
 #include <assert.h>
 #include <core/isr.h>
 #include <errno.h>
-#include <mmu/page.h>
+#include <mmu/paging.h>
 #include <proc/logging.h>
 #include <stdlib.h>
 #include <string.h>

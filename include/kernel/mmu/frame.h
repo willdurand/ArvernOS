@@ -4,7 +4,6 @@
 
 #include <mmu/bitmap.h>
 #include <mmu/memory.h>
-#include <mmu/page.h>
 #include <sys/types.h>
 
 typedef uint64_t frame_number_t;
