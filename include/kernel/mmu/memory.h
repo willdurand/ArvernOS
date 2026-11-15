@@ -138,4 +138,11 @@ memory_framebuffer_t memory_get_framebuffer();
  */
 void memory_map_kernel_sections(memory_section_map_fn map);
 
+/**
+ * Invokes `map` for the kernel image sections described by the linker script.
+ *
+ * @param map the callback to invoke for each section
+ */
+void memory_map_linked_sections(memory_section_map_fn map);
+
 #endif
