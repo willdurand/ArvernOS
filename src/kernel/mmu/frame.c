@@ -10,7 +10,7 @@ opt_uint64_t read_mmap(uint64_t request);
 opt_uint64_t frame_number_to_request(frame_number_t frame_number);
 
 // These variables can be accessed by other parts of the kernel and we do that
-// in `paging_init()` to identity map the bitmap for allocated frames.
+// in `arch_paging_init_impl()` to identity map the bitmap for allocated frames.
 uint32_t frames_for_bitmap = 0;
 bitmap_t* allocated_frames = NULL;
 

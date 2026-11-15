@@ -5,6 +5,13 @@
 #include <mmu/paging.h>
 
 /**
+ * @brief Initializes paging and enables the MMU.
+ *
+ * Architecture-specific implementation called by the shared `paging_init()`.
+ */
+void arch_paging_init();
+
+/**
  * Returns the page number containing a virtual address.
  *
  * This is the architecture-specific address-to-page translation. The

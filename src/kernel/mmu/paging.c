@@ -1,6 +1,18 @@
 #include <mmu/paging.h>
 
 #include <arch/mmu.h>
+#include <logging.h>
+
+#if defined(__x86_64__)
+
+void paging_init()
+{
+  INFO("%s", "mmu: initialize paging");
+
+  arch_paging_init();
+}
+
+#endif
 
 uint64_t paging_page_to_address(page_number_t page_number)
 {

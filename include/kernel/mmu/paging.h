@@ -38,6 +38,14 @@ uint64_t paging_page_to_address(page_number_t page_number);
 uint32_t paging_page_amount_for_byte_size(uint64_t start_address,
                                           uint64_t byte_size);
 
+/**
+ * @brief Initializes paging and enables the MMU.
+ *
+ * This is the architecture-independent entry point. The actual work is done by
+ * the architecture-specific `arch_paging_init()` implementation.
+ */
+void paging_init();
+
 #if defined(__x86_64__)
 #include <arch/paging.h>
 #endif

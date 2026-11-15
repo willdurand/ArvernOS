@@ -1,7 +1,13 @@
 #include <arch/mmu.h>
 
+#include <arch/paging.h>
 #include <mmu/paging.h>
 #include <panic.h>
+
+void arch_paging_init()
+{
+  arch_paging_init_impl();
+}
 
 page_number_t arch_paging_page_containing_address(uint64_t virtual_address)
 {
