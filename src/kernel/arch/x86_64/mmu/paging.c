@@ -80,7 +80,7 @@ void remap_kernel()
                     PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
 
   page_table_t* inactive_page_table =
-    (page_table_t*)page_start_address(temporary_page);
+    (page_table_t*)paging_page_to_address(temporary_page);
   // now we are able to zero the table
   zero_table(inactive_page_table);
   // set up recursive mapping for the table
@@ -97,7 +97,8 @@ void remap_kernel()
   map_page_to_frame(
     temporary_page, backup_addr, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
 
-  page_table_t* p4_table = (page_table_t*)page_start_address(temporary_page);
+  page_table_t* p4_table =
+    (page_table_t*)paging_page_to_address(temporary_page);
 
   // overwrite recursive mapping
   active_p4_table->entries[511] =
@@ -170,7 +171,7 @@ void remap_kernel()
         continue;
       }
 
-      identity_map(page_start_address(page), PAGING_FLAG_PRESENT);
+      identity_map(paging_page_to_address(page), PAGING_FLAG_PRESENT);
     }
   }
   MMU_DEBUG("%s", "bootloader areas mapped!");
@@ -201,7 +202,7 @@ void remap_kernel()
   page_number_t old_page_table =
     arch_page_containing_address(old_page_table_frame);
   unmap(old_page_table);
-  DEBUG("guard page at %p", (void*)page_start_address(old_page_table));
+  DEBUG("guard page at %p", (void*)paging_page_to_address(old_page_table));
 }
 
 void map_kernel_section(uint64_t addr, uint64_t size, uint32_t section_flags)
@@ -389,7 +390,7 @@ void map_page_to_frame(page_number_t page_number,
   MMU_DEBUG("mapping page=%" PRIu64 " (start_addr=%p) to frame=%" PRIu64
             " (start_addr=%p) with flags=%#x",
             page_number,
-            page_start_address(page_number),
+            paging_page_to_address(page_number),
             frame_containing_address(frame),
             frame,
             flags);
@@ -488,7 +489,7 @@ void _set_p4(page_table_t* table)
 
 void unmap(page_number_t page_number)
 {
-  uint64_t addr = page_start_address(page_number);
+  uint64_t addr = paging_page_to_address(page_number);
 
   MMU_DEBUG("unmapping page_number=%" PRIu64 " addr=%p", page_number, addr);
 
@@ -622,11 +623,11 @@ void* paging_create_user_space(void)
 
   map_page_to_frame(
     PAGING_TMP_P4, p4_frame.value, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
-  page_table_t* new_p4 = (page_table_t*)page_start_address(PAGING_TMP_P4);
+  page_table_t* new_p4 = (page_table_t*)paging_page_to_address(PAGING_TMP_P4);
 
   map_page_to_frame(
     PAGING_TMP_P3, p3_frame.value, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
-  page_table_t* new_p3 = (page_table_t*)page_start_address(PAGING_TMP_P3);
+  page_table_t* new_p3 = (page_table_t*)paging_page_to_address(PAGING_TMP_P3);
 
   zero_table(new_p4);
   zero_table(new_p3);
@@ -662,7 +663,7 @@ static void* map_scratch(page_number_t page_number, uint64_t frame)
   map_page_to_frame(
     page_number, frame, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
 
-  return (void*)page_start_address(page_number);
+  return (void*)paging_page_to_address(page_number);
 }
 
 void* paging_clone_user(void)
