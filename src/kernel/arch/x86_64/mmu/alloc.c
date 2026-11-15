@@ -116,7 +116,8 @@ void* liballoc_alloc(int number_of_pages)
     PANIC("no free pages for alloc of %d pages", number_of_pages);
   }
 
-  uint64_t addr = page_start_address(heap_start_page + first_free_page.value);
+  uint64_t addr =
+    paging_page_to_address(heap_start_page + first_free_page.value);
 
   for (int32_t i = 0; i < number_of_pages; i++) {
     bitmap_set(allocated_pages, first_free_page.value + i);

@@ -2,7 +2,7 @@
 
 #include <arch/mmu.h>
 
-uint64_t page_start_address(page_number_t page_number)
+uint64_t paging_page_to_address(page_number_t page_number)
 {
   return page_number * PAGE_SIZE;
 }

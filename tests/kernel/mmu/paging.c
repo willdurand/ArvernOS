@@ -93,8 +93,8 @@ int main()
          "returns 0 for invalid addresses");
   end_describe();
 
-  describe("page_start_address()");
-  assert(page_start_address(1) == 0x1000, "returns a virtual address");
+  describe("paging_page_to_address()");
+  assert(paging_page_to_address(1) == 0x1000, "returns a virtual address");
   end_describe();
 
   describe("p1_index()");

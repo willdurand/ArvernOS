@@ -25,7 +25,7 @@ typedef uint64_t page_number_t;
  * @param page_number a page number
  * @returns a virtual address (page)
  */
-uint64_t page_start_address(page_number_t page_number);
+uint64_t paging_page_to_address(page_number_t page_number);
 
 /**
  * Calculates how many pages are needed for a range of addresses.
