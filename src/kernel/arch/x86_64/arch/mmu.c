@@ -3,7 +3,7 @@
 #include <mmu/paging.h>
 #include <panic.h>
 
-page_number_t arch_page_containing_address(uint64_t virtual_address)
+page_number_t arch_paging_page_containing_address(uint64_t virtual_address)
 {
   // So the address space is split into two halves: the higher half containing
   // addresses with sign extension and the lower half containing addresses

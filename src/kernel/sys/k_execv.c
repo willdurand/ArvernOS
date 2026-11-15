@@ -151,7 +151,7 @@ int k_execv(const char* path, char* const argv[])
   uintptr_t stack_top = USER_SPACE_END;
   uintptr_t stack_base = stack_top - USER_STACK_SIZE;
 
-  map_multiple(arch_page_containing_address(stack_base),
+  map_multiple(arch_paging_page_containing_address(stack_base),
                USER_STACK_SIZE / PAGE_SIZE,
                PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE |
                  PAGING_FLAG_USER_ACCESSIBLE | PAGING_FLAG_NO_EXECUTE);

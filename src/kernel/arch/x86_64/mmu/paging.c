@@ -200,7 +200,7 @@ void remap_kernel()
   uint64_t old_page_table_frame =
     frame_start_address(frame_containing_address(backup_addr));
   page_number_t old_page_table =
-    arch_page_containing_address(old_page_table_frame);
+    arch_paging_page_containing_address(old_page_table_frame);
   unmap(old_page_table);
   DEBUG("guard page at %p", (void*)paging_page_to_address(old_page_table));
 }
@@ -272,7 +272,7 @@ page_table_t* next_table_address(page_table_t* table, uint64_t index)
 opt_uint64_t translate(uint64_t virtual_address)
 {
   uint64_t offset = virtual_address % PAGE_SIZE;
-  page_number_t page = arch_page_containing_address(virtual_address);
+  page_number_t page = arch_paging_page_containing_address(virtual_address);
   opt_uint64_t frame = translate_page(page);
 
   if (!frame.has_value) {
@@ -600,7 +600,7 @@ void paging_frame_deallocate(frame_number_t frame_number)
 
 void identity_map(uint64_t address, uint64_t flags)
 {
-  page_number_t page = arch_page_containing_address(address);
+  page_number_t page = arch_paging_page_containing_address(address);
   map_page_to_frame(page, address, flags);
 }
 
