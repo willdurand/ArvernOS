@@ -1,12 +1,873 @@
-#include <arch/mmu.h>
-
-#include <arch/paging.h>
 #include <mmu/paging.h>
-#include <panic.h>
 
+#include <arch/mmu.h>
+#include <arch/paging.h>
+#include <arvern/utils.h>
+#include <assert.h>
+#include <core/isr.h>
+#include <core/register.h>
+#include <inttypes.h>
+#include <mmu/bitmap.h>
+#include <mmu/logging.h>
+#include <mmu/memory.h>
+#include <panic.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MMU_DEBUG_PAGE_ENTRY(message, e)                                       \
+  {                                                                            \
+    MMU_DEBUG("%s page entry addr=%p"                                          \
+              " present=%d"                                                    \
+              " writable=%d"                                                   \
+              " no_execute=%d"                                                 \
+              " user_accessible=%d"                                            \
+              " huge_page=%d",                                                 \
+              message,                                                         \
+              (e & 0x000ffffffffff000),                                        \
+              (e & PAGING_FLAG_PRESENT) == PAGING_FLAG_PRESENT,                \
+              (e & PAGING_FLAG_WRITABLE) == PAGING_FLAG_WRITABLE,              \
+              (e & PAGING_FLAG_NO_EXECUTE) == PAGING_FLAG_NO_EXECUTE,          \
+              (e & PAGING_FLAG_USER_ACCESSIBLE) ==                             \
+                PAGING_FLAG_USER_ACCESSIBLE,                                   \
+              (e & PAGING_FLAG_HUGE_PAGE) == PAGING_FLAG_HUGE_PAGE);           \
+  }
+
+void map_page_to_frame(page_number_t page_number,
+                       uint64_t frame,
+                       uint64_t flags);
+void map_kernel_section(uint64_t addr, uint64_t size, uint32_t flags);
+void enable_nxe_bit();
+void enable_write_protection();
+void remap_kernel();
+void zero_table(page_table_t* table);
+page_table_t* next_table_address(page_table_t* table, uint64_t index);
+opt_uint64_t pointed_frame(uint64_t entry);
+page_table_t* next_table_create(page_table_t* table,
+                                uint64_t index,
+                                uint64_t flags);
+page_table_t* get_p4();
+opt_uint64_t paging_frame_allocate();
+void paging_frame_deallocate(frame_number_t frame_number);
+
+extern uint32_t frames_for_bitmap;
+extern bitmap_t* allocated_frames;
+extern void load_p4(uint64_t addr);
+
+static page_table_t* active_p4_table = (page_table_t*)P4_TABLE;
+static bool can_deallocate_frames = false;
+// Physical address of the kernel page table (set by `arch_paging_init()`).
+static uint64_t kernel_p4_frame = 0;
+
+/**
+ * @brief Initializes paging to separate virtual and physical memory.
+ *
+ * The bootloader (assembly code) already set up a 4-level paging hierarchy
+ * that maps every page of our kernel to a physical frame. It does this because
+ * paging is mandatory in 64-bit mode on x86_64.
+ *
+ * This means that every memory address that we used in our kernel was a
+ * virtual address. Accessing the VGA buffer at address `0xb8000` only worked
+ * because the bootloader identity mapped that memory page, which means that it
+ * mapped the virtual page `0xb8000` to the physical frame `0xb8000`.
+ *
+ * In addition, this improves safety since illegal memory accesses cause page
+ * fault exceptions instead of modifying arbitrary physical memory. That being
+ * said, identity mapping clutters the virtual address space and makes it more
+ * difficult to find continuous memory regions of larger sizes (like 1000 KiB).
+ *
+ * We remap the kernel and other useful sections/addresses in this function,
+ * then we enable write protection, the NXE bit and we switch to our own table.
+ * This allows us to make everything safer. Memory is still identity mapped,
+ * which isn't great but it works for now.
+ */
 void arch_paging_init()
 {
-  arch_paging_init_impl();
+  enable_nxe_bit();
+  enable_write_protection();
+  remap_kernel();
+
+  // Remember the kernel page table: once a user address space is active, CR3
+  // no longer points at it.
+  kernel_p4_frame = read_cr3();
+}
+
+void remap_kernel()
+{
+  uint64_t inactive_page_table_frame = paging_frame_allocate().value;
+  page_number_t temporary_page = 0xcafec000;
+
+  map_page_to_frame(temporary_page,
+                    inactive_page_table_frame,
+                    PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
+
+  page_table_t* inactive_page_table =
+    (page_table_t*)paging_page_to_address(temporary_page);
+  // now we are able to zero the table
+  zero_table(inactive_page_table);
+  // set up recursive mapping for the table
+  inactive_page_table->entries[511] =
+    inactive_page_table_frame | PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE;
+  unmap(temporary_page);
+
+  uint64_t backup_addr = read_cr3();
+  MMU_DEBUG("backup_addr=%p backup_frame=%" PRIu64,
+            backup_addr,
+            frame_containing_address(backup_addr));
+
+  // map temporary_page to current p4 table
+  map_page_to_frame(
+    temporary_page, backup_addr, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
+
+  page_table_t* p4_table =
+    (page_table_t*)paging_page_to_address(temporary_page);
+
+  // overwrite recursive mapping
+  active_p4_table->entries[511] =
+    inactive_page_table_frame | PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE;
+  write_cr3(read_cr3());
+
+  // We shouldn't deallocate the `inactive_page_table_frame`.
+  can_deallocate_frames = true;
+
+  // Identity map the low memory area, i.e. everything below the kernel image.
+  // See: https://wiki.osdev.org/Memory_Map_(x86)
+  for (uint64_t addr = 0; addr < 0x000A0000; addr += PAGE_SIZE) {
+    paging_identity_map(addr, PAGING_FLAG_PRESENT);
+  }
+  for (uint64_t addr = 0x000A0000; addr < KERNEL_LOAD_ADDRESS;
+       addr += PAGE_SIZE) {
+    paging_identity_map(addr, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
+  }
+  MMU_DEBUG("mapped low memory below %p!",
+            (void*)(uintptr_t)KERNEL_LOAD_ADDRESS);
+
+  memory_framebuffer_t framebuffer = memory_get_framebuffer();
+  if (framebuffer.addr != 0) {
+    uint64_t pages_for_fb =
+      (framebuffer.pitch * framebuffer.height) / PAGE_SIZE;
+
+    for (uint64_t i = 0; i < pages_for_fb; i++) {
+      paging_identity_map(framebuffer.addr + (i * PAGE_SIZE),
+                          PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
+    }
+    MMU_DEBUG("%s", "mapped VBE framebuffer!");
+  }
+
+  MMU_DEBUG("%s", "mapping kernel sections");
+  memory_map_kernel_sections(map_kernel_section);
+  MMU_DEBUG("%s", "kernel sections mapped!");
+
+  // Once the kernel is correctly mapped with the right flags, we map the
+  // bootloader-owned areas (init ramdisk, boot information, ...) so that they
+  // remain accessible. We make sure that they are PRESENT, we probably don't
+  // need any other flags.
+  memory_reserved_areas_t reserved = memory_get_reserved_areas();
+
+  // The low-memory identity map above stops at `KERNEL_LOAD_ADDRESS`. If the
+  // board places the kernel image elsewhere, that map leaves a gap (or maps
+  // memory that is not below the kernel), so the assumption is broken.
+  if (reserved.kernel_start != 0 &&
+      reserved.kernel_start != KERNEL_LOAD_ADDRESS) {
+    PANIC("kernel starts at %p, expected %p",
+          (void*)reserved.kernel_start,
+          (void*)(uintptr_t)KERNEL_LOAD_ADDRESS);
+  }
+
+  MMU_DEBUG("mapping %u bootloader area(s)", reserved.area_count);
+  for (uint32_t i = 0; i < reserved.area_count; i++) {
+    const memory_area_t* area = &reserved.areas[i];
+    if (!(area->flags & MEMORY_AREA_IDENTITY) || area->end <= area->start) {
+      continue;
+    }
+
+    // Some of these pages may already be mapped: the bootloader can place its
+    // payload right next to the kernel image (sharing a page with the last
+    // kernel section), and low memory below the kernel image is identity
+    // mapped above.
+    page_number_t first_page = frame_containing_address(area->start);
+    page_number_t last_page = frame_containing_address(area->end - 1);
+
+    for (page_number_t page = first_page; page <= last_page; page++) {
+      if (translate_page(page).has_value) {
+        continue;
+      }
+
+      paging_identity_map(paging_page_to_address(page), PAGING_FLAG_PRESENT);
+    }
+  }
+  MMU_DEBUG("%s", "bootloader areas mapped!");
+
+  // Bitmap for allocated frames.
+  MMU_DEBUG("mapping %u pages for frame allocator, starting at addr=%p",
+            frames_for_bitmap,
+            allocated_frames);
+  for (uint32_t i = 0; i < frames_for_bitmap; i++) {
+    paging_identity_map((uint64_t)allocated_frames + (i * PAGE_SIZE),
+                        PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
+  }
+  MMU_DEBUG("%s", "pages for frame allocator mapped!");
+
+  // restore recursive mapping to original p4 table
+  p4_table->entries[511] =
+    backup_addr | PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE;
+  write_cr3(read_cr3());
+  MMU_DEBUG("%s", "restored recursive mapping");
+
+  unmap(temporary_page);
+
+  write_cr3(inactive_page_table_frame);
+  DEBUG("switched to new table: cr3=%p", (void*)read_cr3());
+
+  uint64_t old_page_table_frame =
+    frame_start_address(frame_containing_address(backup_addr));
+  page_number_t old_page_table =
+    arch_paging_page_containing_address(old_page_table_frame);
+  unmap(old_page_table);
+  DEBUG("guard page at %p", (void*)paging_page_to_address(old_page_table));
+}
+
+void map_kernel_section(uint64_t addr, uint64_t size, uint32_t section_flags)
+{
+  if (size == 0) {
+    return;
+  }
+
+  frame_number_t start_frame_number = frame_containing_address(addr);
+  frame_number_t end_frame_number = frame_containing_address(addr + size - 1);
+
+  uint64_t flags = PAGING_FLAG_PRESENT;
+
+  if ((section_flags & MEMORY_SECTION_WRITABLE) != 0) {
+    flags |= PAGING_FLAG_WRITABLE;
+  }
+
+  if ((section_flags & MEMORY_SECTION_EXECUTABLE) == 0) {
+    flags |= PAGING_FLAG_NO_EXECUTE;
+  }
+
+  for (uint64_t i = start_frame_number; i <= end_frame_number; i++) {
+    uint64_t address = frame_start_address(i);
+    page_number_t page = arch_paging_page_containing_address(address);
+    arch_paging_map_page(page, address, flags);
+  }
+}
+
+void enable_nxe_bit()
+{
+  uint64_t efer = read_msr(IA32_EFER);
+  write_msr(IA32_EFER, efer | (1 << 11));
+  DEBUG("enabled NXE bit old_efer=%#x new_efer=%#x", efer, read_msr(IA32_EFER));
+}
+
+void enable_write_protection()
+{
+  write_cr0(read_cr0() | (1 << 16));
+  DEBUG("enabled write protection: cr0=%#x", read_cr0());
+}
+
+void zero_table(page_table_t* table)
+{
+  memset((void*)table, 0, sizeof(page_table_t));
+}
+
+page_table_t* next_table_address(page_table_t* table, uint64_t index)
+{
+  if ((table->entries[index] & PAGING_FLAG_PRESENT) != PAGING_FLAG_PRESENT) {
+    MMU_DEBUG("entry at index=%" PRIu64 " in table=%p is not present, "
+              "returning NULL",
+              index,
+              table);
+    return NULL;
+  }
+
+#ifdef TEST_ENV
+  page_table_t* next_table = test_next_table();
+#else
+  page_table_t* next_table =
+    (page_table_t*)(((uint64_t)table << 9) | (index << 12));
+#endif
+
+  MMU_DEBUG("addr=%p, next table=%p", (uint64_t)table, next_table);
+
+  return next_table;
+}
+
+opt_uint64_t translate(uint64_t virtual_address)
+{
+  uint64_t offset = virtual_address % PAGE_SIZE;
+  page_number_t page = arch_paging_page_containing_address(virtual_address);
+  opt_uint64_t frame = translate_page(page);
+
+  if (!frame.has_value) {
+    return frame;
+  }
+
+  return (opt_uint64_t){ .has_value = true,
+                         .value = frame.value * PAGE_SIZE + offset };
+}
+
+opt_uint64_t translate_page(page_number_t page_number)
+{
+  page_table_t* p4 = get_p4();
+
+  page_table_t* p3 = next_table_address(p4, _p4_index(page_number));
+
+  if (p3) {
+    uint64_t p3_entry = p3->entries[_p3_index(page_number)];
+    opt_uint64_t frame = pointed_frame(p3_entry);
+
+    if (frame.has_value &&
+        (p3_entry & PAGING_FLAG_HUGE_PAGE) == PAGING_FLAG_HUGE_PAGE) {
+      MMU_DEBUG(
+        "1GB huge page=%" PRIu64 " frame=%" PRIu64, page_number, frame.value);
+
+      if (frame.value % (PAGE_ENTRIES * PAGE_ENTRIES) == 0) {
+        frame.value +=
+          _p2_index(page_number) * PAGE_ENTRIES + _p1_index(page_number);
+
+        return frame;
+      }
+
+      PANIC("misaligned 1GB page=%" PRIu64, page_number);
+    }
+  } else {
+    MMU_DEBUG("did not find p3 (%p), returning no value", p3);
+    return (opt_uint64_t){ .has_value = false, .value = 0 };
+  }
+
+  page_table_t* p2 = next_table_address(p3, _p3_index(page_number));
+
+  if (p2) {
+    if ((p3->entries[_p3_index(page_number)] & PAGING_FLAG_HUGE_PAGE) ==
+        PAGING_FLAG_HUGE_PAGE) {
+      opt_uint64_t frame = pointed_frame(p2->entries[_p2_index(page_number)]);
+
+      MMU_DEBUG(
+        "2MB huge page=%" PRIu64 " frame=%" PRIu64, page_number, frame.value);
+
+      if (frame.value % PAGE_ENTRIES == 0) {
+        frame.value += _p1_index(page_number);
+
+        return frame;
+      }
+
+      PANIC("misaligned 2MB page=%" PRIu64, page_number);
+    }
+  } else {
+    MMU_DEBUG("did not find p2 (%p), returning no value", p2);
+    return (opt_uint64_t){ .has_value = false, .value = 0 };
+  }
+
+  page_table_t* p1 = next_table_address(p2, _p2_index(page_number));
+
+  if (p1 == NULL) {
+    MMU_DEBUG("did not find p1 (%p), returning no value", p1);
+    return (opt_uint64_t){ .has_value = false, .value = 0 };
+  }
+
+  return pointed_frame(p1->entries[_p1_index(page_number)]);
+}
+
+uint64_t _p4_index(page_number_t page_number)
+{
+  return (page_number >> 27) & 0777;
+}
+
+uint64_t _p3_index(page_number_t page_number)
+{
+  return (page_number >> 18) & 0777;
+}
+
+uint64_t _p2_index(page_number_t page_number)
+{
+  return (page_number >> 9) & 0777;
+}
+
+uint64_t _p1_index(page_number_t page_number)
+{
+  return (page_number >> 0) & 0777;
+}
+
+opt_uint64_t pointed_frame(uint64_t entry)
+{
+  if (entry & PAGING_FLAG_PRESENT) {
+    return (opt_uint64_t){ .has_value = true,
+                           .value = frame_containing_address(
+                             entry & 0x000ffffffffff000) };
+  }
+
+  return (opt_uint64_t){ .has_value = false, .value = 0 };
+}
+
+/**
+ * Maps a page (number) to a frame (physical address).
+ *
+ * @param page_number a page number (not an address)
+ * @param frame a physical address (frame)
+ * @param flags paging flags
+ */
+void map_page_to_frame(page_number_t page_number,
+                       uint64_t frame,
+                       uint64_t flags)
+{
+  MMU_DEBUG("mapping page=%" PRIu64 " (start_addr=%p) to frame=%" PRIu64
+            " (start_addr=%p) with flags=%#x",
+            page_number,
+            paging_page_to_address(page_number),
+            frame_containing_address(frame),
+            frame,
+            flags);
+
+#ifndef TEST_ENV
+  // Do not call `translate_page()` here, otherwise our test suite wouldn't be
+  // able to fake the calls to `next_table_address()` right after.
+  // opt_uint64_t maybe_frame = translate_page(page_number);
+  // assert(!maybe_frame.has_value);
+#endif
+
+  uint64_t p4_idx = _p4_index(page_number);
+  uint64_t p3_idx = _p3_index(page_number);
+  uint64_t p2_idx = _p2_index(page_number);
+  uint64_t p1_idx = _p1_index(page_number);
+
+  MMU_DEBUG("p1_idx=%" PRIu64 " p2_idx=%" PRIu64 " p3_idx=%" PRIu64
+            " p4_idx=%" PRIu64,
+            p1_idx,
+            p2_idx,
+            p3_idx,
+            p4_idx);
+
+  page_table_t* p4 = get_p4();
+  assert(p4 != NULL);
+
+  page_table_t* p3 = next_table_create(p4, p4_idx, flags);
+  assert(p3 != NULL);
+
+  page_table_t* p2 = next_table_create(p3, p3_idx, flags);
+  assert(p2 != NULL);
+
+  page_table_t* p1 = next_table_create(p2, p2_idx, flags);
+  assert(p1 != NULL);
+
+  assert((p1->entries[p1_idx] & PAGING_FLAG_PRESENT) == 0);
+
+  p1->entries[p1_idx] = frame | flags;
+
+  MMU_DEBUG("mapped page=%" PRIu64 " to frame=%" PRIu64 " (addr=%p)",
+            page_number,
+            frame_containing_address(frame),
+            frame);
+}
+
+page_table_t* next_table_create(page_table_t* table,
+                                uint64_t index,
+                                uint64_t flags)
+{
+  MMU_DEBUG("table=%p index=%" PRIu64 " flags=%#x", (void*)table, index, flags);
+
+  // Intermediate page tables must be user-accessible for a ring-3 access to
+  // succeed: the CPU checks the U/S bit at every level. Leaf entries keep the
+  // actual permission, so propagating this flag here does not expose kernel
+  // pages that have `PAGING_FLAG_USER_ACCESSIBLE` clear in their leaf entry.
+  uint64_t entry_flags = PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE;
+  if ((flags & PAGING_FLAG_USER_ACCESSIBLE) != 0) {
+    entry_flags |= PAGING_FLAG_USER_ACCESSIBLE;
+  }
+
+  if (table &&
+      (table->entries[index] & PAGING_FLAG_PRESENT) == PAGING_FLAG_PRESENT) {
+    MMU_DEBUG("page entry at index=%" PRIu64 " is present", index);
+
+    table->entries[index] |= (entry_flags & PAGING_FLAG_USER_ACCESSIBLE);
+
+    return next_table_address(table, index);
+  }
+
+  MMU_DEBUG("page entry at index=%" PRIu64 " is not present, creating entry",
+            index);
+
+  opt_uint64_t frame = paging_frame_allocate();
+  assert(frame.has_value);
+
+  table->entries[index] = frame.value | entry_flags;
+
+  page_table_t* next_table = next_table_address(table, index);
+
+  zero_table(next_table);
+
+  return next_table;
+}
+
+page_table_t* get_p4()
+{
+  return active_p4_table;
+}
+
+void _set_p4(page_table_t* table)
+{
+  MMU_DEBUG("setting p4 to addr=%p", table);
+
+  active_p4_table = table;
+}
+
+void unmap(page_number_t page_number)
+{
+  uint64_t addr = paging_page_to_address(page_number);
+
+  MMU_DEBUG("unmapping page_number=%" PRIu64 " addr=%p", page_number, addr);
+
+#ifndef TEST_ENV
+  // Do not call `translate()` here, otherwise our test suite wouldn't be able
+  // to fake the calls to `next_table_address()` right after.
+  if (!translate(addr).has_value) {
+    MMU_DEBUG("cannot unmap page=%" PRIu64 " (start_address=%p) because it is "
+              "not mapped",
+              page_number,
+              addr);
+    return;
+  }
+#endif
+
+  page_table_t* p4 = get_p4();
+  assert(p4 != NULL);
+  page_table_t* p3 = next_table_address(p4, _p4_index(page_number));
+  assert(p3 != NULL);
+  page_table_t* p2 = next_table_address(p3, _p3_index(page_number));
+  assert(p2 != NULL);
+  page_table_t* p1 = next_table_address(p2, _p2_index(page_number));
+  assert(p1 != NULL);
+
+  uint64_t entry = p1->entries[_p1_index(page_number)];
+
+  opt_uint64_t frame = pointed_frame(entry);
+  assert(frame.has_value);
+
+  frame_number_t frame_number = frame.value;
+
+  p1->entries[_p1_index(page_number)] = 0;
+
+#ifndef TEST_ENV
+  // flush the translation lookaside buffer
+  // cf. http://os.phil-opp.com/modifying-page-tables.html#unmap
+  __asm__("invlpg (%0)"
+          : /* no output */
+          : "r"(addr)
+          : "memory");
+#endif
+
+  // TODO: Free p(1,2,3) table if empty.
+
+#ifdef TEST_ENV
+  can_deallocate_frames = true;
+#endif
+
+  if (can_deallocate_frames) {
+    paging_frame_deallocate(frame_number);
+  }
+
+  MMU_DEBUG("unmapped page=%" PRIu64 " addr=%p", page_number, addr);
+}
+
+void arch_paging_map_page(page_number_t page_number,
+                          uint64_t frame,
+                          uint64_t flags)
+{
+  map_page_to_frame(page_number, frame, flags);
+}
+
+void unmap_multiple(page_number_t start_page_number, uint32_t number_of_pages)
+{
+  MMU_DEBUG("unmapping %ld pages, starting at page=%" PRIu64,
+            number_of_pages,
+            start_page_number);
+
+  for (uint32_t i = 0; i < number_of_pages; i++) {
+    unmap(start_page_number + i);
+  }
+}
+
+opt_uint64_t paging_frame_allocate()
+{
+#ifdef TEST_ENV
+  return test_frame_allocate();
+#endif
+
+  return frame_allocate();
+}
+
+void paging_frame_deallocate(frame_number_t frame_number)
+{
+#ifdef TEST_ENV
+  test_frame_deallocate(frame_number);
+#else
+  frame_deallocate(frame_number);
+#endif
+}
+
+opt_uint64_t arch_paging_allocate_frame(void)
+{
+  return paging_frame_allocate();
+}
+
+void* arch_paging_create_user_space(void)
+{
+  opt_uint64_t p4_frame = paging_frame_allocate();
+  if (!p4_frame.has_value) {
+    return NULL;
+  }
+
+  opt_uint64_t p3_frame = paging_frame_allocate();
+  if (!p3_frame.has_value) {
+    paging_frame_deallocate(frame_containing_address(p4_frame.value));
+    return NULL;
+  }
+
+  // Do not free the frames that we temporarily map while writing the tables.
+  bool saved = can_deallocate_frames;
+  can_deallocate_frames = false;
+
+  map_page_to_frame(
+    PAGING_TMP_P4, p4_frame.value, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
+  page_table_t* new_p4 = (page_table_t*)paging_page_to_address(PAGING_TMP_P4);
+
+  map_page_to_frame(
+    PAGING_TMP_P3, p3_frame.value, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
+  page_table_t* new_p3 = (page_table_t*)paging_page_to_address(PAGING_TMP_P3);
+
+  zero_table(new_p4);
+  zero_table(new_p3);
+
+  // Share the kernel mappings: copy every P3 entry of the current address space
+  // except the user region, which stays private to the new space.
+  page_table_t* kernel_p3 = next_table_address(get_p4(), 0);
+  if (kernel_p3 != NULL) {
+    for (uint64_t i = 0; i < PAGE_ENTRIES; i++) {
+      if (i == USER_P3_INDEX) {
+        continue;
+      }
+      new_p3->entries[i] = kernel_p3->entries[i];
+    }
+  }
+
+  new_p4->entries[0] =
+    p3_frame.value | PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE;
+  new_p4->entries[511] =
+    p4_frame.value | PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE;
+
+  unmap(PAGING_TMP_P3);
+  unmap(PAGING_TMP_P4);
+
+  can_deallocate_frames = saved;
+
+  return (void*)p4_frame.value;
+}
+
+// Maps `frame` at `page_number` and returns the corresponding virtual address.
+static void* map_scratch(page_number_t page_number, uint64_t frame)
+{
+  map_page_to_frame(
+    page_number, frame, PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
+
+  return (void*)paging_page_to_address(page_number);
+}
+
+void* arch_paging_clone_user(void)
+{
+  page_table_t* p3 = next_table_address(get_p4(), 0);
+  page_table_t* p2 =
+    (p3 != NULL) ? next_table_address(p3, USER_P3_INDEX) : NULL;
+
+  if (p2 == NULL) {
+    // No user pages to copy: return a fresh (empty) address space.
+    return arch_paging_create_user_space();
+  }
+
+  // Count the present user pages.
+  uint64_t count = 0;
+  for (uint64_t i = 0; i < PAGE_ENTRIES; i++) {
+    if ((p2->entries[i] & PAGING_FLAG_PRESENT) == 0) {
+      continue;
+    }
+    page_table_t* p1 = next_table_address(p2, i);
+    if (p1 == NULL) {
+      continue;
+    }
+    for (uint64_t j = 0; j < PAGE_ENTRIES; j++) {
+      if (p1->entries[j] & PAGING_FLAG_PRESENT) {
+        count++;
+      }
+    }
+  }
+
+  paging_user_page_t* pages = NULL;
+  if (count > 0) {
+    pages = malloc(count * sizeof(paging_user_page_t));
+    if (pages == NULL) {
+      return NULL;
+    }
+  }
+
+  // Record every user page (virtual page number, physical frame and flags) so
+  // that we can copy it once we switch to the new address space.
+  uint64_t n = 0;
+  for (uint64_t i = 0; i < PAGE_ENTRIES; i++) {
+    if ((p2->entries[i] & PAGING_FLAG_PRESENT) == 0) {
+      continue;
+    }
+
+    page_table_t* p1 = next_table_address(p2, i);
+    if (p1 == NULL) {
+      continue;
+    }
+
+    for (uint64_t j = 0; j < PAGE_ENTRIES; j++) {
+      uint64_t entry = p1->entries[j];
+      if ((entry & PAGING_FLAG_PRESENT) == 0) {
+        continue;
+      }
+
+      pages[n].page = ((page_number_t)USER_P3_INDEX << 18) | (i << 9) | j;
+      pages[n].frame = entry & PAGING_FRAME_ADDRESS_MASK;
+      pages[n].flags = (entry & 0xfff) | (entry & PAGING_FLAG_NO_EXECUTE);
+      n++;
+    }
+  }
+
+  void* space = arch_paging_create_user_space();
+  if (space == NULL) {
+    free(pages);
+    return NULL;
+  }
+
+  // Switch to the new address space so that `map_page_to_frame()` targets it.
+  // Interrupts must remain disabled while CR3 points at the new space: a
+  // preemption would otherwise resume us on the previous address space and the
+  // remaining copies would be applied to the wrong page tables.
+  uint64_t old_p4 = read_cr3();
+  isr_disable_interrupts();
+  write_cr3((uint64_t)space);
+
+  bool saved = can_deallocate_frames;
+  // The scratch mappings point at frames owned by the parent / child: they must
+  // never be deallocated when we unmap them.
+  can_deallocate_frames = false;
+
+  for (uint64_t k = 0; k < n; k++) {
+    opt_uint64_t frame = paging_frame_allocate();
+    if (!frame.has_value) {
+      can_deallocate_frames = saved;
+      write_cr3(old_p4);
+      isr_enable_interrupts();
+      arch_paging_deactivate(space);
+      free(pages);
+      return NULL;
+    }
+
+    void* src = map_scratch(PAGING_TMP_SRC, pages[k].frame);
+    void* dst = map_scratch(PAGING_TMP_DST, frame.value);
+    memcpy(dst, src, PAGE_SIZE);
+    unmap(PAGING_TMP_SRC);
+    unmap(PAGING_TMP_DST);
+
+    map_page_to_frame(pages[k].page, frame.value, pages[k].flags);
+  }
+
+  can_deallocate_frames = saved;
+  write_cr3(old_p4);
+  isr_enable_interrupts();
+  free(pages);
+
+  return space;
+}
+
+void arch_paging_activate(void* space)
+{
+  uint64_t target = (space == NULL) ? kernel_p4_frame : (uint64_t)space;
+
+  if (read_cr3() != target) {
+    write_cr3(target);
+  }
+}
+
+void arch_paging_deactivate(void* space)
+{
+  if (space == NULL) {
+    return;
+  }
+
+  uint64_t target = (uint64_t)space;
+  uint64_t old_p4 = read_cr3();
+  isr_disable_interrupts();
+  if (old_p4 != target) {
+    write_cr3(target);
+  }
+
+  page_table_t* p4 = get_p4();
+  frame_number_t p4_frame =
+    frame_containing_address(p4->entries[511] & PAGING_FRAME_ADDRESS_MASK);
+
+  page_table_t* p3 = next_table_address(p4, 0);
+
+  if (p3 != NULL) {
+    page_table_t* p2 = next_table_address(p3, USER_P3_INDEX);
+
+    if (p2 != NULL) {
+      for (uint64_t i = 0; i < PAGE_ENTRIES; i++) {
+        if ((p2->entries[i] & PAGING_FLAG_PRESENT) == 0) {
+          continue;
+        }
+
+        page_table_t* p1 = next_table_address(p2, i);
+        if (p1 == NULL) {
+          continue;
+        }
+
+        for (uint64_t j = 0; j < PAGE_ENTRIES; j++) {
+          if ((p1->entries[j] & PAGING_FLAG_PRESENT) == 0) {
+            continue;
+          }
+
+          opt_uint64_t f = pointed_frame(p1->entries[j]);
+          p1->entries[j] = 0;
+
+          if (f.has_value) {
+            paging_frame_deallocate(f.value);
+          }
+        }
+
+        opt_uint64_t p1f = pointed_frame(p2->entries[i]);
+        p2->entries[i] = 0;
+
+        if (p1f.has_value) {
+          paging_frame_deallocate(p1f.value);
+        }
+      }
+
+      opt_uint64_t p2f = pointed_frame(p3->entries[USER_P3_INDEX]);
+      p3->entries[USER_P3_INDEX] = 0;
+
+      if (p2f.has_value) {
+        paging_frame_deallocate(p2f.value);
+      }
+    }
+
+    // Free the private P3 table. Switch back first because we are currently
+    // running on it.
+    opt_uint64_t p3f = pointed_frame(p4->entries[0]);
+    p4->entries[0] = 0;
+
+    write_cr3(old_p4);
+
+    if (p3f.has_value) {
+      paging_frame_deallocate(p3f.value);
+    }
+  } else {
+    write_cr3(old_p4);
+  }
+
+  isr_enable_interrupts();
+  paging_frame_deallocate(p4_frame);
 }
 
 page_number_t arch_paging_page_containing_address(uint64_t virtual_address)

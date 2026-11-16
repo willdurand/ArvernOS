@@ -4,7 +4,7 @@
 #include <string.h>
 
 #ifdef __x86_64__
-#include <arch/mmu.h>
+#include <arch/paging.h>
 #include <mmu/paging.h>
 #endif
 
@@ -107,10 +107,10 @@ void elf_load_segment(uint8_t* data, elf_program_header_t* program_header)
 
   CORE_DEBUG("load segment at addr=%p with flags=%#x", addr, flags);
 
-  uint64_t start_page = arch_paging_page_containing_address(addr);
+  uint64_t start_page = paging_page_containing_address(addr);
   uint32_t number_of_pages = paging_page_amount_for_byte_size(addr, mem_size);
 
-  map_multiple(start_page, number_of_pages, flags);
+  paging_map_multiple(start_page, number_of_pages, flags);
 #endif
 
   memcpy((void*)addr, data + offset, file_size);
@@ -135,7 +135,7 @@ void elf_unload(elf_header_t* elf)
 
 #ifdef __x86_64__
       uint64_t addr = program_header[i].virtual_address;
-      uint64_t start_page = arch_paging_page_containing_address(addr);
+      uint64_t start_page = paging_page_containing_address(addr);
       uint32_t number_of_pages =
         paging_page_amount_for_byte_size(addr, mem_size);
 

@@ -1,4 +1,5 @@
 #include "console.h"
+#include <arch/paging.h>
 #include <arvern/utils.h>
 #include <logging.h>
 #include <mmu/paging.h>
@@ -41,8 +42,8 @@ void vbe_console_init(multiboot_tag_framebuffer_common_t* common)
     (common->framebuffer_pitch * common->framebuffer_height) / PAGE_SIZE;
 
   for (uint64_t i = 0; i < pages_for_fb; i++) {
-    identity_map((uint64_t)common->framebuffer_addr + (i * PAGE_SIZE),
-                 PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
+    paging_identity_map((uint64_t)common->framebuffer_addr + (i * PAGE_SIZE),
+                        PAGING_FLAG_PRESENT | PAGING_FLAG_WRITABLE);
   }
 
   ssfn_src =
