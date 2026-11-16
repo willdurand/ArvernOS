@@ -40,7 +40,7 @@ task_t* arch_task_create(uint64_t clone_flags, uintptr_t entrypoint);
 /**
  * Enters user mode and starts executing at `entry`.
  *
- * This function is called by `k_execv()` and it does not return.
+ * This function is called by `task_enter_user()` and it does not return.
  *
  * @param entry the user mode entry point
  * @param user_stack_top the top (high address) of the user stack
@@ -53,8 +53,9 @@ void arch_task_enter_user(uintptr_t entry,
 /**
  * Installs the kernel stack used on the next entry into the kernel.
  *
- * This function is called by `task_switch()` to make sure the next syscall or
- * interrupt of `task` is handled on its own kernel stack.
+ * This function is called by `task_switch()` and `task_set_kernel_stack()` to
+ * make sure the next syscall or interrupt of `task` is handled on its own
+ * kernel stack.
  *
  * @param task the task whose kernel stack top should be installed
  */

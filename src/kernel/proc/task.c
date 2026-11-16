@@ -161,6 +161,16 @@ int task_create(const char* name, uint64_t clone_flags, uintptr_t entrypoint)
   return task->id;
 }
 
+void task_enter_user(uintptr_t entry, uintptr_t user_stack_top, task_t* task)
+{
+  arch_task_enter_user(entry, user_stack_top, task);
+}
+
+void task_set_kernel_stack(task_t* task)
+{
+  arch_task_set_kernel_stack(task);
+}
+
 static task_t* task_find_zombie_child(task_t* parent, pid_t pid)
 {
   for (int i = 0; i < MAX_TASKS; i++) {
