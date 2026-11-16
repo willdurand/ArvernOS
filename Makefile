@@ -286,6 +286,33 @@ libc_deps = $(libc_c_objects:%.o=%.d)
 -include $(libc_deps)
 
 ###############################################################################
+# Track CFLAGS changes to force-rebuild when only configuration changes
+###############################################################################
+
+libk_cflags_file   = $(libk_objs_dir)/.cflags
+libk_asmflags_file = $(libk_objs_dir)/.asmflags
+libc_cflags_file   = $(lib_objs_dir)/.cflags
+libc_asmflags_file = $(lib_objs_dir)/.asmflags
+
+.PHONY: force_cflags_check
+
+$(libk_cflags_file): force_cflags_check
+	$(MKDIR) -p $(dir $@)
+	@echo "$(KERNEL_CFLAGS) $(KERNEL_INCLUDES)" | cmp -s - $@ || echo "$(KERNEL_CFLAGS) $(KERNEL_INCLUDES)" > $@
+
+$(libk_asmflags_file): force_cflags_check
+	$(MKDIR) -p $(dir $@)
+	@echo "$(KERNEL_ASM_FLAGS)" | cmp -s - $@ || echo "$(KERNEL_ASM_FLAGS)" > $@
+
+$(libc_cflags_file): force_cflags_check
+	$(MKDIR) -p $(dir $@)
+	@echo "$(LIBC_CFLAGS) $(LIBC_INCLUDES)" | cmp -s - $@ || echo "$(LIBC_CFLAGS) $(LIBC_INCLUDES)" > $@
+
+$(libc_asmflags_file): force_cflags_check
+	$(MKDIR) -p $(dir $@)
+	@echo "$(LIBC_ASM_FLAGS)" | cmp -s - $@ || echo "$(LIBC_ASM_FLAGS)" > $@
+
+###############################################################################
 # Rules and targets
 ###############################################################################
 
@@ -311,22 +338,22 @@ $(kernel): $(linker_ld) $(libk_asm_objects) $(libk_c_objects) $(libk_extra_objec
 	$(progress) "LD" $@
 	$(LD) --output=$@ --script=$(linker_ld) $(LD_FLAGS) $(libk_asm_objects) $(libk_c_objects) $(libk_extra_objects)
 
-$(libk_asm_objects): $(libk_objs_dir)/%.o: %.asm
+$(libk_asm_objects): $(libk_objs_dir)/%.o: %.asm $(libk_asmflags_file)
 	$(progress) "CC" $<
 	$(MKDIR) -p $(dir $@)
 	$(ASM) $(KERNEL_ASM_FLAGS) $< -o $@
 
-$(libk_c_objects): $(libk_objs_dir)/%.o: %.c
+$(libk_c_objects): $(libk_objs_dir)/%.o: %.c $(libk_cflags_file)
 	$(progress) "CC" $<
 	$(MKDIR) -p $(dir $@)
 	$(CC) -MMD -D__is_libk $(KERNEL_CFLAGS) $(KERNEL_INCLUDES) -c $< -o $@
 
-$(libc_c_objects): $(lib_objs_dir)/%.o: %.c
+$(libc_c_objects): $(lib_objs_dir)/%.o: %.c $(libc_cflags_file)
 	$(progress) "CC" $<
 	$(MKDIR) -p $(dir $@)
 	$(CC) -MMD -D__is_libc $(LIBC_CFLAGS) $(LIBC_INCLUDES) -c $< -o $@
 
-$(libc_asm_objects): $(lib_objs_dir)/%.o: %.asm
+$(libc_asm_objects): $(lib_objs_dir)/%.o: %.asm $(libc_asmflags_file)
 	$(progress) "CC" $<
 	$(MKDIR) -p $(dir $@)
 	$(ASM) $(LIBC_ASM_FLAGS) $< -o $@
