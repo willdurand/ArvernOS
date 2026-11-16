@@ -7,12 +7,6 @@
 #include <stdint.h>
 #include <sys/types.h>
 
-/// Address where the kernel image is loaded, i.e. the end of low memory. Must
-/// match the load address set by the board's linker script.
-#define KERNEL_LOAD_ADDRESS 0x00100000
-
-#define P4_TABLE 0xfffffffffffff000
-
 /// End of the user address space.
 #define USER_SPACE_END 0x80000000
 
@@ -26,27 +20,6 @@
 #define PAGING_FLAG_HUGE_PAGE (1 << 7)
 /// Forbids executing code on this page.
 #define PAGING_FLAG_NO_EXECUTE ((uint64_t)1 << 63)
-
-/// The user space lives in P3 index 1.
-#define USER_P3_INDEX 1
-
-// Scratch virtual pages used to temporarily access physical frames while
-// building an address space. Their page numbers translate to virtual addresses
-// far away from both the kernel mapping and the user space.
-#define PAGING_TMP_P4  ((page_number_t)0xcafed000)
-#define PAGING_TMP_P3  ((page_number_t)0xcafee000)
-#define PAGING_TMP_SRC ((page_number_t)0xcafef000)
-#define PAGING_TMP_DST ((page_number_t)0xcaff0000)
-
-#define PAGING_FRAME_ADDRESS_MASK 0x000ffffffffff000ULL
-
-/// Describes a user page to copy when cloning an address space.
-typedef struct paging_user_page
-{
-  page_number_t page;
-  uint64_t frame;
-  uint64_t flags;
-} paging_user_page_t;
 
 /**
  * Translates a page number to a frame number.
