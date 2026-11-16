@@ -1,4 +1,5 @@
 #include "rtl8139.h"
+#include <arch/paging.h>
 #include <arvern/utils.h>
 #include <core/interrupt.h>
 #include <core/isr.h>

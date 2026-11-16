@@ -1,4 +1,5 @@
 #include <arch/mmu.h>
+#include <arch/paging.h>
 #include <core/isr.h>
 #include <mmu/paging.h>
 #include <stdlib.h>
@@ -109,12 +110,12 @@ int main()
   assert(_p3_index(page) == 42, "returns the correct p3 index");
   end_describe();
 
-  describe("translate_page() and map()");
+  describe("translate_page() and paging_map()");
   assert(!translate_page(page).has_value, "returns no frame when not mapped");
 
   // reset fake next_table impl.
   next_table_index = 3;
-  map(page, PAGING_FLAG_PRESENT);
+  paging_map(page, PAGING_FLAG_PRESENT);
 
   // reset fake next_table impl.
   next_table_index = 3;
@@ -137,7 +138,7 @@ int main()
   assert(!translate_page(page).has_value, "returns no frame when not mapped");
   end_describe();
 
-  describe("identity_map()");
+  describe("paging_identity_map()");
   uint64_t addr_identity = (uint64_t)&fake_frame[9];
   page_number_t page_identity =
     arch_paging_page_containing_address(addr_identity);
@@ -149,12 +150,13 @@ int main()
 
   // reset fake next_table impl.
   next_table_index = 3;
-  identity_map(addr_identity, PAGING_FLAG_PRESENT);
+  paging_identity_map(addr_identity, PAGING_FLAG_PRESENT);
 
   // reset fake next_table impl.
   next_table_index = 3;
   opt_uint64_t frame_identity = translate_page(page_identity);
-  assert(frame_identity.has_value, "returns a frame after identity_map()");
+  assert(frame_identity.has_value,
+         "returns a frame after paging_identity_map()");
   assert(frame_identity.value == frame_containing_address(addr_identity),
          "returns the expected frame");
   end_describe();
