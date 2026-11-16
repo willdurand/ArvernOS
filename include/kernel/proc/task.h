@@ -101,6 +101,24 @@ task_t* task_get_current();
 int task_create(const char* name, uint64_t clone_flags, uintptr_t entrypoint);
 
 /**
+ * Enters user mode and starts executing at `entry`.
+ *
+ * This function does not return.
+ *
+ * @param entry the user mode entry point
+ * @param user_stack_top the top (high address) of the user stack
+ * @param task the task entering user mode
+ */
+void task_enter_user(uintptr_t entry, uintptr_t user_stack_top, task_t* task);
+
+/**
+ * Installs the kernel stack used on the next entry into the kernel.
+ *
+ * @param task the task whose kernel stack top should be installed
+ */
+void task_set_kernel_stack(task_t* task);
+
+/**
  * Waits for a child task to terminate.
  *
  * @param pid the pid of the child to wait for, or `-1` for any child

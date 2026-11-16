@@ -1,6 +1,5 @@
 #include <sys/k_syscall.h>
 
-#include <arch/proc.h>
 #include <core/elf.h>
 #include <errno.h>
 #include <fs/vfs.h>
@@ -194,9 +193,9 @@ int k_execv(const char* path, char* const argv[])
   free(kargv);
   free(kpath);
 
-  arch_task_set_kernel_stack(task);
-  arch_task_enter_user(entry, user_sp, task);
+  task_set_kernel_stack(task);
+  task_enter_user(entry, user_sp, task);
 
-  // `arch_task_enter_user()` never returns.
+  // `task_enter_user()` never returns.
   __builtin_unreachable();
 }
